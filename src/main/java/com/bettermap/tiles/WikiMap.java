@@ -1,0 +1,369 @@
+/*
+ * Copyright (c) 2026, n-oost
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package com.bettermap.tiles;
+
+/**
+ * The map layers published by the OSRS Wiki map service, taken from its own
+ * {@code data/dataloader.json} catalogue. Bounds are plain game coordinates, so no
+ * georeferencing is needed - the tile grid and the game share one coordinate system.
+ *
+ * <p>{@link #SURFACE} is the overworld; every other entry is a dungeon or instanced area that
+ * the game shows on its own separate world map.
+ */
+public enum WikiMap
+{
+	SURFACE(0, "RuneScape Surface", 896, 1984, 4096, 4200),
+	ANCIENT_CAVERN(1, "Ancient Cavern", 1628, 5212, 1892, 5476),
+	ARDOUGNE_UNDERGROUND(2, "Ardougne Underground", 2396, 9500, 2788, 9892),
+	ASGARNIA_ICE_CAVE(3, "Asgarnia Ice Cave", 2780, 9436, 3236, 9700),
+	BRAINDEATH_ISLAND(4, "Braindeath Island", 2012, 4956, 2212, 5220),
+	DORGESH_KAAN(5, "Dorgesh-Kaan", 2588, 5148, 2916, 5540),
+	DWARVEN_MINES(6, "Dwarven Mines", 2844, 9564, 3300, 9892),
+	GOD_WARS_DUNGEON(7, "God Wars Dungeon", 2716, 5084, 3044, 5412),
+	KALPHITE_HIVES(8, "Kalphite Hives", 3036, 9244, 3556, 9636),
+	KARAMJA_UNDERGROUND(9, "Karamja Underground", 2460, 9244, 2980, 9700),
+	KELDAGRIM(10, "Keldagrim", 2716, 9948, 2980, 10276),
+	MISCELLANIA_UNDERGROUND(11, "Miscellania Underground", 2012, 10076, 2916, 10468),
+	MISTHALIN_UNDERGROUND(12, "Misthalin Underground", 2972, 9372, 3364, 10084),
+	MOLE_HOLE(13, "Mole Hole", 1628, 5020, 1828, 5284),
+	MORYTANIA_UNDERGROUND(14, "Morytania Underground", 3264, 9472, 3968, 10048),
+	MOS_LE_HARMLESS_CAVE(15, "Mos Le'Harmless Cave", 3612, 9244, 3904, 9536),
+	OURANIA_ALTAR(16, "Ourania Altar", 2908, 5468, 3136, 5696),
+	FREMENNIK_SLAYER_CAVE(17, "Fremennik Slayer Cave", 2588, 9820, 2880, 10112),
+	STRONGHOLD_OF_SECURITY(18, "Stronghold of Security", 1756, 4764, 2112, 5312),
+	STRONGHOLD_UNDERGROUND(19, "Stronghold Underground", 2140, 9628, 2624, 10112),
+	TAVERLEY_UNDERGROUND(20, "Taverley Underground", 2524, 9500, 3072, 10112),
+	TOLNA_S_RIFT(21, "Tolna's Rift", 3008, 5184, 3364, 9892),
+	TROLL_STRONGHOLD(22, "Troll Stronghold", 2716, 9948, 3072, 10240),
+	TZHAAR_AREA(23, "TzHaar Area", 2268, 4892, 2624, 5248),
+	LAIR_OF_TARN_RAZORLOR(24, "Lair of Tarn Razorlor", 3036, 4444, 3456, 4736),
+	WATERBIRTH_DUNGEON(25, "Waterbirth Dungeon", 2332, 9500, 2816, 10240),
+	WILDERNESS_DUNGEONS(26, "Wilderness Dungeons", 2780, 9948, 3520, 10496),
+	YANILLE_UNDERGROUND(27, "Yanille Underground", 2204, 9308, 2752, 9600),
+	ZANARIS(28, "Zanaris", 2268, 4252, 2560, 4544),
+	FOSSIL_ISLAND_UNDERGROUND(30, "Fossil Island Underground", 3484, 10012, 4032, 10368),
+	FELDIP_HILLS_UNDERGROUND(31, "Feldip Hills Underground", 1600, 8860, 2176, 9280),
+	KOUREND_UNDERGROUND(32, "Kourend Underground", 1216, 9692, 1984, 10240),
+	KEBOS_UNDERGROUND(33, "Kebos Underground", 988, 9756, 1472, 10368),
+	PRIFDDINAS(29, "Prifddinas", 3072, 5888, 3456, 6272),
+	PRIFDDINAS_UNDERGROUND(34, "Prifddinas Underground", 3072, 12288, 3392, 12608),
+	PRIFDDINAS_GRAND_LIBRARY(35, "Prifddinas Grand Library", 2496, 6016, 3136, 6272),
+	LMS_DESERT_ISLAND(36, "LMS Desert Island", 3328, 5696, 3584, 5952),
+	TUTORIAL_ISLAND(37, "Tutorial Island", 1536, 5952, 1856, 6272),
+	LMS_WILD_VARROCK(38, "LMS Wild Varrock", 3392, 5952, 3712, 6272),
+	RUINS_OF_CAMDOZAAL(39, "Ruins of Camdozaal", 2816, 5696, 3136, 5952),
+	THE_ABYSS(40, "The Abyss", 2880, 4672, 3200, 4992),
+	LASSAR_UNDERCITY(41, "Lassar Undercity", 2432, 6208, 2816, 6528),
+	KHARIDIAN_DESERT_UNDERGROUND(42, "Kharidian Desert Underground", 3072, 9024, 3584, 9728),
+	VARLAMORE_UNDERGROUND(43, "Varlamore Underground", 1216, 9216, 1920, 9920),
+	CAM_TORUM(44, "Cam Torum", 1280, 9408, 1600, 9728),
+	NEYPOTZLI(45, "Neypotzli", 1280, 9408, 1600, 9856),
+	ARDENT_OCEAN_UNDERGROUND(46, "Ardent Ocean Underground", 2496, 9280, 3200, 9728),
+	UNQUIET_OCEAN_UNDERGROUND(47, "Unquiet Ocean Underground", 2624, 8512, 3392, 8960),
+	SHROUDED_OCEAN_UNDERGROUND(48, "Shrouded Ocean Underground", 1856, 8640, 2368, 9408),
+	SUNSET_OCEAN_UNDERGROUND(49, "Sunset Ocean Underground", 1088, 9088, 1280, 9280),
+	WESTERN_OCEAN_UNDERGROUND(50, "Western Ocean Underground", 1856, 9408, 2368, 10112),
+	NORTHERN_OCEAN_UNDERGROUND(51, "Northern Ocean Underground", 2048, 10112, 3008, 10560),
+	VAMPYRIUM(52, "Vampyrium", 2368, 7616, 2880, 8000),
+	ABANDONED_MINE_LEVEL_1(10000, "Abandoned Mine - Level 1", 3328, 9536, 3520, 9728),
+	ABANDONED_MINE_LEVEL_2(10001, "Abandoned Mine - Level 2", 2688, 4480, 2880, 4672),
+	ABANDONED_MINE_LEVEL_4(10003, "Abandoned Mine - Level 4", 2688, 4416, 2880, 4608),
+	ABANDONED_MINE_LEVEL_6(10005, "Abandoned Mine - Level 6", 2688, 4352, 2880, 4544),
+	ABYSS(10006, "Abyss", 2880, 4672, 3200, 4928),
+	ABYSSAL_AREA(10007, "Abyssal Area", 2944, 4800, 3136, 4992),
+	AH_ZA_RHOON(10008, "Ah Za Rhoon", 2816, 9216, 3008, 9472),
+	AIRSHIP_PLATFORM(10010, "Airship platform", 1984, 5312, 2176, 5504),
+	APE_ATOLL_DUNGEON(10014, "Ape Atoll Dungeon", 2624, 9024, 2880, 9216),
+	BANANA_PLANTATION_APE_ATOLL(10018, "Banana plantation (Ape Atoll)", 2624, 9088, 2816, 9280),
+	BARBARIAN_ASSAULT(10019, "Barbarian Assault", 1792, 5312, 1984, 5568),
+	BARBARIAN_ASSAULT_LOBBY(10020, "Barbarian Assault lobby", 2496, 5184, 2688, 5376),
+	BARROWS_CRYPTS(10021, "Barrows crypts", 3456, 9600, 3648, 9792),
+	BLAST_FURNACE(10022, "Blast Furnace", 1856, 4864, 2048, 5056),
+	BOOTS_OF_LIGHTNESS_AREAS(10023, "Boots of lightness areas", 2560, 9664, 2752, 9856),
+	BRIMHAVEN_AGILITY_ARENA(10025, "Brimhaven Agility Arena", 2688, 9472, 2880, 9664),
+	BRINE_RAT_CAVERN(10026, "Brine Rat Cavern", 2624, 10048, 2816, 10240),
+	BRYOPHYTA_S_LAIR(10027, "Bryophyta's lair", 3136, 9856, 3328, 10048),
+	BURTHORPE_GAMES_ROOM(10028, "Burthorpe Games Room", 2112, 4864, 2304, 5056),
+	CERBERUS_S_LAIR(10030, "Cerberus's Lair", 1152, 1152, 1472, 1408),
+	CORPOREAL_BEAST_S_LAIR(10031, "Corporeal Beast's lair", 2880, 4160, 3072, 4352),
+	COSMIC_ENTITY_S_PLANE(10033, "Cosmic entity's plane", 1984, 4736, 2176, 4928),
+	CRANDOR_LAB(10035, "Crandor Lab", 2752, 9600, 2944, 9792),
+	CRASH_SITE_CAVERN(10036, "Crash Site Cavern", 1984, 5568, 2240, 5760),
+	CREATURE_CREATION(10037, "Creature Creation", 2944, 4288, 3136, 4480),
+	DAEYALT_ESSENCE_MINE(10038, "Daeyalt Essence mine", 3584, 9664, 3776, 9856),
+	DEATH_ALTAR(10039, "Death altar", 2112, 4736, 2304, 4928),
+	DESERT_EAGLE_LAIR(10040, "Desert Eagle Lair", 3328, 9472, 3520, 9664),
+	DESERT_MINING_CAMP_DUNGEON(10041, "Desert Mining Camp dungeon", 3200, 9344, 3392, 9536),
+	DIGSITE_DUNGEON_ROCKS_BLOWN_UP(10042, "Digsite Dungeon (rocks blown up)", 3264, 9664, 3456, 9856),
+	DONDAKAN_S_MINE_DURING_QUEST(10044, "Dondakan's mine (during quest)", 2240, 4864, 2496, 5056),
+	DORGESH_KAAN_SOUTH_DUNGEON(10045, "Dorgesh-Kaan South Dungeon", 2624, 5120, 2816, 5312),
+	DREAM_WORLD_CHALLENGES(10047, "Dream World - challenges", 1664, 4992, 1856, 5184),
+	DREAM_WORLD_DREAM_MENTOR(10048, "Dream World - Dream Mentor", 1728, 5056, 1920, 5248),
+	DRILL_DEMON(10050, "Drill Demon", 3072, 4736, 3264, 4928),
+	EAGLES_PEAK_DUNGEON(10052, "Eagles' Peak Dungeon", 1920, 4864, 2112, 5056),
+	ELEMENTAL_WORKSHOP(10053, "Elemental Workshop", 2624, 9792, 2816, 9984),
+	ENAKHRA_S_TEMPLE(10054, "Enakhra's Temple", 3008, 9216, 3200, 9408),
+	ENCHANTED_VALLEY(10055, "Enchanted Valley", 2944, 4416, 3136, 4608),
+	ENLIGHTENED_JOURNEY_CRASH_AREAS(10056, "Enlightened Journey crash areas", 1728, 4800, 1920, 4992),
+	EVIL_BOB_S_ISLAND(10057, "Evil Bob's Island", 2432, 4672, 2624, 4864),
+	EVIL_CHICKEN_S_LAIR(10058, "Evil Chicken's Lair", 2368, 4288, 2560, 4480),
+	EVIL_TWIN(10059, "Evil Twin", 1792, 5056, 1984, 5248),
+	EYES_OF_GLOUPHRIE_WAR_CUTSCENE(10060, "Eyes of Glouphrie war cutscene", 2048, 4864, 2240, 5056),
+	FAIRY_RESISTANCE_HIDEOUT(10061, "Fairy Resistance Hideout", 2240, 4352, 2432, 4544),
+	FISHER_REALM_DISEASED(10062, "Fisher Realm (diseased)", 2688, 4608, 2880, 4800),
+	FISHER_REALM_HEALTHY(10063, "Fisher Realm (healthy)", 2560, 4608, 2752, 4800),
+	FISHING_TRAWLER(10064, "Fishing Trawler", 1856, 4736, 2048, 4928),
+	FISHING_TRAWLER_10065(10065, "Fishing Trawler", 1792, 4736, 1984, 4928),
+	FISHING_TRAWLER_10066(10066, "Fishing Trawler", 1920, 4736, 2112, 4928),
+	FOSSIL_ISLAND_BOAT(10067, "Fossil Island boat", 1728, 4672, 1920, 4864),
+	FRAGMENT_OF_SEREN_FIGHT(10068, "Fragment of Seren fight", 3200, 5824, 3392, 6016),
+	FREAKY_FORESTER(10069, "Freaky Forester", 2496, 4672, 2688, 4864),
+	GENIE_CAVE(10070, "Genie cave", 3264, 9216, 3456, 9408),
+	GLARIAL_S_TOMB(10071, "Glarial's Tomb", 2432, 9728, 2624, 9920),
+	GOBLIN_COOK(10072, "Goblin cook", 2880, 9792, 3072, 9984),
+	GORAK_PLANE(10073, "Gorak Plane", 2944, 5248, 3136, 5440),
+	H_A_M_STORE_ROOM(10074, "H.A.M. Store room", 2496, 5120, 2688, 5312),
+	HALLOWED_SEPULCHRE_LEVEL_1(10075, "Hallowed Sepulchre - Level 1", 2112, 5824, 2432, 6144),
+	HALLOWED_SEPULCHRE_STARTING_AREA(10076, "Hallowed Sepulchre starting area", 2304, 5888, 2496, 6080),
+	HARMONY_ISLAND_LOWER_LEVEL(10077, "Harmony Island lower level", 3712, 9152, 3904, 9344),
+	ISAFDAR_SONG_OF_THE_ELVES(10078, "Isafdar (Song of the Elves)", 2624, 5952, 2944, 6272),
+	JALDRAOCHT_PYRAMID_LEVEL_1(10079, "Jaldraocht Pyramid - Level 1", 2816, 4864, 3008, 5056),
+	JALDRAOCHT_PYRAMID_LEVEL_2(10080, "Jaldraocht Pyramid - Level 2", 2752, 4864, 2944, 5056),
+	JALDRAOCHT_PYRAMID_LEVEL_3(10081, "Jaldraocht Pyramid - Level 3", 2688, 4864, 2880, 5056),
+	JALDRAOCHT_PYRAMID_LEVEL_4(10082, "Jaldraocht Pyramid - Level 4", 3136, 9216, 3328, 9408),
+	JATIZSO_MINE(10083, "Jatizso mine", 2304, 10112, 2496, 10304),
+	JIGGIG_DUNGEON(10084, "Jiggig Dungeon", 2368, 9280, 2560, 9536),
+	JUNGLE_EAGLE_LAIR_RED_CHINCHOMPA_HUNTING_GROUND(10085, "Jungle Eagle lair/Red chinchompa hunting ground", 2432, 9216, 2624, 9408),
+	KARAMJAN_TEMPLE(10086, "Karamjan Temple", 2752, 9152, 2944, 9408),
+	KEEP_LE_FAYE_INSTANCE(10087, "Keep Le Faye (instance)", 1600, 4160, 1792, 4352),
+	KELDAGRIM_RAT_PITS(10088, "Keldagrim Rat Pits", 1856, 4608, 2048, 4800),
+	KILLERWATT_PLANE(10089, "Killerwatt Plane", 2560, 5120, 2752, 5312),
+	KING_S_RANSOM_DUNGEON(10090, "King's Ransom dungeon", 1792, 4160, 1984, 4352),
+	KISS_THE_FROG(10091, "Kiss the frog", 2368, 4672, 2560, 4864),
+	KLENTER_S_PYRAMID(10092, "Klenter's Pyramid", 3200, 9088, 3392, 9280),
+	KRUK_S_DUNGEON(10093, "Kruk's Dungeon", 2240, 8960, 2752, 9344),
+	LADY_TRAHAERN_HIDEOUT(10094, "Lady Trahaern hideout", 2240, 9472, 2432, 9664),
+	LIBRARY_HISTORICAL_ARCHIVE(10095, "Library Historical Archive", 1472, 10112, 1664, 10304),
+	LIGHTHOUSE_CUTSCENE(10096, "Lighthouse cutscene", 2368, 4480, 2560, 4672),
+	LIGHTHOUSE_DUNGEON(10097, "Lighthouse Dungeon", 2432, 9920, 2624, 10112),
+	LIGHTHOUSE_DUNGEON_CUTSCENE(10098, "Lighthouse Dungeon (cutscene)", 2432, 4544, 2624, 4736),
+	LITHKREN_VAULT(10099, "Lithkren Vault", 1472, 4992, 1664, 5184),
+	LITHKREN_VAULT_ENTRANCE_DURING_QUEST(10100, "Lithkren Vault entrance (during quest)", 3456, 10304, 3648, 10496),
+	LITHKREN_VAULT_ENTRANCE_POST_QUEST(10101, "Lithkren Vault entrance (post-quest)", 3456, 10368, 3648, 10560),
+	LIZARDMAN_TEMPLE(10102, "Lizardman Temple", 1216, 9984, 1408, 10176),
+	LUMBRIDGE_CASTLE_RECIPE_FOR_DISASTER(10103, "Lumbridge Castle (Recipe for Disaster)", 1792, 5248, 1984, 5440),
+	MAGE_TRAINING_ARENA_ROOMS(10104, "Mage Training Arena rooms", 3264, 9536, 3456, 9792),
+	MANIACAL_MONKEY_HUNTER_AREA(10105, "Maniacal monkey hunter area", 2816, 9024, 3008, 9216),
+	MEIYERDITCH_LABORATORIES(10106, "Meiyerditch Laboratories", 3456, 9600, 3712, 9920),
+	MEIYERDITCH_MINE(10107, "Meiyerditch Mine", 2304, 4544, 2496, 4736),
+	MIME(10108, "Mime", 1920, 4672, 2112, 4864),
+	MISTHALIN_MYSTERY(10109, "Misthalin Mystery", 1536, 4736, 1792, 4928),
+	MOGRE_CAMP(10110, "Mogre Camp", 2880, 9408, 3072, 9600),
+	MONKEY_MADNESS_HANGAR_POST_QUEST(10111, "Monkey Madness hangar (post-quest)", 2560, 4416, 2752, 4608),
+	MONKEY_MADNESS_HANGAR_AND_BONZARA(10112, "Monkey Madness hangar and Bonzara", 2304, 9792, 2496, 9984),
+	MOURNER_TUNNELS(10113, "Mourner Tunnels", 1792, 4544, 2112, 4736),
+	MOUSE_HOLE(10114, "Mouse hole", 2176, 5440, 2368, 5632),
+	MY_ARM_S_BIG_ADVENTURE_BOAT_CUTSCENE(10115, "My Arm's Big Adventure boat cutscene", 1792, 4800, 1984, 4992),
+	MYREQUE_HIDEOUT_BURGH_DE_ROTT(10116, "Myreque Hideout (Burgh de Rott)", 3392, 9536, 3584, 9728),
+	MYREQUE_HIDEOUT_CANIFIS(10117, "Myreque Hideout (Canifis)", 3328, 9728, 3584, 9984),
+	MYREQUE_HIDEOUT_MEIYERDITCH(10118, "Myreque Hideout (Meiyerditch)", 3520, 9536, 3712, 9728),
+	NATURE_ALTAR(10119, "Nature altar", 2304, 4736, 2496, 4928),
+	NIGHTMARE_OF_ASHIHAMA(10120, "Nightmare of Ashihama", 3776, 9856, 3968, 10048),
+	NORTH_EAST_KARAMJA_CUTSCENE(10121, "North-east Karamja cutscene", 2432, 4480, 2624, 4672),
+	OBSERVATORY_DUNGEON(10122, "Observatory Dungeon", 2240, 9280, 2432, 9472),
+	OGRE_ENCLAVE(10123, "Ogre Enclave", 2496, 9344, 2688, 9536),
+	OLD_SCHOOL_MUSEUM(10124, "Old School Museum", 2944, 9856, 3136, 10048),
+	PATERDOMUS_TEMPLE_UNDERGROUND(10125, "Paterdomus Temple underground", 3328, 9792, 3520, 9984),
+	POLAR_EAGLE_LAIR(10126, "Polar Eagle lair", 2624, 10112, 2816, 10304),
+	PRISON_PETE(10127, "Prison Pete", 1984, 4352, 2176, 4544),
+	PURO_PURO(10128, "Puro-Puro", 2496, 4224, 2688, 4416),
+	PYRAMID_PLUNDER(10129, "Pyramid Plunder", 1856, 4352, 2048, 4544),
+	QUIDAMORTEM_CAVE(10130, "Quidamortem Cave", 1088, 9856, 1280, 10048),
+	QUIZ_MASTER(10131, "Quiz Master", 1856, 4672, 2048, 4864),
+	RANTZ_S_CAVE(10132, "Rantz's cave", 2560, 9280, 2752, 9472),
+	RASHILIYIA_S_TOMB(10133, "Rashiliyia's Tomb", 2816, 9408, 3008, 9600),
+	RATCATCHERS_MANSION(10134, "Ratcatchers Mansion", 2752, 4992, 2944, 5184),
+	RECIPE_FOR_DISASTER_APE_ATOLL_DUNGEON(10135, "Recipe for Disaster Ape Atoll Dungeon", 2944, 5376, 3136, 5568),
+	RECRUITMENT_DRIVE(10136, "Recruitment Drive", 2368, 4864, 2560, 5056),
+	ROGUES_DEN(10137, "Rogues' Den", 2880, 4864, 3136, 5184),
+	SABA_S_CAVE(10138, "Saba's cave", 2176, 4672, 2368, 4864),
+	SHADOW_DUNGEON(10139, "Shadow Dungeon", 2560, 4992, 2816, 5184),
+	SKAVID_CAVES(10140, "Skavid caves", 2432, 9344, 2624, 9536),
+	SMOKE_DUNGEON(10141, "Smoke Dungeon", 3136, 9280, 3392, 9472),
+	SOPHANEM_BANK(10142, "Sophanem bank", 2688, 5056, 2880, 5248),
+	SOPHANEM_DUNGEON(10143, "Sophanem Dungeon", 2048, 4160, 2496, 4480),
+	SORCERESS_S_GARDEN(10144, "Sorceress's Garden", 2816, 5376, 3008, 5568),
+	SURPRISE_EXAM(10145, "Surprise Exam", 1792, 4928, 1984, 5120),
+	TEARS_OF_GUTHIX_CAVE(10146, "Tears of Guthix cave", 3136, 9408, 3328, 9600),
+	TEMPLE_OF_IKOV(10147, "Temple of Ikov", 2560, 9728, 2816, 9984),
+	TEMPLE_OF_MARIMBO_DUNGEON(10148, "Temple of Marimbo Dungeon", 2688, 9088, 2880, 9280),
+	TEMPLE_TREKKING(10149, "Temple Trekking", 1984, 4928, 2176, 5120),
+	THAMMARON_S_THRONE_ROOM(10150, "Thammaron's throne room", 2624, 4800, 2816, 4992),
+	THE_GRAND_TREE_MONKEY_MADNESS_II(10151, "The Grand Tree - Monkey Madness II", 1856, 5440, 2112, 5696),
+	THE_KENDAL_S_CAVE(10152, "The Kendal's cave", 2688, 9984, 2880, 10176),
+	TRAIN_STATION(10153, "Train station", 2368, 5440, 2560, 5632),
+	TREE_GNOME_VILLAGE_DUNGEON(10154, "Tree Gnome Village dungeon", 2432, 9472, 2624, 9664),
+	TREE_GNOME_VILLAGE_DUNGEON_INSTANCE(10155, "Tree Gnome Village dungeon (instance)", 2496, 4352, 2688, 4544),
+	TROLL_ARENA_TROLLHEIM_TUNNEL(10156, "Troll arena - Trollheim tunnel", 2816, 9920, 3008, 10112),
+	TROLLWEISS_DUNGEON(10157, "Trollweiss Dungeon", 2688, 10112, 2880, 10304),
+	TUNNEL_OF_CHAOS(10158, "Tunnel of Chaos", 3072, 5120, 3264, 5312),
+	TUTORIAL_ISLAND_DUNGEON(10159, "Tutorial Island dungeon", 3008, 9408, 3200, 9600),
+	TYRAS_CAMP_CUTSCENE(10160, "Tyras Camp cutscene", 2240, 4480, 2432, 4672),
+	UNDERGROUND_PASS_BOTTOM_LEVEL(10161, "Underground Pass - bottom level", 2240, 9728, 2432, 9984),
+	UNDERGROUND_PASS_BOTTOM_LEVEL_SONG_OF_THE_ELVES_INSTANCE(10162, "Underground Pass - bottom level (Song of the Elves instance)", 2368, 6016, 2560, 6272),
+	UNDERGROUND_PASS_FIRST_LEVEL(10163, "Underground Pass - first level", 2304, 9600, 2560, 9792),
+	UNDERGROUND_PASS_IBAN_S_TEMPLE_POST_QUEST(10164, "Underground Pass - Iban's Temple (post-quest)", 1920, 4608, 2112, 4800),
+	UNDERGROUND_PASS_PLATFORMS(10165, "Underground Pass - platforms", 2048, 4480, 2240, 4800),
+	UNDERGROUND_PASS_SECOND_LEVEL(10166, "Underground Pass - second level", 2304, 9472, 2496, 9728),
+	UNDERGROUND_PASS_SWAMP_FAIL_AND_FINAL_AREA(10167, "Underground Pass - swamp fail and final area", 2368, 9536, 2560, 9728),
+	UNGAEL_LABORATORY(10168, "Ungael Laboratory", 2176, 10368, 2368, 10560),
+	UZER_DUNGEON(10169, "Uzer Dungeon", 2624, 4800, 2816, 4992),
+	VARROCK_MUSEUM_BASEMENT_HIGHER(10170, "Varrock Museum basement (higher)", 1664, 4864, 1856, 5056),
+	VARROCK_MUSEUM_BASEMENT_LOWER(10171, "Varrock Museum basement (lower)", 1536, 4864, 1728, 5056),
+	VARROCK_RAT_PITS(10172, "Varrock Rat Pits", 2816, 4992, 3008, 5184),
+	VIYELDI_CAVES_LOWER_LEVEL(10173, "Viyeldi caves (lower level)", 2304, 4608, 2496, 4800),
+	VIYELDI_CAVES_UPPER_LEVEL(10174, "Viyeldi caves (upper level)", 2688, 9216, 2880, 9408),
+	WATER_RAVINE_DUNGEON(10175, "Water Ravine Dungeon", 3264, 9472, 3456, 9664),
+	WATERFALL_DUNGEON(10176, "Waterfall Dungeon", 2496, 9792, 2688, 9984),
+	WATERFALL_DUNGEON_WATER(10177, "Waterfall Dungeon (water)", 2432, 9792, 2624, 9984),
+	WILDERNESS_WARS(10178, "Wilderness Wars", 3200, 4544, 3392, 4736),
+	WITCHAVEN_DUNGEON(10179, "Witchaven Dungeon", 2240, 4992, 2432, 5184),
+	WRATH_ALTAR(10180, "Wrath altar", 2240, 4736, 2432, 4928),
+	YANILLE_CUTSCENE(10181, "Yanille cutscene", 2816, 4608, 3008, 4800),
+	TUTORIAL_ISLAND_V2_DUNGEON(10182, "Tutorial Island v2 dungeon", 1600, 12416, 1792, 12608),
+	PRIFDDINAS_GRAND_LIBRARY_POST_QUEST(10183, "Prifddinas Grand Library (post-quest)", 3136, 12416, 3328, 12608),
+	FULL_MAP(-1, "Full Map", 896, 1152, 4288, 12672);
+
+	/** Cached so hot render / lookup loops do not clone via {@code values()} every call. */
+	public static final WikiMap[] VALUES = values();
+
+	/** Latest high-definition OSRS Wiki map tile version. */
+	public static final String CACHE_VERSION = "2026-08-12_a";
+
+	private final int mapId;
+	private final String displayName;
+	private final int minX;
+	private final int minY;
+	private final int maxX;
+	private final int maxY;
+
+	WikiMap(int mapId, String displayName, int minX, int minY, int maxX, int maxY)
+	{
+		this.mapId = mapId;
+		this.displayName = displayName;
+		this.minX = minX;
+		this.minY = minY;
+		this.maxX = maxX;
+		this.maxY = maxY;
+	}
+
+	public int getMapId()
+	{
+		return mapId;
+	}
+
+	public String getDisplayName()
+	{
+		return displayName;
+	}
+
+	public int getMinX()
+	{
+		return minX;
+	}
+
+	public int getMinY()
+	{
+		return minY;
+	}
+
+	public int getMaxX()
+	{
+		return maxX;
+	}
+
+	public int getMaxY()
+	{
+		return maxY;
+	}
+
+	public boolean contains(int worldX, int worldY)
+	{
+		return worldX >= minX && worldX <= maxX && worldY >= minY && worldY <= maxY;
+	}
+
+	/** The layer with this id, or null. Ids come from the wiki's own catalogue. */
+	public static WikiMap byId(int mapId)
+	{
+		for (WikiMap map : values())
+		{
+			if (map.mapId == mapId)
+			{
+				return map;
+			}
+		}
+		return null;
+	}
+
+	public long area()
+	{
+		return (long) (maxX - minX) * (maxY - minY);
+	}
+
+	/**
+	 * The layer that covers this point, or {@link #SURFACE} when nothing else does.
+	 *
+	 * <p>Dungeon bounds are bounding boxes around areas that do not actually overlap, so several
+	 * boxes can contain the same point - Dorgesh-Kaan's box reaches over God Wars Dungeon, for
+	 * one. The smallest box is the most specific and is the one the game means. Surface bounds
+	 * never overlap a dungeon, so the overworld needs no tiebreak.
+	 */
+	public static WikiMap forPoint(int worldX, int worldY)
+	{
+		final WikiMap found = forPointOrNull(worldX, worldY);
+		return found == null ? SURFACE : found;
+	}
+
+	/**
+	 * As {@link #forPoint}, but null when no layer covers the point at all rather than falling
+	 * back to the surface. Plenty of the game has no published map - the Abyss, Ape Atoll
+	 * Dungeon, most quest instances - and quietly answering "surface" for those would put you on
+	 * the wrong map with no indication anything was wrong.
+	 */
+	public static WikiMap forPointOrNull(int worldX, int worldY)
+	{
+		WikiMap best = null;
+
+		for (WikiMap map : VALUES)
+		{
+			if (map.contains(worldX, worldY) && (best == null || map.area() < best.area()))
+			{
+				best = map;
+			}
+		}
+
+		return best;
+	}
+}

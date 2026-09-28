@@ -63,6 +63,10 @@ class MapTileRenderer
 {
 	private static final float SURFACE_VIEW_DUNGEON_OPACITY = 0.48f;
 	private static final float SURFACE_VIEW_DUNGEON_DARKEN = 0.35f;
+	private static final int[] PRIFDDINAS_SOURCE_BOUNDS = {
+		PrifddinasShift.INSTANCE_MIN_X, PrifddinasShift.INSTANCE_MIN_Y,
+		PrifddinasShift.INSTANCE_MAX_X - 1, PrifddinasShift.INSTANCE_MAX_Y - 1
+	};
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final TileLoader tileLoader;
@@ -575,11 +579,13 @@ class MapTileRenderer
 		graphics.setClip(dest.intersection(bounds));
 		if (plane > 0)
 		{
-			drawTileLayer(graphics, bounds, plane, tileZoom, PrifddinasShift.OFFSET_X, PrifddinasShift.OFFSET_Y, true);
+			drawTileLayer(graphics, bounds, plane, tileZoom, PrifddinasShift.OFFSET_X, PrifddinasShift.OFFSET_Y,
+				true, PRIFDDINAS_SOURCE_BOUNDS);
 		}
 		else
 		{
-			drawTileLayer(graphics, bounds, 0, tileZoom, PrifddinasShift.OFFSET_X, PrifddinasShift.OFFSET_Y);
+			drawTileLayer(graphics, bounds, 0, tileZoom, PrifddinasShift.OFFSET_X, PrifddinasShift.OFFSET_Y,
+				false, PRIFDDINAS_SOURCE_BOUNDS);
 		}
 		graphics.setClip(oldClip);
 	}
@@ -637,7 +643,7 @@ class MapTileRenderer
 		drawTileLayer(graphics, bounds, plane, tileZoom, worldXOffset, worldYOffset, keyVoid, null);
 	}
 
-	/** Draw only the source rectangle needed by one arranged dungeon piece when supplied. */
+	/** Draw only the source rectangle when supplied. Bounds are inclusive world coordinates. */
 	private void drawTileLayer(Graphics2D graphics, Rectangle bounds, int plane, int tileZoom,
 		double worldXOffset, double worldYOffset, boolean keyVoid, int[] sourceBounds)
 	{
@@ -658,10 +664,17 @@ class MapTileRenderer
 		}
 
 		// Include 1 extra tile buffer on all 4 borders so rapid panning never clips edge tiles
-		final int tileXMin = WikiMapTiles.tileIndex(westWorld, tileZoom) - 1;
-		final int tileXMax = WikiMapTiles.tileIndex(eastWorld, tileZoom) + 1;
-		final int tileYMin = WikiMapTiles.tileIndex(southWorld, tileZoom) - 1;
-		final int tileYMax = WikiMapTiles.tileIndex(northWorld, tileZoom) + 1;
+		int tileXMin = WikiMapTiles.tileIndex(westWorld, tileZoom) - 1;
+		int tileXMax = WikiMapTiles.tileIndex(eastWorld, tileZoom) + 1;
+		int tileYMin = WikiMapTiles.tileIndex(southWorld, tileZoom) - 1;
+		int tileYMax = WikiMapTiles.tileIndex(northWorld, tileZoom) + 1;
+		if (sourceBounds != null)
+		{
+			tileXMin = Math.max(tileXMin, WikiMapTiles.tileIndex(sourceBounds[0], tileZoom));
+			tileXMax = Math.min(tileXMax, WikiMapTiles.tileIndex(sourceBounds[2], tileZoom));
+			tileYMin = Math.max(tileYMin, WikiMapTiles.tileIndex(sourceBounds[1], tileZoom));
+			tileYMax = Math.min(tileYMax, WikiMapTiles.tileIndex(sourceBounds[3], tileZoom));
+		}
 
 		final int numCols = tileXMax - tileXMin + 1;
 		final int numRows = tileYMax - tileYMin + 1;

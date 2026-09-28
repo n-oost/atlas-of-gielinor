@@ -30,6 +30,7 @@ import java.awt.image.BufferedImage;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -50,12 +51,9 @@ import net.runelite.client.util.Filepath;
 @Singleton
 public class TileLoader
 {
-	// A fullscreen view needs roughly 40 detail tiles plus a handful of coarse ones, and every
-	// tile decodes to a 256x256 RGB raster - 192KB, whatever it cost on disk. That number is the
-	// whole budget here: RuneLite ships with a 512MB heap, so the cache is sized in megabytes
-	// rather than in tiles. 256 entries is ~49MB, which leaves a comfortable margin over the
-	// working set and still holds several screens' worth of panning.
-	private static final int MEMORY_CACHE_SIZE = 256;
+	// Each decoded 256x256 tile uses roughly 192-256 KiB depending on image type. Allow room
+	// for large viewports and overlapping map layers without constantly evicting visible tiles.
+	private static final int MEMORY_CACHE_SIZE = 512;
 	private static final int SCALED_CACHE_SIZE = 256;
 
 	/**
@@ -97,6 +95,7 @@ public class TileLoader
 	private volatile NavigableSet<Integer> availableZooms = Collections.emptyNavigableSet();
 	private volatile Filepath tileDir;
 	private volatile List<String> installedPaths = Collections.emptyList();
+	private volatile Set<String> installedTilePaths = Collections.emptySet();
 	private volatile String status = "Map assets are not installed.";
 	private volatile ExecutorService executor;
 
@@ -247,6 +246,7 @@ public class TileLoader
 		missing.clear();
 		availableZooms = Collections.emptyNavigableSet();
 		installedPaths = Collections.emptyList();
+		installedTilePaths = Collections.emptySet();
 		tileDir = null;
 		baseTiles.clear();
 		memory.clear();
@@ -308,6 +308,7 @@ public class TileLoader
 		shutDown();
 		tileDir = directory;
 		installedPaths = Collections.unmodifiableList(new ArrayList<>(paths));
+		installedTilePaths = Collections.unmodifiableSet(new HashSet<>(paths));
 		status = "Loading map assets...";
 		startUp();
 	}
@@ -361,11 +362,12 @@ public class TileLoader
 
 		final ExecutorService worker = executor;
 		final Filepath directory = tileDir;
+		final Set<String> paths = installedTilePaths;
 		if (!missing.contains(key) && worker != null && inFlight.add(key))
 		{
 			try
 			{
-				worker.execute(() -> read(worker, directory, key, plane, zoom, tileX, tileY));
+				worker.execute(() -> read(worker, directory, paths, key, plane, zoom, tileX, tileY));
 			}
 			catch (RejectedExecutionException e)
 			{
@@ -479,11 +481,13 @@ public class TileLoader
 			| ((long) tileY & 0x1FFFFL);
 	}
 
-	private void read(ExecutorService worker, Filepath directory, long key, int plane, int zoom, int tileX, int tileY)
+	private void read(ExecutorService worker, Filepath directory, Set<String> paths,
+		long key, int plane, int zoom, int tileX, int tileY)
 	{
 		try
 		{
-			final BufferedImage image = TileStore.read(directory, WikiMapTiles.cachePath(plane, zoom, tileX, tileY));
+			final String path = WikiMapTiles.cachePath(plane, zoom, tileX, tileY);
+			final BufferedImage image = paths.contains(path) ? TileStore.read(directory, path) : null;
 			if (image != null)
 			{
 				reads.incrementAndGet();
@@ -504,7 +508,8 @@ public class TileLoader
 				}
 				if (parentImg == null)
 				{
-					parentImg = TileStore.read(directory, WikiMapTiles.cachePath(plane, zoom - 1, parentX, parentY));
+					final String parentPath = WikiMapTiles.cachePath(plane, zoom - 1, parentX, parentY);
+					parentImg = paths.contains(parentPath) ? TileStore.read(directory, parentPath) : null;
 				}
 
 				if (parentImg != null && parentImg.getWidth() >= 256 && parentImg.getHeight() >= 256)

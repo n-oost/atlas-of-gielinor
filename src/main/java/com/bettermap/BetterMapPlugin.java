@@ -195,6 +195,7 @@ public class BetterMapPlugin extends Plugin
 
 	private BetterMapPanel panel;
 	private NavigationButton navButton;
+	private boolean sidebarNavAdded;
 	private boolean suppressedRuneliteOverlay;
 	/** What {@link #onBeforeRender} last applied, so an already-restored widget is not re-read. */
 	private boolean mapWidgetsHidden;
@@ -224,7 +225,11 @@ public class BetterMapPlugin extends Plugin
 			.priority(6)
 			.panel(panel)
 			.build();
-		clientToolbar.addNavigation(navButton);
+		if (config.showSidebarPanel())
+		{
+			clientToolbar.addNavigation(navButton);
+			sidebarNavAdded = true;
+		}
 
 		final BetterMapPanel loadedPanel = panel;
 		startupTask = executor.submit(() ->
@@ -279,9 +284,10 @@ public class BetterMapPlugin extends Plugin
 			suppressedRuneliteOverlay = false;
 		}
 
-		if (navButton != null)
+		if (navButton != null && sidebarNavAdded)
 		{
 			clientToolbar.removeNavigation(navButton);
+			sidebarNavAdded = false;
 		}
 
 
@@ -687,6 +693,34 @@ public class BetterMapPlugin extends Plugin
 		if ("downloadMapAssets".equals(event.getKey()))
 		{
 			mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
+		}
+		if ("showSidebarPanel".equals(event.getKey()))
+		{
+			syncSidebarPanel();
+		}
+	}
+
+	private void syncSidebarPanel()
+	{
+		if (navButton == null)
+		{
+			return;
+		}
+		if (config.showSidebarPanel())
+		{
+			if (!sidebarNavAdded)
+			{
+				clientToolbar.addNavigation(navButton);
+				sidebarNavAdded = true;
+			}
+		}
+		else
+		{
+			if (sidebarNavAdded)
+			{
+				clientToolbar.removeNavigation(navButton);
+				sidebarNavAdded = false;
+			}
 		}
 	}
 

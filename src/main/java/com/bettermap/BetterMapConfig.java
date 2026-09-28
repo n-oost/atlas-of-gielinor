@@ -302,6 +302,18 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "showSidebarPanel",
+		name = "Show Sidebar Panel",
+		description = "Displays the Better Map panel in RuneLite's sidebar",
+		position = 16,
+		section = mapSection
+	)
+	default boolean showSidebarPanel()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "finderSearchItems",
 		name = "Find Shops & Ground Items",
 		description = "Include the nearest shop that stocks an item, and nearby ground spawns of it, in Find results",

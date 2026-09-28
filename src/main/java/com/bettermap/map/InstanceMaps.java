@@ -285,7 +285,8 @@ public final class InstanceMaps
 		BiFunction<Integer, Integer, T> lookup)
 	{
 		return firstHit(displayX, displayY, (x, y) ->
-			inFocusedLayer(x, y, focus, dungeonContents) ? lookup.apply(x, y) : null);
+			(focus == null && !dungeonContents ? y <= GAP_MIN_Y
+				: inFocusedLayer(x, y, focus, dungeonContents)) ? lookup.apply(x, y) : null);
 	}
 
 	private static UndergroundZone zoneForClipOverride(int worldX, int worldY)

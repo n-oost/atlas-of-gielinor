@@ -34,7 +34,7 @@ slayer masters, weakness strategies, key drops), travel directories, coordinates
 
 ### Dungeon entrances
 
-Hover dungeon entrances to view the dungeon name, location details, and available actions directly
+Hover dungeon entrances to view the dungeon map, location details, and available actions directly
 from the map.
 
 ![Dungeon entrances](docs/gifs/hover-dungeons.gif)

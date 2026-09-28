@@ -2,8 +2,7 @@
 
 A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin is designed to be a drop-in replacement for the RuneLite world map, with no other changes to the game. Enable **Download map assets** in Better Map settings to download the complete versioned [Better Map asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json). Downloads are opt-in and disclose third-party server communication.
 
-Only a verified installed pack supplies map imagery. There are no bundled tiles or legacy local-cache fallbacks. Missing or invalid assets display `NO MAP DATA` with a loading or error message. Downloads and disk validation run off the client thread; compatible updates are checked at startup while downloads are enabled. A valid installed pack remains usable without a network connection. The renderer uses zoom 3 when that level is present in the pack.
-
+Missing or invalid assets display `NO MAP DATA` with a loading or error message. Downloads and disk validation run off the client thread; compatible updates are checked at startup while downloads are enabled.
 The configured asset repository is currently private. Anonymous downloads will fail until a public endpoint is available; the plugin never embeds GitHub credentials. Toggle **Download map assets** off and on to retry.
 
 ## AI-Disclusure

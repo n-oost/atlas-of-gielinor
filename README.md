@@ -16,10 +16,12 @@ Better Overworld / Underworld map and control.
 
 ### Zoom from the whole world to one tile
 
+Better Map owns the camera: 0.04 to 24 pixels per game tile. Drag to pan, scroll to zoom about
+the cursor, right click to step back out.
+
 The map view shows the full surface world with towns, buildings, terrain, water, points of interest,
 and interactive markers visible at the same time.
 
-Drag to pan, scroll to zoom about the cursor 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
 ### Hover cards
@@ -36,7 +38,7 @@ slayer masters, weakness strategies, key drops), travel directories, coordinates
 ### Find
 
 Search locations, monsters, shops and ground-item spawns by name, from the in-map Find card or
-from the quick-find orb by the minimap (drag it to reposition, click to open). Enter routes to
+from the quick-find orb by the minimap (drag it to reposition, click to open). Enter opens map to
 the nearest match; with the map open it also centres on that match. An option echoes the three nearest matches to the
 game chat as you type.
 

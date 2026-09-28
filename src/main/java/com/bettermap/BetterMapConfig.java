@@ -72,13 +72,26 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "useCustomMap",
 		name = "Use Custom Map",
-		description = "Replaces the client world map render with terrain tiles rendered from your local game cache, read from the local tile store",
+		description = "Replaces the client world map with the installed map asset pack",
 		position = 1,
 		section = mapSection
 	)
 	default boolean useCustomMap()
 	{
 		return true;
+	}
+
+	@ConfigItem(
+		keyName = "downloadMapAssets",
+		name = "Download map assets",
+		description = "Downloads and installs the complete map from GitHub and checks for updates at startup. Toggle off and on to retry a failed download.",
+		warning = "This feature submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers",
+		position = 0,
+		section = mapSection
+	)
+	default boolean downloadMapAssets()
+	{
+		return false;
 	}
 
 	@ConfigItem(

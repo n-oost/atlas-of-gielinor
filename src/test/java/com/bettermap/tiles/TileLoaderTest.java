@@ -25,7 +25,6 @@
 package com.bettermap.tiles;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -42,7 +41,6 @@ public class TileLoaderTest
 	public void setUp()
 	{
 		tileLoader = new TileLoader();
-		tileLoader.setTileDir(new File("nonexistent_test_dir"));
 		tileLoader.startUp();
 	}
 

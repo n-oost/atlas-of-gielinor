@@ -135,6 +135,7 @@ public class BetterWorldMapOverlay extends Overlay
 		new LayerToggle("Travel routes", "showTravelRoutes", BetterMapConfig::showTravelRoutes),
 		new LayerToggle("Player boats", "showBoatLocations", BetterMapConfig::showBoatLocations),
 		new LayerToggle("Sailing ports", "showSailingPorts", BetterMapConfig::showSailingPorts),
+        new LayerToggle("Port notice boards", "showPortNoticeBoards", BetterMapConfig::showPortNoticeBoards),
 		new LayerToggle("Other plugin markers", "showPluginMarkers", BetterMapConfig::showPluginMarkers),
 		new LayerToggle("Player marker", "showPlayerMarker", BetterMapConfig::showPlayerMarker),
 		new LayerToggle("Tooltips", "showTooltips", BetterMapConfig::showTooltips)
@@ -315,11 +316,8 @@ public class BetterWorldMapOverlay extends Overlay
 		if (!tileLoader.hasTiles())
 		{
 			drawNotice(graphics, bounds,
-				"No map tiles generated yet.",
-				"Run this once, then reopen the map:",
-				"gradlew.bat dumpCacheTiles",
-				"",
-				"Tiles are stored in " + tileLoader.getTileDir());
+				"NO MAP DATA",
+				tileLoader.getStatus());
 			graphics.setClip(previousClip);
 			return null;
 		}
@@ -613,8 +611,27 @@ public class BetterWorldMapOverlay extends Overlay
 		graphics.setFont(SMALL);
 		graphics.setColor(TEXT_WARN);
 
-		int y = (int) bounds.getCenterY() - (lines.length * 16) / 2;
+		final List<String> wrapped = new ArrayList<>();
 		for (String line : lines)
+		{
+			String row = "";
+			for (String word : line.split(" "))
+			{
+				String next = row.isEmpty() ? word : row + " " + word;
+				if (!row.isEmpty() && graphics.getFontMetrics().stringWidth(next) > Math.max(80, bounds.width - 40))
+				{
+					wrapped.add(row);
+					row = word;
+				}
+				else
+				{
+					row = next;
+				}
+			}
+			wrapped.add(row);
+		}
+		int y = (int) bounds.getCenterY() - (wrapped.size() * 16) / 2;
+		for (String line : wrapped)
 		{
 			final int width = graphics.getFontMetrics().stringWidth(line);
 			graphics.drawString(line, (int) bounds.getCenterX() - width / 2, y);

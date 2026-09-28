@@ -88,6 +88,7 @@ import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -132,7 +133,7 @@ class MapMarkerRenderer
 	private static final Color MONSTER_ZONE_TASK_EDGE = new Color(20, 255, 235, 230);
 	private static final Color MONSTER_ZONE_TASK_GLOW = new Color(0, 210, 200, 45);
 	private static final Color CLUE_GLOW = new Color(150, 110, 240, 60);
-	private static final Font TINY = new Font("SansSerif", Font.BOLD, 9);
+	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
 	private static final long FLASH_MILLIS = 1600L;
 	/** Fixed colours that were being reallocated inside per-frame draw loops. */
 	private static final Color LAYER_CHIP_BG_HOVER = new Color(28, 34, 48, 235);
@@ -447,9 +448,11 @@ class MapMarkerRenderer
 		final boolean cameraOnOverworld = InstanceMaps.cameraOnOverworld(camera.getCenterY());
 		final int plane = camera.getPlane();
 		final ViewWindow view = viewWindow(bounds, 40.0);
-		graphics.setFont(SMALL);
+		final Font boldFont = FontManager.getRunescapeBoldFont();
+		final Font smallFont = FontManager.getRunescapeSmallFont();
+		final FontMetrics fmBold = graphics.getFontMetrics(boldFont);
+		final FontMetrics fmSmall = graphics.getFontMetrics(smallFont);
 		graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		final FontMetrics fm = graphics.getFontMetrics();
 
 		// Same as monster spawns: do not stamp cave labels onto the overworld. They appear
 		// when the dungeon is open or the entrance is hovered (contents-focused).
@@ -464,6 +467,10 @@ class MapMarkerRenderer
 			{
 				return;
 			}
+
+			final boolean major = isMajorPlaceName(name);
+			final FontMetrics fm = major ? fmBold : fmSmall;
+			graphics.setFont(major ? boldFont : smallFont);
 
 			final int sx = (int) Math.round(camera.screenX(poi.getX() + 0.5, poi.getY() + 0.5, bounds));
 			final int sy = (int) Math.round(camera.screenY(poi.getX() + 0.5, poi.getY() + 0.5, bounds));

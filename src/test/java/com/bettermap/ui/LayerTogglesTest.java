@@ -213,6 +213,12 @@ public class LayerTogglesTest
 			}
 
 			@Override
+			public boolean showPortNoticeBoards()
+			{
+				return false;
+			}
+
+			@Override
 			public boolean showGroundItems()
 			{
 				return false;

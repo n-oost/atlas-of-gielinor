@@ -33,6 +33,7 @@ import java.awt.Stroke;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import net.runelite.client.ui.FontManager;
 
 /**
  * The colours, fonts, strokes and fixed geometry the world-map renderers share.
@@ -57,7 +58,13 @@ final class MapStyle
 	static final Color CHIP_BG = new Color(16, 19, 26, 200);
 	static final Color DEBUG_KEY = new Color(140, 200, 255);
 
-	static final Font SMALL = new Font("SansSerif", Font.PLAIN, 11);
+	static final Font RUNESCAPE_BOLD = FontManager.getRunescapeBoldFont();
+	static final Font RUNESCAPE_SMALL = FontManager.getRunescapeSmallFont();
+	static final Font RUNESCAPE_PLAIN = FontManager.getRunescapeFont();
+	static final Font RUNELITE_PLAIN = FontManager.getDefaultFont().deriveFont(11f);
+	static final Font RUNELITE_BOLD = FontManager.getDefaultBoldFont().deriveFont(11f);
+
+	static final Font SMALL = RUNELITE_PLAIN;
 
 	/** The card row colours, handed to {@link CardText} so its layout stays free of the overlay. */
 	static final CardText.Palette CARD_PALETTE =

@@ -1,6 +1,8 @@
 .gradle
 build
 .idea/
+bin
+bin/
 .project
 .settings/
 .classpath
@@ -8,3 +10,4 @@ nbactions.xml
 nb-configuration.xml
 nbproject/
 *.class
+BUGS.md

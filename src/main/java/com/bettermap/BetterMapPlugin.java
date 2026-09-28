@@ -49,12 +49,12 @@ import com.bettermap.map.ShopIndex;
 import com.bettermap.map.WorldMapInput;
 import com.bettermap.map.WorldPointResolver;
 import com.bettermap.tiles.TileLoader;
+import com.bettermap.tiles.MapAssetManager;
 import com.bettermap.ui.BetterMapPanel;
 import com.bettermap.ui.BetterWorldMapOverlay;
 import com.bettermap.ui.QuickFinderOverlay;
 import com.google.inject.Provides;
 import java.awt.Rectangle;
-import java.io.File;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Future;
 import javax.inject.Inject;
@@ -92,6 +92,7 @@ import net.runelite.client.util.ImageUtil;
 @Slf4j
 @PluginDescriptor(
 	name = "Better Map",
+	internalName = "better-map",
 	description = "Replaces the world map with a slippy map: free zoom, drag panning, dungeon layers, monster zones and marker details",
 	tags = {"map", "worldmap", "zoom", "dungeon", "navigation"}
 )
@@ -137,6 +138,9 @@ public class BetterMapPlugin extends Plugin
 
 	@Inject
 	private TileLoader tileLoader;
+
+	@Inject
+	private MapAssetManager mapAssets;
 
 	@Inject
 	private PoiIndex poiIndex;
@@ -202,7 +206,7 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		tileLoader.startUp();
+		mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
 
 		camera.setFinderOrbOffset(config.finderOrbOffsetX(), config.finderOrbOffsetY());
 
@@ -225,12 +229,12 @@ public class BetterMapPlugin extends Plugin
 		final BetterMapPanel loadedPanel = panel;
 		startupTask = executor.submit(() ->
 		{
-			poiIndex.load(tileLoader.getTileDir());
+			poiIndex.load(null);
 			if (Thread.currentThread().isInterrupted())
 			{
 				return;
 			}
-			dungeonPieceIndex.load(tileLoader.getTileDir());
+			dungeonPieceIndex.load(null);
 			if (Thread.currentThread().isInterrupted())
 			{
 				return;
@@ -290,7 +294,7 @@ public class BetterMapPlugin extends Plugin
 			// Unconditional: leaving the chatbox or the map render hidden after the plugin stops
 			// is a HUD the user cannot get back without a relog.
 		});
-		tileLoader.shutDown();
+		mapAssets.shutDown();
 
 		log.info("Better Map stopped");
 	}
@@ -298,11 +302,10 @@ public class BetterMapPlugin extends Plugin
 	/** One readable block at start-up saying whether every input to the map is actually there. */
 	private void logStartupState()
 	{
-		final File tileDir = tileLoader.getTileDir();
 		final boolean hasTiles = tileLoader.hasTiles();
 
 		log.debug("[BetterMap] ---- start-up ----");
-		log.debug("[BetterMap] tile store  : {} (exists={})", tileDir, tileDir.isDirectory());
+		log.debug("[BetterMap] installed tile store: {}", tileLoader.getTileDir());
 		log.debug("[BetterMap] map tiles   : hasTiles={}; zoom levels [{}]",
 			hasTiles, tileLoader.describeLevels());
 		log.debug("[BetterMap] poi index   : {} places, loaded={}", poiIndex.size(), poiIndex.isLoaded());
@@ -316,7 +319,7 @@ public class BetterMapPlugin extends Plugin
 
 		if (!hasTiles)
 		{
-			log.warn("[BetterMap] no tiles found: run gradlew.bat dumpCacheTiles");
+			log.debug("[BetterMap] map assets: {}", tileLoader.getStatus());
 		}
 		else if (!poiIndex.isLoaded())
 		{
@@ -385,15 +388,41 @@ public class BetterMapPlugin extends Plugin
 			widgetState(closeWidget), widgetState(mapWindow), widgetState(mapContainer),
 			widgetState(mapDisplay), widgetState(mapOverlayWidget));
 
-		// closeInterface(node, true) is the sanctioned close path. It detaches the world-map
-		// subinterface, so the minimap orb (which picks its action from if_hassub each frame)
-		// reopens on a single press with no toggle-state sync needed.
-		boolean closed = closeWorldMapInterface();
-
-		if (isWorldMapOpen())
+		// Fire the close button's onOp listener to run the engine's official close CS2 script.
+		// This cleans up map state and flips the minimap orb action back to "Open" in one step.
+		boolean triggeredScript = false;
+		if (closeWidget != null)
 		{
-			log.warn("[BetterMap:close] still open — retrying closeInterface");
-			closed = closeWorldMapInterface() || closed;
+			final Object[] listener = closeWidget.getOnOpListener();
+			if (listener != null)
+			{
+				try
+				{
+					client.createScriptEventBuilder(listener)
+						.setSource(closeWidget)
+						.setOp(1)
+						.build()
+						.run();
+					triggeredScript = true;
+					log.debug("[BetterMap:close] closeWidget OnOpListener executed");
+				}
+				catch (RuntimeException e)
+				{
+					log.warn("[BetterMap:close] failed to run closeWidget OnOpListener", e);
+				}
+			}
+		}
+
+		// Fall back to direct interface detachment if the script was unavailable or map remains open
+		boolean closed = triggeredScript && !isWorldMapOpen();
+		if (!closed)
+		{
+			closed = closeWorldMapInterface();
+			if (isWorldMapOpen())
+			{
+				log.warn("[BetterMap:close] still open — retrying closeInterface");
+				closed = closeWorldMapInterface() || closed;
+			}
 		}
 
 		log.debug("[BetterMap:close] AFTER  closed={} stillOpen={} MAP_CONTAINER={} WINDOW={}",
@@ -654,6 +683,10 @@ public class BetterMapPlugin extends Plugin
 		if ("useCustomMap".equals(event.getKey()))
 		{
 			syncRuneliteOverlay();
+		}
+		if ("downloadMapAssets".equals(event.getKey()))
+		{
+			mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
 		}
 	}
 

@@ -25,8 +25,8 @@
 package com.bettermap.tiles;
 
 /**
- * Slippy-tile geometry for the bundled map. The tiles themselves are terrain renders produced
- * from the user's local OSRS game cache (see {@code tools/CacheTileDumper}); this class only does
+ * Slippy-tile geometry for the installed map pack. The tiles are terrain renders produced
+ * by the asset pipeline; this class only does
  * the coordinate math, which follows the same slippy scheme the OSRS Wiki map uses.
  *
  * <p>Tiles are 256px and their coordinate system is simply game coordinates: at zoom {@code z}
@@ -42,7 +42,7 @@ package com.bettermap.tiles;
  */
 public final class WikiMapTiles
 {
-	/** Credit for the bundled tiles, which are rendered from the game cache. */
+	/** Credit for the hosted tiles, which are rendered from the game cache. */
 	public static final String ATTRIBUTION = "Map imagery © Jagex Ltd.";
 	/** Credit for the bundled POI, shop, monster and ground-item datasets. */
 	public static final String DATA_ATTRIBUTION = "POI, shop and monster data © OSRS Wiki";

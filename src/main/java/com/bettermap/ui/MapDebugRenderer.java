@@ -47,6 +47,7 @@ import java.awt.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Point;
+import net.runelite.client.ui.FontManager;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
@@ -62,7 +63,7 @@ class MapDebugRenderer
 {
 	private static final Color DEBUG_BG = new Color(8, 10, 14, 225);
 	private static final Color DEBUG_VALUE = new Color(225, 225, 225);
-	private static final Font MONO = new Font("Monospaced", Font.PLAIN, 11);
+	private static final Font MONO = FontManager.getDefaultFont().deriveFont(11f);
 
 	private final Client client;
 	private final BetterMapConfig config;

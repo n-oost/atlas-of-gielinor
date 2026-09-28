@@ -25,62 +25,65 @@
 package com.bettermap.tiles;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
+import javax.imageio.ImageIO;
+import net.runelite.client.util.Filepath;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import static org.junit.Assert.*;
 
-/**
- * The bundled tile set is what a Plugin Hub install actually reads, so these run against the real
- * resources rather than a fixture: a manifest that does not match what shipped is a black map.
- */
 public class TileStoreTest
 {
-	@Test
-	public void manifestListsBundledTiles()
-	{
-		final List<String> paths = TileStore.bundledPaths();
-		assertFalse("no tiles bundled; run 'gradlew :tools:packTiles'", paths.isEmpty());
-	}
+	@Rule public TemporaryFolder temporary = new TemporaryFolder();
 
 	@Test
-	public void everyManifestEntryParsesAndLoads()
+	public void missingInstallationDoesNotUseClasspathOrLegacyCache()
 	{
-		final List<String> paths = TileStore.bundledPaths();
-
-		// The first entry of each map/zoom directory is enough to prove the layout; decoding all
-		// 4,000 would make this test cost seconds for no extra signal.
-		String previousPrefix = null;
-		int checked = 0;
-		for (final String path : paths)
+		assertNull(TileStore.read(null, "0/-3/0_1_1.png"));
+		TileLoader loader = new TileLoader();
+		loader.startUp();
+		try
 		{
-			final int[] coords = TileLoader.parseCachePath(path);
-			assertNotNull("unparseable manifest entry " + path, coords);
-
-			final String prefix = path.substring(0, path.lastIndexOf('/'));
-			if (prefix.equals(previousPrefix))
-			{
-				continue;
-			}
-			previousPrefix = prefix;
-
-			final BufferedImage tile = TileStore.read(null, path);
-			assertNotNull("bundled tile " + path + " is missing or unreadable", tile);
-			assertEquals(256, tile.getWidth());
-			assertEquals(256, tile.getHeight());
-			checked++;
+			assertFalse(loader.hasTiles());
+			assertNull(loader.get(0, 2, 50, 50));
 		}
-		assertTrue(checked > 0);
+		finally
+		{
+			loader.shutDown();
+		}
 	}
 
 	@Test
-	public void readReturnsNullForAbsentTile()
+	public void readsInstalledTileAndRecognizesZoomThree() throws Exception
 	{
-		assertNull(TileStore.read(null, "0/-3/9_999_999.png"));
+		Filepath root = Filepath.Unchecked.getRooted(temporary.getRoot().toPath());
+		Filepath tile = root.join("0/3/0_1_1.png");
+		tile.getParent().createDirectories();
+		BufferedImage image = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		image.setRGB(0, 0, 0xff336699);
+		try (java.io.OutputStream out = tile.openOutputStream())
+		{
+			ImageIO.write(image, "png", out);
+		}
+		assertEquals(0xff336699, TileStore.read(root, "0/3/0_1_1.png").getRGB(0, 0));
+		TileLoader loader = new TileLoader();
+		loader.install(root, Arrays.asList("0/3/0_1_1.png"));
+		try
+		{
+			long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(5);
+			while (!loader.hasTiles() && System.nanoTime() < deadline)
+			{
+				Thread.yield();
+			}
+			assertTrue(loader.hasTiles());
+			assertEquals(3, loader.maxAvailableZoom());
+		}
+		finally
+		{
+			loader.shutDown();
+		}
+		assertFalse(loader.hasTiles());
 	}
 
 	@Test

@@ -39,6 +39,7 @@ import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.gameval.ItemID;
 import net.runelite.client.game.ItemManager;
+import net.runelite.client.ui.FontManager;
 
 /**
  * Picks an item sprite to stand in for a monster, slayer creature or boss.
@@ -288,7 +289,7 @@ public class MonsterIconManager
 
 		// Letter initial
 		final String letter = name.length() > 0 ? name.substring(0, 1).toUpperCase(Locale.ROOT) : "M";
-		g.setFont(new Font("SansSerif", Font.BOLD, Math.max(9, targetSize / 2)));
+		g.setFont(FontManager.getDefaultBoldFont().deriveFont((float) Math.max(9, targetSize / 2)));
 		final int textW = g.getFontMetrics().stringWidth(letter);
 		final int textH = g.getFontMetrics().getAscent() - 2;
 		g.drawString(letter, (targetSize - textW) / 2, (targetSize + textH) / 2);

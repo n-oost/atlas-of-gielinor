@@ -169,7 +169,6 @@ public class BetterMapPanel extends PluginPanel
 		if (groups.isEmpty())
 		{
 			listPanel.add(hint("No location data yet."));
-			listPanel.add(hint("Run: gradlew.bat prefetchTiles"));
 		}
 
 		for (Map.Entry<String, List<PoiIndex.Poi>> entry : groups.entrySet())
@@ -459,7 +458,7 @@ public class BetterMapPanel extends PluginPanel
 
 		c.gridy = 1;
 		final JLabel detailLabel = new JLabel(detail);
-		detailLabel.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		detailLabel.setFont(FontManager.getDefaultFont().deriveFont(10f));
 		detailLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		row.add(detailLabel, c);
 
@@ -493,7 +492,7 @@ public class BetterMapPanel extends PluginPanel
 	private JLabel hint(String text)
 	{
 		final JLabel label = new JLabel(text);
-		label.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		label.setFont(FontManager.getDefaultFont().deriveFont(10f));
 		label.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		label.setBorder(new EmptyBorder(4, 6, 4, 6));
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);

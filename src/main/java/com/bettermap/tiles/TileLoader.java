@@ -27,7 +27,6 @@ package com.bettermap.tiles;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,22 +43,13 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.client.RuneLite;
+import net.runelite.client.util.Filepath;
 
-/**
- * Reads map tiles from the local tile store. This class deliberately has no networking: once
- * the plugin is running it never contacts the tile service, or anything else. Populate the
- * store first with the {@code prefetchTiles} Gradle task.
- *
- * <p>Decoding still happens off the client thread, because reading and decoding a few dozen
- * JPEGs inline would stutter the frame that opens the map.
- */
+/** Decodes only the verified installed asset pack, off the client thread. */
 @Slf4j
 @Singleton
 public class TileLoader
 {
-	public static final File DEFAULT_TILE_DIR = new File(RuneLite.CACHE_DIR, "better-map/tiles");
-
 	// A fullscreen view needs roughly 40 detail tiles plus a handful of coarse ones, and every
 	// tile decodes to a 256x256 RGB raster - 192KB, whatever it cost on disk. That number is the
 	// whole budget here: RuneLite ships with a 512MB heap, so the cache is sized in megabytes
@@ -104,38 +94,10 @@ public class TileLoader
 	private final java.util.concurrent.atomic.AtomicLong reads = new java.util.concurrent.atomic.AtomicLong();
 	private final java.util.concurrent.atomic.AtomicLong failures = new java.util.concurrent.atomic.AtomicLong();
 
-	/**
-	 * Zoom levels present in the jar, from the bundled manifest.
-	 *
-	 * <p>Held separately from the on-disk levels because a jar directory cannot be listed, so
-	 * every "is there a map" question has to ask the manifest as well as the filesystem. A Plugin
-	 * Hub install has no on-disk pyramid at all - looking only at disk there reports an empty map
-	 * and the overlay draws the "no tiles" notice over a map that is in fact fully bundled.
-	 */
-	private static final NavigableSet<Integer> BUNDLED_ZOOMS = bundledZooms();
-	private volatile NavigableSet<Integer> availableZooms = BUNDLED_ZOOMS;
-
-	private static NavigableSet<Integer> bundledZooms()
-	{
-		final NavigableSet<Integer> zooms = new TreeSet<>();
-		for (final String path : TileStore.bundledPaths())
-		{
-			if (!path.startsWith("0/"))
-			{
-				// Instance maps are keyed by their own map id and are not part of the surface
-				// pyramid the zoom questions are about.
-				continue;
-			}
-			final int[] parsed = parseCachePath(path);
-			if (parsed != null)
-			{
-				zooms.add(parsed[1]);
-			}
-		}
-		return zooms;
-	}
-
-	private volatile File tileDir = DEFAULT_TILE_DIR;
+	private volatile NavigableSet<Integer> availableZooms = Collections.emptyNavigableSet();
+	private volatile Filepath tileDir;
+	private volatile List<String> installedPaths = Collections.emptyList();
+	private volatile String status = "Map assets are not installed.";
 	private volatile ExecutorService executor;
 
 	public synchronized void startUp()
@@ -161,16 +123,16 @@ public class TileLoader
 		}
 
 		final ExecutorService worker = executor;
-		final File directory = tileDir;
+		final Filepath directory = tileDir;
+		final List<String> paths = installedPaths;
 		worker.execute(() ->
 		{
-			final NavigableSet<Integer> zooms = new TreeSet<>(BUNDLED_ZOOMS);
-			for (int zoom = WikiMapTiles.MIN_ZOOM; zoom <= WikiMapTiles.MAX_ZOOM; zoom++)
+			final NavigableSet<Integer> zooms = new TreeSet<>();
+			for (String path : paths)
 			{
-				final String[] contents = new File(directory, "0/" + zoom).list();
-				if (contents != null && contents.length > 0)
+				if (path.startsWith("0/"))
 				{
-					zooms.add(zoom);
+					zooms.add(parseCachePath(path)[1]);
 				}
 			}
 			synchronized (this)
@@ -182,14 +144,14 @@ public class TileLoader
 				availableZooms = Collections.unmodifiableNavigableSet(zooms);
 			}
 			int loadedBase = 0;
-			for (final String path : basePaths())
+			for (final String path : paths)
 			{
 				if (Thread.currentThread().isInterrupted())
 				{
 					return;
 				}
 				final int[] coords = parseCachePath(path);
-				if (coords == null || coords[1] > BASE_PREWARM_MAX_ZOOM)
+				if (!path.startsWith("0/") || coords == null || coords[1] > BASE_PREWARM_MAX_ZOOM)
 				{
 					continue;
 				}
@@ -212,37 +174,6 @@ public class TileLoader
 			log.info("TileLoader pre-warmed {} base tiles ({} to {}) permanently in memory",
 				loadedBase, WikiMapTiles.MIN_ZOOM, BASE_PREWARM_MAX_ZOOM);
 		});
-	}
-
-	/**
-	 * Cache-relative paths of the surface tiles worth pre-warming.
-	 *
-	 * <p>The bundled manifest is authoritative when it exists, because a jar directory cannot be
-	 * listed. Without it - a dev checkout reading the full pyramid off disk - the level directories
-	 * are walked instead.
-	 */
-	private List<String> basePaths()
-	{
-		final List<String> bundled = TileStore.bundledPaths();
-		if (!bundled.isEmpty())
-		{
-			return bundled;
-		}
-
-		final List<String> paths = new ArrayList<>();
-		for (int zoom = WikiMapTiles.MIN_ZOOM; zoom <= BASE_PREWARM_MAX_ZOOM; zoom++)
-		{
-			final File levelDir = new File(tileDir, "0/" + zoom);
-			final File[] files = levelDir.listFiles((d, name) -> name.endsWith(".png"));
-			if (files != null)
-			{
-				for (File f : files)
-				{
-					paths.add("0/" + zoom + "/" + f.getName());
-				}
-			}
-		}
-		return paths;
 	}
 
 	/**
@@ -314,14 +245,16 @@ public class TileLoader
 		}
 		inFlight.clear();
 		missing.clear();
-		availableZooms = BUNDLED_ZOOMS;
+		availableZooms = Collections.emptyNavigableSet();
+		installedPaths = Collections.emptyList();
+		tileDir = null;
 		baseTiles.clear();
 		memory.clear();
 		memoryKeys.clear();
 		clear(scaled);
 	}
 
-	public File getTileDir()
+	public Filepath getTileDir()
 	{
 		return tileDir;
 	}
@@ -369,28 +302,34 @@ public class TileLoader
 		return text.length() == 0 ? "none" : text.toString();
 	}
 
-	public synchronized void setTileDir(File dir)
+	/** Activated only after the downloader has validated every indexed file. */
+	public synchronized void install(Filepath directory, List<String> paths)
 	{
-		if (!dir.equals(tileDir))
-		{
-			final boolean running = executor != null;
-			shutDown();
-			tileDir = dir;
-			if (running)
-			{
-				startUp();
-			}
-		}
+		shutDown();
+		tileDir = directory;
+		installedPaths = Collections.unmodifiableList(new ArrayList<>(paths));
+		status = "Loading map assets...";
+		startUp();
 	}
 
-	/** True once there is a map to draw, whether it is bundled in the jar or dumped to disk. */
+	public void setStatus(String message)
+	{
+		status = message;
+	}
+
+	public String getStatus()
+	{
+		return status;
+	}
+
+	/** True only after a verified installed pack has been activated. */
 	public boolean hasTiles()
 	{
 		return !availableZooms.isEmpty();
 	}
 
 	/**
-	 * The most detailed zoom level actually available, bundled or on disk.
+	 * The most detailed zoom level present in the installed pack.
 	 */
 	public int maxAvailableZoom()
 	{
@@ -400,6 +339,10 @@ public class TileLoader
 
 	public synchronized BufferedImage get(int plane, int zoom, int tileX, int tileY)
 	{
+		if (!hasTiles())
+		{
+			return null;
+		}
 		final long key = key(plane, zoom, tileX, tileY);
 
 		final BufferedImage cached = memory.get(key);
@@ -417,7 +360,7 @@ public class TileLoader
 		}
 
 		final ExecutorService worker = executor;
-		final File directory = tileDir;
+		final Filepath directory = tileDir;
 		if (!missing.contains(key) && worker != null && inFlight.add(key))
 		{
 			try
@@ -528,11 +471,6 @@ public class TileLoader
 		clear(scaled);
 	}
 
-	public static File tileFile(File dir, int plane, int zoom, int tileX, int tileY)
-	{
-		return new File(dir, WikiMapTiles.cachePath(plane, zoom, tileX, tileY));
-	}
-
 	public static long key(int plane, int zoom, int tileX, int tileY)
 	{
 		return (((long) plane & 0x7L) << 38)
@@ -541,7 +479,7 @@ public class TileLoader
 			| ((long) tileY & 0x1FFFFL);
 	}
 
-	private void read(ExecutorService worker, File directory, long key, int plane, int zoom, int tileX, int tileY)
+	private void read(ExecutorService worker, Filepath directory, long key, int plane, int zoom, int tileX, int tileY)
 	{
 		try
 		{

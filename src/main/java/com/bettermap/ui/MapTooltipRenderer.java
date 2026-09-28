@@ -56,6 +56,8 @@ import com.bettermap.map.SlayerTaskTracker;
 import com.bettermap.map.WorldMapInput;
 import com.bettermap.map.WorldMapPointReader;
 import java.awt.Dimension;
+import java.awt.Font;
+import net.runelite.client.ui.FontManager;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -267,8 +269,7 @@ class MapTooltipRenderer
 		if (title == null)
 		{
 			PoiDetails.Detail detail = null;
-			final PoiIndex.Poi poi = hit(worldX, worldY,
-				(x, y) -> poiIndex.nearest(x, y, plane, pointRadius));
+			final PoiIndex.Poi poi = poiIconAt(cursor, bounds, plane);
 			if (poi != null)
 			{
 				detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), plane);
@@ -775,7 +776,57 @@ class MapTooltipRenderer
 	/** Keeps the hit area a roughly constant size on screen as the zoom changes. */
 	private int hitRadius()
 	{
-		return (int) Math.max(3, Math.ceil(12 / Math.max(0.4, camera.getZoom())));
+		return (int) Math.max(3, Math.ceil(12 / Math.max(0.4, camera.getFrameZoom())));
+	}
+
+	/** Hit-test POI icons using the same fixed screen bounds used to draw them. */
+	private PoiIndex.Poi poiIconAt(java.awt.Point cursor, Rectangle bounds, int plane)
+	{
+		if (camera.getFrameZoom() < 0.45)
+		{
+			return null;
+		}
+		final int halfExtent = 24;
+		final int minX = (int) Math.floor(camera.worldX(cursor.x - halfExtent, bounds));
+		final int maxX = (int) Math.ceil(camera.worldX(cursor.x + halfExtent, bounds));
+		final int minY = (int) Math.floor(camera.worldY(cursor.y + halfExtent, bounds));
+		final int maxY = (int) Math.ceil(camera.worldY(cursor.y - halfExtent, bounds));
+		final PoiIndex.Poi[] best = {null};
+		final double[] bestDistance = {Double.POSITIVE_INFINITY};
+		final boolean surfaceOnly = camera.getFocusedUndergroundZone() == null
+			&& !camera.isDungeonContentsFocused() && InstanceMaps.cameraOnOverworld(camera.getCenterY());
+
+		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY,
+			camera.getCenterX(), camera.getCenterY(), (qMinX, qMaxX, qMinY, qMaxY) ->
+				poiIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, poi ->
+				{
+					if (!layerAllows(poi.getX(), poi.getY()) || (surfaceOnly && poi.getY() > InstanceMaps.GAP_MIN_Y))
+					{
+						return;
+					}
+					final BufferedImage icon = poiIndex.icon(poi.getKey());
+					if (icon == null)
+					{
+						return;
+					}
+					final int iconX = (int) Math.round(camera.screenX(poi.getX() + 0.5, poi.getY() + 0.5, bounds));
+					final int iconY = (int) Math.round(camera.screenY(poi.getX() + 0.5, poi.getY() + 0.5, bounds));
+					final Rectangle iconBounds = new Rectangle(iconX - icon.getWidth() / 2,
+						iconY - icon.getHeight() / 2, icon.getWidth(), icon.getHeight());
+					if (!iconBounds.contains(cursor))
+					{
+						return;
+					}
+					final double dx = iconX - cursor.x;
+					final double dy = iconY - cursor.y;
+					final double distance = dx * dx + dy * dy;
+					if (distance < bestDistance[0])
+					{
+						best[0] = poi;
+						bestDistance[0] = distance;
+					}
+				}));
+		return best[0];
 	}
 
 	private PlayerBoat boatNear(int worldX, int worldY, int plane)
@@ -855,16 +906,20 @@ class MapTooltipRenderer
 
 	private void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines, PanelComponent trailingPanel)
 	{
-		graphics.setFont(SMALL);
-		final FontMetrics metrics = graphics.getFontMetrics();
-		final int lineHeight = metrics.getHeight();
+		final Font titleFont = FontManager.getRunescapeBoldFont();
+		final Font bodyFont = SMALL;
+
+		final FontMetrics titleMetrics = graphics.getFontMetrics(titleFont);
+		final FontMetrics bodyMetrics = graphics.getFontMetrics(bodyFont);
+		final int titleLineHeight = titleMetrics.getHeight();
+		final int bodyLineHeight = bodyMetrics.getHeight();
 
 		final int iconSize = icon != null ? 20 : 0;
 		final int iconPad = icon != null ? 6 : 0;
 		final int availableTitleWidth = CardText.MAX_WIDTH_PX - (iconSize + iconPad);
 
-		final List<CardText.Row> rows = CardText.layout(metrics, lines, CARD_PALETTE);
-		final List<String> titleRows = CardText.wrap(metrics, title, Math.max(80, availableTitleWidth), 2);
+		final List<CardText.Row> rows = CardText.layout(bodyMetrics, lines, CARD_PALETTE);
+		final List<String> titleRows = CardText.wrap(titleMetrics, title, Math.max(80, availableTitleWidth), 2);
 
 		final int padding = 7;
 
@@ -885,11 +940,11 @@ class MapTooltipRenderer
 		int width = 0;
 		for (String titleRow : titleRows)
 		{
-			width = Math.max(width, metrics.stringWidth(titleRow) + (iconSize + iconPad));
+			width = Math.max(width, titleMetrics.stringWidth(titleRow) + (iconSize + iconPad));
 		}
 		for (CardText.Row row : rows)
 		{
-			width = Math.max(width, metrics.stringWidth(row.getText()));
+			width = Math.max(width, bodyMetrics.stringWidth(row.getText()));
 		}
 		if (panelSize != null)
 		{
@@ -900,7 +955,9 @@ class MapTooltipRenderer
 		final int panelGap = panelSize != null ? 4 : 0;
 		final int panelH = panelSize != null ? panelSize.height : 0;
 		final int boxWidth = width + padding * 2;
-		final int boxHeight = (rows.size() + titleRows.size()) * lineHeight + padding * 2 + panelGap + panelH;
+		final int textBlockHeight = titleRows.size() * titleLineHeight + rows.size() * bodyLineHeight;
+		final int minContentHeight = icon != null ? iconSize : 0;
+		final int boxHeight = Math.max(textBlockHeight, minContentHeight) + padding * 2 + panelGap + panelH;
 
 		int x = cursor.x + 14;
 		int y = cursor.y + 14;
@@ -957,27 +1014,29 @@ class MapTooltipRenderer
 			graphics.drawImage(icon, x + padding, y + padding, iconSize, iconSize, null);
 		}
 
-		int textY = y + padding + metrics.getAscent();
-
+		int titleY = y + padding + titleMetrics.getAscent();
+		graphics.setFont(titleFont);
 		graphics.setColor(CARD_TITLE);
 		for (String titleRow : titleRows)
 		{
-			graphics.drawString(titleRow, x + padding + (iconSize + iconPad), textY);
-			textY += lineHeight;
+			graphics.drawString(titleRow, x + padding + (iconSize + iconPad), titleY);
+			titleY += titleLineHeight;
 		}
 
+		int bodyY = y + padding + titleRows.size() * titleLineHeight + bodyMetrics.getAscent();
+		graphics.setFont(bodyFont);
 		for (CardText.Row row : rows)
 		{
 			graphics.setColor(row.getColour());
-			graphics.drawString(row.getText(), x + padding, textY);
-			textY += lineHeight;
+			graphics.drawString(row.getText(), x + padding, bodyY);
+			bodyY += bodyLineHeight;
 		}
 
 		if (panelSize != null)
 		{
 			trailingPanel.setBackgroundColor(null);
 			trailingPanel.setPreferredSize(new Dimension(panelContentW, 0));
-			trailingPanel.setPreferredLocation(new java.awt.Point(x + padding, (textY - metrics.getAscent()) + panelGap));
+			trailingPanel.setPreferredLocation(new java.awt.Point(x + padding, (y + padding + titleRows.size() * titleLineHeight + rows.size() * bodyLineHeight) + panelGap));
 			trailingPanel.render(graphics);
 		}
 	}

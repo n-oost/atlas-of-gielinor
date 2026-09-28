@@ -25,7 +25,6 @@
 package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
-import com.bettermap.map.PoiDetails;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -268,12 +267,6 @@ public class MapFinder
 
 		for (PoiIndex.Poi poi : poiIndex.searchByName(lower, Integer.MAX_VALUE))
 		{
-			// Mining sites are matched through their mineral list below, where they get a useful
-			// mineral-specific result type. Avoid a duplicate generic location row by site name.
-			if ("mining_site".equals(poi.getKey()))
-			{
-				continue;
-			}
 			final int tier = matchTier(poi.getName(), null, lower);
 			if (tier == -1)
 			{
@@ -281,30 +274,8 @@ public class MapFinder
 			}
 			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 			final int tiles = distanceTiles(point, from);
-			candidates.add(new Result(poi.getName(), poi.getName(), point, tiles, tier));
-		}
-
-		// Curated mining-site POIs list their available minerals in their detail lines. Reuse that
-		// authoritative location data so searches like "mithril" find the actual sites.
-		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
-		{
-			if (!"mining_site".equals(poi.getKey()))
-			{
-				continue;
-			}
-			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
-			if (detail == null || detail.getLines().stream().noneMatch(line -> line.toLowerCase(Locale.ROOT).contains(lower)))
-			{
-				continue;
-			}
-			final String mineral = mineralMatch(detail, lower);
-			if (mineral == null)
-			{
-				continue;
-			}
-			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-			candidates.add(new Result(mineral + " — " + poi.getName(), mineral,
-				point, distanceTiles(point, from), matchTier(mineral, poi.getName(), lower), Result.Kind.MINERAL));
+			final Result.Kind kind = "mining_site".equals(poi.getKey()) ? Result.Kind.MINERAL : Result.Kind.PLACE;
+			candidates.add(new Result(poi.getName(), poi.getName(), point, tiles, tier, kind));
 		}
 
 		for (MonsterIndex.Zone zone : monsterIndex.searchByName(lower, Integer.MAX_VALUE))
@@ -316,31 +287,34 @@ public class MapFinder
 			}
 			final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
 			final int tiles = distanceTiles(point, from);
-			// Leaf name is the location; groupKey is the monster. groupByName() collapses these.
-			candidates.add(new Result(zone.getLocationName(), zone.getMonster(), point, tiles, tier));
+			// Keep both the searched monster and its location visible in the result.
+			candidates.add(new Result(zone.getMonster(), zone.getMonster(), point, tiles, tier,
+				Result.Kind.MONSTER, zone.getLocationName(), 0));
 		}
 
 		if (itemSearchEnabled() && shopIndex != null && groundItemIndex != null)
 		{
 			final String term = next.trim();
 
-			for (ShopIndex.Shop shop : shopIndex.searchByName(lower, Integer.MAX_VALUE))
+			for (ShopIndex.Shop shop : shopIndex.all())
 			{
 				final ShopIndex.StockItem matched = shop.stockItemMatch(lower);
 				final String matchName = matched != null ? matched.getName() : shop.stockMatch(lower);
-				int tier = matchTier(matchName, null, lower);
-				if (tier < 0)
+				final int itemTier = matchTier(matchName, null, lower);
+				final int shopTier = matchTier(shop.getName(), null, lower);
+				if (itemTier < 0 && shopTier < 0)
 				{
-					tier = 2;
+					continue;
 				}
+				final int tier = itemTier >= 0 ? itemTier : shopTier + 4;
 				final WorldPoint point = new WorldPoint(shop.getX(), shop.getY(), shop.getPlane());
 				final int tiles = distanceTiles(point, from);
 				final String detail = matched != null ? matched.toDetailLine() : null;
 				final int sellGp = matched != null ? matched.getSell() : 0;
-				// Group by the matched stock item so similarly named results explain what the query found.
-				final String matchLabel = matchName != null ? matchName : term;
-				candidates.add(new Result(shop.getName(), "Shop item: " + matchLabel,
-					point, tiles, tier, Result.Kind.SHOP, detail, sellGp));
+				final String itemName = matchName != null ? matchName : shop.getName();
+				final String subtitle = matched != null ? shop.getName() + " · " + matched.toDetailLine() : "Shop name match";
+				candidates.add(new Result(itemName, "Shop item: " + itemName,
+					point, tiles, tier, Result.Kind.SHOP, subtitle, sellGp));
 			}
 
 			for (GroundItemIndex.Spawn spawn : groundItemIndex.searchByName(lower, Integer.MAX_VALUE))
@@ -353,12 +327,11 @@ public class MapFinder
 				}
 				final WorldPoint point = new WorldPoint(spawn.getX(), spawn.getY(), spawn.getPlane());
 				final int tiles = distanceTiles(point, from);
-				final String where = spawn.getLocation() != null && !spawn.getLocation().isEmpty()
-					? " — " + spawn.getLocation()
-					: "";
-				final String matchLabel = itemName != null ? itemName : term;
-				candidates.add(new Result(matchLabel + where,
-					"Ground item: " + matchLabel, point, tiles, tier, Result.Kind.GROUND_ITEM));
+				final String matchedName = itemName != null ? itemName : term;
+				final String location = spawn.getLocation() != null && !spawn.getLocation().isEmpty()
+					? spawn.getLocation() : "Ground spawn";
+				candidates.add(new Result(location, "Ground item: " + matchedName,
+					point, tiles, tier, Result.Kind.GROUND_ITEM, "Item: " + matchedName, 0));
 			}
 		}
 
@@ -366,27 +339,6 @@ public class MapFinder
 		this.resultOrigin = from;
 		this.searchDataVersion = currentSearchDataVersion();
 		publishRankedResults(candidates);
-	}
-
-	private static String mineralMatch(PoiDetails.Detail detail, String lower)
-	{
-		final String available = detail.getLines().stream()
-			.filter(line -> line.toLowerCase(Locale.ROOT).startsWith("ores"))
-			.findFirst().orElse("");
-		final int colon = available.indexOf(':');
-		if (colon < 0)
-		{
-			return null;
-		}
-		for (String mineral : available.substring(colon + 1).split(","))
-		{
-			final String candidate = mineral.replaceAll("\\s*\\([^)]*\\)", "").trim();
-			if (candidate.toLowerCase(Locale.ROOT).contains(lower))
-			{
-				return candidate;
-			}
-		}
-		return null;
 	}
 
 	/** Refresh distance ordering after movement without rescanning source datasets. */
@@ -606,7 +558,7 @@ public class MapFinder
 		}
 	}
 
-	/** Nearest first, grouped by name, sorted by tier then distance, truncated to max. Pure. */
+	/** Best textual match first, then distance; group children after per-result relevance ranking. */
 	static List<Result> rank(List<Result> candidates, int max)
 	{
 		if (candidates == null || candidates.isEmpty() || max <= 0)
@@ -615,7 +567,7 @@ public class MapFinder
 		}
 
 		final List<Result> sorted = new ArrayList<>(candidates);
-		sorted.sort(MapFinder::compareByTierThenDistance);
+		sorted.sort(MapFinder::compareByRelevanceThenDistance);
 		return groupByName(sorted, max);
 	}
 
@@ -634,7 +586,7 @@ public class MapFinder
 		final Map<String, List<Result>> groups = new LinkedHashMap<>();
 		for (Result leaf : sortedLeaves)
 		{
-			final String key = groupKey(leaf).toLowerCase(Locale.ROOT);
+			final String key = resultGroupIdentity(leaf).toLowerCase(Locale.ROOT);
 			groups.computeIfAbsent(key, k -> new ArrayList<>()).add(leaf);
 		}
 
@@ -658,7 +610,7 @@ public class MapFinder
 		}
 
 		final List<Result> children = new ArrayList<>(members);
-		children.sort(MapFinder::compareByTierThenDistance);
+		children.sort(MapFinder::compareByRelevanceThenDistance);
 		final Result nearest = children.get(0);
 		final String label = resultGroupLabel(nearest, members.size());
 		return new Result(label, groupKey(nearest), nearest.getPoint(), nearest.getDistanceTiles(),
@@ -670,11 +622,11 @@ public class MapFinder
 		final String key = groupKey(result);
 		if (result.getKind() == Result.Kind.SHOP)
 		{
-			return key + " — " + count + " shop" + (count == 1 ? "" : "s");
+			return key + " · " + count + " location" + (count == 1 ? "" : "s");
 		}
 		if (result.getKind() == Result.Kind.GROUND_ITEM)
 		{
-			return key + " — " + count + " ground location" + (count == 1 ? "" : "s");
+			return key + " · " + count + " location" + (count == 1 ? "" : "s");
 		}
 		return key;
 	}
@@ -684,7 +636,7 @@ public class MapFinder
 		return result.getGroupKey() != null ? result.getGroupKey() : result.getName();
 	}
 
-	private static int compareByTierThenDistance(Result r1, Result r2)
+	private static int compareByRelevanceThenDistance(Result r1, Result r2)
 	{
 		final int t1 = r1.getTier();
 		final int t2 = r2.getTier();
@@ -706,7 +658,25 @@ public class MapFinder
 		{
 			return -1;
 		}
-		return Integer.compare(d1, d2);
+		final int distanceOrder = Integer.compare(distanceBand(d1), distanceBand(d2));
+		return distanceOrder != 0 ? distanceOrder : Integer.compare(d1, d2);
+	}
+
+	private static String resultGroupIdentity(Result result)
+	{
+		if (result.getKind() == Result.Kind.SHOP || result.getKind() == Result.Kind.GROUND_ITEM)
+		{
+			return result.getGroupKey();
+		}
+		return result.getKind() + ":" + groupKey(result);
+	}
+
+	private static int distanceBand(int tiles)
+	{
+		if (tiles < 0) return Integer.MAX_VALUE;
+		if (tiles <= 20) return 0;
+		if (tiles <= 100) return 1;
+		return 2;
 	}
 
 	private static int distanceToRegionCenter(MapRegion region, WorldPoint from)

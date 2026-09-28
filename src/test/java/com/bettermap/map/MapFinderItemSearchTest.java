@@ -170,4 +170,28 @@ public class MapFinderItemSearchTest
 		}
 		assertTrue("expected shops stocking bronze pickaxe", found);
 	}
+
+	@Test
+	public void mineralSearchReturnsMiningSitesAsMineralResults()
+	{
+		final MapFinder finder = finder(true);
+		finder.updateQuery("mithril", FROM);
+
+		assertTrue("expected mithril mining-site results", finder.getResults().stream()
+			.anyMatch(result -> result.getKind() == MapFinder.Result.Kind.MINERAL));
+		assertFalse("mining sites should not appear as generic place-name matches", finder.getResults().stream()
+			.anyMatch(result -> result.getKind() == MapFinder.Result.Kind.PLACE
+				&& result.getName().toLowerCase().contains("mining site")));
+	}
+
+	@Test
+	public void shopGroupNamesTheMatchedStockItem()
+	{
+		final MapFinder finder = finder(true);
+		finder.updateQuery("ancient", FROM);
+
+		assertTrue("shop results should expose matched items in their group title",
+			finder.getResults().stream().filter(result -> result.getKind() == MapFinder.Result.Kind.SHOP)
+				.allMatch(result -> result.getGroupKey().startsWith("Shop item: ")));
+	}
 }

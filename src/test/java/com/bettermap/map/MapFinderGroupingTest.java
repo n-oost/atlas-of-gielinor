@@ -204,6 +204,18 @@ public class MapFinderGroupingTest
 	}
 
 	@Test
+	public void monsterResultsShowMonsterAsTitleAndLocationAsDetail()
+	{
+		finder.updateQuery("guard", VARROCK_SQUARE);
+		final MapFinder.Result guard = finder.getResults().stream()
+			.filter(result -> result.getKind() == MapFinder.Result.Kind.MONSTER)
+			.findFirst().orElse(null);
+		assertTrue("expected a typed monster result", guard != null);
+		assertEquals("Guard", guard.getName());
+		assertTrue("result should identify its location", guard.getDetail() != null && !guard.getDetail().isEmpty());
+	}
+
+	@Test
 	public void groupedCountsSeparateRowsFromPhysicalLocations()
 	{
 		finder.updateQuery("bank", VARROCK_SQUARE);

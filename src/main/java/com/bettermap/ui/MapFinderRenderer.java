@@ -89,7 +89,7 @@ class MapFinderRenderer
 		this.finder = finder;
 	}
 
-	/** Description-strip tag for typed results, or null to fall back to POI category. */
+	/** Readable category name for every result row and detail strip. */
 	private static String itemKindLabel(MapFinder.Result res)
 	{
 		if (res == null)
@@ -98,12 +98,16 @@ class MapFinderRenderer
 		}
 		switch (res.getKind())
 		{
+			case PLACE:
+				return "Place";
+			case MONSTER:
+				return "Monster";
 			case SHOP:
-				return "[Shop]";
+				return "Shop";
 			case GROUND_ITEM:
-				return "[Ground spawn]";
+				return "Ground item";
 			case MINERAL:
-				return "[Mineral]";
+				return "Mining";
 			default:
 				return null;
 		}
@@ -187,13 +191,13 @@ class MapFinderRenderer
 		final int titleH = 18;
 		final int fieldH = 20;
 		final int chipRowH = 18;
-		final int rowH = 20;
 		final int descStripH = 26;
 		final int panelW = 300;
 
 		final WorldPoint playerLoc = camera.getPlayerLocation();
 		final String query = finder.getQuery();
 		final boolean isEmptyQuery = query == null || query.isEmpty();
+		final int rowH = isEmptyQuery ? 20 : 30;
 		final boolean browseLoading = isEmptyQuery && finder.isBrowseLoading();
 		finder.refresh(playerLoc);
 
@@ -331,7 +335,7 @@ class MapFinderRenderer
 				int dW = 0;
 				if (dist >= 0)
 				{
-					final String distText = dist + "t";
+						final String distText = distanceLabel(dist);
 					dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
 					graphics.drawString(distText, row.x + row.width - 14 - dW - 6, rowY + rowH - 6);
@@ -404,57 +408,42 @@ class MapFinderRenderer
 						graphics.drawString(countText, row.x + row.width - countW - 8, rowY + rowH - 6);
 
 						final int dist = result.getDistanceTiles();
-						int dW = 0;
-						if (dist >= 0)
+						final String distText = distanceLabel(dist);
+						if (!distText.isEmpty())
 						{
-							final String distText = dist + "t";
-							dW = fm.stringWidth(distText);
+							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - countW - 8 - dW - 6, rowY + rowH - 6);
+							graphics.drawString(distText, row.x + row.width - countW - 8 - dW - 6, rowY + 11);
 						}
 
 						final int nameX = panel.x + padX + 16;
-						final int maxNameW = row.x + row.width - countW - 8 - (dist >= 0 ? dW + 12 : 6) - nameX;
-						String name = result.getName() != null ? result.getName() : "";
-						if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
-						{
-							while (!name.isEmpty() && fm.stringWidth(name + "…") > maxNameW)
-							{
-								name = name.substring(0, name.length() - 1);
-							}
-							name = name + "…";
-						}
-						graphics.setColor(CARD_TEXT);
-						graphics.drawString(name, nameX, rowY + rowH - 6);
+						final int maxNameW = row.x + row.width - countW - 8 - 58 - nameX;
+						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
+						graphics.setColor(TEXT_DIM);
+						graphics.drawString(itemKindLabel(result) + " · " + result.getChildren().size() + " locations",
+							nameX, rowY + 25);
 					}
 					else
 					{
 						walk = null;
 
 						final int dist = result.getDistanceTiles();
-						final int distRight = row.x + row.width - 8 - 6;
-						int distWidth = 0;
-						if (dist >= 0)
+						final String distText = distanceLabel(dist);
+						if (!distText.isEmpty())
 						{
-							final String distText = dist + "t";
-							distWidth = fm.stringWidth(distText);
+							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, distRight - distWidth, rowY + rowH - 6);
+							graphics.drawString(distText, row.x + row.width - dW - 10, rowY + 12);
 						}
 
 						final int nameX = panel.x + padX + 16;
-						final int maxNameW = (dist >= 0 ? distRight - distWidth - 6 : row.x + row.width - 8) - nameX;
-						String name = result.getName() != null ? result.getName() : "";
-						if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
-						{
-							while (!name.isEmpty() && fm.stringWidth(name + "…") > maxNameW)
-							{
-								name = name.substring(0, name.length() - 1);
-							}
-							name = name + "…";
-						}
-						graphics.setColor(CARD_TEXT);
-						graphics.drawString(name, nameX, rowY + rowH - 6);
+						final int maxNameW = row.x + row.width - 74 - nameX;
+						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
+						final String subtitle = result.getDetail() != null ? result.getDetail()
+							: result.getKind() == MapFinder.Result.Kind.MONSTER ? "Monster location"
+							: result.getKind() == MapFinder.Result.Kind.MINERAL ? "Mining location" : "Location";
+						graphics.setColor(TEXT_DIM);
+						graphics.drawString(itemKindLabel(result) + " · " + subtitle, nameX, rowY + 25);
 					}
 
 					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, result.getPoint(), result.getName(), result, null);
@@ -500,7 +489,7 @@ class MapFinderRenderer
 			final String kindLabel = itemKindLabel(flyoutHoveredItem);
 			if (kindLabel != null)
 			{
-				descLine1 = kindLabel + "  " + regName;
+				descLine1 = kindLabel + " · " + regName;
 				final String detail = flyoutHoveredItem.getDetail();
 				descLine2 = detail != null && !detail.isEmpty() ? detail : flyoutHoveredItem.getName();
 			}
@@ -513,12 +502,12 @@ class MapFinderRenderer
 
 				if (detail != null)
 				{
-					descLine1 = "[" + (detail.getCategory() != null ? detail.getCategory() : "Point of Interest") + "]  " + regName;
+					descLine1 = (detail.getCategory() != null ? detail.getCategory() : "Point of Interest") + " · " + regName;
 					descLine2 = !detail.getLines().isEmpty() ? detail.getLines().get(0) : flyoutHoveredItem.getName();
 				}
 				else
 				{
-					descLine1 = "[Location]  " + regName;
+					descLine1 = "Place · " + regName;
 					descLine2 = flyoutHoveredItem.getName();
 				}
 			}
@@ -540,7 +529,7 @@ class MapFinderRenderer
 				final String kindLabel = itemKindLabel(res);
 				if (kindLabel != null)
 				{
-					descLine1 = kindLabel + "  " + regName;
+					descLine1 = kindLabel + " · " + regName;
 					final String detail = res.getDetail();
 					descLine2 = detail != null && !detail.isEmpty() ? detail : res.getName();
 				}
@@ -553,12 +542,12 @@ class MapFinderRenderer
 
 					if (detail != null)
 					{
-						descLine1 = "[" + (detail.getCategory() != null ? detail.getCategory() : "Point of Interest") + "]  " + regName;
+						descLine1 = (detail.getCategory() != null ? detail.getCategory() : "Point of Interest") + " · " + regName;
 						descLine2 = !detail.getLines().isEmpty() ? detail.getLines().get(0) : res.getName();
 					}
 					else
 					{
-						descLine1 = (res.hasChildren() ? "[Group] " : "[Location] ") + regName;
+						descLine1 = (res.hasChildren() ? "Group" : "Place") + " · " + regName;
 						descLine2 = res.getName();
 					}
 				}
@@ -723,28 +712,17 @@ class MapFinderRenderer
 					flyoutHoveredItem = item;
 				}
 
-				final int dist = item.getDistanceTiles();
-				int dW = 0;
-				if (dist >= 0)
+				final String distText = distanceLabel(item.getDistanceTiles());
+				if (!distText.isEmpty())
 				{
-					final String distText = dist + "t";
-					dW = fm.stringWidth(distText);
+					final int dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, itemRow.x + itemRow.width - dW - 6, fRowY + rowH - 6);
+					graphics.drawString(distText, itemRow.x + itemRow.width - dW - 6, fRowY + 12);
 				}
-
-				final int maxNameW = (dist >= 0 ? itemRow.x + itemRow.width - dW - 12 : itemRow.x + itemRow.width - 6) - (flyoutPanel.x + padX);
-				String name = item.getName() != null ? item.getName() : "";
-				if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
-				{
-					while (!name.isEmpty() && fm.stringWidth(name + "…") > maxNameW)
-					{
-						name = name.substring(0, name.length() - 1);
-					}
-					name = name + "…";
-				}
-				graphics.setColor(CARD_TEXT);
-				graphics.drawString(name, flyoutPanel.x + padX, fRowY + rowH - 6);
+				drawClipped(graphics, fm, item.getName(), flyoutPanel.x + padX, fRowY + 12,
+					flyoutW - 88, CARD_TEXT);
+				graphics.setColor(TEXT_DIM);
+				graphics.drawString(itemKindLabel(item), flyoutPanel.x + padX, fRowY + 25);
 
 				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, null, item.getPoint(), item.getName(), item));
 				fRowY += rowH;
@@ -907,6 +885,34 @@ class MapFinderRenderer
 		}
 		graphics.setColor(result.getKind() == MapFinder.Result.Kind.MINERAL ? new Color(210, 170, 95) : CARD_TITLE);
 		graphics.drawString(icon, x, y + 12);
+	}
+
+	private static String distanceLabel(int tiles)
+	{
+		if (tiles < 0) return "";
+		if (tiles <= 20) return "Close";
+		if (tiles <= 100) return "Moderate";
+		return "Far";
+	}
+
+	private static void drawClipped(Graphics2D graphics, FontMetrics fm, String text,
+		int x, int baseline, int maxWidth, Color color)
+	{
+		String clipped = text == null ? "" : text;
+		while (!clipped.isEmpty() && fm.stringWidth(clipped) > maxWidth)
+		{
+			clipped = clipped.substring(0, clipped.length() - 1);
+		}
+		if (!clipped.equals(text) && !clipped.isEmpty())
+		{
+			while (!clipped.isEmpty() && fm.stringWidth(clipped + "…") > maxWidth)
+			{
+				clipped = clipped.substring(0, clipped.length() - 1);
+			}
+			clipped += "…";
+		}
+		graphics.setColor(color);
+		graphics.drawString(clipped, x, baseline);
 	}
 
 	private static int distanceTiles(WorldPoint point, WorldPoint from)

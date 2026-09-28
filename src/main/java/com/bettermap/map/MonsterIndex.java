@@ -44,9 +44,9 @@ import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Monster spawns, from the bundled wiki-derived dataset: 833 monsters over 2370 location zones.
+ * Monster spawns, from the bundled wiki-derived dataset: 805 monsters over 2310 location zones.
  *
- * <p>Each zone is reduced to one marker at the centroid of its spawn tiles. Drawing all 19779
+ * <p>Each zone is reduced to one marker at the centroid of its spawn tiles. Drawing all 19562
  * individual tiles would bury the map, and "Aberrant spectre, Slayer Tower" is the useful unit
  * anyway.
  *
@@ -302,7 +302,7 @@ public class MonsterIndex
 	/**
 	 * Invokes {@code consumer} for every zone on {@code plane} whose centroid lies inside the
 	 * world bounding box. Uses the chunk index so the overlay can draw faint spawn areas without
-	 * scanning all ~2,370 zones every frame.
+	 * scanning all ~2,310 zones every frame.
 	 */
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Zone> consumer)

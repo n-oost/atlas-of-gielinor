@@ -385,6 +385,10 @@ public class PoiIndex
 	/** The icon image for a group, or null when it was not prefetched. */
 	public synchronized BufferedImage icon(String key)
 	{
+		if (!icons.containsKey(key))
+		{
+			return loadIcon(key);
+		}
 		return icons.get(key);
 	}
 

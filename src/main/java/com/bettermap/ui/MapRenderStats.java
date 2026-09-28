@@ -29,20 +29,20 @@ package com.bettermap.ui;
  * that reports them. One holder rather than a copy per renderer, so the panel still sees the
  * whole frame after {@link BetterWorldMapOverlay}'s draw stages were split up.
  */
-class MapRenderStats
+public class MapRenderStats
 {
-	int tilesDrawn;
-	int tilesMissing;
-	int iconsDrawn;
-	int iconsSkipped;
-	int iconsFiltered;
-	int markersDrawn;
+	public int tilesDrawn;
+	public int tilesMissing;
+	public int iconsDrawn;
+	public int iconsSkipped;
+	public int iconsFiltered;
+	public int markersDrawn;
 
 	/** Tile zoom level the last tile pass drew at; survives a frame that draws no tiles. */
-	int tileZoomInUse;
+	public int tileZoomInUse;
 
 	/** Zeroes exactly the counters {@code render()} zeroed before the split — not the tile zoom. */
-	void reset()
+	public void reset()
 	{
 		tilesDrawn = 0;
 		tilesMissing = 0;

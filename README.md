@@ -51,7 +51,7 @@ TBD
 
 ### Monster zones
 
-833 monsters across 2,370 location zones, each drawn as one marker at the centroid of its spawn
+805 monsters across 2,310 location zones, each drawn as one marker at the centroid of its spawn
 tiles, with the spawn area shaded behind it.
 
 ![Monster zones](docs/gifs/gnome-man.png)
@@ -90,7 +90,7 @@ members,quest helper) are drawn on Better Map's camera, along with the player or
 
 ## Datasets
 -Data is bundled in `resources/com/bettermap/data`.
-- **Monster locations**: 833 monsters across 2,370 location zones in `monsters.json.gz`.
+- **Monster locations**: 805 monsters across 2,310 location zones in `monsters.json.gz`.
 - **Shops**: ~450 shops from OSRS Wiki `Category:Shops` in `shops.json.gz` (owner, special stock,
   notable items, services).
 - **Ground item spawns**: 370 unique items over 4,361 exact world tiles. Runtime dataset

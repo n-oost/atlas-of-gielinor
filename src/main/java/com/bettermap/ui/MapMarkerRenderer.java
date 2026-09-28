@@ -44,6 +44,7 @@ import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.TravelData;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.data.sailing.BoatTracker;
+import com.bettermap.data.sailing.BoatType;
 import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.sailing.PortNoticeBoard;
 import com.bettermap.data.sailing.SailingPort;
@@ -76,6 +77,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -238,6 +242,9 @@ class MapMarkerRenderer
 	private final DungeonPieceIndex dungeonPieceIndex;
 	private BufferedImage dungeonExclamation;
 	private BufferedImage dungeonExclamationGreen;
+	private BufferedImage boatSloopIcon;
+	private BufferedImage boatSkiffIcon;
+	private BufferedImage boatRaftIcon;
 	private List<int[]> walkingRuns = java.util.Collections.emptyList();
 
 	MapMarkerRenderer(
@@ -702,6 +709,59 @@ class MapMarkerRenderer
 	private static int glyph(int size, int offsetAt32)
 	{
 		return Math.round(size * offsetAt32 / 32f);
+	}
+
+	private BufferedImage boatIcon(BoatType type)
+	{
+		if (type == BoatType.RAFT)
+		{
+			if (boatRaftIcon == null)
+			{
+				boatRaftIcon = loadBoatIcon("boat_raft");
+			}
+			return boatRaftIcon;
+		}
+		if (type == BoatType.SKIFF || type == BoatType.TUTORIAL)
+		{
+			if (boatSkiffIcon == null)
+			{
+				boatSkiffIcon = loadBoatIcon("boat_skiff");
+			}
+			return boatSkiffIcon;
+		}
+		if (boatSloopIcon == null)
+		{
+			boatSloopIcon = loadBoatIcon("boat_sloop");
+			if (boatSloopIcon == null)
+			{
+				boatSloopIcon = loadBoatIcon("boat");
+			}
+		}
+		return boatSloopIcon;
+	}
+
+	private BufferedImage loadBoatIcon(String name)
+	{
+		BufferedImage icon = null;
+		if (poiIndex != null)
+		{
+			icon = poiIndex.icon(name);
+		}
+		if (icon == null)
+		{
+			try (InputStream in = MapMarkerRenderer.class.getResourceAsStream("/com/bettermap/" + name + ".png"))
+			{
+				if (in != null)
+				{
+					icon = ImageIO.read(in);
+				}
+			}
+			catch (IOException e)
+			{
+				log.warn("Failed to load boat icon: {}", name, e);
+			}
+		}
+		return icon;
 	}
 
 	private BufferedImage dungeonExclamation(boolean green)
@@ -1948,41 +2008,65 @@ class MapMarkerRenderer
 			final int sx = (int) Math.round(camera.screenX(loc.getX() + 0.5, loc.getY() + 0.5, bounds)) + offsetX;
 			final int sy = (int) Math.round(camera.screenY(loc.getX() + 0.5, loc.getY() + 0.5, bounds)) + offsetY;
 
-			final int pinSize = 18;
-			final Rectangle rect = new Rectangle(sx - pinSize / 2, sy - pinSize / 2, pinSize, pinSize);
+			final BufferedImage icon = boatIcon(boat.getBoatType());
+			final int iconW = icon != null ? icon.getWidth() : 18;
+			final int iconH = icon != null ? icon.getHeight() : 18;
+			final Rectangle rect = new Rectangle(sx - iconW / 2, sy - iconH / 2, iconW, iconH);
 			if (!bounds.intersects(rect))
 			{
 				continue;
 			}
 
-			// Outer dark shadow/border
-			graphics.setColor(BOAT_EDGE);
-			graphics.fillOval(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2);
-
-			// Pin background
-			graphics.setColor(BOAT_FILL);
-			graphics.fillOval(rect.x, rect.y, rect.width, rect.height);
-
-			// Gold border
-			graphics.setColor(BOAT_BORDER);
-			graphics.setStroke(MARKER_RING);
-			graphics.drawOval(rect.x, rect.y, rect.width, rect.height);
+			if (icon != null)
+			{
+				graphics.drawImage(icon, rect.x, rect.y, null);
+			}
+			else
+			{
+				// Fallback if boat icon resource fails to load
+				graphics.setColor(BOAT_EDGE);
+				graphics.fillOval(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2);
+				graphics.setColor(BOAT_FILL);
+				graphics.fillOval(rect.x, rect.y, rect.width, rect.height);
+				graphics.setColor(BOAT_BORDER);
+				graphics.setStroke(MARKER_RING);
+				graphics.drawOval(rect.x, rect.y, rect.width, rect.height);
+			}
 
 			// Health condition ring accent (top-right pip)
 			final Color healthColor = boat.getHealth() < 0 ? BOAT_HULL_GOOD
 				: (boat.getHealth() >= 0.75f ? BOAT_HULL_GOOD : (boat.getHealth() >= 0.35f ? BOAT_HULL_WARN : BOAT_HULL_BAD));
 			graphics.setColor(healthColor);
-			graphics.fillOval(rect.x + rect.width - 6, rect.y, 6, 6);
+			graphics.fillOval(rect.x + rect.width - 5, rect.y - 1, 6, 6);
 			graphics.setColor(BOAT_EDGE);
 			graphics.setStroke(MARKER_OUTLINE);
-			graphics.drawOval(rect.x + rect.width - 6, rect.y, 6, 6);
+			graphics.drawOval(rect.x + rect.width - 5, rect.y - 1, 6, 6);
 
 			// Boat glyph / initials or number
-			graphics.setFont(SMALL);
-			final String numStr = String.valueOf(boat.getBoatId());
-			final int numW = graphics.getFontMetrics().stringWidth(numStr);
-			graphics.setColor(Color.WHITE);
-			graphics.drawString(numStr, sx - numW / 2, sy + 4);
+			if (icon == null)
+			{
+				graphics.setFont(SMALL);
+				final String numStr = String.valueOf(boat.getBoatId());
+				final int numW = graphics.getFontMetrics().stringWidth(numStr);
+				graphics.setColor(Color.WHITE);
+				graphics.drawString(numStr, sx - numW / 2, sy + 4);
+			}
+			else if (owned.size() > 1)
+			{
+				final String numStr = String.valueOf(boat.getBoatId());
+				final int badgeSize = 10;
+				final int bx = rect.x + rect.width - 3;
+				final int by = rect.y + rect.height - 3;
+				graphics.setColor(BOAT_EDGE);
+				graphics.fillOval(bx - badgeSize / 2, by - badgeSize / 2, badgeSize, badgeSize);
+				graphics.setColor(BOAT_BORDER);
+				graphics.setStroke(MARKER_OUTLINE);
+				graphics.drawOval(bx - badgeSize / 2, by - badgeSize / 2, badgeSize, badgeSize);
+				graphics.setFont(TINY);
+				final int numW = graphics.getFontMetrics().stringWidth(numStr);
+				graphics.setColor(Color.WHITE);
+				graphics.drawString(numStr, bx - numW / 2, by + 3);
+			}
 
 			placed.add(rect);
 			stats.markersDrawn++;
@@ -1994,7 +2078,7 @@ class MapMarkerRenderer
 				graphics.setFont(SMALL);
 				final int textW = graphics.getFontMetrics().stringWidth(label);
 				final int textX = sx - textW / 2;
-				final int textY = rect.y + pinSize + 12;
+				final int textY = rect.y + iconH + 12;
 
 				final Rectangle labelRect = new Rectangle(textX - 4, textY - 10, textW + 8, 13);
 				if (bounds.intersects(labelRect))

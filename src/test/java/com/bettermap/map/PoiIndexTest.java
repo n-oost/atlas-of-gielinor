@@ -58,6 +58,10 @@ public class PoiIndexTest
 		assertNotNull(poiIndex.icon("quest_start"));
 		assertNull(poiIndex.icon("missing_test_icon"));
 		assertEquals(poiIndex.icon("quest_start"), poiIndex.icon("quest_start"));
+		assertNotNull(poiIndex.icon("boat_sloop"));
+		assertNotNull(poiIndex.icon("boat_skiff"));
+		assertNotNull(poiIndex.icon("boat_raft"));
+		assertNotNull(poiIndex.icon("boat"));
 	}
 
 	@Test

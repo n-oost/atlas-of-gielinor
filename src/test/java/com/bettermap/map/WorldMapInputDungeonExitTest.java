@@ -27,7 +27,7 @@ package com.bettermap.map;
 import com.google.gson.Gson;
 import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
-import com.bettermap.PanButton;
+import com.bettermap.ui.input.PanButton;
 import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.UndergroundZone;
 import java.awt.Canvas;

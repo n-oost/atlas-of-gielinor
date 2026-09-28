@@ -24,6 +24,7 @@
  */
 package com.bettermap;
 
+import com.bettermap.ui.input.PanButton;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;

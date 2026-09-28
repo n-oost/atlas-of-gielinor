@@ -55,21 +55,25 @@ import com.bettermap.map.ShopIndex;
 import com.bettermap.map.SlayerTaskTracker;
 import com.bettermap.map.WorldMapInput;
 import com.bettermap.map.WorldMapPointReader;
+import com.bettermap.ui.tooltips.BoatTooltipBuilder;
+import com.bettermap.ui.tooltips.MonsterTooltipBuilder;
+import com.bettermap.ui.tooltips.PoiTooltipBuilder;
+import com.bettermap.ui.tooltips.TooltipCard;
 import java.awt.Dimension;
 import java.awt.Font;
-import net.runelite.client.ui.FontManager;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
@@ -77,11 +81,10 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 /**
  * The hover card: what is under the cursor, and the card that describes it.
  *
- * <p>Split out of {@link BetterWorldMapOverlay}. The {@code *Near} hit-tests decide which of
- * the map's layers answers for a given tile, in the same order the card used to check them.
+ * <p>Decomposed into specialized tooltip builders in {@code com.bettermap.ui.tooltips}.
  */
 @Slf4j
-class MapTooltipRenderer
+public class MapTooltipRenderer
 {
 	private final Client client;
 	private final BetterMapConfig config;
@@ -99,7 +102,14 @@ class MapTooltipRenderer
 	private final WorldMapPointManager worldMapPointManager;
 	private final WorldMapPointReader worldMapPointReader;
 
-	MapTooltipRenderer(
+	@Getter
+	private final BoatTooltipBuilder boatTooltipBuilder;
+	@Getter
+	private final MonsterTooltipBuilder monsterTooltipBuilder;
+	@Getter
+	private final PoiTooltipBuilder poiTooltipBuilder;
+
+	public MapTooltipRenderer(
 		Client client,
 		BetterMapConfig config,
 		MapCamera camera,
@@ -131,6 +141,10 @@ class MapTooltipRenderer
 		this.boatTracker = boatTracker;
 		this.worldMapPointManager = worldMapPointManager;
 		this.worldMapPointReader = worldMapPointReader;
+
+		this.boatTooltipBuilder = new BoatTooltipBuilder();
+		this.monsterTooltipBuilder = new MonsterTooltipBuilder();
+		this.poiTooltipBuilder = new PoiTooltipBuilder();
 	}
 
 	private <T> T hit(int worldX, int worldY, BiFunction<Integer, Integer, T> lookup)
@@ -149,7 +163,7 @@ class MapTooltipRenderer
 	 * The card that follows the cursor. Bosses win over map icons, and failing both it still
 	 * reports the coordinate under the cursor, so the map always answers "what is this".
 	 */
-	void drawTooltip(Graphics2D graphics, Rectangle bounds)
+	public void drawTooltip(Graphics2D graphics, Rectangle bounds)
 	{
 		if (!config.showTooltips())
 		{
@@ -216,64 +230,38 @@ class MapTooltipRenderer
 			return;
 		}
 
-		final List<String> lines = new ArrayList<>();
-		String title = null;
-		BufferedImage tooltipIcon = null;
+		TooltipCard card = null;
 
-		// Point markers before area centroids: bosses → shops → POIs → RuneLite → monster zones.
-
+		// Point markers before area centroids: bosses -> shops -> POIs -> RuneLite -> ground items -> monster zones.
 		final MonsterLocationData boss = monsterNear(worldX, worldY);
 		if (boss != null)
 		{
-			title = boss.getName() + " (Lvl " + boss.getCombatLevel() + ")";
-			tooltipIcon = monsterIconManager.getBossIcon(boss, 20);
-			if (config.highlightSlayerTask() && slayerTaskTracker.isTaskBoss(boss))
-			{
-				final int remaining = slayerTaskTracker.getRemainingTaskAmount();
-				lines.add(remaining > 0 ? "[Current Slayer Task • " + remaining + " remaining]" : "[Current Slayer Task]");
-			}
-			lines.add("[Boss • " + boss.getLocationName() + "]");
-			if (!config.compactTooltips())
-			{
-				lines.add("Strategy: " + boss.getWeaknessStrategy());
-				lines.add("Key drops: " + boss.getKeyDrops());
-			}
+			final BufferedImage bossIcon = monsterIconManager != null ? monsterIconManager.getBossIcon(boss, 20) : null;
+			final boolean isTaskBoss = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskBoss(boss);
+			final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
+			card = monsterTooltipBuilder.buildBossCard(boss, bossIcon, isTaskBoss, remaining, config.compactTooltips());
 		}
 
-		if (title == null)
+		if (card == null && shopIndex != null)
 		{
 			final ShopIndex.Shop shop = hit(worldX, worldY,
 				(x, y) -> shopIndex.nearest(x, y, plane, Math.min(radius, 10)));
 			if (shop != null)
 			{
-				final PoiDetails.Detail detail = shop.toDetail(shopIndex.othersNear(shop, 6, 2));
-				title = detail.getTitle();
-				final String iconKey = shop.getIcon() != null && !shop.getIcon().isEmpty()
-					? shop.getIcon()
-					: "general_store";
-				tooltipIcon = poiIndex.icon(iconKey);
-				lines.add("[" + detail.getCategory() + "]");
 				final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
-				if (findQuery != null && !findQuery.trim().isEmpty())
-				{
-					final ShopIndex.StockItem matched = shop.stockItemMatch(findQuery.trim().toLowerCase());
-					if (matched != null && matched.getName() != null)
-					{
-						lines.add(matched.toDetailLine());
-					}
-				}
-				lines.addAll(detail.getLines());
+				card = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
 			}
 		}
 
-		if (title == null)
+		if (card == null)
 		{
 			PoiDetails.Detail detail = null;
 			final PoiIndex.Poi poi = poiIconAt(cursor, bounds, plane);
+			BufferedImage tooltipIcon = null;
 			if (poi != null)
 			{
 				detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), plane);
-				tooltipIcon = poiIndex.icon(poi.getKey());
+				tooltipIcon = poiIndex != null ? poiIndex.icon(poi.getKey()) : null;
 			}
 			if (detail == null)
 			{
@@ -281,144 +269,58 @@ class MapTooltipRenderer
 					(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius));
 			}
 
-			if (detail != null)
+			if (detail != null || (poi != null && poi.getName() != null && !poi.getName().isEmpty()))
 			{
-				title = detail.getTitle();
-				if (detail.getCategory() != null && !detail.getCategory().isEmpty())
-				{
-					lines.add("[" + detail.getCategory() + "]");
-				}
-				lines.addAll(detail.getLines());
-			}
-			else if (poi != null && poi.getName() != null && !poi.getName().isEmpty())
-			{
-				title = poi.getName();
-				lines.add("[" + PoiCategory.of(poi.getKey()).name() + "]");
+				card = poiTooltipBuilder.buildPoiCard(detail, poi, tooltipIcon);
 			}
 		}
 
-		if (title == null)
+		if (card == null)
 		{
 			final WorldMapPoint rPoint = findRuneLitePointNear(worldX, worldY, plane, pointRadius);
 			if (rPoint != null)
 			{
-				final String pName = rPoint.getName();
-				final String pTip = rPoint.getTooltip();
-				tooltipIcon = rPoint.getImage();
-				if (pName != null && !pName.isEmpty())
-				{
-					title = pName;
-					if (pTip != null && !pTip.isEmpty() && !pTip.equals(pName))
-					{
-						lines.add(pTip);
-					}
-				}
-				else if (pTip != null && !pTip.isEmpty())
-				{
-					title = pTip;
-				}
+				card = poiTooltipBuilder.buildRuneLitePointCard(rPoint);
 			}
 		}
 
-		// Ground items are exact tiles, so the hover radius stays tight: a wide one would steal
-		// hovers from the POI under it. Gated on the same zoom as the draw, so a marker that is
-		// not on screen is never hoverable.
-		if (title == null && config.showGroundItems() && camera.getZoom() >= config.groundItemMinZoom())
+		// Ground items are exact tiles, so the hover radius stays tight.
+		if (card == null && config.showGroundItems() && groundItemIndex != null && groundItemIndex.isLoaded()
+			&& camera.getZoom() >= config.groundItemMinZoom())
 		{
 			final GroundItemIndex.Spawn spawn = hit(worldX, worldY,
 				(x, y) -> groundItemIndex.nearest(x, y, plane, Math.min(radius, 4), config.groundItemMinValue()));
 			if (spawn != null)
 			{
-				final GroundItemIndex.Item primary = spawn.getPrimary();
-				title = primary.getQuantity() > 1
-					? primary.getName() + " ×" + primary.getQuantity()
-					: primary.getName();
-				tooltipIcon = monsterIconManager.getItemIcon(primary.getId(), 20);
-				lines.add("[Ground spawn"
-					+ (spawn.getLocation() != null && !spawn.getLocation().isEmpty()
-						? " • " + spawn.getLocation() : "")
-					+ "]");
-
-				if (!config.compactTooltips())
-				{
-					for (GroundItemIndex.Item item : spawn.getItems())
-					{
-						final StringBuilder worth = new StringBuilder();
-						if (item.getGePrice() > 0)
-						{
-							worth.append("GE ").append(item.getGePrice()).append(" gp");
-						}
-						if (item.getHighAlch() > 0)
-						{
-							worth.append(worth.length() > 0 ? ", " : "")
-								.append("alch ").append(item.getHighAlch()).append(" gp");
-						}
-						lines.add(item.getName()
-							+ (item.getQuantity() > 1 ? " ×" + item.getQuantity() : "")
-							+ (worth.length() > 0 ? " — " + worth : ""));
-					}
-					if (spawn.isMembers())
-					{
-						lines.add("Members only");
-					}
-				}
-				else if (spawn.getItems().size() > 1)
-				{
-					lines.add("+" + (spawn.getItems().size() - 1) + " more on this tile");
-				}
+				card = poiTooltipBuilder.buildGroundItemCard(spawn, monsterIconManager, config.compactTooltips());
 			}
 		}
 
-		// Monster zones last — wide centroids must not steal shortcut / shop / quest hovers.
-		if (title == null && config.showMonsterZones())
+		// Monster zones last - wide centroids must not steal shortcut / shop / quest hovers.
+		if (card == null && config.showMonsterZones() && monsterIndex != null && monsterIndex.isLoaded())
 		{
 			final MonsterIndex.Zone monster = PrifddinasShift.firstHit(worldX, worldY,
 				(x, y) -> layerAllows(x, y) ? monsterIndex.nearest(plane, x, y, pointRadius) : null);
 			if (monster != null)
 			{
-				final boolean isTask = config.highlightSlayerTask() && slayerTaskTracker.isTaskMonster(monster);
-				title = monster.getMonster() + (monster.getCombatLevel() > 0 ? " (Lvl " + monster.getCombatLevel() + ")" : "");
-				tooltipIcon = monsterIconManager.getZoneIcon(monster, 20);
-				if (isTask)
-				{
-					final int remaining = slayerTaskTracker.getRemainingTaskAmount();
-					lines.add(remaining > 0 ? "[Current Slayer Task • " + remaining + " remaining]" : "[Current Slayer Task]");
-				}
-				if (monster.getLocationName() != null && !monster.getLocationName().isEmpty())
-				{
-					lines.add("[Monster • " + monster.getLocationName() + "]");
-				}
-				if (monster.getSlayerLevel() > 1)
-				{
-					lines.add("Slayer required: Level " + monster.getSlayerLevel() + " Slayer");
-				}
-				lines.addAll(monster.combatSummaryLines());
-				if (!config.compactTooltips())
-				{
-					if (monster.getSlayerMasters() != null)
-					{
-						lines.add("Assigned by: " + monster.getSlayerMasters());
-					}
-					if (monster.getExamine() != null && !monster.getExamine().isEmpty())
-					{
-						lines.add("\"" + monster.getExamine() + "\"");
-					}
-				}
+				final BufferedImage zoneIcon = monsterIconManager != null ? monsterIconManager.getZoneIcon(monster, 20) : null;
+				final boolean isTask = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskMonster(monster);
+				final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
+				card = monsterTooltipBuilder.buildMonsterZoneCard(monster, zoneIcon, isTask, remaining, config.compactTooltips());
 			}
 		}
 
-		if (title == null || title.trim().isEmpty())
+		if (card == null || card.isEmpty())
 		{
 			return;
 		}
 
-		lines.add(worldX + ", " + worldY + " (Floor " + plane + ")");
-		drawCard(graphics, bounds, cursor, title, tooltipIcon, lines);
+		card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+		drawCard(graphics, bounds, cursor, card);
 	}
 
 	/**
 	 * Where the cursor is, in screen and world terms, plus the hit radius for this zoom.
-	 * Built once and handed to each card probe below, which are tried in priority order.
 	 */
 	private static final class HoverProbe
 	{
@@ -438,44 +340,18 @@ class MapTooltipRenderer
 		}
 	}
 
-	/** Travel hub directory. Only when no tighter point marker is under the cursor - the travel hover radius is wide. */
+	/** Travel hub directory. Only when no tighter point marker is under the cursor. */
 	private boolean drawTravelNodeCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final TravelData.TravelNode travelNode = camera.getHoveredTravelNode();
 		if (travelNode != null && !hasTighterPointMarker(probe.worldX, probe.worldY, probe.plane, probe.pointRadius))
 		{
-			final String title = travelNode.getName();
-			final List<String> lines = new ArrayList<>();
-			lines.add("[" + travelNode.getType().getDisplayName() + " • " + travelNode.getName() + "]");
-
-			final List<TravelData.TravelDestination> dests = travelNode.getDestinations();
-			int shown = 0;
-			int omitted = 0;
-			final int limit = 12;
-			for (TravelData.TravelDestination dest : dests)
+			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(travelNode);
+			if (card != null)
 			{
-				if (dest.getName() != null && dest.getName().equalsIgnoreCase(travelNode.getName()))
-				{
-					continue; // skip self-destination
-				}
-				if (shown >= limit)
-				{
-					omitted++;
-					continue;
-				}
-				final String req = dest.getRequirement();
-				final boolean hasReq = req != null && !req.trim().isEmpty();
-				final String cost = dest.getCost() != null ? dest.getCost() : "";
-				lines.add("→ " + dest.getName() + ": " + cost + (hasReq ? " (Req: " + req.trim() + ")" : ""));
-				shown++;
+				drawCard(graphics, bounds, probe.cursor, card);
+				return true;
 			}
-			if (omitted > 0)
-			{
-				lines.add("... +" + omitted + " more");
-			}
-
-			drawCard(graphics, bounds, probe.cursor, title, lines);
-			return true;
 		}
 		return false;
 	}
@@ -486,20 +362,14 @@ class MapTooltipRenderer
 		final WorldPoint clueLoc = clueNear(probe.worldX, probe.worldY, probe.plane, probe.pointRadius);
 		if (clueLoc != null)
 		{
-			final String label = clueScrollTracker.label();
-			final String cardTitle = label != null ? label : "Clue Scroll";
-			final List<String> clueLines = new ArrayList<>();
-			clueLines.add("[Clue Scroll Target]");
-			clueLines.add(clueLoc.getX() + ", " + clueLoc.getY() + " (Floor " + clueLoc.getPlane() + ")");
-
-			// The clue plugin's own hint panel carries the step detail (emotes, STASH lines,
-			// required items) plus the enemy / spade / light requirement lines that
-			// ClueScrollTracker appends. RuneLite's PanelComponent renderer draws it, attached
-			// under the hovercard text.
-			final PanelComponent cluePanelHint = clueScrollTracker.cluePanel();
-			drawCard(graphics, bounds, probe.cursor, cardTitle, clueLines,
-				cluePanelHint != null && !cluePanelHint.getChildren().isEmpty() ? cluePanelHint : null);
-			return true;
+			final String label = clueScrollTracker != null ? clueScrollTracker.label() : null;
+			final PanelComponent cluePanelHint = clueScrollTracker != null ? clueScrollTracker.cluePanel() : null;
+			final TooltipCard card = poiTooltipBuilder.buildClueCard(clueLoc, label, cluePanelHint);
+			if (card != null)
+			{
+				drawCard(graphics, bounds, probe.cursor, card);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -510,42 +380,13 @@ class MapTooltipRenderer
 		final SailingPort port = portNear(probe.worldX, probe.worldY, probe.plane);
 		if (port != null)
 		{
-			final String portTitle = port.getName();
-			final List<String> portLines = new ArrayList<>();
-			final String sailingHeader = port.getSailingLevelRequired() > 1
-				? "Level " + port.getSailingLevelRequired() + " Sailing"
-				: "Open Dock";
-			portLines.add("[Sailing Dock • " + sailingHeader + "]");
-
 			final List<PlayerBoat> dockedBoats = boatTracker != null ? boatTracker.getBoatsAt(port) : Collections.emptyList();
-			if (!dockedBoats.isEmpty())
+			final TooltipCard card = boatTooltipBuilder.buildPortCard(port, dockedBoats, probe.plane);
+			if (card != null)
 			{
-				if (dockedBoats.size() == 1)
-				{
-					portLines.add("Docked boat: ⛵ " + dockedBoats.get(0).getBoatName());
-				}
-				else
-				{
-					final StringBuilder sb = new StringBuilder("Docked boats (" + dockedBoats.size() + "): ");
-					for (int i = 0; i < dockedBoats.size(); i++)
-					{
-						if (i > 0)
-						{
-							sb.append(", ");
-						}
-						sb.append("⛵ ").append(dockedBoats.get(i).getBoatName());
-					}
-					portLines.add(sb.toString());
-				}
+				drawCard(graphics, bounds, probe.cursor, card);
+				return true;
 			}
-
-			if (port.getNavigationLocation() != null)
-			{
-				portLines.add(port.getNavigationLocation().getX() + ", " + port.getNavigationLocation().getY() + " (Floor " + probe.plane + ")");
-			}
-
-			drawCard(graphics, bounds, probe.cursor, portTitle, portLines);
-			return true;
 		}
 		return false;
 	}
@@ -556,39 +397,12 @@ class MapTooltipRenderer
 		final PortNoticeBoard noticeBoard = noticeBoardNear(probe.worldX, probe.worldY, probe.plane);
 		if (noticeBoard != null)
 		{
-			final String boardTitle = noticeBoard.getName();
-			final List<String> boardLines = new ArrayList<>();
-			boardLines.add("[Port tasks • sample]");
-
-			final List<String> couriers = noticeBoard.getCourierTasks();
-			if (couriers != null && !couriers.isEmpty())
+			final TooltipCard card = boatTooltipBuilder.buildNoticeBoardCard(noticeBoard, probe.plane);
+			if (card != null)
 			{
-				boardLines.add("Courier tasks (sample):");
-				for (String courier : couriers)
-				{
-					boardLines.add("  • " + courier);
-				}
+				drawCard(graphics, bounds, probe.cursor, card);
+				return true;
 			}
-
-			final List<String> bounties = noticeBoard.getBountyTasks();
-			if (bounties != null && !bounties.isEmpty())
-			{
-				boardLines.add("Bounty tasks (sample):");
-				for (String bounty : bounties)
-				{
-					boardLines.add("  • " + bounty);
-				}
-			}
-			else
-			{
-				boardLines.add("Bounty unlocks at Sailing 30");
-			}
-
-			boardLines.add("Boards rotate after 8 tasks or daily reset");
-			boardLines.add(noticeBoard.getLocation().getX() + ", " + noticeBoard.getLocation().getY() + " (Floor " + probe.plane + ")");
-
-			drawCard(graphics, bounds, probe.cursor, boardTitle, boardLines);
-			return true;
 		}
 		return false;
 	}
@@ -599,73 +413,38 @@ class MapTooltipRenderer
 		final PlayerBoat boat = boatNear(probe.worldX, probe.worldY, probe.plane);
 		if (boat != null && boat.isOwned() && boat.getPort() != null)
 		{
-			final SailingPort port = boat.getPort();
-			final String portName = port != null ? port.getName() : SailingPort.resolvePortName(client, boat.getPortId());
-			final String typeStr = boat.getBoatType() != null ? boat.getBoatType().getName() : "Sailing Ship";
-			final String boatTitle = boat.getBoatName() + " (Boat #" + boat.getBoatId() + ")";
-
-			final List<String> boatLines = new ArrayList<>();
-			boatLines.add("[" + typeStr + " • Docked at " + portName + "]");
-			if (port != null && port.getSailingLevelRequired() > 1)
+			final TooltipCard card = boatTooltipBuilder.buildBoatCard(boat, client, probe.plane);
+			if (card != null)
 			{
-				boatLines.add("Required: Level " + port.getSailingLevelRequired() + " Sailing");
+				drawCard(graphics, bounds, probe.cursor, card);
+				return true;
 			}
-			if (boat.getHealth() >= 0)
-			{
-				final int pct = Math.round(boat.getHealth() * 100f);
-				final String cond = pct >= 80 ? "Good" : (pct >= 40 ? "Damaged" : "Critical");
-				boatLines.add("Hull Condition: " + pct + "% (" + cond + ")");
-			}
-			if (port != null && port.getNavigationLocation() != null)
-			{
-				boatLines.add(port.getNavigationLocation().getX() + ", " + port.getNavigationLocation().getY() + " (Floor " + probe.plane + ")");
-			}
-			drawCard(graphics, bounds, probe.cursor, boatTitle, boatLines);
-			return true;
 		}
 		return false;
 	}
 
-	/** A hovered large layer symbol, surface or underground. Runs before the world coordinates are resolved, so it takes the cursor directly. */
+	/** A hovered large layer symbol, surface or underground. */
 	private boolean drawUndergroundZoneCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor)
 	{
 		final UndergroundZone hoveredZone = camera.getHoveredUndergroundZone();
 		if (hoveredZone != null)
 		{
-			final List<String> lines = new ArrayList<>();
-			String title;
-			if (camera.isHoveredSurfaceToUnderground())
+			final TooltipCard card = poiTooltipBuilder.buildUndergroundZoneCard(hoveredZone, camera.isHoveredSurfaceToUnderground());
+			if (card != null)
 			{
-				title = hoveredZone.getName() + " (Underground)";
-				lines.add("[Underground Layer • Lower Plane]");
-				lines.add(hoveredZone.getDescription());
-				lines.add("Hovering: Lower level revealed (surface transparent)");
-				lines.add("Click to open full underground map");
+				drawCard(graphics, bounds, cursor, card);
+				return true;
 			}
-			else
-			{
-				title = hoveredZone.getName() + " (Surface Overworld)";
-				lines.add("[Surface Layer • Upper Plane]");
-				lines.add("Surface location: (" + hoveredZone.getSurfacePoint().getX() + ", " + hoveredZone.getSurfacePoint().getY() + ")");
-				lines.add("Hovering: Surface overworld revealed");
-				lines.add("Click to open full surface map");
-			}
-			drawCard(graphics, bounds, cursor, title, lines);
-			return true;
 		}
 		final OverlayCluster cluster = camera.getHoveredOverlayCluster();
 		if (cluster != null)
 		{
-			final List<String> lines = new ArrayList<>();
-			lines.add("[Connected overlay • member dungeons]");
-			lines.add("Green dungeon icon peeks every connected dungeon in this area.");
-			lines.add("Click to keep the overlay open. Click a dungeon icon to open that dungeon.");
-			for (UndergroundZone member : cluster.members)
+			final TooltipCard card = poiTooltipBuilder.buildOverlayClusterCard(cluster);
+			if (card != null)
 			{
-				lines.add("• " + member.getName());
+				drawCard(graphics, bounds, cursor, card);
+				return true;
 			}
-			drawCard(graphics, bounds, cursor, cluster.name, lines);
-			return true;
 		}
 		return false;
 	}
@@ -681,12 +460,12 @@ class MapTooltipRenderer
 		{
 			return true;
 		}
-		if (hit(worldX, worldY,
+		if (shopIndex != null && hit(worldX, worldY,
 			(x, y) -> shopIndex.nearest(x, y, plane, Math.min(pointRadius, 10))) != null)
 		{
 			return true;
 		}
-		if (hit(worldX, worldY,
+		if (poiIndex != null && hit(worldX, worldY,
 			(x, y) -> poiIndex.nearest(x, y, plane, pointRadius)) != null)
 		{
 			return true;
@@ -701,6 +480,10 @@ class MapTooltipRenderer
 
 	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius)
 	{
+		if (worldMapPointReader == null || worldMapPointManager == null)
+		{
+			return null;
+		}
 		for (WorldMapPoint point : worldMapPointReader.points(worldMapPointManager))
 		{
 			final WorldPoint wp = point.getWorldPoint();
@@ -782,7 +565,7 @@ class MapTooltipRenderer
 	/** Hit-test POI icons using the same fixed screen bounds used to draw them. */
 	private PoiIndex.Poi poiIconAt(java.awt.Point cursor, Rectangle bounds, int plane)
 	{
-		if (camera.getFrameZoom() < 0.45)
+		if (poiIndex == null || camera.getFrameZoom() < 0.45)
 		{
 			return null;
 		}
@@ -889,22 +672,31 @@ class MapTooltipRenderer
 		return null;
 	}
 
-	private void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines)
+	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, TooltipCard card)
+	{
+		if (card == null || card.isEmpty())
+		{
+			return;
+		}
+		drawCard(graphics, bounds, cursor, card.getTitle(), card.getIcon(), card.getLines(), card.getTrailingPanel());
+	}
+
+	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines)
 	{
 		drawCard(graphics, bounds, cursor, title, null, lines, null);
 	}
 
-	private void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines)
+	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines)
 	{
 		drawCard(graphics, bounds, cursor, title, icon, lines, null);
 	}
 
-	private void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines, PanelComponent trailingPanel)
+	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines, PanelComponent trailingPanel)
 	{
 		drawCard(graphics, bounds, cursor, title, null, lines, trailingPanel);
 	}
 
-	private void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines, PanelComponent trailingPanel)
+	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines, PanelComponent trailingPanel)
 	{
 		final Font titleFont = FontManager.getRunescapeBoldFont();
 		final Font bodyFont = SMALL;
@@ -925,8 +717,7 @@ class MapTooltipRenderer
 
 		// The clue hint panel, when supplied, is drawn under the text rows by RuneLite's own
 		// PanelComponent renderer. Its width is an input to that renderer, not an output, so we
-		// fix the content width and measure only the height with a throwaway two-pass render (a
-		// PanelComponent returns a stale size on its first render).
+		// fix the content width and measure only the height with a throwaway two-pass render.
 		final int panelContentW = CardText.MAX_WIDTH_PX - padding * 2;
 		Dimension panelSize = null;
 		if (trailingPanel != null && !trailingPanel.getChildren().isEmpty())
@@ -1042,16 +833,10 @@ class MapTooltipRenderer
 	}
 
 	/**
-	 * The surface {@link #measurePanel} measures against. Nothing is ever drawn into it, so one
-	 * buffer serves every call rather than one per card per frame. Client thread only.
+	 * The surface {@link #measurePanel} measures against.
 	 */
 	private static final BufferedImage MEASURE_SCRATCH = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
-	/**
-	 * A {@link PanelComponent} reports a stale {@code (10,10)} size on its first {@code render}
-	 * (the return value is read from a cache that the call only fills at its end), so measure
-	 * with two throwaway renders on a 1x1 buffer whose font matches the real graphics.
-	 */
 	private static Dimension measurePanel(PanelComponent panel, Graphics2D reference)
 	{
 		final Graphics2D sg = MEASURE_SCRATCH.createGraphics();

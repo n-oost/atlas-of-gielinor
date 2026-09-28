@@ -41,55 +41,49 @@ import net.runelite.client.ui.FontManager;
  * <p>Split out of {@link BetterWorldMapOverlay} so the draw code reads as draw code; the
  * renderers static-import these, so a constant is named the same everywhere it is used.
  */
-final class MapStyle
+public final class MapStyle
 {
-
-	static final Color TEXT_DIM = new Color(205, 205, 205, 165);
-	static final Color TEXT_WARN = new Color(255, 214, 120);
-	static final Color CLUE_FILL = new Color(120, 90, 210, 235);
-	static final Color CLUE_EDGE = new Color(214, 190, 255, 240);
+	public static final Color TEXT_DIM = new Color(205, 205, 205, 165);
+	public static final Color TEXT_WARN = new Color(255, 214, 120);
+	public static final Color CLUE_FILL = new Color(120, 90, 210, 235);
+	public static final Color CLUE_EDGE = new Color(214, 190, 255, 240);
 	/** Quest Helper green, kept clear of the purple the clue markers use. */
-	static final Color QUEST_FILL = new Color(70, 175, 105, 235);
-	static final Color QUEST_EDGE = new Color(178, 240, 200, 240);
-	static final Color CARD_BG = new Color(16, 19, 26, 238);
-	static final Color CARD_EDGE = new Color(196, 162, 80, 200);
-	static final Color CARD_TITLE = new Color(255, 209, 102);
-	static final Color CARD_TEXT = new Color(214, 214, 214);
-	static final Color CHIP_BG = new Color(16, 19, 26, 200);
-	static final Color DEBUG_KEY = new Color(140, 200, 255);
+	public static final Color QUEST_FILL = new Color(70, 175, 105, 235);
+	public static final Color QUEST_EDGE = new Color(178, 240, 200, 240);
+	public static final Color CARD_BG = new Color(16, 19, 26, 238);
+	public static final Color CARD_EDGE = new Color(196, 162, 80, 200);
+	public static final Color CARD_TITLE = new Color(255, 209, 102);
+	public static final Color CARD_TEXT = new Color(214, 214, 214);
+	public static final Color CHIP_BG = new Color(16, 19, 26, 200);
+	public static final Color DEBUG_KEY = new Color(140, 200, 255);
 
-	static final Font RUNESCAPE_BOLD = FontManager.getRunescapeBoldFont();
-	static final Font RUNESCAPE_SMALL = FontManager.getRunescapeSmallFont();
-	static final Font RUNESCAPE_PLAIN = FontManager.getRunescapeFont();
-	static final Font RUNELITE_PLAIN = FontManager.getDefaultFont().deriveFont(11f);
-	static final Font RUNELITE_BOLD = FontManager.getDefaultBoldFont().deriveFont(11f);
+	public static final Font RUNESCAPE_BOLD = FontManager.getRunescapeBoldFont();
+	public static final Font RUNESCAPE_SMALL = FontManager.getRunescapeSmallFont();
+	public static final Font RUNESCAPE_PLAIN = FontManager.getRunescapeFont();
+	public static final Font RUNELITE_PLAIN = FontManager.getDefaultFont().deriveFont(11f);
+	public static final Font RUNELITE_BOLD = FontManager.getDefaultBoldFont().deriveFont(11f);
 
-	static final Font SMALL = RUNELITE_PLAIN;
+	public static final Font SMALL = RUNELITE_PLAIN;
 
 	/** The card row colours, handed to {@link CardText} so its layout stays free of the overlay. */
-	static final CardText.Palette CARD_PALETTE =
+	public static final CardText.Palette CARD_PALETTE =
 		new CardText.Palette(DEBUG_KEY, TEXT_WARN, TEXT_DIM, CARD_TEXT);
 
-
-
-	static final Color ROUTE_SHADOW = new Color(18, 18, 18, 200);
+	public static final Color ROUTE_SHADOW = new Color(18, 18, 18, 200);
 	/** Better Map's own computed walking route: cyan, so it never reads as a themed travel-route arc. */
-	static final Color ROUTE_LINE = new Color(96, 205, 255, 235);
+	public static final Color ROUTE_LINE = new Color(96, 205, 255, 235);
 	/** Same route when the target is unreachable — amber; the line stops at the closest tile. */
-	static final Color ROUTE_LINE_PARTIAL = new Color(240, 190, 90, 235);
-
+	public static final Color ROUTE_LINE_PARTIAL = new Color(240, 190, 90, 235);
 
 	/** Enum.values() clones its array on every call; these are read in per-frame loops. */
-	static final MonsterLocationData[] BOSSES = MonsterLocationData.values();
-
-
+	public static final MonsterLocationData[] BOSSES = MonsterLocationData.values();
 
 	/**
 	 * Left toolbar below the status chip: layers gear (slot 0), finder magnifier (slot 1).
 	 */
-	static final int LEFT_TOOLBAR_BUTTON_SIZE = 22;
-	static final int LEFT_TOOLBAR_LAYERS = 0;
-	static final int LEFT_TOOLBAR_FINDER = 1;
+	public static final int LEFT_TOOLBAR_BUTTON_SIZE = 22;
+	public static final int LEFT_TOOLBAR_LAYERS = 0;
+	public static final int LEFT_TOOLBAR_FINDER = 1;
 
 	private MapStyle()
 	{

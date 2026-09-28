@@ -89,7 +89,7 @@ class MapFinderRenderer
 		this.finder = finder;
 	}
 
-	/** Description-strip tag for shop / ground-item results, or null to fall back to POI category. */
+	/** Description-strip tag for typed results, or null to fall back to POI category. */
 	private static String itemKindLabel(MapFinder.Result res)
 	{
 		if (res == null)
@@ -102,6 +102,8 @@ class MapFinderRenderer
 				return "[Shop]";
 			case GROUND_ITEM:
 				return "[Ground spawn]";
+			case MINERAL:
+				return "[Mineral]";
 			default:
 				return null;
 		}
@@ -390,6 +392,7 @@ class MapFinderRenderer
 					{
 						flyoutAnchorRow = row;
 					}
+					drawResultIcon(graphics, result, panel.x + padX, rowY + 4);
 
 					final Rectangle walk;
 					if (result.hasChildren())
@@ -410,7 +413,8 @@ class MapFinderRenderer
 							graphics.drawString(distText, row.x + row.width - countW - 8 - dW - 6, rowY + rowH - 6);
 						}
 
-						final int maxNameW = row.x + row.width - countW - 8 - (dist >= 0 ? dW + 12 : 6) - (panel.x + padX);
+						final int nameX = panel.x + padX + 16;
+						final int maxNameW = row.x + row.width - countW - 8 - (dist >= 0 ? dW + 12 : 6) - nameX;
 						String name = result.getName() != null ? result.getName() : "";
 						if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
 						{
@@ -421,7 +425,7 @@ class MapFinderRenderer
 							name = name + "…";
 						}
 						graphics.setColor(CARD_TEXT);
-						graphics.drawString(name, panel.x + padX, rowY + rowH - 6);
+						graphics.drawString(name, nameX, rowY + rowH - 6);
 					}
 					else
 					{
@@ -438,7 +442,8 @@ class MapFinderRenderer
 							graphics.drawString(distText, distRight - distWidth, rowY + rowH - 6);
 						}
 
-						final int maxNameW = (dist >= 0 ? distRight - distWidth - 6 : row.x + row.width - 8) - (panel.x + padX);
+						final int nameX = panel.x + padX + 16;
+						final int maxNameW = (dist >= 0 ? distRight - distWidth - 6 : row.x + row.width - 8) - nameX;
 						String name = result.getName() != null ? result.getName() : "";
 						if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
 						{
@@ -449,7 +454,7 @@ class MapFinderRenderer
 							name = name + "…";
 						}
 						graphics.setColor(CARD_TEXT);
-						graphics.drawString(name, panel.x + padX, rowY + rowH - 6);
+						graphics.drawString(name, nameX, rowY + rowH - 6);
 					}
 
 					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, result.getPoint(), result.getName(), result, null);
@@ -501,7 +506,7 @@ class MapFinderRenderer
 			}
 			else
 			{
-				final PoiIndex.Poi poi = (poiIndex != null && pt != null) ? poiIndex.nearest(pt.getX(), pt.getY(), pt.getPlane(), 2) : null;
+								final PoiIndex.Poi poi = (poiIndex != null && pt != null) ? poiIndex.nearest(pt.getX(), pt.getY(), pt.getPlane(), 2) : null;
 				final PoiDetails.Detail detail = poi != null
 					? PoiDetails.getDetail(poi, pt.getX(), pt.getY(), pt.getPlane())
 					: (pt != null ? PoiDetails.getDetailByPosition(pt.getX(), pt.getY(), pt.getPlane(), 6) : null);
@@ -887,6 +892,21 @@ class MapFinderRenderer
 			graphics.drawString(displayText, field.x + 6, textY);
 		}
 		camera.setFinderFieldBounds(field);
+	}
+
+	private static void drawResultIcon(Graphics2D graphics, MapFinder.Result result, int x, int y)
+	{
+		final String icon;
+		switch (result.getKind())
+		{
+			case SHOP: icon = "$"; break;
+			case GROUND_ITEM: icon = "◆"; break;
+			case MONSTER: icon = "☠"; break;
+			case MINERAL: icon = "⛏"; break;
+			default: icon = "●"; break;
+		}
+		graphics.setColor(result.getKind() == MapFinder.Result.Kind.MINERAL ? new Color(210, 170, 95) : CARD_TITLE);
+		graphics.drawString(icon, x, y + 12);
 	}
 
 	private static int distanceTiles(WorldPoint point, WorldPoint from)

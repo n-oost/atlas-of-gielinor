@@ -169,15 +169,32 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "compactTooltips",
-		name = "Compact Tooltips",
-		description = "Shows concise tooltip cards without lengthy examine texts, strategies, or full drop tables",
+		keyName = "expandedTooltips",
+		name = "Expanded Tooltips",
+		description = "Shows detailed tooltip information by default; turn off for icon-and-name tooltips",
 		position = 8,
 		section = mapSection
 	)
-	default boolean compactTooltips()
+	default boolean expandedTooltips()
 	{
 		return false;
+	}
+
+	@ConfigItem(
+		keyName = "tooltipExpandModifier",
+		name = "Expand Tooltips With",
+		description = "Hold this modifier to temporarily show full tooltip details",
+		position = 9,
+		section = mapSection
+	)
+	default TooltipModifier tooltipExpandModifier()
+	{
+		return TooltipModifier.ALT;
+	}
+
+	enum TooltipModifier
+	{
+		SHIFT, ALT, CTRL
 	}
 
 	@ConfigItem(

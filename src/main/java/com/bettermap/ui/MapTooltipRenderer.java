@@ -169,6 +169,7 @@ public class MapTooltipRenderer
 		{
 			return;
 		}
+		final boolean compact = !config.expandedTooltips() && !input.isTooltipExpandModifierDown();
 
 		final java.awt.Point cursor = input.getCursor();
 		if (cursor == null || !bounds.contains(cursor))
@@ -239,7 +240,11 @@ public class MapTooltipRenderer
 			final BufferedImage bossIcon = monsterIconManager != null ? monsterIconManager.getBossIcon(boss, 20) : null;
 			final boolean isTaskBoss = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskBoss(boss);
 			final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
-			card = monsterTooltipBuilder.buildBossCard(boss, bossIcon, isTaskBoss, remaining, config.compactTooltips());
+			final MonsterIndex.Zone stats = monsterIndex != null
+				? monsterIndex.nearest(plane, boss.getWorldPoint().getX(), boss.getWorldPoint().getY(), 2)
+				: null;
+			final MonsterIndex.Zone bossStats = stats != null && boss.getName().equalsIgnoreCase(stats.getMonster()) ? stats : null;
+			card = monsterTooltipBuilder.buildBossCard(boss, bossIcon, isTaskBoss, remaining, compact, bossStats);
 		}
 
 		if (card == null && shopIndex != null)
@@ -271,7 +276,7 @@ public class MapTooltipRenderer
 
 			if (detail != null || (poi != null && poi.getName() != null && !poi.getName().isEmpty()))
 			{
-				card = poiTooltipBuilder.buildPoiCard(detail, poi, tooltipIcon);
+				card = poiTooltipBuilder.buildPoiCard(detail, poi, tooltipIcon, compact);
 			}
 		}
 
@@ -292,7 +297,7 @@ public class MapTooltipRenderer
 				(x, y) -> groundItemIndex.nearest(x, y, plane, Math.min(radius, 4), config.groundItemMinValue()));
 			if (spawn != null)
 			{
-				card = poiTooltipBuilder.buildGroundItemCard(spawn, monsterIconManager, config.compactTooltips());
+				card = poiTooltipBuilder.buildGroundItemCard(spawn, monsterIconManager, compact);
 			}
 		}
 
@@ -306,7 +311,7 @@ public class MapTooltipRenderer
 				final BufferedImage zoneIcon = monsterIconManager != null ? monsterIconManager.getZoneIcon(monster, 20) : null;
 				final boolean isTask = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskMonster(monster);
 				final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
-				card = monsterTooltipBuilder.buildMonsterZoneCard(monster, zoneIcon, isTask, remaining, config.compactTooltips());
+			card = monsterTooltipBuilder.buildMonsterZoneCard(monster, zoneIcon, isTask, remaining, compact);
 			}
 		}
 
@@ -677,6 +682,16 @@ public class MapTooltipRenderer
 		if (card == null || card.isEmpty())
 		{
 			return;
+		}
+		if (!config.expandedTooltips() && !input.isTooltipExpandModifierDown())
+		{
+			final String compactTitle = card.getTitle().replaceFirst(" \\(Lvl \\d+\\)$", "");
+			final TooltipCard compactCard = new TooltipCard(compactTitle, card.getIcon());
+			if (card.isPreserveCompactLines())
+			{
+				compactCard.addLines(card.getLines());
+			}
+			card = compactCard;
 		}
 		drawCard(graphics, bounds, cursor, card.getTitle(), card.getIcon(), card.getLines(), card.getTrailingPanel());
 	}

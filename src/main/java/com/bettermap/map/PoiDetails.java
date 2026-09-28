@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,6 +42,44 @@ import java.util.Set;
  */
 public final class PoiDetails
 {
+	private static final Pattern LEVEL_REQUIREMENT = Pattern.compile("(?i)(?:level requirement:|requires:)?\\s*(?:level\\s*)?(\\d+)\\s+([a-z ]+?)(?:\\s*[,.(].*)?$");
+
+	public static List<String> compactSkillingLines(String title, List<String> lines)
+	{
+		for (String line : lines)
+		{
+			final Matcher matcher = LEVEL_REQUIREMENT.matcher(line.trim());
+			if (matcher.matches())
+			{
+				return List.of("Level " + matcher.group(1) + " " + matcher.group(2).trim());
+			}
+		}
+		final Matcher titleLevel = Pattern.compile("(?i).*\\(Level (\\d+)\\).*").matcher(title);
+		if (titleLevel.matches())
+		{
+			return List.of("Level " + titleLevel.group(1));
+		}
+		return Collections.emptyList();
+	}
+
+	/** Known spell requirements for teleport POIs; other travel modes have no rune spell cost. */
+	public static List<String> compactTeleportLines(String title)
+	{
+		switch (title)
+		{
+			case "Teleport to Rune Essence":
+				return List.of("Wizard NPC • Rune Mysteries");
+			case "Teleport to Sorceress's Garden":
+				return List.of("Minigame teleport • Prince Ali Rescue");
+			case "Teleport to Library Archive":
+				return List.of("2 Earth, 1 Law rune • 6 Magic");
+			case "Teleport to Prifddinas Library":
+				return List.of("Teleport crystal • Song of the Elves");
+			default:
+				return Collections.emptyList();
+		}
+	}
+
 	public static final class Detail
 	{
 		private final String title;

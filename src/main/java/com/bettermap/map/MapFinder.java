@@ -25,6 +25,7 @@
 package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
+import com.bettermap.map.PoiDetails;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -267,6 +268,12 @@ public class MapFinder
 
 		for (PoiIndex.Poi poi : poiIndex.searchByName(lower, Integer.MAX_VALUE))
 		{
+			// Mining sites are matched through their mineral list below, where they get a useful
+			// mineral-specific result type. Avoid a duplicate generic location row by site name.
+			if ("mining_site".equals(poi.getKey()))
+			{
+				continue;
+			}
 			final int tier = matchTier(poi.getName(), null, lower);
 			if (tier == -1)
 			{
@@ -275,6 +282,29 @@ public class MapFinder
 			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 			final int tiles = distanceTiles(point, from);
 			candidates.add(new Result(poi.getName(), poi.getName(), point, tiles, tier));
+		}
+
+		// Curated mining-site POIs list their available minerals in their detail lines. Reuse that
+		// authoritative location data so searches like "mithril" find the actual sites.
+		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
+		{
+			if (!"mining_site".equals(poi.getKey()))
+			{
+				continue;
+			}
+			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
+			if (detail == null || detail.getLines().stream().noneMatch(line -> line.toLowerCase(Locale.ROOT).contains(lower)))
+			{
+				continue;
+			}
+			final String mineral = mineralMatch(detail, lower);
+			if (mineral == null)
+			{
+				continue;
+			}
+			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
+			candidates.add(new Result(mineral + " — " + poi.getName(), mineral,
+				point, distanceTiles(point, from), matchTier(mineral, poi.getName(), lower), Result.Kind.MINERAL));
 		}
 
 		for (MonsterIndex.Zone zone : monsterIndex.searchByName(lower, Integer.MAX_VALUE))
@@ -307,9 +337,9 @@ public class MapFinder
 				final int tiles = distanceTiles(point, from);
 				final String detail = matched != null ? matched.toDetailLine() : null;
 				final int sellGp = matched != null ? matched.getSell() : 0;
-				// All shops stocking the term share one groupKey, so groupByName() folds them into
-				// one flyout titled after that key, nearest shop on the parent row.
-				candidates.add(new Result(shop.getName(), "Shops stocking \"" + term + "\"",
+				// Group by the matched stock item so similarly named results explain what the query found.
+				final String matchLabel = matchName != null ? matchName : term;
+				candidates.add(new Result(shop.getName(), "Shop item: " + matchLabel,
 					point, tiles, tier, Result.Kind.SHOP, detail, sellGp));
 			}
 
@@ -326,8 +356,9 @@ public class MapFinder
 				final String where = spawn.getLocation() != null && !spawn.getLocation().isEmpty()
 					? " — " + spawn.getLocation()
 					: "";
-				candidates.add(new Result((itemName != null ? itemName : term) + where,
-					"\"" + term + "\" on the ground", point, tiles, tier, Result.Kind.GROUND_ITEM));
+				final String matchLabel = itemName != null ? itemName : term;
+				candidates.add(new Result(matchLabel + where,
+					"Ground item: " + matchLabel, point, tiles, tier, Result.Kind.GROUND_ITEM));
 			}
 		}
 
@@ -335,6 +366,27 @@ public class MapFinder
 		this.resultOrigin = from;
 		this.searchDataVersion = currentSearchDataVersion();
 		publishRankedResults(candidates);
+	}
+
+	private static String mineralMatch(PoiDetails.Detail detail, String lower)
+	{
+		final String available = detail.getLines().stream()
+			.filter(line -> line.toLowerCase(Locale.ROOT).startsWith("ores"))
+			.findFirst().orElse("");
+		final int colon = available.indexOf(':');
+		if (colon < 0)
+		{
+			return null;
+		}
+		for (String mineral : available.substring(colon + 1).split(","))
+		{
+			final String candidate = mineral.replaceAll("\\s*\\([^)]*\\)", "").trim();
+			if (candidate.toLowerCase(Locale.ROOT).contains(lower))
+			{
+				return candidate;
+			}
+		}
+		return null;
 	}
 
 	/** Refresh distance ordering after movement without rescanning source datasets. */
@@ -608,9 +660,23 @@ public class MapFinder
 		final List<Result> children = new ArrayList<>(members);
 		children.sort(MapFinder::compareByTierThenDistance);
 		final Result nearest = children.get(0);
-		final String label = groupKey(nearest);
+		final String label = resultGroupLabel(nearest, members.size());
 		return new Result(label, groupKey(nearest), nearest.getPoint(), nearest.getDistanceTiles(),
 			nearest.getTier(), nearest.getKind(), children, nearest.getDetail(), nearest.getSellGp());
+	}
+
+	private static String resultGroupLabel(Result result, int count)
+	{
+		final String key = groupKey(result);
+		if (result.getKind() == Result.Kind.SHOP)
+		{
+			return key + " — " + count + " shop" + (count == 1 ? "" : "s");
+		}
+		if (result.getKind() == Result.Kind.GROUND_ITEM)
+		{
+			return key + " — " + count + " ground location" + (count == 1 ? "" : "s");
+		}
+		return key;
 	}
 
 	private static String groupKey(Result result)
@@ -667,7 +733,8 @@ public class MapFinder
 			PLACE,
 			MONSTER,
 			SHOP,
-			GROUND_ITEM
+			GROUND_ITEM,
+			MINERAL
 		}
 
 		private final String name;

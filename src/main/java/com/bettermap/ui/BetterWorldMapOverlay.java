@@ -260,10 +260,6 @@ public class BetterWorldMapOverlay extends Overlay
 					camera.isActive(),
 					camera.isClosing());
 			}
-			if (camera.isClosing())
-			{
-				camera.setClosing(false);
-			}
 			if (wasOpen)
 			{
 				onMapClosed();

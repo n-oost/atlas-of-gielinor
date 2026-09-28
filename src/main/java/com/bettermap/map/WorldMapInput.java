@@ -74,6 +74,9 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	private final MapKeyHandler keyHandler;
 
 	private volatile Point cursor;
+	private volatile boolean shiftDown;
+	private volatile boolean altDown;
+	private volatile boolean ctrlDown;
 
 	/** Package-private for tests — production uses {@link MapCamera#FINDER_FLYOUT_DWELL_MS}. */
 	long flyoutDwellMs = MapCamera.FINDER_FLYOUT_DWELL_MS;
@@ -144,6 +147,19 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	public Point getCursor()
 	{
 		return cursor;
+	}
+
+	public boolean isTooltipExpandModifierDown()
+	{
+		switch (config.tooltipExpandModifier())
+		{
+			case ALT:
+				return altDown;
+			case CTRL:
+				return ctrlDown;
+			default:
+				return shiftDown;
+		}
 	}
 
 	@Override
@@ -452,13 +468,34 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public void keyPressed(KeyEvent event)
 	{
+		setModifier(event.getKeyCode(), true);
 		keyHandler.keyPressed(event);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent event)
 	{
+		setModifier(event.getKeyCode(), false);
 		keyHandler.keyReleased(event);
+	}
+
+	private void setModifier(int keyCode, boolean down)
+	{
+		switch (keyCode)
+		{
+			case KeyEvent.VK_SHIFT:
+				shiftDown = down;
+				break;
+			case KeyEvent.VK_ALT:
+			case KeyEvent.VK_ALT_GRAPH:
+				altDown = down;
+				break;
+			case KeyEvent.VK_CONTROL:
+				ctrlDown = down;
+				break;
+			default:
+				break;
+		}
 	}
 
 	@Override
@@ -467,6 +504,9 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 		dragController.reset();
 		cursor = null;
 		camera.setShiftHeld(false);
+		shiftDown = false;
+		altDown = false;
+		ctrlDown = false;
 		camera.setFinderFieldFocused(false);
 		camera.setHoveredUnderground(null, true);
 		camera.setHoveredTravelNode(null);

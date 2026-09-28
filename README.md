@@ -29,7 +29,7 @@ slayer masters, weakness strategies, key drops), travel directories, coordinates
 | Shop stock | POI details |
 | :---: | :---: |
 | ![Shop stock](docs/gifs/karamja-store.png) | ![POI details](docs/gifs/yew-tree.png) |
-| **Notice board & travel directory** | **Monster details** |
+| **Notice board** | **Monster details** |
 | ![Notice board](docs/gifs/port-board.png) | ![Monster details](docs/gifs/gnome-man.png) |
 
 ### Find

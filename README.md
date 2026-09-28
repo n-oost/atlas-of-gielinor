@@ -16,9 +16,10 @@ Better Overworld / Underworld map and control.
 
 ### Zoom from the whole world to one tile
 
-Better Map owns the camera: 0.04 to 24 pixels per game tile. Drag to pan, scroll to zoom about
-the cursor, right click to step back out.
+The map view shows the full surface world with towns, buildings, terrain, water, points of interest,
+and interactive markers visible at the same time.
 
+Drag to pan, scroll to zoom about the cursor 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
 ### Hover cards

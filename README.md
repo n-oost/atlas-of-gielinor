@@ -19,9 +19,6 @@ Better Overworld / Underworld map and control.
 Better Map owns the camera: 0.04 to 24 pixels per game tile. Drag to pan, scroll to zoom about
 the cursor, right click to step back out.
 
-The map view shows the full surface world with towns, buildings, terrain, water, points of interest,
-and interactive markers visible at the same time.
-
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
 ### Hover cards
@@ -35,12 +32,17 @@ slayer masters, weakness strategies, key drops), travel directories, coordinates
 | **Notice board** | **Monster details** |
 | ![Notice board](docs/gifs/port-board.png) | ![Monster details](docs/gifs/gnome-man.png) |
 
+### Dungeon entrances
+
+Hover dungeon entrances to view the dungeon name, location details, and available actions directly
+from the map.
+
+![Dungeon entrances](docs/gifs/hover-dungeons.gif)
+
 ### Find
 
 Search locations, monsters, shops and ground-item spawns by name, from the in-map Find card or
-from the quick-find orb by the minimap (drag it to reposition, click to open). Enter opens map to
-the nearest match; with the map open it also centres on that match. An option echoes the three nearest matches to the
-game chat as you type.
+from the quick-find orb by the minimap (drag it to reposition, click to open). Type location, monster, shop, item. Click or hit enter to open map and open up on location. Can work with shortest route plugin.
 
 ![Find](docs/gifs/ground-item-search.gif)
 

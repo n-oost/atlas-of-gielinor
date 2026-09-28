@@ -68,18 +68,15 @@
 #L	1007	1	Asgarnian Ice Dungeon	202
 #L	1008	1	Banana plantation	237
 #L	1009	1	Barbarian Assault	212
-#L	1010	1	Barbarian Assault lobby	212
 #L	1012	1	Blast Furnace	218
 #L	1014	1	Braindeath Island	240
 #L	1016	1	Brimhaven Dungeon	221
 #L	1017	1	Brine Rat Cavern	218
-#L	1018	1	Layer 1018	-1
-#L	1019	1	Layer 1019	-1
+#L	1019	1	Guardians of the Rift	-1
 #L	1020	1	Cam Torum	235
 #L	1021	1	Catacombs of Kourend	232
 #L	1022	1	Corporeal Beast Lair	241
 #L	1023	1	Corsair Cove Dungeon	238
-#L	1024	1	Layer 1024	-1
 #L	1025	1	Crabclaw Caves	233
 #L	1026	1	Crandor and Karamja Dungeon	222
 #L	1028	1	Crash Site Cavern	211
@@ -92,14 +89,10 @@
 #L	1047	1	Elemental Workshop	213
 #L	1048	1	Enakhra's Temple	226
 #L	1049	1	Enchanted Valley	244
-#L	1050	1	Enlightened Journey crash areas	244
-#L	1052	1	Dorgesh-Kaan	204
-#L	1053	1	Dorgesh-Kaan (Middle level)	1052
+#L	1052	1	Dorgesh-Kaan (0)	1383
+#L	1053	1	Dorgesh-Kaan (1)	1383
 #L	1054	1	Ferox Enclave Dungeon	241
-#L	1055	1	Layer 1055	-1
-#L	1056	1	Fishing Trawler	244
 #L	1057	1	Forthos Dungeon	233
-#L	1058	1	Layer 1058	-1
 #L	1059	1	Fossil Island Caverns / Wyvern Cave	231
 #L	1062	1	Fremennik Slayer Dungeon	218
 #L	1063	1	Garden of Death	234
@@ -116,7 +109,6 @@
 #L	1084	1	Jungle Eagle lair/Red chinchompa hunting ground	238
 #L	1089	1	Karamjan Temple	223
 #L	1090	1	Karuulm Slayer Dungeon	234
-#L	1091	1	Layer 1091	-1
 #L	1092	1	Keldagrim	218
 #L	1096	1	Klenter's Pyramid	225
 #L	1097	1	Kraken Cove	215
@@ -159,17 +151,15 @@
 #L	1172	1	Troll Stronghold	219
 #L	1173	1	Tunnel of Chaos	207
 #L	1175	1	Tutorial Island dungeon	206
-#L	1176	1	Tutorial Island v2 dungeon	244
 #L	1177	1	TzHaar City / Mor Ul Rek	222
-#L	1179	1	Underground Pass (6 -Well of Voyage)	217
+#L	1179	1	Underground Pass (5)	1384
 #L	1180	1	Ungael Laboratory	220
 #L	1191	1	Varrock Museum basement	207
-#L	1192	1	Varrock Sewers	207
+#L	1192	1	Varrock Sewers & Edgeville Dungeon	207
 #L	1195	1	Waterbirth Island Dungeon	220
 #L	1196	1	Web Chasm	241
 #L	1200	1	Xeric's Lookout basement	233
-#L	1201	1	Yanille Agility Dungeon	214
-#L	1202	1	Yanille cutscene	244
+#L	1201	1	Yanille Agility Dungeon (0)	1385
 #L	1203	1	Zanaris	205
 #L	1204	1	Jiggig Dungeon	238
 #L	1205	1	Temple of Ikov	213
@@ -185,7 +175,6 @@
 #L	1229	1	Desert Mining Camp dungeon	224
 #L	1231	1	Draynor Manor Basement	204
 #L	1232	1	Ectofuntus dungeon	228
-#L	1234	1	Fairy Resistance Hideout	244
 #L	1235	1	Fortis Colosseum	236
 #L	1236	1	Genie cave	226
 #L	1238	1	Gryphon Cave	243
@@ -213,24 +202,20 @@
 #L	1268	1	Shellbane Gryphon	243
 #L	1269	1	Smoke Devil Dungeon	214
 #L	1270	1	Sourhog Cave	204
-#L	1271	1	Stronghold of Security	208
+#L	1271	1	Stronghold of Security (0)	1382
 #L	1272	1	Sunbleak Cave	243
 #L	1273	1	Chasm of Tears	1252
 #L	1275	1	The Abyss	208
-#L	1276	1	The Inferno	244
 #L	1280	1	Vet'ion's Rest	241
 #L	1281	1	Villa Lucens	236
-#L	1285	1	Western Ocean Underground	243
 #L	1286	1	Wizards' Tower Basement	204
 #L	1287	1	Ynysdail Cavern	243
 #L	1290	1	idk?	244
-#L	1291	1	no idea	244
 #L	1294	1	Fragment of Seren (Song of the Elves)	244
 #L	1301	1	Tiles (dump leftover)	244
 #L	1303	1	Dragon Nest	235
 #L	1304	1	Hunter Guild	236
-#L	1305	1	Fortis Barracks	236
-#L	1306	1	Fortis Crypt	236
+#L	1305	1	Under Civitas illa Fortis	236
 #L	1307	1	Witchaven Dungeon	210
 #L	1308	1	Fisher Realm (Holy Grail)	244
 #L	1309	1	Keep Le Faye (quest)	244
@@ -278,9 +263,9 @@
 #L	1353	1	Pandemonium Cave	243
 #L	1354	1	Jogre Dungeon	223
 #L	1355	1	Agility Pyramid	225
-#L	1358	1	Stronghold of Security (Catacomb of Famine)	1271
-#L	1359	1	Stronghold of Security (Pit of Pestilence)	1271
-#L	1360	1	Stronghold of Security (Sepulchre of Death)	1271
+#L	1358	1	Stronghold of Security (1)	1382
+#L	1359	1	Stronghold of Security (2)	1382
+#L	1360	1	Stronghold of Security (3)	1382
 #L	1361	1	Mining Guild	200
 #L	1362	1	Motherlode Mine	200
 #L	1363	1	Scrubfoot's Cave	200
@@ -290,17 +275,23 @@
 #L	1367	1	Goblin Cave	213
 #L	1368	1	Tower of Life Basement	210
 #L	1371	1	Wizards' Guild Basement	214
-#L	1372	1	Yanille Agility Dungeon (lower level)	1201
-#L	1373	1	Dorgesh-Kaan (Upper level)	1052
+#L	1372	1	Yanille Agility Dungeon (1)	1385
+#L	1373	1	Dorgesh-Kaan (2)	1383
 #L	1374	1	Jaldraocht	102
 #L	1375	1	werewolf agility	108
-#L	1376	1	Underground Pass (2)	217
-#L	1377	1	Underground Pass(1)	217
-#L	1378	1	Underground Pass (3)	217
-#L	1379	1	Underground Pass (4)	217
-#L	1380	1	Underground Pass (5)	217
+#L	1376	1	Underground Pass (1)	1384
+#L	1377	1	Underground Pass (0)	1384
+#L	1378	1	Underground Pass (2)	1384
+#L	1379	1	Underground Pass (3)	1384
+#L	1380	1	Underground Pass (4)	1384
+#L	1382	1	Stronghold of Security (4)	208
+#L	1383	1	Dorgesh-Kaan (3)	204
+#L	1384	1	Underground Pass (6)	217
+#L	1385	1	Yanille Agility Dungeon (2)	214
+#L	1386	1	Legends Guild Dungeon	100
+#L	1387	1	Poison Wastes Sewer	100
 # piece	layer	plane	label	srcMinX	srcMinY	srcMaxX	srcMaxY	dstDx	dstDy	rot	locked	flip	zone
-47	1020	0	Cam Torum under or above ground?	1410	9544	1492	9607	-4	-6381	0	0	0	cam_torum
+47	1020	0	Cam Torum under or above ground?	1393	9517	1494	9607	-4	-6381	0	1	0	cam_torum
 48	1126	0	Neypotzli — Earthbound Cavern (Hunter)	1343	9666	1408	9743	9	-6393	0	1	0	neypotzli
 49	1126	0	Neypotzli — Streambound Cavern (Fishing)	1472	9664	1535	9726	-17	-6393	0	1	0	neypotzli
 50	1126	0	Neypotzli — Blue Moon Arena	1422	9648	1458	9697	-4	-6395	0	1	0	neypotzli
@@ -311,308 +302,296 @@
 0	1000	0	Abandoned Mine - Level 1	3396	9608	3447	9663	5	-6405	0	0	0	haunted_mine
 2	1312	0	Abandoned Mine - Level 2	2756	4416	2811	4543	747	-1306	0	0	0	-
 3	1002	0	Ah Za Rhoon	2880	9280	2943	9335	23	-6337	0	0	0	-
-4	1003	0	Airship platform	2048	5376	2111	5439	720	-2058	0	0	0	-
+4	1290	0	?	2047	5408	2111	5619	3910	-1506	0	0	0	eagles_peak_dungeon
 5	1271	0	Stronghold of Security (Vault of War)	1856	5184	1916	5246	1222	-1822	0	1	0	stronghold_of_security
-6	1004	0	Ancient Cavern	1733	5318	1790	5373	743	-1855	0	1	0	ancient_cavern
-7	1301	0	Tiles (dump leftover)	1728	5440	1791	5503	751	-1836	0	0	0	-
+6	1004	0	Ancient Cavern (lower)	1733	5318	1799	5373	747	-1862	0	1	0	ancient_cavern
+7	1301	0	Tiles (dump leftover)	1728	5440	1791	5503	6460	-1857	0	0	0	-
 8	1005	0	Ape Atoll Dungeon	2688	9088	2815	9215	0	-6400	0	1	0	ape_atoll_dungeon
-9	1301	0	Tiles (dump leftover) (island 1)	2816	9216	2879	9295	0	-6400	0	0	0	-
+9	1301	0	Tiles (dump leftover) (island 1)	2816	9216	2879	9295	5709	-6421	0	0	0	-
 10	1354	0	Jogre Dungeon	2815	9473	2882	9536	-4	-6405	0	0	0	-
-12	1006	0	Ardougne Sewers	2537	9664	2622	9727	0	-6400	0	1	0	ardougne_underground
-13	1343	0	Chaos Druid Tower dungeon	2559	9729	2593	9757	0	-6400	0	1	0	chaos_druid_tower
-14	1301	0	Tiles (dump leftover) (island 2)	2508	9736	2531	9775	0	-6400	0	0	0	-
-15	1301	0	Tiles (dump leftover) (island 3)	2560	9700	2579	9719	0	-6400	0	0	0	-
-16	1301	0	Tiles (dump leftover) (island 4)	2532	9740	2547	9751	0	-6400	0	0	0	-
-17	1301	0	Tiles (dump leftover) (island 5)	2536	9692	2551	9703	0	-6400	0	0	0	-
-18	1301	0	Tiles (dump leftover) (island 6)	2532	9616	2539	9623	0	-6400	0	0	0	-
-19	1007	0	Asgarnian Ice Dungeon	2944	9536	3081	9598	0	-6400	0	1	0	asgarnia_ice_cave
-20	1007	0	Asgarnian Ice Dungeon	2884	9472	2943	9535	0	-6400	0	0	0	asgarnia_ice_cave
-21	1007	0	Asgarnian Ice Dungeon	2944	9520	2947	9531	0	-6400	0	0	0	asgarnia_ice_cave
-22	1007	0	Asgarnian Ice Dungeon	2952	9528	2959	9535	0	-6400	0	0	0	asgarnia_ice_cave
+12	1006	0	Ardougne Sewers	2551	9675	2622	9689	17	-6448	0	1	0	ardougne_underground
+13	1343	0	Chaos Druid Tower dungeon	2559	9729	2593	9759	0	-6400	0	0	0	chaos_druid_tower
+14	1301	0	Tiles (dump leftover) (island 2)	2508	9736	2531	9775	5709	-6421	0	0	0	-
+15	1301	0	Tiles (dump leftover) (island 3)	2560	9700	2579	9719	5709	-6421	0	0	0	-
+16	1301	0	Tiles (dump leftover) (island 4)	2532	9740	2547	9751	5709	-6421	0	0	0	-
+17	1301	0	Tiles (dump leftover) (island 5)	2536	9692	2551	9703	5709	-6421	0	0	0	-
+18	1301	0	Tiles (dump leftover) (island 6)	2532	9616	2539	9623	5709	-6421	0	0	0	-
+19	1007	0	Asgarnian Ice Dungeon	2820	9536	3087	9601	0	-6400	0	1	0	asgarnia_ice_cave
+20	1016	0	Rashiliyia's Tomb	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
 23	1008	0	Banana plantation	2684	9156	2743	9211	0	-6400	0	0	0	-
-24	1009	0	Barbarian Assault	1864	5448	1911	5464	645	-1867	0	0	0	barbarian_assault
-25	1009	0	Barbarian Assault	1860	5388	1911	5427	645	-1867	0	0	0	barbarian_assault
-26	1010	0	Barbarian Assault lobby	2572	5256	2611	5303	-58	-1706	0	0	0	-
+24	1009	0	Barbarian Assault Room	1864	5448	1911	5494	647	-1889	0	1	0	barbarian_assault
+25	1009	0	Barbarian Assault Queen Room	1860	5388	1911	5427	647	-1825	0	1	0	barbarian_assault
+26	1009	0	Barbarian Assault lobby	2572	5256	2611	5303	-58	-1706	0	0	0	barbarian_assault
 28	1012	0	Blast Furnace	1988	5000	2023	5051	776	-1245	0	0	0	-
 29	1012	0	Blast Furnace (island 1)	2016	5028	2023	5051	776	-1245	0	0	0	-
-30	1205	0	Temple of Ikov	2626	9784	2748	9862	0	-6400	0	1	0	temple_of_ikov
+30	1205	0	Temple of Ikov	2626	9791	2751	9844	0	-6400	0	1	0	temple_of_ikov
 31	1014	0	Braindeath Island	2112	5047	2239	5183	1808	-1908	0	0	0	-
 32	1014	0	Braindeath Island (island 1)	2184	5047	2199	5054	1808	-1908	0	0	0	-
 33	1014	0	Braindeath Island (island 2)	2208	5047	2219	5050	1808	-1908	0	0	0	-
 34	1014	0	Braindeath Island (island 3)	2224	5047	2235	5050	1808	-1908	0	0	0	-
-35	1301	0	Tiles (dump leftover)	2752	9600	2815	9615	0	-6400	0	0	0	-
+35	1301	0	Tiles (dump leftover)	2752	9600	2815	9615	5709	-6421	0	0	0	-
 36	1016	0	Brimhaven Dungeon	2626	9409	2749	9522	25	-6414	0	0	0	brimhaven_dungeon
-38	1301	0	Tiles (dump leftover) (island 2)	2620	9600	2623	9663	30	-6410	0	0	0	-
-39	1301	0	Tiles (dump leftover) (island 4)	2944	9472	3005	9531	41	-6458	0	0	0	-
-40	1301	0	Tiles (dump leftover) (island 5)	2656	9616	2671	9663	30	-6410	0	0	0	-
-41	1329	0	Port Sarim Rat Pits	2952	9624	2980	9659	56	-6419	0	1	0	port_sarim_rat_pits
-42	1372	0	Yanille Agility Dungeon (lower level)	2568	9549	2603	9586	0	-6404	0	1	0	yanille_agility_dungeon
-43	1301	0	Tiles (dump leftover) (island 10)	2620	9560	2623	9579	30	-6410	0	0	0	-
+38	1301	0	Tiles (dump leftover) (island 2)	2620	9600	2623	9663	5739	-6431	0	0	0	-
+39	1301	0	Tiles (dump leftover) (island 4)	2944	9472	3005	9531	5750	-6479	0	0	0	-
+40	1301	0	Tiles (dump leftover) (island 5)	2656	9616	2671	9663	5739	-6431	0	0	0	-
+41	1329	0	Port Sarim Rat Pits	2952	9624	3000	9659	28	-6402	180	1	0	port_sarim_rat_pits
+42	1372	0	Yanille Agility Dungeon (lower level)	2568	9548	2605	9588	-25	-6480	0	1	0	yanille_agility_dungeon
+43	1301	0	Tiles (dump leftover) (island 10)	2620	9560	2623	9579	5739	-6431	0	0	0	-
 44	1017	0	Brine Rat Cavern	2688	10114	2751	10177	4	-6416	0	0	0	-
-45	1301	0	Tiles (dump leftover)	2636	10056	2683	10107	0	-6400	0	0	0	-
-46	1301	0	Tiles (dump leftover) (island 1)	2652	10076	2659	10083	0	-6400	0	0	0	-
+45	1301	0	Tiles (dump leftover)	2636	10056	2683	10107	5709	-6421	0	0	0	-
+46	1301	0	Tiles (dump leftover) (island 1)	2652	10076	2659	10083	5709	-6421	0	0	0	-
 54	1020	1	Cam Torum	1380	9504	1525	9614	-4	-6381	0	1	0	cam_torum
-55	1301	1	Tiles (dump leftover) (island 1)	1352	9504	1375	9523	-4	-6381	0	0	0	-
-56	1301	1	Tiles (dump leftover) (island 2)	1472	9504	1491	9511	-4	-6381	0	0	0	-
+55	1301	1	Tiles (dump leftover) (island 1)	1352	9504	1375	9523	5705	-6402	0	0	0	-
+56	1301	1	Tiles (dump leftover) (island 2)	1472	9504	1491	9511	5705	-6402	0	0	0	-
 57	1021	0	Catacombs of Kourend	1590	9979	1736	10111	-28	-6375	0	1	0	catacombs_of_kourend
-58	1301	2	Tiles (dump leftover)	2892	4364	2939	4407	235	-701	0	0	0	-
+58	1301	2	Tiles (dump leftover)	2892	4364	2939	4407	5944	-722	0	0	0	-
 59	1023	1	Corsair Cove Dungeon	1875	8960	2075	9086	512	-6147	0	1	0	corsair_cove_dungeon
-60	1301	0	Tiles (dump leftover)	1536	9536	1600	9663	-4	-6381	0	0	0	-
-61	1305	0	Fortis Barracks (island 1)	1635	9548	1660	9579	9	-6355	0	0	0	fortis_barracks
+60	1301	0	Tiles (dump leftover)	1536	9536	1600	9663	5705	-6402	0	0	0	-
+61	1305	0	Under Civitas illa Fortis	1610	9534	1730	9588	0	-6400	0	1	0	fortis_barracks
+61	1305	0	Under Civitas illa Fortis	1611	9472	1730	9533	0	-6400	0	1	0	fortis_barracks
 62	1025	0	Crabclaw Caves	1635	9800	1724	9855	0	-6399	0	1	0	crabclaw_caves
 65	1255	0	Melzar's Maze Basement	2920	9638	2941	9659	0	-6400	0	1	0	melzars_maze_basement
-66	1028	0	Crash Site Cavern	2064	5636	2163	5691	345	-2218	0	0	0	-
-67	1368	0	Tower of Life Basement	3009	4353	3068	4413	-410	-1184	0	1	0	tower_of_life_basement
-68	1301	2	Tiles (dump leftover)	3008	4352	3071	4415	-410	-1184	0	0	0	-
+66	1028	0	Crash Site Cavern	2064	5636	2163	5691	351	-2077	0	1	0	-
+67	1368	0	Tower of Life Basement	3007	4351	3073	4418	-390	-1162	0	1	0	tower_of_life_basement
+68	1301	2	Tiles (dump leftover)	3008	4352	3071	4415	5299	-1205	0	0	0	-
 69	1326	0	Chaos altar	2248	4836	2291	4859	775	-1243	0	0	0	-
 70	1326	0	Chaos altar	2264	4824	2295	4843	775	-1243	0	0	0	-
-71	1301	0	Tiles (dump leftover) (island 2)	2252	4824	2263	4835	334	-1506	0	0	0	-
+71	1301	0	Tiles (dump leftover) (island 2)	2252	4824	2263	4835	6043	-1527	0	0	0	-
 72	1032	0	Deep Wilderness Dungeon	3008	10304	3071	10367	0	-6400	0	1	0	deep_wilderness_dungeon
-73	1301	0	Tiles (dump leftover) (island 1)	3068	10304	3071	10323	0	-6400	0	0	0	-
+73	1301	0	Tiles (dump leftover) (island 1)	3068	10304	3071	10323	5709	-6421	0	0	0	-
 74	1316	0	Chasm of Fire	1409	10048	1468	10110	0	-6400	0	1	0	chasm_of_fire
 75	1244	0	Kalphite Queen Chamber	3463	9476	3509	9526	-259	-6444	0	1	0	kalphite_lair
 187	1244	2	Kalphite Lair	3456	9472	3519	9537	-264	-6398	0	1	0	kalphite_lair
 77	1319	2	tiny underground	3200	9371	3219	9387	23	-6373	0	0	0	river_elid_dungeon
 78	1273	2	Chasm of Tears	3210	9487	3262	9533	-4	-6391	0	1	0	chasm_of_tears
 79	1319	2	lowers	3161	9112	3543	9710	868	-6265	0	0	0	river_elid_dungeon
-81	1301	0	Tiles (dump leftover)	2304	4928	2427	4991	364	-1970	0	0	0	-
+81	1301	0	Tiles (dump leftover)	2304	4928	2427	4991	6073	-1991	0	0	0	-
 82	1052	0	Dorgesh-Kaan (Lower level)	2688	5247	2751	5376	567	-2178	0	1	0	dorgesh_kaan
 83	1052	0	Dorgesh-Kaan South Dungeon	2691	5183	2751	5251	567	-2178	0	1	0	dorgesh_kaan_south
-84	1301	0	Tiles (dump leftover)	2740	5236	2747	5241	487	-2023	0	0	0	-
+84	1301	0	Tiles (dump leftover)	2740	5236	2747	5241	6196	-2044	0	0	0	-
 85	1118	0	Mole Hole	1731	5131	1787	5244	1225	-1793	0	1	0	mole_hole
-86	1301	0	Tiles (dump leftover) (island 1)	1854	5182	1917	5249	751	-1836	0	0	0	-
-87	1301	0	Tiles (dump leftover)	1748	5328	1776	5360	751	-1836	0	0	0	-
-88	1301	0	Tiles (dump leftover) (island 3)	1934	5126	1985	5173	1225	-1793	0	0	0	-
-89	1301	0	Tiles (dump leftover) (island 4)	1950	5310	1985	5345	751	-1836	0	0	0	-
-90	1301	0	Tiles (dump leftover) (island 5)	794	2044	5040	6617	4616	-655	0	0	0	-
-91	1301	0	Tiles (dump leftover) (island 6)	1858	5122	1877	5141	1225	-1793	0	0	0	-
-92	1301	0	Tiles (dump leftover) (island 7)	1858	5314	1869	5333	751	-1836	0	0	0	-
-93	1301	0	Tiles (dump leftover) (island 8)	1858	5338	1869	5357	751	-1836	0	0	0	-
-94	1301	0	Tiles (dump leftover) (island 9)	1766	5126	1769	5137	1225	-1793	0	0	0	-
-95	1301	0	Tiles (dump leftover)	1372	10216	1391	10231	0	-6400	0	0	0	-
-96	1045	0	Eagles' Peak Dungeon	2080	5000	2099	5027	248	-1528	0	1	0	eagles_peak_dungeon
+86	1301	0	Tiles (dump leftover) (island 1)	1854	5182	1917	5249	6460	-1857	0	0	0	-
+87	1301	0	Tiles (dump leftover)	1748	5328	1776	5360	6460	-1857	0	0	0	-
+88	1301	0	Tiles (dump leftover) (island 3)	1934	5126	1985	5173	6934	-1814	0	0	0	-
+89	1301	0	Tiles (dump leftover) (island 4)	1950	5310	1985	5345	6460	-1857	0	0	0	-
+90	1301	0	Tiles (dump leftover) (island 5)	794	2044	5040	6617	10325	-676	0	0	0	-
+91	1301	0	Tiles (dump leftover) (island 6)	1858	5122	1877	5141	6934	-1814	0	0	0	-
+92	1301	0	Tiles (dump leftover) (island 7)	1858	5314	1869	5333	6460	-1857	0	0	0	-
+93	1301	0	Tiles (dump leftover) (island 8)	1858	5338	1869	5357	6460	-1857	0	0	0	-
+94	1301	0	Tiles (dump leftover) (island 9)	1766	5126	1769	5137	6934	-1814	0	0	0	-
+95	1301	0	Tiles (dump leftover)	1372	10216	1391	10231	5709	-6421	0	0	0	-
 98	1047	0	Elemental Workshop	2689	9863	2740	9917	-7	-6390	0	1	0	elemental_workshop
-100	1301	0	Tiles (dump leftover)	2678	9848	2686	9856	-7	-6390	0	0	0	-
+100	1301	0	Tiles (dump leftover)	2678	9848	2686	9856	5702	-6411	0	0	0	-
 101	1048	0	Enakhra's Temple	3072	9280	3135	9344	68	-6401	0	1	0	enakhras_temple
-102	1049	2	Enchanted Valley	3012	4480	3071	4535	235	-701	0	0	0	-
-103	1050	0	Enlightened Journey crash areas	1788	4800	1920	4895	976	-1546	0	0	0	-
-104	1050	0	Enlightened Journey crash areas (island 1)	1792	4880	1811	4895	976	-1546	0	0	0	-
-105	1234	0	Fairy Resistance Hideout	2320	4420	2363	4463	526	-1388	0	0	0	-
+102	1049	0	Enchanted Valley	3004	4481	3072	4557	617	-2316	0	1	0	-
+103	1290	0	?	1592	4583	2195	5043	3336	-1651	0	0	2	eagles_peak_dungeon
 106	1054	0	Ferox Enclave Dungeon	3140	9988	3199	10047	-12	-6399	0	0	0	ferox_enclave_dungeon
-107	1308	0	Fisher Realm (Holy Grail)	2688	4624	2859	4800	-27	-1227	0	0	0	mage_arena_bank
-108	1308	0	Fisher Realm (Holy Grail)	2496	4648	2831	4810	-27	-1227	0	0	0	mage_arena_bank
+107	1308	0	Fisher Realm (Holy Grail)	2688	4624	2859	4800	1861	-762	0	0	0	mage_arena_bank
+108	1308	0	Fisher Realm (Holy Grail)	2496	4648	2831	4810	1979	-966	0	0	0	mage_arena_bank
 109	1334	0	Body altar	2504	4820	2539	4855	529	-1392	0	0	0	-
-110	1308	0	Fisher Realm (Holy Grail) (island 2)	2496	4680	2519	4731	-27	-1227	0	0	0	mage_arena_bank
-111	1308	0	Fisher Realm (Holy Grail) (island 3)	2500	4648	2543	4667	-27	-1227	0	0	0	mage_arena_bank
-112	1308	0	Fisher Realm (Holy Grail) (island 4)	2528	4708	2547	4723	-27	-1227	0	0	0	mage_arena_bank
-113	1056	0	Fishing Trawler	1856	4792	2048	4919	714	-1666	0	0	0	-
-114	1056	0	Fishing Trawler (island 1)	1932	4912	1943	4915	714	-1666	0	0	0	-
+110	1308	0	Fisher Realm (Holy Grail) (island 2)	2496	4680	2519	4731	1744	-927	0	0	0	mage_arena_bank
+111	1308	0	Fisher Realm (Holy Grail) (island 3)	2500	4648	2543	4667	1686	-911	0	0	0	mage_arena_bank
+112	1308	0	Fisher Realm (Holy Grail) (island 4)	2528	4708	2547	4723	1647	-915	0	0	0	mage_arena_bank
 115	1057	0	Forthos Dungeon	1781	9881	1866	9994	-128	-6400	0	1	0	forthos_dungeon
-117	1294	0	Fragment of Seren (Song of the Elves)	3200	5888	3391	6016	-946	-2750	0	0	0	-
-118	1294	0	Fragment of Seren (Song of the Elves) (island 1)	3204	5832	3259	5879	-946	-2750	0	0	0	-
-119	1294	0	Fragment of Seren (Song of the Elves) (island 2)	3212	5904	3247	5939	-946	-2750	0	0	0	-
-120	1294	0	Fragment of Seren (Song of the Elves) (island 3)	3392	5824	3392	5887	-946	-2750	0	0	0	-
+117	1294	0	Fragment of Seren (Song of the Elves)	3112	5786	3391	6089	1177	-2506	0	0	0	-
+118	1294	0	Fragment of Seren (Song of the Elves) (island 1)	3204	5832	3259	5879	1065	-2511	0	0	0	-
+119	1294	0	Fragment of Seren (Song of the Elves) (island 2)	3212	5904	3247	5939	1000	-2582	0	0	0	-
+120	1294	0	Fragment of Seren (Song of the Elves) (island 3)	3392	5824	3392	5887	970	-2519	0	0	0	-
 121	1253	0	Mage Arena Bank	2500	4680	2556	4730	574	-771	0	1	0	mage_arena_bank
 122	1062	0	Fremennik Slayer Dungeon	2688	9960	2812	10045	-12	-6387	0	1	0	fremennik_slayer_dungeon
-123	1301	0	Tiles (dump leftover) (island 1)	2752	10048	2815	10111	-4	-6385	0	0	0	-
-124	1301	0	Tiles (dump leftover)	1356	9988	1391	10039	0	-6400	0	0	0	-
-125	1301	0	Tiles (dump leftover)	1412	9805	1463	9840	0	-6400	0	0	0	-
-126	1301	0	Tiles (dump leftover) (island 1)	1408	9845	1467	9847	0	-6400	0	0	0	-
-127	1301	0	Tiles (dump leftover) (island 2)	1464	9801	1471	9844	0	-6400	0	0	0	-
+123	1301	0	Tiles (dump leftover) (island 1)	2752	10048	2815	10111	5705	-6406	0	0	0	-
+124	1301	0	Tiles (dump leftover)	1356	9988	1391	10039	5709	-6421	0	0	0	-
+125	1301	0	Tiles (dump leftover)	1412	9805	1463	9840	5709	-6421	0	0	0	-
+126	1301	0	Tiles (dump leftover) (island 1)	1408	9845	1467	9847	5709	-6421	0	0	0	-
+127	1301	0	Tiles (dump leftover) (island 2)	1464	9801	1471	9844	5709	-6421	0	0	0	-
 128	1063	0	Garden of Death	1287	9991	1322	10041	0	-6400	0	0	0	stalker_den
 129	1063	0	Garden of Death (island 1)	1354	9987	1397	10042	-7	-6401	0	1	0	stalker_den
 130	1063	0	Garden of Death (island 2)	1170	10001	1207	10039	179	-6359	0	0	0	stalker_den
 131	1346	0	Scabaras Dungeon	3364	9216	3443	9279	-30	-6400	0	1	0	-
 132	1317	0	Giants' Den	1412	9856	1471	9915	-12	-6325	0	1	0	giants_den
-133	1067	0	Glarial's Tomb	2525	9808	2557	9848	0	-6400	0	1	0	glarials_tomb
-134	1301	0	Tiles (dump leftover)	2848	5188	2943	5231	36	-1563	0	0	0	-
+133	1067	0	Glarial's Tomb	2525	9808	2557	9850	1	-6400	0	1	0	glarials_tomb
+134	1301	0	Tiles (dump leftover)	2848	5188	2943	5231	5745	-1584	0	0	0	-
 135	1069	2	God Wars Dungeon	2820	5252	2943	5375	36	-1563	0	0	0	god_wars_dungeon
-136	1071	0	Grand Tree Tunnels	2432	9856	2495	9919	0	-6400	0	1	0	grand_tree_tunnels
+136	1071	0	Grand Tree Tunnels	2432	9856	2495	9919	1	-6399	0	1	0	grand_tree_tunnels
 137	1072	0	H.A.M. Hideout	3136	9604	3191	9659	16	-6400	0	1	0	ham_hideout
 138	1075	0	Harmony Island lower level	3780	9220	3791	9231	0	-6400	0	0	0	-
 139	1076	0	Heroes' Guild Mine	2884	9881	2943	9918	0	-6400	0	1	0	heroes_guild_mine
 140	1077	0	Hespori Cave	1236	10076	1259	10099	-14	-6357	0	1	0	hespori_cave
-141	1228	0	Deepfin Mine	1924	9160	2107	9215	-92	-6436	0	0	0	-
+141	1228	0	Deepfin Mine	1924	9160	2107	9215	-18	-6387	0	1	0	-
 142	1313	0	Jaldraocht Pyramid - Level 1	2865	4671	4275	5148	1210	-2056	0	0	0	jaldraocht_pyramid
 143	1313	0	exttra	1380	4131	4012	6542	3051	-597	0	0	0	jaldraocht_pyramid
 144	1313	0	Jaldraocht Pyramid - Level 4	-53	7309	4259	10665	-483	-8701	0	0	0	jaldraocht_pyramid
 145	1083	0	Jatizso Mine	2370	10180	2430	10235	-6	-6376	0	1	0	jatizso_mine
-146	1301	0	Tiles (dump leftover)	2564	9216	2615	9263	54	-6425	0	0	0	-
+146	1301	0	Tiles (dump leftover)	2564	9216	2615	9263	5763	-6446	0	0	0	-
 147	1243	0	Kalphite Cave	3264	9473	3341	9543	18	-6386	0	1	0	kalphite_cave
-148	1301	0	Tiles (dump leftover) (island 1)	3168	9536	3195	9551	33	-6383	0	0	0	-
-149	1301	0	Tiles (dump leftover) (island 2)	3216	9540	3239	9551	0	-6400	0	0	0	-
+148	1301	0	Tiles (dump leftover) (island 1)	3168	9536	3195	9551	5742	-6404	0	0	0	-
+149	1301	0	Tiles (dump leftover) (island 2)	3216	9540	3239	9551	5709	-6421	0	0	0	-
 150	1319	0	extra	3324	9530	3380	9599	1110	-6428	0	0	0	river_elid_dungeon
-151	1301	0	Tiles (dump leftover)	3552	9442	3679	9537	500	-6157	0	0	0	-
+151	1301	0	Tiles (dump leftover)	3552	9442	3679	9537	6209	-6178	0	0	0	-
 153	1026	0	Crandor and Karamja Dungeon	2821	9535	3087	9601	0	-6400	0	0	0	karamja_dungeon
-154	1301	0	Tiles (dump leftover) (island 1)	2884	9472	2931	9535	0	-6400	0	0	0	-
+154	1301	0	Tiles (dump leftover) (island 1)	2884	9472	2931	9535	5709	-6421	0	0	0	-
 155	1089	0	Rashiliyia's Tomb (lower sanctuary)	2752	9280	2815	9343	-1	-6409	0	0	0	rashiliyias_tomb
 156	1089	0	Rashiliyia's Tomb (Ah Za Rhoon)	2754	9155	2815	9215	-2	-6219	0	0	0	rashiliyias_tomb
 157	1090	0	Karuulm Slayer Dungeon	1254	10174	1380	10281	0	-6400	0	1	0	karuulm_slayer_dungeon
-159	1309	0	Keep Le Faye (quest)	1600	4160	1792	4223	1061	-856	0	0	0	-
+159	1309	0	Keep Le Faye (quest)	1600	4160	1792	4223	2600	-595	0	0	0	-
 160	1092	0	Keldagrim	2760	10100	2943	10239	0	-6400	0	1	0	keldagrim
-161	1301	0	Tiles (dump leftover)	1856	4608	2047	4671	776	-989	0	0	0	-
-162	1310	0	King's Ransom (quest)	1792	4160	1984	4223	869	-856	0	0	0	-
+161	1301	0	Tiles (dump leftover)	1856	4608	2047	4671	6485	-1010	0	0	0	-
+162	1310	0	King's Ransom (quest)	1792	4160	1984	4223	2408	-595	0	0	0	-
 163	1096	0	Klenter's Pyramid	3272	9169	3312	9205	2	-6421	0	1	0	klenters_pyramid
-164	1097	0	Kraken Cove	2241	9985	2301	10043	0	-6400	0	1	0	kraken_cove
-165	1301	0	Tiles (dump leftover)	2368	9480	2431	9531	0	-6400	0	0	0	-
-166	1301	0	Tiles (dump leftover) (island 1)	2368	9480	2395	9499	0	-6400	0	0	0	-
-167	1301	0	Tiles (dump leftover) (island 2)	2408	9512	2431	9531	0	-6400	0	0	0	-
-168	1301	0	Tiles (dump leftover)	3248	4672	3547	4891	193	-1358	0	0	0	-
-170	1301	0	Tiles (dump leftover)	3400	4804	3447	4847	193	-1358	0	0	0	-
+164	1097	0	Kraken Cove	2241	9985	2301	10043	2	-6376	0	1	0	kraken_cove
+165	1301	0	Tiles (dump leftover)	2368	9480	2431	9531	5709	-6421	0	0	0	-
+166	1301	0	Tiles (dump leftover) (island 1)	2368	9480	2395	9499	5709	-6421	0	0	0	-
+167	1301	0	Tiles (dump leftover) (island 2)	2408	9512	2431	9531	5709	-6421	0	0	0	-
+168	1301	0	Tiles (dump leftover)	3248	4672	3547	4891	5902	-1379	0	0	0	-
+170	1301	0	Tiles (dump leftover)	3400	4804	3447	4847	5902	-1379	0	0	0	-
 171	1101	0	Lava Maze Dungeon	3009	10240	3071	10291	54	-6393	0	1	0	lava_maze_dungeon
 172	1102	0	Library Historical Archive	1560	10184	1595	10215	46	-6374	0	0	0	-
 173	1103	0	Lighthouse Dungeon	2498	9986	2542	10041	-8	-6380	0	1	0	lighthouse_dungeon
 174	1322	0	Lithkren Vault — Level 2	1537	5052	1598	5125	1992	-1012	0	1	0	lithkren_vault
 175	1106	0	Lizardman Caves	1280	9935	1343	9984	0	-6400	0	1	0	lizardman_caves
-176	1301	0	Tiles (dump leftover)	1860	5384	1911	5427	1243	-2094	0	0	0	-
+176	1301	0	Tiles (dump leftover)	1860	5384	1911	5427	6952	-2115	0	0	0	-
 178	1252	0	Lumbridge Swamp Caves	3140	9537	3260	9603	0	-6400	0	1	0	lumbridge_swamp_caves
 179	1344	0	Crash Island Dungeon	2892	9092	2927	9147	0	-6400	0	1	0	crash_island_dungeon
-181	1301	1	Tiles (dump leftover) (island 1)	3326	9668	3393	9727	0	-6400	0	0	0	-
-184	1301	0	Tiles (dump leftover)	3342	9732	3393	9791	-17	-6402	0	0	0	-
-188	1301	1	Tiles (dump leftover) (island 8)	3362	9796	3389	9800	-17	-6402	0	0	0	-
-189	1301	0	Tiles (dump leftover)	2304	4549	2367	4607	1822	-1349	0	0	0	-
+181	1301	1	Tiles (dump leftover) (island 1)	3326	9668	3393	9727	5709	-6421	0	0	0	-
+184	1301	0	Tiles (dump leftover)	3342	9732	3393	9791	5692	-6423	0	0	0	-
+188	1301	1	Tiles (dump leftover) (island 8)	3362	9796	3389	9800	5692	-6423	0	0	0	-
+189	1301	0	Tiles (dump leftover)	2304	4549	2367	4607	7531	-1370	0	0	0	-
 190	1337	0	Iceberg	2628	10368	2687	10431	-26	-6410	0	0	0	-
-191	1116	0	Misthalin Mystery	1600	4780	1731	4863	-4	-1602	0	0	0	-
-192	1117	0	Mogre Camp	2960	9472	3003	9531	48	-6399	0	0	0	-
-193	1301	0	Tiles (dump leftover)	1728	5170	1787	5196	1225	-1793	0	0	0	-
-194	1301	0	Tiles (dump leftover) (island 1)	1764	5128	1767	5139	1225	-1793	0	1	0	-
-195	1119	0	Monkey Madness hangar	2572	4488	2603	4539	-124	-1017	0	0	0	-
-196	1301	0	Tiles (dump leftover)	2304	9792	2367	9919	0	-6400	0	0	0	-
+191	1116	0	Misthalin Mystery	1600	4798	1680	4862	3158	-1432	0	0	0	-
+192	1117	0	Mogre Camp	2944	9472	3005	9515	45	-6408	0	1	0	-
+193	1301	0	Tiles (dump leftover)	1728	5170	1787	5196	6934	-1814	0	0	0	-
+194	1301	0	Tiles (dump leftover) (island 1)	1764	5128	1767	5139	3417	-1581	0	0	0	-
+195	1119	0	Monkey Madness hangar	2572	4488	2603	4539	-192	-1009	0	1	0	-
+196	1301	0	Tiles (dump leftover)	2304	9792	2367	9919	5709	-6421	0	0	0	-
 198	1122	0	Mos Le'Harmless Cave	3715	9348	3838	9470	0	-6400	0	1	0	mos_le_harmless_cave
-199	1301	0	Tiles (dump leftover)	2188	5444	2223	5503	1930	-2011	0	0	0	-
+199	1301	0	Tiles (dump leftover)	2188	5444	2223	5503	7639	-2032	0	0	0	-
 200	1375	0	Werewolf Agility Course	3517	9854	3585	9921	-5	-6403	0	1	0	-
 201	1124	0	dunno	3664	9608	3695	9654	381	-6429	0	0	0	-
-202	1301	0	Tiles (dump leftover)	2304	4800	2363	4859	465	-1813	0	0	0	-
-203	1301	0	Tiles (dump leftover)	1412	9808	1463	9839	0	-6400	0	0	0	-
-204	1301	0	Tiles (dump leftover) (island 1)	1408	9800	1471	9847	0	-6400	0	0	0	-
+202	1301	0	Tiles (dump leftover)	2304	4800	2363	4859	6174	-1834	0	0	0	-
+203	1301	0	Tiles (dump leftover)	1412	9808	1463	9839	5709	-6421	0	0	0	-
+204	1301	0	Tiles (dump leftover) (island 1)	1408	9800	1471	9847	5709	-6421	0	0	0	-
 206	1259	0	Nightmare of Ashihama	3840	9912	3911	9983	-84	-6589	0	1	0	-
-209	1269	0	Smoke Devil Dungeon	2376	9414	2427	9468	0	-6400	0	1	0	smoke_devil_dungeon
+209	1269	0	Smoke Devil Dungeon	2340	9407	2432	9473	43	-6401	180	1	0	smoke_devil_dungeon
 210	1349	0	Rantz's cave	2632	9376	2659	9399	0	-6400	0	0	0	-
-211	1131	0	Ourania Cave	3008	5568	3070	5630	-571	-2351	0	1	0	ourania_altar
+211	1131	0	Ourania Cave	3008	5568	3070	5632	-612	-2341	180	1	0	ourania_altar
 212	1124	0	Myreque Hideout	3468	9827	3500	9848	17	-6384	0	1	0	-
 213	1124	0	Myreque Hideout (island 1)	3458	9793	3479	9825	28	-6382	0	1	0	-
 214	1124	0	Myreque Hideout (island 2)	3500	9828	3517	9847	0	-6387	0	1	0	-
 215	1133	0	Polar Eagle lair	2752	10248	2815	10291	0	-6400	0	0	0	-
 216	1323	0	The Warrens	1727	10109	1816	10176	0	-6400	0	1	0	the_warrens
 217	1136	0	Tiles (dump leftover)	3136	5888	3391	6207	-2597	-2730	0	0	0	-
-218	1301	0	Tiles (dump leftover) (island 1)	3148	5904	3183	5939	-576	-2816	0	0	0	-
-219	1301	0	Tiles (dump leftover)	2564	6016	2943	6279	-576	-2816	0	0	0	-
+218	1301	0	Tiles (dump leftover) (island 1)	3148	5904	3183	5939	5133	-2837	0	0	0	-
+219	1301	0	Tiles (dump leftover)	2564	6016	2943	6279	5133	-2837	0	0	0	-
 220	1136	0	Prifddinas Grand Library	3208	12510	3256	12546	-960	-9173	0	1	0	prifddinas_grand_library
 221	1137	0	Prifddinas Underground	3152	12355	3263	12429	-1014	-9142	0	1	0	prifddinas_underground
-221	1137	0	Prifddinas Underground	3152	12475	3263	12480	-1014	-9142	0	1	0	prifddinas_underground
-221	1137	0	Prifddinas Underground	3152	12430	3263	12474	-1014	-9142	0	1	0	prifddinas_underground
-222	1262	0	Prison Pete	1984	4480	2003	4507	818	-2291	0	0	0	-
-223	1139	0	Puro-Puro	2560	4288	2623	4351	789	-1265	0	0	0	-
-224	1301	0	Tiles (dump leftover)	1712	4223	2656	4635	2258	-1825	0	0	0	-
-226	1301	0	Tiles (dump leftover)	1156	9924	1207	9979	0	-6400	0	0	0	-
-228	1301	0	Tiles (dump leftover)	3048	5476	3071	5491	0	-6400	0	0	0	-
-229	1301	0	Tiles (dump leftover)	2440	5016	2475	5047	-4	-1460	0	0	0	-
+222	1262	0	Prison Pete	1973	4442	2123	4554	3853	-1300	0	0	0	-
+223	1139	0	Puro-Puro	2560	4288	2623	4351	3077	-1090	0	0	0	-
+224	1301	0	Tiles (dump leftover)	1712	4223	2656	4635	7967	-1846	0	0	0	-
+226	1301	0	Tiles (dump leftover)	1156	9924	1207	9979	5709	-6421	0	0	0	-
+228	1301	0	Tiles (dump leftover)	3048	5476	3071	5491	5709	-6421	0	0	0	-
+229	1301	0	Tiles (dump leftover)	2440	5016	2475	5047	5705	-1481	0	0	0	-
 230	1264	1	Rogues' Den	3024	4944	3104	5040	-155	-1448	0	0	0	rogues_den
 231	1147	0	Ruins of Camdozaal	2905	5761	3031	5856	22	-2331	0	1	0	camdozaal
 232	1245	0	King Black Dragon Lair	2252	4676	2291	4715	745	-856	0	1	0	king_black_dragon_lair
 233	1267	0	Shadow Dungeon	2624	5056	2751	5119	-82	-1649	0	1	0	shadow_dungeon
 234	1206	0	Lizardman Temple	1283	10051	1339	10106	0	-6399	0	0	0	lizardman_temple
-235	1301	0	Tiles (dump leftover)	1572	9824	1587	9835	0	-6400	0	0	0	-
+235	1301	0	Tiles (dump leftover)	1572	9824	1587	9835	5709	-6421	0	0	0	-
 236	1151	0	Shayzien Prison	1428	9936	1447	9967	20	-6391	0	0	0	-
 237	1152	1	Sisterhood Sanctuary	3716	9692	3858	9841	-19	-6398	0	1	0	sisterhood_sanctuary
-239	1301	1	Tiles (dump leftover) (island 2)	3876	9664	3887	9671	-11	-6401	0	0	0	-
+239	1301	1	Tiles (dump leftover) (island 2)	3876	9664	3887	9671	5698	-6422	0	0	0	-
 240	1204	0	Jiggig Dungeon	2436	9412	2491	9460	0	-6400	0	1	0	jiggig_dungeon
 241	1154	0	Smoke Dungeon	3165	9344	3330	9407	104	-6418	0	1	0	smoke_dungeon
 242	1140	0	Shadow Dungeon	2618	5056	2751	5120	-42	-1600	0	0	0	shadow_dungeon
 243	1156	0	Sophanem Dungeon	2236	4280	2312	4359	1020	-1514	0	0	0	sophanem_dungeon
 447	1156	0	Sophanem Dungeon (Maze)	2368	4225	2430	4286	888	-1506	0	0	0	sophanem_dungeon
-244	1158	0	Stalker Den	1240	9728	1339	9827	10	-6401	0	1	0	stalker_den
-245	1160	0	Stronghold Slayer Dungeon	2387	9767	2495	9803	1	-6400	0	1	0	stronghold_slayer_dungeon
-246	1247	0	Kurask Lair	1164	9180	1199	9211	0	-6400	0	0	0	-
+244	1158	0	Stalker Den	1240	9728	1339	9840	10	-6401	0	1	0	stalker_den
+245	1160	0	Stronghold Slayer Dungeon	2379	9767	2495	9799	2	-6400	0	1	0	stronghold_slayer_dungeon
+246	1247	0	Kurask Lair	1164	9180	1199	9211	-2	-6398	0	1	0	-
 247	1162	0	Taverley Dungeon	2769	9670	2978	9854	0	-6400	0	1	0	taverley_dungeon
-248	1301	0	Tiles (dump leftover)	2956	9726	2976	9745	-82	-6340	0	0	0	-
-249	1301	0	Tiles (dump leftover)	2928	9734	2939	9745	-49	-6341	0	0	0	-
-250	1301	0	Tiles (dump leftover) (island 3)	2760	9802	2763	9817	0	-6400	0	1	0	-
-251	1301	0	Tiles (dump leftover)	2964	9758	2971	9765	-83	-6363	0	0	0	-
-252	1301	0	Tiles (dump leftover)	1988	5056	2031	5099	1399	-1782	0	0	0	-
-253	1301	0	Tiles (dump leftover)	2624	4800	2816	4863	310	-946	0	0	0	-
+248	1301	0	Tiles (dump leftover)	2956	9726	2976	9745	5627	-6361	0	0	0	-
+249	1301	0	Tiles (dump leftover)	2928	9734	2939	9745	5660	-6362	0	0	0	-
+250	1301	0	Tiles (dump leftover) (island 3)	2760	9802	2763	9817	2192	-6188	0	0	0	-
+251	1301	0	Tiles (dump leftover)	2964	9758	2971	9765	5626	-6384	0	0	0	-
+252	1301	0	Tiles (dump leftover)	1988	5056	2031	5099	7108	-1803	0	0	0	-
+253	1301	0	Tiles (dump leftover)	2624	4800	2816	4863	6019	-967	0	0	0	-
 254	1275	0	The Abyss	2950	4740	3132	4866	65	-1274	0	1	0	abyss
-255	1301	0	Tiles (dump leftover)	1920	5504	2112	5635	645	-1867	0	0	0	-
+255	1301	0	Tiles (dump leftover)	1920	5504	2112	5635	6354	-1888	0	0	0	-
 256	1168	0	Kendal's Lair	2820	10048	2859	10111	4	-6404	0	0	0	-
 257	1168	0	Kendal's Lair (island 1)	2848	10060	2859	10095	4	-6404	0	0	0	-
-258	1301	0	Tiles (dump leftover)	2368	5600	2431	5632	-4	-2036	0	0	0	-
+258	1301	0	Tiles (dump leftover)	2368	5600	2431	5632	5705	-2057	0	0	0	-
 259	1170	0	Tree Gnome Village Dungeon	2507	9551	2553	9584	0	-6400	0	1	0	tree_gnome_village_dungeon
 261	1315	0	Wilderness God Wars Dungeon	3015	10115	3067	10166	0	-6400	0	1	0	wilderness_god_wars_dungeon
 262	1173	0	Tunnel of Chaos	3140	5184	3191	5243	105	-1726	0	0	0	-
 264	1175	0	Tutorial Island dungeon	3072	9492	3115	9535	0	-6400	0	1	0	-
-265	1176	0	Tutorial Island v2 dungeon	1664	12500	1707	12543	0	-6400	0	0	0	-
 266	1177	0	TzHaar City / Mor Ul Rek	2366	5059	2559	5183	351	-1957	0	0	0	tzhaar_city
-268	1301	0	Tiles (dump leftover) (island 2)	2468	5084	2543	5107	364	-1970	0	0	0	-
-269	1301	0	Tiles (dump leftover) (island 4)	2308	5000	2343	5051	364	-1970	0	0	0	-
-270	1301	0	Tiles (dump leftover) (island 5)	2336	5030	2363	5051	364	-1970	0	0	0	-
-271	1301	0	Tiles (dump leftover) (island 6)	2500	5084	2543	5139	364	-1970	0	0	0	-
-272	1301	0	Tiles (dump leftover) (island 9)	2464	5096	2507	5119	364	-1970	0	0	0	-
-273	1301	0	Tiles (dump leftover) (island 10)	2412	5092	2431	5119	364	-1970	0	0	0	-
-274	1301	0	Tiles (dump leftover) (island 11)	2436	5144	2455	5167	364	-1970	0	0	0	-
-275	1301	0	Tiles (dump leftover) (island 12)	2448	5084	2471	5095	364	-1970	0	0	0	-
-276	1301	0	Tiles (dump leftover) (island 13)	2436	5096	2459	5111	364	-1970	0	0	0	-
-277	1301	0	Tiles (dump leftover) (island 14)	2512	5152	2535	5167	364	-1970	0	0	0	-
-278	1301	0	Tiles (dump leftover) (island 15)	2396	5104	2403	5119	364	-1970	0	0	0	-
-279	1301	0	Tiles (dump leftover) (island 16)	2540	5120	2555	5135	364	-1970	0	0	0	-
-280	1301	0	Tiles (dump leftover) (island 17)	2372	5152	2387	5171	364	-1970	0	0	0	-
-281	1301	0	Tiles (dump leftover) (island 18)	2372	5096	2379	5119	364	-1970	0	0	0	-
-282	1301	0	Tiles (dump leftover) (island 19)	2540	5104	2551	5115	364	-1970	0	0	0	-
-283	1301	0	Tiles (dump leftover) (island 20)	2476	5108	2483	5131	364	-1970	0	0	0	-
-284	1301	0	Tiles (dump leftover) (island 21)	2404	5136	2411	5151	364	-1970	0	0	0	-
-285	1301	0	Tiles (dump leftover) (island 22)	2492	5084	2495	5095	364	-1970	0	0	0	-
-286	1301	0	Tiles (dump leftover)	2432	4627	4107	6207	-6	-12	0	0	0	-
-287	1287	0	Ynysdail Cavern	2264	9872	2280	9896	-53	-6405	0	0	0	-
-288	1301	0	Tiles (dump leftover)	2384	9764	2475	9792	0	-6400	0	0	0	-
+268	1301	0	Tiles (dump leftover) (island 2)	2468	5084	2543	5107	6073	-1991	0	0	0	-
+269	1301	0	Tiles (dump leftover) (island 4)	2308	5000	2343	5051	6073	-1991	0	0	0	-
+270	1301	0	Tiles (dump leftover) (island 5)	2336	5030	2363	5051	6073	-1991	0	0	0	-
+271	1301	0	Tiles (dump leftover) (island 6)	2500	5084	2543	5139	6073	-1991	0	0	0	-
+272	1301	0	Tiles (dump leftover) (island 9)	2464	5096	2507	5119	6073	-1991	0	0	0	-
+273	1301	0	Tiles (dump leftover) (island 10)	2412	5092	2431	5119	6073	-1991	0	0	0	-
+274	1301	0	Tiles (dump leftover) (island 11)	2436	5144	2455	5167	6073	-1991	0	0	0	-
+275	1301	0	Tiles (dump leftover) (island 12)	2448	5084	2471	5095	6073	-1991	0	0	0	-
+276	1301	0	Tiles (dump leftover) (island 13)	2436	5096	2459	5111	6073	-1991	0	0	0	-
+277	1301	0	Tiles (dump leftover) (island 14)	2512	5152	2535	5167	6073	-1991	0	0	0	-
+278	1301	0	Tiles (dump leftover) (island 15)	2396	5104	2403	5119	6073	-1991	0	0	0	-
+279	1301	0	Tiles (dump leftover) (island 16)	2540	5120	2555	5135	6073	-1991	0	0	0	-
+280	1301	0	Tiles (dump leftover) (island 17)	2372	5152	2387	5171	6073	-1991	0	0	0	-
+281	1301	0	Tiles (dump leftover) (island 18)	2372	5096	2379	5119	6073	-1991	0	0	0	-
+282	1301	0	Tiles (dump leftover) (island 19)	2540	5104	2551	5115	6073	-1991	0	0	0	-
+283	1301	0	Tiles (dump leftover) (island 20)	2476	5108	2483	5131	6073	-1991	0	0	0	-
+284	1301	0	Tiles (dump leftover) (island 21)	2404	5136	2411	5151	6073	-1991	0	0	0	-
+285	1301	0	Tiles (dump leftover) (island 22)	2492	5084	2495	5095	6073	-1991	0	0	0	-
+286	1301	0	Tiles (dump leftover)	2432	4627	4107	6207	5703	-33	0	0	0	-
+287	1287	0	Ynysdail Cavern	2242	9831	2301	9919	-72	-6438	0	1	0	-
+288	1301	0	Tiles (dump leftover)	2384	9764	2475	9792	5709	-6421	0	0	0	-
 289	1380	1	Underground Pass (5 Iban's Lair & Platforms)	2112	4608	2175	4735	203	-1431	0	0	0	underground_pass
 292	1180	0	Ungael Laboratory	2250	10448	2297	10487	-12	-6404	0	0	0	-
-293	1301	0	Tiles (dump leftover)	3076	8644	3135	8699	0	-6400	0	0	0	-
-294	1228	0	Deepfin Mine	1925	9163	2108	9214	-92	-6436	0	0	0	-
-295	1301	0	Tiles (dump leftover)	3264	5440	3291	5467	121	-1941	0	1	0	-
-296	1301	0	Tiles (dump leftover)	3264	5184	3359	5407	123	-1942	0	0	0	-
-297	1301	0	Tiles (dump leftover) (island 1)	3264	5216	3291	5243	123	-1942	0	0	0	-
-298	1301	0	Tiles (dump leftover) (island 2)	3332	5216	3359	5243	123	-1942	0	0	0	-
-299	1301	0	Tiles (dump leftover) (island 3)	3328	5184	3359	5211	123	-1942	0	0	0	-
-300	1301	0	Tiles (dump leftover) (island 4)	3264	5184	3291	5207	123	-1942	0	0	0	-
-301	1301	0	Tiles (dump leftover)	1662	9682	1725	9717	0	-6400	0	0	0	-
-302	1285	0	Western Ocean Underground	1892	9948	1907	9959	0	-6400	0	0	0	-
-303	1301	0	Tiles (dump leftover)	1618	9928	1625	9947	0	-6400	0	0	0	-
-304	1272	0	Sunbleak Cave	2212	8716	2239	8759	0	-6400	0	0	0	-
-305	1301	0	Tiles (dump leftover)	1792	9408	1855	9471	0	-6400	0	0	0	-
-306	1301	0	Tiles (dump leftover)	2776	8868	2915	9003	0	-6400	0	0	0	-
-307	1301	0	Tiles (dump leftover) (island 1)	2912	8920	2919	8927	0	-6400	0	0	0	-
+293	1301	0	Tiles (dump leftover)	3076	8644	3135	8699	5709	-6421	0	0	0	-
+295	1301	0	Tiles (dump leftover)	3264	5440	3291	5467	2313	-1729	0	0	0	-
+296	1301	0	Tiles (dump leftover)	3264	5184	3359	5407	5832	-1963	0	0	0	-
+297	1301	0	Tiles (dump leftover) (island 1)	3264	5216	3291	5243	5832	-1963	0	0	0	-
+298	1301	0	Tiles (dump leftover) (island 2)	3332	5216	3359	5243	5832	-1963	0	0	0	-
+299	1301	0	Tiles (dump leftover) (island 3)	3328	5184	3359	5211	5832	-1963	0	0	0	-
+300	1301	0	Tiles (dump leftover) (island 4)	3264	5184	3291	5207	5832	-1963	0	0	0	-
+301	1301	0	Tiles (dump leftover)	1662	9682	1725	9717	5709	-6421	0	0	0	-
+303	1301	0	Tiles (dump leftover)	1618	9928	1625	9947	5709	-6421	0	0	0	-
+304	1272	0	Sunbleak Cave	2212	8716	2239	8759	-1	-6400	0	1	0	-
+305	1301	0	Tiles (dump leftover)	1792	9408	1855	9471	5709	-6421	0	0	0	-
+306	1301	0	Tiles (dump leftover)	2776	8868	2915	9003	5709	-6421	0	0	0	-
+307	1301	0	Tiles (dump leftover) (island 1)	2912	8920	2919	8927	5709	-6421	0	0	0	-
 308	1191	0	Varrock Museum basement	1544	4872	1567	4895	1701	-1430	0	0	0	-
-309	1301	0	Tiles (dump leftover)	3008	9922	3067	9981	-11	-6569	0	0	0	-
-310	1301	0	Tiles (dump leftover) (island 1)	2948	9922	3003	9981	-11	-6569	0	0	0	-
-311	1301	0	Tiles (dump leftover)	2636	9996	2675	10047	25	-6165	0	0	0	-
+309	1301	0	Tiles (dump leftover)	3008	9922	3067	9981	5698	-6590	0	0	0	-
+310	1301	0	Tiles (dump leftover) (island 1)	2948	9922	3003	9981	5698	-6590	0	0	0	-
+311	1301	0	Tiles (dump leftover)	2636	9996	2675	10047	5734	-6186	0	0	0	-
 312	1195	0	Waterbirth Island Dungeon	2440	10110	2560	10180	0	-6400	0	1	0	waterbirth_dungeon
 313	1345	0	Wilderness Slayer Cave	3329	10049	3453	10173	-113	-6396	0	1	0	wilderness_slayer_cave
-314	1301	0	Tiles (dump leftover) (island 1)	3264	4672	3392	4736	-196	-690	0	0	0	-
-315	1301	0	Tiles (dump leftover)	2396	5124	2419	5151	364	-1970	0	0	0	-
+314	1301	0	Tiles (dump leftover) (island 1)	3264	4672	3392	4736	5513	-711	0	0	0	-
+315	1301	0	Tiles (dump leftover)	2396	5124	2419	5151	6073	-1991	0	0	0	-
 317	1321	0	Woodcutting Guild Dungeon	1540	9860	1599	9915	10	-6392	0	1	0	woodcutting_guild_dungeon
 318	1200	0	Xeric's Lookout basement	1556	9948	1571	9959	26	-6423	0	1	0	-
-319	1201	0	Yanille Agility Dungeon (upper level)	2560	9494	2622	9534	0	-6404	0	1	0	yanille_agility_dungeon
-320	1301	0	Tiles (dump leftover) (island 1)	2628	9492	2687	9535	0	-6404	0	0	0	-
-321	1202	0	Yanille cutscene	2880	4672	2943	4735	-372	-1614	0	0	0	-
+319	1201	0	Yanille Agility Dungeon (upper level)	2598	9472	2623	9481	0	-6400	0	1	0	yanille_agility_dungeon
+320	1301	0	Tiles (dump leftover) (island 1)	2628	9492	2687	9535	5709	-6425	0	0	0	-
 322	1203	0	Zanaris	2316	4349	2496	4499	751	-1309	0	1	0	zanaris
-323	1301	0	Tiles (dump leftover)	2432	4408	2447	4411	789	-1265	0	0	0	-
+323	1301	0	Tiles (dump leftover)	2432	4408	2447	4411	6498	-1286	0	0	0	-
 324	1129	0	Ogre Enclave	2496	9408	2559	9471	0	-6400	0	1	0	ogre_enclave
-325	1301	0	Tiles (dump leftover)	2368	9408	2431	9471	0	-6400	0	0	0	-
+325	1301	0	Tiles (dump leftover)	2368	9408	2431	9471	5709	-6421	0	0	0	-
 326	1084	0	Red chinchompa hunting ground	2508	9284	2535	9308	0	-6400	0	1	0	red_chinchompa_hunting_ground
-327	1301	0	Tiles (dump leftover) (island 5)	2408	9512	2431	9535	0	-6400	0	0	0	-
+327	1301	0	Tiles (dump leftover) (island 5)	2408	9512	2431	9535	5709	-6421	0	0	0	-
 328	1084	0	Jungle Eagle lair	2508	9312	2527	9331	0	-6400	0	1	0	jungle_eagle_lair
-331	1301	0	Tiles (dump leftover) (island 3)	2764	9800	2816	9855	3	-6406	0	0	0	-
-332	1301	0	Tiles (dump leftover)	2688	9728	2739	9787	3	-6406	0	0	0	-
-334	1301	0	Tiles (dump leftover) (island 6)	2688	9952	2723	9984	0	-6400	0	0	0	-
-335	1301	0	Tiles (dump leftover) (island 7)	2560	9728	2595	9767	3	-6406	0	0	0	-
-337	1301	0	Tiles (dump leftover)	2636	9756	2655	9767	3	-6406	0	0	0	-
-338	1301	0	Tiles (dump leftover) (island 11)	2636	9736	2655	9747	-349	-5686	0	0	0	-
-341	1301	0	Tiles (dump leftover) (island 3)	1248	10144	1283	10176	0	-6400	0	0	0	-
-342	1301	0	Tiles (dump leftover) (island 5)	1396	9984	1399	10043	0	-6400	0	0	0	-
-344	1301	0	Tiles (dump leftover) (island 7)	1352	10040	1395	10047	0	-6400	0	0	0	-
-345	1301	0	Tiles (dump leftover) (island 1)	2816	9216	2879	9280	0	-6400	0	0	0	-
-346	1301	0	Tiles (dump leftover)	2624	9792	2688	9915	0	-6400	0	0	0	-
-347	1301	0	Tiles (dump leftover) (island 3)	2532	9932	2559	9967	0	-6400	0	0	0	-
-348	1301	0	Tiles (dump leftover) (island 4)	2532	9888	2547	9919	0	-6400	0	0	0	-
+331	1301	0	Tiles (dump leftover) (island 3)	2764	9800	2816	9855	5712	-6427	0	0	0	-
+332	1301	0	Tiles (dump leftover)	2688	9728	2739	9787	5712	-6427	0	0	0	-
+334	1301	0	Tiles (dump leftover) (island 6)	2688	9952	2723	9984	5709	-6421	0	0	0	-
+335	1301	0	Tiles (dump leftover) (island 7)	2560	9728	2595	9767	5712	-6427	0	0	0	-
+337	1301	0	Tiles (dump leftover)	2636	9756	2655	9767	5712	-6427	0	0	0	-
+338	1301	0	Tiles (dump leftover) (island 11)	2636	9736	2655	9747	5360	-5707	0	0	0	-
+341	1301	0	Tiles (dump leftover) (island 3)	1248	10144	1283	10176	5709	-6421	0	0	0	-
+342	1301	0	Tiles (dump leftover) (island 5)	1396	9984	1399	10043	5709	-6421	0	0	0	-
+344	1301	0	Tiles (dump leftover) (island 7)	1352	10040	1395	10047	5709	-6421	0	0	0	-
+345	1301	0	Tiles (dump leftover) (island 1)	2816	9216	2879	9280	5709	-6421	0	0	0	-
+346	1301	0	Tiles (dump leftover)	2624	9792	2688	9915	5709	-6421	0	0	0	-
+347	1301	0	Tiles (dump leftover) (island 3)	2532	9932	2559	9967	5709	-6421	0	0	0	-
+348	1301	0	Tiles (dump leftover) (island 4)	2532	9888	2547	9919	5709	-6421	0	0	0	-
 350	1034	0	Desert Eagle Lair	3412	9560	3435	9580	-13	-6400	0	1	0	desert_eagle_lair
 351	1000	0	Abandoned Mine - Level 1 (island 4)	3488	9620	3503	9635	5	-6405	0	0	0	haunted_mine
 352	1319	0	River Elid Dungeon	3333	9533	3381	9597	21	-6399	0	1	0	river_elid_dungeon
@@ -626,37 +605,33 @@
 360	1312	0	Abandoned Mine - Level 2 (island 6)	2716	4560	2731	4567	707	-1378	0	0	0	-
 361	1312	0	Abandoned Mine - Level 2 (island 1)	2688	4428	2751	4482	623	-1241	0	0	0	-
 362	1002	0	Ah Za Rhoon (Floor 2)	2880	9344	2943	9407	23	-6403	0	0	0	-
-363	1301	0	Tiles (dump leftover) (island 2)	2964	9236	2987	9259	0	-6400	0	0	0	-
-364	1003	0	Airship platform (island 1)	1984	5504	2043	5504	720	-2058	0	0	0	-
-365	1003	0	Airship platform (island 2)	2112	5504	2175	5504	720	-2058	0	0	0	-
-366	1301	0	Tiles (dump leftover)	1748	5328	1776	5360	751	-1836	0	0	0	-
-367	1301	0	Tiles (dump leftover) (island 2)	1856	5316	1871	5331	751	-1836	0	0	0	-
-368	1301	0	Tiles (dump leftover) (island 3)	1856	5340	1871	5355	751	-1836	0	0	0	-
-369	1301	0	Tiles (dump leftover) (island 1)	2624	9080	2679	9211	-238	-6515	0	0	0	-
-370	1301	0	Tiles (dump leftover) (island 1)	2624	9180	2631	9187	0	-6400	0	0	0	-
-371	1301	0	Tiles (dump leftover) (island 2)	2564	9188	2615	9263	64	-6485	0	0	0	-
-372	1301	0	Tiles (dump leftover) (island 3)	2616	9224	2639	9275	45	-6384	0	0	0	-
-373	1301	0	Tiles (dump leftover) (island 4)	2588	9160	2611	9183	0	-6400	0	0	0	-
-374	1301	0	Tiles (dump leftover) (island 5)	2912	8940	2919	8947	0	-6400	0	0	0	-
-375	1301	0	Tiles (dump leftover) (island 6)	2616	9156	2623	9163	0	-6400	0	0	0	-
-376	1301	0	Tiles (dump leftover) (island 7)	2616	9168	2623	9175	0	-6400	0	0	0	-
-377	1301	0	Tiles (dump leftover) (island 8)	2564	9176	2571	9183	0	-6400	0	0	0	-
-378	1301	0	Tiles (dump leftover) (island 9)	2500	9031	2609	9114	-25	-6454	0	0	0	-
-379	1301	0	Tiles (dump leftover) (island 10)	2640	9032	2683	9063	0	-6400	0	0	0	-
-380	1226	0	Charred Dungeon (island 11)	2624	8832	2743	8895	0	-6400	0	0	0	zanaris
-381	1301	0	Tiles (dump leftover) (island 1)	2628	9616	2687	9727	0	-6400	0	0	0	-
-382	1301	0	Tiles (dump leftover)	3000	9536	3040	9599	0	-6400	0	0	0	-
-383	1353	0	Pandemonium Cave	3020	9372	3063	9403	0	-6400	0	0	0	-
-384	1301	0	Tiles (dump leftover) (island 5)	2972	9620	2999	9659	0	-6400	0	0	0	-
-385	1301	0	Tiles (dump leftover) (island 1)	2612	9180	2631	9191	0	-6400	0	0	0	-
-386	1301	0	Tiles (dump leftover) (island 2)	2587	9065	2689	9211	13	-6534	0	0	0	-
-387	1301	0	Tiles (dump leftover) (island 3)	2618	9224	2639	9275	74	-6381	0	0	0	-
-388	1009	0	Barbarian Assault (island 1)	1873	5361	1894	5379	645	-1867	0	0	0	barbarian_assault
-389	1009	0	Barbarian Assault (island 2)	1864	5346	1871	5357	645	-1867	0	0	0	barbarian_assault
-390	1009	0	Barbarian Assault (island 3)	1864	5380	1911	5385	645	-1867	0	0	0	barbarian_assault
-391	1009	0	Barbarian Assault (island 4)	1864	5361	1872	5379	645	-1867	0	0	0	barbarian_assault
-392	1009	0	Barbarian Assault (island 5)	1895	5361	1911	5379	645	-1867	0	0	0	barbarian_assault
-393	1010	0	Barbarian Assault lobby (island 1)	2564	5184	2579	5219	-58	-1706	0	0	0	-
+363	1301	0	Tiles (dump leftover) (island 2)	2964	9236	2987	9259	5709	-6421	0	0	0	-
+364	1290	0	?	1805	5484	2173	5698	3778	-1585	0	0	0	eagles_peak_dungeon
+365	1028	0	crash-cave-area	1996	5587	2040	5624	448	-2048	0	1	0	-
+366	1301	0	Tiles (dump leftover)	1748	5328	1776	5360	6460	-1857	0	0	0	-
+367	1301	0	Tiles (dump leftover) (island 2)	1856	5316	1871	5331	6460	-1857	0	0	0	-
+368	1301	0	Tiles (dump leftover) (island 3)	1856	5340	1871	5355	6460	-1857	0	0	0	-
+369	1301	0	Tiles (dump leftover) (island 1)	2624	9080	2679	9211	5471	-6536	0	0	0	-
+370	1301	0	Tiles (dump leftover) (island 1)	2624	9180	2631	9187	5709	-6421	0	0	0	-
+371	1301	0	Tiles (dump leftover) (island 2)	2564	9188	2615	9263	5773	-6506	0	0	0	-
+372	1301	0	Tiles (dump leftover) (island 3)	2616	9224	2639	9275	5754	-6405	0	0	0	-
+373	1301	0	Tiles (dump leftover) (island 4)	2588	9160	2611	9183	5709	-6421	0	0	0	-
+374	1301	0	Tiles (dump leftover) (island 5)	2912	8940	2919	8947	5709	-6421	0	0	0	-
+375	1301	0	Tiles (dump leftover) (island 6)	2616	9156	2623	9163	5709	-6421	0	0	0	-
+376	1301	0	Tiles (dump leftover) (island 7)	2616	9168	2623	9175	5709	-6421	0	0	0	-
+377	1301	0	Tiles (dump leftover) (island 8)	2564	9176	2571	9183	5709	-6421	0	0	0	-
+378	1301	0	Tiles (dump leftover) (island 9)	2500	9031	2609	9114	5684	-6475	0	0	0	-
+379	1301	0	Tiles (dump leftover) (island 10)	2640	9032	2683	9063	5709	-6421	0	0	0	-
+380	1226	0	Charred Dungeon (island 11)	2624	8832	2743	8895	-23	-6480	0	1	0	zanaris
+381	1301	0	Tiles (dump leftover) (island 1)	2628	9616	2687	9727	5709	-6421	0	0	0	-
+382	1301	0	Tiles (dump leftover)	3000	9536	3040	9599	5709	-6421	0	0	0	-
+383	1353	0	Pandemonium Cave	3020	9359	3066	9410	2	-6400	0	1	0	-
+384	1301	0	Tiles (dump leftover) (island 5)	2972	9620	2999	9659	5709	-6421	0	0	0	-
+385	1301	0	Tiles (dump leftover) (island 1)	2612	9180	2631	9191	5709	-6421	0	0	0	-
+386	1301	0	Tiles (dump leftover) (island 2)	2587	9065	2689	9211	5722	-6555	0	0	0	-
+387	1301	0	Tiles (dump leftover) (island 3)	2618	9224	2639	9275	5783	-6402	0	0	0	-
+389	1290	0	?	1725	5268	1991	5374	2401	-1845	0	0	0	barbarian_assault
+393	1072	0	Ham hideout hallway quest spot	2563	5184	2579	5219	598	-1944	0	0	0	ham_hideout
 394	1266	0	Shade Catacombs	3456	9664	3519	9727	1	-6400	0	1	0	shade_catacombs
 399	1012	0	Blast Furnace (island 1)	1988	4864	2047	4919	776	-1245	0	0	0	-
 400	1012	0	Blast Furnace (island 2)	2016	5024	2043	5051	776	-1245	0	0	0	-
@@ -674,383 +649,353 @@
 412	1012	0	Blast Furnace (island 10)	2020	5056	2031	5056	776	-1245	0	0	0	-
 413	1012	0	Blast Furnace (island 12)	1920	4992	1983	4992	776	-1245	0	0	0	-
 414	1012	0	Blast Furnace (island 13)	1856	4864	1856	4895	776	-1245	0	0	0	-
-415	1307	0	Witchaven Dungeon	2692	9665	2748	9719	0	-6400	0	1	0	witchaven_dungeon
-416	1205	0	Temple of Ikov (McGrubor's Wood)	2626	9863	2665	9915	0	-6400	0	1	0	temple_of_ikov
-417	1301	0	Tiles (dump leftover) (island 1)	2756	9356	2760	9391	30	-6410	0	0	0	-
-418	1301	0	Tiles (dump leftover) (island 1)	2764	10180	2807	10239	6	-6363	0	0	0	-
-419	1301	0	Tiles (dump leftover) (island 2)	2752	10072	2815	10111	6	-6363	0	0	0	-
-420	1301	0	Tiles (dump leftover) (island 3)	2764	10124	2803	10167	6	-6363	0	0	0	-
-421	1301	0	Tiles (dump leftover) (island 4)	2688	10112	2751	10175	6	-6363	0	0	0	-
-422	1301	0	Tiles (dump leftover) (island 5)	2704	10192	2743	10231	6	-6363	0	0	0	-
-423	1301	0	Tiles (dump leftover) (island 6)	2816	10128	2816	10159	6	-6363	0	0	0	-
-424	1301	0	Tiles (dump leftover) (island 1)	1408	9548	1459	9607	-4	-6381	0	0	0	-
-425	1301	0	Tiles (dump leftover) (island 1)	1448	9536	1499	9575	-4	-6381	0	0	0	-
-426	1301	0	Tiles (dump leftover) (island 2)	1492	9560	1531	9599	-4	-6381	0	0	0	-
-427	1301	0	Tiles (dump leftover) (island 3)	1384	9516	1499	9547	-4	-6381	0	0	0	-
-428	1301	0	Tiles (dump leftover) (island 4)	1384	9552	1391	9599	-4	-6381	0	0	0	-
-429	1301	0	Tiles (dump leftover) (island 5)	1480	9568	1491	9595	-4	-6381	0	0	0	-
-430	1301	0	Tiles (dump leftover) (island 6)	1500	9540	1515	9555	-4	-6381	0	0	0	-
-431	1301	0	Tiles (dump leftover) (island 7)	1452	9532	1475	9539	-4	-6381	0	0	0	-
-432	1301	0	Tiles (dump leftover) (island 8)	1392	9544	1399	9555	-4	-6381	0	0	0	-
-433	1301	0	Tiles (dump leftover) (island 9)	1428	9532	1439	9535	-4	-6381	0	0	0	-
-434	1301	0	Tiles (dump leftover) (island 2)	1280	9480	1343	9591	-4	-6381	0	0	0	-
-435	1301	0	Tiles (dump leftover) (island 3)	1536	9536	1600	9663	-4	-6381	0	0	0	-
-438	1301	0	Tiles (dump leftover) (island 6)	1344	9536	1391	9599	-4	-6381	0	0	0	-
-439	1301	0	Tiles (dump leftover) (island 1)	1384	9536	1391	9543	-4	-6381	0	0	0	-
-443	1301	0	Tiles (dump leftover) (island 10)	1280	9408	1339	9423	-4	-6381	0	0	0	-
-444	1301	0	Tiles (dump leftover) (island 11)	1376	9448	1387	9455	-4	-6381	0	0	0	-
-445	1301	0	Tiles (dump leftover) (island 12)	1352	9500	1375	9523	-4	-6381	0	0	0	-
-446	1304	1	Hunter Guild (island 1)	1534	9408	1579	9471	0	-6400	0	0	0	hunter_guild
-448	1301	1	Tiles (dump leftover) (island 1)	1280	9480	1347	9590	-4	-6381	0	0	0	-
-449	1301	1	Tiles (dump leftover) (island 1)	1344	9539	1347	9591	-4	-6381	0	0	0	-
-450	1301	1	Tiles (dump leftover) (island 2)	1536	9536	1600	9663	-4	-6381	0	0	0	-
-451	1305	1	Fortis Barracks (island 1)	1612	9536	1674	9579	-34	-6343	0	0	0	fortis_barracks
+415	1307	0	Witchaven Dungeon	2225	9222	3072	10002	-2713	-6601	0	0	0	witchaven_dungeon
+416	1205	0	Temple of Ikov (McGrubor's Wood)	2626	9863	2665	9917	0	-6400	0	1	0	temple_of_ikov
+417	1301	0	Tiles (dump leftover) (island 1)	2756	9356	2760	9391	5739	-6431	0	0	0	-
+418	1301	0	Tiles (dump leftover) (island 1)	2764	10180	2807	10239	5715	-6384	0	0	0	-
+419	1301	0	Tiles (dump leftover) (island 2)	2752	10072	2815	10111	5715	-6384	0	0	0	-
+420	1301	0	Tiles (dump leftover) (island 3)	2764	10124	2803	10167	5715	-6384	0	0	0	-
+421	1301	0	Tiles (dump leftover) (island 4)	2688	10112	2751	10175	5715	-6384	0	0	0	-
+422	1301	0	Tiles (dump leftover) (island 5)	2704	10192	2743	10231	5715	-6384	0	0	0	-
+423	1301	0	Tiles (dump leftover) (island 6)	2816	10128	2816	10159	5715	-6384	0	0	0	-
+424	1301	0	Tiles (dump leftover) (island 1)	1408	9548	1459	9607	5705	-6402	0	0	0	-
+425	1301	0	Tiles (dump leftover) (island 1)	1448	9536	1499	9575	5705	-6402	0	0	0	-
+426	1301	0	Tiles (dump leftover) (island 2)	1492	9560	1531	9599	5705	-6402	0	0	0	-
+427	1301	0	Tiles (dump leftover) (island 3)	1384	9516	1499	9547	5705	-6402	0	0	0	-
+428	1301	0	Tiles (dump leftover) (island 4)	1384	9552	1391	9599	5705	-6402	0	0	0	-
+429	1301	0	Tiles (dump leftover) (island 5)	1480	9568	1491	9595	5705	-6402	0	0	0	-
+430	1301	0	Tiles (dump leftover) (island 6)	1500	9540	1515	9555	5705	-6402	0	0	0	-
+431	1301	0	Tiles (dump leftover) (island 7)	1452	9532	1475	9539	5705	-6402	0	0	0	-
+432	1301	0	Tiles (dump leftover) (island 8)	1392	9544	1399	9555	5705	-6402	0	0	0	-
+433	1301	0	Tiles (dump leftover) (island 9)	1428	9532	1439	9535	5705	-6402	0	0	0	-
+434	1301	0	Tiles (dump leftover) (island 2)	1280	9480	1343	9591	5705	-6402	0	0	0	-
+435	1301	0	Tiles (dump leftover) (island 3)	1536	9536	1600	9663	5705	-6402	0	0	0	-
+438	1301	0	Tiles (dump leftover) (island 6)	1344	9536	1391	9599	5705	-6402	0	0	0	-
+439	1301	0	Tiles (dump leftover) (island 1)	1384	9536	1391	9543	5705	-6402	0	0	0	-
+443	1301	0	Tiles (dump leftover) (island 10)	1280	9408	1339	9423	5705	-6402	0	0	0	-
+444	1301	0	Tiles (dump leftover) (island 11)	1376	9448	1387	9455	5705	-6402	0	0	0	-
+445	1301	0	Tiles (dump leftover) (island 12)	1352	9500	1375	9523	5705	-6402	0	0	0	-
+446	1304	0	Hunter Guild (island 1)	1534	9410	1579	9471	0	-6399	0	1	0	hunter_guild
+448	1301	1	Tiles (dump leftover) (island 1)	1280	9480	1347	9590	5705	-6402	0	0	0	-
+449	1301	1	Tiles (dump leftover) (island 1)	1344	9539	1347	9591	5705	-6402	0	0	0	-
+450	1301	1	Tiles (dump leftover) (island 2)	1536	9536	1600	9663	5705	-6402	0	0	0	-
 452	1303	0	Dragon Nest	1216	9472	1271	9535	40	-6401	0	1	0	dragon_nest
-453	1306	1	Fortis Crypt (island 4)	1605	9472	1736	9585	-1	-6400	0	0	0	fortis_barracks
 454	1126	1	Neypotzli — Central Hub	1422	9612	1458	9652	-4	-6395	0	1	0	neypotzli
-455	1301	1	Tiles (dump leftover) (island 6)	1664	9680	1671	9699	56	-6319	0	0	0	-
-456	1305	1	Fortis Barracks (island 7)	1688	9552	1711	9575	23	-6358	0	0	0	fortis_barracks
-457	1301	0	Tiles (dump leftover) (island 1)	1688	10106	1718	10106	-28	-6375	0	0	0	-
-458	1301	0	Tiles (dump leftover) (island 1)	1612	10106	1623	10106	-28	-6375	0	0	0	-
-459	1301	0	Tiles (dump leftover) (island 2)	1596	10107	1619	10114	-28	-6375	0	0	0	-
-460	1301	2	Tiles (dump leftover) (island 1)	2892	4428	2939	4471	235	-701	0	0	0	-
+455	1301	1	Tiles (dump leftover) (island 6)	1664	9680	1671	9699	5765	-6340	0	0	0	-
+457	1301	0	Tiles (dump leftover) (island 1)	1688	10106	1718	10106	5681	-6396	0	0	0	-
+458	1301	0	Tiles (dump leftover) (island 1)	1612	10106	1623	10106	5681	-6396	0	0	0	-
+459	1301	0	Tiles (dump leftover) (island 2)	1596	10107	1619	10114	5681	-6396	0	0	0	-
+460	1301	2	Tiles (dump leftover) (island 1)	2892	4428	2939	4471	5944	-722	0	0	0	-
 461	1022	2	Corporeal Beast Lair (island 2)	2964	4368	2999	4399	235	-701	0	0	0	corporeal_beast
-462	1301	2	Tiles (dump leftover) (island 3)	2964	4240	2999	4267	235	-701	0	0	0	-
-463	1301	1	Tiles (dump leftover) (island 1)	1924	9160	2107	9215	512	-6146	0	0	0	-
-465	1301	0	Tiles (dump leftover) (island 2)	1664	9680	1727	9715	0	-6399	0	0	0	-
-466	1301	0	Tiles (dump leftover) (island 3)	1668	9728	1727	9767	0	-6399	0	0	0	-
+462	1301	2	Tiles (dump leftover) (island 3)	2964	4240	2999	4267	5944	-722	0	0	0	-
+463	1301	1	Tiles (dump leftover) (island 1)	1924	9160	2107	9215	6221	-6167	0	0	0	-
+465	1301	0	Tiles (dump leftover) (island 2)	1664	9680	1727	9715	5709	-6420	0	0	0	-
+466	1301	0	Tiles (dump leftover) (island 3)	1668	9728	1727	9767	5709	-6420	0	0	0	-
 467	1063	0	Stalker Den (island 4)	1288	9854	1334	9907	41	-6378	0	0	0	stalker_den
 468	1158	0	Stalker Den (island 5)	1240	9756	1275	9787	10	-6401	0	1	0	stalker_den
-469	1305	0	Fortis Barracks (island 7)	1635	9548	1660	9579	41	-6355	0	0	0	fortis_barracks
-470	1305	0	Fortis Barracks (island 1)	1640	9484	1659	9499	0	-6436	0	0	0	fortis_barracks
 471	1235	0	Fortis Colosseum	1796	9480	1855	9535	-1	-6400	0	1	0	-
-472	1301	0	Tiles (dump leftover) (island 1)	2880	9664	2943	9700	-1	-6403	0	0	0	-
-474	1250	0	Entrana Dungeon	2848	9724	2876	9752	0	-6400	0	0	0	-
-475	1301	0	Tiles (dump leftover) (island 1)	2928	9732	2943	9747	0	-6400	0	0	0	-
-476	1301	0	Tiles (dump leftover) (island 1)	1847	5498	2047	5631	348	-2164	0	0	0	-
-477	1301	0	Tiles (dump leftover) (island 2)	2240	5632	2240	5695	348	-2164	0	0	0	-
+472	1301	0	Tiles (dump leftover) (island 1)	2880	9664	2943	9700	5708	-6424	0	0	0	-
+474	1250	0	Entrana Dungeon	2819	9729	2875	9758	-2	-6399	0	1	0	-
+475	1301	0	Tiles (dump leftover) (island 1)	2928	9732	2943	9747	5709	-6421	0	0	0	-
+476	1301	0	Tiles (dump leftover) (island 1)	1847	5498	2047	5631	6057	-2185	0	0	0	-
+477	1301	0	Tiles (dump leftover) (island 2)	2240	5632	2240	5695	6057	-2185	0	0	0	-
 478	1256	0	Morytania Spider Cave	3652	9792	3711	9867	0	-6400	0	1	0	morytania_spider_cave
-479	1301	0	Tiles (dump leftover) (island 1)	2184	4812	2231	4859	334	-1506	0	0	0	-
-480	1301	0	Tiles (dump leftover) (island 1)	2180	4852	2191	4859	334	-1506	0	0	0	-
+479	1301	0	Tiles (dump leftover) (island 1)	2184	4812	2231	4859	6043	-1527	0	0	0	-
+480	1301	0	Tiles (dump leftover) (island 1)	2180	4852	2191	4859	6043	-1527	0	0	0	-
 481	1331	0	Saba's cave	2264	4748	2275	4763	588	-1175	0	0	0	-
 482	1342	0	Grimstone Dungeon	2876	10440	2931	10487	0	-6400	0	0	0	ghorrock_dungeon
-483	1301	0	Tiles (dump leftover) (island 2)	2896	10304	2939	10355	0	-6400	0	0	0	-
-484	1301	0	Tiles (dump leftover) (island 1)	801	2283	7673	7167	4597	-5808	0	0	0	-
+483	1301	0	Tiles (dump leftover) (island 2)	2896	10304	2939	10355	5709	-6421	0	0	0	-
+484	1301	0	Tiles (dump leftover) (island 1)	801	2283	7673	7167	10306	-5829	0	0	0	-
 485	1036	0	Digsite Dungeon	3360	9801	3389	9853	-2	-6397	0	1	0	digsite_dungeon
 486	1036	0	Digsite Dungeon (winch)	3346	9814	3357	9824	-2	-6397	0	1	0	digsite_dungeon
 487	1036	0	Digsite Dungeon (east)	3402	9801	3416	9820	-2	-6397	0	1	0	digsite_dungeon
 488	1328	0	Nature Grotto	3434	9732	3450	9747	0	-6401	0	1	0	nature_grotto
-489	1301	0	Tiles (dump leftover) (island 4)	3436	9820	3451	9827	-2	-6397	0	1	0	-
-490	1301	0	Tiles (dump leftover)	2793	5158	2805	5173	478	-2129	0	0	0	-
+489	1301	0	Tiles (dump leftover) (island 4)	3436	9820	3451	9827	2190	-6185	0	0	0	-
+490	1301	0	Tiles (dump leftover)	2793	5158	2805	5173	6187	-2150	0	0	0	-
 491	1156	0	Sophanum Bank	2759	5129	2771	5145	557	-2337	90	0	0	sophanem_dungeon
 492	1040	0	Draynor Sewers	3076	9640	3127	9699	0	-6400	0	1	0	draynor_sewers
 493	1231	0	Draynor Manor Basement	3088	9744	3119	9767	0	-6392	0	1	0	draynor_manor_basement
-494	1301	0	Tiles (dump leftover)	3072	9764	3083	9779	0	-6400	0	0	0	-
-496	1301	0	Tiles (dump leftover)	2972	9904	2991	9919	0	-6400	0	1	0	-
-499	1301	0	Tiles (dump leftover) (island 1)	3020	9360	3063	9403	70	-6402	0	0	0	-
+494	1301	0	Tiles (dump leftover)	3072	9764	3083	9779	5709	-6421	0	0	0	-
+496	1301	0	Tiles (dump leftover)	2972	9904	2991	9919	2192	-6188	0	0	0	-
+499	1301	0	Tiles (dump leftover) (island 1)	3020	9360	3063	9403	5779	-6423	0	0	0	-
 500	1229	0	Desert Mining Camp Dungeon	3264	9407	3327	9471	23	-6384	0	1	0	enakhras_temple
-501	1301	0	Tiles (dump leftover) (island 3)	3024	9228	3059	9263	70	-6402	0	0	0	-
-502	1301	0	Tiles (dump leftover) (island 4)	3080	9242	3130	9270	70	-6402	0	0	0	-
+501	1301	0	Tiles (dump leftover) (island 3)	3024	9228	3059	9263	5779	-6423	0	0	0	-
+502	1301	0	Tiles (dump leftover) (island 4)	3080	9242	3130	9270	5779	-6423	0	0	0	-
 503	1374	0	Jaldraocht Pyramid	3200	9280	3269	9342	0	-6396	0	1	0	enakhras_temple
 504	1191	0	Varrock Museum basement	1728	4928	1791	4991	1498	-1504	0	0	0	-
-505	1050	0	Enlightened Journey crash areas (island 2)	1832	4908	1851	4923	976	-1546	0	0	0	-
-506	1050	0	Enlightened Journey crash areas (island 3)	1728	4800	1731	4863	976	-1546	0	0	0	-
-507	1301	0	Tiles (dump leftover)	2504	4823	2539	4854	624	-1522	0	0	0	-
+507	1301	0	Tiles (dump leftover)	2504	4823	2539	4854	6333	-1543	0	0	0	-
 508	1330	0	Revenant Caves	3144	10053	3262	10236	-124	-6403	0	1	0	revenant_caves
-509	1301	0	Tiles (dump leftover) (island 2)	3076	9948	3135	9999	-67	-6382	0	0	0	-
-510	1308	0	Fisher Realm (Holy Grail) (island 1)	2880	4672	2880	4735	-27	-1227	0	0	0	mage_arena_bank
-511	1308	0	Fisher Realm (Holy Grail) (island 2)	2816	4800	2859	4800	-27	-1227	0	0	0	mage_arena_bank
-512	1056	0	Fishing Trawler (island 1)	1944	4756	1959	4775	714	-1666	0	0	0	-
-513	1056	0	Fishing Trawler (island 2)	1792	4736	1855	4736	714	-1666	0	0	0	-
-514	1056	0	Fishing Trawler (island 3)	1792	4800	1984	4895	714	-1666	0	0	0	-
-515	1301	0	Tiles (dump leftover) (island 1)	2048	10048	2111	10107	0	-6400	0	0	0	-
+509	1301	0	Tiles (dump leftover) (island 2)	3076	9948	3135	9999	5642	-6403	0	0	0	-
+510	1308	0	Fisher Realm (Holy Grail) (island 1)	2880	4672	2880	4735	1512	-966	0	0	0	mage_arena_bank
+511	1308	0	Fisher Realm (Holy Grail) (island 2)	2816	4800	2859	4800	1512	-966	0	0	0	mage_arena_bank
+515	1301	0	Tiles (dump leftover) (island 1)	2048	10048	2111	10107	5709	-6421	0	0	0	-
 516	1059	0	Fossil Island Caverns	3581	10175	3664	10303	45	-6406	0	1	0	fossil_island_underground
-517	1291	0	no idea	3464	9854	3583	9979	0	-6400	0	0	0	-
-518	1291	0	no idea (island 1)	3488	9854	3515	9877	0	-6400	0	0	0	-
+517	1290	0	no idea	3464	9854	3583	9979	1539	-6139	0	0	0	-
+518	1290	0	no idea (island 1)	3488	9854	3515	9877	1539	-6139	0	0	0	-
 519	1222	0	Araxxor's Lair	3608	9796	3651	9835	0	-6400	0	1	0	morytania_spider_cave
 520	1232	0	Ectofuntus Dungeon	3670	9875	3692	9901	-15	-6369	0	1	0	ectofuntus_dungeon
-521	1301	0	Tiles (dump leftover) (island 3)	2848	10060	2871	10095	-4	-6385	0	0	0	-
+521	1301	0	Tiles (dump leftover) (island 3)	2848	10060	2871	10095	5705	-6406	0	0	0	-
 522	1236	0	Genie cave (island 1)	3365	9296	3379	9327	0	-6399	0	1	0	-
-523	1301	0	Tiles (dump leftover) (island 5)	2432	9872	2432	9887	0	-6400	0	0	0	-
-524	1301	0	Tiles (dump leftover) (island 6)	2432	9792	2495	9839	0	-6400	0	0	0	-
-525	1301	0	Tiles (dump leftover) (island 7)	2432	9856	2495	9892	0	-6400	0	0	0	-
-526	1301	0	Tiles (dump leftover) (island 1)	3028	9792	3063	9855	0	-6400	0	0	0	-
-529	1301	0	Tiles (dump leftover)	2881	9881	2944	9920	0	-6400	0	1	0	-
-530	1301	0	Tiles (dump leftover)	2813	9861	2880	9888	-4	-6380	0	1	0	-
-531	1301	0	Tiles (dump leftover) (island 3)	2897	9861	2924	9880	0	-6400	0	1	0	-
-532	1301	2	Tiles (dump leftover) (island 1)	2980	5184	3103	5247	36	-1563	0	0	0	-
-533	1301	2	Tiles (dump leftover) (island 2)	2848	5188	2943	5231	36	-1563	0	0	0	-
-534	1301	0	Tiles (dump leftover) (island 2)	2380	9864	2411	9915	0	-6400	0	0	0	-
-535	1301	0	Tiles (dump leftover) (island 3)	2412	9904	2419	9915	0	-6400	0	0	0	-
+523	1301	0	Tiles (dump leftover) (island 5)	2432	9872	2432	9887	5709	-6421	0	0	0	-
+524	1301	0	Tiles (dump leftover) (island 6)	2432	9792	2495	9839	5709	-6421	0	0	0	-
+525	1301	0	Tiles (dump leftover) (island 7)	2432	9856	2495	9892	5709	-6421	0	0	0	-
+526	1301	0	Tiles (dump leftover) (island 1)	3028	9792	3063	9855	5709	-6421	0	0	0	-
+529	1301	0	Tiles (dump leftover)	2881	9881	2944	9920	2192	-6188	0	0	0	-
+530	1301	0	Tiles (dump leftover)	2813	9861	2880	9888	2188	-6168	0	0	0	-
+531	1301	0	Tiles (dump leftover) (island 3)	2897	9861	2924	9880	2192	-6188	0	0	0	-
+532	1301	2	Tiles (dump leftover) (island 1)	2980	5184	3103	5247	5745	-1584	0	0	0	-
+533	1301	2	Tiles (dump leftover) (island 2)	2848	5188	2943	5231	5745	-1584	0	0	0	-
+534	1301	0	Tiles (dump leftover) (island 2)	2380	9864	2411	9915	5709	-6421	0	0	0	-
+535	1301	0	Tiles (dump leftover) (island 3)	2412	9904	2419	9915	5709	-6421	0	0	0	-
 536	1270	0	Sourhog Cave	3152	9669	3182	9721	-13	-6366	0	1	0	sourhog_cave
 537	1225	0	Champion Guild Basement	3144	9736	3191	9779	21	-6403	0	1	0	sourhog_cave
 538	1074	0	HS55	2240	5808	2311	5883	1355	-2490	0	1	0	hallowed_sepulchre
-539	1301	0	Tiles (dump leftover) (island 1)	3820	9252	3835	9255	0	-6400	0	0	0	-
+539	1301	0	Tiles (dump leftover) (island 1)	3820	9252	3835	9255	5709	-6421	0	0	0	-
 540	1075	0	Harmony Island lower level (island 2)	3780	9252	3791	9255	0	-6400	0	0	0	-
-541	1301	0	Tiles (dump leftover)	2876	9880	2944	9924	0	-6400	0	1	0	-
+541	1301	0	Tiles (dump leftover)	2876	9880	2944	9924	2192	-6188	0	0	0	-
 543	1350	0	White Wolf Tunnel	2816	9860	2878	9886	0	-6396	0	1	0	white_wolf_tunnel
-544	1301	0	Tiles (dump leftover) (island 4)	2896	9860	2927	9879	0	-6400	0	1	0	-
-545	1301	0	Tiles (dump leftover) (island 3)	2900	10016	2927	10039	-16	-6432	0	0	0	-
-546	1301	0	Tiles (dump leftover) (island 1)	2528	9224	2555	9259	51	-6439	0	0	0	-
-547	1301	0	Tiles (dump leftover) (island 4)	2304	9088	2347	9095	0	-6400	0	0	0	-
-548	1301	0	Tiles (dump leftover) (island 5)	2304	9272	2347	9279	0	-6400	0	0	0	-
-549	1301	0	Tiles (dump leftover) (island 6)	2528	9136	2539	9147	0	-6400	0	0	0	-
-550	1301	0	Tiles (dump leftover) (island 7)	2500	9188	2507	9203	0	-6400	0	0	0	-
-551	1301	0	Tiles (dump leftover) (island 8)	2436	9112	2463	9115	0	-6400	0	0	0	-
-552	1301	0	Tiles (dump leftover) (island 9)	2512	9132	2519	9143	0	-6400	0	0	0	-
-553	1301	0	Tiles (dump leftover) (island 10)	2544	9152	2551	9159	0	-6400	0	0	0	-
-554	1301	0	Tiles (dump leftover) (island 11)	2536	9176	2547	9183	0	-6400	0	0	0	-
-555	1301	0	Tiles (dump leftover) (island 12)	2340	9344	2363	9344	0	-6400	0	0	0	-
-556	1301	0	Tiles (dump leftover) (island 13)	2320	9344	2335	9344	0	-6400	0	0	0	-
-557	1301	0	Tiles (dump leftover) (island 14)	2568	9244	2587	9263	58	-6405	0	0	0	-
-558	1324	0	Observatory Dungeon	2305	9344	2365	9405	103	-6209	0	1	0	observatory_dungeon
-559	1301	0	Tiles (dump leftover)	2328	9568	2339	9583	0	-6400	0	0	0	-
-560	1301	0	Tiles (dump leftover) (island 1)	3168	9339	3330	9408	421	-6491	0	0	0	-
+544	1301	0	Tiles (dump leftover) (island 4)	2896	9860	2927	9879	2192	-6188	0	0	0	-
+545	1301	0	Tiles (dump leftover) (island 3)	2900	10016	2927	10039	5693	-6453	0	0	0	-
+546	1301	0	Tiles (dump leftover) (island 1)	2528	9224	2555	9259	5760	-6460	0	0	0	-
+547	1301	0	Tiles (dump leftover) (island 4)	2304	9088	2347	9095	5709	-6421	0	0	0	-
+548	1301	0	Tiles (dump leftover) (island 5)	2304	9272	2347	9279	5709	-6421	0	0	0	-
+549	1301	0	Tiles (dump leftover) (island 6)	2528	9136	2539	9147	5709	-6421	0	0	0	-
+550	1301	0	Tiles (dump leftover) (island 7)	2500	9188	2507	9203	5709	-6421	0	0	0	-
+551	1301	0	Tiles (dump leftover) (island 8)	2436	9112	2463	9115	5709	-6421	0	0	0	-
+552	1301	0	Tiles (dump leftover) (island 9)	2512	9132	2519	9143	5709	-6421	0	0	0	-
+553	1301	0	Tiles (dump leftover) (island 10)	2544	9152	2551	9159	5709	-6421	0	0	0	-
+554	1301	0	Tiles (dump leftover) (island 11)	2536	9176	2547	9183	5709	-6421	0	0	0	-
+555	1301	0	Tiles (dump leftover) (island 12)	2340	9344	2363	9344	5709	-6421	0	0	0	-
+556	1301	0	Tiles (dump leftover) (island 13)	2320	9344	2335	9344	5709	-6421	0	0	0	-
+557	1301	0	Tiles (dump leftover) (island 14)	2568	9244	2587	9263	5767	-6426	0	0	0	-
+558	1324	0	Observatory Dungeon	2305	9344	2365	9405	102	-6211	0	1	0	observatory_dungeon
+559	1301	0	Tiles (dump leftover)	2328	9568	2339	9583	5709	-6421	0	0	0	-
+560	1301	0	Tiles (dump leftover) (island 1)	3168	9339	3330	9408	6130	-6512	0	0	0	-
 562	1348	0	Ice Troll Caves	2368	10260	2432	10320	0	-6400	0	1	0	ice_troll_caves
-563	1301	0	Tiles (dump leftover) (island 4)	2616	9268	2624	9275	0	-6400	0	0	0	-
-564	1301	2	Tiles (dump leftover) (island 1)	3552	9504	3555	9515	-257	-6402	0	0	0	-
+563	1301	0	Tiles (dump leftover) (island 4)	2616	9268	2624	9275	5709	-6421	0	0	0	-
+564	1301	2	Tiles (dump leftover) (island 1)	3552	9504	3555	9515	5452	-6423	0	0	0	-
 565	1325	0	Shilo Village Gem Mine	2824	9376	2859	9400	-14	-6389	0	0	0	shilo_village_gem_mine
-566	1309	0	Keep Le Faye (quest) (island 1)	1668	4228	1723	4283	1061	-856	0	0	0	-
-567	1301	0	Tiles (dump leftover) (island 1)	2880	10072	2899	10091	-139	-6475	0	0	0	-
-568	1301	0	Tiles (dump leftover) (island 2)	2928	10080	2939	10087	-139	-6475	0	0	0	-
-569	1301	0	Tiles (dump leftover) (island 3)	2844	10440	2931	10491	0	-6400	0	0	0	-
-570	1301	0	Tiles (dump leftover) (island 4)	2780	10180	2807	10239	-139	-6475	0	0	0	-
-571	1301	0	Tiles (dump leftover) (island 5)	2780	10256	2815	10291	-139	-6475	0	0	0	-
+566	1309	0	Keep Le Faye (quest) (island 1)	1668	4228	1723	4283	2600	-595	0	0	0	-
+567	1301	0	Tiles (dump leftover) (island 1)	2880	10072	2899	10091	5570	-6496	0	0	0	-
+568	1301	0	Tiles (dump leftover) (island 2)	2928	10080	2939	10087	5570	-6496	0	0	0	-
+569	1301	0	Tiles (dump leftover) (island 3)	2844	10440	2931	10491	5709	-6421	0	0	0	-
+570	1301	0	Tiles (dump leftover) (island 4)	2780	10180	2807	10239	5570	-6496	0	0	0	-
+571	1301	0	Tiles (dump leftover) (island 5)	2780	10256	2815	10291	5570	-6496	0	0	0	-
 572	1341	0	Weiss	2824	10324	2859	10355	24	-6410	0	1	0	weiss_salt_mine
-573	1301	0	Tiles (dump leftover) (island 7)	2780	10124	2803	10147	-139	-6475	0	0	0	-
-574	1301	0	Tiles (dump leftover) (island 1)	1924	4680	1967	4715	776	-989	0	0	0	-
-575	1310	0	King's Ransom (quest) (island 1)	1884	4256	1915	4283	869	-856	0	0	0	-
-576	1310	0	King's Ransom (quest) (island 2)	1812	4256	1827	4279	869	-856	0	0	0	-
-577	1310	0	King's Ransom (quest) (island 3)	1860	4228	1871	4247	869	-856	0	0	0	-
-578	1246	0	Kiss the frog (island 1)	2368	4672	2431	4735	394	-1440	0	0	0	-
-579	1246	0	Kiss the frog (island 3)	2496	4747	2569	4866	394	-1440	0	0	0	-
-580	1246	0	Kiss the frog (island 1)	2368	4803	2427	4866	394	-1440	0	0	0	-
-581	1246	0	Kiss the frog (island 2)	2368	4671	2431	4734	394	-1440	0	0	0	-
-582	1338	0	Law altar	2456	4810	2472	4826	394	-1440	0	0	0	-
-583	1246	0	Kiss the frog (island 5)	2496	4683	2519	4730	394	-1440	0	0	0	-
-584	1246	0	Kiss the frog (island 6)	2452	4767	2479	4794	394	-1440	0	0	0	-
-585	1246	0	Kiss the frog (island 7)	2528	4707	2547	4726	394	-1440	0	0	0	-
+573	1301	0	Tiles (dump leftover) (island 7)	2780	10124	2803	10147	5570	-6496	0	0	0	-
+574	1301	0	Tiles (dump leftover) (island 1)	1924	4680	1967	4715	6485	-1010	0	0	0	-
+575	1310	0	King's Ransom (quest) (island 1)	1884	4256	1915	4283	2408	-595	0	0	0	-
+576	1310	0	King's Ransom (quest) (island 2)	1812	4256	1827	4279	2408	-595	0	0	0	-
+577	1310	0	King's Ransom (quest) (island 3)	1860	4228	1871	4247	2408	-595	0	0	0	-
+578	1246	0	Kiss the frog (island 1)	2170	4407	2583	4984	3518	-1118	0	0	0	zanaris
+580	1246	0	altar	2368	4803	2427	4866	3363	-1681	0	0	0	zanaris
+581	1246	0	Vyeldi Caves	2359	4671	2442	4738	3341	-1461	0	0	0	zanaris
+582	1338	0	Law altar	2443	4810	2486	4854	394	-1440	0	1	0	-
 586	1351	0	Tombs of Amascut	3344	9102	3375	9130	208	-6055	0	0	0	tombs_of_amascut
-589	1301	0	Tiles (dump leftover) (island 4)	2392	9556	2399	9563	0	-6400	0	0	0	-
+589	1301	0	Tiles (dump leftover) (island 4)	2392	9556	2399	9563	5709	-6421	0	0	0	-
 590	1249	0	Lassar Undercity (island 1)	2550	6400	2665	6465	416	-2965	0	0	0	-
-591	1301	0	Tiles (dump leftover)	2768	6424	2799	6447	374	-2875	0	0	0	-
-592	1301	0	Tiles (dump leftover) (island 1)	3216	10328	3247	10355	0	-6400	0	0	0	-
+591	1301	0	Tiles (dump leftover)	2768	6424	2799	6447	6083	-2896	0	0	0	-
+592	1301	0	Tiles (dump leftover) (island 1)	3216	10328	3247	10355	5709	-6421	0	0	0	-
 593	1102	0	Library Historical Archive	1536	10208	1567	10239	102	-6398	0	0	0	-
 594	1110	0	Lumbridge Castle Cellar	3207	9614	3220	9627	-3	-6403	0	1	0	lumbridge_cellar
-595	1301	0	Tiles (dump leftover) (island 2)	3305	9600	3327	9655	8	-6398	0	0	0	-
+595	1301	0	Tiles (dump leftover) (island 2)	3305	9600	3327	9655	5717	-6419	0	0	0	-
 596	1113	0	Meiyerditch Laboratories	3511	9731	3645	9791	10	-6378	0	1	0	meiyerditch_laboratories
-597	1301	0	Tiles (dump leftover) (island 1)	2320	4632	2339	4647	1226	-1425	0	0	0	-
+597	1301	0	Tiles (dump leftover) (island 1)	2320	4632	2339	4647	6935	-1446	0	0	0	-
 598	1115	0	Miscellania Underground	2500	10240	2623	10303	0	-6400	0	1	0	miscellania_underground
 600	1311	0	Jormungand's Prison (island 3)	2416	10372	2488	10420	12	-6377	0	0	0	jormungands_prison
-601	1301	0	Tiles (dump leftover) (island 2)	3008	9544	3015	9555	0	-6400	0	0	0	-
-602	1301	0	Tiles (dump leftover) (island 1)	2560	4544	2687	4608	-226	-1012	0	0	0	-
-603	1301	0	Tiles (dump leftover) (island 2)	2568	4428	2622	4467	-226	-1012	0	0	0	-
-604	1301	0	Tiles (dump leftover) (island 3)	2636	4488	2667	4539	-226	-1012	0	0	0	-
-605	1290	0	idk?	2240	5630	2303	5697	818	-2291	0	0	0	-
+601	1301	0	Tiles (dump leftover) (island 2)	3008	9544	3015	9555	5709	-6421	0	0	0	-
+602	1301	0	Tiles (dump leftover) (island 1)	2560	4544	2687	4608	5483	-1033	0	0	0	-
+603	1301	0	Tiles (dump leftover) (island 2)	2568	4428	2622	4467	5483	-1033	0	0	0	-
+604	1301	0	Tiles (dump leftover) (island 3)	2636	4488	2667	4539	5483	-1033	0	0	0	-
+605	1290	0	idk?	2240	5630	2303	5697	2357	-2030	0	0	0	eagles_peak_dungeon
 606	1223	0	Barrows Crypts & Tunnels	3522	9672	3585	9725	13	-6406	0	1	0	barrows_crypts
-609	1301	0	Tiles (dump leftover) (island 1)	2324	4800	2335	4800	465	-1813	0	0	0	-
-610	1301	0	Tiles (dump leftover) (island 2)	2628	9472	2688	9536	0	-6400	0	0	0	-
-611	1301	0	Tiles (dump leftover) (island 3)	2608	9500	2623	9527	0	-6400	0	0	0	-
+609	1301	0	Tiles (dump leftover) (island 1)	2324	4800	2335	4800	6174	-1834	0	0	0	-
+610	1301	0	Tiles (dump leftover) (island 2)	2628	9472	2688	9536	5709	-6421	0	0	0	-
+611	1301	0	Tiles (dump leftover) (island 3)	2608	9500	2623	9527	5709	-6421	0	0	0	-
 612	1124	0	Myreque Hideout	3488	9856	3515	9879	18	-6419	270	1	0	-
 615	1132	0	Paterdomus Basement	3402	9880	3442	9907	0	-6400	0	1	0	paterdomus_basement
 617	1327	0	Experiment cave	3464	9922	3581	9981	-5	-6400	0	1	0	-
-618	1301	0	Tiles (dump leftover) (island 2)	3200	6272	3263	6272	-576	-2816	0	0	0	-
-621	1262	0	Prison Pete	2112	4352	2175	4415	818	-2291	0	0	0	-
-631	1301	0	Tiles (dump leftover) (island 9)	2056	4444	2111	4479	1328	-1653	0	0	0	-
-632	1301	0	Tiles (dump leftover) (island 1)	1176	10008	1199	10031	0	-6400	0	0	0	-
+618	1301	0	Tiles (dump leftover) (island 2)	3200	6272	3263	6272	5133	-2837	0	0	0	-
+621	1262	0	Prison Pete	2112	4352	2175	4415	2386	-2121	0	0	0	-
+631	1301	0	Tiles (dump leftover) (island 9)	2056	4444	2111	4479	7037	-1674	0	0	0	-
+632	1301	0	Tiles (dump leftover) (island 1)	1176	10008	1199	10031	5709	-6421	0	0	0	-
 633	1263	0	Ratcatchers Area	2892	5072	2923	5115	371	-1697	0	1	0	-
-634	1301	0	Tiles (dump leftover) (island 1)	3012	5448	3031	5463	0	-6400	0	0	0	-
-635	1301	0	Tiles (dump leftover) (island 2)	3016	5480	3031	5495	0	-6400	0	0	0	-
-636	1301	0	Tiles (dump leftover) (island 3)	3008	5568	3051	5568	0	-6400	0	0	0	-
-637	1301	0	Tiles (dump leftover) (island 1)	2452	4956	2467	4967	-4	-1460	0	0	0	-
-638	1301	0	Tiles (dump leftover) (island 1)	2468	4952	2483	4959	-4	-1460	0	0	0	-
-639	1301	0	Tiles (dump leftover) (island 2)	2472	4964	2483	4967	-4	-1460	0	0	0	-
-640	1301	0	Tiles (dump leftover) (island 2)	2468	4964	2491	4979	-4	-1460	0	0	0	-
-641	1301	0	Tiles (dump leftover) (island 3)	2464	4932	2479	4947	-4	-1460	0	0	0	-
-642	1301	0	Tiles (dump leftover) (island 4)	2444	4972	2463	4983	-4	-1460	0	0	0	-
-643	1301	0	Tiles (dump leftover) (island 5)	2444	4932	2455	4947	-4	-1460	0	0	0	-
-644	1301	0	Tiles (dump leftover) (island 6)	2436	4952	2447	4959	-4	-1460	0	0	0	-
-645	1301	0	Tiles (dump leftover) (island 7)	2372	5000	2427	5055	-4	-1460	0	0	0	-
-646	1301	0	Tiles (dump leftover) (island 8)	2496	4928	2560	4987	-4	-1460	0	0	0	-
-647	1301	0	Tiles (dump leftover) (island 9)	2368	4928	2427	4991	-4	-1460	0	0	0	-
+634	1301	0	Tiles (dump leftover) (island 1)	3012	5448	3031	5463	5709	-6421	0	0	0	-
+635	1301	0	Tiles (dump leftover) (island 2)	3016	5480	3031	5495	5709	-6421	0	0	0	-
+636	1301	0	Tiles (dump leftover) (island 3)	3008	5568	3051	5568	5709	-6421	0	0	0	-
+637	1301	0	Tiles (dump leftover) (island 1)	2452	4956	2467	4967	5705	-1481	0	0	0	-
+638	1301	0	Tiles (dump leftover) (island 1)	2468	4952	2483	4959	5705	-1481	0	0	0	-
+639	1301	0	Tiles (dump leftover) (island 2)	2472	4964	2483	4967	5705	-1481	0	0	0	-
+640	1301	0	Tiles (dump leftover) (island 2)	2468	4964	2491	4979	5705	-1481	0	0	0	-
+641	1301	0	Tiles (dump leftover) (island 3)	2464	4932	2479	4947	5705	-1481	0	0	0	-
+642	1301	0	Tiles (dump leftover) (island 4)	2444	4972	2463	4983	5705	-1481	0	0	0	-
+643	1301	0	Tiles (dump leftover) (island 5)	2444	4932	2455	4947	5705	-1481	0	0	0	-
+644	1301	0	Tiles (dump leftover) (island 6)	2436	4952	2447	4959	5705	-1481	0	0	0	-
+645	1301	0	Tiles (dump leftover) (island 7)	2372	5000	2427	5055	5705	-1481	0	0	0	-
+646	1301	0	Tiles (dump leftover) (island 8)	2496	4928	2560	4987	5705	-1481	0	0	0	-
+647	1301	0	Tiles (dump leftover) (island 9)	2368	4928	2427	4991	5705	-1481	0	0	0	-
 648	1140	0	Nex Bank	2848	5187	2942	5237	654	-2306	0	0	0	pyramid_plunder
 650	1358	0	Stronghold of Security (Catacomb of Famine)	1984	5184	2046	5246	1094	-1822	0	1	0	stronghold_of_security
-651	1301	0	Tiles (dump leftover) (island 1)	2432	9728	2443	9735	1	-6400	0	0	0	-
-653	1301	0	Tiles (dump leftover) (island 1)	2764	9696	2971	9855	0	-6400	0	0	0	-
-654	1301	0	Tiles (dump leftover)	2956	9728	2971	9747	-82	-6340	0	0	0	-
-655	1301	0	Tiles (dump leftover) (island 3)	2828	9848	2835	9855	0	-6400	0	0	0	-
+651	1301	0	Tiles (dump leftover) (island 1)	2432	9728	2443	9735	5710	-6421	0	0	0	-
+653	1301	0	Tiles (dump leftover) (island 1)	2764	9696	2971	9855	5709	-6421	0	0	0	-
+654	1301	0	Tiles (dump leftover)	2956	9728	2971	9747	5627	-6361	0	0	0	-
+655	1301	0	Tiles (dump leftover) (island 3)	2828	9848	2835	9855	5709	-6421	0	0	0	-
 656	1025	0	Isle of Souls Dungeon	2113	9285	2173	9341	174	-6401	0	1	0	isle_of_souls_dungeon
-657	1301	0	Tiles (dump leftover) (island 1)	3136	4736	3319	4863	65	-1274	0	0	0	-
+657	1301	0	Tiles (dump leftover) (island 1)	3136	4736	3319	4863	5774	-1295	0	0	0	-
 658	1355	0	Agility Pyramid	3008	4672	3071	4735	481	-1869	0	0	0	-
-659	1301	0	Tiles (dump leftover)	2880	4804	2939	4859	63	-1273	0	0	0	-
+659	1301	0	Tiles (dump leftover)	2880	4804	2939	4859	5772	-1294	0	0	0	-
 660	1168	0	Kendal's Lair (island 2)	2816	10112	2880	10176	4	-6404	0	0	0	-
-661	1301	0	Tiles (dump leftover) (island 1)	2508	5528	2523	5631	-4	-2036	0	0	0	-
-662	1301	0	Tiles (dump leftover) (island 2)	2388	5524	2415	5563	-4	-2036	0	0	0	-
-663	1301	0	Tiles (dump leftover) (island 3)	2432	5512	2447	5559	-4	-2036	0	0	0	-
-664	1301	0	Tiles (dump leftover) (island 4)	2476	5512	2491	5559	-4	-2036	0	0	0	-
-665	1301	0	Tiles (dump leftover) (island 5)	2532	5508	2555	5523	-4	-2036	0	0	0	-
+661	1301	0	Tiles (dump leftover) (island 1)	2508	5528	2523	5631	5705	-2057	0	0	0	-
+662	1301	0	Tiles (dump leftover) (island 2)	2388	5524	2415	5563	5705	-2057	0	0	0	-
+663	1301	0	Tiles (dump leftover) (island 3)	2432	5512	2447	5559	5705	-2057	0	0	0	-
+664	1301	0	Tiles (dump leftover) (island 4)	2476	5512	2491	5559	5705	-2057	0	0	0	-
+665	1301	0	Tiles (dump leftover) (island 5)	2532	5508	2555	5523	5705	-2057	0	0	0	-
 666	1366	0	Clock Tower Dungeon	2560	9600	2623	9663	0	-6400	0	1	0	clock_tower_dungeon
-668	1301	0	Tiles (dump leftover) (island 1)	1856	5829	2175	6079	2263	-2917	0	0	0	-
+668	1301	0	Tiles (dump leftover) (island 1)	1856	5829	2175	6079	7972	-2938	0	0	0	-
 669	1286	0	Wizards' Tower Basement	3092	9551	3125	9581	1	-6414	0	1	0	wizards_tower_basement
-670	1301	0	Tiles (dump leftover) (island 1)	2496	4928	2619	4991	364	-1970	0	0	0	-
-671	1276	0	The Inferno (island 2)	2304	5376	2367	5439	364	-1970	0	0	0	-
-672	1276	0	The Inferno	2244	5316	2295	5371	364	-1970	0	0	0	-
-673	1301	0	Tiles (dump leftover) (island 4)	2564	5184	2575	5184	364	-1970	0	0	0	-
-674	1301	0	Tiles (dump leftover) (island 1)	2512	9636	2560	9683	-1	-6399	0	0	0	-
-675	1301	0	Tiles (dump leftover) (island 4)	2560	9632	2560	9651	-1	-6399	0	0	0	-
-676	1301	0	Tiles (dump leftover) (island 6)	2556	9752	2560	9759	-1	-6399	0	0	0	-
-677	1301	0	Tiles (dump leftover)	3140	8644	3199	8699	0	-6400	0	0	0	-
-678	1301	0	Tiles (dump leftover)	3204	8644	3263	8699	0	-6400	0	0	0	-
-679	1301	0	Tiles (dump leftover)	3268	8644	3327	8699	0	-6400	0	0	0	-
-680	1301	0	Tiles (dump leftover)	3332	8644	3391	8699	0	-6400	0	0	0	-
-681	1301	0	Tiles (dump leftover)	3076	8708	3135	8763	0	-6400	0	0	0	-
-682	1301	0	Tiles (dump leftover)	3140	8708	3199	8763	0	-6400	0	0	0	-
-683	1301	0	Tiles (dump leftover)	3204	8708	3263	8763	0	-6400	0	0	0	-
-684	1301	0	Tiles (dump leftover)	3268	8708	3327	8763	0	-6400	0	0	0	-
-685	1301	0	Tiles (dump leftover)	3332	8708	3391	8763	0	-6400	0	0	0	-
-686	1301	0	Tiles (dump leftover)	3076	8772	3135	8827	0	-6400	0	0	0	-
-687	1301	0	Tiles (dump leftover)	3140	8772	3199	8827	0	-6400	0	0	0	-
-688	1238	0	Gryphon Cave	3204	8772	3263	8827	0	-6400	0	0	0	-
-689	1301	0	Tiles (dump leftover)	3268	8772	3327	8827	0	-6400	0	0	0	-
-690	1301	0	Tiles (dump leftover)	3332	8772	3391	8827	0	-6400	0	0	0	-
-691	1238	0	Gryphon Cave	3204	8836	3251	8887	0	-6400	0	0	0	-
-692	1238	0	Gryphon Cave	3080	8840	3131	8887	0	-6400	0	0	0	-
-693	1227	0	Coral Nurseries	3276	8832	3319	8887	0	-6400	0	0	0	-
-694	1268	0	Shellbane Gryphon	3164	8860	3191	8887	0	-6400	0	0	0	-
-695	1240	0	Here be minotaurs (island 1)	1924	9488	1971	9523	0	-6400	0	0	0	-
-696	1285	0	Western Ocean Underground	1924	9444	1943	9455	0	-6400	0	0	0	-
-697	1301	0	Tonali Cavern	1280	9344	1343	9423	0	-6310	0	1	0	tonali_cavern
-698	1220	0	Alchemical Society	1344	9296	1403	9335	31	-6404	0	0	0	-
-699	1281	0	Villa Lucens	1428	9308	1471	9343	6	-6398	0	0	0	-
-700	1301	0	Tiles (dump leftover) (island 1)	3296	5440	3323	5475	123	-1942	0	0	0	-
-701	1301	0	Tiles (dump leftover) (island 2)	3332	5440	3359	5467	123	-1942	0	0	0	-
-702	1301	0	Tiles (dump leftover) (island 3)	3308	5500	3315	5507	123	-1942	0	0	0	-
-703	1301	0	Tiles (dump leftover) (island 4)	3308	5532	3315	5539	123	-1942	0	0	0	-
-704	1301	0	Tiles (dump leftover) (island 5)	3308	5564	3315	5571	123	-1942	0	0	0	-
-705	1301	0	Tiles (dump leftover) (island 6)	3308	5596	3315	5600	123	-1942	0	0	0	-
-707	1301	0	Tiles (dump leftover)	1600	9344	1663	9407	0	-6400	0	0	0	-
-708	1301	0	Tiles (dump leftover) (island 1)	2832	7632	2859	7659	840	-4507	0	0	0	-
+670	1301	0	Tiles (dump leftover) (island 1)	2496	4928	2619	4991	6073	-1991	0	0	0	-
+673	1301	0	Tiles (dump leftover) (island 4)	2564	5184	2575	5184	6073	-1991	0	0	0	-
+674	1301	0	Tiles (dump leftover) (island 1)	2512	9636	2560	9683	5708	-6420	0	0	0	-
+675	1301	0	Tiles (dump leftover) (island 4)	2560	9632	2560	9651	5708	-6420	0	0	0	-
+676	1301	0	Tiles (dump leftover) (island 6)	2556	9752	2560	9759	5708	-6420	0	0	0	-
+677	1301	0	Tiles (dump leftover)	3140	8644	3199	8699	5709	-6421	0	0	0	-
+678	1301	0	Tiles (dump leftover)	3204	8644	3263	8699	5709	-6421	0	0	0	-
+679	1301	0	Tiles (dump leftover)	3268	8644	3327	8699	5709	-6421	0	0	0	-
+680	1301	0	Tiles (dump leftover)	3332	8644	3391	8699	5709	-6421	0	0	0	-
+681	1301	0	Tiles (dump leftover)	3076	8708	3135	8763	5709	-6421	0	0	0	-
+682	1301	0	Tiles (dump leftover)	3140	8708	3199	8763	5709	-6421	0	0	0	-
+683	1301	0	Tiles (dump leftover)	3204	8708	3263	8763	5709	-6421	0	0	0	-
+684	1301	0	Tiles (dump leftover)	3268	8708	3327	8763	5709	-6421	0	0	0	-
+685	1301	0	Tiles (dump leftover)	3332	8708	3391	8763	5709	-6421	0	0	0	-
+686	1301	0	Tiles (dump leftover)	3076	8772	3135	8827	5709	-6421	0	0	0	-
+687	1301	0	Tiles (dump leftover)	3140	8772	3199	8827	5709	-6421	0	0	0	-
+688	1290	0	?	3204	8772	3263	8827	75	-6416	0	0	0	-
+689	1301	0	Tiles (dump leftover)	3268	8772	3327	8827	5709	-6421	0	0	0	-
+690	1301	0	Tiles (dump leftover)	3332	8772	3391	8827	5709	-6421	0	0	0	-
+691	1238	0	Gryphon Cave	3204	8836	3251	8887	-2	-6464	0	1	0	-
+692	1238	0	Gryphon Cave	3080	8840	3131	8887	-6	-6390	0	1	0	-
+693	1227	0	Coral Nurseries	3276	8832	3319	8887	-7	-6391	0	1	0	-
+694	1268	0	Shellbane Gryphon	3164	8860	3191	8887	7	-6396	0	1	0	-
+695	1240	0	Here be minotaurs (island 1)	1924	9488	1971	9523	34	-6425	0	0	0	-
+697	1020	0	Tonali Cavern	1280	9344	1343	9423	0	-6310	0	0	0	tonali_cavern
+698	1220	0	Alchemical Society	1344	9296	1403	9335	31	-6404	0	1	0	-
+699	1281	0	Villa Lucens	1428	9308	1471	9343	6	-6398	0	1	0	-
+700	1301	0	Tiles (dump leftover) (island 1)	3296	5440	3323	5475	5832	-1963	0	0	0	-
+701	1301	0	Tiles (dump leftover) (island 2)	3332	5440	3359	5467	5832	-1963	0	0	0	-
+702	1301	0	Tiles (dump leftover) (island 3)	3308	5500	3315	5507	5832	-1963	0	0	0	-
+703	1301	0	Tiles (dump leftover) (island 4)	3308	5532	3315	5539	5832	-1963	0	0	0	-
+704	1301	0	Tiles (dump leftover) (island 5)	3308	5564	3315	5571	5832	-1963	0	0	0	-
+705	1301	0	Tiles (dump leftover) (island 6)	3308	5596	3315	5600	5832	-1963	0	0	0	-
+707	1301	0	Tiles (dump leftover)	1600	9344	1663	9407	5709	-6421	0	0	0	-
+708	1301	0	Tiles (dump leftover) (island 1)	2832	7632	2859	7659	6549	-4528	0	0	0	-
 709	1191	0	Varrock Museum basement (island 1)	1600	4928	1663	4991	1626	-1503	0	0	0	-
-710	1301	0	Tiles (dump leftover)	3232	9760	3255	9787	0	-6400	0	0	0	-
-711	1301	0	Tiles (dump leftover)	3348	9896	3363	9907	0	-6400	0	0	0	-
-712	1301	0	Tiles (dump leftover)	3360	9760	3364	9771	0	-6400	0	0	0	-
-714	1301	0	Tiles (dump leftover) (island 3)	2496	9984	2543	10043	25	-6165	0	0	0	-
-715	1301	0	Tiles (dump leftover) (island 7)	2196	9672	2207	9683	0	-6400	0	0	0	-
+710	1301	0	Tiles (dump leftover)	3232	9760	3255	9787	5709	-6421	0	0	0	-
+711	1301	0	Tiles (dump leftover)	3348	9896	3363	9907	5709	-6421	0	0	0	-
+712	1301	0	Tiles (dump leftover)	3360	9760	3364	9771	5709	-6421	0	0	0	-
+714	1301	0	Tiles (dump leftover) (island 3)	2496	9984	2543	10043	5734	-6186	0	0	0	-
+715	1301	0	Tiles (dump leftover) (island 7)	2196	9672	2207	9683	5709	-6421	0	0	0	-
 716	1196	0	Web Chasm	3140	10080	3224	10180	0	-6400	0	1	0	web_chasm
-717	1301	0	Tiles (dump leftover) (island 2)	3328	10048	3427	10175	-118	-6387	0	0	0	-
-718	1301	0	Tiles (dump leftover) (island 3)	3328	10240	3391	10299	-118	-6387	0	0	0	-
+717	1301	0	Tiles (dump leftover) (island 2)	3328	10048	3427	10175	5591	-6408	0	0	0	-
+718	1301	0	Tiles (dump leftover) (island 3)	3328	10240	3391	10299	5591	-6408	0	0	0	-
 719	1280	0	Vet'ion's Rest	3284	10192	3307	10211	0	-6400	0	1	0	vetions_rest
 720	1129	0	Skavid Caves	2560	9420	2585	9470	0	-6400	0	1	0	skavid_caves
-721	1301	0	Tiles (dump leftover) (island 1)	2404	5140	2411	5151	364	-1970	0	0	0	-
-722	1301	0	Tiles (dump leftover) (island 2)	2424	5168	2432	5171	364	-1970	0	0	0	-
-723	1301	0	Tiles (dump leftover) (island 5)	2308	5184	2323	5184	364	-1970	0	0	0	-
-724	1301	0	Tiles (dump leftover)	2388	9588	2415	9600	0	-6400	0	0	0	-
-725	1301	0	Tiles (dump leftover)	2368	9588	2387	9600	0	-6400	0	0	0	-
-726	1301	0	Tiles (dump leftover) (island 8)	2576	9600	2599	9600	0	-6404	0	0	0	-
-727	1301	0	Tiles (dump leftover)	2948	4736	3008	4800	65	-1274	0	0	0	-
-728	1202	0	Yanille cutscene (island 2)	3008	4672	3008	4735	-372	-1614	0	0	0	-
-729	1301	0	Tiles (dump leftover)	3316	9633	3327	9655	22	-6407	0	0	0	-
+721	1301	0	Tiles (dump leftover) (island 1)	2404	5140	2411	5151	6073	-1991	0	0	0	-
+722	1301	0	Tiles (dump leftover) (island 2)	2424	5168	2432	5171	6073	-1991	0	0	0	-
+723	1301	0	Tiles (dump leftover) (island 5)	2308	5184	2323	5184	6073	-1991	0	0	0	-
+724	1301	0	Tiles (dump leftover)	2388	9588	2415	9600	5709	-6421	0	0	0	-
+725	1301	0	Tiles (dump leftover)	2368	9588	2387	9600	5709	-6421	0	0	0	-
+726	1301	0	Tiles (dump leftover) (island 8)	2576	9600	2599	9600	5709	-6425	0	0	0	-
+727	1301	0	Tiles (dump leftover)	2948	4736	3008	4800	5774	-1295	0	0	0	-
+729	1301	0	Tiles (dump leftover)	3316	9633	3327	9655	5731	-6428	0	0	0	-
 730	1254	0	Mage Training Arena	3328	9664	3390	9727	1	-6389	0	1	0	-
-731	1301	0	Tiles (dump leftover)	3308	9600	3327	9632	22	-6407	0	0	0	-
-732	1301	0	Tiles (dump leftover)	3308	9633	3315	9655	22	-6407	0	0	0	-
-737	1301	0	Tiles (dump leftover) (island 5)	3340	9616	3390	9696	0	-6400	0	0	0	-
-738	1301	0	Tiles (dump leftover) (island 1)	3332	9668	3359	9695	0	-6400	0	0	0	-
-742	1301	0	Tiles (dump leftover)	3202	9922	3235	9949	0	-6400	180	1	0	-
-743	1301	0	Tiles (dump leftover)	3079	9793	3105	9820	0	-6400	90	1	0	-
+731	1301	0	Tiles (dump leftover)	3308	9600	3327	9632	5731	-6428	0	0	0	-
+732	1301	0	Tiles (dump leftover)	3308	9633	3315	9655	5731	-6428	0	0	0	-
+737	1301	0	Tiles (dump leftover) (island 5)	3340	9616	3390	9696	5709	-6421	0	0	0	-
+738	1301	0	Tiles (dump leftover) (island 1)	3332	9668	3359	9695	5709	-6421	0	0	0	-
+742	1301	0	Tiles (dump leftover)	3202	9922	3235	9949	2192	-6188	180	0	0	-
+743	1301	0	Tiles (dump leftover)	3079	9793	3105	9820	2192	-6188	90	0	0	-
 744	1192	0	Varrock Sewers & Edgeville Dungeon	3069	9839	3315	9917	6	-6402	0	0	0	varrock_sewers
-745	1301	0	Tiles (dump leftover)	3147	9821	3166	9836	0	-6400	0	1	0	-
-746	1301	0	Tiles (dump leftover)	3183	9821	3198	9836	0	-6400	0	1	0	-
-748	1301	0	Tiles (dump leftover)	2986	9820	3005	9845	0	-6400	0	1	0	-
-749	1055	0	Fenkenstrain's Castle Dungeon	3520	9856	3583	9919	0	-6400	0	1	0	fenkenstrain_dungeon
-751	1058	0	Daeyalt Essence Mine	3720	9664	3744	9700	0	-6400	0	1	0	daeyalt_essence_mine
-752	1091	0	Molch Pearl Caves	1280	9935	1343	9983	102	-6158	0	0	0	molch_pearl_caves
-754	1301	0	Tiles (dump leftover)	2880	9664	2943	9725	-24	-6291	0	0	0	-
+745	1301	0	Tiles (dump leftover)	3147	9821	3166	9836	2192	-6188	0	0	0	-
+746	1301	0	Tiles (dump leftover)	3183	9821	3198	9836	2192	-6188	0	0	0	-
+748	1301	0	Tiles (dump leftover)	2986	9820	3005	9845	2192	-6188	0	0	0	-
+749	1290	0	?	3342	9590	3988	10012	706	-6337	0	0	0	fenkenstrain_dungeon
+754	1301	0	Tiles (dump leftover)	2880	9664	2943	9725	5685	-6312	0	0	0	-
 755	1242	0	Ice Queen's Lair	2816	9897	2896	9976	0	-6400	0	1	0	ice_queen_lair
-756	1301	0	Tiles (dump leftover)	3014	9846	3061	9848	0	-6400	0	1	0	-
-757	1301	0	Tiles (dump leftover)	2986	9846	3005	9848	0	-6400	0	1	0	-
-758	1301	0	Tiles (dump leftover)	3014	9849	3049	9856	0	-6400	0	1	0	-
-759	1301	0	Tiles (dump leftover)	2994	9814	3057	9817	0	-6400	0	1	0	-
-760	1301	0	Tiles (dump leftover)	2962	9814	2973	9817	0	-6400	0	1	0	-
-761	1301	0	Tiles (dump leftover)	2978	9814	2989	9817	0	-6400	0	1	0	-
-762	1301	0	Tiles (dump leftover)	3014	9818	3057	9819	0	-6400	0	1	0	-
-763	1301	0	Tiles (dump leftover)	2994	9818	3005	9819	0	-6400	0	1	0	-
-764	1301	0	Tiles (dump leftover)	2962	9810	3057	9813	0	-6400	0	1	0	-
-765	1301	0	Tiles (dump leftover)	3011	9807	3046	9808	0	-6400	0	1	0	-
-766	1301	0	Tiles (dump leftover)	2979	9807	3006	9808	0	-6400	0	1	0	-
-767	1301	0	Tiles (dump leftover)	3007	9800	3054	9806	0	-6400	0	1	0	-
-768	1301	0	Tiles (dump leftover)	2979	9800	3006	9806	0	-6400	0	1	0	-
-769	1301	0	Tiles (dump leftover)	2962	9809	3057	9809	0	-6400	0	1	0	-
-770	1301	0	Tiles (dump leftover)	2962	9805	2969	9808	0	-6400	0	1	0	-
+756	1301	0	Tiles (dump leftover)	3014	9846	3061	9848	2192	-6188	0	0	0	-
+757	1301	0	Tiles (dump leftover)	2986	9846	3005	9848	2192	-6188	0	0	0	-
+758	1301	0	Tiles (dump leftover)	3014	9849	3049	9856	2192	-6188	0	0	0	-
+759	1301	0	Tiles (dump leftover)	2994	9814	3057	9817	2192	-6188	0	0	0	-
+760	1301	0	Tiles (dump leftover)	2962	9814	2973	9817	2192	-6188	0	0	0	-
+761	1301	0	Tiles (dump leftover)	2978	9814	2989	9817	2192	-6188	0	0	0	-
+762	1301	0	Tiles (dump leftover)	3014	9818	3057	9819	2192	-6188	0	0	0	-
+763	1301	0	Tiles (dump leftover)	2994	9818	3005	9819	2192	-6188	0	0	0	-
+764	1301	0	Tiles (dump leftover)	2962	9810	3057	9813	2192	-6188	0	0	0	-
+765	1301	0	Tiles (dump leftover)	3011	9807	3046	9808	2192	-6188	0	0	0	-
+766	1301	0	Tiles (dump leftover)	2979	9807	3006	9808	2192	-6188	0	0	0	-
+767	1301	0	Tiles (dump leftover)	3007	9800	3054	9806	2192	-6188	0	0	0	-
+768	1301	0	Tiles (dump leftover)	2979	9800	3006	9806	2192	-6188	0	0	0	-
+769	1301	0	Tiles (dump leftover)	2962	9809	3057	9809	2192	-6188	0	0	0	-
+770	1301	0	Tiles (dump leftover)	2962	9805	2969	9808	2192	-6188	0	0	0	-
 771	1361	0	Mining Guild	3001	9698	3057	9756	0	-6400	0	1	0	mining_guild
-772	1301	0	Tiles (dump leftover)	2996	9792	3007	9799	0	-6400	0	1	0	-
-773	1301	0	Tiles (dump leftover)	3141	10000	3200	10047	0	-6400	0	1	0	-
-774	1301	0	Tiles (dump leftover)	3113	9960	3128	9999	0	-6400	0	1	0	-
-775	1301	0	Tiles (dump leftover)	3077	9960	3100	9975	0	-6400	0	1	0	-
-780	1301	1	Tiles (dump leftover) (island 1)	3378	9851	3389	9853	-17	-6402	0	0	0	-
-781	1301	1	Tiles (dump leftover) (island 2)	3342	9801	3393	9850	-17	-6402	0	0	0	-
-782	1301	1	Tiles (dump leftover) (island 1)	3402	9801	3417	9820	-17	-6402	0	0	0	-
-784	1301	1	Tiles (dump leftover) (island 3)	3438	9821	3453	9828	-17	-6402	0	0	0	-
-788	1301	1	Tiles (dump leftover) (island 1)	3414	9885	3445	9900	-17	-6402	0	0	0	-
+772	1301	0	Tiles (dump leftover)	2996	9792	3007	9799	2192	-6188	0	0	0	-
+773	1301	0	Tiles (dump leftover)	3141	10000	3200	10047	2192	-6188	0	0	0	-
+774	1301	0	Tiles (dump leftover)	3113	9960	3128	9999	2192	-6188	0	0	0	-
+775	1301	0	Tiles (dump leftover)	3077	9960	3100	9975	2192	-6188	0	0	0	-
+780	1301	1	Tiles (dump leftover) (island 1)	3378	9851	3389	9853	5692	-6423	0	0	0	-
+781	1301	1	Tiles (dump leftover) (island 2)	3342	9801	3393	9850	5692	-6423	0	0	0	-
+782	1301	1	Tiles (dump leftover) (island 1)	3402	9801	3417	9820	5692	-6423	0	0	0	-
+784	1301	1	Tiles (dump leftover) (island 3)	3438	9821	3453	9828	5692	-6423	0	0	0	-
+788	1301	1	Tiles (dump leftover) (island 1)	3414	9885	3445	9900	5692	-6423	0	0	0	-
 790	1089	0	Kharazi Caves	2817	9217	2865	9296	0	-6400	0	1	0	kharazi_caves
-791	1301	1	Tiles (dump leftover) (island 4)	3350	9897	3365	9908	-17	-6402	0	0	0	-
-792	1301	1	Tiles (dump leftover) (island 5)	3406	9878	3433	9884	-17	-6402	0	0	0	-
-802	1301	0	Tiles (dump leftover)	2796	9800	2868	9856	84	-6400	0	0	0	-
-803	1301	0	Tiles (dump leftover)	2842	9736	2968	9786	33	-6362	0	0	0	-
-811	1301	0	Tiles (dump leftover)	2343	4352	2520	4470	779	-1206	0	0	0	-
-812	1301	0	Tiles (dump leftover)	3041	9536	3083	9599	-48	-6397	0	0	0	-
+791	1301	1	Tiles (dump leftover) (island 4)	3350	9897	3365	9908	5692	-6423	0	0	0	-
+792	1301	1	Tiles (dump leftover) (island 5)	3406	9878	3433	9884	5692	-6423	0	0	0	-
+802	1301	0	Tiles (dump leftover)	2796	9800	2868	9856	5793	-6421	0	0	0	-
+803	1301	0	Tiles (dump leftover)	2842	9736	2968	9786	5742	-6383	0	0	0	-
+811	1301	0	Tiles (dump leftover)	2343	4352	2520	4470	6488	-1227	0	0	0	-
+812	1301	0	Tiles (dump leftover)	3041	9536	3083	9599	5661	-6418	0	0	0	-
 813	1210	0	Waterfall Dungeon	2560	9860	2595	9919	-64	-6398	0	1	0	waterfall_dungeon
 814	1141	0	Quidamortem Cave	1155	9924	1206	9988	15	-6391	0	0	0	-
 815	1320	0	Ruins of Uzer basement	2706	4881	2736	4920	771	-1794	0	1	0	-
-816	1301	0	Tiles (dump leftover)	1404	9968	1440	10016	0	-6400	0	0	0	-
+816	1301	0	Tiles (dump leftover)	1404	9968	1440	10016	5709	-6421	0	0	0	-
 817	1104	0	Lithkren Vault — Level 1	3540	10440	3559	10487	10	-6438	0	1	0	lithkren_vault
 818	1125	0	Nature altar	2388	4830	2412	4853	465	-1813	0	0	0	-
-821	1301	0	Tiles (dump leftover)	3288	9816	3308	9836	12	-6372	0	0	0	-
+821	1301	0	Tiles (dump leftover)	3288	9816	3308	9836	5721	-6393	0	0	0	-
 822	1336	0	Fire altar	2568	4822	2600	4854	736	-1597	0	0	0	-
 823	1339	0	Mind altar	2784	4818	2800	4836	188	-1316	0	0	0	-
 824	1335	0	Earth altar	2627	4815	2685	4861	647	-1354	0	0	0	-
 825	1340	0	Water altar	2705	4822	2732	4846	456	-1672	0	1	0	-
-826	1333	0	Air altar	2834	4820	2850	4836	141	-1540	0	0	0	-
+826	1333	0	Air altar	2831	4819	2858	4848	141	-1540	0	1	0	-
 827	1347	0	White Knights' Castle Crypt	2957	9729	2977	9745	0	-6400	0	1	0	white_knights_castle_crypt
-828	1250	0	Entrana Dungeon	2811	9766	2835	9788	0	-6400	0	0	0	-
 829	1053	1	Dorgesh-Kaan (Middle level)	2688	5247	2751	5376	567	-2178	0	1	0	dorgesh_kaan
 897	1373	2	Dorgesh-Kaan (Upper level)	2688	5248	2751	5376	567	-2178	0	1	0	dorgesh_kaan
 830	1052	3	Dorgesh-Kaan South Dungeon (upper)	2691	5183	2751	5250	567	-2178	0	1	0	dorgesh_kaan_south
-831	1226	1	uppers	2177	2321	4055	5120	1923	-1388	0	0	0	zanaris
+831	1226	1	uppers	2177	2321	4055	3236	2931	-3068	0	0	0	zanaris
 832	1359	0	Stronghold of Security (Pit of Pestilence)	2113	5248	2174	5310	965	-1886	0	1	0	stronghold_of_security
 833	1360	0	Stronghold of Security (Sepulchre of Death)	2322	5203	2366	5246	764	-1832	0	1	0	stronghold_of_security
 834	1364	0	Warriors' Guild Basement	2904	9954	2943	9976	-73	-6426	0	1	0	warriors_guild_basement
-835	1004	1	Ancient Cavern (whirlpool dock)	1761	5364	1770	5371	743	-1855	0	1	0	ancient_cavern
-836	1004	1	Ancient Cavern (upper)	1749	5322	1790	5360	743	-1855	0	1	0	ancient_cavern
-837	1006	0	Ardougne Sewers (south spur)	2513	9638	2557	9663	0	-6400	0	1	0	ardougne_underground
-838	1006	0	Ardougne Sewers (east)	2628	9617	2685	9727	0	-6400	0	1	0	ardougne_underground
-839	1365	0	Brimstail's Cave	2378	9807	2414	9832	-7	-6393	0	1	0	brimstail_cave
+835	1004	1	Ancient Cavern (Upper)	1731	5278	1791	5373	747	-1862	0	1	0	ancient_cavern
+837	1006	0	Ardougne Sewers (south spur)	2513	9638	2557	9667	17	-6448	0	1	0	ardougne_underground
+838	1006	0	Ardougne Sewers (east)	2628	9616	2685	9728	0	-6400	0	1	0	ardougne_underground
+839	1365	0	Brimstail's Cave	2378	9811	2416	9833	-7	-6393	0	1	0	brimstail_cave
 841	1367	0	Goblin Cave	2561	9793	2622	9854	0	-6400	0	1	0	goblin_cave
-842	1371	0	Wizards' Guild Basement	2582	9484	2594	9493	0	-6400	0	1	0	wizards_guild_basement
+842	1371	0	Wizards' Guild Basement	2581	9481	2595	9495	0	-6400	0	1	0	wizards_guild_basement
 880	227	0	Haunted Mine	3397	9609	3447	9662	17	-6393	0	0	0	haunted_mine
-881	1018	1	Poison Waste Sewer (Main Level)	1474	4227	1533	4347	845	-1129	0	1	0	poison_waste_dungeon
-882	1018	0	Poison Waste Sewer (Lower Level)	1349	4230	1531	4283	845	-1129	0	1	0	poison_waste_dungeon
-883	1019	0	Mos Le'Harmless Caves (Cave Horrors)	3579	9456	3652	9535	168	-6400	0	1	0	mos_le_harmless_cave
+881	1387	0	Poison Waste Sewer (1)	1474	4227	1533	4347	849	-1136	0	1	0	poison_waste_dungeon
+882	1387	1	Poison Waste Sewer (2)	1472	4227	1533	4347	849	-1136	0	1	0	poison_waste_dungeon
+883	1019	0	Guardians of the Rift	3579	9456	3652	9535	-670	-6715	0	0	0	mos_le_harmless_cave
 884	1005	1	Ape Atoll Dungeon (Upper / Gorillas)	2499	9034	2682	9277	459	-6443	0	0	0	ape_atoll_dungeon
 885	1021	1	Sisterhood Sanctuary (Slepe Crypt)	3716	9664	3903	9837	0	-6400	0	1	0	sisterhood_sanctuary
 886	1021	0	The Nightmare of Ashihama Lair	3715	10240	3837	10302	0	-6400	0	1	0	sisterhood_sanctuary
 887	1022	0	Jormungand's Prison	2398	10370	2493	10468	0	-6400	0	1	0	jormungands_prison
 888	1023	0	Ghorrock Dungeon	2844	10441	2932	10489	0	-6400	0	1	0	ghorrock_dungeon
 889	1379	0	Underground Pass (4 -Soulless Pit)	2304	9792	2367	9922	10	-6615	0	0	0	underground_pass
-898	1019	0	???	2240	9832	2299	9923	-97	-6413	0	0	0	underground_pass
 899	1378	0	Underground Pass (3)	2359	9701	2428	9733	-53	-6422	0	0	0	underground_pass
-890	1019	0	???	1568	9601	1724	9663	489	-6452	0	0	0	underground_pass
-891	1018	1	Kruk Dungeon (Maniacal Monkeys)	2309	9134	2455	9277	107	-6738	0	0	0	ape_atoll_dungeon
-892	1018	2	Kruk Dungeon (Upper Catwalks)	2347	9152	2508	9276	393	-6596	0	0	0	ape_atoll_dungeon
+890	1020	0	Ruins of Tapoyauki	1568	9599	1724	9665	-26	-6407	0	0	0	underground_pass
+891	1005	1	Kruk Dungeon (Maniacal Monkeys)	2309	9134	2455	9277	378	-6616	0	0	0	ape_atoll_dungeon
+892	1005	2	Kruk Dungeon (Upper Catwalks)	2420	9359	2508	9481	420	-6809	0	0	0	ape_atoll_dungeon
 893	1092	1	Keldagrim (Palace)	2860	10160	2936	10235	0	-6400	0	1	0	keldagrim
 894	1172	0	Troll Stronghold	3012	10112	3067	10167	-173	-6422	0	1	0	troll_stronghold
-11	1045	0	Eagles' Peak Dungeon (island 1)	2080	5028	2107	5047	248	-1528	0	1	0	eagles_peak_dungeon
-27	1045	0	Eagles' Peak Dungeon (island 2)	2048	5024	2071	5047	248	-1528	0	1	0	eagles_peak_dungeon
-37	1045	0	Eagles' Peak Dungeon (island 3)	2052	4996	2067	5015	248	-1528	0	1	0	eagles_peak_dungeon
-63	1160	0	Stronghold Slayer Dungeon (island 1)	2415	9807	2495	9838	1	-6400	0	1	0	stronghold_slayer_dungeon
-64	1201	0	Yanille Agility Dungeon (upper level) (island 1)	2560	9484	2581	9493	0	-6404	0	1	0	yanille_agility_dungeon
-80	1201	0	Yanille Agility Dungeon (upper level) (island 2)	2595	9484	2622	9493	0	-6404	0	1	0	yanille_agility_dungeon
-97	1201	0	Yanille Agility Dungeon (upper level) (island 3)	2560	9475	2622	9483	0	-6404	0	1	0	yanille_agility_dungeon
-99	1210	0	Waterfall Dungeon (island 1)	2596	9888	2611	9919	-64	-6398	0	1	0	waterfall_dungeon
+37	1045	0	wrong	2052	4996	2067	5015	277	-1515	0	0	0	eagles_peak_dungeon
 116	1179	0	Underground Pass(Well of Voyage Exit)	2310	9609	2356	9641	2	-6407	0	0	0	underground_pass
 152	1192	0	Bryophyta's Lair	3203	9923	3233	9948	-51	-6415	180	0	0	varrock_sewers
 895	1110	0	Cave Goblin Mine	3309	9598	3327	9658	-3	-6403	0	1	0	lumbridge_cellar
@@ -1109,3 +1054,39 @@
 607	1377	0	Underground Pass (1) (island 1)	2412	9689	2497	9699	-64	-6402	0	0	0	underground_pass
 608	1377	0	Underground Pass (1) (island 2)	2430	9700	2497	9732	-64	-6402	0	0	0	underground_pass
 613	1137	0	Tairannwn Mine	3277	12430	3316	12474	-1022	-9145	0	1	0	prifddinas_underground
+614	1137	0	Prifddinas Underground (island 1)	3152	12475	3263	12480	-1014	-9142	0	1	0	prifddinas_underground
+616	1137	0	Prifddinas Underground (island 2)	3152	12430	3263	12474	-1014	-9142	0	1	0	prifddinas_underground
+11	1006	0	Ardougne Sewers (West)	2500	9734	2534	9782	37	-6436	0	1	0	ardougne_underground
+27	1386	0	Legends Guild Dungeon	2688	9728	2751	9786	0	-6399	0	1	0	legends_guild_dungeon
+63	1201	0	Yanille Agility Dungeon (Salarin Twisted Chamber)	2609	9500	2618	9527	-4	-6399	0	1	0	yanille_agility_dungeon
+64	1201	0	Yanille Agility Dungeon (small bit)	2612	9561	2624	9568	0	-6465	0	1	0	yanille_agility_dungeon
+80	1006	0	Ardougne Sewers (island 1)	2572	9690	2622	9699	17	-6448	0	1	0	ardougne_underground
+96	1006	0	Ardougne Sewers (island 2)	2593	9724	2622	9728	17	-6448	0	1	0	ardougne_underground
+97	1006	0	Ardougne Sewers (island 3)	2593	9700	2622	9723	17	-6448	0	1	0	ardougne_underground
+99	1006	0	Ardougne Sewers (island 4)	2551	9664	2560	9674	17	-6448	0	1	0	ardougne_underground
+104	1006	0	Ardougne Sewers (island 5)	2600	9664	2622	9674	17	-6448	0	1	0	ardougne_underground
+105	1205	0	Temple of Ikov (island 1)	2626	9781	2686	9790	0	-6400	0	1	0	temple_of_ikov
+113	1160	0	Stronghold Slayer Dungeon (island 1)	2428	9840	2495	9840	2	-6400	0	1	0	stronghold_slayer_dungeon
+114	1160	0	Stronghold Slayer Dungeon (island 2)	2405	9800	2495	9808	2	-6400	0	1	0	stronghold_slayer_dungeon
+265	1160	0	Stronghold Slayer Dungeon (island 3)	2428	9838	2495	9839	2	-6400	0	1	0	stronghold_slayer_dungeon
+321	1160	0	Stronghold Slayer Dungeon (island 4)	2422	9809	2495	9834	2	-6400	0	1	0	stronghold_slayer_dungeon
+388	1160	0	Stronghold Slayer Dungeon (island 5)	2428	9835	2495	9837	2	-6400	0	1	0	stronghold_slayer_dungeon
+390	1201	0	Yanille Agility Dungeon (upper level) (island 1)	2560	9495	2623	9499	0	-6400	0	1	0	yanille_agility_dungeon
+391	1201	0	Yanille Agility Dungeon (upper level) (island 2)	2598	9494	2623	9495	0	-6400	0	1	0	yanille_agility_dungeon
+392	1201	0	Yanille Agility Dungeon (upper level) (island 3)	2596	9482	2623	9495	0	-6400	0	1	0	yanille_agility_dungeon
+505	1201	0	Yanille Agility Dungeon (upper level) (island 4)	2560	9499	2606	9500	0	-6400	0	1	0	yanille_agility_dungeon
+506	1201	0	Yanille Agility Dungeon (upper level) (island 5)	2620	9499	2623	9500	0	-6400	0	1	0	yanille_agility_dungeon
+512	1201	0	Yanille Agility Dungeon (upper level) (island 6)	2565	9531	2588	9536	0	-6400	0	1	0	yanille_agility_dungeon
+513	1201	0	Yanille Agility Dungeon (upper level) (island 7)	2560	9500	2588	9530	0	-6400	0	1	0	yanille_agility_dungeon
+514	1201	0	Yanille Agility Dungeon (upper level) (island 8)	2620	9500	2623	9500	0	-6400	0	1	0	yanille_agility_dungeon
+579	1365	0	Brimstail's Cave (island 1)	2378	9804	2395	9810	-7	-6393	0	1	0	brimstail_cave
+583	1201	0	Yanille Agility Dungeon (small bit) (island 1)	2612	9569	2619	9573	0	-6465	0	1	0	yanille_agility_dungeon
+21	1047	0	Sorcerer's Tower Upper	2676	9845	2690	9860	20	-6447	0	0	0	temple_of_ikov
+22	1007	0	Asgarnian Ice Dungeon (island 1)	2820	9602	2868	9663	0	-6400	0	1	0	asgarnia_ice_cave
+584	1205	0	Temple of Ikov (island 1)	2626	9861	2751	9862	0	-6400	0	1	0	temple_of_ikov
+585	1205	0	Temple of Ikov (island 2)	2626	9845	2675	9860	0	-6400	0	1	0	temple_of_ikov
+619	1205	0	Temple of Ikov (island 3)	2691	9845	2751	9860	0	-6400	0	1	0	temple_of_ikov
+620	1117	0	Mogre Camp (island 1)	2961	9516	3005	9530	45	-6408	0	1	0	-
+622	1250	0	Entrana Dungeon (island 1)	2819	9759	2850	9770	-2	-6399	0	1	0	-
+623	1250	0	Entrana Dungeon (island 2)	2819	9771	2845	9777	-2	-6399	0	1	0	-
+624	1250	0	Entrana Dungeon (island 3)	2822	9778	2843	9782	-2	-6399	0	1	0	-

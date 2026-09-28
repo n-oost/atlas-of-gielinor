@@ -34,13 +34,16 @@ public class DungeonVoidTest
 	public void exactBlackAndNearBlackAreVoid()
 	{
 		assertTrue(DungeonVoid.isVoid(0xFF000000));
+		assertTrue(DungeonVoid.isVoid(0xFF000001));
+		assertTrue(DungeonVoid.isVoid(0xFF010101));
 		assertTrue(DungeonVoid.isVoid(0xFF020202));
 		assertTrue(DungeonVoid.isVoid(0x020202));
-		assertFalse(DungeonVoid.isVoid(0xFF010101));
-		assertFalse(DungeonVoid.isVoid(0xFF030303));
-		assertFalse(DungeonVoid.isVoid(0xFF0C0C0C));
+		assertTrue(DungeonVoid.isVoid(0xFF030303));
+		assertTrue(DungeonVoid.isVoid(0xFF030202));
 		assertTrue(DungeonVoid.isVoid(0xFF362509));
+		assertFalse(DungeonVoid.isVoid(0xFF040303));
 		assertFalse(DungeonVoid.isVoid(0xFF060404));
+		assertFalse(DungeonVoid.isVoid(0xFF0C0C0C));
 	}
 
 	@Test
@@ -49,8 +52,8 @@ public class DungeonVoidTest
 		assertFalse(DungeonVoid.isVoid(0xFF0D0000));
 		assertFalse(DungeonVoid.isVoid(0xFF000D00));
 		assertFalse(DungeonVoid.isVoid(0xFF00000D));
-		assertFalse(DungeonVoid.isVoid(0xFF020201));
-		assertFalse(DungeonVoid.isVoid(0xFF020203));
+		assertFalse(DungeonVoid.isVoid(0xFF040201));
+		assertFalse(DungeonVoid.isVoid(0xFF020403));
 	}
 
 	@Test

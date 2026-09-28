@@ -1064,7 +1064,7 @@ public class BetterMapPlugin extends Plugin
 					}
 					else
 					{
-						camera.setUndergroundMode(zone);
+						camera.setUndergroundMode(zone, target.getSurfacePoint());
 					}
 				});
 			final OverlayFloor next = nextFloor(zone, target.getFloor());
@@ -1083,7 +1083,7 @@ public class BetterMapPlugin extends Plugin
 				.setOption("Return to surface")
 				.setTarget("<col=ffff00>" + zone.getName() + "</col>")
 				.setType(MenuAction.RUNELITE)
-				.onClick(e -> camera.exitDungeonToSurface());
+				.onClick(e -> camera.exitDungeonToSurface(target.getSurfacePoint()));
 		}
 	}
 

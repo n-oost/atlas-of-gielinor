@@ -61,7 +61,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class MapTileRenderer
 {
-	private static final float SURFACE_VIEW_DUNGEON_OPACITY = 0.48f;
+	private static final float SURFACE_VIEW_DUNGEON_OPACITY = 0.68f;
 	private static final float SURFACE_VIEW_DUNGEON_DARKEN = 0.35f;
 	private static final int[] PRIFDDINAS_SOURCE_BOUNDS = {
 		PrifddinasShift.INSTANCE_MIN_X, PrifddinasShift.INSTANCE_MIN_Y,
@@ -139,6 +139,13 @@ class MapTileRenderer
 			drawUndergroundLayer(graphics, bounds, Collections.singletonList(activeUnderground),
 				tileZoom, keyVoid, opacity, blur);
 		}
+		else if (camera.isViewingPlayerInteriorFromSurface()
+			&& (!hoverPreview || hoveredZone == camera.getObservedPlayerUndergroundZone()))
+		{
+			drawSurfaceTiles(graphics, bounds, plane, tileZoom);
+			drawDimmedPlayerInterior(graphics, bounds,
+				camera.getObservedPlayerUndergroundZone(), tileZoom);
+		}
 		else if (hoverPreview)
 		{
 			// Hover: the layer being peeked at is drawn solid, the layer above it faint.
@@ -171,12 +178,6 @@ class MapTileRenderer
 			drawUndergroundLayer(graphics, bounds, camera.previewUndergroundZones(),
 				tileZoom, config.undergroundTransparentVoid(),
 				config.undergroundOverlayOpacity() / 100f, config.undergroundHoverBlur());
-		}
-		else if (camera.isViewingPlayerInteriorFromSurface())
-		{
-			drawSurfaceTiles(graphics, bounds, plane, tileZoom);
-			drawBlurredPlayerInterior(graphics, bounds,
-				camera.getObservedPlayerUndergroundZone(), tileZoom);
 		}
 		else if (camera.isInteriorMapUnavailable())
 		{
@@ -231,15 +232,14 @@ class MapTileRenderer
 		}
 	}
 
-	/** Sharp surface with the physically occupied dungeon pushed back as a dark, blurred ghost. */
-	private void drawBlurredPlayerInterior(Graphics2D graphics, Rectangle bounds, UndergroundZone zone, int tileZoom)
+	/** Sharp surface with the physically occupied dungeon visible as a dimmed overlay. */
+	private void drawDimmedPlayerInterior(Graphics2D graphics, Rectangle bounds, UndergroundZone zone, int tileZoom)
 	{
 		if (zone == null || bounds.width <= 2 || bounds.height <= 2)
 		{
 			return;
 		}
-		final int factor = Math.max(2, config.undergroundLayerSurfaceBlur() + 1);
-		ensureOverlayBuffers(bounds.width, bounds.height, factor);
+		ensureOverlayBuffer(bounds.width, bounds.height);
 		final Graphics2D bufferGraphics = overlayBuffer.createGraphics();
 		try
 		{
@@ -259,27 +259,10 @@ class MapTileRenderer
 			bufferGraphics.dispose();
 		}
 
-		final Graphics2D blurGraphics = blurBuffer.createGraphics();
-		try
-		{
-			blurGraphics.setComposite(AlphaComposite.Clear);
-			blurGraphics.fillRect(0, 0, blurBuffer.getWidth(), blurBuffer.getHeight());
-			blurGraphics.setComposite(AlphaComposite.SrcOver);
-			blurGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			blurGraphics.drawImage(overlayBuffer, 0, 0, blurBuffer.getWidth(), blurBuffer.getHeight(), null);
-		}
-		finally
-		{
-			blurGraphics.dispose();
-		}
-
 		final Composite original = graphics.getComposite();
-		final Object originalInterpolation = graphics.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
 		graphics.setComposite(AlphaComposite.SrcOver.derive(SURFACE_VIEW_DUNGEON_OPACITY));
-		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		graphics.drawImage(blurBuffer, bounds.x, bounds.y, bounds.width, bounds.height, null);
+		graphics.drawImage(overlayBuffer, bounds.x, bounds.y, null);
 		graphics.setComposite(original);
-		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, originalInterpolation);
 	}
 
 	/**
@@ -477,15 +460,20 @@ class MapTileRenderer
 
 	private void ensureOverlayBuffers(int width, int height, int factor)
 	{
-		if (overlayBuffer == null || overlayBuffer.getWidth() != width || overlayBuffer.getHeight() != height)
-		{
-			overlayBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		}
+		ensureOverlayBuffer(width, height);
 		final int blurW = Math.max(1, width / factor);
 		final int blurH = Math.max(1, height / factor);
 		if (blurBuffer == null || blurBuffer.getWidth() != blurW || blurBuffer.getHeight() != blurH)
 		{
 			blurBuffer = new BufferedImage(blurW, blurH, BufferedImage.TYPE_INT_ARGB);
+		}
+	}
+
+	private void ensureOverlayBuffer(int width, int height)
+	{
+		if (overlayBuffer == null || overlayBuffer.getWidth() != width || overlayBuffer.getHeight() != height)
+		{
+			overlayBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		}
 	}
 

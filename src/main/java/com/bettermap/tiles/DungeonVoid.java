@@ -36,9 +36,11 @@ public final class DungeonVoid
 	private static final int VOID_BROWN = 0x362509;
 
 	/**
-	 * Dark void canvas fill baked into certain dungeon renders (exact {@code #020202}).
+	 * Mask matching near-black void canvas tones (R &lt;= 3, G &lt;= 3, B &lt;= 3). This encompasses
+	 * solid {@code #000000}, {@code #000001}, {@code #010101}, {@code #020202}, {@code #030303},
+	 * and {@code #030202} baked into Crash Site Cavern and other underground renders.
 	 */
-	private static final int VOID_DARK = 0x020202;
+	private static final int VOID_BLACK_MASK = ~0x030303 & 0xFFFFFF;
 
 	private DungeonVoid()
 	{
@@ -48,8 +50,7 @@ public final class DungeonVoid
 	public static boolean isVoid(int argb)
 	{
 		final int rgb = argb & 0xFFFFFF;
-		return rgb == 0
-			|| rgb == VOID_DARK
+		return (rgb & VOID_BLACK_MASK) == 0
 			|| rgb == VOID_BROWN;
 	}
 }

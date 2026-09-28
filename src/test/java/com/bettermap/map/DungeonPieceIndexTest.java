@@ -239,4 +239,46 @@ public class DungeonPieceIndexTest
 			assertTrue(layers.contains(1373));
 		}
 	}
+
+	@Test
+	public void sharedZoneReturnsPiecesForAliasedZone()
+	{
+		final DungeonPieceIndex index = new DungeonPieceIndex();
+		index.load(null);
+		final java.util.List<DungeonPiece> edgeville = index.piecesFor("edgeville_dungeon");
+		final java.util.List<DungeonPiece> varrock = index.piecesFor("varrock_sewers");
+		assertFalse(edgeville.isEmpty());
+		assertEquals(varrock.size(), edgeville.size());
+		assertEquals(varrock.get(0).id, edgeville.get(0).id);
+		assertTrue(index.hasPieces("edgeville_dungeon"));
+		assertEquals(varrock.get(0), index.pieceAt("edgeville_dungeon", 3100, 9870, 0, null));
+	}
+
+	@Test
+	public void crandorAndKaramjaShareOnlyTheirDungeonPieces()
+	{
+		final DungeonPieceIndex index = new DungeonPieceIndex();
+		index.load(null);
+		final List<DungeonPiece> crandor = index.piecesFor("crandor_dungeon");
+		final List<DungeonPiece> karamja = index.piecesFor("karamja_dungeon");
+		assertFalse(crandor.isEmpty());
+		assertEquals(karamja.size(), crandor.size());
+		assertTrue(crandor.stream().anyMatch(piece -> piece.id == 153));
+		assertTrue(crandor.stream().anyMatch(piece -> piece.id == 186));
+		assertTrue(crandor.stream().allMatch(piece -> "karamja_dungeon".equals(piece.zoneId)));
+		assertEquals(186, index.pieceAt("crandor_dungeon", 2833, 9658, 0, null).id);
+		assertEquals(153, index.pieceAt("karamja_dungeon", 2855, 9568, 0, null).id);
+	}
+
+	@Test
+	public void asgarnianIceDungeonUsesItsFourPieces()
+	{
+		final DungeonPieceIndex index = new DungeonPieceIndex();
+		index.load(null);
+		final List<DungeonPiece> ice = index.piecesFor("asgarnia_ice_cave");
+		assertEquals(4, ice.size());
+		assertTrue(ice.stream().allMatch(piece -> piece.layer == 1007));
+		assertEquals(19, index.pieceAt("asgarnia_ice_cave", 3007, 9550, 0, null).id);
+		assertEquals(20, index.pieceAt("asgarnia_ice_cave", 2900, 9500, 0, null).id);
+	}
 }

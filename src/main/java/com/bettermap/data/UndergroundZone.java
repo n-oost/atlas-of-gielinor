@@ -272,11 +272,25 @@ public enum UndergroundZone
 		new WorldPoint(2676, 9804, 0),
 		6400,
 		50,
-		"South of the Ranging Guild • ice arrows, Lucien's temple, McGrubor's Wood key",
+		"Lucien's temple; Shiny key required at McGrubor's Wood shortcut",
 		2626,
 		9784,
 		2748,
-		9862
+		9862,
+		new WorldPoint(2659, 3492, 0)
+	),
+	LEGENDS_GUILD_DUNGEON(
+		"legends_guild_dungeon",
+		"Legends' Guild Dungeon",
+		new WorldPoint(2724, 3375, 0),
+		new WorldPoint(2724, 9775, 0),
+		6400,
+		35,
+		"Below Legends' Guild • Legends' Quest, shadow warriors, mithril and coal rocks",
+		2688,
+		9728,
+		2751,
+		9786
 	),
 	KRAKEN_COVE(
 		"kraken_cove",
@@ -285,7 +299,7 @@ public enum UndergroundZone
 		new WorldPoint(2278, 10011, 0),
 		6400,
 		45,
-		"West of Piscatoris • cave kraken, Kraken boss instance is entrance-only",
+		"cave kraken, Kraken boss",
 		2241,
 		9985,
 		2301,
@@ -298,7 +312,7 @@ public enum UndergroundZone
 		new WorldPoint(2512, 10265, 0),
 		6400,
 		60,
-		"Under Kingdom of Miscellania • Mining Caverns, Fishing Caverns, Royal Trouble",
+		"Mining Caverns, Fishing Caverns, Royal Trouble",
 		2500,
 		10240,
 		2623,
@@ -313,7 +327,7 @@ public enum UndergroundZone
 		new WorldPoint(1800, 9950, 0),
 		6376,
 		80,
-		"Under Hosidius • Sarachnis, Red Dragons, Temple of the Moon",
+		"Sarachnis, Red Dragons, Temple of the Moon",
 		1781,
 		9881,
 		1866,
@@ -2161,6 +2175,24 @@ public enum UndergroundZone
 		return surfacePoints;
 	}
 
+	public WorldPoint nearestSurfacePoint(int worldX, int worldY)
+	{
+		WorldPoint nearest = surfacePoint;
+		long nearestDistance = Long.MAX_VALUE;
+		for (WorldPoint point : surfacePoints)
+		{
+			final long dx = (long) point.getX() - worldX;
+			final long dy = (long) point.getY() - worldY;
+			final long distance = dx * dx + dy * dy;
+			if (distance < nearestDistance)
+			{
+				nearest = point;
+				nearestDistance = distance;
+			}
+		}
+		return nearest;
+	}
+
 	public WorldPoint getUndergroundPoint()
 	{
 		return undergroundPoint;
@@ -2203,6 +2235,7 @@ public enum UndergroundZone
 
 	public static final List<UndergroundZone> ALL_ZONES;
 	private static final Map<String, UndergroundZone> BY_ID;
+	private static final Map<String, String> SHARED_ZONE_IDS;
 
 	static
 	{
@@ -2215,6 +2248,38 @@ public enum UndergroundZone
 			ids.put(zone.id, zone);
 		}
 		BY_ID = Collections.unmodifiableMap(ids);
+
+		final Map<String, String> shared = new HashMap<>();
+		shared.put("edgeville_dungeon", "varrock_sewers");
+		shared.put("crandor_dungeon", "karamja_dungeon");
+		SHARED_ZONE_IDS = Collections.unmodifiableMap(shared);
+	}
+
+	public static String canonicalZoneId(String zoneId)
+	{
+		if (zoneId == null)
+		{
+			return null;
+		}
+		return SHARED_ZONE_IDS.getOrDefault(zoneId, zoneId);
+	}
+
+	public static boolean zonesMatch(String a, String b)
+	{
+		if (a == null || b == null)
+		{
+			return false;
+		}
+		if (a.equals(b))
+		{
+			return true;
+		}
+		return canonicalZoneId(a).equals(canonicalZoneId(b));
+	}
+
+	public String getCanonicalId()
+	{
+		return canonicalZoneId(this.id);
 	}
 
 	public static UndergroundZone byId(String id)

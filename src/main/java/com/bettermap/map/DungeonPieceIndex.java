@@ -25,6 +25,7 @@
 package com.bettermap.map;
 
 import com.bettermap.data.DungeonPiece;
+import com.bettermap.data.UndergroundZone;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -113,8 +114,19 @@ public class DungeonPieceIndex
 		{
 			return Collections.emptyList();
 		}
-		final List<DungeonPiece> list = byZone.get(zoneId);
-		return list == null ? Collections.emptyList() : list;
+		final String canonical = UndergroundZone.canonicalZoneId(zoneId);
+		final List<DungeonPiece> list = byZone.get(canonical);
+		if (list != null && !list.isEmpty())
+		{
+			return list;
+		}
+		final List<DungeonPiece> direct = byZone.get(zoneId);
+		return direct == null ? Collections.emptyList() : direct;
+	}
+
+	public synchronized boolean hasPieces(String zoneId)
+	{
+		return !piecesFor(zoneId).isEmpty();
 	}
 
 	/** The arranged piece containing a native player coordinate on the displayed floor. */
@@ -140,7 +152,12 @@ public class DungeonPieceIndex
 			{
 				continue;
 			}
-			byZone.computeIfAbsent(piece.zoneId, k -> new ArrayList<>()).add(piece);
+			final String canonical = UndergroundZone.canonicalZoneId(piece.zoneId);
+			byZone.computeIfAbsent(canonical, k -> new ArrayList<>()).add(piece);
+			if (!canonical.equals(piece.zoneId))
+			{
+				byZone.computeIfAbsent(piece.zoneId, k -> new ArrayList<>()).add(piece);
+			}
 		}
 		for (List<DungeonPiece> list : byZone.values())
 		{

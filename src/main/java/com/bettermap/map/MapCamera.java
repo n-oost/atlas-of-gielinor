@@ -62,14 +62,22 @@ public class MapCamera
 	{
 		private final Rectangle bounds;
 		private final UndergroundZone zone;
+		private final WorldPoint surfacePoint;
 		private final OverlayCluster cluster;
 		private final OverlayFloor floor;
 		private final boolean surfaceToUnderground;
 
 		public LayerSymbolTarget(Rectangle bounds, UndergroundZone zone, boolean surfaceToUnderground)
 		{
+			this(bounds, zone, zone == null ? null : zone.getSurfacePoint(), surfaceToUnderground);
+		}
+
+		public LayerSymbolTarget(Rectangle bounds, UndergroundZone zone, WorldPoint surfacePoint,
+			boolean surfaceToUnderground)
+		{
 			this.bounds = bounds;
 			this.zone = zone;
+			this.surfacePoint = surfacePoint;
 			this.cluster = null;
 			this.floor = null;
 			this.surfaceToUnderground = surfaceToUnderground;
@@ -79,6 +87,7 @@ public class MapCamera
 		{
 			this.bounds = bounds;
 			this.zone = null;
+			this.surfacePoint = null;
 			this.cluster = cluster;
 			this.floor = null;
 			this.surfaceToUnderground = true;
@@ -88,6 +97,7 @@ public class MapCamera
 		{
 			this.bounds = bounds;
 			this.zone = floor.zone;
+			this.surfacePoint = floor.zone.getSurfacePoint();
 			this.cluster = null;
 			this.floor = floor;
 			this.surfaceToUnderground = true;
@@ -101,6 +111,11 @@ public class MapCamera
 		public UndergroundZone getZone()
 		{
 			return zone;
+		}
+
+		public WorldPoint getSurfacePoint()
+		{
+			return surfacePoint;
 		}
 
 		public OverlayCluster getCluster()
@@ -406,6 +421,7 @@ public class MapCamera
 	private volatile long flashStartMillis;
 
 	private volatile UndergroundZone activeUndergroundZone;
+	private volatile WorldPoint activeUndergroundSurfacePoint;
 	private volatile OverlayCluster activeOverlayCluster;
 	private volatile UndergroundZone hoveredUndergroundZone;
 	private volatile OverlayCluster hoveredOverlayCluster;
@@ -680,7 +696,19 @@ public class MapCamera
 			observedPlayerPlane = playerPlane;
 			if (playerZone != null)
 			{
-				setUndergroundMode(playerZone);
+				WorldPoint entrance = playerZone.getSurfacePoint();
+				if (lastSurfaceLocation != null)
+				{
+					final WorldPoint nearestEntrance = playerZone.nearestSurfacePoint(
+						lastSurfaceLocation.getX(), lastSurfaceLocation.getY());
+					final long dx = (long) nearestEntrance.getX() - lastSurfaceLocation.getX();
+					final long dy = (long) nearestEntrance.getY() - lastSurfaceLocation.getY();
+					if (dx * dx + dy * dy <= 64)
+					{
+						entrance = nearestEntrance;
+					}
+				}
+				setUndergroundMode(playerZone, entrance);
 				setPlane(player.getPlane());
 				for (OverlayFloor floor : OverlayFloor.all())
 				{
@@ -1341,6 +1369,12 @@ public class MapCamera
 
 	public synchronized void setUndergroundMode(UndergroundZone zone)
 	{
+		setUndergroundMode(zone, zone == null ? null : zone.getSurfacePoint());
+	}
+
+	/** Opens a dungeon from a particular surface entrance while keeping its projected map anchor. */
+	public synchronized void setUndergroundMode(UndergroundZone zone, WorldPoint entrance)
+	{
 		this.activeFloorLayer = null;
 		if (zone == null)
 		{
@@ -1349,6 +1383,10 @@ public class MapCamera
 		}
 		if (zone == this.activeUndergroundZone)
 		{
+			if (entrance != null)
+			{
+				this.activeUndergroundSurfacePoint = entrance;
+			}
 			return;
 		}
 		if (this.activeUndergroundZone == null)
@@ -1356,12 +1394,13 @@ public class MapCamera
 			this.savedSurfaceZoom = this.zoom;
 		}
 		this.activeUndergroundZone = zone;
+		this.activeUndergroundSurfacePoint = entrance != null ? entrance : zone.getSurfacePoint();
 		this.activeOverlayCluster = null;
 		// Render the committed view exactly like the hover preview: the dungeon tiles are
 		// composited onto the surface entrance via the zone delta, so the camera stays on
 		// surface coordinates and frames the entrance rather than leaping ~6400 tiles north.
-		this.centerX = zone.getSurfacePoint().getX();
-		this.centerY = zone.getSurfacePoint().getY();
+		this.centerX = activeUndergroundSurfacePoint.getX();
+		this.centerY = activeUndergroundSurfacePoint.getY();
 		this.plane = zone.getUndergroundPoint().getPlane();
 		this.planeChosenByUser = true;
 		this.zoom = clampZoom(Math.max(this.zoom, dungeonTargetZoom(zone)));
@@ -1372,14 +1411,16 @@ public class MapCamera
 	{
 		this.activeFloorLayer = null;
 		final UndergroundZone previous = this.activeUndergroundZone;
+		final WorldPoint previousSurfacePoint = this.activeUndergroundSurfacePoint;
 		this.activeUndergroundZone = null;
+		this.activeUndergroundSurfacePoint = null;
 		this.activeOverlayCluster = null;
 		if (previous != null)
 		{
 			// The camera stayed on surface coordinates the whole time the layer was open (the
 			// dungeon was composited forward via the zone delta), so there is nothing to
 			// translate back — just drop to the surface plane.
-			this.plane = previous.getSurfacePoint().getPlane();
+			this.plane = (previousSurfacePoint != null ? previousSurfacePoint : previous.getSurfacePoint()).getPlane();
 			this.planeChosenByUser = true;
 			clampCenter();
 		}
@@ -1396,13 +1437,26 @@ public class MapCamera
 	 */
 	public synchronized void exitDungeonToSurface()
 	{
+		exitDungeonToSurface(null);
+	}
+
+	/** Returns from a dungeon to the surface entrance represented by the clicked exit target. */
+	public synchronized void exitDungeonToSurface(WorldPoint surfacePoint)
+	{
 		// An exact match — an activated zone, or a wiki-map box the camera sits inside — is the
 		// entrance to head for. A loose forUndergroundPoint() guess (see getDungeonZone) is not,
 		// because the +6400 band is crowded and it can snap to an unrelated dungeon.
 		final UndergroundZone exact = activeUndergroundZone != null
 			? activeUndergroundZone
 			: InstanceMaps.zoneForPoint(centerX, centerY);
+		final WorldPoint exitPoint = surfacePoint != null ? surfacePoint : activeUndergroundSurfacePoint;
 		clearUndergroundMode();
+
+		if (exitPoint != null)
+		{
+			centerOnSurfacePoint(exitPoint);
+			return;
+		}
 
 		if (exact != null)
 		{

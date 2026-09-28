@@ -108,6 +108,9 @@ public class PoiDetailsTest
 		assertEquals("Fortis Colosseum", PoiDetails.getDetailByPosition(1824, 3107, 0, 0).getTitle());
 		assertEquals("Digsite Dungeon", PoiDetails.getDetailByPosition(3370, 3428, 0, 0).getTitle());
 		assertEquals("Morytania Spider Cave", PoiDetails.getDetailByPosition(3657, 3407, 0, 0).getTitle());
+		assertEquals("Temple of Ikov", PoiDetails.getDetailByPosition(2676, 3404, 0, 0).getTitle());
+		assertEquals("Temple of Ikov — McGrubor's Wood shortcut",
+			PoiDetails.getDetailByPosition(2659, 3492, 0, 0).getTitle());
 	}
 
 	@Test

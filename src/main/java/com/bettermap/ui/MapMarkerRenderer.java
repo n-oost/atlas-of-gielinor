@@ -603,11 +603,14 @@ class MapMarkerRenderer
 			final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
 			if (pieces.isEmpty())
 			{
-				final long dx = (long) worldX - zone.getSurfacePoint().getX();
-				final long dy = (long) worldY - zone.getSurfacePoint().getY();
-				if (dx * dx + dy * dy <= (long) zone.getRadius() * zone.getRadius())
+				for (WorldPoint entrance : zone.getSurfacePoints())
 				{
-					return true;
+					final long dx = (long) worldX - entrance.getX();
+					final long dy = (long) worldY - entrance.getY();
+					if (dx * dx + dy * dy <= (long) zone.getRadius() * zone.getRadius())
+					{
+						return true;
+					}
 				}
 				continue;
 			}
@@ -848,7 +851,7 @@ class MapMarkerRenderer
 
 			final List<WorldPoint> anchors = onSurface
 				? zone.getSurfacePoints()
-				: Collections.singletonList(zone.getSurfacePoint());
+				: zone.getSurfacePoints();
 			for (WorldPoint anchor : anchors)
 			{
 			final int sx = (int) Math.round(camera.screenX(anchor.getX() + 0.5, anchor.getY() + 0.5, bounds));
@@ -863,7 +866,7 @@ class MapMarkerRenderer
 			}
 
 			final boolean isSurfaceToUnderground = onSurface;
-			targets.add(new MapCamera.LayerSymbolTarget(rect, zone, isSurfaceToUnderground));
+			targets.add(new MapCamera.LayerSymbolTarget(rect, zone, anchor, isSurfaceToUnderground));
 
 			final boolean isHovered = camera.getHoveredUndergroundZone() == zone
 				&& camera.isHoveredSurfaceToUnderground() == isSurfaceToUnderground

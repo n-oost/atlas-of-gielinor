@@ -138,6 +138,7 @@ public class UndergroundZoneTest
 		assertEquals("glarials_tomb", UndergroundZone.forSurfacePoint(2557, 3444, 40).getId());
 		assertEquals("goblin_cave", UndergroundZone.forSurfacePoint(2622, 3393, 40).getId());
 		assertEquals("temple_of_ikov", UndergroundZone.forSurfacePoint(2676, 3404, 40).getId());
+		assertEquals("legends_guild_dungeon", UndergroundZone.forSurfacePoint(2724, 3375, 8).getId());
 		assertEquals("kraken_cove", UndergroundZone.forSurfacePoint(2278, 3611, 40).getId());
 		assertEquals("ourania_altar", UndergroundZone.forSurfacePoint(2451, 3231, 40).getId());
 		assertEquals("smoke_devil_dungeon", UndergroundZone.forSurfacePoint(2412, 3061, 40).getId());
@@ -986,6 +987,8 @@ public class UndergroundZoneTest
 	public void templeOfIkovUsesClipOverrideNotGiantWikiBox()
 	{
 		assertTrue(UndergroundZone.TEMPLE_OF_IKOV.hasClipOverride());
+		assertEquals(UndergroundZone.TEMPLE_OF_IKOV,
+			UndergroundZone.forSurfacePoint(2659, 3492, 0));
 		assertTrue(UndergroundZone.TEMPLE_OF_IKOV.getClipMinX() >= 2626);
 		assertTrue(UndergroundZone.TEMPLE_OF_IKOV.getClipMaxX() <= 2748);
 		assertTrue(UndergroundZone.TEMPLE_OF_IKOV.getClipMinY() >= 9784);
@@ -1163,6 +1166,16 @@ public class UndergroundZoneTest
 		camera.clearUndergroundMode();
 		assertEquals(zone.getSurfacePoint().getX(), camera.getCenterX(), 0.001);
 		assertEquals(zone.getSurfacePoint().getY(), camera.getCenterY(), 0.001);
+	}
+
+	@Test
+	public void openingIkovShortcutFramesTheShortcut()
+	{
+		MapCamera camera = new MapCamera();
+		final net.runelite.api.coords.WorldPoint shortcut = new net.runelite.api.coords.WorldPoint(2659, 3492, 0);
+		camera.setUndergroundMode(UndergroundZone.TEMPLE_OF_IKOV, shortcut);
+		assertEquals(2659, camera.getCenterX(), 0.001);
+		assertEquals(3492, camera.getCenterY(), 0.001);
 	}
 
 	@Test
@@ -1393,5 +1406,26 @@ public class UndergroundZoneTest
 					+ " at (" + ux + "," + uy + ")",
 				found);
 		}
+	}
+
+	@Test
+	public void canonicalZoneAliasingAndMatching()
+	{
+		assertEquals("varrock_sewers", UndergroundZone.canonicalZoneId("edgeville_dungeon"));
+		assertEquals("varrock_sewers", UndergroundZone.canonicalZoneId("varrock_sewers"));
+		assertEquals("karamja_dungeon", UndergroundZone.canonicalZoneId("crandor_dungeon"));
+		assertEquals("taverley_dungeon", UndergroundZone.canonicalZoneId("taverley_dungeon"));
+		assertNull(UndergroundZone.canonicalZoneId(null));
+
+		assertTrue(UndergroundZone.zonesMatch("edgeville_dungeon", "varrock_sewers"));
+		assertTrue(UndergroundZone.zonesMatch("varrock_sewers", "edgeville_dungeon"));
+		assertTrue(UndergroundZone.zonesMatch("edgeville_dungeon", "edgeville_dungeon"));
+		assertTrue(UndergroundZone.zonesMatch("crandor_dungeon", "karamja_dungeon"));
+		assertFalse(UndergroundZone.zonesMatch("edgeville_dungeon", "taverley_dungeon"));
+		assertFalse(UndergroundZone.zonesMatch(null, "varrock_sewers"));
+		assertFalse(UndergroundZone.zonesMatch("edgeville_dungeon", null));
+
+		assertEquals("varrock_sewers", UndergroundZone.EDGEVILLE_DUNGEON.getCanonicalId());
+		assertEquals("varrock_sewers", UndergroundZone.VARROCK_SEWERS.getCanonicalId());
 	}
 }

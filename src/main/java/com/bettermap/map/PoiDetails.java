@@ -903,6 +903,7 @@ public final class PoiDetails
 		addEntry("dungeon", "Taverley Dungeon", "Dungeons", 2841, 3424, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Temple - Desert Treasure 2", "Dungeons", 1174, 3429, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Temple of Ikov", "Dungeons", 2676, 3404, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
+		addEntry("dungeon", "Temple of Ikov — McGrubor's Wood shortcut", "Dungeons", 2659, 3492, 0, "Type: Dungeon shortcut", "Requires: Shiny key to open the shed door");
 		addEntry("dungeon", "Theatre of Blood", "Dungeons", 3676, 3219, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Dragon Nest", "Dungeons", 1289, 3134, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Passage to Gemstone Crab", "Dungeons", 1278, 3168, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");

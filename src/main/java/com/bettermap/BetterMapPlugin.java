@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.runelite.api.MenuEntry;
 import com.bettermap.map.QuestHelperTracker;
+import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.SlayerTaskTracker;
 import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.InstanceMaps;
@@ -58,6 +59,7 @@ import java.awt.Rectangle;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Future;
 import javax.inject.Inject;
+import javax.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -68,6 +70,7 @@ import net.runelite.api.WidgetNode;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOpened;
+import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.BeforeRender;
@@ -154,6 +157,9 @@ public class BetterMapPlugin extends Plugin
 
 	@Inject
 	private ClueScrollTracker clueScrollTracker;
+
+	@Inject
+	private ShortestPathTracker shortestPathTracker;
 
 	@Inject
 	private QuestHelperTracker questHelperTracker;
@@ -606,6 +612,7 @@ public class BetterMapPlugin extends Plugin
 		}
 
 		clueScrollTracker.update();
+		shortestPathTracker.update();
 		questHelperTracker.update();
 		echoFinderResults();
 
@@ -784,6 +791,64 @@ public class BetterMapPlugin extends Plugin
 		});
 	}
 
+	/** Open Better Map's world-map interface and center it on a Finder destination. */
+	public void openMapAt(WorldPoint point)
+	{
+		camera.setFinderStandalone(false);
+		camera.setFinderPanelOpen(false);
+		clientThread.invoke(this::openWorldMapOnClientThread);
+		centerMapOn(point);
+	}
+
+	/** Center on a destination and request Shortest Path to calculate a route to it. */
+	public void routeTo(WorldPoint point, boolean openMap)
+	{
+		if (openMap)
+		{
+			camera.setFinderStandalone(false);
+			camera.setFinderPanelOpen(false);
+			clientThread.invoke(this::openWorldMapOnClientThread);
+		}
+		centerMapOn(point);
+		clientThread.invoke(() -> shortestPathTracker.routeTo(point));
+	}
+
+	private void openWorldMapOnClientThread()
+	{
+		if (isWorldMapOpen())
+		{
+			return;
+		}
+		final int[] orbIds = {
+			InterfaceID.Orbs.ORB_WORLDMAP,
+			InterfaceID.Orbs.WORLDMAP,
+			InterfaceID.OrbsNomap.ORB_WORLDMAP,
+			InterfaceID.OrbsNomap.WORLDMAP
+		};
+		for (int id : orbIds)
+		{
+			final Widget orb = client.getWidget(id);
+			if (orb == null || orb.getOnOpListener() == null)
+			{
+				continue;
+			}
+			try
+			{
+				client.createScriptEventBuilder(orb.getOnOpListener())
+					.setSource(orb)
+					.setOp(1)
+					.build()
+					.run();
+				return;
+			}
+			catch (RuntimeException e)
+			{
+				log.debug("[BetterMap] could not run world-map orb listener", e);
+			}
+		}
+		log.debug("[BetterMap] no world-map orb listener available to open the map");
+	}
+
 
 	/**
 	 * Pans and flashes the map on the local player, following them into an instance layer if that is
@@ -938,6 +1003,22 @@ public class BetterMapPlugin extends Plugin
 
 	private void addMapContextMenuEntries(net.runelite.api.Point mouse)
 	{
+		final WorldPoint finderTarget = finderTargetAt(mouse);
+		if (finderTarget != null)
+		{
+			resetMapMenu();
+			addRouteMenuEntry(finderTarget, camera.isFinderStandalone());
+			return;
+		}
+		final Rectangle finderPanel = camera.getFinderPanelBounds();
+		final Rectangle finderFlyout = camera.getFinderFlyoutHitBounds();
+		if (camera.isFinderPanelOpen()
+			&& ((finderPanel != null && finderPanel.contains(mouse.getX(), mouse.getY()))
+				|| (finderFlyout != null && finderFlyout.contains(mouse.getX(), mouse.getY()))))
+		{
+			return;
+		}
+
 		final Rectangle viewport = camera.getViewport();
 		if (!camera.isActive() || viewport == null || !viewport.contains(mouse.getX(), mouse.getY()))
 		{
@@ -949,6 +1030,7 @@ public class BetterMapPlugin extends Plugin
 		final WorldPoint targetPoint = PrifddinasShift.toWorld(worldX, worldY, camera.getPlane());
 
 		resetMapMenu();
+		addRouteMenuEntry(targetPoint, false);
 
 		if (camera.isViewingDungeonLayer())
 		{
@@ -960,6 +1042,46 @@ public class BetterMapPlugin extends Plugin
 		}
 
 		addEntityContextMenuEntries(mouse, worldX, worldY);
+	}
+
+	@Nullable
+	private WorldPoint finderTargetAt(net.runelite.api.Point mouse)
+	{
+		for (MapCamera.FlyoutTarget target : camera.getFlyoutTargets())
+		{
+			final Rectangle row = target.getRowBounds();
+			final Rectangle route = target.getWalkBounds();
+			if ((row != null && row.contains(mouse.getX(), mouse.getY()))
+				|| (route != null && route.contains(mouse.getX(), mouse.getY())))
+			{
+				return target.getPoint();
+			}
+		}
+		for (MapCamera.FinderResultTarget target : camera.getFinderResultTargets())
+		{
+			final Rectangle row = target.getRowBounds();
+			final Rectangle route = target.getWalkBounds();
+			if ((row != null && row.contains(mouse.getX(), mouse.getY()))
+				|| (route != null && route.contains(mouse.getX(), mouse.getY())))
+			{
+				if (target.getRegion() != null)
+				{
+					return new WorldPoint(target.getRegion().getCenterX(), target.getRegion().getCenterY(), 0);
+				}
+				final MapFinder.Result result = MapFinder.activationTarget(target.getResult());
+				return result != null ? result.getPoint() : target.getPoint();
+			}
+		}
+		return null;
+	}
+
+	private void addRouteMenuEntry(WorldPoint point, boolean openMap)
+	{
+		client.getMenu().createMenuEntry(-1)
+			.setOption("Route here")
+			.setTarget("<col=ffff00>" + point.getX() + ", " + point.getY() + "</col>")
+			.setType(MenuAction.RUNELITE)
+			.onClick(e -> routeTo(point, openMap));
 	}
 
 	private void resetMapMenu()

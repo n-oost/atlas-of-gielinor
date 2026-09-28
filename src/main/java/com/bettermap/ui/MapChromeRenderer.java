@@ -268,8 +268,7 @@ class MapChromeRenderer
 			camera.setCloseButton(null);
 		}
 
-		// The tiles come from the game cache, the datasets from the wiki, and — when walking routes
-		// are enabled — the route engine is a vendored copy of Skretzo's Shortest Path (BSD-2).
+		// The tiles come from the game cache and the datasets from the wiki.
 		final List<String> credits = new ArrayList<>(3);
 		credits.add(WikiMapTiles.ATTRIBUTION);
 		credits.add(WikiMapTiles.DATA_ATTRIBUTION);

@@ -330,7 +330,7 @@ class MapFinderRenderer
 				final int dist = distanceTiles(regCenter, playerLoc);
 				final String arrow = "▸";
 				graphics.setColor(CARD_TITLE);
-				graphics.drawString(arrow, row.x + row.width - 14, rowY + rowH - 6);
+				graphics.drawString(arrow, row.x + row.width - 60, rowY + rowH - 6);
 
 				int dW = 0;
 				if (dist >= 0)
@@ -338,10 +338,10 @@ class MapFinderRenderer
 						final String distText = distanceLabel(dist);
 					dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, row.x + row.width - 14 - dW - 6, rowY + rowH - 6);
+					graphics.drawString(distText, row.x + row.width - 68 - dW, rowY + rowH - 6);
 				}
 
-				final int maxNameW = row.x + row.width - 14 - (dist >= 0 ? dW + 12 : 6) - (panel.x + padX);
+				final int maxNameW = row.x + row.width - 68 - (dist >= 0 ? dW + 6 : 0) - (panel.x + padX);
 				String name = region.getDisplayName();
 				if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
 				{
@@ -354,7 +354,8 @@ class MapFinderRenderer
 				graphics.setColor(CARD_TEXT);
 				graphics.drawString(name, panel.x + padX, rowY + rowH - 6);
 
-				final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, null, regCenter, region.getDisplayName(), null, region);
+				final Rectangle route = drawRouteButton(graphics, fm, row, cursor);
+				final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, route, regCenter, region.getDisplayName(), null, region);
 				targets.add(target);
 				if (cursor != null && row.contains(cursor))
 				{
@@ -401,11 +402,11 @@ class MapFinderRenderer
 					final Rectangle walk;
 					if (result.hasChildren())
 					{
-						walk = null;
+						walk = result.getPoint() == null ? null : drawRouteButton(graphics, fm, row, cursor);
 						final String countText = "▸ " + result.getChildren().size();
 						final int countW = fm.stringWidth(countText);
 						graphics.setColor(CARD_TITLE);
-						graphics.drawString(countText, row.x + row.width - countW - 8, rowY + rowH - 6);
+						graphics.drawString(countText, row.x + row.width - countW - 60, rowY + rowH - 6);
 
 						final int dist = result.getDistanceTiles();
 						final String distText = distanceLabel(dist);
@@ -413,7 +414,7 @@ class MapFinderRenderer
 						{
 							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - countW - 8 - dW - 6, rowY + 11);
+							graphics.drawString(distText, row.x + row.width - countW - 66 - dW, rowY + 11);
 						}
 
 						final int nameX = panel.x + padX + 16;
@@ -425,7 +426,7 @@ class MapFinderRenderer
 					}
 					else
 					{
-						walk = null;
+						walk = result.getPoint() == null ? null : drawRouteButton(graphics, fm, row, cursor);
 
 						final int dist = result.getDistanceTiles();
 						final String distText = distanceLabel(dist);
@@ -433,7 +434,7 @@ class MapFinderRenderer
 						{
 							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - dW - 10, rowY + 12);
+							graphics.drawString(distText, row.x + row.width - 62 - dW, rowY + 12);
 						}
 
 						final int nameX = panel.x + padX + 16;
@@ -446,7 +447,9 @@ class MapFinderRenderer
 						graphics.drawString(itemKindLabel(result) + " · " + subtitle, nameX, rowY + 25);
 					}
 
-					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, result.getPoint(), result.getName(), result, null);
+					final MapFinder.Result routeTarget = MapFinder.activationTarget(result);
+					final WorldPoint targetPoint = routeTarget != null ? routeTarget.getPoint() : result.getPoint();
+					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, targetPoint, result.getName(), result, null);
 					targets.add(target);
 					if (cursor != null && row.contains(cursor))
 					{
@@ -712,19 +715,20 @@ class MapFinderRenderer
 					flyoutHoveredItem = item;
 				}
 
+				final Rectangle route = item.getPoint() == null ? null : drawRouteButton(graphics, fm, itemRow, cursor);
 				final String distText = distanceLabel(item.getDistanceTiles());
 				if (!distText.isEmpty())
 				{
 					final int dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, itemRow.x + itemRow.width - dW - 6, fRowY + 12);
+					graphics.drawString(distText, itemRow.x + itemRow.width - (route == null ? 6 : route.width + 10) - dW, fRowY + 12);
 				}
 				drawClipped(graphics, fm, item.getName(), flyoutPanel.x + padX, fRowY + 12,
 					flyoutW - 88, CARD_TEXT);
 				graphics.setColor(TEXT_DIM);
 				graphics.drawString(itemKindLabel(item), flyoutPanel.x + padX, fRowY + 25);
 
-				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, null, item.getPoint(), item.getName(), item));
+				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, item.getPoint(), item.getName(), item));
 				fRowY += rowH;
 			}
 
@@ -885,6 +889,23 @@ class MapFinderRenderer
 		}
 		graphics.setColor(result.getKind() == MapFinder.Result.Kind.MINERAL ? new Color(210, 170, 95) : CARD_TITLE);
 		graphics.drawString(icon, x, y + 12);
+	}
+
+	private static Rectangle drawRouteButton(Graphics2D graphics, FontMetrics fm, Rectangle row,
+		java.awt.Point cursor)
+	{
+		final Rectangle button = new Rectangle(row.x + row.width - 53, row.y + Math.max(2, (row.height - 20) / 2),
+			49, Math.min(20, row.height - 4));
+		final boolean hover = cursor != null && button.contains(cursor);
+		graphics.setColor(hover ? CARD_EDGE : CHIP_BG);
+		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 4, 4);
+		graphics.setColor(hover ? CARD_TITLE : CARD_EDGE);
+		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 4, 4);
+		graphics.setColor(CARD_TEXT);
+		final String label = "Route";
+		graphics.drawString(label, button.x + (button.width - fm.stringWidth(label)) / 2,
+			button.y + (button.height + fm.getAscent() - fm.getDescent()) / 2);
+		return button;
 	}
 
 	private static String distanceLabel(int tiles)

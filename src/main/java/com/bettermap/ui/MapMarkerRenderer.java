@@ -32,6 +32,7 @@ import static com.bettermap.ui.MapStyle.CARD_EDGE;
 import static com.bettermap.ui.MapStyle.CARD_TEXT;
 import static com.bettermap.ui.MapStyle.CARD_TITLE;
 import static com.bettermap.ui.MapStyle.ROUTE_SHADOW;
+import static com.bettermap.ui.MapStyle.ROUTE_LINE;
 import static com.bettermap.ui.MapStyle.SMALL;
 import static com.bettermap.ui.MapStyle.TEXT_DIM;
 
@@ -61,6 +62,7 @@ import com.bettermap.map.PoiCategory;
 import com.bettermap.map.PoiIndex;
 import com.bettermap.map.PrifddinasShift;
 import com.bettermap.map.SlayerTaskTracker;
+import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.WorldMapPointReader;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -76,6 +78,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,13 +93,13 @@ import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import net.runelite.api.coords.WorldPoint;
 
 /**
  * Everything drawn on top of the tiles that marks a place: POI badges, layer symbols,
@@ -233,6 +236,7 @@ class MapMarkerRenderer
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final ClueScrollTracker clueScrollTracker;
+	private final ShortestPathTracker shortestPathTracker;
 	private final GroundItemIndex groundItemIndex;
 	private final BoatTracker boatTracker;
 	private final WorldMapPointManager worldMapPointManager;
@@ -245,7 +249,6 @@ class MapMarkerRenderer
 	private BufferedImage boatSloopIcon;
 	private BufferedImage boatSkiffIcon;
 	private BufferedImage boatRaftIcon;
-	private List<int[]> walkingRuns = java.util.Collections.emptyList();
 
 	MapMarkerRenderer(
 		Client client,
@@ -256,6 +259,7 @@ class MapMarkerRenderer
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
 		ClueScrollTracker clueScrollTracker,
+		ShortestPathTracker shortestPathTracker,
 		GroundItemIndex groundItemIndex,
 		BoatTracker boatTracker,
 		WorldMapPointManager worldMapPointManager,
@@ -272,6 +276,7 @@ class MapMarkerRenderer
 		this.monsterIconManager = monsterIconManager;
 		this.slayerTaskTracker = slayerTaskTracker;
 		this.clueScrollTracker = clueScrollTracker;
+		this.shortestPathTracker = shortestPathTracker;
 		this.groundItemIndex = groundItemIndex;
 		this.boatTracker = boatTracker;
 		this.worldMapPointManager = worldMapPointManager;
@@ -336,6 +341,99 @@ class MapMarkerRenderer
 		}
 		return InstanceMaps.inFocusedLayer(worldX, worldY,
 			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused());
+	}
+
+	/** Draws the enabled Shortest Path plugin's cached route in Better Map's world projection. */
+	boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)
+	{
+		if (shortestPathTracker.readFailed())
+		{
+			return true;
+		}
+
+		final List<WorldPoint> route = shortestPathTracker.route();
+		if (route.isEmpty())
+		{
+			return false;
+		}
+
+		final int plane = camera.getPlane();
+		final Stroke oldStroke = graphics.getStroke();
+		final Color oldColor = graphics.getColor();
+		boolean hasPointOnLayer = false;
+		int segments = 0;
+		WorldPoint previous = null;
+		WorldPoint firstPointOnLayer = null;
+		try
+		{
+			graphics.setStroke(ROUTE_LINE_STROKE);
+			for (WorldPoint point : route)
+			{
+				if (point.getPlane() != plane || !drawable(point.getX(), point.getY()))
+				{
+					previous = null;
+					continue;
+				}
+				hasPointOnLayer = true;
+				if (firstPointOnLayer == null)
+				{
+					firstPointOnLayer = point;
+				}
+				if (previous != null)
+				{
+					// Shortest Path includes teleport/transport endpoints in one list. Its own tile
+					// overlay leaves those hops disconnected, so do not draw a misleading continent-spanning line.
+					if (Math.abs(point.getX() - previous.getX()) > 1
+						|| Math.abs(point.getY() - previous.getY()) > 1)
+					{
+						final int x = (int) camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds);
+						final int y = (int) camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds);
+						graphics.setColor(ROUTE_LINE);
+						graphics.fillOval(x - 3, y - 3, 7, 7);
+						previous = point;
+						continue;
+					}
+					final double x1 = camera.screenX(previous.getX() + 0.5, previous.getY() + 0.5, bounds);
+					final double y1 = camera.screenY(previous.getX() + 0.5, previous.getY() + 0.5, bounds);
+					final double x2 = camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds);
+					final double y2 = camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds);
+					if (!Double.isFinite(x1) || !Double.isFinite(y1) || !Double.isFinite(x2) || !Double.isFinite(y2))
+					{
+						return true;
+					}
+					graphics.setColor(ROUTE_SHADOW);
+					graphics.setStroke(ROUTE_HALO_STROKE);
+					graphics.draw(new Line2D.Double(x1, y1, x2, y2));
+					graphics.setColor(ROUTE_LINE);
+					graphics.setStroke(ROUTE_LINE_STROKE);
+					graphics.draw(new Line2D.Double(x1, y1, x2, y2));
+					segments++;
+				}
+				previous = point;
+			}
+			if (!hasPointOnLayer)
+			{
+				return true;
+			}
+			if (segments == 0)
+			{
+				final int x = (int) camera.screenX(firstPointOnLayer.getX() + 0.5, firstPointOnLayer.getY() + 0.5, bounds);
+				final int y = (int) camera.screenY(firstPointOnLayer.getX() + 0.5, firstPointOnLayer.getY() + 0.5, bounds);
+				graphics.setColor(ROUTE_LINE);
+				graphics.fillOval(x - 3, y - 3, 7, 7);
+			}
+			return false;
+		}
+		catch (RuntimeException | LinkageError e)
+		{
+			log.debug("[BetterMap:route] route projection failed", e);
+			return true;
+		}
+		finally
+		{
+			graphics.setStroke(oldStroke);
+			graphics.setColor(oldColor);
+		}
 	}
 
 	private void forEachPoiInView(int plane, int minX, int maxX, int minY, int maxY,

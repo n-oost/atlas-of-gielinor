@@ -278,6 +278,17 @@ public class MapFinder
 			candidates.add(new Result(poi.getName(), poi.getName(), point, tiles, tier, kind));
 		}
 
+		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
+		{
+			if (!"mining_site".equals(poi.getKey())) continue;
+			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
+			final String mineral = detail == null ? null : mineralMatch(detail, lower);
+			if (mineral == null) continue;
+			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
+			candidates.add(new Result(mineral + " — " + poi.getName(), mineral, point,
+				distanceTiles(point, from), matchTier(mineral, poi.getName(), lower), Result.Kind.MINERAL));
+		}
+
 		for (MonsterIndex.Zone zone : monsterIndex.searchByName(lower, Integer.MAX_VALUE))
 		{
 			final int tier = matchTier(zone.getMonster(), zone.getLocationName(), lower);
@@ -288,7 +299,7 @@ public class MapFinder
 			final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
 			final int tiles = distanceTiles(point, from);
 			// Keep both the searched monster and its location visible in the result.
-			candidates.add(new Result(zone.getMonster(), zone.getMonster(), point, tiles, tier,
+			candidates.add(new Result(zone.getLocationName(), zone.getMonster(), point, tiles, tier,
 				Result.Kind.MONSTER, zone.getLocationName(), 0));
 		}
 
@@ -339,6 +350,22 @@ public class MapFinder
 		this.resultOrigin = from;
 		this.searchDataVersion = currentSearchDataVersion();
 		publishRankedResults(candidates);
+	}
+
+	private static String mineralMatch(PoiDetails.Detail detail, String lower)
+	{
+		for (String line : detail.getLines())
+		{
+			if (!line.toLowerCase(Locale.ROOT).startsWith("ores")) continue;
+			final int colon = line.indexOf(':');
+			if (colon < 0) continue;
+			for (String value : line.substring(colon + 1).split(","))
+			{
+				final String mineral = value.replaceAll("\\s*\\([^)]*\\)", "").trim();
+				if (mineral.toLowerCase(Locale.ROOT).contains(lower)) return mineral;
+			}
+		}
+		return null;
 	}
 
 	/** Refresh distance ordering after movement without rescanning source datasets. */

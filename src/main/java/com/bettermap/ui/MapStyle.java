@@ -70,10 +70,8 @@ public final class MapStyle
 		new CardText.Palette(DEBUG_KEY, TEXT_WARN, TEXT_DIM, CARD_TEXT);
 
 	public static final Color ROUTE_SHADOW = new Color(18, 18, 18, 200);
-	/** Better Map's own computed walking route: cyan, so it never reads as a themed travel-route arc. */
+	/** Route read from the Shortest Path plugin. */
 	public static final Color ROUTE_LINE = new Color(96, 205, 255, 235);
-	/** Same route when the target is unreachable — amber; the line stops at the closest tile. */
-	public static final Color ROUTE_LINE_PARTIAL = new Color(240, 190, 90, 235);
 
 	/** Enum.values() clones its array on every call; these are read in per-frame loops. */
 	public static final MonsterLocationData[] BOSSES = MonsterLocationData.values();

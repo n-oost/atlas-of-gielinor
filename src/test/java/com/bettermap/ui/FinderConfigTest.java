@@ -41,7 +41,6 @@ public class FinderConfigTest
 		};
 
 		assertBooleanConfig(config, "showFinderButton");
-		// assertBooleanConfig(config, "enableShortestPath");
 	}
 
 	@Test

@@ -53,7 +53,6 @@ public class ClueTooltipTest
 		boolean showBossLocations = false;
 		boolean showGroundItems = false;
 		boolean showMonsterZones = false;
-		boolean compactTooltips = false;
 
 		@Override
 		public boolean showTooltips()
@@ -103,11 +102,6 @@ public class ClueTooltipTest
 			return showMonsterZones;
 		}
 
-		@Override
-		public boolean compactTooltips()
-		{
-			return compactTooltips;
-		}
 	}
 
 	private static class TestClueTracker extends ClueScrollTracker

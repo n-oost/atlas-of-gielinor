@@ -40,6 +40,7 @@ import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.MapFinder;
 import com.bettermap.map.MonsterIconManager;
 import com.bettermap.map.MonsterIndex;
@@ -205,6 +206,7 @@ public class BetterWorldMapOverlay extends Overlay
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
 		ClueScrollTracker clueScrollTracker,
+		ShortestPathTracker shortestPathTracker,
 		QuestHelperTracker questHelperTracker,
 		ShopIndex shopIndex,
 		GroundItemIndex groundItemIndex,
@@ -224,7 +226,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.tileRenderer = new MapTileRenderer(config, camera, tileLoader, stats, dungeonPieceIndex);
 		this.markerRenderer = new MapMarkerRenderer(
 			client, config, camera, poiIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
-			clueScrollTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
+			clueScrollTracker, shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
 			finder, stats, dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
 			questHelperTracker, slayerTaskTracker, poiIndex);
@@ -324,6 +326,7 @@ public class BetterWorldMapOverlay extends Overlay
 
 		try
 		{
+			boolean routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
 			// POI badges and plugin/marker layers keep separate overlap lists so enabling one
 			// layer does not cull icons from another (e.g. Quest Helper stars hiding banks).
 			final List<Rectangle> placedPoiIcons = new ArrayList<>();
@@ -356,6 +359,10 @@ public class BetterWorldMapOverlay extends Overlay
 			drawFinder(graphics, bounds);
 			// drawUnmappedWarning(graphics, bounds);
 			tooltipRenderer.drawTooltip(graphics, bounds);
+			if (routeDrawFailure)
+			{
+				drawNotice(graphics, bounds, "FAILED TO DRAW ROUTE");
+			}
 		}
 		catch (RuntimeException | LinkageError e)
 		{

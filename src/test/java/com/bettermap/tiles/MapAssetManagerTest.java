@@ -43,6 +43,19 @@ public class MapAssetManagerTest
 			MapAssetManager.bytes(root().join("inventory.json"), 8 * 1024 * 1024));
 		assertEquals(channel.pack.fileCount - 2, paths.size());
 		assertTrue(paths.stream().anyMatch(path -> path.startsWith("0/2/")));
+		assertTrue("Public pack must contain native zoom 3", paths.stream().anyMatch(path -> path.startsWith("0/3/")));
+		assertTrue("Public pack must contain only map 0", paths.stream().allMatch(path -> path.startsWith("0/")));
+		TileLoader tiles = new TileLoader();
+		try
+		{
+			tiles.install(root().join("tiles"), paths);
+			await(tiles::hasTiles);
+			assertEquals(3, tiles.maxAvailableZoom());
+		}
+		finally
+		{
+			tiles.shutDown();
+		}
 	}
 
 	@Test

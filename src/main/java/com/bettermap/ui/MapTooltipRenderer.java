@@ -41,6 +41,8 @@ import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.sailing.PortNoticeBoard;
 import com.bettermap.data.sailing.SailingPort;
 import com.bettermap.map.ClueScrollTracker;
+import com.bettermap.map.BossLocationIndex;
+import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
@@ -92,6 +94,7 @@ public class MapTooltipRenderer
 	private final WorldMapInput input;
 	private final PoiIndex poiIndex;
 	private final MonsterIndex monsterIndex;
+	private final DungeonPieceIndex dungeonPieceIndex;
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final ClueScrollTracker clueScrollTracker;
@@ -116,6 +119,7 @@ public class MapTooltipRenderer
 		WorldMapInput input,
 		PoiIndex poiIndex,
 		MonsterIndex monsterIndex,
+		DungeonPieceIndex dungeonPieceIndex,
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
 		ClueScrollTracker clueScrollTracker,
@@ -132,6 +136,7 @@ public class MapTooltipRenderer
 		this.input = input;
 		this.poiIndex = poiIndex;
 		this.monsterIndex = monsterIndex;
+		this.dungeonPieceIndex = dungeonPieceIndex;
 		this.monsterIconManager = monsterIconManager;
 		this.slayerTaskTracker = slayerTaskTracker;
 		this.clueScrollTracker = clueScrollTracker;
@@ -659,22 +664,39 @@ public class MapTooltipRenderer
 
 		final int radius = hitRadius();
 
-		for (MonsterLocationData monster : BOSSES)
+		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
-			final WorldPoint point = monster.getWorldPoint();
-			if (point.getPlane() != camera.getPlane() || !layerAllows(point.getX(), point.getY()))
+			final MonsterLocationData monster = location.boss;
+			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex);
+			if (location.plane != camera.getPlane()
+				|| !bossVisibleInFocusedLayer(location)
+				|| !layerAllows(location.x, location.y) && (location.zoneId == null || location.zoneId.isEmpty()))
 			{
 				continue;
 			}
 
-			if (Math.abs(InstanceMaps.toDisplayX(point.getX(), point.getY(), camera.getCenterX(), camera.getCenterY()) - worldX) <= radius
-				&& Math.abs(InstanceMaps.toDisplayY(point.getX(), point.getY(), camera.getCenterX(), camera.getCenterY()) - worldY) <= radius)
+			if (Math.abs(point.getX() - worldX) <= radius && Math.abs(point.getY() - worldY) <= radius)
 			{
 				return monster;
 			}
 		}
 
 		return null;
+	}
+
+	private boolean bossVisibleInFocusedLayer(BossLocationIndex.Location location)
+	{
+		if (location.zoneId == null || location.zoneId.isEmpty())
+		{
+			return true;
+		}
+		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
+		if (zone == null || camera.getFocusedUndergroundZone() != zone)
+		{
+			return false;
+		}
+		final Integer layer = camera.floorLayerFor(zone);
+		return layer == null || layer == location.layer;
 	}
 
 	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, TooltipCard card)

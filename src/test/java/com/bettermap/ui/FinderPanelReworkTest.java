@@ -56,7 +56,7 @@ public class FinderPanelReworkTest
 		final WorldMapInput input = new WorldMapInput(camera, config, () -> null, finder);
 		final BetterWorldMapOverlay overlay = new BetterWorldMapOverlay(
 			null, config, null, camera, input, null, null, null, null, null, null, null, null, null, null, null,
-			finder, null);
+			null, finder, null);
 
 		final BufferedImage img = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g2d = img.createGraphics();
@@ -100,7 +100,7 @@ public class FinderPanelReworkTest
 		final WorldMapInput input = new WorldMapInput(camera, config, () -> null, finder);
 		final BetterWorldMapOverlay overlay = new BetterWorldMapOverlay(
 			null, config, null, camera, input, null, null, null, null, null, null, null, null, null, null, null,
-			finder, null);
+			null, finder, null);
 
 		final BufferedImage img = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g2d = img.createGraphics();

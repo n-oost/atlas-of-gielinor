@@ -67,7 +67,7 @@ public class BetterWorldMapOverlayPoiTest
 	{
 		return new BetterWorldMapOverlay(
 			null, config, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-			null);
+			null, null);
 	}
 
 	@Test
@@ -181,7 +181,7 @@ public class BetterWorldMapOverlayPoiTest
 	{
 		return new BetterWorldMapOverlay(
 			null, config, null, camera, null, null, null, null, null, null, null, null, null, null, null, null,
-			null, dungeonPieceIndex);
+			null, null, dungeonPieceIndex);
 	}
 
 	@Test

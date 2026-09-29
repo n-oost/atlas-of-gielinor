@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -91,6 +92,37 @@ public class ShopIndex
 	public synchronized List<Shop> all()
 	{
 		return Collections.unmodifiableList(shops);
+	}
+
+	/** Visits shops on the given plane inside the world-coordinate box. */
+	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
+		Consumer<Shop> consumer)
+	{
+		final int minChunkX = minWorldX >> 6;
+		final int maxChunkX = maxWorldX >> 6;
+		final int minChunkY = minWorldY >> 6;
+		final int maxChunkY = maxWorldY >> 6;
+
+		for (int cx = minChunkX; cx <= maxChunkX; cx++)
+		{
+			for (int cy = minChunkY; cy <= maxChunkY; cy++)
+			{
+				final List<Shop> chunkShops = chunkMap.get(chunkKey(plane, cx, cy));
+				if (chunkShops == null)
+				{
+					continue;
+				}
+
+				for (Shop shop : chunkShops)
+				{
+					if (shop.x >= minWorldX && shop.x <= maxWorldX
+						&& shop.y >= minWorldY && shop.y <= maxWorldY)
+					{
+						consumer.accept(shop);
+					}
+				}
+			}
+		}
 	}
 
 	/** Parses the bundled dataset. Call off the client thread. */

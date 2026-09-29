@@ -274,8 +274,9 @@ public class BetterMapContextMenuTest
 
 		plugin.onMenuOpened(new MenuOpened());
 
-		assertEquals(1, entries.size());
+		assertEquals(2, entries.size());
 		assertEquals("Cancel", entries.get(0).option);
+		assertEquals("Route here", entries.get(1).option);
 	}
 
 	@Test
@@ -291,9 +292,10 @@ public class BetterMapContextMenuTest
 
 		plugin.onMenuOpened(new MenuOpened());
 
-		assertEquals(2, entries.size());
+		assertEquals(3, entries.size());
 		assertEquals("Cancel", entries.get(0).option);
-		assertEquals("Return to surface", entries.get(1).option);
+		assertEquals("Route here", entries.get(1).option);
+		assertEquals("Return to surface", entries.get(2).option);
 	}
 
 	@Test
@@ -309,8 +311,9 @@ public class BetterMapContextMenuTest
 
 		plugin.onMenuOpened(new MenuOpened());
 
-		assertEquals(2, entries.size());
-		assertEquals("Return to surface", entries.get(1).option);
+		assertEquals(3, entries.size());
+		assertEquals("Route here", entries.get(1).option);
+		assertEquals("Return to surface", entries.get(2).option);
 	}
 
 	@Test

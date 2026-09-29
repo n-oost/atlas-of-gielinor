@@ -53,6 +53,7 @@ import com.bettermap.map.ClueScrollTracker;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import com.bettermap.map.DungeonPieceIndex;
+import com.bettermap.map.BossLocationIndex;
 import com.bettermap.map.MapFinder;
 import com.bettermap.map.MapRegion;
 import com.bettermap.map.GroundItemIndex;
@@ -60,6 +61,7 @@ import com.bettermap.map.MonsterIconManager;
 import com.bettermap.map.MonsterIndex;
 import com.bettermap.map.PoiCategory;
 import com.bettermap.map.PoiIndex;
+import com.bettermap.map.ShopIndex;
 import com.bettermap.map.PrifddinasShift;
 import com.bettermap.map.SlayerTaskTracker;
 import com.bettermap.map.ShortestPathTracker;
@@ -232,6 +234,7 @@ class MapMarkerRenderer
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final PoiIndex poiIndex;
+	private final ShopIndex shopIndex;
 	private final MonsterIndex monsterIndex;
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
@@ -255,6 +258,7 @@ class MapMarkerRenderer
 		BetterMapConfig config,
 		MapCamera camera,
 		PoiIndex poiIndex,
+		ShopIndex shopIndex,
 		MonsterIndex monsterIndex,
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
@@ -272,6 +276,7 @@ class MapMarkerRenderer
 		this.config = config;
 		this.camera = camera;
 		this.poiIndex = poiIndex;
+		this.shopIndex = shopIndex;
 		this.monsterIndex = monsterIndex;
 		this.monsterIconManager = monsterIconManager;
 		this.slayerTaskTracker = slayerTaskTracker;
@@ -346,11 +351,6 @@ class MapMarkerRenderer
 	/** Draws the enabled Shortest Path plugin's cached route in Better Map's world projection. */
 	boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)
 	{
-		if (shortestPathTracker.readFailed())
-		{
-			return true;
-		}
-
 		final List<WorldPoint> route = shortestPathTracker.route();
 		if (route.isEmpty())
 		{
@@ -413,7 +413,9 @@ class MapMarkerRenderer
 			}
 			if (!hasPointOnLayer)
 			{
-				return true;
+				// A valid route can belong to another plane or focused dungeon layer. It has
+				// nothing to draw in this view, which is not a projection failure.
+				return false;
 			}
 			if (segments == 0)
 			{
@@ -452,6 +454,19 @@ class MapMarkerRenderer
 				if (drawable(poi.getX(), poi.getY()))
 				{
 					consumer.accept(poi);
+				}
+			}));
+	}
+
+	private void forEachShopInView(int plane, int minX, int maxX, int minY, int maxY,
+		Consumer<ShopIndex.Shop> consumer)
+	{
+		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(), true,
+			(qMinX, qMaxX, qMinY, qMaxY) -> shopIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, shop ->
+			{
+				if (drawable(shop.getX(), shop.getY()))
+				{
+					consumer.accept(shop);
 				}
 			}));
 	}
@@ -535,6 +550,33 @@ class MapMarkerRenderer
 			placed.add(rect);
 			stats.iconsDrawn++;
 		});
+
+		if (config.iconShops() && shopIndex != null && shopIndex.isLoaded())
+		{
+			forEachShopInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, shop ->
+			{
+				final BufferedImage icon = poiIndex.icon(shop.getIcon());
+				if (icon == null)
+				{
+					return;
+				}
+
+				final Rectangle rect = new Rectangle(
+					(int) Math.round(camera.screenX(shop.getX() + 0.5, shop.getY() + 0.5, bounds)) - icon.getWidth() / 2,
+					(int) Math.round(camera.screenY(shop.getX() + 0.5, shop.getY() + 0.5, bounds)) - icon.getHeight() / 2,
+					icon.getWidth(),
+					icon.getHeight());
+
+				if (!bounds.intersects(rect) || overlapsPlaced(placed, rect))
+				{
+					return;
+				}
+
+				graphics.drawImage(icon, rect.x, rect.y, null);
+				placed.add(rect);
+				stats.iconsDrawn++;
+			});
+		}
 	}
 
 	/**
@@ -1276,23 +1318,25 @@ class MapMarkerRenderer
 		final boolean highlightTask = config.highlightSlayerTask();
 		final int pinSize = 22;
 
-		for (MonsterLocationData monster : BOSSES)
+		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
-			final WorldPoint point = monster.getWorldPoint();
-			if (point.getPlane() != plane)
+			final MonsterLocationData monster = location.boss;
+			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
+			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
+				? null : UndergroundZone.byId(location.zoneId);
+			final boolean wrongPlane = bossZone == null ? location.plane != plane
+				: camera.getPlane() != location.plane;
+			if (wrongPlane)
 			{
 				continue;
 			}
-
-			final int mx = point.getX();
-			final int my = point.getY();
-			if (!camera.inView(mx, my, view.minX, view.maxX, view.minY, view.maxY) || !drawable(mx, my))
+			if (!bossVisibleInFocusedLayer(location)
+				|| !camera.inView((int) display.getX(), (int) display.getY(), view.minX, view.maxX, view.minY, view.maxY))
 			{
 				continue;
 			}
-
-			final int x = (int) Math.round(camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds));
-			final int y = (int) Math.round(camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds));
+			final int x = (int) Math.round(camera.screenX(display.getX() + 0.5, bounds));
+			final int y = (int) Math.round(camera.screenY(display.getY() + 0.5, bounds));
 
 			final Rectangle rect = new Rectangle(x - pinSize / 2, y - pinSize / 2, pinSize, pinSize);
 			if (!bounds.intersects(rect))
@@ -1372,6 +1416,21 @@ class MapMarkerRenderer
 		}
 
 		graphics.setStroke(oldStroke);
+	}
+
+	private boolean bossVisibleInFocusedLayer(BossLocationIndex.Location location)
+	{
+		if (location.zoneId == null || location.zoneId.isEmpty())
+		{
+			return drawable(location.x, location.y);
+		}
+		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
+		if (zone == null || camera.getFocusedUndergroundZone() != zone)
+		{
+			return false;
+		}
+		final Integer layer = camera.floorLayerFor(zone);
+		return layer == null || layer == location.layer;
 	}
 
 	/** Bosses and slayer targets, with details on hover and item sprites on the map. */

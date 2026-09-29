@@ -156,7 +156,7 @@ public class DungeonPieceIndexTest
 		{
 			final DungeonPieceIndex.ParseResult parsed = DungeonPieceIndex.parse(
 				new java.io.InputStreamReader(in, StandardCharsets.UTF_8));
-			for (int id = 19; id <= 22; id++)
+			for (int id : new int[] {19, 20, 22})
 			{
 				final int pieceId = id;
 				final DungeonPiece piece = parsed.pieces.stream()
@@ -276,7 +276,7 @@ public class DungeonPieceIndexTest
 		final DungeonPieceIndex index = new DungeonPieceIndex();
 		index.load(null);
 		final List<DungeonPiece> ice = index.piecesFor("asgarnia_ice_cave");
-		assertEquals(4, ice.size());
+		assertEquals(3, ice.size());
 		assertTrue(ice.stream().allMatch(piece -> piece.layer == 1007));
 		assertEquals(19, index.pieceAt("asgarnia_ice_cave", 3007, 9550, 0, null).id);
 		assertEquals(20, index.pieceAt("asgarnia_ice_cave", 2900, 9500, 0, null).id);

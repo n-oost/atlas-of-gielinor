@@ -34,7 +34,8 @@ final class MinimapOrbs
 {
 	/**
 	 * The four IDs the world-map orb goes by: sprite layer vs clickable layer, "classic" minimap
-	 * vs resizable-modern / no-minimap layout. Probe all, take the first that is really on screen.
+	 * vs resizable-modern / no-minimap layout. The sprite and clickable widgets can have different
+	 * bounds, so passthrough must cover every visible layer.
 	 */
 	private static final int[] WORLD_MAP_ORB_IDS = {
 		InterfaceID.Orbs.ORB_WORLDMAP,
@@ -54,6 +55,7 @@ final class MinimapOrbs
 		{
 			return null;
 		}
+		Rectangle bounds = null;
 		for (int id : WORLD_MAP_ORB_IDS)
 		{
 			final Widget orb = client.getWidget(id);
@@ -61,12 +63,19 @@ final class MinimapOrbs
 			{
 				continue;
 			}
-			final Rectangle bounds = orb.getBounds();
-			if (bounds != null && bounds.width > 0 && bounds.height > 0)
+			final Rectangle orbBounds = orb.getBounds();
+			if (orbBounds != null && orbBounds.width > 0 && orbBounds.height > 0)
 			{
-				return bounds;
+				if (bounds == null)
+				{
+					bounds = new Rectangle(orbBounds);
+				}
+				else
+				{
+					bounds.add(orbBounds);
+				}
 			}
 		}
-		return null;
+		return bounds;
 	}
 }

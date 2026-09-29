@@ -30,6 +30,7 @@ public class WorldMapInputFinderTest
 	private MapFinder finder;
 
 	private WorldPoint capturedCenterPoint;
+	private boolean capturedRoute;
 	private boolean capturedCloseMap;
 	private boolean clientMenuOpen;
 	private boolean dragToPan;
@@ -76,6 +77,14 @@ public class WorldMapInputFinderTest
 			public void closeMap()
 			{
 				capturedCloseMap = true;
+			}
+
+			@Override
+			public void routeTo(WorldPoint point, boolean openMap)
+			{
+				capturedCenterPoint = point;
+				capturedRoute = true;
+				capturedCloseMap = false;
 			}
 
 			@Override
@@ -195,7 +204,8 @@ public class WorldMapInputFinderTest
 
 		assertTrue(second.isConsumed());
 		assertEquals(point, capturedCenterPoint);
-		assertTrue("double click closes the map", capturedCloseMap);
+		assertTrue("double click requests a route", capturedRoute);
+		assertFalse("routing leaves the map open", capturedCloseMap);
 	}
 
 	@Test
@@ -350,7 +360,8 @@ public class WorldMapInputFinderTest
 
 		assertTrue(event.isConsumed());
 		assertEquals(point, capturedCenterPoint);
-		assertTrue(capturedCloseMap);
+		assertTrue(capturedRoute);
+		assertFalse(capturedCloseMap);
 	}
 
 	@Test

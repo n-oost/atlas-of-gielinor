@@ -225,7 +225,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.stats = new MapRenderStats();
 		this.tileRenderer = new MapTileRenderer(config, camera, tileLoader, stats, dungeonPieceIndex);
 		this.markerRenderer = new MapMarkerRenderer(
-			client, config, camera, poiIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
+			client, config, camera, poiIndex, shopIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
 			clueScrollTracker, shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
 			finder, stats, dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
@@ -233,7 +233,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.finderRenderer = new MapFinderRenderer(
 			client, config, camera, input, poiIndex, slayerTaskTracker, finder);
 		this.tooltipRenderer = new MapTooltipRenderer(
-			client, config, camera, input, poiIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
+			client, config, camera, input, poiIndex, monsterIndex, dungeonPieceIndex, monsterIconManager, slayerTaskTracker,
 			clueScrollTracker, shopIndex, finder, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader);
 		this.debugRenderer = new MapDebugRenderer(
 			client, config, camera, tileLoader, input, poiIndex, shopIndex, groundItemIndex, boatTracker,

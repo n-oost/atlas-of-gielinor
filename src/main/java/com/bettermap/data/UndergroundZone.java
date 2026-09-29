@@ -2052,6 +2052,21 @@ public enum UndergroundZone
 		1340,
 		9908,
 		new WorldPoint(1324, 3364, 0)
+	),
+	WYRMSCRAIG_CAVERN(
+		"wyrmscraig_cavern",
+		"Wyrmscraig Cavern",
+		new WorldPoint(2540, 2213, 0),
+		new WorldPoint(2580, 8613, 0),
+		6400,
+		55,
+		"Under Wyrmscraig • Mortimer, wyrms, mining and the Ardeaglais basement",
+		2560,
+		8576,
+		2624,
+		8672,
+		new WorldPoint(2530, 2205, 0),
+		new WorldPoint(2562, 2203, 0)
 	);
 
 	private final String id;

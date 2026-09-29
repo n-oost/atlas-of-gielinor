@@ -82,6 +82,23 @@ public class PlaceNamesTest
 	}
 
 	@Test
+	public void islandsStayVisibleAtTheMajorPlaceZoom()
+	{
+		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+			"Waterbirth Island", 3756, 0.5, false, true));
+		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+			"Dognose Island", 2648, 0.5, false, true));
+		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+			"Isle of Bones", 2533, 0.5, false, true));
+		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+			"Shimmering Atoll", 2786, 0.5, false, true));
+		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+			"Cursed Archipelago", 2581, 0.5, false, true));
+		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+			"Waterbirth Island", 3756, 0.4, false, true));
+	}
+
+	@Test
 	public void surfaceEntranceNamesAreNotInterior()
 	{
 		assertFalse(MapMarkerRenderer.isInteriorPlaceLabel(3099));

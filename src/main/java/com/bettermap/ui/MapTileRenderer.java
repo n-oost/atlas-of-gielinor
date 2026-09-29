@@ -313,6 +313,8 @@ class MapTileRenderer
 	private boolean drawZonePieces(Graphics2D graphics, Rectangle bounds, UndergroundZone zone,
 		int tileZoom, int nudgeX, int nudgeY, boolean keyVoid, int planeFilter)
 	{
+		// This cavern ships at native zoom 3, independent of the installed map pack's zoom.
+		final int sourceZoom = zone == UndergroundZone.WYRMSCRAIG_CAVERN ? WikiMapTiles.MAX_ZOOM : tileZoom;
 		final List<DungeonPiece> pieces = dungeonPieceIndex == null
 			? Collections.emptyList()
 			: dungeonPieceIndex.piecesFor(zone.getId());
@@ -351,7 +353,7 @@ class MapTileRenderer
 				final double shiftX = -piece.dx + nudgeX;
 				final double shiftY = -piece.dy + nudgeY;
 				final int[] sourceBounds = piece.srcBounds();
-				drawTileLayer(pg, bounds, piece.plane, tileZoom, shiftX, shiftY, keyVoid, sourceBounds);
+				drawTileLayer(pg, bounds, piece.plane, sourceZoom, shiftX, shiftY, keyVoid, sourceBounds);
 			}
 			finally
 			{

@@ -86,6 +86,21 @@ public class TileLoaderTest
 	}
 
 	@Test
+	public void wyrmscraigCavernTilesAreBundledAndReadable()
+	{
+		for (String tile : new String[] {
+			"0/3/0_80_268.png", "0/3/0_80_269.png", "0/3/0_80_270.png",
+			"0/3/0_81_268.png", "0/3/0_81_269.png" })
+		{
+			final BufferedImage image = TileLoader.readBundledCavernTile(tile);
+			assertNotNull(tile, image);
+			assertEquals(256, image.getWidth());
+			assertEquals(256, image.getHeight());
+		}
+		assertNull(TileLoader.readBundledCavernTile("0/3/0_82_269.png"));
+	}
+
+	@Test
 	public void detailedTileReplacesScaledFallback()
 	{
 		final BufferedImage fallback = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);

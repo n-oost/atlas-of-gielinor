@@ -82,6 +82,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.PluginChanged;
+import net.runelite.client.events.PluginChanged;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
@@ -213,6 +214,12 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
+		// Resolve conflicting saved settings deterministically on startup.
+		if (config.useExternalShortestPathSettings() && config.enableShortestPath())
+		{
+			configManager.setConfiguration("bettermap", "enableShortestPath", false);
+		}
+		shortestPathTracker.startUp();
 		mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
 
 		camera.setFinderOrbOffset(config.finderOrbOffsetX(), config.finderOrbOffsetY());
@@ -271,6 +278,7 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
+		shortestPathTracker.shutDown();
 		if (startupTask != null)
 		{
 			startupTask.cancel(true);
@@ -612,7 +620,7 @@ public class BetterMapPlugin extends Plugin
 		}
 
 		clueScrollTracker.update();
-		shortestPathTracker.update();
+		shortestPathTracker.update(lastPlayerLocation);
 		questHelperTracker.update();
 		echoFinderResults();
 
@@ -688,6 +696,14 @@ public class BetterMapPlugin extends Plugin
 	{
 		boatTracker.onConfigChanged(event);
 
+		if ("shortestpath".equals(event.getGroup()))
+		{
+			if (config.useExternalShortestPathSettings())
+			{
+				clientThread.invoke(shortestPathTracker::refreshRoute);
+			}
+			return;
+		}
 		if (!"bettermap".equals(event.getGroup()))
 		{
 			return;
@@ -704,6 +720,28 @@ public class BetterMapPlugin extends Plugin
 		if ("showSidebarPanel".equals(event.getKey()))
 		{
 			syncSidebarPanel();
+		}
+		boolean externalModeChanged = "useExternalShortestPathSettings".equals(event.getKey());
+		boolean localModeChanged = "enableShortestPath".equals(event.getKey());
+		if (externalModeChanged && config.useExternalShortestPathSettings() && config.enableShortestPath())
+		{
+			configManager.setConfiguration("bettermap", "enableShortestPath", false);
+		}
+		else if (localModeChanged && config.enableShortestPath() && config.useExternalShortestPathSettings())
+		{
+			configManager.setConfiguration("bettermap", "useExternalShortestPathSettings", false);
+		}
+		if (externalModeChanged || localModeChanged
+			|| (event.getKey().startsWith("route") && !config.useExternalShortestPathSettings()))
+		{
+			clientThread.invoke(() ->
+			{
+				shortestPathTracker.refreshRoute();
+				if (externalModeChanged)
+				{
+					shortestPathTracker.repostTarget();
+				}
+			});
 		}
 	}
 
@@ -753,6 +791,18 @@ public class BetterMapPlugin extends Plugin
 	public void onPluginChanged(PluginChanged event)
 	{
 		boatTracker.onPluginChanged(event);
+		if (config.useExternalShortestPathSettings()
+			&& "shortestpath.ShortestPathPlugin".equals(event.getPlugin().getClass().getName()))
+		{
+			clientThread.invoke(() ->
+			{
+				shortestPathTracker.refreshRoute();
+				if (event.isLoaded())
+				{
+					shortestPathTracker.repostTarget();
+				}
+			});
+		}
 	}
 
 	public BoatTracker getBoatTracker()

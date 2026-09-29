@@ -326,12 +326,12 @@ public class BetterWorldMapOverlay extends Overlay
 
 		try
 		{
-			boolean routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
 			// POI badges and plugin/marker layers keep separate overlap lists so enabling one
 			// layer does not cull icons from another (e.g. Quest Helper stars hiding banks).
 			final List<Rectangle> placedPoiIcons = new ArrayList<>();
 			final List<Rectangle> placedMarkers = new ArrayList<>();
 			tileRenderer.drawTiles(graphics, bounds);
+			boolean routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
 			markerRenderer.drawPlaceNames(graphics, bounds);
 			markerRenderer.drawWorldMapPoints(graphics, bounds, placedMarkers);
 			markerRenderer.drawPoiIcons(graphics, bounds, placedPoiIcons);

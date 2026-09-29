@@ -255,6 +255,18 @@ public class DungeonPieceIndexTest
 	}
 
 	@Test
+	public void wyrmscraigCavernHasAProjectedPreviewPiece()
+	{
+		final DungeonPieceIndex index = new DungeonPieceIndex();
+		index.load(null);
+		final DungeonPiece piece = index.pieceAt("wyrmscraig_cavern", 2593, 8639, 0, null);
+		assertTrue(piece != null);
+		assertEquals(-40, piece.dx);
+		assertEquals(-6400, piece.dy);
+		assertTrue(piece.worldBounds()[0] <= 2540 && piece.worldBounds()[2] >= 2540);
+	}
+
+	@Test
 	public void crandorAndKaramjaShareOnlyTheirDungeonPieces()
 	{
 		final DungeonPieceIndex index = new DungeonPieceIndex();

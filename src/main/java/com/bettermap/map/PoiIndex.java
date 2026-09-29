@@ -51,9 +51,10 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Names for the things on the map.
  *
- * <p>Four sources feed this index, in order:
+ * <p>Five sources feed this index, in order:
  * <ol>
  *   <li>the OSRS Wiki icon overlay ({@code poi/pois.tsv}), prefetched offline</li>
+ *   <li>mapped banks missing from that overlay ({@code poi/pois-banks.tsv})</li>
  *   <li>named region labels from the game cache ({@code poi/pois-cache.tsv}), which cover
  *       Varlamore, Prifddinas and underground places the wiki overlay misses</li>
  *   <li>canonical modeled-dungeon search targets from {@link UndergroundZone}</li>
@@ -179,6 +180,8 @@ public class PoiIndex
 
 		final Set<Long> existingPoints = new HashSet<>();
 		readTsv(open(tileDir, "pois.tsv"), existingPoints);
+		// The wiki's icon overlay omits many banks listed on its mapped bank catalogue.
+		readTsv(open(tileDir, "pois-banks.tsv"), existingPoints);
 		// Cache labels fill gaps the wiki overlay misses; wiki rows already in existingPoints win.
 		readTsv(open(tileDir, "pois-cache.tsv"), existingPoints);
 

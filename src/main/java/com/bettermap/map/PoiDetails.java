@@ -1433,6 +1433,7 @@ public final class PoiDetails
 		addEntry("dungeon", "Kurask Lair", "Dungeons", 1203, 2733, 0, "Type: Slayer cave (Kurasks)", "Requirements: Level 70 Slayer, Leaf-bladed weapon or Broad bolts", "Region: Laguna Aurorae (Sailing)");
 		addEntry("dungeon", "Sunbleak Cave", "Dungeons", 2190, 2327, 0, "Type: Underground mining cavern", "Features: Coal, Mithril, and Adamantite rocks", "Region: Sunbleak Island (Sailing)");
 		addEntry("dungeon", "Brittle Isle Cave", "Dungeons", 1955, 4056, 0, "Type: Unmarked sea cave", "Requirements: Level 81 Sailing to access island", "Region: Brittle Isle (Sailing)");
+		addEntry("dungeon", "Wyrmscraig Cavern", "Dungeons", 2580, 8613, 0, "Type: Underground cavern", "Access: Partial completion of Fallen From Grace", "Region: Wyrmscraig (Sailing)");
 
 		// Sailing expansion - Mining sites
 		addEntry("mining_site", "The Pandemonium - Mining Site", "Skilling • Mining", 3069, 2987, 0, "Ores available: Copper (1), Tin (1), Iron (15), Lead (25)", "Tool needed: Pickaxe (Bronze to Crystal)", "Region: The Pandemonium (Sailing)");

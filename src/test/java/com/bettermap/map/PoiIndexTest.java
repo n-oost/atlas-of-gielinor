@@ -65,6 +65,24 @@ public class PoiIndexTest
 	}
 
 	@Test
+	public void mappedBanksMissingFromWikiIconsAreSearchableAndVisible()
+	{
+		assertBankAt("Wyrmscraig chest", 2586, 2260);
+		assertBankAt("Sunbleak Island chest", 2194, 2314);
+		assertBankAt("Fortis east bank", 1780, 3096);
+	}
+
+	private void assertBankAt(String name, int x, int y)
+	{
+		final List<PoiIndex.Poi> matches = poiIndex.searchByName(name, 10);
+		assertEquals(1, matches.size());
+		assertEquals("bank", matches.get(0).getKey());
+		final List<PoiIndex.Poi> markers = poiIndex.inArea(0, x, x, y, y);
+		assertEquals(1, markers.size());
+		assertEquals("bank", markers.get(0).getKey());
+	}
+
+	@Test
 	public void spatialNearestFindsCooksAssistantInLumbridge()
 	{
 		// Cook's Assistant is at (3208, 3214, plane 0)

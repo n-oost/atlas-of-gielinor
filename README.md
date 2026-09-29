@@ -48,7 +48,19 @@ from the quick-find orb by the minimap (drag it to reposition, click to open). T
 
 ### Walking routes
 
-TBD
+Better Map calculates and draws its own route line using a pinned copy of the
+[Shortest Path](https://github.com/Skretzo/shortest-path) engine and map data by Skretzo and
+contributors (BSD 2-Clause). Choose a mode in **Routing (Shortest Path by Skretzo)**:
+
+- **Use external plugin settings** requires Shortest Path to be enabled separately. Better Map reads
+  its saved routing settings and sends it the selected destination for its own in-game route.
+  If the external plugin is disabled, routing pauses instead of falling back to local settings.
+- **Use Better Map routing** uses the bundled fork and Better Map's own routing settings.
+  It does not read settings from or send destinations to the external plugin.
+
+Enabling either mode disables the other; both off disables routing.
+The two plugins calculate their routes independently, so differences are possible when their
+engine or collision-data revisions differ.
 
 ![Walking routes](docs/gifs/click-map-path-route.gif)
 
@@ -106,6 +118,8 @@ members,quest helper) are drawn on Better Map's camera, along with the player or
 ## Credits
 - n-oost, truenosus
 - **[RuneLite](https://runelite.net)** - plugin API and client.
+- **[Skretzo and Shortest Path contributors](https://github.com/Skretzo/shortest-path)** -
+  route engine and map data, BSD 2-Clause. See [third-party notices](THIRD-PARTY-NOTICES.md).
 
 ## License
 

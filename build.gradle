@@ -29,8 +29,8 @@ dependencies {
 
 group = 'com.example'
 
-// Imagery is supplied exclusively by the installed remote pack.
-sourceSets.main.resources.exclude 'com/bettermap/tiles/**'
+// Large map imagery comes from the installed pack; small cavern fallback tiles are bundled.
+sourceSets.main.resources.exclude 'com/bettermap/tiles/0/**'
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'

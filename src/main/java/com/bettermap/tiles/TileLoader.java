@@ -27,6 +27,8 @@ package com.bettermap.tiles;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,11 +44,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
+import javax.imageio.ImageIO;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.util.Filepath;
 
-/** Decodes only the verified installed asset pack, off the client thread. */
+/** Decodes the verified installed asset pack and bundled cavern tiles off the client thread. */
 @Slf4j
 @Singleton
 public class TileLoader
@@ -55,6 +58,9 @@ public class TileLoader
 	// for large viewports and overlapping map layers without constantly evicting visible tiles.
 	private static final int MEMORY_CACHE_SIZE = 512;
 	private static final int SCALED_CACHE_SIZE = 256;
+	private static final Set<String> BUNDLED_CAVERN_TILES = Set.of(
+		"0/3/0_80_268.png", "0/3/0_80_269.png", "0/3/0_80_270.png",
+		"0/3/0_81_268.png", "0/3/0_81_269.png");
 
 	/**
 	 * Coarsest zoom levels kept in memory for the whole session, as the backdrop the hierarchical
@@ -487,7 +493,7 @@ public class TileLoader
 		try
 		{
 			final String path = WikiMapTiles.cachePath(plane, zoom, tileX, tileY);
-			final BufferedImage image = paths.contains(path) ? TileStore.read(directory, path) : null;
+			final BufferedImage image = paths.contains(path) ? TileStore.read(directory, path) : readBundledCavernTile(path);
 			if (image != null)
 			{
 				reads.incrementAndGet();
@@ -552,6 +558,24 @@ public class TileLoader
 					inFlight.remove(key);
 				}
 			}
+		}
+	}
+
+	static BufferedImage readBundledCavernTile(String path)
+	{
+		if (!BUNDLED_CAVERN_TILES.contains(path))
+		{
+			return null;
+		}
+		final String fileName = path.substring(path.lastIndexOf('/') + 1);
+		try (InputStream in = TileLoader.class.getResourceAsStream("/com/bettermap/tiles/wyrmscraig/" + fileName))
+		{
+			return in == null ? null : ImageIO.read(in);
+		}
+		catch (IOException e)
+		{
+			log.debug("Unreadable bundled cavern tile {}", path, e);
+			return null;
 		}
 	}
 

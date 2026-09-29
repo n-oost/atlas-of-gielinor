@@ -348,9 +348,13 @@ class MapMarkerRenderer
 			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused());
 	}
 
-	/** Draws the enabled Shortest Path plugin's cached route in Better Map's world projection. */
+	/** Draws Better Map's locally calculated route in its world projection. */
 	boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)
 	{
+		if (!config.enableShortestPath() && !config.useExternalShortestPathSettings())
+		{
+			return false;
+		}
 		final List<WorldPoint> route = shortestPathTracker.route();
 		if (route.isEmpty())
 		{
@@ -692,7 +696,9 @@ class MapMarkerRenderer
 	private static boolean isMajorPlaceName(String name)
 	{
 		final String key = name.trim().toLowerCase(Locale.ROOT);
-		return MAJOR_PLACE_NAMES.contains(key) || key.startsWith("kingdom of ");
+		return MAJOR_PLACE_NAMES.contains(key) || key.startsWith("kingdom of ")
+			|| key.contains("island") || key.contains("isle")
+			|| key.contains("atoll") || key.contains("archipelago");
 	}
 
 	private static Set<String> majorPlaceNames()

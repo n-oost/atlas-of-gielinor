@@ -24,6 +24,7 @@
  */
 package com.bettermap;
 
+import com.bettermap.pathfinding.TeleportationItem;
 import com.bettermap.ui.input.PanButton;
 
 import net.runelite.client.config.Config;
@@ -41,6 +42,15 @@ public interface BetterMapConfig extends Config
 		position = 0
 	)
 	String mapSection = "map";
+
+	@ConfigSection(
+		name = "Routing (Shortest Path by Skretzo)",
+		description = "Better Map's route engine uses a pinned, BSD-2-Clause copy of Shortest Path by Skretzo and contributors. "
+			+ "Choose one routing mode. The settings below apply only to Better Map routing. "
+			+ "Better Map is not affiliated with Shortest Path.",
+		position = 5
+	)
+	String pathfindingSection = "pathfinding";
 
 	@ConfigSection(
 		name = "Developer",
@@ -70,6 +80,389 @@ public interface BetterMapConfig extends Config
 		position = 30
 	)
 	String debugSection = "debug";
+
+	@ConfigItem(
+		keyName = "useExternalShortestPathSettings",
+		name = "Use external plugin settings",
+		description = "Use the enabled Shortest Path plugin's saved routing settings. Keep that plugin enabled separately. "
+			+ "Enabling this turns off Better Map routing. Better Map calculates its map line with its pinned "
+			+ "Skretzo Shortest Path fork; routes may differ from newer external versions.",
+		position = -1,
+		section = pathfindingSection
+	)
+	default boolean useExternalShortestPathSettings()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "enableShortestPath",
+		name = "Use Better Map routing",
+		description = "Calculate and draw routes on Better Map using a pinned, BSD-2-Clause fork of the Shortest Path engine "
+			+ "by Skretzo and contributors. Uses the settings below; no external plugin needed. "
+			+ "Enabling this turns off external settings mode. "
+			+ "Better Map is not affiliated with the Shortest Path project.",
+		position = 0,
+		section = pathfindingSection
+	)
+	default boolean enableShortestPath()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeAvoidWilderness",
+		name = "Avoid wilderness",
+		description = "Whether the wilderness should be avoided if possible (otherwise, will e.g. use wilderness lever from Edgeville to Ardougne)",
+		position = 1,
+		section = pathfindingSection
+	)
+	default boolean routeAvoidWilderness()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseAgilityShortcuts",
+		name = "Use agility shortcuts",
+		description = "Whether to include agility shortcuts in the path. You must also have the required agility level",
+		position = 2,
+		section = pathfindingSection
+	)
+	default boolean routeUseAgilityShortcuts()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseGrappleShortcuts",
+		name = "Use grapple shortcuts",
+		description = "Whether to include crossbow grapple agility shortcuts in the path. You must also have the required agility, ranged and strength levels",
+		position = 3,
+		section = pathfindingSection
+	)
+	default boolean routeUseGrappleShortcuts()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseBoats",
+		name = "Use boats",
+		description = "Whether to include small boats in the path (e.g. the boat to Fishing Platform)",
+		position = 4,
+		section = pathfindingSection
+	)
+	default boolean routeUseBoats()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseCanoes",
+		name = "Use canoes",
+		description = "Whether to include canoes in the path",
+		position = 5,
+		section = pathfindingSection
+	)
+	default boolean routeUseCanoes()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseCharterShips",
+		name = "Use charter ships",
+		description = "Whether to include charter ships in the path",
+		position = 6,
+		section = pathfindingSection
+	)
+	default boolean routeUseCharterShips()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseShips",
+		name = "Use ships",
+		description = "Whether to include passenger ships in the path (e.g. the customs ships to Karamja)",
+		position = 7,
+		section = pathfindingSection
+	)
+	default boolean routeUseShips()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseFairyRings",
+		name = "Use fairy rings",
+		description = "Whether to include fairy rings in the path. You must also have completed the required quests or miniquests",
+		position = 8,
+		section = pathfindingSection
+	)
+	default boolean routeUseFairyRings()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseGnomeGliders",
+		name = "Use gnome gliders",
+		description = "Whether to include gnome gliders in the path",
+		position = 9,
+		section = pathfindingSection
+	)
+	default boolean routeUseGnomeGliders()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseHotAirBalloons",
+		name = "Use hot air balloons",
+		description = "Whether to include hot air balloons in the path",
+		position = 10,
+		section = pathfindingSection
+	)
+	default boolean routeUseHotAirBalloons()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseMagicCarpets",
+		name = "Use magic carpets",
+		description = "Whether to include magic carpets in the path",
+		position = 11,
+		section = pathfindingSection
+	)
+	default boolean routeUseMagicCarpets()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseMagicMushtrees",
+		name = "Use magic mushtrees",
+		description = "Whether to include Fossil Island Magic Mushtrees in the path",
+		position = 12,
+		section = pathfindingSection
+	)
+	default boolean routeUseMagicMushtrees()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseMinecarts",
+		name = "Use minecarts",
+		description = "Whether to include minecarts in the path (e.g. the Keldagrim and Lovakengj minecart networks)",
+		position = 13,
+		section = pathfindingSection
+	)
+	default boolean routeUseMinecarts()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseQuetzals",
+		name = "Use quetzals",
+		description = "Whether to include quetzals in the path",
+		position = 14,
+		section = pathfindingSection
+	)
+	default boolean routeUseQuetzals()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseSpiritTrees",
+		name = "Use spirit trees",
+		description = "Whether to include spirit trees in the path",
+		position = 15,
+		section = pathfindingSection
+	)
+	default boolean routeUseSpiritTrees()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationItems",
+		name = "Use teleportation items",
+		description = "Whether to include teleportation items from the player's inventory and equipment",
+		position = 16,
+		section = pathfindingSection
+	)
+	default TeleportationItem routeUseTeleportationItems()
+	{
+		return TeleportationItem.INVENTORY_NON_CONSUMABLE;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationLevers",
+		name = "Use teleportation levers",
+		description = "Whether to include teleportation levers in the path (e.g. the lever from Edgeville to Wilderness)",
+		position = 17,
+		section = pathfindingSection
+	)
+	default boolean routeUseTeleportationLevers()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationPortals",
+		name = "Use teleportation portals",
+		description = "Whether to include teleportation portals in the path (e.g. the portal from Ferox Enclave to Castle Wars)",
+		position = 18,
+		section = pathfindingSection
+	)
+	default boolean routeUseTeleportationPortals()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationSpells",
+		name = "Use teleportation spells",
+		description = "Whether to include teleportation spells in the path",
+		position = 19,
+		section = pathfindingSection
+	)
+	default boolean routeUseTeleportationSpells()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationSpellsHome",
+		name = "Use Home Teleport spells",
+		description = "Whether to include Home Teleport spells in the path",
+		position = 20,
+		section = pathfindingSection
+	)
+	default boolean routeUseTeleportationSpellsHome()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseTeleportationMinigames",
+		name = "Use teleportation to minigames",
+		description = "Whether to include teleportation to minigames/activities/grouping in the path. These teleports share a 20 minute cooldown",
+		position = 21,
+		section = pathfindingSection
+	)
+	default boolean routeUseTeleportationMinigames()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseWildernessObelisks",
+		name = "Use wilderness obelisks",
+		description = "Whether to include wilderness obelisks in the path",
+		position = 22,
+		section = pathfindingSection
+	)
+	default boolean routeUseWildernessObelisks()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "routeUseSeasonalTransports",
+		name = "Use seasonal transports",
+		description = "Whether to include seasonal transports like League teleports in the path",
+		position = 23,
+		section = pathfindingSection
+	)
+	default boolean routeUseSeasonalTransports()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeCurrencyThreshold",
+		name = "Currency threshold",
+		description = "The maximum amount of currency to use on a single transportation method. "
+			+ "Affects coins, trading sticks, ecto-tokens and warrior guild tokens",
+		position = 24,
+		section = pathfindingSection
+	)
+	default int routeCurrencyThreshold()
+	{
+		return 100000;
+	}
+
+	@ConfigItem(
+		keyName = "routeCancelInstead",
+		name = "Cancel instead of recalculating",
+		description = "Whether the path should be cancelled rather than recalculated when the recalculate distance limit is exceeded",
+		position = 25,
+		section = pathfindingSection
+	)
+	default boolean routeCancelInstead()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "routeRecalculateDistance",
+		name = "Recalculate distance",
+		description = "Distance from the path the player should be for it to be recalculated (-1 for never)",
+		position = 26,
+		section = pathfindingSection
+	)
+	@Range(min = -1, max = 20000)
+	default int routeRecalculateDistance()
+	{
+		return 10;
+	}
+
+	@ConfigItem(
+		keyName = "routeFinishDistance",
+		name = "Finish distance",
+		description = "Distance from the target tile at which the path should be ended (-1 for never)",
+		position = 27,
+		section = pathfindingSection
+	)
+	@Range(min = -1, max = 50)
+	default int routeFinishDistance()
+	{
+		return 5;
+	}
+
+	@ConfigItem(
+		keyName = "routeUnreachableTargetDistance",
+		name = "Unreachable target distance",
+		description = "Distance from the target at which a finished path is considered not to reach the target",
+		position = 28,
+		section = pathfindingSection
+	)
+	@Range(max = 20000)
+	default int routeUnreachableTargetDistance()
+	{
+		return 2;
+	}
+
+	@ConfigItem(
+		keyName = "routeCalculationCutoff",
+		name = "Calculation cutoff",
+		description = "The cutoff threshold in number of ticks (0.6 seconds) of no progress being made towards the "
+			+ "path target before the calculation will be stopped",
+		position = 29,
+		section = pathfindingSection
+	)
+	@Range(min = 1, max = 30)
+	default int routeCalculationCutoff()
+	{
+		return 5;
+	}
 
 	@ConfigItem(
 		keyName = "useCustomMap",

@@ -39,6 +39,19 @@ import static org.junit.Assert.assertTrue;
 public class UndergroundZoneTest
 {
 	@Test
+	public void wyrmscraigEntrancesResolveToItsCavern()
+	{
+		final UndergroundZone zone = UndergroundZone.WYRMSCRAIG_CAVERN;
+		assertEquals(3, zone.getSurfacePoints().size());
+		assertEquals(zone, UndergroundZone.forSurfacePoint(2540, 2213, 0));
+		assertEquals(zone, UndergroundZone.forSurfacePoint(2530, 2205, 0));
+		assertEquals(zone, UndergroundZone.forSurfacePoint(2562, 2203, 0));
+		assertEquals(zone, InstanceMaps.zoneForPoint(2593, 8639));
+		assertEquals(2553, InstanceMaps.toDisplayX(2593, 8639, 2600, 2240));
+		assertEquals(2239, InstanceMaps.toDisplayY(2593, 8639, 2600, 2240));
+	}
+
+	@Test
 	public void wizardsGuildHasIndependentEntranceAndCut()
 	{
 		UndergroundZone guild = UndergroundZone.WIZARDS_GUILD_BASEMENT;

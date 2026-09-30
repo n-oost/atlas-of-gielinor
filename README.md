@@ -111,7 +111,7 @@ members,quest helper) are drawn on Better Map's camera, along with the player or
 - **Ground item spawns**: 370 unique items over 4,361 exact world tiles. Runtime dataset
   `ground_items.json.gz` (gzip-compressed; loaders decompress on read); full scrape in
   `docs/data/ground_item_spawns.tsv` and `docs/data/ground_item_data_complete.json`. 
-- **Points of interest**: wiki icon overlay (`poi/pois.tsv`) plus cache region labels
+- **Points of interest**: current cache world-map icons (`poi/pois.tsv`), older unmatched wiki markers (`poi/pois-legacy.tsv`), curated additions, and cache region labels
   (`poi/pois-cache.tsv`).
 - **Travel networks**: charter ships and other transport hubs. Runtime dataset `travel_networks.json.gz` from manually curated wiki nodes and routes.
 

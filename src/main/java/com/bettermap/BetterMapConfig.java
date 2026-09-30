@@ -1019,6 +1019,18 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "iconOther",
+		name = "Other map icons",
+		description = "New game map icons whose labels are not yet available",
+		position = 11,
+		section = iconsSection
+	)
+	default boolean iconOther()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "showPlaceNames",
 		name = "Place names",
 		description = "Draws region labels. Cities stay zoomed out; smaller areas appear as you zoom in. Dungeon rooms only show inside the dungeon or on hover",

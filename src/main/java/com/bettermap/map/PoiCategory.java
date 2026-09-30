@@ -29,11 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Groups the wiki's 122 location icons into something a settings panel can switch on and off.
+ * Groups location icons into something a settings panel can switch on and off.
  *
  * <p>The wiki tags every icon {@code category: "others"}, so the grouping is ours. It is defined
- * by explicit key sets plus a few suffix rules, and is checked by a test that every key the
- * dataset actually contains lands somewhere other than {@link #OTHER}.
+ * by explicit key sets plus a few suffix rules. Unidentified native sprites use {@link #OTHER}.
  */
 public enum PoiCategory
 {
@@ -51,7 +50,7 @@ public enum PoiCategory
 	private static final Set<String> BANK_KEYS = keys("bank");
 
 	private static final Set<String> TRAVEL_KEYS = keys(
-		"transportation", "dungeon_link", "agility_short-cut", "house_portal");
+		"transportation", "dungeon_link", "agility_short-cut", "house_portal", "mooring_point");
 
 	private static final Set<String> ALTAR_KEYS = keys("altar");
 
@@ -64,6 +63,7 @@ public enum PoiCategory
 		"fishing_spot", "mining_site", "rare_trees", "cooking_range", "water_source", "farming_patch",
 		"anvil", "furnace", "spinning_wheel", "potters_wheel", "windmill", "dairy_churn", "dairy_cow",
 		"loom", "tannery", "sawmill", "woodcutting_stump", "dummy", "agility_training",
+		"stagnant_water_source", "stonemason",
 		"hunter_training", "brewery", "sandpit", "thieving");
 
 	private static final Set<String> SHOP_KEYS = keys(

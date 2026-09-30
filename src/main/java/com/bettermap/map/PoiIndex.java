@@ -51,20 +51,21 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Names for the things on the map.
  *
- * <p>Five sources feed this index, in order:
+ * <p>Seven sources feed this index, in order:
  * <ol>
- *   <li>the OSRS Wiki icon overlay ({@code poi/pois.tsv}), prefetched offline</li>
- *   <li>mapped banks missing from that overlay ({@code poi/pois-banks.tsv})</li>
+ *   <li>world-map icons from the current game cache ({@code poi/pois.tsv}), prefetched offline</li>
+ *   <li>curated additions absent from the game's icon layer</li>
+ *   <li>older wiki icons not found in the current cache export ({@code poi/pois-legacy.tsv})</li>
+ *   <li>mapped banks missing from that icon layer ({@code poi/pois-banks.tsv})</li>
  *   <li>named region labels from the game cache ({@code poi/pois-cache.tsv}), which cover
- *       Varlamore, Prifddinas and underground places the wiki overlay misses</li>
+ *       Varlamore, Prifddinas and underground places the icon layer misses</li>
  *   <li>canonical modeled-dungeon search targets from {@link UndergroundZone}</li>
  *   <li>curated entries from {@link PoiDetails}</li>
  * </ol>
-	 * Wiki rows win rendering ties. Distinct curated names at the same coordinate remain searchable
-	 * aliases, so a generic wiki marker does not erase the place's real name. Icon-bearing cache
-	 * areas have no name of their own — those icons still come from the wiki TSV.
+ * Native icon rows win rendering ties. Distinct curated names at the same coordinate remain
+ * searchable aliases, so a generic marker does not erase the place's real name.
  *
- * <p>Like everything else at runtime this only ever reads from disk.
+ * <p>All data is bundled or read from the local tile store; runtime loading makes no web requests.
  */
 @Slf4j
 @Singleton
@@ -102,8 +103,8 @@ public class PoiIndex
 	 * Opens one bundled POI file, falling back to the on-disk tile store.
 	 *
 	 * <p>The data ships in the jar, which is never unpacked on disk, so it is read as a stream
-	 * rather than as a file. The dev tooling writes fresher copies into the tile store, and those
-	 * win when they exist so a re-scrape can be tried without rebuilding.
+	 * rather than as a file. Dev tooling can override supplementary files in the tile store.
+	 * The main icon snapshot is always read from the jar when present.
 	 */
 	private static InputStream open(File tileDir, String name)
 	{
@@ -179,10 +180,14 @@ public class PoiIndex
 		loaded = false;
 
 		final Set<Long> existingPoints = new HashSet<>();
-		readTsv(open(tileDir, "pois.tsv"), existingPoints);
-		// The wiki's icon overlay omits many banks listed on its mapped bank catalogue.
-		readTsv(open(tileDir, "pois-banks.tsv"), existingPoints);
-		// Cache labels fill gaps the wiki overlay misses; wiki rows already in existingPoints win.
+		// Downloaded packs can contain an older icon overlay. The bundled snapshot is authoritative.
+		InputStream bundledPois = PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois.tsv");
+		readTsv(bundledPois != null ? bundledPois : open(tileDir, "pois.tsv"), existingPoints);
+		readTsv(PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois-additions.tsv"), existingPoints);
+		readTsv(PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois-legacy.tsv"), existingPoints);
+		// Keep bank catalogue names searchable without drawing a second icon a tile or two away.
+		readTsv(open(tileDir, "pois-banks.tsv"), existingPoints, true);
+		// Cache labels fill gaps the native icon layer misses.
 		readTsv(open(tileDir, "pois-cache.tsv"), existingPoints);
 
 		// UndergroundZone owns modeled dungeon entrance coordinates. These aliases power Finder;
@@ -274,6 +279,11 @@ public class PoiIndex
 
 	private void readTsv(InputStream source, Set<Long> existingPoints)
 	{
+		readTsv(source, existingPoints, false);
+	}
+
+	private void readTsv(InputStream source, Set<Long> existingPoints, boolean bankSupplement)
+	{
 		if (source == null)
 		{
 			return;
@@ -304,9 +314,17 @@ public class PoiIndex
 						parts[3],
 						parts[4]);
 					final long key = packedPoint(poi.plane, poi.x, poi.y);
+					if (bankSupplement && hasNearbyBank(poi))
+					{
+						addSearchPoi(poi);
+						continue;
+					}
 					if (!existingPoints.add(key))
 					{
-						// Coordinate already taken; earlier sources keep the name.
+						if (bankSupplement)
+						{
+							addSearchPoi(poi);
+						}
 						continue;
 					}
 					addPoi(poi);
@@ -321,6 +339,19 @@ public class PoiIndex
 		{
 			log.warn("Could not read {}", source, e);
 		}
+	}
+
+	private boolean hasNearbyBank(Poi candidate)
+	{
+		for (Poi poi : pois)
+		{
+			if ("bank".equals(poi.key) && poi.plane == candidate.plane
+				&& Math.abs(poi.x - candidate.x) <= 2 && Math.abs(poi.y - candidate.y) <= 2)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void addPoi(Poi poi)

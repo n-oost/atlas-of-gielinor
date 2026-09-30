@@ -410,6 +410,8 @@ public class PoiMarkerRenderer
 				return config.iconDungeons();
 			case SERVICES:
 				return config.iconServices();
+			case OTHER:
+				return config.iconOther();
 			default:
 				return false;
 		}
@@ -419,6 +421,7 @@ public class PoiMarkerRenderer
 	private boolean anyPoiCategoryEnabled()
 	{
 		return config.iconBanks() || config.iconShops() || config.iconSkilling() || config.iconTravel()
-			|| config.iconQuests() || config.iconAltars() || config.iconDungeons() || config.iconServices();
+			|| config.iconQuests() || config.iconAltars() || config.iconDungeons() || config.iconServices()
+			|| config.iconOther();
 	}
 }

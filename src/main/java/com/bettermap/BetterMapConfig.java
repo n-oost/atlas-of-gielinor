@@ -99,7 +99,7 @@ public interface BetterMapConfig extends Config
 		keyName = "enableShortestPath",
 		name = "Use Better Map routing",
 		description = "Calculate and draw routes on Better Map using a pinned, BSD-2-Clause fork of the Shortest Path engine "
-			+ "by Skretzo and contributors. Uses the settings below; no external plugin needed. "
+			+ "by Skretzo and contributors. Uses the settings below; sends destinations to Shortest Path if enabled. "
 			+ "Enabling this turns off external settings mode. "
 			+ "Better Map is not affiliated with the Shortest Path project.",
 		position = 0,

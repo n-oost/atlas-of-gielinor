@@ -53,6 +53,7 @@ public class FinderKeyCaptureTest
 	private FinderKeyCapture capture;
 
 	private WorldPoint centeredOn;
+	private boolean openedMap;
 
 	@Before
 	public void setUp()
@@ -63,9 +64,17 @@ public class FinderKeyCaptureTest
 		finder = new MapFinder(new PoiIndex(), monsterIndex);
 		host = new FakeHost();
 		centeredOn = null;
+		openedMap = false;
 
 		final BetterMapPlugin plugin = new BetterMapPlugin()
 		{
+			@Override
+			public void openMapAt(WorldPoint point)
+			{
+				centeredOn = point;
+				openedMap = true;
+			}
+
 			@Override
 			public void centerMapOn(WorldPoint point)
 			{
@@ -177,7 +186,7 @@ public class FinderKeyCaptureTest
 	}
 
 	@Test
-	public void standaloneEnterAimsTheClosedMapBeforeClosingFinder()
+	public void standaloneEnterOpensMapAtSelectedResult()
 	{
 		camera.setFinderStandalone(true);
 		camera.setFinderPanelOpen(true);
@@ -188,5 +197,6 @@ public class FinderKeyCaptureTest
 		host.onDone.accept(finder.getQuery());
 
 		assertEquals(selected, centeredOn);
+		assertTrue(openedMap);
 	}
 }

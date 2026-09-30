@@ -3,7 +3,7 @@
 3395	2138	0	cache_icon_4947	Map feature
 2460	2144	0	cache_icon_4947	Map feature
 1889	2150	0	cache_icon_4947	Map feature
-2543	2184	0	rare_trees	Wyrmscraig yew trees
+2543	2184	0	rare_trees	Yew trees
 2562	2191	0	rare_trees	Rare trees
 2572	2195	0	hunter_training	Hunter training
 2579	2199	0	rare_trees	Rare trees
@@ -14,27 +14,26 @@
 2141	2212	0	cache_icon_4947	Map feature
 2541	2213	0	dungeon_link	Dungeon with map link
 3355	2216	0	mooring_point	Mooring point
-2575	2219	0	fishing_spot	Wyrmscraig fishing spot
+2575	2219	0	fishing_spot	Lobster & Swordfish
 2565	2220	0	agility_short-cut	Agility short-cut
 2598	2220	0	cooking_range	Cooking range
 2978	2224	0	cache_icon_4945	Map feature
 2614	2237	0	mining_site	Mining site
-2598	2239	0	mining_site	Wyrmscraig mine
+2598	2239	0	mining_site	Sunstone & Iron
 2576	2240	0	spinning_wheel	Spinning wheel
 2572	2242	0	clothes_shop	Where Wyrmscraig's Wear Wares Were
 2576	2243	0	cooking_range	Cooking range
 2563	2245	0	cooking_range	Cooking range
-2571	2248	0	water_source	Wyrmscraig water source
+2571	2248	0	water_source	Water source
 2613	2249	0	agility_short-cut	Agility short-cut
-2566	2252	0	dairy_churn	Wyrmscraig dairy churn
+2566	2252	0	dairy_churn	Dairy churn
 2564	2253	0	cooking_range	Cooking range
 2575	2253	0	quest_start	Quest start
 2979	2254	0	mining_site	Mining site
 2566	2255	0	general_store	Supplies's Supplies
-2587	2260	0	bank	Bank
-2580	2262	0	anvil	Wyrmscraig anvil
-2578	2264	0	furnace	Wyrmscraig furnace
-2577	2268	0	loom	Wyrmscraig loom
+2580	2262	0	anvil	Anvil
+2578	2264	0	furnace	Furnace
+2577	2268	0	loom	Loom
 2985	2268	0	bank	Bank
 2345	2270	0	mooring_point	Mooring point
 3003	2276	0	fishing_spot	Fishing spot
@@ -3295,8 +3294,8 @@
 2654	7845	0	hunter_training	Hunter training
 2711	7845	0	water_source	Water source
 2581	7848	0	altar	Altar
-2616	8593	0	mining_site	Wyrmscraig Cavern mine
-2611	8598	0	fishing_spot	Wyrmscraig lava eel fishing spot
+2616	8593	0	mining_site	Coal, Mithril & Adamantite
+2611	8598	0	fishing_spot	Lava eel
 2564	8606	0	dungeon_link	Dungeon with map link
 2582	8607	0	mooring_point	Mooring point
 2590	8614	0	slayer_master	Mortimer

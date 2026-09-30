@@ -218,12 +218,12 @@ public class MapLayerInputHandler
 	{
 		if (camera.isFinderPanelOpen())
 		{
-			if (clickedFinderChip(event.getPoint()))
+			if (clickedFlyoutItem(event.getPoint(), event.isShiftDown(), event.getClickCount()))
 			{
 				return true;
 			}
 
-			if (clickedFlyoutItem(event.getPoint(), event.isShiftDown(), event.getClickCount()))
+			if (clickedFinderChip(event.getPoint()))
 			{
 				return true;
 			}
@@ -308,7 +308,7 @@ public class MapLayerInputHandler
 			playerLoc != null ? playerLoc.getX() : 0, playerLoc != null ? playerLoc.getY() : 0);
 		if (bank != null && pluginProvider != null && pluginProvider.get() != null)
 		{
-			pluginProvider.get().centerMapOn(new WorldPoint(bank.getX(), bank.getY(), bank.getPlane()));
+			activateRow(new WorldPoint(bank.getX(), bank.getY(), bank.getPlane()));
 		}
 	}
 
@@ -323,7 +323,7 @@ public class MapLayerInputHandler
 		final WorldPoint target = slayerTaskTracker.nearestTaskLocation(playerLoc, monsterIndex, poiIndex);
 		if (target != null && pluginProvider != null && pluginProvider.get() != null)
 		{
-			pluginProvider.get().centerMapOn(target);
+			activateRow(target);
 		}
 	}
 
@@ -348,7 +348,7 @@ public class MapLayerInputHandler
 		}
 		if (best != null && pluginProvider != null && pluginProvider.get() != null)
 		{
-			pluginProvider.get().centerMapOn(best.getLocation());
+			activateRow(best.getLocation());
 		}
 	}
 
@@ -367,6 +367,7 @@ public class MapLayerInputHandler
 
 	private void activateRow(WorldPoint point)
 	{
+		cancelPendingQuickFinderClick();
 		if (pluginProvider != null && pluginProvider.get() != null)
 		{
 			if (camera.isFinderStandalone())
@@ -394,9 +395,15 @@ public class MapLayerInputHandler
 		cancelPendingQuickFinderClick();
 		Object interval = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
 		final int delay = interval instanceof Number ? Math.max(250, ((Number) interval).intValue()) : 500;
+		final String clickedQuery = finder != null ? finder.getQuery() : null;
 		pendingQuickFinderClick = new Timer(delay, e ->
 		{
 			pendingQuickFinderClick = null;
+			if (!camera.isFinderStandalone() || !camera.isFinderPanelOpen()
+				|| (finder != null && !finder.getQuery().equals(clickedQuery)))
+			{
+				return;
+			}
 			if (pluginProvider != null && pluginProvider.get() != null)
 			{
 				pluginProvider.get().openMapAt(point);
@@ -417,6 +424,12 @@ public class MapLayerInputHandler
 
 	private void activateRowAndClose(WorldPoint point)
 	{
+		cancelPendingQuickFinderClick();
+		if (camera.isFinderStandalone())
+		{
+			activateRow(point);
+			return;
+		}
 		if (pluginProvider == null || pluginProvider.get() == null)
 		{
 			return;
@@ -433,6 +446,12 @@ public class MapLayerInputHandler
 	{
 		for (MapCamera.FlyoutTarget target : camera.getFlyoutTargets())
 		{
+			final Rectangle mapButton = target.getMapBounds();
+			if (mapButton != null && mapButton.contains(point))
+			{
+				activateRow(target.getPoint());
+				return true;
+			}
 			final Rectangle routeButton = target.getWalkBounds();
 			if (routeButton != null && routeButton.contains(point))
 			{
@@ -472,6 +491,12 @@ public class MapLayerInputHandler
 	{
 		for (MapCamera.FinderResultTarget target : camera.getFinderResultTargets())
 		{
+			final Rectangle mapButton = target.getMapBounds();
+			if (mapButton != null && mapButton.contains(point))
+			{
+				activateRow(finderTargetPoint(target));
+				return true;
+			}
 			final Rectangle routeButton = target.getWalkBounds();
 			if (routeButton != null && routeButton.contains(point))
 			{

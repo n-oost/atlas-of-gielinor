@@ -189,7 +189,7 @@ public class BetterMapPanel extends PluginPanel
 				final List<PoiIndex.Poi> sorted = new ArrayList<>(entries);
 				if (from != null)
 				{
-					sorted.sort(Comparator.comparingInt(p -> distanceSq(p.getX(), p.getY(), from)));
+					sorted.sort(Comparator.comparingLong(p -> distanceSq(p.getX(), p.getY(), from)));
 				}
 
 				int shown = 0;
@@ -369,7 +369,7 @@ public class BetterMapPanel extends PluginPanel
 				final List<MonsterIndex.Zone> sorted = new ArrayList<>(zones);
 				if (from != null)
 				{
-					sorted.sort(Comparator.comparingInt(z -> distanceSq(z.getX(), z.getY(), from)));
+					sorted.sort(Comparator.comparingLong(z -> distanceSq(z.getX(), z.getY(), from)));
 				}
 
 				int shown = 0;
@@ -500,10 +500,10 @@ public class BetterMapPanel extends PluginPanel
 	}
 
 	/** Squared tile distance; only ever used to order lists, so the square root is wasted work. */
-	private static int distanceSq(int x, int y, WorldPoint from)
+	private static long distanceSq(int x, int y, WorldPoint from)
 	{
-		final int dx = x - from.getX();
-		final int dy = y - from.getY();
+		final long dx = (long) x - from.getX();
+		final long dy = (long) y - from.getY();
 		return dx * dx + dy * dy;
 	}
 

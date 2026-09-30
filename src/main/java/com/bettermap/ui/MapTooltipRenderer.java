@@ -170,6 +170,11 @@ public class MapTooltipRenderer
 	 */
 	public void drawTooltip(Graphics2D graphics, Rectangle bounds)
 	{
+		drawTooltip(graphics, bounds, null);
+	}
+
+	void drawTooltip(Graphics2D graphics, Rectangle bounds, MapMarkerRenderer markerRenderer)
+	{
 		if (!config.showTooltips())
 		{
 			return;
@@ -210,6 +215,22 @@ public class MapTooltipRenderer
 		final int radius = hitRadius();
 		final int pointRadius = Math.min(radius, 6);
 		final HoverProbe probe = new HoverProbe(cursor, worldX, worldY, plane, pointRadius);
+		final PoiIndex.Poi drawnPoi = markerRenderer != null ? markerRenderer.visiblePoiIconAt(cursor) : null;
+		if (drawnPoi != null)
+		{
+			final PoiDetails.Detail detail = PoiDetails.getDetail(drawnPoi, drawnPoi.getX(), drawnPoi.getY(), plane);
+			final BufferedImage icon = poiIndex != null ? poiIndex.icon(drawnPoi.getKey()) : null;
+			final TooltipCard card = poiTooltipBuilder.buildPoiCard(detail, drawnPoi, icon, compact);
+			if (card != null)
+			{
+				if (!compact)
+				{
+					card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+				}
+				drawCard(graphics, bounds, cursor, card);
+				return;
+			}
+		}
 
 		if (drawBoatCard(graphics, bounds, probe))
 		{
@@ -238,7 +259,7 @@ public class MapTooltipRenderer
 
 		TooltipCard card = null;
 
-		// Point markers before area centroids: bosses -> shops -> POIs -> RuneLite -> ground items -> monster zones.
+		// The active overlay already handled exact drawn POI icons above.
 		final MonsterLocationData boss = monsterNear(worldX, worldY);
 		if (boss != null)
 		{
@@ -250,6 +271,14 @@ public class MapTooltipRenderer
 				: null;
 			final MonsterIndex.Zone bossStats = stats != null && boss.getName().equalsIgnoreCase(stats.getMonster()) ? stats : null;
 			card = monsterTooltipBuilder.buildBossCard(boss, bossIcon, isTaskBoss, remaining, compact, bossStats);
+		}
+
+		final PoiIndex.Poi iconPoi = markerRenderer == null ? poiIconAt(cursor, bounds, plane) : null;
+		if (card == null && iconPoi != null)
+		{
+			final PoiDetails.Detail detail = PoiDetails.getDetail(iconPoi, iconPoi.getX(), iconPoi.getY(), plane);
+			final BufferedImage tooltipIcon = poiIndex != null ? poiIndex.icon(iconPoi.getKey()) : null;
+			card = poiTooltipBuilder.buildPoiCard(detail, iconPoi, tooltipIcon, compact);
 		}
 
 		if (card == null && shopIndex != null)
@@ -265,23 +294,11 @@ public class MapTooltipRenderer
 
 		if (card == null)
 		{
-			PoiDetails.Detail detail = null;
-			final PoiIndex.Poi poi = poiIconAt(cursor, bounds, plane);
-			BufferedImage tooltipIcon = null;
-			if (poi != null)
+			final PoiDetails.Detail detail = hit(worldX, worldY,
+				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius));
+			if (detail != null)
 			{
-				detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), plane);
-				tooltipIcon = poiIndex != null ? poiIndex.icon(poi.getKey()) : null;
-			}
-			if (detail == null)
-			{
-				detail = hit(worldX, worldY,
-					(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius));
-			}
-
-			if (detail != null || (poi != null && poi.getName() != null && !poi.getName().isEmpty()))
-			{
-				card = poiTooltipBuilder.buildPoiCard(detail, poi, tooltipIcon, compact);
+				card = poiTooltipBuilder.buildPoiCard(detail, null, null, compact);
 			}
 		}
 
@@ -325,7 +342,10 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+		if (!compact)
+		{
+			card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+		}
 		drawCard(graphics, bounds, cursor, card);
 	}
 

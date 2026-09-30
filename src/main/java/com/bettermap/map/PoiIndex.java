@@ -611,7 +611,7 @@ public class PoiIndex
 		private final String key;
 		private final String name;
 
-		Poi(int x, int y, int plane, String key, String name)
+		public Poi(int x, int y, int plane, String key, String name)
 		{
 			this.x = x;
 			this.y = y;

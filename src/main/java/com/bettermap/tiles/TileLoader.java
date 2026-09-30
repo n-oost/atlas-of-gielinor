@@ -399,6 +399,10 @@ public class TileLoader
 
 			if (parentImg != null && parentImg.getWidth() >= 256 && parentImg.getHeight() >= 256)
 			{
+				if (shift >= 8)
+				{
+					continue;
+				}
 				final int factor = 1 << shift;
 				final int subSize = 256 / factor;
 				if (subSize > 0)

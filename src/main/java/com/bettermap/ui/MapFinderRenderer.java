@@ -129,7 +129,7 @@ class MapFinderRenderer
 		graphics.setFont(SMALL);
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		if (!config.showFinderButton())
+		if (camera.isFinderStandalone() ? !config.showFinderOrb() : !config.showFinderButton())
 		{
 			if (drawButton || collapsedAsField)
 			{
@@ -192,11 +192,12 @@ class MapFinderRenderer
 		final int fieldH = 20;
 		final int chipRowH = 18;
 		final int descStripH = 26;
-		final int panelW = 300;
+		final int actionExtra = camera.isFinderStandalone() ? 90 : 0;
+		final int panelW = 300 + actionExtra;
 
 		final WorldPoint playerLoc = camera.getPlayerLocation();
 		final String query = finder.getQuery();
-		final boolean isEmptyQuery = query == null || query.isEmpty();
+		final boolean isEmptyQuery = query == null || query.trim().isEmpty();
 		final int rowH = isEmptyQuery ? 20 : 30;
 		final boolean browseLoading = isEmptyQuery && finder.isBrowseLoading();
 		finder.refresh(playerLoc);
@@ -242,6 +243,7 @@ class MapFinderRenderer
 			panelY = Math.max((int) bounds.getMinY() + 4, (int) bounds.getMaxY() - 4 - panelH);
 		}
 
+		panelX = Math.max((int) bounds.getMinX() + 4, panelX);
 		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
 		graphics.setColor(CARD_BG);
 		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
@@ -330,7 +332,7 @@ class MapFinderRenderer
 				final int dist = distanceTiles(regCenter, playerLoc);
 				final String arrow = "▸";
 				graphics.setColor(CARD_TITLE);
-				graphics.drawString(arrow, row.x + row.width - 60, rowY + rowH - 6);
+				graphics.drawString(arrow, row.x + row.width - actionExtra - 60, rowY + rowH - 6);
 
 				int dW = 0;
 				if (dist >= 0)
@@ -338,10 +340,10 @@ class MapFinderRenderer
 						final String distText = distanceLabel(dist);
 					dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, row.x + row.width - 68 - dW, rowY + rowH - 6);
+					graphics.drawString(distText, row.x + row.width - actionExtra - 68 - dW, rowY + rowH - 6);
 				}
 
-				final int maxNameW = row.x + row.width - 68 - (dist >= 0 ? dW + 6 : 0) - (panel.x + padX);
+				final int maxNameW = row.x + row.width - actionExtra - 68 - (dist >= 0 ? dW + 6 : 0) - (panel.x + padX);
 				String name = region.getDisplayName();
 				if (fm.stringWidth(name) > maxNameW && maxNameW > 0)
 				{
@@ -355,7 +357,7 @@ class MapFinderRenderer
 				graphics.drawString(name, panel.x + padX, rowY + rowH - 6);
 
 				final Rectangle route = drawRouteButton(graphics, fm, row, cursor);
-				final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, route, regCenter, region.getDisplayName(), null, region);
+				final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, route, drawMapButton(graphics, fm, route, cursor), regCenter, region.getDisplayName(), null, region);
 				targets.add(target);
 				if (cursor != null && row.contains(cursor))
 				{
@@ -406,7 +408,7 @@ class MapFinderRenderer
 						final String countText = "▸ " + result.getChildren().size();
 						final int countW = fm.stringWidth(countText);
 						graphics.setColor(CARD_TITLE);
-						graphics.drawString(countText, row.x + row.width - countW - 60, rowY + rowH - 6);
+						graphics.drawString(countText, row.x + row.width - actionExtra - countW - 60, rowY + rowH - 6);
 
 						final int dist = result.getDistanceTiles();
 						final String distText = distanceLabel(dist);
@@ -414,11 +416,11 @@ class MapFinderRenderer
 						{
 							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - countW - 66 - dW, rowY + 11);
+							graphics.drawString(distText, row.x + row.width - actionExtra - countW - 66 - dW, rowY + 11);
 						}
 
 						final int nameX = panel.x + padX + 16;
-						final int maxNameW = row.x + row.width - countW - 8 - 58 - nameX;
+						final int maxNameW = row.x + row.width - actionExtra - countW - 8 - 58 - nameX;
 						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
 						graphics.setColor(TEXT_DIM);
 						graphics.drawString(itemKindLabel(result) + " · " + result.getChildren().size() + " locations",
@@ -434,11 +436,11 @@ class MapFinderRenderer
 						{
 							final int dW = fm.stringWidth(distText);
 							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - 62 - dW, rowY + 12);
+							graphics.drawString(distText, row.x + row.width - actionExtra - 62 - dW, rowY + 12);
 						}
 
 						final int nameX = panel.x + padX + 16;
-						final int maxNameW = row.x + row.width - 74 - nameX;
+						final int maxNameW = row.x + row.width - actionExtra - 74 - nameX;
 						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
 						final String subtitle = result.getDetail() != null ? result.getDetail()
 							: result.getKind() == MapFinder.Result.Kind.MONSTER ? "Monster location"
@@ -449,7 +451,7 @@ class MapFinderRenderer
 
 					final MapFinder.Result routeTarget = MapFinder.activationTarget(result);
 					final WorldPoint targetPoint = routeTarget != null ? routeTarget.getPoint() : result.getPoint();
-					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, targetPoint, result.getName(), result, null);
+					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, drawMapButton(graphics, fm, walk, cursor), targetPoint, result.getName(), result, null);
 					targets.add(target);
 					if (cursor != null && row.contains(cursor))
 					{
@@ -604,6 +606,7 @@ class MapFinderRenderer
 		Rectangle bounds, Rectangle flyoutAnchorRow,
 		WorldPoint playerLoc, List<MapFinder.Result> rows)
 	{
+		rowH = 30;
 		// Flyout submenu resolution (needed before description strip so hovering a flyout item updates strip)
 		final String hoveredKey = camera.getHoveredRowKey();
 		List<MapFinder.Result> flyoutItems = null;
@@ -653,7 +656,8 @@ class MapFinderRenderer
 
 		if (flyoutItems != null && !flyoutItems.isEmpty())
 		{
-			final int flyoutW = 260;
+			final int actionExtra = camera.isFinderStandalone() ? 90 : 0;
+			final int flyoutW = 260 + actionExtra;
 			final int totalFlyout = flyoutItems.size();
 			camera.setFinderFlyoutItemCount(totalFlyout);
 			camera.clampFinderFlyoutScroll();
@@ -721,14 +725,14 @@ class MapFinderRenderer
 				{
 					final int dW = fm.stringWidth(distText);
 					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, itemRow.x + itemRow.width - (route == null ? 6 : route.width + 10) - dW, fRowY + 12);
+					graphics.drawString(distText, itemRow.x + itemRow.width - actionExtra - (route == null ? 6 : route.width + 10) - dW, fRowY + 12);
 				}
 				drawClipped(graphics, fm, item.getName(), flyoutPanel.x + padX, fRowY + 12,
-					flyoutW - 88, CARD_TEXT);
+					flyoutW - actionExtra - 88, CARD_TEXT);
 				graphics.setColor(TEXT_DIM);
 				graphics.drawString(itemKindLabel(item), flyoutPanel.x + padX, fRowY + 25);
 
-				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, item.getPoint(), item.getName(), item));
+				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, drawMapButton(graphics, fm, route, cursor), item.getPoint(), item.getName(), item));
 				fRowY += rowH;
 			}
 
@@ -889,6 +893,26 @@ class MapFinderRenderer
 		}
 		graphics.setColor(result.getKind() == MapFinder.Result.Kind.MINERAL ? new Color(210, 170, 95) : CARD_TITLE);
 		graphics.drawString(icon, x, y + 12);
+	}
+
+	private Rectangle drawMapButton(Graphics2D graphics, FontMetrics fm, Rectangle route,
+		java.awt.Point cursor)
+	{
+		if (!camera.isFinderStandalone() || route == null)
+		{
+			return null;
+		}
+		final Rectangle button = new Rectangle(route.x - 90, route.y, 86, route.height);
+		final boolean hover = cursor != null && button.contains(cursor);
+		graphics.setColor(hover ? CARD_EDGE : CHIP_BG);
+		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 4, 4);
+		graphics.setColor(hover ? CARD_TITLE : CARD_EDGE);
+		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 4, 4);
+		graphics.setColor(CARD_TEXT);
+		final String label = "Open on map";
+		graphics.drawString(label, button.x + (button.width - fm.stringWidth(label)) / 2,
+			button.y + (button.height + fm.getAscent() - fm.getDescent()) / 2);
+		return button;
 	}
 
 	private static Rectangle drawRouteButton(Graphics2D graphics, FontMetrics fm, Rectangle row,

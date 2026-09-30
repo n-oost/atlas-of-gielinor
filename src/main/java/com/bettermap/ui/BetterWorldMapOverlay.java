@@ -188,6 +188,7 @@ public class BetterWorldMapOverlay extends Overlay
 	private boolean renderFailureLogged;
 	private Point unmappedPosition;
 	private boolean wasOpen;
+	private volatile Runnable finderFocusOnOpen;
 	private boolean everOpened;
 	private Point lastClientPosition;
 	private float lastClientZoom;
@@ -297,6 +298,12 @@ public class BetterWorldMapOverlay extends Overlay
 		camera.setActive(true);
 
 		syncWithClient(worldMap, bounds);
+		final Runnable focus = finderFocusOnOpen;
+		if (wasOpen && focus != null)
+		{
+			finderFocusOnOpen = null;
+			focus.run();
+		}
 
 		// Freeze the camera pose for the rest of this frame. Without this, a drag or wheel event
 		// on the AWT thread can move the camera between the tile-grid pass and later passes,
@@ -358,7 +365,7 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
 			// drawUnmappedWarning(graphics, bounds);
-			tooltipRenderer.drawTooltip(graphics, bounds);
+			tooltipRenderer.drawTooltip(graphics, bounds, markerRenderer);
 			if (routeDrawFailure)
 			{
 				drawNotice(graphics, bounds, "FAILED TO DRAW ROUTE");
@@ -507,6 +514,12 @@ public class BetterWorldMapOverlay extends Overlay
 		final double dx = position.getX() - camera.getCenterX();
 		final double dy = position.getY() - camera.getCenterY();
 		return Math.sqrt(dx * dx + dy * dy);
+	}
+
+	/** Apply a Finder destination after the initial player recenter on map opening. */
+	public void setFinderFocusOnOpen(Runnable focus)
+	{
+		finderFocusOnOpen = focus;
 	}
 
 	/**

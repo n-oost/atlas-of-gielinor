@@ -290,7 +290,7 @@ public class PrimitiveIntList
 
 	private void rangeCheck(int index)
 	{
-		if (index >= size)
+		if (index < 0 || index >= size)
 		{
 			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
 		}

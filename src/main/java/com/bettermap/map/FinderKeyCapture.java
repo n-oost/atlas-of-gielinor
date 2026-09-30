@@ -144,15 +144,7 @@ public class FinderKeyCapture
 		finder.caretEnd();
 	}
 
-	/**
-	 * Enter in the chatbox: the keyboard twin of clicking the selected first row. Plain Enter centres the
-	 * open map on it and builds the path, leaving the map up; Shift+Enter builds the path and closes
-	 * the map, matching a double click. In standalone mode it also aims the map before the Finder
-	 * closes, matching a mouse click. The input then closes itself.
-	 *
-	 * <p>Shift comes from {@link MapCamera#isShiftHeld()} because the chatbox input hands us the
-	 * text and nothing else.
-	 */
+	/** Enter shows the selected destination, opening the world map for Quick Finder. */
 	private void onDone()
 	{
 		final MapFinder.Result target = finder.selectedResult();
@@ -165,7 +157,14 @@ public class FinderKeyCapture
 		{
 			return;
 		}
-		plugin.centerMapOn(target.getPoint());
+		if (camera.isFinderStandalone())
+		{
+			plugin.openMapAt(target.getPoint());
+		}
+		else
+		{
+			plugin.centerMapOn(target.getPoint());
+		}
 	}
 
 	private void onInputClosed()

@@ -278,6 +278,12 @@ public class BetterWorldMapOverlayPoiTest
 			}
 
 			@Override
+			public boolean iconOther()
+			{
+				return false;
+			}
+
+			@Override
 			public boolean showPluginMarkers()
 			{
 				return false;

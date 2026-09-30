@@ -70,7 +70,6 @@ import net.runelite.api.WidgetNode;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOpened;
-import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.BeforeRender;
@@ -81,7 +80,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.events.PluginChanged;
 import net.runelite.client.events.PluginChanged;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.input.MouseManager;
@@ -791,12 +789,14 @@ public class BetterMapPlugin extends Plugin
 	public void onPluginChanged(PluginChanged event)
 	{
 		boatTracker.onPluginChanged(event);
-		if (config.useExternalShortestPathSettings()
-			&& "shortestpath.ShortestPathPlugin".equals(event.getPlugin().getClass().getName()))
+		if ("shortestpath.ShortestPathPlugin".equals(event.getPlugin().getClass().getName()))
 		{
 			clientThread.invoke(() ->
 			{
-				shortestPathTracker.refreshRoute();
+				if (config.useExternalShortestPathSettings())
+				{
+					shortestPathTracker.refreshRoute();
+				}
 				if (event.isLoaded())
 				{
 					shortestPathTracker.repostTarget();
@@ -844,6 +844,10 @@ public class BetterMapPlugin extends Plugin
 	/** Open Better Map's world-map interface and center it on a Finder destination. */
 	public void openMapAt(WorldPoint point)
 	{
+		if (!camera.isActive())
+		{
+			mapOverlay.setFinderFocusOnOpen(() -> centerMapOn(point));
+		}
 		camera.setFinderStandalone(false);
 		camera.setFinderPanelOpen(false);
 		clientThread.invoke(this::openWorldMapOnClientThread);
@@ -855,11 +859,12 @@ public class BetterMapPlugin extends Plugin
 	{
 		if (openMap)
 		{
-			camera.setFinderStandalone(false);
-			camera.setFinderPanelOpen(false);
-			clientThread.invoke(this::openWorldMapOnClientThread);
+			openMapAt(point);
 		}
-		centerMapOn(point);
+		else
+		{
+			centerMapOn(point);
+		}
 		clientThread.invoke(() -> shortestPathTracker.routeTo(point));
 	}
 
@@ -1057,7 +1062,23 @@ public class BetterMapPlugin extends Plugin
 		if (finderTarget != null)
 		{
 			resetMapMenu();
-			addRouteMenuEntry(finderTarget, camera.isFinderStandalone());
+			final boolean standalone = camera.isFinderStandalone();
+			addRouteMenuEntry(finderTarget, standalone);
+			client.getMenu().createMenuEntry(-1)
+				.setOption("Open on map")
+				.setTarget("<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>")
+				.setType(MenuAction.RUNELITE)
+				.onClick(e ->
+				{
+					if (standalone)
+					{
+						openMapAt(finderTarget);
+					}
+					else
+					{
+						centerMapOn(finderTarget);
+					}
+				});
 			return;
 		}
 		final Rectangle finderPanel = camera.getFinderPanelBounds();
@@ -1097,6 +1118,10 @@ public class BetterMapPlugin extends Plugin
 	@Nullable
 	private WorldPoint finderTargetAt(net.runelite.api.Point mouse)
 	{
+		if (!camera.isFinderInteractive())
+		{
+			return null;
+		}
 		for (MapCamera.FlyoutTarget target : camera.getFlyoutTargets())
 		{
 			final Rectangle row = target.getRowBounds();

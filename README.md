@@ -56,7 +56,8 @@ contributors (BSD 2-Clause). Choose a mode in **Routing (Shortest Path by Skretz
   its saved routing settings and sends it the selected destination for its own in-game route.
   If the external plugin is disabled, routing pauses instead of falling back to local settings.
 - **Use Better Map routing** uses the bundled fork and Better Map's own routing settings.
-  It does not read settings from or send destinations to the external plugin.
+  It does not read settings from the external plugin. If Shortest Path is enabled, Better Map
+  sends it the selected destination so its route also appears in game.
 
 Enabling either mode disables the other; both off disables routing.
 The two plugins calculate their routes independently, so differences are possible when their

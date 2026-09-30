@@ -744,6 +744,7 @@ public final class PoiDetails
 		addEntry("rare_trees", "Ironwood tree (Level 80)", "Skilling • Woodcutting", 2205, 2321, 0, "Level requirement: Level 80 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Yield: Logs, Birds' nests");
 		addEntry("rare_trees", "Redwood tree (Level 90)", "Skilling • Woodcutting", 1569, 3493, 0, "Level requirement: Level 90 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Yield: Logs, Birds' nests");
 		addEntry("rare_trees", "Redwood tree (Level 90)", "Skilling • Woodcutting", 1569, 3483, 0, "Level requirement: Level 90 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Yield: Logs, Birds' nests");
+		addEntry("rare_trees", "Yew trees (Level 60)", "Skilling • Woodcutting", 2543, 2184, 0, "Level requirement: Level 60 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Yield: Logs, Birds' nests");
 	}
 
 	/**
@@ -1742,6 +1743,110 @@ public final class PoiDetails
 		addEntry("fishing_spot", "Fishing Spot (Dark Crab)", "Skilling • Fishing", 3347, 3813, 0, "Method / Fish: Dark Crab", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Check Fishing skill guide for exact bait & level reqs");
 		addEntry("fishing_spot", "Fishing Spot (Lava Eel)", "Skilling • Fishing", 3071, 3840, 0, "Method / Fish: Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Check Fishing skill guide for exact bait & level reqs");
 		addEntry("fishing_spot", "Fishing Spot (Dark Crab)", "Skilling • Fishing", 3186, 3925, 0, "Method / Fish: Dark Crab", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Check Fishing skill guide for exact bait & level reqs");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2575, 2219, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Coastal saltwater fishing");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 3003, 2276, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Lobster pot");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3191, 2376, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3169, 2386, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3269, 2411, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3211, 2425, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3265, 2425, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3195, 2437, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3260, 2480, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3258, 2494, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3156, 2537, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Desert Sole & Catfish)", "Skilling • Fishing", 3169, 2541, 0, "Method / Fish: Desert Sole & Catfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small net / Fishing rod");
+		addEntry("fishing_spot", "Fishing Spot (Sea Turtle & Manta Ray)", "Skilling • Fishing", 2074, 2604, 0, "Method / Fish: Sea Turtle & Manta Ray", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon fishing");
+		addEntry("fishing_spot", "Fishing Spot (Shrimp & Anchovies)", "Skilling • Fishing", 3052, 2633, 0, "Method / Fish: Shrimp & Anchovies", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2476, 2696, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2466, 2702, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2465, 2712, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 1183, 2720, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 1173, 2722, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Monkfish)", "Skilling • Fishing", 1587, 2777, 0, "Method / Fish: Anglerfish & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Sandworms / Small net");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Monkfish)", "Skilling • Fishing", 1594, 2783, 0, "Method / Fish: Anglerfish & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Sandworms / Small net");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 1201, 2792, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Monkfish)", "Skilling • Fishing", 1552, 2807, 0, "Method / Fish: Anglerfish & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Sandworms / Small net");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Monkfish)", "Skilling • Fishing", 1547, 2813, 0, "Method / Fish: Anglerfish & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Sandworms / Small net");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3046, 2826, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3048, 2829, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3036, 2834, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3051, 2867, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3037, 2868, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 3048, 2874, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 1586, 2951, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 1899, 2972, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2196, 3067, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2184, 3068, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Karambwan)", "Skilling • Fishing", 2892, 3134, 0, "Method / Fish: Karambwan", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Karambwan vessel + Karambwanji");
+		addEntry("fishing_spot", "Fishing Spot (Karambwan)", "Skilling • Fishing", 2926, 3179, 0, "Method / Fish: Karambwan", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Karambwan vessel + Karambwanji");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Monkfish)", "Skilling • Fishing", 2076, 3189, 0, "Method / Fish: Shark & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Net");
+		addEntry("fishing_spot", "Fishing Spot (Shrimp & Anchovies)", "Skilling • Fishing", 3099, 3194, 0, "Method / Fish: Shrimp & Anchovies", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Monkfish)", "Skilling • Fishing", 2087, 3196, 0, "Method / Fish: Shark & Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Net");
+		addEntry("fishing_spot", "Fishing Spot (Karambwan)", "Skilling • Fishing", 2887, 3196, 0, "Method / Fish: Karambwan", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Karambwan vessel + Karambwanji");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 2163, 3350, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 2164, 3371, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2612, 3413, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Lobster pot");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2828, 3414, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2606, 3417, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Lobster pot");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2605, 3423, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Lobster pot");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2854, 3423, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2860, 3426, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2235, 3428, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2845, 3429, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2227, 3430, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2837, 3431, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Salmon & Trout)", "Skilling • Fishing", 1485, 3432, 0, "Method / Fish: Salmon & Trout", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fly fishing rod + Feathers");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish)", "Skilling • Fishing", 1889, 3436, 0, "Method / Fish: Anglerfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Lobster & Swordfish)", "Skilling • Fishing", 2235, 3445, 0, "Method / Fish: Lobster & Swordfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Cage / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Cod & Bass)", "Skilling • Fishing", 2137, 3537, 0, "Method / Fish: Cod & Bass", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Big fishing net / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Cod & Bass)", "Skilling • Fishing", 2159, 3541, 0, "Method / Fish: Cod & Bass", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Big fishing net / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Cod & Bass)", "Skilling • Fishing", 2131, 3544, 0, "Method / Fish: Cod & Bass", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Big fishing net / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Cod & Bass)", "Skilling • Fishing", 2156, 3551, 0, "Method / Fish: Cod & Bass", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Big fishing net / Harpoon");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Sandworms)", "Skilling • Fishing", 1839, 3595, 0, "Method / Fish: Anglerfish & Sandworms", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Sandworms)", "Skilling • Fishing", 1818, 3603, 0, "Method / Fish: Anglerfish & Sandworms", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Sandworms)", "Skilling • Fishing", 1828, 3605, 0, "Method / Fish: Anglerfish & Sandworms", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Sandworms)", "Skilling • Fishing", 1829, 3614, 0, "Method / Fish: Anglerfish & Sandworms", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish & Sandworms)", "Skilling • Fishing", 1841, 3619, 0, "Method / Fish: Anglerfish & Sandworms", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Sea Turtle)", "Skilling • Fishing", 2077, 3674, 0, "Method / Fish: Shark & Sea Turtle", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon fishing");
+		addEntry("fishing_spot", "Fishing Spot (Monkfish)", "Skilling • Fishing", 2329, 3701, 0, "Method / Fish: Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Monkfish)", "Skilling • Fishing", 2348, 3702, 0, "Method / Fish: Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Monkfish)", "Skilling • Fishing", 2344, 3719, 0, "Method / Fish: Monkfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Shrimp & Anchovies)", "Skilling • Fishing", 1887, 3764, 0, "Method / Fish: Shrimp & Anchovies", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2401, 3780, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Cage");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2417, 3783, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Cage");
+		addEntry("fishing_spot", "Fishing Spot (Shark & Lobster)", "Skilling • Fishing", 2420, 3789, 0, "Method / Fish: Shark & Lobster", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Harpoon / Cage");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish)", "Skilling • Fishing", 1763, 3796, 0, "Method / Fish: Anglerfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish)", "Skilling • Fishing", 1746, 3802, 0, "Method / Fish: Anglerfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Volcanic Ash & Seaweed)", "Skilling • Fishing", 3042, 4510, 0, "Method / Fish: Seaweed & Drift Net", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Drift net fishing");
+		addEntry("fishing_spot", "Fishing Spot (Sacred Eel)", "Skilling • Fishing", 2680, 4702, 0, "Method / Fish: Sacred Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Sacred Eel)", "Skilling • Fishing", 2674, 4708, 0, "Method / Fish: Sacred Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Sacred Eel)", "Skilling • Fishing", 2669, 4710, 0, "Method / Fish: Sacred Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Infernal Eel)", "Skilling • Fishing", 2694, 5225, 0, "Method / Fish: Infernal Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Infernal Eel)", "Skilling • Fishing", 2747, 5229, 0, "Method / Fish: Infernal Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3276, 5454, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3309, 5456, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3341, 5456, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Crystal Eel)", "Skilling • Fishing", 1971, 5854, 0, "Method / Fish: Crystal Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Crystal rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Camdozaal Tetra)", "Skilling • Fishing", 2090, 5913, 0, "Method / Fish: Camdozaal Tetra", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Camdozaal Tetra)", "Skilling • Fishing", 2089, 6047, 0, "Method / Fish: Camdozaal Tetra", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 1693, 6099, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Dark Crab & Lava Eel)", "Skilling • Fishing", 3187, 6102, 0, "Method / Fish: Dark Crab & Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Lobster pot + Dark fishing bait");
+		addEntry("fishing_spot", "Fishing Spot (Dark Crab & Lava Eel)", "Skilling • Fishing", 3188, 6123, 0, "Method / Fish: Dark Crab & Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Lobster pot + Dark fishing bait");
+		addEntry("fishing_spot", "Fishing Spot (Dark Crab & Lava Eel)", "Skilling • Fishing", 3259, 6180, 0, "Method / Fish: Dark Crab & Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Lobster pot + Dark fishing bait");
+		addEntry("fishing_spot", "Fishing Spot (Dark Crab & Lava Eel)", "Skilling • Fishing", 3251, 6182, 0, "Method / Fish: Dark Crab & Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Lobster pot + Dark fishing bait");
+		addEntry("fishing_spot", "Fishing Spot (Shrimp & Anchovies)", "Skilling • Fishing", 2718, 6197, 0, "Method / Fish: Shrimp & Anchovies", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Dark Crab & Lava Eel)", "Skilling • Fishing", 3259, 6197, 0, "Method / Fish: Dark Crab & Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Lobster pot + Dark fishing bait");
+		addEntry("fishing_spot", "Fishing Spot (Cam Torum Tetra)", "Skilling • Fishing", 2710, 7819, 0, "Method / Fish: Cam Torum Tetra", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Cam Torum Tetra)", "Skilling • Fishing", 2721, 7825, 0, "Method / Fish: Cam Torum Tetra", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Small fishing net");
+		addEntry("fishing_spot", "Fishing Spot (Lava Eel)", "Skilling • Fishing", 2611, 8598, 0, "Method / Fish: Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Lava Eel)", "Skilling • Fishing", 2725, 8845, 0, "Method / Fish: Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3355, 9566, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3371, 9577, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3362, 9588, 0, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Lava Eel)", "Skilling • Fishing", 1501, 9698, 0, "Method / Fish: Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Anglerfish)", "Skilling • Fishing", 1317, 9785, 0, "Method / Fish: Anglerfish", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Sandworms");
+		addEntry("fishing_spot", "Fishing Spot (Lava Eel)", "Skilling • Fishing", 1521, 9689, 1, "Method / Fish: Lava Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Oily fishing rod + Bait");
+		addEntry("fishing_spot", "Fishing Spot (Cave Eel)", "Skilling • Fishing", 3741, 10298, 1, "Method / Fish: Cave Eel", "Tools: Net, Rod + Bait, Pot, or Harpoon", "Fishing rod + Bait");
 	}
 
 	/** Mining sites, by ore. */
@@ -1907,6 +2012,70 @@ public final class PoiDetails
 		addEntry("mining_site", "Ynysdail Mining Site", "Skilling • Mining", 2224, 3476, 0, "Ores available: Iron, Nickel", "Tool needed: Pickaxe (Bronze to Crystal)", "Check Mining skill guide for ore levels");
 		addEntry("mining_site", "Ynysdail Cavern North Mining Site", "Skilling • Mining", 2267, 9892, 0, "Ores available: Mithril, Adamantite", "Tool needed: Pickaxe (Bronze to Crystal)", "Check Mining skill guide for ore levels");
 		addEntry("mining_site", "Ynysdail Cavern West Mining Site", "Skilling • Mining", 2249, 9878, 0, "Ores available: Mithril, Runite", "Tool needed: Pickaxe (Bronze to Crystal)", "Check Mining skill guide for ore levels");
+		addEntry("mining_site", "Sunstone & Iron Mining Site", "Skilling • Mining", 2614, 2237, 0, "Ores available: Sunstone, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Sunstone used for craftables");
+		addEntry("mining_site", "Sunstone & Iron Mining Site", "Skilling • Mining", 2598, 2239, 0, "Ores available: Sunstone, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Sunstone used for craftables");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 3107, 3012, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Desert mining");
+		addEntry("mining_site", "Clay & Iron Mining Site", "Skilling • Mining", 3464, 3038, 0, "Ores available: Clay, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Uzer mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 2908, 3362, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Taverley mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 2698, 3506, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Ardougne mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 1491, 3847, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Lovakengj mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2485, 4373, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2775, 4420, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2724, 4434, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2784, 4436, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2791, 4436, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2750, 4437, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2804, 4445, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 3025, 4490, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Volcanic Ash & Iron Mining Site", "Skilling • Mining", 2723, 4491, 0, "Ores available: Volcanic Ash, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island mine");
+		addEntry("mining_site", "Coal, Mithril & Adamantite Mining Site", "Skilling • Mining", 2810, 4577, 0, "Ores available: Coal, Mithril, Adamantite, Runite", "Tool needed: Pickaxe (Bronze to Crystal)", "Blast Mine");
+		addEntry("mining_site", "Coal, Mithril & Adamantite Mining Site", "Skilling • Mining", 2783, 4594, 0, "Ores available: Coal, Mithril, Adamantite, Runite", "Tool needed: Pickaxe (Bronze to Crystal)", "Blast Mine");
+		addEntry("mining_site", "Silver & Gold Mining Site", "Skilling • Mining", 2004, 5865, 0, "Ores available: Silver, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Lunar Isle mine");
+		addEntry("mining_site", "Tephra & Soft Clay Mining Site", "Skilling • Mining", 3026, 6041, 0, "Ores available: Tephra, Soft clay", "Tool needed: Pickaxe (Bronze to Crystal)", "Zalcano / Prifddinas");
+		addEntry("mining_site", "Tephra & Soft Clay Mining Site", "Skilling • Mining", 3041, 6041, 0, "Ores available: Tephra, Soft clay", "Tool needed: Pickaxe (Bronze to Crystal)", "Zalcano / Prifddinas");
+		addEntry("mining_site", "Tephra & Soft Clay Mining Site", "Skilling • Mining", 3026, 6058, 0, "Ores available: Tephra, Soft clay", "Tool needed: Pickaxe (Bronze to Crystal)", "Zalcano / Prifddinas");
+		addEntry("mining_site", "Tephra & Soft Clay Mining Site", "Skilling • Mining", 3041, 6058, 0, "Ores available: Tephra, Soft clay", "Tool needed: Pickaxe (Bronze to Crystal)", "Zalcano / Prifddinas");
+		addEntry("mining_site", "Iron, Coal & Mithril Mining Site", "Skilling • Mining", 2726, 6103, 0, "Ores available: Iron, Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Prifddinas North");
+		addEntry("mining_site", "Barronite Mining Site", "Skilling • Mining", 1939, 6352, 0, "Ores available: Barronite", "Tool needed: Pickaxe (Bronze to Crystal)", "Camdozaal mine");
+		addEntry("mining_site", "Barronite Mining Site", "Skilling • Mining", 1961, 6368, 0, "Ores available: Barronite", "Tool needed: Pickaxe (Bronze to Crystal)", "Camdozaal mine");
+		addEntry("mining_site", "Barronite Mining Site", "Skilling • Mining", 1935, 6373, 0, "Ores available: Barronite", "Tool needed: Pickaxe (Bronze to Crystal)", "Camdozaal mine");
+		addEntry("mining_site", "Iron, Coal & Mithril Mining Site", "Skilling • Mining", 3035, 6448, 0, "Ores available: Iron, Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Isle of Souls mine");
+		addEntry("mining_site", "Iron, Coal & Mithril Mining Site", "Skilling • Mining", 3043, 6448, 0, "Ores available: Iron, Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Isle of Souls mine");
+		addEntry("mining_site", "Coal, Mithril & Adamantite Mining Site", "Skilling • Mining", 2616, 8593, 0, "Ores available: Coal, Mithril, Adamantite", "Tool needed: Pickaxe (Bronze to Crystal)", "Cavern mine");
+		addEntry("mining_site", "Silver & Iron Mining Site", "Skilling • Mining", 2225, 8721, 0, "Ores available: Silver, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Dorgesh-Kaan mine");
+		addEntry("mining_site", "Silver & Iron Mining Site", "Skilling • Mining", 2222, 8747, 0, "Ores available: Silver, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Dorgesh-Kaan mine");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 2635, 8849, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Taverley Dungeon");
+		addEntry("mining_site", "Gold & Silver Mining Site", "Skilling • Mining", 2152, 9301, 0, "Ores available: Gold, Silver", "Tool needed: Pickaxe (Bronze to Crystal)", "TzHaar mine");
+		addEntry("mining_site", "Gold & Silver Mining Site", "Skilling • Mining", 2135, 9308, 0, "Ores available: Gold, Silver", "Tool needed: Pickaxe (Bronze to Crystal)", "TzHaar mine");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3088, 9499, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Mining Guild");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3075, 9505, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Mining Guild");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3421, 9631, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Haunted Mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 3310, 9645, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Mining site");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3420, 9646, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Haunted Mine");
+		addEntry("mining_site", "Sulfur & Coal Mining Site", "Skilling • Mining", 1582, 9659, 0, "Ores available: Sulfur, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Sulfur mine");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3384, 9749, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Lumbridge Swamp Caves");
+		addEntry("mining_site", "Coal & Mithril Mining Site", "Skilling • Mining", 3384, 9813, 0, "Ores available: Coal, Mithril", "Tool needed: Pickaxe (Bronze to Crystal)", "Lumbridge Swamp Caves");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 1468, 10101, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Catacombs mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 2911, 10310, 0, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Slayer Tower mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1635, 5328, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1763, 5328, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1649, 5333, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1777, 5333, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1656, 5350, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Pay-dirt & Gold Mining Site", "Skilling • Mining", 1784, 5350, 1, "Ores available: Pay-dirt, Gold", "Tool needed: Pickaxe (Bronze to Crystal)", "Motherlode Mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 1937, 9020, 1, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Keldagrim mine");
+		addEntry("mining_site", "Iron & Coal Mining Site", "Skilling • Mining", 1978, 9041, 1, "Ores available: Iron, Coal", "Tool needed: Pickaxe (Bronze to Crystal)", "Keldagrim mine");
+		addEntry("mining_site", "Coal & Iron Mining Site", "Skilling • Mining", 1511, 9540, 1, "Ores available: Coal, Iron", "Tool needed: Pickaxe (Bronze to Crystal)", "Lovakengj Upper");
+		addEntry("mining_site", "Volcanic Ash Mining Site", "Skilling • Mining", 3889, 9749, 1, "Ores available: Volcanic Ash", "Tool needed: Pickaxe (Bronze to Crystal)", "Fossil Island");
+		addEntry("mining_site", "Basalt & Salt Mining Site", "Skilling • Mining", 2386, 4628, 2, "Ores available: Basalt, Salt", "Tool needed: Pickaxe (Bronze to Crystal)", "Weiss mine");
+		addEntry("mining_site", "Basalt & Salt Mining Site", "Skilling • Mining", 3672, 9751, 2, "Ores available: Basalt, Salt", "Tool needed: Pickaxe (Bronze to Crystal)", "Salt mine");
+		addEntry("mining_site", "Basalt & Salt Mining Site", "Skilling • Mining", 3688, 9756, 2, "Ores available: Basalt, Salt", "Tool needed: Pickaxe (Bronze to Crystal)", "Salt mine");
+		addEntry("mining_site", "Basalt & Salt Mining Site", "Skilling • Mining", 3675, 9766, 2, "Ores available: Basalt, Salt", "Tool needed: Pickaxe (Bronze to Crystal)", "Salt mine");
+		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2333, 10318, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
+		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2358, 10325, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
+		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2318, 10327, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
+		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2317, 10342, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
+		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2356, 10347, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
 	}
 
 	/** Fixed travel links: fairy rings, spirit trees, ships, carpets, quetzals. */
@@ -2135,6 +2304,12 @@ public final class PoiDetails
 		{
 			return getDetailByPosition(worldX, worldY, plane, 6);
 		}
+		if (poi.getKey() != null && poi.getKey().startsWith("cache_icon_"))
+		{
+			return new Detail(poi.getName(), "Other map icons", List.of(
+				"Unidentified world-map icon from the game cache"
+			));
+		}
 
 		// 1. Direct exact lookup by coordinate key
 		final Entry exact = EXACT_MAP.get(pointKey(worldX, worldY, plane));
@@ -2316,6 +2491,10 @@ public final class PoiDetails
 				case "house_portal":
 					return new Detail(name, "Travel", List.of(
 						"Player-owned house portal"
+					));
+				case "mooring_point":
+					return new Detail(name, "Travel", List.of(
+						"Ship mooring point"
 					));
 				case "poll_booth":
 					return new Detail(name, "Tutors and services", List.of(

@@ -247,6 +247,7 @@ class MapMarkerRenderer
 	private final MapFinder finder;
 	private final MapRenderStats stats;
 	private final DungeonPieceIndex dungeonPieceIndex;
+	private final List<PoiIconHit> visiblePoiIcons = new ArrayList<>();
 	private BufferedImage dungeonExclamation;
 	private BufferedImage dungeonExclamationGreen;
 	private BufferedImage boatSloopIcon;
@@ -511,6 +512,7 @@ class MapMarkerRenderer
 	 */
 	void drawPoiIcons(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
+		visiblePoiIcons.clear();
 		if (!anyPoiCategoryEnabled() || camera.getZoom() < ICON_ZOOM_THRESHOLD)
 		{
 			return;
@@ -552,6 +554,7 @@ class MapMarkerRenderer
 
 			graphics.drawImage(icon, rect.x, rect.y, null);
 			placed.add(rect);
+			visiblePoiIcons.add(new PoiIconHit(rect, poi));
 			stats.iconsDrawn++;
 		});
 
@@ -580,6 +583,31 @@ class MapMarkerRenderer
 				placed.add(rect);
 				stats.iconsDrawn++;
 			});
+		}
+	}
+
+	PoiIndex.Poi visiblePoiIconAt(java.awt.Point cursor)
+	{
+		for (int i = visiblePoiIcons.size() - 1; i >= 0; i--)
+		{
+			final PoiIconHit hit = visiblePoiIcons.get(i);
+			if (hit.bounds.contains(cursor))
+			{
+				return hit.poi;
+			}
+		}
+		return null;
+	}
+
+	private static final class PoiIconHit
+	{
+		private final Rectangle bounds;
+		private final PoiIndex.Poi poi;
+
+		private PoiIconHit(Rectangle bounds, PoiIndex.Poi poi)
+		{
+			this.bounds = bounds;
+			this.poi = poi;
 		}
 	}
 

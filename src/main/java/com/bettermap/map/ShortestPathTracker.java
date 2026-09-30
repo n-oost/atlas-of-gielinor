@@ -212,7 +212,7 @@ public class ShortestPathTracker
 
 	private void postTargetIfAvailable(WorldPoint destination)
 	{
-		if (mapConfig.useExternalShortestPathSettings() && isAvailable())
+		if (isAvailable())
 		{
 			try
 			{

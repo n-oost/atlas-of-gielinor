@@ -360,6 +360,10 @@ public class WorldPointUtil
 	public static int fromLocalInstance(Client client, LocalPoint localPoint)
 	{
 		WorldView worldView = client.getWorldView(localPoint.getWorldView());
+		if (worldView == null)
+		{
+			return UNDEFINED;
+		}
 		int plane = worldView.getPlane();
 
 		if (!worldView.isInstance())
@@ -381,6 +385,13 @@ public class WorldPointUtil
 		int chunkY = sceneY / CHUNK_SIZE;
 
 		// get the template chunk for the chunk
+		if (instanceTemplateChunks == null || plane < 0 || plane >= instanceTemplateChunks.length
+			|| instanceTemplateChunks[plane] == null || chunkX < 0 || chunkX >= instanceTemplateChunks[plane].length
+			|| instanceTemplateChunks[plane][chunkX] == null || chunkY < 0
+			|| chunkY >= instanceTemplateChunks[plane][chunkX].length)
+		{
+			return UNDEFINED;
+		}
 		int templateChunk = instanceTemplateChunks[plane][chunkX][chunkY];
 
 		int rotation = unpackChunkRotation(templateChunk);

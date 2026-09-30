@@ -317,7 +317,7 @@
 17	1301	0	Tiles (dump leftover) (island 5)	2536	9692	2551	9703	5709	-6421	0	0	0	-
 18	1301	0	Tiles (dump leftover) (island 6)	2532	9616	2539	9623	5709	-6421	0	0	0	-
 19	1007	0	Asgarnian Ice Dungeon	2820	9536	3087	9601	0	-6400	0	1	0	asgarnia_ice_cave
-20	1016	0	Rashiliyia's Tomb	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
+20	1007	0	Asgarnian Ice Dungeon (island 2)	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
 23	1008	0	Banana plantation	2684	9156	2743	9211	0	-6400	0	0	0	-
 24	1009	0	Barbarian Assault Room	1864	5448	1911	5494	647	-1889	0	1	0	barbarian_assault
 25	1009	0	Barbarian Assault Queen Room	1860	5388	1911	5427	647	-1825	0	1	0	barbarian_assault
@@ -500,6 +500,7 @@
 239	1301	1	Tiles (dump leftover) (island 2)	3876	9664	3887	9671	5698	-6422	0	0	0	-
 240	1204	0	Jiggig Dungeon	2436	9412	2491	9460	0	-6400	0	1	0	jiggig_dungeon
 241	1154	0	Smoke Dungeon	3165	9344	3330	9407	104	-6418	0	1	0	smoke_dungeon
+242	1140	0	Shadow Dungeon	2618	5056	2751	5120	-42	-1600	0	0	0	shadow_dungeon
 243	1156	0	Sophanem Dungeon	2236	4280	2312	4359	1020	-1514	0	0	0	sophanem_dungeon
 447	1156	0	Sophanem Dungeon (Maze)	2368	4225	2430	4286	888	-1506	0	0	0	sophanem_dungeon
 244	1158	0	Stalker Den	1240	9728	1339	9840	10	-6401	0	1	0	stalker_den
@@ -832,7 +833,7 @@
 645	1301	0	Tiles (dump leftover) (island 7)	2372	5000	2427	5055	5705	-1481	0	0	0	-
 646	1301	0	Tiles (dump leftover) (island 8)	2496	4928	2560	4987	5705	-1481	0	0	0	-
 647	1301	0	Tiles (dump leftover) (island 9)	2368	4928	2427	4991	5705	-1481	0	0	0	-
-648	1044	0	Nex Bank	2848	5187	2942	5237	654	-2306	0	0	0	pyramid_plunder
+648	1140	0	Nex Bank	2848	5187	2942	5237	654	-2306	0	0	0	pyramid_plunder
 650	1358	0	Stronghold of Security (Catacomb of Famine)	1984	5184	2046	5246	1094	-1822	0	1	0	stronghold_of_security
 651	1301	0	Tiles (dump leftover) (island 1)	2432	9728	2443	9735	5710	-6421	0	0	0	-
 653	1301	0	Tiles (dump leftover) (island 1)	2764	9696	2971	9855	5709	-6421	0	0	0	-
@@ -1089,3 +1090,4 @@
 623	1250	0	Entrana Dungeon (island 2)	2819	9771	2845	9777	-2	-6399	0	1	0	-
 624	1250	0	Entrana Dungeon (island 3)	2822	9778	2843	9782	-2	-6399	0	1	0	-
 294	1305	0	Under Civitas illa Fortis (island 1)	1611	9472	1730	9533	0	-6400	0	1	0	fortis_barracks
+900	60	0	Wyrmscraig Cavern	2560	8576	2623	8671	-40	-6400	0	1	0	wyrmscraig_cavern

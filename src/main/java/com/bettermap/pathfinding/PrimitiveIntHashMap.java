@@ -82,6 +82,7 @@ public class PrimitiveIntHashMap<V>
 		// world points of nearby tiles differ only in a few low bits, so the cheap xor-shift mix used
 		// previously left spatially-clustered transport origins clustered in the table too -> long
 		// probe runs on the per-tile miss lookups. Fibonacci-style multiply + xorshift spreads them.
+		// Overflow is intentional: multiplication modulo 2^32 provides the bit mixing.
 		int h = value * 0x9E3779B1;
 		return h ^ (h >>> 16);
 	}
@@ -169,7 +170,7 @@ public class PrimitiveIntHashMap<V>
 		}
 
 		int i = (hash(key) & 0x7FFFFFFF) & mask;
-		while (values[i] != null)
+		for (int probes = 0; values[i] != null; probes++)
 		{
 			if (keys[i] == key)
 			{
@@ -195,6 +196,11 @@ public class PrimitiveIntHashMap<V>
 				}
 				return previous;
 			}
+			if (probes >= capacity - 1)
+			{
+				rehash();
+				return put(key, value);
+			}
 			i = (i + 1) & mask;
 		}
 
@@ -207,7 +213,7 @@ public class PrimitiveIntHashMap<V>
 	private int findSlot(int key)
 	{
 		int i = (hash(key) & 0x7FFFFFFF) & mask;
-		while (values[i] != null)
+		for (int probes = 0; values[i] != null && probes < capacity; probes++)
 		{
 			if (keys[i] == key)
 			{

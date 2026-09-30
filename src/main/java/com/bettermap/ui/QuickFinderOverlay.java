@@ -84,6 +84,10 @@ public class QuickFinderOverlay extends Overlay
 		if (!config.showFinderOrb() || camera.isActive())
 		{
 			camera.setQuickFinderOrb(null);
+			if (camera.isFinderStandalone())
+			{
+				camera.setFinderPanelOpen(false);
+			}
 			return null;
 		}
 
@@ -91,6 +95,10 @@ public class QuickFinderOverlay extends Overlay
 		if (worldMapOrb == null)
 		{
 			camera.setQuickFinderOrb(null);
+			if (camera.isFinderStandalone())
+			{
+				camera.setFinderPanelOpen(false);
+			}
 			return null;
 		}
 

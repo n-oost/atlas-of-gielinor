@@ -179,6 +179,7 @@ public class MapCamera
 	{
 		private final Rectangle rowBounds;
 		private final Rectangle walkBounds;
+		private final Rectangle mapBounds;
 		private final WorldPoint point;
 		private final String name;
 		private final MapFinder.Result result;
@@ -196,8 +197,14 @@ public class MapCamera
 
 		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result, MapRegion region)
 		{
+			this(rowBounds, walkBounds, null, point, name, result, region);
+		}
+
+		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, Rectangle mapBounds, WorldPoint point, String name, MapFinder.Result result, MapRegion region)
+		{
 			this.rowBounds = rowBounds;
 			this.walkBounds = walkBounds;
+			this.mapBounds = mapBounds;
 			this.point = point;
 			this.name = name;
 			this.result = result;
@@ -212,6 +219,11 @@ public class MapCamera
 		public Rectangle getWalkBounds()
 		{
 			return walkBounds;
+		}
+
+		public Rectangle getMapBounds()
+		{
+			return mapBounds;
 		}
 
 		public WorldPoint getPoint()
@@ -240,14 +252,21 @@ public class MapCamera
 	{
 		private final Rectangle rowBounds;
 		private final Rectangle walkBounds;
+		private final Rectangle mapBounds;
 		private final WorldPoint point;
 		private final String name;
 		private final MapFinder.Result result;
 
 		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result)
 		{
+			this(rowBounds, walkBounds, null, point, name, result);
+		}
+
+		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, Rectangle mapBounds, WorldPoint point, String name, MapFinder.Result result)
+		{
 			this.rowBounds = rowBounds;
 			this.walkBounds = walkBounds;
+			this.mapBounds = mapBounds;
 			this.point = point;
 			this.name = name;
 			this.result = result;
@@ -266,6 +285,11 @@ public class MapCamera
 		public Rectangle getWalkBounds()
 		{
 			return walkBounds;
+		}
+
+		public Rectangle getMapBounds()
+		{
+			return mapBounds;
 		}
 
 		public WorldPoint getPoint()

@@ -35,6 +35,12 @@ import com.bettermap.map.PoiIndex;
 import com.bettermap.map.ShopIndex;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+import java.util.ArrayList;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
@@ -94,21 +100,14 @@ public class PoiTooltipBuilder
 	{
 		if (detail != null)
 		{
-			final TooltipCard card = new TooltipCard(detail.getTitle(), icon);
-			card.setPreserveCompactLines(compact);
+			final String title = compact ? resolveCompactPoiName(detail, poi) : cleanPoiName(detail.getTitle());
+			final TooltipCard card = new TooltipCard(title, icon);
+			card.setPreserveCompactLines(false);
 			if (!compact && detail.getCategory() != null && !detail.getCategory().isEmpty())
 			{
 				card.addLine("[" + detail.getCategory() + "]");
 			}
-			if (compact && poi != null && "transportation".equals(poi.getKey()))
-			{
-				card.addLines(PoiDetails.compactTeleportLines(detail.getTitle()));
-			}
-			else if (compact && poi != null && PoiCategory.of(poi.getKey()) == PoiCategory.SKILLING)
-			{
-				card.addLines(PoiDetails.compactSkillingLines(detail.getTitle(), detail.getLines()));
-			}
-			else if (!compact)
+			if (!compact)
 			{
 				card.addLines(detail.getLines());
 			}
@@ -116,7 +115,9 @@ public class PoiTooltipBuilder
 		}
 		else if (poi != null && poi.getName() != null && !poi.getName().isEmpty())
 		{
-			final TooltipCard card = new TooltipCard(poi.getName(), icon);
+			final String name = compact ? resolveCompactPoiName(null, poi) : cleanPoiName(poi.getName());
+			final TooltipCard card = new TooltipCard(name, icon);
+			card.setPreserveCompactLines(false);
 			if (!compact)
 			{
 				card.addLine("[" + PoiCategory.of(poi.getKey()).name() + "]");
@@ -124,6 +125,187 @@ public class PoiTooltipBuilder
 			return card;
 		}
 		return null;
+	}
+
+	public static String cleanPoiName(String title)
+	{
+		if (title == null)
+		{
+			return "";
+		}
+		if ("Wyrmscraig chest".equalsIgnoreCase(title))
+		{
+			return "Bank chest";
+		}
+		// Strip redundant "Wyrmscraig " prefix from generic POIs, keeping unique shops
+		if (title.startsWith("Wyrmscraig ") && !title.equals("Where Wyrmscraig's Wear Wares Were"))
+		{
+			final String stripped = title.substring("Wyrmscraig ".length()).trim();
+			if (!stripped.isEmpty())
+			{
+				return Character.toUpperCase(stripped.charAt(0)) + stripped.substring(1);
+			}
+		}
+		return title;
+	}
+
+	public static String resolveCompactPoiName(PoiDetails.Detail detail, PoiIndex.Poi poi)
+	{
+		final String rawTitle = detail != null ? detail.getTitle() : (poi != null ? poi.getName() : null);
+		final String title = cleanPoiName(rawTitle);
+		final String poiName = poi != null ? cleanPoiName(poi.getName()) : null;
+		final String key = poi != null ? poi.getKey() : "";
+		final String cat = detail != null ? detail.getCategory() : "";
+		final List<String> lines = detail != null ? detail.getLines() : Collections.emptyList();
+
+		if ("Wyrmscraig chest".equalsIgnoreCase(poiName) || "Wyrmscraig chest".equalsIgnoreCase(title))
+		{
+			return "Bank chest";
+		}
+
+		// 1. Fishing spots -> fish
+		if ("fishing_spot".equals(key) || (cat != null && cat.contains("Fishing")) || (title != null && title.toLowerCase().contains("fishing")))
+		{
+			if (title != null)
+			{
+				final Matcher m = Pattern.compile("Fishing [Ss]pot \\((.+?)\\)").matcher(title);
+				if (m.find())
+				{
+					return mapFishAlias(m.group(1).trim());
+				}
+			}
+			if (lines != null)
+			{
+				for (String line : lines)
+				{
+					for (String prefix : new String[]{"Method / Fish: ", "Fish: ", "Catch: "})
+					{
+						if (line.startsWith(prefix))
+						{
+							return mapFishAlias(line.substring(prefix.length()).trim());
+						}
+					}
+				}
+			}
+			if (poiName != null && !poiName.equalsIgnoreCase("Fishing spot") && !poiName.equalsIgnoreCase("fishing_spot"))
+			{
+				return poiName;
+			}
+			return "Fishing spot";
+		}
+
+		// 2. Mining sites -> minerals
+		if ("mining_site".equals(key) || (cat != null && cat.contains("Mining")) || (title != null && title.toLowerCase().contains("mine")))
+		{
+			if (lines != null)
+			{
+				for (String line : lines)
+				{
+					for (String prefix : new String[]{"Ores available: ", "Ores: "})
+					{
+						if (line.startsWith(prefix))
+						{
+							return cleanMineralList(line.substring(prefix.length()).trim());
+						}
+					}
+				}
+			}
+			if (title != null && title.endsWith(" Mining Site"))
+			{
+				final String prefix = title.substring(0, title.length() - " Mining Site".length()).trim();
+				if (!prefix.isEmpty() && !prefix.equalsIgnoreCase("Mining"))
+				{
+					return prefix;
+				}
+			}
+			if (poiName != null && !poiName.equalsIgnoreCase("Mining site") && !poiName.equalsIgnoreCase("mining_site"))
+			{
+				return poiName;
+			}
+			return "Mining site";
+		}
+
+		// 3. Farming patches -> patch type
+		if ("farming_patch".equals(key) || (cat != null && cat.contains("Farming")) || (title != null && (title.toLowerCase().contains("farming") || title.toLowerCase().contains("patch"))))
+		{
+			String t = title != null ? title : (poiName != null ? poiName : "Farming patch");
+			t = t.replaceFirst("\\s*\\(Level \\d+\\+?\\)$", "").trim();
+			if (t.contains(" - "))
+			{
+				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
+			}
+			t = t.replaceFirst("(?i)\\s+Farming Patch$", " patch").trim();
+			t = t.replace("/", ", ");
+			return t;
+		}
+
+		// 4. Rare trees -> tree type
+		if ("rare_trees".equals(key) || (cat != null && cat.contains("Woodcutting")) || (title != null && title.toLowerCase().contains("tree")))
+		{
+			String t = title != null ? title : (poiName != null ? poiName : "Rare trees");
+			t = t.replaceFirst("\\s*\\(Level \\d+\\)$", "").trim();
+			if (t.contains(" - "))
+			{
+				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
+			}
+			return t;
+		}
+
+		return title != null ? title : (poiName != null ? poiName : "");
+	}
+
+	private static String mapFishAlias(String fish)
+	{
+		if ("Salmon".equalsIgnoreCase(fish)) return "Salmon & Trout";
+		if ("Lobster".equalsIgnoreCase(fish)) return "Lobster & Swordfish";
+		if ("Shrimp".equalsIgnoreCase(fish)) return "Shrimp & Anchovies";
+		return fish;
+	}
+
+	private static String cleanMineralList(String ores)
+	{
+		if (ores == null || ores.isEmpty())
+		{
+			return "Mining site";
+		}
+		final String noLevels = ores.replaceAll("\\s*\\(\\d+\\)", "").trim();
+		final String[] parts = noLevels.split(",");
+		final List<String> list = new ArrayList<>();
+		final Set<String> seen = new HashSet<>();
+		for (String part : parts)
+		{
+			final String item = part.trim();
+			if (!item.isEmpty() && seen.add(item.toLowerCase()))
+			{
+				list.add(item);
+			}
+		}
+		if (list.isEmpty())
+		{
+			return "Mining site";
+		}
+		if (list.size() == 1)
+		{
+			return list.get(0);
+		}
+		if (list.size() == 2)
+		{
+			return list.get(0) + " & " + list.get(1);
+		}
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (i > 0 && i < list.size() - 1)
+			{
+				sb.append(", ");
+			}
+			else if (i == list.size() - 1)
+			{
+				sb.append(" & ");
+			}
+			sb.append(list.get(i));
+		}
+		return sb.toString();
 	}
 
 	/**

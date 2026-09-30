@@ -27,7 +27,10 @@ package com.bettermap.ui.tooltips;
 import com.bettermap.map.PoiDetails;
 import com.bettermap.map.PoiIndex;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.List;
+import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -211,5 +214,48 @@ public class PoiTooltipBuilderTest
 		final PoiDetails.Detail yewDetail = PoiDetails.getDetail(yewPoi, 2543, 2184, 0);
 		assertNotNull(yewDetail);
 		assertEquals("Yew trees", builder.buildPoiCard(yewDetail, yewPoi, dummyIcon, true).getTitle());
+	}
+
+	@Test
+	public void hunterTrainingAndRareTreesCompactAndExpandedResolveCleanly()
+	{
+		// Wyrmscraig goats (hunter_training)
+		final PoiIndex.Poi goatPoi = new PoiIndex.Poi(2572, 2195, 0, "hunter_training", "Goats");
+		final PoiDetails.Detail goatDetail = PoiDetails.getDetail(goatPoi, 2572, 2195, 0);
+		assertNotNull(goatDetail);
+		// Compact format shows creature without level or "Wyrmscraig" prefix
+		assertEquals("Goats", builder.buildPoiCard(goatDetail, goatPoi, dummyIcon, true).getTitle());
+		// Expanded shows full title
+		assertEquals("Goats (Level 60)", builder.buildPoiCard(goatDetail, goatPoi, dummyIcon, false).getTitle());
+
+		// Red chinchompas with region prefix
+		final PoiIndex.Poi chinPoi = new PoiIndex.Poi(2558, 2912, 0, "hunter_training", "Hunter training");
+		final PoiDetails.Detail chinDetail = PoiDetails.getDetail(chinPoi, 2558, 2912, 0);
+		assertEquals("Red Chinchompas", builder.buildPoiCard(chinDetail, chinPoi, dummyIcon, true).getTitle());
+
+		// Raw RuneLite tooltip strings without parentheses: "wyrmscraig goats 60"
+		final PoiDetails.Detail rawRlDetail = new PoiDetails.Detail("wyrmscraig goats 60", "Skilling • Hunter", Collections.emptyList());
+		assertEquals("Goats", builder.buildPoiCard(rawRlDetail, goatPoi, dummyIcon, true).getTitle());
+
+		// Rare trees: "Yew tree 60" or "Yew tree (60)"
+		final PoiDetails.Detail rawTreeDetail = new PoiDetails.Detail("Yew tree 60", "Skilling • Woodcutting", Collections.emptyList());
+		final PoiIndex.Poi treePoi = new PoiIndex.Poi(2562, 2191, 0, "rare_trees", "Teak trees");
+		assertEquals("Yew tree", builder.buildPoiCard(rawTreeDetail, treePoi, dummyIcon, true).getTitle());
+
+		// Wyrmscraig Teak trees
+		final PoiDetails.Detail teakDetail = PoiDetails.getDetail(treePoi, 2562, 2191, 0);
+		assertNotNull(teakDetail);
+		assertEquals("Teak trees", builder.buildPoiCard(teakDetail, treePoi, dummyIcon, true).getTitle());
+	}
+
+	@Test
+	public void runeLitePointCardCleansWyrmscraigPrefix()
+	{
+		final WorldMapPoint pt = new WorldMapPoint(new WorldPoint(2572, 2195, 0), dummyIcon);
+		pt.setName("Wyrmscraig goats");
+		pt.setTooltip("Level 60");
+		final TooltipCard card = builder.buildRuneLitePointCard(pt);
+		assertNotNull(card);
+		assertEquals("Goats", card.getTitle());
 	}
 }

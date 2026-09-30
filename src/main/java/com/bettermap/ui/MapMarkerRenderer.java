@@ -591,7 +591,9 @@ class MapMarkerRenderer
 		for (int i = visiblePoiIcons.size() - 1; i >= 0; i--)
 		{
 			final PoiIconHit hit = visiblePoiIcons.get(i);
-			if (hit.bounds.contains(cursor))
+			final Rectangle r = hit.bounds;
+			if (cursor.x >= r.x - 3 && cursor.x <= r.x + r.width + 3
+				&& cursor.y >= r.y - 3 && cursor.y <= r.y + r.height + 3)
 			{
 				return hit.poi;
 			}

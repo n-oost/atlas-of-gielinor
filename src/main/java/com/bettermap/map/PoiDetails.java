@@ -1454,6 +1454,8 @@ public final class PoiDetails
 		addEntry("rare_trees", "Tear of the Soul - Yew trees (Level 60)", "Skilling • Woodcutting", 2319, 2774, 0, "Trees: Yew tree", "Level requirement: Level 60 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Region: Tear of the Soul (Sailing)");
 		addEntry("rare_trees", "Deepfin Point - Rare Trees (Level 15–60)", "Skilling • Woodcutting", 1925, 2758, 0, "Trees: Oak (15), Yew (60)", "Level requirement: Level 15 / 60 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Region: Deepfin Point (Sailing)");
 		addEntry("rare_trees", "Laguna Aurorae - Yew trees (Level 60)", "Skilling • Woodcutting", 1204, 2733, 0, "Trees: Yew tree", "Level requirement: Level 60 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Region: Laguna Aurorae (Sailing)");
+		addEntry("rare_trees", "Wyrmscraig - Teak trees (Level 35)", "Skilling • Woodcutting", 2562, 2191, 0, "Trees: Teak tree", "Level requirement: Level 35 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Region: Isle of Wyrms / Wyrmscraig");
+		addEntry("rare_trees", "Wyrmscraig - Teak trees (Level 35)", "Skilling • Woodcutting", 2579, 2199, 0, "Trees: Teak tree", "Level requirement: Level 35 Woodcutting", "Tool needed: Axe (Bronze to Crystal)", "Region: Isle of Wyrms / Wyrmscraig");
 
 		// Sailing expansion - Thieving
 		addEntry("thieving", "Dognose Island - Rusty Pirate Chest (Level 33)", "Skilling • Thieving", 3063, 2639, 0, "Activity: Pick locked pirate chest (Rusty chest)", "Level requirement: Level 33 Thieving", "Region: Dognose Island (Sailing)");
@@ -1462,6 +1464,7 @@ public final class PoiDetails
 		addEntry("thieving", "Port Roberts - Pirate Stalls (Level 2–87)", "Skilling • Thieving", 1861, 3306, 0, "Activity: Steal from 9 non-depleting pirate stalls", "Level requirement: Level 2–87 Thieving (varies by stall)", "Region: Port Roberts (Sailing)");
 
 		// Sailing expansion - Hunter areas
+		addEntry("hunter_training", "Wyrmscraig - Goats (Level 60)", "Skilling • Hunter", 2572, 2195, 0, "Target: Wyrmscraig goat (Hunter level 60)", "Level requirement: Level 60 Hunter", "Catch method: Tracking (Noose wand) / Box trap", "Region: Isle of Wyrms / Wyrmscraig");
 		addEntry("hunter_training", "Charred Island - Hunter Area", "Skilling • Hunter", 2660, 2396, 0, "Target: Sailing-island hunter creatures", "Level requirement: Check Hunter skill guide for creature levels", "Catch method: Traps, snares, or tracking", "Region: Charred Island (Sailing)");
 		addEntry("hunter_training", "Anglers' Retreat - Hunter Area", "Skilling • Hunter", 2467, 2722, 0, "Target: Sailing-island hunter creatures", "Level requirement: Check Hunter skill guide for creature levels", "Catch method: Traps, snares, or tracking", "Region: Anglers' Retreat (Sailing)");
 		addEntry("hunter_training", "Minotaurs' Rest - Hunter Area", "Skilling • Hunter", 1958, 3118, 0, "Target: Sailing-island hunter creatures", "Level requirement: Check Hunter skill guide for creature levels", "Catch method: Traps, snares, or tracking", "Region: Minotaurs' Rest (Sailing)");

@@ -68,6 +68,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -218,7 +219,23 @@ public class MapTooltipRenderer
 		final PoiIndex.Poi drawnPoi = markerRenderer != null ? markerRenderer.visiblePoiIconAt(cursor) : null;
 		if (drawnPoi != null)
 		{
-			final PoiDetails.Detail detail = PoiDetails.getDetail(drawnPoi, drawnPoi.getX(), drawnPoi.getY(), plane);
+			if (shopIndex != null && PoiCategory.of(drawnPoi.getKey()) == PoiCategory.SHOPS)
+			{
+				final ShopIndex.Shop shop = shopIndex.nearest(drawnPoi.getX(), drawnPoi.getY(), plane, 3);
+				if (shop != null)
+				{
+					final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
+					final TooltipCard shopCard = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
+					if (shopCard != null)
+					{
+						drawCard(graphics, bounds, cursor, shopCard);
+						return;
+					}
+				}
+			}
+
+			PoiDetails.Detail detail = PoiDetails.getDetail(drawnPoi, drawnPoi.getX(), drawnPoi.getY(), plane);
+			detail = enrichDetailWithRuneLitePoint(detail, drawnPoi, plane);
 			final BufferedImage icon = poiIndex != null ? poiIndex.icon(drawnPoi.getKey()) : null;
 			final TooltipCard card = poiTooltipBuilder.buildPoiCard(detail, drawnPoi, icon, compact);
 			if (card != null)
@@ -276,9 +293,22 @@ public class MapTooltipRenderer
 		final PoiIndex.Poi iconPoi = markerRenderer == null ? poiIconAt(cursor, bounds, plane) : null;
 		if (card == null && iconPoi != null)
 		{
-			final PoiDetails.Detail detail = PoiDetails.getDetail(iconPoi, iconPoi.getX(), iconPoi.getY(), plane);
-			final BufferedImage tooltipIcon = poiIndex != null ? poiIndex.icon(iconPoi.getKey()) : null;
-			card = poiTooltipBuilder.buildPoiCard(detail, iconPoi, tooltipIcon, compact);
+			if (shopIndex != null && PoiCategory.of(iconPoi.getKey()) == PoiCategory.SHOPS)
+			{
+				final ShopIndex.Shop shop = shopIndex.nearest(iconPoi.getX(), iconPoi.getY(), plane, 3);
+				if (shop != null)
+				{
+					final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
+					card = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
+				}
+			}
+			if (card == null)
+			{
+				PoiDetails.Detail detail = PoiDetails.getDetail(iconPoi, iconPoi.getX(), iconPoi.getY(), plane);
+				detail = enrichDetailWithRuneLitePoint(detail, iconPoi, plane);
+				final BufferedImage tooltipIcon = poiIndex != null ? poiIndex.icon(iconPoi.getKey()) : null;
+				card = poiTooltipBuilder.buildPoiCard(detail, iconPoi, tooltipIcon, compact);
+			}
 		}
 
 		if (card == null && shopIndex != null)
@@ -294,8 +324,9 @@ public class MapTooltipRenderer
 
 		if (card == null)
 		{
+			// Tight radius (1 tile) for position hits so moving the cursor into adjacent grass does not trigger phantom cards
 			final PoiDetails.Detail detail = hit(worldX, worldY,
-				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius));
+				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, 1));
 			if (detail != null)
 			{
 				card = poiTooltipBuilder.buildPoiCard(detail, null, null, compact);
@@ -304,7 +335,10 @@ public class MapTooltipRenderer
 
 		if (card == null)
 		{
-			final WorldMapPoint rPoint = findRuneLitePointNear(worldX, worldY, plane, pointRadius);
+			// Only match RuneLite points that are ACTUALLY DRAWN as markers (requireImage = true)
+			// with a tight radius (1 tile), so invisible overlay points (image == null) never show
+			// up as ghost/phantom tooltips with no icon on empty terrain.
+			final WorldMapPoint rPoint = findRuneLitePointNear(worldX, worldY, plane, 1, true);
 			if (rPoint != null)
 			{
 				card = poiTooltipBuilder.buildRuneLitePointCard(rPoint);
@@ -505,10 +539,15 @@ public class MapTooltipRenderer
 		{
 			return true;
 		}
-		return findRuneLitePointNear(worldX, worldY, plane, pointRadius) != null;
+		return findRuneLitePointNear(worldX, worldY, plane, pointRadius, true) != null;
 	}
 
 	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius)
+	{
+		return findRuneLitePointNear(worldX, worldY, plane, radius, false);
+	}
+
+	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius, boolean requireImage)
 	{
 		if (worldMapPointReader == null || worldMapPointManager == null)
 		{
@@ -516,6 +555,10 @@ public class MapTooltipRenderer
 		}
 		for (WorldMapPoint point : worldMapPointReader.points(worldMapPointManager))
 		{
+			if (requireImage && point.getImage() == null)
+			{
+				continue;
+			}
 			final WorldPoint wp = point.getWorldPoint();
 			if (wp == null || wp.getPlane() != plane || !layerAllows(wp.getX(), wp.getY()))
 			{
@@ -528,6 +571,48 @@ public class MapTooltipRenderer
 			}
 		}
 		return null;
+	}
+
+	private PoiDetails.Detail enrichDetailWithRuneLitePoint(PoiDetails.Detail detail, PoiIndex.Poi poi, int plane)
+	{
+		if (poi == null)
+		{
+			return detail;
+		}
+		final WorldMapPoint rPoint = findRuneLitePointNear(poi.getX(), poi.getY(), plane, 2, false);
+		if (rPoint == null)
+		{
+			return detail;
+		}
+		final String rTip = rPoint.getTooltip();
+		final String rName = rPoint.getName();
+		final String specificTitle = (rTip != null && !rTip.isEmpty()) ? rTip : rName;
+		if (specificTitle == null || specificTitle.isEmpty())
+		{
+			return detail;
+		}
+		final boolean isGeneric = detail == null
+			|| detail.getTitle() == null
+			|| detail.getTitle().equalsIgnoreCase(poi.getName())
+			|| detail.getTitle().equalsIgnoreCase(poi.getKey())
+			|| detail.getTitle().equalsIgnoreCase("Point of Interest");
+		if (!isGeneric)
+		{
+			return detail;
+		}
+		final List<String> lines = new ArrayList<>();
+		if (rTip != null && !rTip.isEmpty() && !rTip.equals(specificTitle))
+		{
+			lines.add(rTip);
+		}
+		if (detail != null && detail.getLines() != null)
+		{
+			lines.addAll(detail.getLines());
+		}
+		final String cat = detail != null && detail.getCategory() != null
+			? detail.getCategory()
+			: PoiCategory.of(poi.getKey()).name();
+		return new PoiDetails.Detail(specificTitle, cat, lines);
 	}
 
 	private WorldPoint clueNear(int worldX, int worldY, int plane, int radius)

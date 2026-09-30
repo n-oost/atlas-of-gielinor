@@ -137,10 +137,15 @@ public class PoiTooltipBuilder
 		{
 			return "Bank chest";
 		}
-		// Strip redundant "Wyrmscraig " prefix from generic POIs, keeping unique shops
-		if (title.startsWith("Wyrmscraig ") && !title.equals("Where Wyrmscraig's Wear Wares Were"))
+		// Strip redundant "Wyrmscraig " or "Wyrmscraig - " prefix from generic POIs, keeping unique shops
+		if (title.regionMatches(true, 0, "Wyrmscraig", 0, 10)
+			&& !title.equalsIgnoreCase("Where Wyrmscraig's Wear Wares Were"))
 		{
-			final String stripped = title.substring("Wyrmscraig ".length()).trim();
+			String stripped = title.substring(10).trim();
+			if (stripped.startsWith("-") || stripped.startsWith("–") || stripped.startsWith("—"))
+			{
+				stripped = stripped.substring(1).trim();
+			}
 			if (!stripped.isEmpty())
 			{
 				return Character.toUpperCase(stripped.charAt(0)) + stripped.substring(1);
@@ -218,6 +223,15 @@ public class PoiTooltipBuilder
 					return prefix;
 				}
 			}
+			if (title != null)
+			{
+				String t = title.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
+					.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
+				if (!t.isEmpty() && !t.equalsIgnoreCase("Mining site") && !t.equalsIgnoreCase("mining_site") && !t.equalsIgnoreCase("Mining"))
+				{
+					return t;
+				}
+			}
 			if (poiName != null && !poiName.equalsIgnoreCase("Mining site") && !poiName.equalsIgnoreCase("mining_site"))
 			{
 				return poiName;
@@ -229,7 +243,8 @@ public class PoiTooltipBuilder
 		if ("farming_patch".equals(key) || (cat != null && cat.contains("Farming")) || (title != null && (title.toLowerCase().contains("farming") || title.toLowerCase().contains("patch"))))
 		{
 			String t = title != null ? title : (poiName != null ? poiName : "Farming patch");
-			t = t.replaceFirst("\\s*\\(Level \\d+\\+?\\)$", "").trim();
+			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
+				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
 			if (t.contains(" - "))
 			{
 				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
@@ -243,10 +258,33 @@ public class PoiTooltipBuilder
 		if ("rare_trees".equals(key) || (cat != null && cat.contains("Woodcutting")) || (title != null && title.toLowerCase().contains("tree")))
 		{
 			String t = title != null ? title : (poiName != null ? poiName : "Rare trees");
-			t = t.replaceFirst("\\s*\\(Level \\d+\\)$", "").trim();
+			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
+				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
 			if (t.contains(" - "))
 			{
 				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
+			}
+			return t;
+		}
+
+		// 5. Hunter training -> target creature / creature name
+		if ("hunter_training".equals(key) || (cat != null && cat.contains("Hunter")) || (title != null && title.toLowerCase().contains("hunter")))
+		{
+			String t = title != null ? title : (poiName != null ? poiName : "Hunter training");
+			t = cleanPoiName(t);
+			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
+				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
+			if (t.contains(" - "))
+			{
+				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
+			}
+			if (t.startsWith("-") || t.startsWith("–") || t.startsWith("—"))
+			{
+				t = t.substring(1).trim();
+			}
+			if (t.equalsIgnoreCase("Hunter training") || t.equalsIgnoreCase("Hunter"))
+			{
+				return "Hunter training";
 			}
 			return t;
 		}
@@ -328,7 +366,7 @@ public class PoiTooltipBuilder
 
 		if (pName != null && !pName.isEmpty())
 		{
-			title = pName;
+			title = cleanPoiName(pName);
 			if (pTip != null && !pTip.isEmpty() && !pTip.equals(pName))
 			{
 				card.addLine(pTip);
@@ -336,7 +374,7 @@ public class PoiTooltipBuilder
 		}
 		else if (pTip != null && !pTip.isEmpty())
 		{
-			title = pTip;
+			title = cleanPoiName(pTip);
 		}
 
 		if (title == null)

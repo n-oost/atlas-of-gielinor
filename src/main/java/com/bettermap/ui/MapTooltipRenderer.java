@@ -215,7 +215,7 @@ public class MapTooltipRenderer
 		final int plane = camera.getPlane();
 		final int radius = hitRadius();
 		final int pointRadius = Math.min(radius, 6);
-		final HoverProbe probe = new HoverProbe(cursor, worldX, worldY, plane, pointRadius);
+		final HoverProbe probe = new HoverProbe(cursor, worldX, worldY, plane, pointRadius, markerRenderer);
 		final PoiIndex.Poi drawnPoi = markerRenderer != null ? markerRenderer.visiblePoiIconAt(cursor) : null;
 		if (drawnPoi != null)
 		{
@@ -278,7 +278,7 @@ public class MapTooltipRenderer
 
 		// The active overlay already handled exact drawn POI icons above.
 		final MonsterLocationData boss = monsterNear(worldX, worldY);
-		if (boss != null)
+		if (boss != null && probe.allows(boss))
 		{
 			final BufferedImage bossIcon = monsterIconManager != null ? monsterIconManager.getBossIcon(boss, 20) : null;
 			final boolean isTaskBoss = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskBoss(boss);
@@ -315,14 +315,14 @@ public class MapTooltipRenderer
 		{
 			final ShopIndex.Shop shop = hit(worldX, worldY,
 				(x, y) -> shopIndex.nearest(x, y, plane, Math.min(radius, 10)));
-			if (shop != null)
+			if (shop != null && probe.allows(shop))
 			{
 				final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
 				card = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
 			}
 		}
 
-		if (card == null)
+		if (card == null && markerRenderer == null)
 		{
 			// Tight radius (1 tile) for position hits so moving the cursor into adjacent grass does not trigger phantom cards
 			final PoiDetails.Detail detail = hit(worldX, worldY,
@@ -339,7 +339,7 @@ public class MapTooltipRenderer
 			// with a tight radius (1 tile), so invisible overlay points (image == null) never show
 			// up as ghost/phantom tooltips with no icon on empty terrain.
 			final WorldMapPoint rPoint = findRuneLitePointNear(worldX, worldY, plane, 1, true);
-			if (rPoint != null)
+			if (rPoint != null && probe.allows(rPoint))
 			{
 				card = poiTooltipBuilder.buildRuneLitePointCard(rPoint);
 			}
@@ -351,7 +351,7 @@ public class MapTooltipRenderer
 		{
 			final GroundItemIndex.Spawn spawn = hit(worldX, worldY,
 				(x, y) -> groundItemIndex.nearest(x, y, plane, Math.min(radius, 4), config.groundItemMinValue()));
-			if (spawn != null)
+			if (spawn != null && probe.allows(spawn))
 			{
 				card = poiTooltipBuilder.buildGroundItemCard(spawn, monsterIconManager, compact);
 			}
@@ -362,7 +362,7 @@ public class MapTooltipRenderer
 		{
 			final MonsterIndex.Zone monster = PrifddinasShift.firstHit(worldX, worldY,
 				(x, y) -> layerAllows(x, y) ? monsterIndex.nearest(plane, x, y, pointRadius) : null);
-			if (monster != null)
+			if (monster != null && probe.allows(monster))
 			{
 				final BufferedImage zoneIcon = monsterIconManager != null ? monsterIconManager.getZoneIcon(monster, 20) : null;
 				final boolean isTask = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskMonster(monster);
@@ -393,14 +393,21 @@ public class MapTooltipRenderer
 		private final int worldY;
 		private final int plane;
 		private final int pointRadius;
+		private final MapMarkerRenderer markerRenderer;
 
-		private HoverProbe(java.awt.Point cursor, int worldX, int worldY, int plane, int pointRadius)
+		private HoverProbe(java.awt.Point cursor, int worldX, int worldY, int plane, int pointRadius, MapMarkerRenderer markerRenderer)
 		{
 			this.cursor = cursor;
 			this.worldX = worldX;
 			this.worldY = worldY;
 			this.plane = plane;
 			this.pointRadius = pointRadius;
+			this.markerRenderer = markerRenderer;
+		}
+
+		private boolean allows(Object target)
+		{
+			return markerRenderer == null || markerRenderer.isTooltipTargetVisible(target);
 		}
 	}
 
@@ -408,7 +415,7 @@ public class MapTooltipRenderer
 	private boolean drawTravelNodeCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final TravelData.TravelNode travelNode = camera.getHoveredTravelNode();
-		if (travelNode != null && !hasTighterPointMarker(probe.worldX, probe.worldY, probe.plane, probe.pointRadius))
+		if (travelNode != null && !hasTighterPointMarker(probe))
 		{
 			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(travelNode);
 			if (card != null)
@@ -424,7 +431,7 @@ public class MapTooltipRenderer
 	private boolean drawClueCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final WorldPoint clueLoc = clueNear(probe.worldX, probe.worldY, probe.plane, probe.pointRadius);
-		if (clueLoc != null)
+		if (clueLoc != null && probe.allows(clueLoc))
 		{
 			final String label = clueScrollTracker != null ? clueScrollTracker.label() : null;
 			final PanelComponent cluePanelHint = clueScrollTracker != null ? clueScrollTracker.cluePanel() : null;
@@ -442,7 +449,7 @@ public class MapTooltipRenderer
 	private boolean drawPortCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final SailingPort port = portNear(probe.worldX, probe.worldY, probe.plane);
-		if (port != null)
+		if (port != null && probe.allows(port))
 		{
 			final List<PlayerBoat> dockedBoats = boatTracker != null ? boatTracker.getBoatsAt(port) : Collections.emptyList();
 			final TooltipCard card = boatTooltipBuilder.buildPortCard(port, dockedBoats, probe.plane);
@@ -459,7 +466,7 @@ public class MapTooltipRenderer
 	private boolean drawNoticeBoardCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final PortNoticeBoard noticeBoard = noticeBoardNear(probe.worldX, probe.worldY, probe.plane);
-		if (noticeBoard != null)
+		if (noticeBoard != null && probe.allows(noticeBoard))
 		{
 			final TooltipCard card = boatTooltipBuilder.buildNoticeBoardCard(noticeBoard, probe.plane);
 			if (card != null)
@@ -475,7 +482,7 @@ public class MapTooltipRenderer
 	private boolean drawBoatCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final PlayerBoat boat = boatNear(probe.worldX, probe.worldY, probe.plane);
-		if (boat != null && boat.isOwned() && boat.getPort() != null)
+		if (boat != null && probe.allows(boat) && boat.isOwned() && boat.getPort() != null)
 		{
 			final TooltipCard card = boatTooltipBuilder.buildBoatCard(boat, client, probe.plane);
 			if (card != null)
@@ -514,32 +521,50 @@ public class MapTooltipRenderer
 	}
 
 	/** True when a shop, boss, POI, or RuneLite pin is under the cursor (beats travel hubs). */
-	private boolean hasTighterPointMarker(int worldX, int worldY, int plane, int pointRadius)
+	private boolean hasTighterPointMarker(HoverProbe probe)
 	{
-		if (clueNear(worldX, worldY, plane, pointRadius) != null)
+		final int worldX = probe.worldX;
+		final int worldY = probe.worldY;
+		final int plane = probe.plane;
+		final int pointRadius = probe.pointRadius;
+		final WorldPoint clue = clueNear(worldX, worldY, plane, pointRadius);
+		if (clue != null && probe.allows(clue))
 		{
 			return true;
 		}
-		if (monsterNear(worldX, worldY) != null)
+		final MonsterLocationData boss = monsterNear(worldX, worldY);
+		if (boss != null && probe.allows(boss))
 		{
 			return true;
 		}
-		if (shopIndex != null && hit(worldX, worldY,
-			(x, y) -> shopIndex.nearest(x, y, plane, Math.min(pointRadius, 10))) != null)
+		final ShopIndex.Shop shop = shopIndex != null ? hit(worldX, worldY,
+			(x, y) -> shopIndex.nearest(x, y, plane, Math.min(pointRadius, 10))) : null;
+		if (shop != null && probe.allows(shop))
 		{
 			return true;
 		}
-		if (poiIndex != null && hit(worldX, worldY,
-			(x, y) -> poiIndex.nearest(x, y, plane, pointRadius)) != null)
+		if (probe.markerRenderer != null)
 		{
-			return true;
+			if (probe.markerRenderer.visiblePoiIconAt(probe.cursor) != null)
+			{
+				return true;
+			}
 		}
-		if (hit(worldX, worldY,
-			(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius)) != null)
+		else
 		{
-			return true;
+			if (poiIndex != null && hit(worldX, worldY,
+				(x, y) -> poiIndex.nearest(x, y, plane, pointRadius)) != null)
+			{
+				return true;
+			}
+			if (hit(worldX, worldY,
+				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius)) != null)
+			{
+				return true;
+			}
 		}
-		return findRuneLitePointNear(worldX, worldY, plane, pointRadius, true) != null;
+		final WorldMapPoint point = findRuneLitePointNear(worldX, worldY, plane, pointRadius, true);
+		return point != null && probe.allows(point);
 	}
 
 	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius)
@@ -740,7 +765,7 @@ public class MapTooltipRenderer
 
 	private PortNoticeBoard noticeBoardNear(int worldX, int worldY, int plane)
 	{
-		if (!config.showPortNoticeBoards())
+		if (!config.showPortNoticeBoards() || camera.getZoom() < 0.8)
 		{
 			return null;
 		}
@@ -773,7 +798,13 @@ public class MapTooltipRenderer
 		{
 			final MonsterLocationData monster = location.boss;
 			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex);
-			if (location.plane != camera.getPlane()
+			final UndergroundZone bossZone = UndergroundZone.byId(location.zoneId);
+			if (bossZone != null)
+			{
+				point.setLocation(point.getX() - camera.getDungeonTuner().offsetX(bossZone),
+					point.getY() - camera.getDungeonTuner().offsetY(bossZone));
+			}
+			if (bossZone == null && location.plane != camera.getPlane()
 				|| !bossVisibleInFocusedLayer(location)
 				|| !layerAllows(location.x, location.y) && (location.zoneId == null || location.zoneId.isEmpty()))
 			{
@@ -797,6 +828,13 @@ public class MapTooltipRenderer
 		}
 		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
 		if (zone == null || camera.getFocusedUndergroundZone() != zone)
+		{
+			return false;
+		}
+		final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
+		final int visiblePlane = hoveredPlane != null ? hoveredPlane
+			: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
+		if (location.plane != visiblePlane)
 		{
 			return false;
 		}

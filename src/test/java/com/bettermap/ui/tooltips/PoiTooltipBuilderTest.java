@@ -347,4 +347,29 @@ public class PoiTooltipBuilderTest
 		assertEquals("Imbued altar", builder.buildPoiCard(altarDetail, altarPoi, dummyIcon, true).getTitle());
 		assertTrue(altarDetail.getLines().stream().anyMatch(l -> l.contains("Zalcano")));
 	}
+
+	@Test
+	public void questTooltipsRenderCleanNameInCompactAndRichCardInExpanded()
+	{
+		// Cook'''s Assistant
+		final PoiIndex.Poi cooksPoi = new PoiIndex.Poi(3210, 3215, 0, "quest_start", "Cook's Assistant");
+		final PoiDetails.Detail cooksDetail = PoiDetails.getDetail(cooksPoi, 3210, 3215, 0);
+		assertNotNull(cooksDetail);
+		// Compact format: <ICON> <NAME>
+		assertEquals("Cook's Assistant", builder.buildPoiCard(cooksDetail, cooksPoi, dummyIcon, true).getTitle());
+		// Expanded format:
+		final TooltipCard expandedCard = builder.buildPoiCard(cooksDetail, cooksPoi, dummyIcon, false);
+		assertEquals("Cook's Assistant", expandedCard.getTitle());
+		assertTrue(expandedCard.getLines().stream().anyMatch(l -> l.contains("Lumbridge Castle")));
+		assertTrue(expandedCard.getLines().stream().anyMatch(l -> l.contains("Reward: 1 Quest Point")));
+
+		// Song of the Elves
+		final PoiIndex.Poi sotePoi = new PoiIndex.Poi(2579, 3295, 1, "quest_start", "Song of the Elves");
+		final PoiDetails.Detail soteDetail = PoiDetails.getDetail(sotePoi, 2579, 3295, 1);
+		assertNotNull(soteDetail);
+		assertEquals("Song of the Elves", builder.buildPoiCard(soteDetail, sotePoi, dummyIcon, true).getTitle());
+		final TooltipCard soteExpanded = builder.buildPoiCard(soteDetail, sotePoi, dummyIcon, false);
+		assertTrue(soteExpanded.getLines().stream().anyMatch(l -> l.contains("East Ardougne")));
+		assertTrue(soteExpanded.getLines().stream().anyMatch(l -> l.contains("Grandmaster")));
+	}
 }

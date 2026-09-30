@@ -248,6 +248,7 @@ class MapMarkerRenderer
 	private final MapRenderStats stats;
 	private final DungeonPieceIndex dungeonPieceIndex;
 	private final List<PoiIconHit> visiblePoiIcons = new ArrayList<>();
+	private final Set<Object> visibleTooltipTargets = new HashSet<>();
 	private BufferedImage dungeonExclamation;
 	private BufferedImage dungeonExclamationGreen;
 	private BufferedImage boatSloopIcon;
@@ -581,9 +582,21 @@ class MapMarkerRenderer
 
 				graphics.drawImage(icon, rect.x, rect.y, null);
 				placed.add(rect);
+				visibleTooltipTargets.add(shop);
 				stats.iconsDrawn++;
 			});
 		}
+	}
+
+	/** Reset before drawing markers so hidden targets cannot retain hover cards from the last frame. */
+	void beginFrame()
+	{
+		visibleTooltipTargets.clear();
+	}
+
+	boolean isTooltipTargetVisible(Object target)
+	{
+		return visibleTooltipTargets.contains(target);
 	}
 
 	PoiIndex.Poi visiblePoiIconAt(java.awt.Point cursor)
@@ -1335,6 +1348,7 @@ class MapMarkerRenderer
 
 			graphics.drawImage(image, rect.x, rect.y, null);
 			placed.add(rect);
+			visibleTooltipTargets.add(point);
 		}
 	}
 
@@ -1360,11 +1374,15 @@ class MapMarkerRenderer
 		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
 			final MonsterLocationData monster = location.boss;
-			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
 			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
 				? null : UndergroundZone.byId(location.zoneId);
-			final boolean wrongPlane = bossZone == null ? location.plane != plane
-				: camera.getPlane() != location.plane;
+			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
+			if (bossZone != null)
+			{
+				display.setLocation(display.getX() - camera.getDungeonTuner().offsetX(bossZone),
+					display.getY() - camera.getDungeonTuner().offsetY(bossZone));
+			}
+			final boolean wrongPlane = bossZone == null && location.plane != plane;
 			if (wrongPlane)
 			{
 				continue;
@@ -1420,6 +1438,7 @@ class MapMarkerRenderer
 			}
 
 			placed.add(rect);
+			visibleTooltipTargets.add(monster);
 			stats.markersDrawn++;
 
 			if (drawLabels)
@@ -1465,6 +1484,13 @@ class MapMarkerRenderer
 		}
 		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
 		if (zone == null || camera.getFocusedUndergroundZone() != zone)
+		{
+			return false;
+		}
+		final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
+		final int visiblePlane = hoveredPlane != null ? hoveredPlane
+			: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
+		if (location.plane != visiblePlane)
 		{
 			return false;
 		}
@@ -1520,6 +1546,8 @@ class MapMarkerRenderer
 			final int minRadius = isTaskZone ? (int) Math.max(7, Math.min(16, zoom * 4.5)) : (int) Math.max(6, Math.min(14, zoom * 4.0));
 			final int maxRadius = isTaskZone ? 48 : 40;
 			final int radiusPx = (int) Math.max(minRadius, Math.min(maxRadius, baseRadius));
+
+			visibleTooltipTargets.add(zone);
 
 			final int diam = radiusPx * 2;
 			final int ox = sx - radiusPx;
@@ -1733,6 +1761,7 @@ class MapMarkerRenderer
 			}
 
 			placed.add(rect);
+			visibleTooltipTargets.add(spawn);
 			stats.markersDrawn++;
 
 			if (drawLabels)
@@ -2087,6 +2116,7 @@ class MapMarkerRenderer
 				graphics.setColor(PORT_DOT);
 				graphics.fillOval(sx - 2, sy - 2, 4, 4);
 
+				visibleTooltipTargets.add(port);
 				stats.markersDrawn++;
 			}
 		}
@@ -2155,6 +2185,7 @@ class MapMarkerRenderer
 			graphics.drawLine(sx - 3, sy, sx + 3, sy);
 			graphics.drawLine(sx - 3, sy + 2, sx + 1, sy + 2);
 
+			visibleTooltipTargets.add(board);
 			stats.markersDrawn++;
 		}
 
@@ -2268,6 +2299,7 @@ class MapMarkerRenderer
 			}
 
 			placed.add(rect);
+			visibleTooltipTargets.add(boat);
 			stats.markersDrawn++;
 
 			// Optional Name label chip below marker
@@ -2473,6 +2505,7 @@ class MapMarkerRenderer
 			}
 
 			placed.add(rect);
+			visibleTooltipTargets.add(loc);
 			stats.markersDrawn++;
 
 			if (drawLabels && name != null)

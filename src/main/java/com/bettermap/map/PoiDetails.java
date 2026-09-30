@@ -2319,6 +2319,15 @@ public final class PoiDetails
 			return getDetailByPosition(worldX, worldY, plane, 6);
 		}
 
+		if ("quest_start".equals(poi.getKey()))
+		{
+			final Detail questDetail = QuestDetailsData.QUEST_DETAILS.get(poi.getName());
+			if (questDetail != null)
+			{
+				return questDetail;
+			}
+		}
+
 
 		// 1. Direct exact lookup by coordinate key
 		final Entry exact = EXACT_MAP.get(pointKey(worldX, worldY, plane));
@@ -2449,6 +2458,11 @@ public final class PoiDetails
 
 		if ("quest_start".equals(key) || lowerName.contains("quest"))
 		{
+			final Detail questDetail = QuestDetailsData.QUEST_DETAILS.get(name);
+			if (questDetail != null)
+			{
+				return questDetail;
+			}
 			return new Detail(name, "Quest Start", List.of(
 				"Talk to the quest giver NPC nearby to begin",
 				"Check Quest List in-game for full requirement breakdown"

@@ -340,6 +340,7 @@ public class BetterWorldMapOverlay extends Overlay
 			tileRenderer.drawTiles(graphics, bounds);
 			boolean routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
 			markerRenderer.drawPlaceNames(graphics, bounds);
+			markerRenderer.beginFrame();
 			markerRenderer.drawWorldMapPoints(graphics, bounds, placedMarkers);
 			markerRenderer.drawPoiIcons(graphics, bounds, placedPoiIcons);
 			markerRenderer.drawLargeLayerSymbols(graphics, bounds);

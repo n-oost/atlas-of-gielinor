@@ -143,8 +143,10 @@ public final class BossLocationIndex
 				final int[] b = piece.srcBounds();
 				final double cx = (b[0] + b[2] + 1) / 2.0 + piece.dx;
 				final double cy = (b[1] + b[3] + 1) / 2.0 + piece.dy;
-				return DungeonPieceTransform.affine(piece.rot, piece.flipX, piece.flipY, cx, cy)
-					.transform(new Point2D.Double(x, y), null);
+				// Screen Y points down; world Y points north, so world rotation has the opposite sign.
+				final Point2D center = DungeonPieceTransform.affine(-piece.rot, piece.flipX, piece.flipY, cx, cy)
+					.transform(new Point2D.Double(x + 0.5 + piece.dx, y + 0.5 + piece.dy), null);
+				return new Point2D.Double(center.getX() - 0.5, center.getY() - 0.5);
 			}
 			return new Point2D.Double(x, y);
 		}

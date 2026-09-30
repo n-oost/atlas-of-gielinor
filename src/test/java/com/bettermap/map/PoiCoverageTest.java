@@ -113,4 +113,49 @@ public class PoiCoverageTest
 
 		assertTrue("Found POIs with 'Map feature' or unidentified descriptions: " + violations, violations.isEmpty());
 	}
+
+	@Test
+	public void noPoisNamedGenericQuestStartAndAllQuestPoisHaveCuratedCards() throws Exception
+	{
+		final PoiIndex poiIndex = new PoiIndex();
+		poiIndex.load(null);
+		final List<PoiIndex.Poi> pois = poiIndex.all();
+		final List<String> violations = new ArrayList<>();
+		int questCount = 0;
+
+		for (PoiIndex.Poi p : pois)
+		{
+			if ("quest_start".equals(p.getKey()))
+			{
+				questCount++;
+				if (p.getName() == null || p.getName().equalsIgnoreCase("Quest start") || p.getName().equalsIgnoreCase("quest_start"))
+				{
+					violations.add("Quest POI at (" + p.getX() + "," + p.getY() + ") still named 'Quest start'");
+				}
+				final PoiDetails.Detail detail = PoiDetails.getDetail(p, p.getX(), p.getY(), p.getPlane());
+				if (detail == null)
+				{
+					violations.add("Quest POI " + p.getName() + " returned null detail");
+				}
+				else
+				{
+					if (detail.getLines().isEmpty())
+					{
+						violations.add("Quest POI " + p.getName() + " has empty detail lines");
+					}
+					if (!detail.getCategory().contains("Quest Start") && !detail.getCategory().contains("Activity"))
+					{
+						violations.add("Quest POI " + p.getName() + " unexpected category: " + detail.getCategory());
+					}
+					if (detail.getLines().stream().anyMatch(l -> l.contains("Check Quest List in-game for full requirement breakdown")))
+					{
+						violations.add("Quest POI " + p.getName() + " has generic fallback line");
+					}
+				}
+			}
+		}
+
+		assertTrue("Expected quest starts, found " + questCount, questCount >= 200);
+		assertTrue("Found quest POI violations: " + violations, violations.isEmpty());
+	}
 }

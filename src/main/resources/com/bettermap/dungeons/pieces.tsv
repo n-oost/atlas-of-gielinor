@@ -291,6 +291,17 @@
 #L	1386	1	Legends Guild Dungeon	100
 #L	1387	1	Poison Wastes Sewer	100
 # piece	layer	plane	label	srcMinX	srcMinY	srcMaxX	srcMaxY	dstDx	dstDy	rot	locked	flip	zone
+#L	1388	1	God Wars Dungeon (Saradomin)	1069
+#L	1389	1	Dagannoth Kings Lair	1195
+#L	1390	1	Abyssal Nexus	1275
+#L	1391	1	God Wars Dungeon (Nex)	1069
+#L	1392	1	Phantom Muspah	1023
+#L	1393	1	Duke Sucellus	1023
+#L	1394	1	The Scar (Leviathan)	1275
+#L	1395	1	Scorpia Cave	241
+#L	1397	1	Silk Chasm	241
+#L	1398	1	Skotizo Arena	1021
+#L	1399	1	Cerberus Lair	1162
 47	1020	0	Cam Torum under or above ground?	1393	9517	1494	9607	-4	-6381	0	1	0	cam_torum
 48	1126	0	Neypotzli — Earthbound Cavern (Hunter)	1343	9666	1408	9743	9	-6393	0	1	0	neypotzli
 49	1126	0	Neypotzli — Streambound Cavern (Fishing)	1472	9664	1535	9726	-17	-6393	0	1	0	neypotzli
@@ -833,7 +844,7 @@
 645	1301	0	Tiles (dump leftover) (island 7)	2372	5000	2427	5055	5705	-1481	0	0	0	-
 646	1301	0	Tiles (dump leftover) (island 8)	2496	4928	2560	4987	5705	-1481	0	0	0	-
 647	1301	0	Tiles (dump leftover) (island 9)	2368	4928	2427	4991	5705	-1481	0	0	0	-
-648	1140	0	Nex Bank	2848	5187	2942	5237	654	-2306	0	0	0	pyramid_plunder
+648	1391	0	Nex Bank	2848	5187	2942	5237	36	-1563	0	0	0	god_wars_dungeon
 650	1358	0	Stronghold of Security (Catacomb of Famine)	1984	5184	2046	5246	1094	-1822	0	1	0	stronghold_of_security
 651	1301	0	Tiles (dump leftover) (island 1)	2432	9728	2443	9735	5710	-6421	0	0	0	-
 653	1301	0	Tiles (dump leftover) (island 1)	2764	9696	2971	9855	5709	-6421	0	0	0	-
@@ -1091,3 +1102,13 @@
 624	1250	0	Entrana Dungeon (island 3)	2822	9778	2843	9782	-2	-6399	0	1	0	-
 294	1305	0	Under Civitas illa Fortis (island 1)	1611	9472	1730	9533	0	-6400	0	1	0	fortis_barracks
 900	60	0	Wyrmscraig Cavern	2560	8576	2623	8671	-40	-6400	0	1	0	wyrmscraig_cavern
+901	1388	0	God Wars Dungeon (Saradomin)	2880	5248	2943	5311	36	-1563	0	0	0	god_wars_dungeon
+902	1389	0	Dagannoth Kings Lair	2880	4416	2943	4479	-367	-678	0	0	0	waterbirth_dungeon
+903	1390	0	Abyssal Nexus	2950	4740	3132	4866	65	-1274	0	1	0	abyss
+904	1392	0	Phantom Muspah	2880	10288	2943	10367	-62	-6274	0	0	0	ghorrock_dungeon
+905	1393	0	Duke Sucellus	3008	6400	3071	6463	-192	-2411	0	0	0	ghorrock_dungeon
+906	1394	0	The Scar (Leviathan)	2048	6336	2111	6399	1024	-2814	0	0	0	abyss
+907	1395	0	Scorpia Cave	3208	10312	3263	10367	0	-6400	0	0	0	scorpia_cave
+909	1397	2	Silk Chasm	3392	10176	3455	10239	-103	-6405	0	0	0	silk_chasm
+910	1398	0	Skotizo Arena	2240	5632	2303	5695	-635	-1988	0	0	0	catacombs_of_kourend
+911	1399	0	Cerberus Lair	1280	1216	1343	1343	1548	2148	0	0	0	taverley_dungeon

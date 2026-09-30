@@ -258,4 +258,93 @@ public class PoiTooltipBuilderTest
 		assertNotNull(card);
 		assertEquals("Goats", card.getTitle());
 	}
+
+	@Test
+	public void mapFeaturePoisResolveRealTooltipsAndCompactForms()
+	{
+		// 1. Port Sarim Mooring point
+		final PoiIndex.Poi sarimPoi = new PoiIndex.Poi(3050, 3192, 0, "mooring_point", "Mooring point - Port Sarim");
+		final PoiDetails.Detail sarimDetail = PoiDetails.getDetail(sarimPoi, 3050, 3192, 0);
+		assertNotNull(sarimDetail);
+		assertEquals("Mooring point", builder.buildPoiCard(sarimDetail, sarimPoi, dummyIcon, true).getTitle());
+		assertEquals("Mooring point - Port Sarim", builder.buildPoiCard(sarimDetail, sarimPoi, dummyIcon, false).getTitle());
+		assertTrue(sarimDetail.getLines().stream().anyMatch(l -> l.contains("Requires Level 1 Sailing")));
+
+		// 2. Wyrmscraig Mooring point
+		final PoiIndex.Poi wyrmPoi = new PoiIndex.Poi(2568, 2297, 0, "mooring_point", "Mooring point - Wyrmscraig");
+		final PoiDetails.Detail wyrmDetail = PoiDetails.getDetail(wyrmPoi, 2568, 2297, 0);
+		assertNotNull(wyrmDetail);
+		assertEquals("Mooring point", builder.buildPoiCard(wyrmDetail, wyrmPoi, dummyIcon, true).getTitle());
+		assertTrue(wyrmDetail.getLines().stream().anyMatch(l -> l.contains("Requires Level 62 Sailing")));
+
+		// 3. Canoe station
+		final PoiIndex.Poi canoePoi = new PoiIndex.Poi(3238, 3192, 0, "canoe_station", "Canoe station");
+		final PoiDetails.Detail canoeDetail = PoiDetails.getDetail(canoePoi, 3238, 3192, 0);
+		assertNotNull(canoeDetail);
+		assertEquals("Canoe station", builder.buildPoiCard(canoeDetail, canoePoi, dummyIcon, true).getTitle());
+		assertTrue(canoeDetail.getLines().stream().anyMatch(l -> l.contains("dugout, canoe, or waka")));
+
+		// 4. Hot air balloon
+		final PoiIndex.Poi balloonPoi = new PoiIndex.Poi(3022, 3343, 0, "hot_air_balloon", "Hot air balloon");
+		final PoiDetails.Detail balloonDetail = PoiDetails.getDetail(balloonPoi, 3022, 3343, 0);
+		assertNotNull(balloonDetail);
+		assertEquals("Hot air balloon", builder.buildPoiCard(balloonDetail, balloonPoi, dummyIcon, true).getTitle());
+		assertTrue(balloonDetail.getLines().stream().anyMatch(l -> l.contains("Enlightened Journey")));
+
+		// 5. Magic mushtree
+		final PoiIndex.Poi mushPoi = new PoiIndex.Poi(3763, 3755, 0, "magic_mushtree", "Magic mushtree");
+		final PoiDetails.Detail mushDetail = PoiDetails.getDetail(mushPoi, 3763, 3755, 0);
+		assertNotNull(mushDetail);
+		assertEquals("Magic mushtree", builder.buildPoiCard(mushDetail, mushPoi, dummyIcon, true).getTitle());
+		assertTrue(mushDetail.getLines().stream().anyMatch(l -> l.contains("Mushtree") || l.contains("Fossil Island")));
+
+		// 6. Magic carpet
+		final PoiIndex.Poi carpetPoi = new PoiIndex.Poi(3348, 2959, 0, "magic_carpet", "Magic carpet");
+		final PoiDetails.Detail carpetDetail = PoiDetails.getDetail(carpetPoi, 3348, 2959, 0);
+		assertNotNull(carpetDetail);
+		assertEquals("Magic carpet", builder.buildPoiCard(carpetDetail, carpetPoi, dummyIcon, true).getTitle());
+		assertTrue(carpetDetail.getLines().stream().anyMatch(l -> l.contains("Rug merchant")));
+
+		// 7. Minecart network
+		final PoiIndex.Poi cartPoi = new PoiIndex.Poi(1384, 3274, 0, "minecart_network", "Minecart network");
+		final PoiDetails.Detail cartDetail = PoiDetails.getDetail(cartPoi, 1384, 3274, 0);
+		assertNotNull(cartDetail);
+		assertEquals("Minecart network", builder.buildPoiCard(cartDetail, cartPoi, dummyIcon, true).getTitle());
+		assertTrue(cartDetail.getLines().stream().anyMatch(l -> l.contains("minecart transit system")));
+
+		// 8. Shipwright
+		final PoiIndex.Poi shipPoi = new PoiIndex.Poi(2171, 3324, 0, "shipwright", "Shipwright");
+		final PoiDetails.Detail shipDetail = PoiDetails.getDetail(shipPoi, 2171, 3324, 0);
+		assertNotNull(shipDetail);
+		assertEquals("Shipwright", builder.buildPoiCard(shipDetail, shipPoi, dummyIcon, true).getTitle());
+		assertTrue(shipDetail.getLines().stream().anyMatch(l -> l.contains("Shipyard services")));
+
+		// 9. Port task board
+		final PoiIndex.Poi taskPoi = new PoiIndex.Poi(2170, 3328, 0, "noticeboard", "Port task board");
+		final PoiDetails.Detail taskDetail = PoiDetails.getDetail(taskPoi, 2170, 3328, 0);
+		assertNotNull(taskDetail);
+		assertEquals("Port task board", builder.buildPoiCard(taskDetail, taskPoi, dummyIcon, true).getTitle());
+		assertTrue(taskDetail.getLines().stream().anyMatch(l -> l.contains("bounty contracts")));
+
+		// 10. Cargo bay
+		final PoiIndex.Poi cargoPoi = new PoiIndex.Poi(2173, 3335, 0, "cargo_bay", "Cargo bay");
+		final PoiDetails.Detail cargoDetail = PoiDetails.getDetail(cargoPoi, 2173, 3335, 0);
+		assertNotNull(cargoDetail);
+		assertEquals("Cargo bay", builder.buildPoiCard(cargoDetail, cargoPoi, dummyIcon, true).getTitle());
+		assertTrue(cargoDetail.getLines().stream().anyMatch(l -> l.contains("cargo loading bay")));
+
+		// 11. Singing bowl
+		final PoiIndex.Poi bowlPoi = new PoiIndex.Poi(3295, 6043, 0, "singing_bowl", "Singing bowl");
+		final PoiDetails.Detail bowlDetail = PoiDetails.getDetail(bowlPoi, 3295, 6043, 0);
+		assertNotNull(bowlDetail);
+		assertEquals("Singing bowl", builder.buildPoiCard(bowlDetail, bowlPoi, dummyIcon, true).getTitle());
+		assertTrue(bowlDetail.getLines().stream().anyMatch(l -> l.contains("Song of the Elves")));
+
+		// 12. Imbued altar
+		final PoiIndex.Poi altarPoi = new PoiIndex.Poi(3022, 6049, 0, "altar", "Imbued altar");
+		final PoiDetails.Detail altarDetail = PoiDetails.getDetail(altarPoi, 3022, 6049, 0);
+		assertNotNull(altarDetail);
+		assertEquals("Imbued altar", builder.buildPoiCard(altarDetail, altarPoi, dummyIcon, true).getTitle());
+		assertTrue(altarDetail.getLines().stream().anyMatch(l -> l.contains("Zalcano")));
+	}
 }

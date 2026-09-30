@@ -168,6 +168,40 @@ public class PoiTooltipBuilder
 			return "Bank chest";
 		}
 
+		// 0. Travel networks and port services -> clean basic name
+		if ("mooring_point".equals(key) || (title != null && title.toLowerCase().contains("mooring")))
+		{
+			if (title != null && title.toLowerCase().contains("mooring buoy"))
+			{
+				return "Mooring buoy";
+			}
+			if (title != null && title.toLowerCase().contains("boarding plank"))
+			{
+				return "Ship boarding plank";
+			}
+			return "Mooring point";
+		}
+		if ("canoe_station".equals(key) || (title != null && title.toLowerCase().contains("canoe"))) return "Canoe station";
+		if ("hot_air_balloon".equals(key) || (title != null && title.toLowerCase().contains("balloon"))) return "Hot air balloon";
+		if ("magic_mushtree".equals(key) || (title != null && title.toLowerCase().contains("mushtree"))) return "Magic mushtree";
+		if ("magic_carpet".equals(key) || (title != null && title.toLowerCase().contains("carpet"))) return "Magic carpet";
+		if ("minecart_network".equals(key) || (title != null && title.toLowerCase().contains("minecart"))) return "Minecart network";
+		if ("navigation_node".equals(key)) return "Navigation node";
+		if ("sea_current".equals(key)) return "Sea current";
+		if ("shipwright".equals(key)) return "Shipwright";
+		if ("cargo_bay".equals(key)) return "Cargo bay";
+		if ("lookout_point".equals(key)) return "Lookout point";
+		if ("singing_bowl".equals(key)) return "Singing bowl";
+		if ("noticeboard".equals(key) || (title != null && title.toLowerCase().contains("noticeboard")))
+		{
+			if (title != null && title.toLowerCase().contains("port task"))
+			{
+				return "Port task board";
+			}
+			return "Noticeboard";
+		}
+		if ("agility_short-cut".equals(key)) return "Agility shortcut";
+
 		// 1. Fishing spots -> fish
 		if ("fishing_spot".equals(key) || (cat != null && cat.contains("Fishing")) || (title != null && title.toLowerCase().contains("fishing")))
 		{
@@ -288,6 +322,8 @@ public class PoiTooltipBuilder
 			}
 			return t;
 		}
+
+
 
 		return title != null ? title : (poiName != null ? poiName : "");
 	}

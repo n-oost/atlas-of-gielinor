@@ -50,7 +50,9 @@ public enum PoiCategory
 	private static final Set<String> BANK_KEYS = keys("bank");
 
 	private static final Set<String> TRAVEL_KEYS = keys(
-		"transportation", "dungeon_link", "agility_short-cut", "house_portal", "mooring_point");
+		"transportation", "dungeon_link", "agility_short-cut", "house_portal", "mooring_point",
+		"canoe_station", "hot_air_balloon", "magic_mushtree", "magic_carpet", "minecart_network",
+		"navigation_node", "sea_current");
 
 	private static final Set<String> ALTAR_KEYS = keys("altar");
 
@@ -64,17 +66,18 @@ public enum PoiCategory
 		"anvil", "furnace", "spinning_wheel", "potters_wheel", "windmill", "dairy_churn", "dairy_cow",
 		"loom", "tannery", "sawmill", "woodcutting_stump", "dummy", "agility_training",
 		"stagnant_water_source", "stonemason",
-		"hunter_training", "brewery", "sandpit", "thieving");
+		"hunter_training", "brewery", "sandpit", "thieving", "singing_bowl");
 
 	private static final Set<String> SHOP_KEYS = keys(
 		"general_store", "bar", "apothecary", "estate_agent", "grand_exchange", "junk_checker",
 		"taxidermist", "jewellery", "key", "herbalist", "kebab_seller", "garden_supplier",
-		"vegetable_store", "pet_insurance_shop", "bounty_hunter_store", "silk_trader", "fur_trader");
+		"vegetable_store", "pet_insurance_shop", "bounty_hunter_store", "silk_trader", "fur_trader",
+		"shipwright");
 
 	private static final Set<String> SERVICE_KEYS = keys(
-		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth");
+		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth", "cargo_bay");
 
-	private static final Set<String> PLACE_KEYS = keys("region_label");
+	private static final Set<String> PLACE_KEYS = keys("region_label", "lookout_point");
 
 	private final String displayName;
 

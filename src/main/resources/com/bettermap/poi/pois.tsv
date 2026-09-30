@@ -1,8 +1,8 @@
 # x	y	plane	key	name - OSRS live cache 2026-09-30, OpenRS2 cache 2727
 # Mapped native world-map sprites to Better Map icon keys; native icon placements extracted from live cache.
-3395	2138	0	cache_icon_4947	Map feature
-2460	2144	0	cache_icon_4947	Map feature
-1889	2150	0	cache_icon_4947	Map feature
+3395	2138	0	mooring_point	Mooring buoy
+2460	2144	0	mooring_point	Mooring buoy
+1889	2150	0	mooring_point	Mooring buoy
 2543	2184	0	rare_trees	Yew trees
 2562	2191	0	rare_trees	Teak trees
 2572	2195	0	hunter_training	Goats
@@ -10,14 +10,14 @@
 2563	2203	0	dungeon_link	Dungeon with map link
 2530	2206	0	dungeon_link	Dungeon with map link
 2552	2208	0	agility_short-cut	Agility short-cut
-1748	2209	0	cache_icon_4947	Map feature
-2141	2212	0	cache_icon_4947	Map feature
+1748	2209	0	mooring_point	Mooring buoy
+2141	2212	0	mooring_point	Mooring buoy
 2541	2213	0	dungeon_link	Dungeon with map link
-3355	2216	0	mooring_point	Mooring point
+3355	2216	0	mooring_point	Mooring point - The Little Pearl
 2575	2219	0	fishing_spot	Lobster & Swordfish
 2565	2220	0	agility_short-cut	Agility short-cut
 2598	2220	0	cooking_range	Cooking range
-2978	2224	0	cache_icon_4945	Map feature
+2978	2224	0	navigation_node	Navigation node
 2614	2237	0	mining_site	Mining site
 2598	2239	0	mining_site	Sunstone & Iron
 2576	2240	0	spinning_wheel	Spinning wheel
@@ -35,31 +35,31 @@
 2578	2264	0	furnace	Furnace
 2577	2268	0	loom	Loom
 2985	2268	0	bank	Bank
-2345	2270	0	mooring_point	Mooring point
+2345	2270	0	mooring_point	Mooring point - Rainbow's End
 3003	2276	0	fishing_spot	Fishing spot
-2196	2278	0	cache_icon_4945	Map feature
+2196	2278	0	navigation_node	Navigation node
 2983	2282	0	furnace	Furnace
 2584	2283	0	agility_short-cut	Agility short-cut
-2998	2288	0	mooring_point	Mooring point
+2998	2288	0	mooring_point	Mooring point - The Onyx Crest
 2983	2290	0	water_source	Water source
-2568	2297	0	mooring_point	Mooring point
-2579	2299	0	cache_icon_7282	Map feature
+2568	2297	0	mooring_point	Mooring point - Wyrmscraig
+2579	2299	0	shipwright	Shipwright
 2194	2314	0	bank	Bank
 2199	2316	0	cooking_range	Cooking range
 2206	2321	0	rare_trees	Rare trees
 2216	2321	0	water_source	Water source
 2222	2322	0	rare_trees	Rare trees
-2190	2327	0	mooring_point	Mooring point
-2849	2327	0	mooring_point	Mooring point
+2190	2327	0	mooring_point	Mooring point - Sunbleak Island
+2849	2327	0	mooring_point	Mooring point - Last Light
 3273	2330	0	agility_short-cut	Agility short-cut
 2220	2331	0	dungeon_link	Dungeon with map link
 2860	2332	0	water_source	Water source
 3277	2339	0	rare_trees	Rare trees
 2224	2341	0	rare_trees	Rare trees
 3249	2352	0	mining_site	Mining site
-3175	2367	0	mooring_point	Mooring point
+3175	2367	0	mooring_point	Mooring point - The Summer Shore
 3191	2371	0	transportation	Transportation
-2814	2373	0	cache_icon_4945	Map feature
+2814	2373	0	navigation_node	Navigation node
 3259	2375	0	hunter_training	Hunter training
 3191	2376	0	fishing_spot	Fishing spot
 3169	2386	0	fishing_spot	Fishing spot
@@ -68,11 +68,11 @@
 2641	2390	0	mining_site	Mining site
 2645	2392	0	anvil	Anvil
 3209	2394	0	agility_short-cut	Agility short-cut
-2661	2395	0	mooring_point	Mooring point
+2661	2395	0	mooring_point	Mooring point - Charred Island
 3147	2397	0	cooking_range	Cooking range
 3246	2397	0	rare_trees	Rare trees
 3257	2397	0	agility_short-cut	Agility short-cut
-1689	2399	0	cache_icon_4947	Map feature
+1689	2399	0	mooring_point	Mooring buoy
 2645	2401	0	hunter_training	Hunter training
 3200	2402	0	sandpit	Sandpit
 3126	2403	0	farming_patch	Farming patch
@@ -98,7 +98,7 @@
 3247	2432	0	hunter_training	Hunter training
 3181	2433	0	agility_short-cut	Agility short-cut
 3195	2437	0	fishing_spot	Fishing spot
-1919	2439	0	cache_icon_4945	Map feature
+1919	2439	0	navigation_node	Navigation node
 3179	2445	0	transportation	Transportation
 3130	2446	0	rare_trees	Rare trees
 3265	2462	0	transportation	Transportation
@@ -115,27 +115,27 @@
 3209	2493	0	altar	Altar
 3258	2494	0	fishing_spot	Fishing spot
 3184	2502	0	mining_site	Mining site
-1887	2508	0	cache_icon_4947	Map feature
+1887	2508	0	mooring_point	Mooring buoy
 3213	2509	0	hunter_training	Hunter training
-2809	2510	0	mooring_point	Mooring point
-3019	2510	0	cache_icon_4945	Map feature
+2809	2510	0	mooring_point	Mooring point - Red Rock
+3019	2510	0	navigation_node	Navigation node
 3145	2520	0	rare_trees	Rare trees
-2533	2531	0	mooring_point	Mooring point
+2533	2531	0	mooring_point	Mooring point - Isle of Bones
 3123	2532	0	hunter_training	Hunter training
 3197	2532	0	transportation	Transportation
 3156	2537	0	fishing_spot	Fishing spot
 3169	2541	0	fishing_spot	Fishing spot
-2664	2544	0	cache_icon_4947	Map feature
+2664	2544	0	mooring_point	Mooring buoy
 2281	2547	0	bank	Bank
-2972	2603	0	mooring_point	Mooring point
+2972	2603	0	mooring_point	Mooring point - Remote Island
 2074	2604	0	fishing_spot	Fishing spot
 2962	2604	0	quest_start	Quest start
-2059	2606	0	mooring_point	Mooring point
-2784	2632	0	cache_icon_4945	Map feature
+2059	2606	0	mooring_point	Mooring point - Wintumber Island
+2784	2632	0	navigation_node	Navigation node
 3052	2633	0	fishing_spot	Fishing spot
 2661	2637	0	minigame	Minigame
 3054	2639	0	quest_start	Quest start
-3062	2639	0	mooring_point	Mooring point
+3062	2639	0	mooring_point	Mooring point - Dognose Island
 3044	2640	0	rare_trees	Rare trees
 2639	2641	0	minigame	Minigame
 2633	2648	0	minigame	Minigame
@@ -145,15 +145,15 @@
 2659	2653	0	magic_shop	Magic shop
 2667	2655	0	poll_booth	Poll booth
 2652	2658	0	anvil	Anvil
-1766	2659	0	mooring_point	Mooring point
+1766	2659	0	mooring_point	Mooring point - The Crown Jewel
 2666	2660	0	archery_shop	Archery shop
-1707	2662	0	cache_icon_4945	Map feature
+1707	2662	0	navigation_node	Navigation node
 1758	2662	0	hunter_training	Hunter training
 2650	2664	0	general_store	General store
-2272	2677	0	cache_icon_4945	Map feature
+2272	2677	0	navigation_node	Navigation node
 2660	2677	0	transportation	Transportation
-2652	2678	0	mooring_point	Mooring point
-1564	2679	0	cache_icon_4947	Map feature
+2652	2678	0	mooring_point	Mooring point - Void Knights' Outpost
+1564	2679	0	mooring_point	Mooring buoy
 2476	2696	0	fishing_spot	Fishing spot
 2775	2697	0	rare_trees	Rare trees
 2480	2699	0	hunter_training	Hunter training
@@ -174,16 +174,16 @@
 2067	2719	0	anvil	Anvil
 1183	2720	0	fishing_spot	Fishing spot
 2062	2720	0	rare_trees	Rare trees
-2468	2721	0	mooring_point	Mooring point
+2468	2721	0	mooring_point	Mooring point - Anglers' Retreat
 2921	2721	0	dungeon	Dungeon
 1173	2722	0	fishing_spot	Fishing spot
-1405	2723	0	cache_icon_4945	Map feature
+1405	2723	0	navigation_node	Navigation node
 2075	2723	0	rare_trees	Rare trees
 2470	2725	0	transportation	Transportation
 2892	2726	0	transportation	Transportation
 2476	2729	0	agility_short-cut	Agility short-cut
 2084	2732	0	transportation	Transportation
-1203	2733	0	mooring_point	Mooring point
+1203	2733	0	mooring_point	Mooring point - Laguna Aurorae
 2726	2735	0	rare_trees	Rare trees
 2087	2737	0	rare_trees	Rare trees
 2738	2739	0	transportation	Transportation
@@ -192,17 +192,17 @@
 2753	2742	0	agility_training	Agility training
 3281	2753	0	water_source	Water source
 3284	2755	0	spice_shop	Spice shop
-1924	2758	0	mooring_point	Mooring point
+1924	2758	0	mooring_point	Mooring point - Deepfin Point
 3315	2759	0	water_source	Water source
 2341	2762	0	rare_trees	Rare trees
 3314	2764	0	water_source	Water source
 2757	2769	0	magic_shop	Magic shop
 3281	2770	0	quest_start	Quest start
 3304	2770	0	food_shop	Food shop
-1558	2771	0	mooring_point	Mooring point
+1558	2771	0	mooring_point	Mooring point - Shimmering Atoll
 3157	2773	0	spinning_wheel	Spinning wheel
 3314	2773	0	potters_wheel	Potters wheel
-2319	2774	0	mooring_point	Mooring point
+2319	2774	0	mooring_point	Mooring point - Tear of the Soul
 2759	2774	0	scimitar_shop	Scimitar shop
 2753	2775	0	general_store	General store
 3281	2775	0	altar	Altar
@@ -221,7 +221,7 @@
 2780	2782	0	bank	Bank
 1594	2783	0	fishing_spot	Fishing spot
 3317	2783	0	water_source	Water source
-1867	2784	0	cache_icon_4945	Map feature
+1867	2784	0	navigation_node	Navigation node
 2218	2784	0	anvil	Anvil
 1165	2785	0	water_source	Water source
 1587	2786	0	rare_trees	Rare trees
@@ -254,7 +254,7 @@
 3297	2806	0	sword_shop	Sword shop
 1552	2807	0	fishing_spot	Fishing spot
 2255	2808	0	rare_trees	Rare trees
-3124	2808	0	cache_icon_4947	Map feature
+3124	2808	0	mooring_point	Mooring buoy
 2162	2812	0	water_source	Water source
 1547	2813	0	fishing_spot	Fishing spot
 3245	2814	0	transportation	Transportation
@@ -262,9 +262,9 @@
 3267	2818	0	agility_short-cut	Agility short-cut
 2445	2819	0	dungeon_link	Dungeon with map link
 2159	2822	0	hunter_training	Hunter training
-2283	2823	0	mooring_point	Mooring point
-2479	2823	0	cache_icon_4947	Map feature
-3144	2824	0	mooring_point	Mooring point
+2283	2823	0	mooring_point	Mooring point - Isle of Souls
+2479	2823	0	mooring_point	Mooring buoy
+3144	2824	0	mooring_point	Mooring point - Ruins of Unkah
 3788	2824	0	windmill	Windmill
 3046	2826	0	fishing_spot	Fishing spot
 3348	2827	0	agility_training	Agility training
@@ -273,7 +273,7 @@
 3048	2829	0	fishing_spot	Fishing spot
 3136	2832	0	water_source	Water source
 3036	2834	0	fishing_spot	Fishing spot
-3159	2835	0	cache_icon_7282	Map feature
+3159	2835	0	shipwright	Shipwright
 3155	2836	0	bank	Bank
 3794	2836	0	farming_patch	Farming patch
 2512	2838	0	fishing_spot	Fishing spot
@@ -281,9 +281,9 @@
 3790	2840	0	farming_patch	Farming patch
 1375	2841	0	fishing_spot	Fishing spot
 2282	2841	0	fishing_spot	Fishing spot
-1827	2842	0	cache_icon_4947	Map feature
+1827	2842	0	mooring_point	Mooring buoy
 2543	2843	0	transportation	Transportation
-2580	2843	0	mooring_point	Mooring point
+2580	2843	0	mooring_point	Mooring point - Corsair Cove
 3146	2843	0	transportation	Transportation
 2444	2845	0	rare_trees	Rare trees
 2457	2847	0	dungeon_link	Dungeon with map link
@@ -292,7 +292,7 @@
 3315	2849	0	quest_start	Quest start
 2486	2850	0	transportation	Transportation
 3032	2850	0	water_source	Water source
-2561	2852	0	cache_icon_7284	Map feature
+2561	2852	0	cargo_bay	Cargo bay
 2210	2855	0	minigame	Minigame
 1399	2856	0	rare_trees	Rare trees
 1390	2858	0	bar	Pub/bar
@@ -349,7 +349,7 @@
 3400	2916	0	transportation	Transportation
 3426	2916	0	water_source	Water source
 1470	2917	0	agility_short-cut	Agility short-cut
-2997	2917	0	cache_icon_4947	Map feature
+2997	2917	0	mooring_point	Mooring buoy
 2524	2918	0	hunting_tutor	Hunting Tutor
 2309	2919	0	dungeon_link	Dungeon with map link
 1357	2920	0	dungeon_link	Dungeon with map link
@@ -362,14 +362,14 @@
 1474	2922	0	agility_short-cut	Agility short-cut
 1358	2924	0	brewery	Brewery
 1398	2924	0	poll_booth	Poll booth
-1494	2924	0	cache_icon_4945	Map feature
+1494	2924	0	navigation_node	Navigation node
 1389	2926	0	water_source	Water source
 3191	2926	0	quest_start	Quest start
 1378	2927	0	bar	Pub/bar
 1401	2927	0	bank	Bank
 1478	2927	0	dungeon_link	Dungeon with map link
 1734	2929	0	altar	Altar
-3034	2929	0	cache_icon_4946	Map feature
+3034	2929	0	sea_current	Sea current
 1650	2930	0	agility_training	Agility training
 1430	2933	0	water_source	Water source
 1672	2933	0	transportation	Transportation
@@ -388,15 +388,15 @@
 1409	2946	0	water_source	Water source
 2925	2946	0	agility_short-cut	Agility short-cut
 1353	2948	0	cooking_range	Cooking range
-3111	2948	0	cache_icon_4947	Map feature
-2756	2949	0	cache_icon_7283	Map feature
+3111	2948	0	mooring_point	Mooring buoy
+2756	2949	0	noticeboard	Port task board
 1346	2950	0	loom	Loom
 2128	2950	0	hunter_training	Hunter training
 1586	2951	0	fishing_spot	Fishing spot
-2750	2951	0	mooring_point	Mooring point
+2750	2951	0	mooring_point	Mooring point - Cairn Isle
 2883	2951	0	quest_start	Quest start
 2845	2952	0	poll_booth	Poll booth
-2758	2953	0	cache_icon_7282	Map feature
+2758	2953	0	shipwright	Shipwright
 1574	2954	0	fishing_spot	Fishing spot
 2852	2954	0	bank	Bank
 1748	2955	0	mining_site	Mining site
@@ -408,11 +408,11 @@
 2825	2958	0	general_store	General store
 2834	2958	0	transportation	Transportation
 3372	2958	0	agility_short-cut	Agility short-cut
-3348	2959	0	cache_icon_4942	Map feature
+3348	2959	0	magic_carpet	Magic carpet
 1375	2960	0	cooking_range	Cooking range
 1560	2960	0	fishing_shop	Fishing shop
 2568	2961	0	mining_site	Mining site
-1070	2962	0	cache_icon_4947	Map feature
+1070	2962	0	mooring_point	Mooring buoy
 1433	2962	0	cooking_range	Cooking range
 1773	2962	0	transportation	Transportation
 3310	2962	0	dungeon	Dungeon
@@ -429,7 +429,7 @@
 1379	2968	0	water_source	Water source
 2541	2969	0	transportation	Transportation
 3367	2969	0	water_source	Water source
-1453	2970	0	mooring_point	Mooring point
+1453	2970	0	mooring_point	Mooring point - Aldarin
 3674	2970	0	fishing_shop	Fishing shop
 3711	2970	0	agility_short-cut	Agility short-cut
 1684	2971	0	farming_patch	Farming patch
@@ -451,7 +451,7 @@
 2972	2974	0	transportation	Transportation
 3036	2974	0	hunter_training	Hunter training
 3352	2974	0	kebab_seller	Kebab seller
-1512	2975	0	mooring_point	Mooring point
+1512	2975	0	mooring_point	Mooring point - Sunset Coast
 1683	2975	0	quest_start	Quest start
 1894	2975	0	mining_site	Mining site
 2281	2975	0	fishing_spot	Fishing spot
@@ -474,9 +474,9 @@
 3162	2983	0	bar	Pub/bar
 3329	2983	0	agility_short-cut	Agility short-cut
 1373	2985	0	fishing_spot	Fishing spot
-1873	2985	0	mooring_point	Mooring point
+1873	2985	0	mooring_point	Mooring point - Vatrachos Island
 2835	2985	0	quest_start	Quest start
-3070	2986	0	mooring_point	Mooring point
+3070	2986	0	mooring_point	Mooring point - The Pandemonium
 3177	2986	0	general_store	General store
 1892	2987	0	mining_site	Mining site
 3359	2987	0	general_store	General store
@@ -490,7 +490,7 @@
 2501	2991	0	dungeon	Dungeon
 1413	2992	0	rare_trees	Rare trees
 1775	2993	0	fishing_spot	Fishing spot
-3362	2993	0	cache_icon_4942	Map feature
+3362	2993	0	magic_carpet	Magic carpet
 2131	2994	0	dungeon_link	Dungeon with map link
 2639	2996	0	mining_site	Mining site
 1548	2997	0	transportation	Transportation
@@ -525,7 +525,7 @@
 1344	3020	0	transportation	Transportation
 1576	3020	0	hunter_training	Hunter training
 1283	3021	0	hunter_training	Hunter training
-2448	3021	0	cache_icon_4947	Map feature
+2448	3021	0	mooring_point	Mooring buoy
 3806	3021	0	bank	Bank
 3812	3021	0	minigame	Minigame
 3486	3023	0	dungeon	Dungeon
@@ -534,7 +534,7 @@
 3097	3025	0	bank_tutor	Bank Tutor
 2575	3028	0	dungeon	Dungeon
 3108	3028	0	ironman_tutor	Ironman Tutor
-2439	3030	0	cache_icon_4946	Map feature
+2439	3030	0	sea_current	Sea current
 2546	3032	0	agility_short-cut	Agility short-cut
 1329	3033	0	rare_trees	Rare trees
 1554	3033	0	quest_start	Quest start
@@ -568,7 +568,7 @@
 1373	3045	0	general_store	General store
 1655	3046	0	windmill	Windmill
 1516	3047	0	hunter_training	Hunter training
-2699	3047	0	cache_icon_4947	Map feature
+2699	3047	0	mooring_point	Mooring buoy
 2527	3048	0	herbalist	Herbalist
 1558	3049	0	dungeon_link	Dungeon with map link
 2334	3049	0	rare_trees	Rare trees
@@ -648,7 +648,7 @@
 1732	3091	0	cooking_range	Cooking range
 3101	3091	0	fishing_spot	Fishing spot
 1643	3092	0	dungeon_link	Dungeon with map link
-1669	3092	0	cache_icon_4942	Map feature
+1669	3092	0	magic_carpet	Magic carpet
 2440	3092	0	minigame	Minigame
 1209	3093	0	cooking_range	Cooking range
 1780	3093	0	bank	Bank
@@ -682,7 +682,7 @@
 2552	3101	0	quest_start	Quest start
 2791	3101	0	anvil	Anvil
 1270	3102	0	hunter_training	Hunter training
-1636	3102	0	cache_icon_4942	Map feature
+1636	3102	0	magic_carpet	Magic carpet
 1965	3102	0	hunter_training	Hunter training
 2549	3102	0	water_source	Water source
 2570	3102	0	dairy_churn	Dairy churn
@@ -715,7 +715,7 @@
 2339	3111	0	transportation	Transportation
 3469	3111	0	transportation	Transportation
 1353	3112	0	mining_site	Mining site
-1654	3112	0	cache_icon_4942	Map feature
+1654	3112	0	magic_carpet	Magic carpet
 1702	3112	0	cookery_shop	Cookery shop
 1770	3112	0	furnace	Furnace
 2996	3112	0	transportation	Transportation
@@ -727,7 +727,7 @@
 1650	3115	0	poll_booth	Poll booth
 2607	3115	0	minigame	Minigame
 1713	3116	0	bar	Pub/bar
-1959	3117	0	mooring_point	Mooring point
+1959	3117	0	mooring_point	Mooring point - Minotaurs' Rest
 1224	3118	0	bar	Pub/bar
 2825	3118	0	dungeon_link	Dungeon with map link
 1203	3119	0	dye_trader	Dye trader
@@ -741,13 +741,13 @@
 3308	3119	0	bank	Bank
 1244	3120	0	poll_booth	Poll booth
 1587	3120	0	dairy_cow	Dairy cow
-2145	3120	0	mooring_point	Mooring point
+2145	3120	0	mooring_point	Mooring point - Port Tyras
 3118	3120	0	poll_booth	Poll booth
 2584	3121	0	dairy_cow	Dairy cow
 3299	3121	0	task_master	Task Master
 1245	3122	0	bank	Bank
 1435	3122	0	quest_start	Quest start
-1636	3122	0	cache_icon_4942	Map feature
+1636	3122	0	magic_carpet	Magic carpet
 1666	3122	0	cooking_range	Cooking range
 2569	3122	0	dungeon_link	Dungeon with map link
 2767	3122	0	general_store	General store
@@ -760,8 +760,8 @@
 3310	3124	0	poll_booth	Poll booth
 1706	3125	0	water_source	Water source
 3122	3125	0	bank	Bank
-1780	3126	0	cache_icon_7284	Map feature
-2158	3126	0	cache_icon_7282	Map feature
+1780	3126	0	cargo_bay	Cargo bay
+2158	3126	0	shipwright	Shipwright
 3111	3126	0	dungeon	Dungeon
 1717	3127	0	cooking_range	Cooking range
 1456	3128	0	agility_short-cut	Agility short-cut
@@ -769,7 +769,7 @@
 2875	3128	0	agility_short-cut	Agility short-cut
 2528	3129	0	transportation	Transportation
 1690	3130	0	cooking_range	Cooking range
-1781	3130	0	cache_icon_7282	Map feature
+1781	3130	0	shipwright	Shipwright
 2368	3130	0	water_source	Water source
 1436	3131	0	dungeon_link	Dungeon with map link
 1584	3131	0	cooking_range	Cooking range
@@ -783,7 +783,7 @@
 3211	3135	0	agility_short-cut	Agility short-cut
 1240	3136	0	water_source	Water source
 1577	3137	0	water_source	Water source
-1653	3137	0	cache_icon_2216	Map feature
+1653	3137	0	canoe_station	Canoe station
 2440	3137	0	transportation	Transportation
 3318	3138	0	cooking_range	Cooking range
 1658	3139	0	sword_shop	Sword shop
@@ -791,7 +791,7 @@
 3276	3140	0	fishing_spot	Fishing spot
 1661	3141	0	anvil	Anvil
 1686	3141	0	quest_start	Quest start
-1775	3141	0	mooring_point	Mooring point
+1775	3141	0	mooring_point	Mooring point - Civitas illa Fortis
 2218	3141	0	rare_trees	Rare trees
 2285	3141	0	rare_trees	Rare trees
 3239	3141	0	transportation	Transportation
@@ -802,23 +802,23 @@
 2916	3142	0	water_source	Water source
 3270	3142	0	transportation	Transportation
 1364	3143	0	rare_trees	Rare trees
-1782	3143	0	cache_icon_7281	Map feature
+1782	3143	0	mooring_point	Ship boarding plank
 2874	3143	0	agility_short-cut	Agility short-cut
 2926	3143	0	bar	Pub/bar
 1284	3144	0	agility_short-cut	Agility short-cut
 2288	3144	0	quest_start	Quest start
-2941	3144	0	cache_icon_7281	Map feature
+2941	3144	0	mooring_point	Ship boarding plank
 2999	3144	0	anvil	Anvil
 2955	3145	0	transportation	Transportation
 1219	3146	0	fishing_spot	Fishing spot
 2193	3146	0	furnace	Furnace
 3227	3146	0	mining_site	Mining site
 3362	3146	0	quest_start	Quest start
-1781	3147	0	cache_icon_7283	Map feature
+1781	3147	0	noticeboard	Port task board
 2289	3147	0	quest_start	Quest start
-2961	3147	0	mooring_point	Mooring point
+2961	3147	0	mooring_point	Mooring point - Musa Point
 2905	3148	0	general_store	General store
-2944	3148	0	cache_icon_7284	Map feature
+2944	3148	0	cargo_bay	Cargo bay
 3223	3148	0	mining_tutor	Mining Tutor
 3267	3148	0	fishing_spot	Fishing spot
 3110	3149	0	transportation	Transportation
@@ -839,7 +839,7 @@
 2794	3155	0	bar	Pub/bar
 3236	3155	0	quest_start	Quest start
 3359	3155	0	anvil	Anvil
-2663	3156	0	cache_icon_7284	Map feature
+2663	3156	0	cargo_bay	Cargo bay
 3393	3156	0	agility_short-cut	Agility short-cut
 2206	3157	0	quest_start	Quest start
 3244	3157	0	fishing_tutor	Fishing Tutor
@@ -853,7 +853,7 @@
 2354	3161	0	poll_booth	Poll booth
 2527	3161	0	general_store	General store
 2662	3161	0	bank	Bank
-2686	3161	0	mooring_point	Mooring point
+2686	3161	0	mooring_point	Mooring point - Port Khazard
 2530	3162	0	poll_booth	Poll booth
 2814	3162	0	cooking_range	Cooking range
 3104	3162	0	dungeon_link	Dungeon with map link
@@ -946,10 +946,10 @@
 3273	3186	0	furnace	Furnace
 2609	3187	0	water_source	Water source
 2793	3187	0	food_shop	Food shop
-2098	3188	0	mooring_point	Mooring point
+2098	3188	0	mooring_point	Mooring point - Lledrith Island
 2592	3188	0	water_source	Water source
 2076	3189	0	fishing_spot	Fishing spot
-2443	3189	0	cache_icon_2960	Map feature
+2443	3189	0	hot_air_balloon	Hot air balloon
 3289	3189	0	scimitar_shop	Scimitar shop
 2806	3190	0	task_master	Task Master
 2438	3191	0	cooking_range	Cooking range
@@ -957,8 +957,8 @@
 3274	3191	0	tannery	Tannery
 2485	3192	0	transportation	Transportation
 2787	3192	0	cooking_range	Cooking range
-3051	3192	0	mooring_point	Mooring point
-3238	3192	0	cache_icon_2216	Map feature
+3051	3192	0	mooring_point	Mooring point - Port Sarim
+3238	3192	0	canoe_station	Canoe station
 3473	3192	0	fishing_spot	Fishing spot
 2791	3193	0	water_source	Water source
 2807	3193	0	agility_training	Agility training
@@ -1034,7 +1034,7 @@
 1641	3221	0	dungeon	Dungeon
 1512	3222	0	transportation	Transportation
 2939	3223	0	farming_patch	Farming patch
-3232	3223	0	cache_icon_1678	Map feature
+3232	3223	0	noticeboard	Noticeboard
 1517	3224	0	general_store	General store
 2616	3224	0	farming_patch	Farming patch
 2916	3224	0	transportation	Transportation
@@ -1042,7 +1042,7 @@
 3673	3224	0	quest_start	Quest start
 2733	3225	0	mining_site	Mining site
 1500	3226	0	bar	Pub/bar
-2906	3226	0	mooring_point	Mooring point
+2906	3226	0	mooring_point	Mooring point - Rimmington
 3013	3226	0	fishing_shop	Fishing shop
 3222	3226	0	water_source	Water source
 2910	3227	0	transportation	Transportation
@@ -1052,7 +1052,7 @@
 1520	3228	0	bank	Bank
 3085	3228	0	fishing_spot	Fishing spot
 2569	3229	0	dungeon_link	Dungeon with map link
-2758	3229	0	mooring_point	Mooring point
+2758	3229	0	mooring_point	Mooring point - Brimhaven
 1487	3230	0	transportation	Transportation
 1518	3230	0	poll_booth	Poll booth
 3493	3230	0	bar	Pub/bar
@@ -1078,8 +1078,8 @@
 3217	3235	0	transportation	Transportation
 3482	3235	0	water_source	Water source
 3016	3236	0	poll_booth	Poll booth
-3097	3237	0	cache_icon_4941	Map feature
-3228	3237	0	cache_icon_1696	Map feature
+3097	3237	0	noticeboard	Noticeboard
+3228	3237	0	noticeboard	Noticeboard
 3019	3238	0	cooking_range	Cooking range
 3242	3238	0	transportation	Transportation
 3314	3238	0	minigame	Minigame
@@ -1149,7 +1149,7 @@
 2577	3262	0	transportation	Transportation
 2606	3264	0	quest_start	Quest start
 2594	3265	0	quest_start	Quest start
-2672	3265	0	mooring_point	Mooring point
+2672	3265	0	mooring_point	Mooring point - Ardougne
 3097	3266	0	quest_start	Quest start
 3091	3267	0	slayer_master	Slayer Master
 2636	3268	0	transportation	Transportation
@@ -1169,7 +1169,7 @@
 3030	3273	0	quest_start	Quest start
 3380	3273	0	poll_booth	Poll booth
 3440	3273	0	fishing_spot	Fishing spot
-1384	3274	0	cache_icon_4944	Map feature
+1384	3274	0	minecart_network	Minecart network
 2731	3274	0	spinning_wheel	Spinning wheel
 2162	3275	0	fishing_spot	Fishing spot
 2929	3275	0	poll_booth	Poll booth
@@ -1177,7 +1177,7 @@
 3253	3275	0	dairy_cow	Dairy cow
 2570	3276	0	quest_start	Quest start
 1632	3277	0	mining_site	Mining site
-2677	3277	0	cache_icon_7281	Map feature
+2677	3277	0	mooring_point	Ship boarding plank
 3171	3277	0	quest_start	Quest start
 3482	3278	0	quest_start	Quest start
 2647	3279	0	poll_booth	Poll booth
@@ -1200,7 +1200,7 @@
 2465	3286	0	general_store	General store
 2530	3286	0	altar	Altar
 1402	3287	0	agility_short-cut	Agility short-cut
-1412	3287	0	cache_icon_4944	Map feature
+1412	3287	0	minecart_network	Minecart network
 2861	3287	0	mining_site	Mining site
 3039	3287	0	loom	Loom
 1627	3288	0	general_store	General store
@@ -1219,7 +1219,7 @@
 2930	3292	0	potters_wheel	Potters wheel
 1526	3293	0	bank	Bank
 1633	3293	0	water_source	Water source
-1842	3293	0	cache_icon_4945	Map feature
+1842	3293	0	navigation_node	Navigation node
 3037	3293	0	farming_shop	Farming shop
 2612	3294	0	general_store	General store
 2632	3294	0	dungeon_link	Dungeon with map link
@@ -1237,7 +1237,7 @@
 3750	3297	0	bar	Pub/bar
 2648	3298	0	cooking_range	Cooking range
 2674	3298	0	agility_training	Agility training
-1351	3299	0	cache_icon_4941	Map feature
+1351	3299	0	noticeboard	Noticeboard
 1587	3299	0	fishing_spot	Fishing spot
 2617	3299	0	quest_start	Quest start
 2346	3300	0	agility_short-cut	Agility short-cut
@@ -1254,12 +1254,12 @@
 1366	3304	0	bar	Pub/bar
 1397	3304	0	fishing_spot	Fishing spot
 2723	3304	0	transportation	Transportation
-2747	3304	0	mooring_point	Mooring point
+2747	3304	0	mooring_point	Mooring point - Witchaven
 3702	3304	0	water_source	Water source
 3704	3304	0	cooking_range	Cooking range
-1438	3305	0	cache_icon_4944	Map feature
+1438	3305	0	minecart_network	Minecart network
 1370	3306	0	water_source	Water source
-1861	3306	0	mooring_point	Mooring point
+1861	3306	0	mooring_point	Mooring point - Port Roberts
 3721	3306	0	cooking_range	Cooking range
 1478	3307	0	agility_short-cut	Agility short-cut
 3166	3307	0	windmill	Windmill
@@ -1304,11 +1304,11 @@
 2562	3318	0	minigame	Minigame
 2917	3318	0	cooking_range	Cooking range
 3363	3318	0	minigame	Minigame
-2783	3319	0	cache_icon_4947	Map feature
+2783	3319	0	mooring_point	Mooring buoy
 3172	3319	0	dairy_cow	Dairy cow
 3729	3319	0	quest_start	Quest start
 3755	3319	0	anvil	Anvil
-1346	3320	0	cache_icon_4944	Map feature
+1346	3320	0	minecart_network	Minecart network
 1362	3320	0	rare_trees	Rare trees
 2561	3320	0	dungeon_link	Dungeon with map link
 2572	3320	0	quest_start	Quest start
@@ -1321,11 +1321,11 @@
 1170	3323	0	mining_site	Mining site
 1381	3323	0	rare_trees	Rare trees
 1431	3323	0	transportation	Transportation
-1590	3323	0	cache_icon_4947	Map feature
+1590	3323	0	mooring_point	Mooring buoy
 2547	3323	0	cooking_range	Cooking range
 3612	3323	0	cooking_range	Cooking range
-2159	3324	0	mooring_point	Mooring point
-2171	3324	0	cache_icon_7282	Map feature
+2159	3324	0	mooring_point	Mooring point - Prifddinas
+2171	3324	0	shipwright	Shipwright
 2682	3324	0	transportation	Transportation
 2917	3324	0	dairy_churn	Dairy churn
 2920	3324	0	makeover_mage	Makeover mage
@@ -1339,8 +1339,8 @@
 2183	3327	0	dungeon_link	Dungeon with map link
 2297	3327	0	dungeon_link	Dungeon with map link
 2589	3327	0	potters_wheel	Potters wheel
-2170	3328	0	cache_icon_7283	Map feature
-1397	3329	0	cache_icon_4944	Map feature
+2170	3328	0	noticeboard	Port task board
+1397	3329	0	minecart_network	Minecart network
 1459	3330	0	fishing_spot	Fishing spot
 2500	3330	0	anvil	Anvil
 2969	3330	0	cooking_range	Cooking range
@@ -1352,7 +1352,7 @@
 1454	3332	0	agility_short-cut	Agility short-cut
 2569	3332	0	quest_start	Quest start
 2695	3332	0	mining_site	Mining site
-1477	3333	0	cache_icon_4944	Map feature
+1477	3333	0	minecart_network	Minecart network
 3266	3333	0	quest_start	Quest start
 3357	3333	0	potters_wheel	Potters wheel
 3697	3333	0	water_source	Water source
@@ -1366,11 +1366,11 @@
 3614	3334	0	water_source	Water source
 3622	3334	0	cooking_range	Cooking range
 3657	3334	0	furnace	Furnace
-2173	3335	0	cache_icon_7284	Map feature
+2173	3335	0	cargo_bay	Cargo bay
 2568	3335	0	quest_start	Quest start
 2592	3335	0	quest_start	Quest start
 2613	3335	0	poll_booth	Poll booth
-2879	3335	0	mooring_point	Mooring point
+2879	3335	0	mooring_point	Mooring point - Entrana
 3365	3335	0	quest_start	Quest start
 2603	3336	0	agility_short-cut	Agility short-cut
 3641	3336	0	general_store	General store
@@ -1383,14 +1383,14 @@
 1402	3341	0	axe_shop	Axe shop
 2816	3341	0	sandpit	Sandpit
 3364	3341	0	quest_start	Quest start
-1452	3342	0	cache_icon_4944	Map feature
+1452	3342	0	minecart_network	Minecart network
 2876	3342	0	fishing_spot	Fishing spot
 2977	3342	0	quest_start	Quest start
 3036	3342	0	agility_training	Agility training
 3192	3342	0	agility_short-cut	Agility short-cut
 1405	3343	0	anvil	Anvil
 1412	3343	0	staff_shop	Staff shop
-3022	3343	0	cache_icon_2960	Map feature
+3022	3343	0	hot_air_balloon	Hot air balloon
 1371	3344	0	rare_trees	Rare trees
 2809	3344	0	herbalist	Herbalist
 3203	3344	0	transportation	Transportation
@@ -1406,7 +1406,7 @@
 3051	3348	0	water_source	Water source
 3644	3348	0	water_source	Water source
 3662	3348	0	water_source	Water source
-2143	3350	0	cache_icon_4947	Map feature
+2143	3350	0	mooring_point	Mooring buoy
 2163	3350	0	fishing_spot	Fishing spot
 1379	3351	0	general_store	General store
 1442	3351	0	cooking_range	Cooking range
@@ -1469,7 +1469,7 @@
 3039	3367	0	cooking_range	Cooking range
 3097	3367	0	cooking_range	Cooking range
 1367	3368	0	minigame	Minigame
-1565	3368	0	cache_icon_4945	Map feature
+1565	3368	0	navigation_node	Navigation node
 2510	3368	0	dummy	Dummy
 2947	3368	0	bank	Bank
 2957	3368	0	bar	Pub/bar
@@ -1490,7 +1490,7 @@
 2944	3373	0	poll_booth	Poll booth
 3018	3373	0	garden_supplier	Garden supplier
 1296	3374	0	dungeon_link	Dungeon with map link
-1369	3374	0	cache_icon_4944	Map feature
+1369	3374	0	minecart_network	Minecart network
 2561	3374	0	fishing_spot	Fishing spot
 2820	3374	0	dungeon_link	Dungeon with map link
 2995	3374	0	quest_start	Quest start
@@ -1555,7 +1555,7 @@
 3267	3400	0	minigame	Minigame
 2487	3401	0	spinning_wheel	Spinning wheel
 2595	3401	0	fishing_shop	Fishing shop
-1507	3402	0	mooring_point	Mooring point
+1507	3402	0	mooring_point	Mooring point - Land's End
 2205	3403	0	cooking_range	Cooking range
 3195	3403	0	apothecary	Apothecary
 3237	3403	0	cooking_range	Cooking range
@@ -1588,7 +1588,7 @@
 3150	3411	0	quest_start	Quest start
 1282	3412	0	mining_site	Mining site
 2527	3412	0	fishing_spot	Fishing spot
-2797	3412	0	mooring_point	Mooring point
+2797	3412	0	mooring_point	Mooring point - Catherby
 2612	3413	0	fishing_spot	Fishing spot
 3271	3413	0	tea_trader	Tea trader
 3280	3413	0	transportation	Transportation
@@ -1636,7 +1636,7 @@
 3205	3424	0	quest_start	Quest start
 2218	3425	0	transportation	Transportation
 2632	3425	0	fishing_spot	Fishing spot
-3220	3425	0	cache_icon_2966	Map feature
+3220	3425	0	noticeboard	Noticeboard
 1502	3426	0	water_source	Water source
 2599	3426	0	transportation	Transportation
 2860	3426	0	fishing_spot	Fishing spot
@@ -1652,7 +1652,7 @@
 2896	3428	0	herbalist	Herbalist
 3225	3428	0	quest_start	Quest start
 1175	3429	0	dungeon	Dungeon
-1893	3429	0	mooring_point	Mooring point
+1893	3429	0	mooring_point	Mooring point - Chinchompa Island
 2845	3429	0	fishing_spot	Fishing spot
 2869	3429	0	agility_short-cut	Agility short-cut
 3074	3429	0	helmet_shop	Helmet shop
@@ -1677,7 +1677,7 @@
 3238	3434	0	water_source	Water source
 1271	3435	0	dungeon	Dungeon
 2630	3435	0	fishing_spot	Fishing spot
-2841	3435	0	cache_icon_7287	Map feature
+2841	3435	0	agility_short-cut	Agility shortcut
 3228	3435	0	anvil	Anvil
 3255	3435	0	dummy	Dummy
 1557	3436	0	hunter_training	Hunter training
@@ -1704,7 +1704,7 @@
 1517	3443	0	water_source	Water source
 1611	3443	0	rare_trees	Rare trees
 2833	3443	0	fishing_shop	Fishing shop
-2223	3444	0	cache_icon_4947	Map feature
+2223	3444	0	mooring_point	Mooring buoy
 2610	3444	0	fishing_spot	Fishing spot
 2618	3444	0	fishing_spot	Fishing spot
 2637	3444	0	fishing_spot	Fishing spot
@@ -1733,7 +1733,7 @@
 3142	3451	0	windmill	Windmill
 1194	3452	0	transportation	Transportation
 1530	3452	0	rare_trees	Rare trees
-1727	3452	0	mooring_point	Mooring point
+1727	3452	0	mooring_point	Mooring point - Hosidius
 3116	3452	0	dungeon_link	Dungeon with map link
 2891	3454	0	quest_start	Quest start
 3147	3454	0	cooking_range	Cooking range
@@ -1744,12 +1744,12 @@
 1780	3457	0	transportation	Transportation
 3227	3457	0	farming_patch	Farming patch
 3237	3458	0	dungeon_link	Dungeon with map link
-2253	3459	0	cache_icon_4946	Map feature
+2253	3459	0	sea_current	Sea current
 2466	3459	0	task_master	Task Master
 2479	3459	0	transportation	Transportation
 2694	3460	0	altar	Altar
 2715	3460	0	rare_trees	Rare trees
-1725	3461	0	cache_icon_7283	Map feature
+1725	3461	0	noticeboard	Port task board
 2567	3461	0	quest_start	Quest start
 3170	3461	0	bond_tutor	Bond Tutor
 3543	3461	0	dungeon_link	Dungeon with map link
@@ -1765,12 +1765,12 @@
 3495	3464	0	dungeon_link	Dungeon with map link
 2721	3465	0	rare_trees	Rare trees
 2892	3465	0	house_portal	House/POH portal
-2223	3466	0	mooring_point	Mooring point
-2713	3466	0	cache_icon_2216	Map feature
+2223	3466	0	mooring_point	Mooring point - Ynysdail
+2713	3466	0	canoe_station	Canoe station
 2749	3466	0	rare_trees	Rare trees
 3675	3467	0	cooking_range	Cooking range
 3689	3467	0	bank	Bank
-1726	3468	0	cache_icon_7282	Map feature
+1726	3468	0	shipwright	Shipwright
 2228	3468	0	transportation	Transportation
 1677	3469	0	fishing_spot	Fishing spot
 3086	3469	0	rare_trees	Rare trees
@@ -1788,7 +1788,7 @@
 3447	3472	0	transportation	Transportation
 2699	3473	0	water_source	Water source
 3143	3473	0	minigame	Minigame
-3182	3473	0	cache_icon_2961	Map feature
+3182	3473	0	hot_air_balloon	Hot air balloon
 3220	3473	0	quest_start	Quest start
 3249	3473	0	rare_trees	Rare trees
 3083	3474	0	minigame	Minigame
@@ -1802,12 +1802,12 @@
 3240	3476	0	estate_agent	Estate Agent
 3423	3476	0	agility_short-cut	Agility short-cut
 1271	3477	0	transportation	Transportation
-3097	3477	0	cache_icon_2216	Map feature
+3097	3477	0	canoe_station	Canoe station
 3228	3477	0	quest_start	Quest start
 3503	3477	0	quest_start	Quest start
 1513	3478	0	hunter_training	Hunter training
 2219	3478	0	dungeon_link	Dungeon with map link
-2728	3478	0	cache_icon_4941	Map feature
+2728	3478	0	noticeboard	Noticeboard
 3465	3478	0	task_master	Task Master
 1669	3479	0	fishing_spot	Fishing spot
 2761	3479	0	water_source	Water source
@@ -1959,7 +1959,7 @@
 2894	3528	0	quest_start	Quest start
 2898	3529	0	quest_start	Quest start
 3588	3529	0	water_source	Water source
-2151	3530	0	mooring_point	Mooring point
+2151	3530	0	mooring_point	Mooring point - Drumstick Isle
 2715	3531	0	fishing_spot	Fishing spot
 1753	3532	0	loom	Loom
 3443	3532	0	agility_short-cut	Agility short-cut
@@ -1997,7 +1997,7 @@
 3671	3545	0	transportation	Transportation
 1272	3546	0	fishing_spot	Fishing spot
 2137	3546	0	rare_trees	Rare trees
-2881	3546	0	cache_icon_2962	Map feature
+2881	3546	0	hot_air_balloon	Hot air balloon
 2927	3546	0	general_store	General store
 2498	3548	0	fishing_spot	Fishing spot
 2920	3548	0	water_source	Water source
@@ -2151,14 +2151,14 @@
 1371	3632	0	fishing_spot	Fishing spot
 1529	3632	0	water_source	Water source
 1552	3632	0	agility_training	Agility training
-3126	3632	0	cache_icon_2216	Map feature
+3126	3632	0	canoe_station	Canoe station
 1763	3634	0	water_source	Water source
 1504	3635	0	minigame	Minigame
 1524	3635	0	water_source	Water source
 2508	3635	0	quest_start	Quest start
 3139	3635	0	minigame	Minigame
 1561	3636	0	rare_trees	Rare trees
-2024	3637	0	cache_icon_4945	Map feature
+2024	3637	0	navigation_node	Navigation node
 3126	3637	0	altar	Altar
 2503	3638	0	transportation	Transportation
 2739	3639	0	rare_trees	Rare trees
@@ -2181,7 +2181,7 @@
 2346	3652	0	quest_start	Quest start
 1470	3653	0	dungeon_link	Dungeon with map link
 2908	3653	0	dungeon	Dungeon
-2117	3655	0	cache_icon_4947	Map feature
+2117	3655	0	mooring_point	Mooring buoy
 3075	3655	0	dungeon_link	Dungeon with map link
 1777	3656	0	water_source	Water source
 1212	3657	0	mining_site	Mining site
@@ -2199,7 +2199,7 @@
 1635	3661	0	vegetable_store	Vegetable store
 1640	3661	0	gem_shop	Gem shop
 2668	3661	0	water_source	Water source
-1619	3662	0	cache_icon_2216	Map feature
+1619	3662	0	canoe_station	Canoe station
 2616	3662	0	potters_wheel	Potters wheel
 1314	3663	0	dungeon_link	Dungeon with map link
 1384	3663	0	transportation	Transportation
@@ -2273,27 +2273,27 @@
 1312	3686	0	dungeon_link	Dungeon with map link
 1677	3686	0	water_source	Water source
 2331	3686	0	bank	Bank
-2637	3686	0	cache_icon_7284	Map feature
+2637	3686	0	cargo_bay	Cargo bay
 2908	3686	0	agility_short-cut	Agility short-cut
 1210	3687	0	fishing_spot	Fishing spot
-1846	3687	0	mooring_point	Mooring point
+1846	3687	0	mooring_point	Mooring point - Port Piscarillius
 2097	3687	0	bank	Bank
 1218	3688	0	rare_trees	Rare trees
 1265	3688	0	dairy_cow	Dairy cow
 1541	3688	0	water_source	Water source
 2075	3688	0	dungeon_link	Dungeon with map link
-2315	3688	0	cache_icon_7282	Map feature
+2315	3688	0	shipwright	Shipwright
 1675	3689	0	cooking_range	Cooking range
 1682	3689	0	rare_trees	Rare trees
 2991	3689	0	anvil	Anvil
-2081	3690	0	mooring_point	Mooring point
+2081	3690	0	mooring_point	Mooring point - Buccaneers' Haven
 2086	3690	0	transportation	Transportation
-2304	3690	0	mooring_point	Mooring point
+2304	3690	0	mooring_point	Mooring point - Piscatoris
 2327	3690	0	general_store	General store
 2839	3690	0	dungeon_link	Dungeon with map link
 2619	3691	0	quest_start	Quest start
 2633	3691	0	fishing_spot	Fishing spot
-2313	3693	0	cache_icon_7283	Map feature
+2313	3693	0	noticeboard	Port task board
 2329	3693	0	poll_booth	Poll booth
 2664	3693	0	helmet_shop	Helmet shop
 2725	3693	0	mining_site	Mining site
@@ -2311,7 +2311,7 @@
 1232	3704	0	rare_trees	Rare trees
 2683	3704	0	mining_site	Mining site
 3050	3704	0	fishing_spot	Fishing spot
-2631	3705	0	mooring_point	Mooring point
+2631	3705	0	mooring_point	Mooring point - Rellekka
 3038	3706	0	food_shop	Food shop
 1270	3707	0	fishing_spot	Fishing spot
 2667	3707	0	sandpit	Sandpit
@@ -2397,7 +2397,7 @@
 1243	3755	0	farming_patch	Farming patch
 1402	3755	0	anvil	Anvil
 3677	3755	0	transportation	Transportation
-3763	3755	0	cache_icon_2215	Map feature
+3763	3755	0	magic_mushtree	Magic mushtree
 1294	3756	0	rare_trees	Rare trees
 1782	3756	0	food_shop	Food shop
 3758	3756	0	transportation	Transportation
@@ -2408,21 +2408,21 @@
 1792	3760	0	water_source	Water source
 2929	3760	0	agility_short-cut	Agility short-cut
 1304	3762	0	transportation	Transportation
-3769	3762	0	cache_icon_2215	Map feature
+3769	3762	0	magic_mushtree	Magic mushtree
 1570	3763	0	bar	Pub/bar
 3087	3763	0	mining_site	Mining site
 1679	3764	0	magic_shop	Magic shop
 1887	3764	0	fishing_spot	Fishing spot
-2544	3765	0	mooring_point	Mooring point
+2544	3765	0	mooring_point	Mooring point - Waterbirth Island
 1238	3770	0	rare_trees	Rare trees
-2944	3770	0	cache_icon_7287	Map feature
+2944	3770	0	agility_short-cut	Agility shortcut
 3143	3771	0	hunter_training	Hunter training
 1832	3773	0	fishing_spot	Fishing spot
-2312	3773	0	cache_icon_7282	Map feature
+2312	3773	0	shipwright	Shipwright
 1507	3774	0	furnace	Furnace
 3283	3775	0	dungeon_link	Dungeon with map link
 3683	3775	0	rare_trees	Rare trees
-2307	3776	0	cache_icon_7283	Map feature
+2307	3776	0	noticeboard	Port task board
 1757	3778	0	cooking_range	Cooking range
 1477	3779	0	mining_site	Mining site
 1555	3779	0	water_source	Water source
@@ -2430,24 +2430,24 @@
 3746	3779	0	dungeon_link	Dungeon with map link
 1753	3780	0	water_source	Water source
 2401	3780	0	fishing_spot	Fishing spot
-2413	3780	0	mooring_point	Mooring point
+2413	3780	0	mooring_point	Mooring point - Jatizso
 2421	3780	0	transportation	Transportation
 2720	3780	0	hunter_training	Hunter training
 3663	3781	0	rare_trees	Rare trees
 1325	3782	0	agility_short-cut	Agility short-cut
 1796	3782	0	quest_start	Quest start
 1544	3783	0	water_source	Water source
-2309	3783	0	mooring_point	Mooring point
+2309	3783	0	mooring_point	Mooring point - Neitiznot
 2417	3783	0	fishing_spot	Fishing spot
 1309	3784	0	slayer_master	Slayer Master
 1810	3784	0	poll_booth	Poll booth
 1836	3784	0	fishing_shop	Fishing shop
 1446	3788	0	water_source	Water source
-2401	3788	0	cache_icon_7283	Map feature
+2401	3788	0	noticeboard	Port task board
 3222	3788	0	dungeon_link	Dungeon with map link
 2420	3789	0	fishing_spot	Fishing spot
 2221	3790	0	cooking_range	Cooking range
-2404	3790	0	cache_icon_7282	Map feature
+2404	3790	0	shipwright	Shipwright
 1323	3791	0	agility_short-cut	Agility short-cut
 1563	3791	0	dungeon_link	Dungeon with map link
 1803	3793	0	bank	Bank
@@ -2498,7 +2498,7 @@
 3746	3813	0	water_source	Water source
 1279	3814	0	mining_site	Mining site
 3771	3815	0	mining_site	Mining site
-3679	3816	0	cache_icon_2215	Map feature
+3679	3816	0	magic_mushtree	Magic mushtree
 3715	3816	0	agility_short-cut	Agility short-cut
 3726	3817	0	general_store	General store
 1437	3820	0	bank	Bank
@@ -2523,12 +2523,12 @@
 3125	3832	0	dungeon_link	Dungeon with map link
 3261	3833	0	dungeon_link	Dungeon with map link
 1518	3834	0	mining_shop	Mining shop
-1904	3835	0	cache_icon_4947	Map feature
+1904	3835	0	mooring_point	Mooring buoy
 3708	3838	0	farming_patch	Farming patch
 1448	3840	0	mining_site	Mining site
-2612	3840	0	mooring_point	Mooring point
+2612	3840	0	mooring_point	Mooring point - Etceteria
 3072	3840	0	fishing_spot	Fishing spot
-2194	3843	0	cache_icon_4947	Map feature
+2194	3843	0	mooring_point	Mooring buoy
 1764	3844	0	mining_site	Mining site
 2509	3846	0	dungeon_link	Dungeon with map link
 1491	3847	0	mining_site	Mining site
@@ -2536,11 +2536,11 @@
 3017	3849	0	dungeon_link	Dungeon with map link
 3660	3849	0	transportation	Transportation
 2375	3850	0	mining_site	Mining site
-2617	3850	0	cache_icon_7281	Map feature
+2617	3850	0	mooring_point	Ship boarding plank
 3293	3850	0	dungeon_link	Dungeon with map link
 3750	3850	0	hunter_training	Hunter training
 1771	3851	0	agility_short-cut	Agility short-cut
-1743	3853	0	cache_icon_7287	Map feature
+1743	3853	0	agility_short-cut	Agility shortcut
 2311	3853	0	mining_site	Mining site
 2529	3853	0	herbalist	Herbalist
 2578	3854	0	fishing_spot	Fishing spot
@@ -2576,12 +2576,12 @@
 1482	3876	0	mining_site	Mining site
 2600	3876	0	vegetable_store	Vegetable store
 2600	3879	0	fishing_shop	Fishing shop
-2152	3880	0	mooring_point	Mooring point
+2152	3880	0	mooring_point	Mooring point - Lunar Isle
 3093	3880	0	agility_short-cut	Agility short-cut
-3677	3882	0	cache_icon_2215	Map feature
+3677	3882	0	magic_mushtree	Magic mushtree
 3060	3884	0	mining_site	Mining site
 2513	3886	0	transportation	Transportation
-1775	3888	0	cache_icon_7287	Map feature
+1775	3888	0	agility_short-cut	Agility shortcut
 2401	3889	0	dungeon_link	Dungeon with map link
 2527	3891	0	mining_site	Mining site
 2618	3892	0	poll_booth	Poll booth
@@ -2633,18 +2633,18 @@
 3096	3957	0	minigame	Minigame
 3005	3963	0	dungeon_link	Dungeon with map link
 2848	3967	0	transportation	Transportation
-2861	3972	0	mooring_point	Mooring point
+2861	3972	0	mooring_point	Mooring point - Weiss
 3583	3973	0	transportation	Transportation
-1821	3989	0	cache_icon_4947	Map feature
+1821	3989	0	mooring_point	Mooring buoy
 2471	3994	0	transportation	Transportation
 2465	4012	0	dungeon_link	Dungeon with map link
-2815	4014	0	cache_icon_4945	Map feature
-2846	4030	0	cache_icon_4947	Map feature
+2815	4014	0	navigation_node	Navigation node
+2846	4030	0	mooring_point	Mooring buoy
 2277	4034	0	transportation	Transportation
-1935	4040	0	cache_icon_4945	Map feature
+1935	4040	0	navigation_node	Navigation node
 2263	4044	0	agility_short-cut	Agility short-cut
-1955	4056	0	mooring_point	Mooring point
-2928	4056	0	mooring_point	Mooring point
+1955	4056	0	mooring_point	Mooring point - Brittle Isle
+2928	4056	0	mooring_point	Mooring point - Grimstone
 3420	4057	0	bank	Bank
 3417	4060	0	poll_booth	Poll booth
 2910	4062	0	mining_site	Mining site
@@ -2653,10 +2653,10 @@
 3426	4070	0	bank	Bank
 2902	4084	0	mining_site	Mining site
 2912	4084	0	mining_site	Mining site
-1770	4124	0	cache_icon_4947	Map feature
-2592	4128	0	cache_icon_4947	Map feature
-2273	4129	0	cache_icon_4947	Map feature
-2793	4256	0	cache_icon_2210	Map feature
+1770	4124	0	mooring_point	Mooring buoy
+2592	4128	0	mooring_point	Mooring buoy
+2273	4129	0	mooring_point	Mooring buoy
+2793	4256	0	singing_bowl	Singing bowl
 3246	4315	0	transportation	Transportation
 3744	4320	0	altar	Altar
 2485	4373	0	mining_site	Mining site
@@ -2762,7 +2762,7 @@
 3955	4895	0	poll_booth	Poll booth
 2081	4896	0	quest_start	Quest start
 3909	4896	0	quest_start	Quest start
-3924	4897	0	cache_icon_2966	Map feature
+3924	4897	0	noticeboard	Noticeboard
 3864	4899	0	cooking_range	Cooking range
 3892	4899	0	anvil	Anvil
 3915	4899	0	water_source	Water source
@@ -2796,7 +2796,7 @@
 3945	4943	0	minigame	Minigame
 3975	4943	0	rare_trees	Rare trees
 3847	4945	0	minigame	Minigame
-3886	4945	0	cache_icon_2961	Map feature
+3886	4945	0	hot_air_balloon	Hot air balloon
 3924	4945	0	quest_start	Quest start
 3953	4945	0	rare_trees	Rare trees
 4144	4945	0	cooking_range	Cooking range
@@ -2946,7 +2946,7 @@
 2018	5546	0	quest_start	Quest start
 2038	5563	0	agility_short-cut	Agility short-cut
 1503	5573	0	transportation	Transportation
-1500	5596	0	cache_icon_2214	Map feature
+1500	5596	0	agility_training	Agility course
 1485	5599	0	agility_training	Agility training
 1520	5599	0	agility_training	Agility training
 2027	5612	0	dungeon	Dungeon
@@ -3019,14 +3019,14 @@
 3362	6040	0	agility_short-cut	Agility short-cut
 3026	6041	0	mining_site	Mining site
 3041	6041	0	mining_site	Mining site
-3295	6043	0	cache_icon_2210	Map feature
+3295	6043	0	singing_bowl	Singing bowl
 1956	6044	0	rare_trees	Rare trees
 3225	6044	0	dungeon_link	Dungeon with map link
 3291	6044	0	mining_shop	Mining shop
 3257	6046	0	water_source	Water source
 2089	6047	0	fishing_spot	Fishing spot
 3252	6047	0	dummy	Dummy
-3022	6049	0	cache_icon_1687	Map feature
+3022	6049	0	altar	Imbued altar
 3045	6049	0	furnace	Furnace
 3271	6049	0	dungeon_link	Dungeon with map link
 3285	6049	0	water_source	Water source
@@ -3046,7 +3046,7 @@
 3294	6061	0	bank	Bank
 2003	6063	0	rare_trees	Rare trees
 1939	6066	0	dungeon	Dungeon
-3239	6066	0	cache_icon_2210	Map feature
+3239	6066	0	singing_bowl	Singing bowl
 3289	6066	0	rare_trees	Rare trees
 3033	6069	0	dungeon_link	Dungeon with map link
 3231	6069	0	clothes_shop	Clothes shop
@@ -3056,15 +3056,15 @@
 3306	6074	0	archery_shop	Archery shop
 3218	6075	0	loom	Loom
 3183	6076	0	mooring_point	Mooring point
-3195	6076	0	cache_icon_7282	Map feature
+3195	6076	0	shipwright	Shipwright
 3239	6077	0	house_portal	House/POH portal
 3207	6079	0	dungeon_link	Dungeon with map link
 3321	6079	0	dungeon_link	Dungeon with map link
-3194	6080	0	cache_icon_7283	Map feature
+3194	6080	0	noticeboard	Port task board
 2464	6082	0	dungeon	Dungeon
 2733	6085	0	rare_trees	Rare trees
 2441	6086	0	anvil	Anvil
-3197	6087	0	cache_icon_7284	Map feature
+3197	6087	0	cargo_bay	Cargo bay
 2736	6088	0	quest_start	Quest start
 3295	6088	0	farming_shop	Farming shop
 3285	6089	0	cooking_range	Cooking range
@@ -3077,7 +3077,7 @@
 3276	6099	0	gem_shop	Gem shop
 3290	6100	0	farming_patch	Farming patch
 3230	6101	0	rare_trees	Rare trees
-3167	6102	0	cache_icon_4947	Map feature
+3167	6102	0	mooring_point	Mooring buoy
 3187	6102	0	fishing_spot	Fishing spot
 2726	6103	0	mining_site	Mining site
 3275	6103	0	food_shop	Food shop
@@ -3099,7 +3099,7 @@
 3246	6116	0	altar	Altar
 3316	6117	0	sawmill	Sawmill
 1682	6118	0	water_source	Water source
-3256	6118	0	cache_icon_2216	Map feature
+3256	6118	0	canoe_station	Canoe station
 3286	6118	0	herbalist	Herbalist
 2775	6120	0	crafting_shop	Crafting shop
 3293	6120	0	farming_patch	Farming patch
@@ -3108,7 +3108,7 @@
 2771	6124	0	spinning_wheel	Spinning wheel
 3275	6124	0	transportation	Transportation
 3271	6125	0	cooking_range	Cooking range
-3303	6125	0	cache_icon_4941	Map feature
+3303	6125	0	noticeboard	Noticeboard
 3238	6126	0	bar	Pub/bar
 3253	6126	0	mace_shop	Mace shop
 1680	6127	0	dungeon	Dungeon
@@ -3127,7 +3127,7 @@
 2081	6156	0	cooking_range	Cooking range
 2059	6157	0	vegetable_store	Vegetable store
 2064	6157	0	gem_shop	Gem shop
-2075	6158	0	cache_icon_2216	Map feature
+2075	6158	0	canoe_station	Canoe station
 2067	6159	0	rare_trees	Rare trees
 2099	6159	0	rare_trees	Rare trees
 2761	6159	0	dungeon	Dungeon
@@ -3164,7 +3164,7 @@
 2903	6184	0	crafting_shop	Crafting shop
 2899	6188	0	spinning_wheel	Spinning wheel
 2911	6193	0	general_store	General store
-3247	6196	0	cache_icon_4947	Map feature
+3247	6196	0	mooring_point	Mooring buoy
 2718	6197	0	fishing_spot	Fishing spot
 2786	6197	0	agility_short-cut	Agility short-cut
 3259	6197	0	fishing_spot	Fishing spot
@@ -3488,7 +3488,7 @@
 3033	9720	0	mining_site	Mining site
 3493	9726	0	dungeon_link	Dungeon with map link
 2958	9737	0	dungeon_link	Dungeon with map link
-2978	9737	0	cache_icon_2216	Map feature
+2978	9737	0	canoe_station	Canoe station
 3019	9739	0	dungeon_link	Dungeon with map link
 3041	9740	0	mining_site	Mining site
 3056	9744	0	dungeon	Dungeon
@@ -3534,7 +3534,7 @@
 2409	9811	0	dungeon_link	Dungeon with map link
 2936	9811	0	agility_short-cut	Agility short-cut
 3560	9811	0	agility_short-cut	Agility short-cut
-2388	9813	0	cache_icon_2210	Map feature
+2388	9813	0	singing_bowl	Singing bowl
 2878	9813	0	agility_short-cut	Agility short-cut
 3012	9813	0	anvil	Anvil
 3384	9813	0	mining_site	Mining site
@@ -3737,78 +3737,78 @@
 2887	10481	0	dungeon_link	Dungeon with map link
 2588	2257	1	cooking_range	Cooking range
 3187	2367	1	transportation	Transportation
-3184	2368	1	cache_icon_7281	Map feature
-3173	2370	1	cache_icon_7283	Map feature
-3180	2370	1	cache_icon_7282	Map feature
+3184	2368	1	mooring_point	Ship boarding plank
+3173	2370	1	noticeboard	Port task board
+3180	2370	1	shipwright	Shipwright
 2806	2502	1	transportation	Transportation
-2806	2512	1	cache_icon_7281	Map feature
-2802	2513	1	cache_icon_7283	Map feature
-2793	2515	1	cache_icon_7282	Map feature
+2806	2512	1	mooring_point	Ship boarding plank
+2802	2513	1	noticeboard	Port task board
+2793	2515	1	shipwright	Shipwright
 2809	2521	1	bank	Bank
-2804	2523	1	cache_icon_7284	Map feature
-2652	2673	1	cache_icon_7283	Map feature
-2659	2673	1	cache_icon_7281	Map feature
-2656	2676	1	cache_icon_7282	Map feature
+2804	2523	1	cargo_bay	Cargo bay
+2652	2673	1	noticeboard	Port task board
+2659	2673	1	mooring_point	Ship boarding plank
+2656	2676	1	shipwright	Shipwright
 3358	2711	1	dungeon_link	Dungeon with map link
 3355	2714	1	raids_lobby	Raids Lobby
 1944	2753	1	transportation	Transportation
 1936	2754	1	bank	Bank
 1950	2755	1	furnace	Furnace
-1937	2759	1	cache_icon_7284	Map feature
-1927	2761	1	cache_icon_7283	Map feature
-1932	2761	1	cache_icon_7281	Map feature
+1937	2759	1	cargo_bay	Cargo bay
+1927	2761	1	noticeboard	Port task board
+1932	2761	1	mooring_point	Ship boarding plank
 1939	2761	1	bar	Pub/bar
 1949	2761	1	anvil	Anvil
 1946	2762	1	mining_shop	Mining shop
 1940	2763	1	cooking_range	Cooking range
-1941	2766	1	cache_icon_7282	Map feature
+1941	2766	1	shipwright	Shipwright
 2797	2800	1	altar	Altar
 1153	2804	1	agility_short-cut	Agility short-cut
 3404	2825	1	furnace	Furnace
-3148	2826	1	cache_icon_7283	Map feature
-3146	2828	1	cache_icon_7281	Map feature
+3148	2826	1	noticeboard	Port task board
+3146	2828	1	mooring_point	Ship boarding plank
 3401	2829	1	water_source	Water source
 3406	2834	1	anvil	Anvil
 2578	2839	1	transportation	Transportation
 2467	2848	1	cooking_range	Cooking range
-2581	2848	1	cache_icon_7283	Map feature
+2581	2848	1	noticeboard	Port task board
 3408	2848	1	dungeon	Dungeon
 2463	2849	1	bank	Bank
-2576	2849	1	cache_icon_7282	Map feature
+2576	2849	1	shipwright	Shipwright
 2590	2851	1	transportation	Transportation
 2452	2852	1	herbalist	Herbalist
-2580	2853	1	cache_icon_7281	Map feature
+2580	2853	1	mooring_point	Ship boarding plank
 2455	2855	1	water_source	Water source
 1448	2928	1	water_source	Water source
 3670	2931	1	transportation	Transportation
 3684	2952	1	transportation	Transportation
 2764	2957	1	transportation	Transportation
-1444	2963	1	cache_icon_7282	Map feature
+1444	2963	1	shipwright	Shipwright
 3052	2965	1	water_source	Water source
 3049	2967	1	quest_start	Quest start
-1445	2968	1	cache_icon_7284	Map feature
+1445	2968	1	cargo_bay	Cargo bay
 1456	2968	1	transportation	Transportation
-1439	2969	1	cache_icon_7281	Map feature
-1449	2969	1	cache_icon_7283	Map feature
+1439	2969	1	mooring_point	Ship boarding plank
+1449	2969	1	noticeboard	Port task board
 1514	2970	1	transportation	Transportation
 3048	2971	1	bar	Pub/bar
 3508	2971	1	quest_start	Quest start
 3511	2971	1	dungeon	Dungeon
-3058	2974	1	cache_icon_7286	Map feature
+3058	2974	1	lookout_point	Lookout point
 1444	2977	1	transportation	Transportation
-1515	2977	1	cache_icon_7283	Map feature
-1518	2978	1	cache_icon_7282	Map feature
-3060	2979	1	cache_icon_7284	Map feature
+1515	2977	1	noticeboard	Port task board
+1518	2978	1	shipwright	Shipwright
+3060	2979	1	cargo_bay	Cargo bay
 3046	2980	1	dungeon_link	Dungeon with map link
 3064	2980	1	water_source	Water source
 2869	2982	1	slayer_master	Slayer Master
 3047	2984	1	fishing_shop	Fishing shop
 1493	2985	1	transportation	Transportation
 1517	2985	1	cooking_range	Cooking range
-3061	2985	1	cache_icon_7283	Map feature
-3058	2986	1	cache_icon_7281	Map feature
+3061	2985	1	noticeboard	Port task board
+3058	2986	1	mooring_point	Ship boarding plank
 1515	2987	1	general_store	General store
-3063	2991	1	cache_icon_7282	Map feature
+3063	2991	1	shipwright	Shipwright
 1514	2994	1	helmet_shop	Helmet shop
 1517	2995	1	anvil	Anvil
 2863	2996	1	bar	Pub/bar
@@ -3818,46 +3818,46 @@
 2780	3087	1	quest_start	Quest start
 1799	3107	1	minigame	Minigame
 2142	3123	1	transportation	Transportation
-2147	3123	1	cache_icon_7281	Map feature
-2151	3123	1	cache_icon_7283	Map feature
+2147	3123	1	mooring_point	Ship boarding plank
+2151	3123	1	noticeboard	Port task board
 2368	3130	1	altar	Altar
 1744	3136	1	transportation	Transportation
 2674	3143	1	transportation	Transportation
-2956	3149	1	cache_icon_7282	Map feature
-2952	3150	1	cache_icon_7283	Map feature
+2956	3149	1	shipwright	Shipwright
+2952	3150	1	noticeboard	Port task board
 2341	3155	1	cooking_range	Cooking range
 2955	3158	1	transportation	Transportation
 2337	3159	1	food_shop	Food shop
 2341	3160	1	cooking_range	Cooking range
-2666	3160	1	cache_icon_7282	Map feature
-2679	3162	1	cache_icon_7281	Map feature
-2684	3164	1	cache_icon_7283	Map feature
+2666	3160	1	shipwright	Shipwright
+2679	3162	1	mooring_point	Ship boarding plank
+2684	3164	1	noticeboard	Port task board
 2356	3172	1	altar	Altar
 3421	3180	1	altar	Altar
 3038	3191	1	transportation	Transportation
-3028	3194	1	cache_icon_7283	Map feature
-3030	3198	1	cache_icon_7281	Map feature
-3024	3204	1	cache_icon_7284	Map feature
-3029	3206	1	cache_icon_7282	Map feature
+3028	3194	1	noticeboard	Port task board
+3030	3198	1	mooring_point	Ship boarding plank
+3024	3204	1	cargo_bay	Cargo bay
+3029	3206	1	shipwright	Shipwright
 3026	3209	1	quest_start	Quest start
 3208	3212	1	spinning_wheel	Spinning wheel
 3212	3212	1	crafting_tutor	Crafting Tutor
 3662	3219	1	raids_lobby	Raids Lobby
 3211	3220	1	quest_start	Quest start
 3212	3224	1	quest_start	Quest start
-2769	3225	1	cache_icon_7283	Map feature
-2919	3226	1	cache_icon_7282	Map feature
-2765	3227	1	cache_icon_7281	Map feature
-2770	3228	1	cache_icon_7284	Map feature
-2761	3233	1	cache_icon_7282	Map feature
+2769	3225	1	noticeboard	Port task board
+2919	3226	1	shipwright	Shipwright
+2765	3227	1	mooring_point	Ship boarding plank
+2770	3228	1	cargo_bay	Cargo bay
+2761	3233	1	shipwright	Shipwright
 2773	3234	1	transportation	Transportation
 2761	3238	1	transportation	Transportation
 3055	3244	1	transportation	Transportation
 3214	3248	1	cooking_range	Cooking range
 1577	3251	1	agility_short-cut	Agility short-cut
-2668	3266	1	cache_icon_7282	Map feature
-2673	3269	1	cache_icon_7283	Map feature
-1885	3274	1	cache_icon_4942	Map feature
+2668	3266	1	shipwright	Shipwright
+2673	3269	1	noticeboard	Port task board
+1885	3274	1	magic_carpet	Magic carpet
 2681	3275	1	transportation	Transportation
 2936	3283	1	tannery	Tannery
 1905	3284	1	cooking_range	Cooking range
@@ -3866,23 +3866,23 @@
 1864	3289	1	spice_shop	Spice shop
 1870	3289	1	gem_shop	Gem shop
 1904	3289	1	water_source	Water source
-1884	3291	1	cache_icon_7282	Map feature
+1884	3291	1	shipwright	Shipwright
 1862	3292	1	fishing_shop	Fishing shop
 1871	3292	1	fur_trader	Fur trader
-1866	3293	1	cache_icon_4942	Map feature
+1866	3293	1	magic_carpet	Magic carpet
 2576	3293	1	quest_start	Quest start
 1862	3295	1	mining_shop	Mining shop
 1870	3295	1	silk_trader	Silk trader
 2579	3295	1	quest_start	Quest start
 1864	3297	1	vegetable_store	Vegetable store
 1867	3297	1	archery_shop	Archery shop
-1883	3297	1	cache_icon_7284	Map feature
+1883	3297	1	cargo_bay	Cargo bay
 1888	3298	1	general_store	General store
-1882	3301	1	cache_icon_7286	Map feature
+1882	3301	1	lookout_point	Lookout point
 1906	3301	1	cooking_range	Cooking range
 1909	3301	1	water_source	Water source
-1871	3304	1	cache_icon_7281	Map feature
-1866	3306	1	cache_icon_7283	Map feature
+1871	3304	1	mooring_point	Ship boarding plank
+1866	3306	1	noticeboard	Port task board
 1871	3312	1	transportation	Transportation
 1908	3312	1	cooking_range	Cooking range
 1885	3313	1	poll_booth	Poll booth
@@ -3890,10 +3890,10 @@
 1892	3316	1	bar	Pub/bar
 1883	3317	1	bank	Bank
 3366	3318	1	bank	Bank
-2164	3326	1	cache_icon_7281	Map feature
+2164	3326	1	mooring_point	Ship boarding plank
 2157	3331	1	transportation	Transportation
 2834	3334	1	transportation	Transportation
-2874	3339	1	cache_icon_7283	Map feature
+2874	3339	1	noticeboard	Port task board
 3725	3356	1	dungeon_link	Dungeon with map link
 3726	3361	1	cooking_range	Cooking range
 3728	3363	1	water_source	Water source
@@ -3902,16 +3902,16 @@
 1504	3398	1	transportation	Transportation
 3202	3401	1	cooking_range	Cooking range
 1495	3403	1	transportation	Transportation
-1499	3405	1	cache_icon_7282	Map feature
-1506	3407	1	cache_icon_7283	Map feature
-1502	3408	1	cache_icon_7281	Map feature
-1509	3410	1	cache_icon_7284	Map feature
-2804	3412	1	cache_icon_7282	Map feature
-2800	3413	1	cache_icon_7283	Map feature
+1499	3405	1	shipwright	Shipwright
+1506	3407	1	noticeboard	Port task board
+1502	3408	1	mooring_point	Ship boarding plank
+1509	3410	1	cargo_bay	Cargo bay
+2804	3412	1	shipwright	Shipwright
+2800	3413	1	noticeboard	Port task board
 2792	3415	1	transportation	Transportation
-2803	3419	1	cache_icon_7281	Map feature
+2803	3419	1	mooring_point	Ship boarding plank
 2897	3426	1	quest_start	Quest start
-2805	3427	1	cache_icon_7284	Map feature
+2805	3427	1	cargo_bay	Cargo bay
 3148	3449	1	dairy_churn	Dairy churn
 3144	3453	1	cooking_range	Cooking range
 2710	3471	1	spinning_wheel	Spinning wheel
@@ -3965,16 +3965,16 @@
 1587	3622	1	transportation	Transportation
 2509	3640	1	general_store	General store
 1809	3679	1	transportation	Transportation
-1822	3680	1	cache_icon_7284	Map feature
-2629	3686	1	cache_icon_7281	Map feature
-1841	3688	1	cache_icon_7282	Map feature
+1822	3680	1	cargo_bay	Cargo bay
+2629	3686	1	mooring_point	Ship boarding plank
+1841	3688	1	shipwright	Shipwright
 1826	3690	1	quest_start	Quest start
-1837	3691	1	cache_icon_7283	Map feature
-1840	3691	1	cache_icon_7281	Map feature
+1837	3691	1	noticeboard	Port task board
+1840	3691	1	mooring_point	Ship boarding plank
 1824	3692	1	transportation	Transportation
 2628	3692	1	transportation	Transportation
-2632	3696	1	cache_icon_7282	Map feature
-2629	3699	1	cache_icon_7283	Map feature
+2632	3696	1	shipwright	Shipwright
+2629	3699	1	noticeboard	Port task board
 1829	3723	1	food_shop	Food shop
 1525	3725	1	transportation	Transportation
 1777	3733	1	cooking_range	Cooking range
@@ -3987,22 +3987,22 @@
 1766	3751	1	cooking_range	Cooking range
 1773	3751	1	water_source	Water source
 1750	3752	1	cooking_range	Cooking range
-1846	3753	1	cache_icon_4942	Map feature
+1846	3753	1	magic_carpet	Magic carpet
 1753	3759	1	water_source	Water source
 1750	3764	1	cooking_range	Cooking range
-1633	3807	1	cache_icon_7287	Map feature
+1633	3807	1	agility_short-cut	Agility shortcut
 2710	3829	1	hunting_tutor	Hunting Tutor
 1674	3832	1	transportation	Transportation
-2618	3845	1	cache_icon_7282	Map feature
+2618	3845	1	shipwright	Shipwright
 2580	3846	1	transportation	Transportation
-2612	3846	1	cache_icon_7283	Map feature
+2612	3846	1	noticeboard	Port task board
 2498	3857	1	quest_start	Quest start
 2498	3861	1	quest_start	Quest start
-2146	3879	1	cache_icon_7283	Map feature
+2146	3879	1	noticeboard	Port task board
 3763	3879	1	transportation	Transportation
 3765	3883	1	agility_short-cut	Agility short-cut
-2140	3884	1	cache_icon_7281	Map feature
-2146	3884	1	cache_icon_7282	Map feature
+2140	3884	1	mooring_point	Ship boarding plank
+2146	3884	1	shipwright	Shipwright
 2094	3905	1	water_source	Water source
 2094	3909	1	cooking_range	Cooking range
 2658	3988	1	transportation	Transportation
@@ -4095,7 +4095,7 @@
 3380	5899	1	transportation	Transportation
 2879	6022	1	altar	Altar
 2816	6074	1	altar	Altar
-3188	6078	1	cache_icon_7281	Map feature
+3188	6078	1	mooring_point	Ship boarding plank
 3181	6083	1	transportation	Transportation
 3233	6087	1	water_source	Water source
 2623	6088	1	transportation	Transportation
@@ -4183,7 +4183,7 @@
 1404	9720	1	water_source	Water source
 3889	9749	1	mining_site	Mining site
 3726	9756	1	dungeon_link	Dungeon with map link
-3186	9758	1	cache_icon_2960	Map feature
+3186	9758	1	hot_air_balloon	Hot air balloon
 2888	9823	1	agility_short-cut	Agility short-cut
 2772	10003	1	agility_short-cut	Agility short-cut
 3157	10027	1	minigame	Minigame
@@ -4195,7 +4195,7 @@
 1330	10069	1	dungeon_link	Dungeon with map link
 1293	10077	1	dungeon_link	Dungeon with map link
 1312	10086	1	dungeon_link	Dungeon with map link
-1443	10098	1	cache_icon_7287	Map feature
+1443	10098	1	agility_short-cut	Agility shortcut
 3295	10189	1	dungeon_link	Dungeon with map link
 2916	10193	1	brewery	Brewery
 3731	10271	1	farming_patch	Farming patch
@@ -4231,7 +4231,7 @@
 1782	3758	2	water_source	Water source
 1688	3794	2	altar	Altar
 2224	3796	2	transportation	Transportation
-1633	3807	2	cache_icon_7287	Map feature
+1633	3807	2	agility_short-cut	Agility shortcut
 2138	3899	2	transportation	Transportation
 2966	4380	2	dungeon_link	Dungeon with map link
 2386	4628	2	mining_site	Mining site
@@ -4266,7 +4266,7 @@
 3672	9751	2	mining_site	Mining site
 3688	9756	2	mining_site	Mining site
 3675	9766	2	mining_site	Mining site
-1436	10076	2	cache_icon_7287	Map feature
+1436	10076	2	agility_short-cut	Agility shortcut
 2831	10077	2	dungeon_link	Dungeon with map link
 1435	10078	2	dungeon_link	Dungeon with map link
 2837	10089	2	dungeon_link	Dungeon with map link

@@ -77,4 +77,40 @@ public class PoiCoverageTest
 
 		assertTrue("Sailing-region hunter POIs count was " + sailingHunterCount + " (expected >= 6)", sailingHunterCount >= 6);
 	}
+
+	@Test
+	public void noPoisNamedMapFeatureOrUnidentifiedCacheIcon()
+	{
+		final List<PoiIndex.Poi> pois = PoiDetails.getAllPois();
+		final List<String> violations = new ArrayList<>();
+
+		for (PoiIndex.Poi p : pois)
+		{
+			if (p.getName() != null && p.getName().equalsIgnoreCase("Map feature"))
+			{
+				violations.add("POI at (" + p.getX() + "," + p.getY() + ") still named 'Map feature'");
+			}
+			if (p.getKey() != null && p.getKey().startsWith("cache_icon_"))
+			{
+				violations.add("POI at (" + p.getX() + "," + p.getY() + ") has unresolved cache key: " + p.getKey());
+			}
+			final PoiDetails.Detail detail = PoiDetails.getDetail(p, p.getX(), p.getY(), p.getPlane());
+			if (detail != null)
+			{
+				if ("Other map icons".equals(detail.getCategory()))
+				{
+					violations.add("POI " + p.getName() + " resolved to 'Other map icons'");
+				}
+				for (String line : detail.getLines())
+				{
+					if (line.toLowerCase().contains("unidentified"))
+					{
+						violations.add("POI " + p.getName() + " has unidentified tooltip line: " + line);
+					}
+				}
+			}
+		}
+
+		assertTrue("Found POIs with 'Map feature' or unidentified descriptions: " + violations, violations.isEmpty());
+	}
 }

@@ -500,13 +500,24 @@ public final class PoiDetails
 		return "dungeon".equals(key) || "dungeon_link".equals(key) || "basement".equals(key);
 	}
 
+	private static boolean isTravelKey(String key)
+	{
+		return "transportation".equals(key) || "canoe_station".equals(key)
+			|| "hot_air_balloon".equals(key) || "magic_mushtree".equals(key)
+			|| "magic_carpet".equals(key) || "minecart_network".equals(key);
+	}
+
 	private static boolean typeMatches(String entryType, String typeHint)
 	{
 		if (typeHint == null || typeHint.equals(entryType))
 		{
 			return true;
 		}
-		return isDungeonKey(typeHint) && isDungeonKey(entryType);
+		if (isDungeonKey(typeHint) && isDungeonKey(entryType))
+		{
+			return true;
+		}
+		return isTravelKey(typeHint) && isTravelKey(entryType);
 	}
 
 	private static Detail entryToDetail(Entry entry)
@@ -2307,12 +2318,7 @@ public final class PoiDetails
 		{
 			return getDetailByPosition(worldX, worldY, plane, 6);
 		}
-		if (poi.getKey() != null && poi.getKey().startsWith("cache_icon_"))
-		{
-			return new Detail(poi.getName(), "Other map icons", List.of(
-				"Unidentified world-map icon from the game cache"
-			));
-		}
+
 
 		// 1. Direct exact lookup by coordinate key
 		final Entry exact = EXACT_MAP.get(pointKey(worldX, worldY, plane));
@@ -2365,7 +2371,7 @@ public final class PoiDetails
 			return new Detail(name, "Dungeons", dungeonReq);
 		}
 
-		if ("rare_trees".equals(key) || lowerName.contains("tree"))
+		if ("rare_trees".equals(key) || (lowerName.contains("tree") && !lowerName.contains("mushtree")))
 		{
 			return new Detail(name, "Skilling • Woodcutting", List.of(
 				"Skill: Woodcutting",
@@ -2397,7 +2403,7 @@ public final class PoiDetails
 			));
 		}
 
-		if ("mining_site".equals(key) || lowerName.contains("mine"))
+		if ("mining_site".equals(key) || (lowerName.contains("mine") && !lowerName.contains("minecart")))
 		{
 			return new Detail(name, "Skilling • Mining", List.of(
 				"Skill: Mining",
@@ -2488,6 +2494,12 @@ public final class PoiDetails
 						"Also used for gold jewellery with a mould"
 					));
 				case "altar":
+					if ("Imbued altar".equalsIgnoreCase(name))
+					{
+						return new Detail(name, "Altars", List.of(
+							"Converts refined tephra into imbued tephra during the Zalcano fight"
+						));
+					}
 					return new Detail(name, "Altars", List.of(
 						"Recharges Prayer points"
 					));
@@ -2496,8 +2508,69 @@ public final class PoiDetails
 						"Player-owned house portal"
 					));
 				case "mooring_point":
+					return mooringDetail(poi, name);
+				case "shipwright":
+					return new Detail(name, "Shops and trade", List.of(
+						"Shipyard services: boat retrieval, ship customization, and vessel upgrades"
+					));
+				case "cargo_bay":
+					return new Detail(name, "Tutors and services", List.of(
+						"Port cargo loading bay and shipwreck salvage sorting"
+					));
+				case "noticeboard":
+					if (name.toLowerCase().contains("port task"))
+					{
+						return new Detail(name, "Noticeboard", List.of(
+							"Courier deliveries and maritime bounty contracts"
+						));
+					}
+					return new Detail(name, "Noticeboard", List.of(
+						"View local announcements, activities, and task notices"
+					));
+				case "lookout_point":
+					return new Detail(name, "Places", List.of(
+						"High vantage point for coastal, sea, and territory observation"
+					));
+				case "singing_bowl":
+					return new Detail(name, "Skilling • Crafting", List.of(
+						"Sing crystal equipment, tools, and armor using crystal shards",
+						"Requires Song of the Elves to access Prifddinas singing bowls"
+					));
+				case "canoe_station":
 					return new Detail(name, "Travel", List.of(
-						"Ship mooring point"
+						"River transportation via dugout, canoe, or waka",
+						"Craft a canoe using an axe on the fallen tree station"
+					));
+				case "hot_air_balloon":
+					return new Detail(name, "Travel", List.of(
+						"Hot air balloon transport network",
+						"Requires logs to travel (Willow, Yew, Magic)",
+						"Requires Enlightened Journey quest"
+					));
+				case "magic_mushtree":
+					return new Detail(name, "Travel", List.of(
+						"Fossil Island rapid travel network between key locations",
+						"Requires Bone Voyage quest"
+					));
+				case "magic_carpet":
+					return new Detail(name, "Travel", List.of(
+						"Desert and regional carpet transportation",
+						"Talk to the Rug merchant to travel (200 coins)"
+					));
+				case "minecart_network":
+					return new Detail(name, "Travel", List.of(
+						"Great Kourend minecart transit system",
+						"Requires minecart control scroll or 50% Lovakengj favour"
+					));
+				case "navigation_node":
+					return new Detail(name, "Travel", List.of(
+						"Open-sea navigational charting node",
+						"Chart nautical landmarks to complete your sea chart"
+					));
+				case "sea_current":
+					return new Detail(name, "Travel", List.of(
+						"Ocean speed current",
+						"Increases vessel speed when traveling in the current's direction"
 					));
 				case "poll_booth":
 					return new Detail(name, "Tutors and services", List.of(
@@ -2627,7 +2700,7 @@ public final class PoiDetails
 					{
 						continue;
 					}
-					if (typeHint != null && !typeMatches(e.type, typeHint) && dist > 16)
+					if (typeHint != null && !typeMatches(e.type, typeHint))
 					{
 						continue;
 					}
@@ -2658,7 +2731,7 @@ public final class PoiDetails
 			{
 				continue;
 			}
-			if (typeHint != null && !typeMatches(e.type, typeHint) && dist > 16)
+			if (typeHint != null && !typeMatches(e.type, typeHint))
 			{
 				continue;
 			}
@@ -2666,5 +2739,70 @@ public final class PoiDetails
 			best = e;
 		}
 		return best;
+	}
+
+	private static final int[][] MOORINGS = {
+		{3050, 3192, 1}, {3069, 2986, 1}, {1506, 3402, 5}, {1726, 3452, 5},
+		{2960, 3147, 10}, {1845, 3687, 15}, {2905, 3226, 18}, {2796, 3412, 20},
+		{2757, 3229, 25}, {2671, 3265, 28}, {2685, 3161, 30}, {2746, 3304, 34},
+		{2878, 3335, 36}, {1774, 3141, 38}, {2579, 2843, 40}, {3061, 2639, 40},
+		{2749, 2951, 42}, {1892, 3429, 42}, {1511, 2975, 44}, {2971, 2603, 45},
+		{3174, 2367, 45}, {3354, 2216, 45}, {1452, 2970, 46}, {1872, 2985, 46},
+		{2997, 2288, 47}, {3143, 2824, 48}, {1557, 2771, 49}, {2651, 2678, 50},
+		{1860, 3306, 50}, {2467, 2721, 51}, {2848, 2327, 52}, {2808, 2510, 52},
+		{1958, 3117, 54}, {2282, 2823, 55}, {2532, 2531, 56}, {1202, 2733, 58},
+		{2660, 2395, 60}, {2318, 2774, 61}, {2630, 3705, 62}, {2567, 2297, 62},
+		{2773, 8607, 62}, {2058, 2606, 63}, {1765, 2659, 64}, {2611, 3840, 65},
+		{2144, 3120, 66}, {2097, 3188, 66}, {1923, 2758, 67}, {2412, 3780, 68},
+		{2308, 3783, 68}, {2344, 2270, 69}, {2158, 3324, 70}, {2189, 2327, 72},
+		{2222, 3466, 73}, {2543, 3765, 74}, {2303, 3690, 75}, {2151, 3880, 76},
+		{2080, 3690, 76}, {2150, 3530, 79}, {2860, 3972, 80}, {1954, 4056, 81},
+		{2927, 4056, 87}
+	};
+
+	private static int getMooringLevel(int x, int y)
+	{
+		int bestDist = 30 * 30;
+		int bestLvl = 0;
+		for (int[] m : MOORINGS)
+		{
+			int dx = m[0] - x;
+			int dy = m[1] - y;
+			int dist = dx * dx + dy * dy;
+			if (dist <= bestDist)
+			{
+				bestDist = dist;
+				bestLvl = m[2];
+			}
+		}
+		return bestLvl;
+	}
+
+	private static Detail mooringDetail(PoiIndex.Poi poi, String name)
+	{
+		if ("Mooring buoy".equalsIgnoreCase(name))
+		{
+			return new Detail(name, "Travel", List.of(
+				"Off-shore mooring buoy for docking player vessels",
+				"Requires Sailing to dock"
+			));
+		}
+		if ("Ship boarding plank".equalsIgnoreCase(name))
+		{
+			return new Detail(name, "Travel", List.of(
+				"Port dock for boarding and disembarking player ships"
+			));
+		}
+		final int level = poi != null ? getMooringLevel(poi.getX(), poi.getY()) : 0;
+		if (level > 0)
+		{
+			return new Detail(name, "Travel", List.of(
+				"Mooring point for docking and disembarking player vessels",
+				"Requires Level " + level + " Sailing"
+			));
+		}
+		return new Detail(name, "Travel", List.of(
+			"Mooring point for docking and disembarking player vessels"
+		));
 	}
 }

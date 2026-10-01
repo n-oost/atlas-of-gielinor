@@ -50,7 +50,7 @@ import net.runelite.api.coords.WorldPoint;
 @Singleton
 public class MapCamera
 {
-	public static final double MIN_ZOOM = 0.04;
+	public static final double MIN_ZOOM = 0.14;
 	public static final double MAX_ZOOM = 24.0;
 
 	public static final int MIN_WORLD_X = 896;

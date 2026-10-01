@@ -24,7 +24,6 @@
  */
 package com.bettermap.ui.markers;
 
-import static com.bettermap.ui.MapStyle.BOSSES;
 import static com.bettermap.ui.MapStyle.CARD_BG;
 import static com.bettermap.ui.MapStyle.CARD_TEXT;
 import static com.bettermap.ui.MapStyle.CARD_TITLE;
@@ -32,6 +31,9 @@ import static com.bettermap.ui.MapStyle.SMALL;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.MonsterLocationData;
+import com.bettermap.data.UndergroundZone;
+import com.bettermap.map.BossLocationIndex;
+import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import com.bettermap.map.MonsterIconManager;
@@ -47,17 +49,17 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
-import net.runelite.api.coords.WorldPoint;
 
-/**
- * Renders boss marker pins, monster habitat zones (spawns/areas), Slayer task highlights,
- * and monster labels.
- */
+/** Draws boss pins and monster zones with Slayer task highlights. */
 public class MonsterMarkerRenderer
 {
+	private final Set<Object> visibleTooltipTargets;
+
 	private static final Color MONSTER_FILL = new Color(224, 72, 72);
 	private static final Color MONSTER_EDGE = new Color(18, 18, 18);
 	private static final Color MONSTER_ZONE_FILL = new Color(224, 72, 72, 75);
@@ -67,7 +69,6 @@ public class MonsterMarkerRenderer
 	private static final Color MONSTER_ZONE_TASK_FILL = new Color(0, 230, 220, 100);
 	private static final Color MONSTER_ZONE_TASK_EDGE = new Color(20, 255, 235, 230);
 	private static final Color MONSTER_ZONE_TASK_GLOW = new Color(0, 210, 200, 45);
-
 	private static final Color ZONE_CHIP_TEXT = new Color(130, 255, 240);
 	private static final Color ZONE_MARK_SLAYER = new Color(180, 90, 220, 220);
 	private static final Color ZONE_MARK = new Color(224, 72, 72, 200);
@@ -75,18 +76,22 @@ public class MonsterMarkerRenderer
 	private static final Color ZONE_CHIP_EDGE = new Color(224, 72, 72, 180);
 	private static final Color ZONE_CHIP_SLAYER_TEXT = new Color(230, 180, 255);
 
+	/**
+	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
+	 * Each renderer keeps its immutable outline strokes for reuse between frames.
+	 */
 	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
 	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
 	private static final Stroke MARKER_RING = new BasicStroke(1.5f);
 	private static final Stroke TASK_EDGE = new BasicStroke(1.8f);
 	private static final Stroke ACCENT_RING = new BasicStroke(2.0f);
-
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final MonsterIndex monsterIndex;
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final MapRenderStats stats;
+	private final DungeonPieceIndex dungeonPieceIndex;
 
 	public MonsterMarkerRenderer(
 		BetterMapConfig config,
@@ -94,7 +99,9 @@ public class MonsterMarkerRenderer
 		MonsterIndex monsterIndex,
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
-		MapRenderStats stats)
+		MapRenderStats stats,
+		DungeonPieceIndex dungeonPieceIndex,
+		Set<Object> visibleTooltipTargets)
 	{
 		this.config = config;
 		this.camera = camera;
@@ -102,6 +109,8 @@ public class MonsterMarkerRenderer
 		this.monsterIconManager = monsterIconManager;
 		this.slayerTaskTracker = slayerTaskTracker;
 		this.stats = stats;
+		this.dungeonPieceIndex = dungeonPieceIndex;
+		this.visibleTooltipTargets = visibleTooltipTargets;
 	}
 
 	private void forEachMonsterInView(int plane, int minX, int maxX, int minY, int maxY,
@@ -117,6 +126,11 @@ public class MonsterMarkerRenderer
 			}));
 	}
 
+	/**
+	 * Monster zones stay on their native dungeon tiles. {@link MapCamera#screenX(double, double, Rectangle)}
+	 * would slide those tiles onto the overworld entrance, which is how cave spawns used to
+	 * appear in town. Prifddinas still composites onto Tirannwn.
+	 */
 	private double monsterScreenX(double worldX, double worldY, Rectangle bounds)
 	{
 		return camera.screenX(PrifddinasShift.toDisplayX(worldX, worldY), bounds);
@@ -127,10 +141,8 @@ public class MonsterMarkerRenderer
 		return camera.screenY(PrifddinasShift.toDisplayY(worldX, worldY), bounds);
 	}
 
-	/**
-	 * Draws hard-coded boss markers from MonsterLocationData, with boss icons and pins.
-	 */
-	public void drawBossPins(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
+	/** Hard-coded boss markers from {@link MonsterLocationData}, drawn with their boss icons and pins. */
+	public void drawMonsters(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
 		if (!config.showBossLocations())
 		{
@@ -143,37 +155,50 @@ public class MonsterMarkerRenderer
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		final Stroke oldStroke = graphics.getStroke();
 
+		final double zoom = camera.getZoom();
 		final boolean drawIcons = config.showMonsterIcons();
-		final boolean drawLabels = config.showMonsterLabels() && camera.getZoom() >= 0.75;
+		final boolean drawLabels = config.showMonsterLabels() && zoom >= config.bossLabelMinZoom();
 		final boolean highlightTask = config.highlightSlayerTask();
 		final int pinSize = 22;
 
-		for (MonsterLocationData monster : BOSSES)
+		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
-			final WorldPoint point = monster.getWorldPoint();
-			if (point.getPlane() != plane)
+			final MonsterLocationData monster = location.boss;
+			if (RaidBossDisplay.isRaidBoss(monster))
 			{
 				continue;
 			}
-
-			final int mx = point.getX();
-			final int my = point.getY();
-			if (!camera.inView(mx, my, view.minX, view.maxX, view.minY, view.maxY)
-				|| !ViewWindow.isDrawable(camera, mx, my))
+			final boolean isTaskBoss = highlightTask && slayerTaskTracker.isTaskBoss(monster);
+			if (zoom < config.bossMinZoom() && !isTaskBoss)
 			{
 				continue;
 			}
-
-			final int x = (int) Math.round(camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds));
-			final int y = (int) Math.round(camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds));
+			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
+				? null : UndergroundZone.byId(location.zoneId);
+			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
+			if (bossZone != null)
+			{
+				display.setLocation(display.getX() - camera.getDungeonTuner().offsetX(bossZone),
+					display.getY() - camera.getDungeonTuner().offsetY(bossZone));
+			}
+			final boolean wrongPlane = bossZone == null && location.plane != plane;
+			if (wrongPlane)
+			{
+				continue;
+			}
+			if (!bossVisibleInFocusedLayer(location)
+				|| !camera.inView((int) display.getX(), (int) display.getY(), view.minX, view.maxX, view.minY, view.maxY))
+			{
+				continue;
+			}
+			final int x = (int) Math.round(camera.screenX(display.getX() + 0.5, bounds));
+			final int y = (int) Math.round(camera.screenY(display.getY() + 0.5, bounds));
 
 			final Rectangle rect = new Rectangle(x - pinSize / 2, y - pinSize / 2, pinSize, pinSize);
 			if (!bounds.intersects(rect))
 			{
 				continue;
 			}
-
-			final boolean isTaskBoss = highlightTask && slayerTaskTracker.isTaskBoss(monster);
 
 			if (drawIcons)
 			{
@@ -210,14 +235,12 @@ public class MonsterMarkerRenderer
 			}
 
 			placed.add(rect);
-			if (stats != null)
-			{
-				stats.markersDrawn++;
-			}
+			visibleTooltipTargets.add(monster);
+			stats.markersDrawn++;
 
 			if (drawLabels)
 			{
-				final String label = (isTaskBoss ? "\u2694 \ud83d\udc51 " : "\ud83d\udc51 ") + monster.getName();
+				final String label = (isTaskBoss ? "⚔ 👑 " : "👑 ") + monster.getName();
 				graphics.setFont(SMALL);
 				final int textW = graphics.getFontMetrics().stringWidth(label);
 				final int textX = x - textW / 2;
@@ -250,18 +273,29 @@ public class MonsterMarkerRenderer
 		graphics.setStroke(oldStroke);
 	}
 
-	/**
-	 * Backward compatibility alias for {@link #drawBossPins}.
-	 */
-	public void drawMonsters(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
+	private boolean bossVisibleInFocusedLayer(BossLocationIndex.Location location)
 	{
-		drawBossPins(graphics, bounds, placed);
+		if (location.zoneId == null || location.zoneId.isEmpty())
+		{
+			return ViewWindow.isDrawable(camera, location.x, location.y);
+		}
+		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
+		if (zone == null || camera.getFocusedUndergroundZone() != zone)
+		{
+			return false;
+		}
+		final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
+		final int visiblePlane = hoveredPlane != null ? hoveredPlane
+			: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
+		if (location.plane != visiblePlane)
+		{
+			return false;
+		}
+		final Integer layer = camera.floorLayerFor(zone);
+		return layer == null || layer == location.layer;
 	}
 
-	/**
-	 * Draws monster spawn habitat zones as soft underlays, and calls {@link #drawMonsterLabels}
-	 * for monster icons and text labels.
-	 */
+	/** Bosses and slayer targets, with details on hover and item sprites on the map. */
 	public void drawMonsterZones(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
 		if (!config.showMonsterZones() || !monsterIndex.isLoaded())
@@ -310,6 +344,8 @@ public class MonsterMarkerRenderer
 			final int maxRadius = isTaskZone ? 48 : 40;
 			final int radiusPx = (int) Math.max(minRadius, Math.min(maxRadius, baseRadius));
 
+			visibleTooltipTargets.add(zone);
+
 			final int diam = radiusPx * 2;
 			final int ox = sx - radiusPx;
 			final int oy = sy - radiusPx;
@@ -345,43 +381,13 @@ public class MonsterMarkerRenderer
 		graphics.setStroke(prevStroke);
 		graphics.setComposite(previous);
 
-		// 2. Monster / slayer icons & labels at zone centroids
-		drawMonsterLabels(graphics, bounds, placed, view, zoom, zoomGatePassed, highlightTask);
-	}
-
-	/**
-	 * Draws monster centroid icons and labels.
-	 */
-	public void drawMonsterLabels(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
-	{
-		if (!config.showMonsterIcons() || !monsterIndex.isLoaded())
-		{
-			return;
-		}
-
-		final ViewWindow view = ViewWindow.from(camera, bounds, 8.0);
-		final double zoom = camera.getZoom();
-		final boolean zoomGatePassed = zoom >= config.monsterZoneMinZoom();
-		final boolean highlightTask = config.highlightSlayerTask();
-		drawMonsterLabels(graphics, bounds, placed, view, zoom, zoomGatePassed, highlightTask);
-	}
-
-	private void drawMonsterLabels(
-		Graphics2D graphics,
-		Rectangle bounds,
-		List<Rectangle> placed,
-		ViewWindow view,
-		double zoom,
-		boolean zoomGatePassed,
-		boolean highlightTask)
-	{
+		// 2. Monster / slayer icons at zone centroids
 		if (!config.showMonsterIcons())
 		{
 			return;
 		}
 
-		final int plane = camera.getPlane();
-		final boolean drawLabels = config.showMonsterLabels() && zoom >= 0.85;
+		final boolean drawLabels = config.showMonsterLabels() && zoom >= config.monsterLabelMinZoom();
 		final int iconSize = 18;
 		final Stroke iconPrevStroke = graphics.getStroke();
 
@@ -389,12 +395,12 @@ public class MonsterMarkerRenderer
 		{
 			final boolean isTaskZone = highlightTask && slayerTaskTracker.isTaskMonster(zone);
 
-			// Gating for icons: task zones show icons even when zoomed out (zoom >= 0.30); normal icons require zoom >= 0.40 & zoomGate
-			if (!isTaskZone && (zoom < 0.40 || !zoomGatePassed))
+			// Task icons use their own threshold; standard icons follow the spawn-area threshold.
+			if (!isTaskZone && !zoomGatePassed)
 			{
 				return;
 			}
-			if (isTaskZone && zoom < 0.30)
+			if (isTaskZone && zoom < config.slayerTaskIconMinZoom())
 			{
 				return;
 			}
@@ -439,14 +445,11 @@ public class MonsterMarkerRenderer
 			}
 
 			placed.add(rect);
-			if (stats != null)
-			{
-				stats.markersDrawn++;
-			}
+			stats.markersDrawn++;
 
-			if (drawLabels || (isTaskZone && zoom >= 0.65))
+			if (isTaskZone ? zoom >= config.slayerTaskLabelMinZoom() : drawLabels)
 			{
-				final String label = (isTaskZone ? "\u2694 " : "") + zone.getMonster() + (zone.getCombatLevel() > 0 ? " (" + zone.getCombatLevel() + ")" : "");
+				final String label = (isTaskZone ? "⚔ " : "") + zone.getMonster() + (zone.getCombatLevel() > 0 ? " (" + zone.getCombatLevel() + ")" : "");
 				graphics.setFont(SMALL);
 				final int textW = graphics.getFontMetrics().stringWidth(label);
 				final int textX = sx - textW / 2;
@@ -479,4 +482,5 @@ public class MonsterMarkerRenderer
 
 		graphics.setStroke(iconPrevStroke);
 	}
+
 }

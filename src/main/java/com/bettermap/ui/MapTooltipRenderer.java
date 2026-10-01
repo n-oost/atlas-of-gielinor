@@ -24,6 +24,8 @@
  */
 package com.bettermap.ui;
 
+import com.bettermap.ui.markers.RaidBossDisplay;
+
 import static com.bettermap.ui.MapStyle.BOSSES;
 import static com.bettermap.ui.MapStyle.CARD_BG;
 import static com.bettermap.ui.MapStyle.CARD_EDGE;
@@ -178,7 +180,7 @@ public class MapTooltipRenderer
 	private final java.util.Map<MonsterLocationData, MonsterIndex.Zone> raidStats =
 		new java.util.EnumMap<>(MonsterLocationData.class);
 
-	void drawRaidBossCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor,
+	public void drawRaidBossCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor,
 		MonsterLocationData boss, String raidName)
 	{
 		if (!config.showTooltips())
@@ -250,7 +252,8 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		final boolean travelFocused = config.showTravelRoutes() && camera.getSelectedTravelNode() != null;
+		final boolean travelFocused = config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom()
+			&& camera.getSelectedTravelNode() != null;
 		if (travelFocused && camera.getHoveredTravelNode() != null)
 		{
 			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(camera.getHoveredTravelNode());
@@ -271,6 +274,10 @@ public class MapTooltipRenderer
 		final int radius = hitRadius();
 		final int pointRadius = Math.min(radius, 6);
 		final HoverProbe probe = new HoverProbe(cursor, worldX, worldY, plane, pointRadius, markerRenderer);
+		if (drawPortCard(graphics, bounds, probe))
+		{
+			return;
+		}
 		final PoiIndex.Poi drawnPoi = markerRenderer != null ? markerRenderer.visiblePoiIconAt(cursor) : null;
 		if (drawnPoi != null)
 		{
@@ -315,11 +322,6 @@ public class MapTooltipRenderer
 		}
 
 		if (drawNoticeBoardCard(graphics, bounds, probe))
-		{
-			return;
-		}
-
-		if (drawPortCard(graphics, bounds, probe))
 		{
 			return;
 		}
@@ -475,7 +477,8 @@ public class MapTooltipRenderer
 	private boolean drawTravelNodeCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final TravelData.TravelNode travelNode = camera.getHoveredTravelNode();
-		if (travelNode != null && !hasTighterPointMarker(probe))
+		if (travelNode != null && camera.getZoom() >= config.travelStationMinZoom()
+			&& !hasTighterPointMarker(probe))
 		{
 			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(travelNode);
 			if (card != null)

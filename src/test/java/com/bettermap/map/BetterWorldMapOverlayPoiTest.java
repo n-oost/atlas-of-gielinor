@@ -28,6 +28,7 @@ import com.bettermap.BetterMapConfig;
 import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.ui.BetterWorldMapOverlay;
+import com.bettermap.ui.markers.ViewWindow;
 import java.io.File;
 import java.util.Collections;
 import static org.junit.Assert.assertFalse;
@@ -36,6 +37,58 @@ import org.junit.Test;
 
 public class BetterWorldMapOverlayPoiTest
 {
+	@Test
+	public void allInteriorPoiCategoriesStayOffThePlainSurface()
+	{
+		final MapCamera camera = new MapCamera();
+		camera.centerOn(3222, 3218);
+		final BetterWorldMapOverlay overlay = createOverlay(createConfig(true, true, true), camera, null);
+		final net.runelite.api.coords.WorldPoint interior = UndergroundZone.TAVERLEY_DUNGEON.getUndergroundPoint();
+		for (String key : new String[]{"agility_short-cut", "bank", "general_store", "fishing_spot"})
+		{
+			assertFalse(key + " must not project from a dungeon onto the surface",
+				overlay.shouldDrawPoiIcon(new PoiIndex.Poi(interior.getX(), interior.getY(), 0, key, key)));
+		}
+	}
+
+	@Test
+	public void realOverworldOverlaysKeepTheirPois()
+	{
+		final MapCamera camera = new MapCamera();
+		camera.centerOn(3222, 3218);
+		assertTrue(ViewWindow.isPoiDrawable(camera, 3213, 6170));
+		assertTrue(ViewWindow.isPoiDrawable(camera, 2112, 5088));
+		assertTrue(ViewWindow.isPoiDrawable(camera, 3208, 3218));
+	}
+
+	@Test
+	public void previewPoisBelongOnlyToTheVisibleDungeon()
+	{
+		final MapCamera camera = new MapCamera();
+		camera.centerOn(3222, 3218);
+		final net.runelite.api.coords.WorldPoint interior = UndergroundZone.TAVERLEY_DUNGEON.getUndergroundPoint();
+		camera.setHoveredUnderground(UndergroundZone.TAVERLEY_DUNGEON, true);
+		assertTrue(ViewWindow.isPoiDrawable(camera, interior.getX(), interior.getY()));
+		assertFalse(ViewWindow.isPoiDrawable(camera, 2907, 5265));
+		camera.setHoveredUnderground(null, true);
+		assertFalse(ViewWindow.isPoiDrawable(camera, interior.getX(), interior.getY()));
+		camera.setUndergroundMode(UndergroundZone.TAVERLEY_DUNGEON);
+		assertTrue(ViewWindow.isPoiDrawable(camera, interior.getX(), interior.getY()));
+	}
+
+	@Test
+	public void regionalPreviewDoesNotPullInUnrelatedDungeonPois()
+	{
+		final MapCamera camera = new MapCamera();
+		camera.centerOn(3222, 3218);
+		camera.setHoveredOverlayCluster(new OverlayCluster(
+			"asgarnia", "Asgarnia underground", 2800, 3120, 3110, 3525,
+			Collections.singletonList(UndergroundZone.TAVERLEY_DUNGEON), 2992, 3408));
+		final net.runelite.api.coords.WorldPoint interior = UndergroundZone.TAVERLEY_DUNGEON.getUndergroundPoint();
+		assertTrue(ViewWindow.isPoiDrawable(camera, interior.getX(), interior.getY()));
+		assertFalse(ViewWindow.isPoiDrawable(camera, 2907, 5265));
+	}
+
 	private BetterMapConfig createConfig(
 		final boolean iconSkilling,
 		final boolean iconBanks,
@@ -94,7 +147,7 @@ public class BetterWorldMapOverlayPoiTest
 	}
 
 	@Test
-	public void disablingSkillingHidesAllSkillingAndDefaultKeyBadges()
+	public void disablingSkillingKeepsIndependentShortcutsVisible()
 	{
 		final BetterMapConfig config = createConfig(false, false, false);
 		final BetterWorldMapOverlay overlay = createOverlay(config);
@@ -105,7 +158,7 @@ public class BetterWorldMapOverlayPoiTest
 		final PoiIndex.Poi fishing = new PoiIndex.Poi(3240, 3150, 0, "fishing_spot", "Lumbridge Fishing");
 
 		assertFalse("skilling toggle off disables agility training", overlay.shouldDrawPoiIcon(agilityCourse));
-		assertFalse("skilling toggle off disables agility shortcuts", overlay.shouldDrawPoiIcon(agilityShortcut));
+		assertTrue("shortcuts use their own enabled toggle", overlay.shouldDrawPoiIcon(agilityShortcut));
 		assertFalse("skilling toggle off disables hunter training", overlay.shouldDrawPoiIcon(hunterSpot));
 		assertFalse("skilling toggle off disables generic skilling badges", overlay.shouldDrawPoiIcon(fishing));
 	}
@@ -174,6 +227,9 @@ public class BetterWorldMapOverlayPoiTest
 		final PoiIndex.Poi isleEntrance = new PoiIndex.Poi(2309, 2919, 0, "dungeon", "Isle of Souls Dungeon");
 		assertFalse("the canonical entrance uses one interactive layer symbol",
 			overlay.shouldDrawPoiIcon(isleEntrance));
+		final PoiIndex.Poi poisonWaste = new PoiIndex.Poi(2321, 3100, 0, "dungeon", "Dungeon");
+		assertFalse("a moved Poison Waste button replaces the native POI badge",
+			overlay.shouldDrawPoiIcon(poisonWaste));
 	}
 
 	private BetterWorldMapOverlay createOverlay(

@@ -103,6 +103,27 @@ public class PoiIndexTest
 	}
 
 	@Test
+	public void genericDungeonMarkersUseKnownDestinationNames()
+	{
+		final PoiIndex.Poi taverley = poiIndex.nearest(2884, 3397, 0, 0);
+		assertNotNull(taverley);
+		assertEquals("Taverley Dungeon", taverley.getName());
+		assertEquals("dungeon_link", taverley.getKey());
+
+		final PoiIndex.Poi wyrmscraig = poiIndex.nearest(2563, 2203, 0, 0);
+		assertNotNull(wyrmscraig);
+		assertEquals("Wyrmscraig Cavern", wyrmscraig.getName());
+	}
+
+	@Test
+	public void unknownDungeonMarkerDoesNotBorrowADistantName()
+	{
+		final PoiIndex.Poi unknown = poiIndex.nearest(2220, 2331, 0, 0);
+		assertNotNull(unknown);
+		assertEquals("Dungeon with map link", unknown.getName());
+	}
+
+	@Test
 	public void distinctDungeonEntrancesRemainSeparate()
 	{
 		final PoiIndex.Poi northBrimhaven = poiIndex.nearest(2744, 3154, 0, 0);
@@ -138,6 +159,36 @@ public class PoiIndexTest
 			.count());
 		assertEquals(2309, entrance.getX());
 		assertEquals(2919, entrance.getY());
+	}
+
+	@Test
+	public void fairyRingsKeepTheirLabeledPointWithoutANativeDouble()
+	{
+		for (PoiIndex.Poi ring : PoiDetails.getAllPois())
+		{
+			if (!"transportation".equals(ring.getKey()) || !ring.getName().contains("Fairy Ring ("))
+			{
+				continue;
+			}
+			final List<PoiIndex.Poi> nearby = poiIndex.inArea(ring.getPlane(),
+				ring.getX() - 3, ring.getX() + 3, ring.getY() - 3, ring.getY() + 3);
+			assertEquals(ring.getName(), 1, nearby.stream()
+				.filter(poi -> "transportation".equals(poi.getKey())).count());
+			final PoiIndex.Poi marker = poiIndex.nearest(ring.getX(), ring.getY(), ring.getPlane(), 0);
+			assertNotNull(ring.getName(), marker);
+			assertEquals(ring.getName(), marker.getName());
+		}
+		assertNotNull(poiIndex.icon("transportation"));
+	}
+
+	@Test
+	public void poisonWasteDoesNotKeepItsOldEntranceMarker()
+	{
+		assertEquals(1, poiIndex.inArea(0, 2318, 2333, 3097, 3109).stream()
+			.filter(poi -> "dungeon".equals(poi.getKey()) || "dungeon_link".equals(poi.getKey()))
+			.count());
+		assertNull(poiIndex.nearest(2330, 3106, 0, 0));
+		assertNotNull(poiIndex.nearest(2321, 3100, 0, 0));
 	}
 
 	@Test

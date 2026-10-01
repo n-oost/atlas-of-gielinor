@@ -87,7 +87,7 @@ class MapLayout
 	 */
 	int rightUiInset(Rectangle bounds)
 	{
-		if (client == null || config == null || config.hideMinimapOnOpen())
+		if (client == null || config == null)
 		{
 			return 0;
 		}

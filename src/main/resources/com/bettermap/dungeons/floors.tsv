@@ -1,19 +1,19 @@
 # Better Map dungeon floor hover points — on composed footprints, not stacked on the entrance chip
 # zoneId	name	plane	worldX	worldY	optionalLayerId
-yanille_agility_dungeon	Yanille Agility Dungeon (upper level)	0	2575	3095	1201
-yanille_agility_dungeon	Yanille Agility Dungeon (lower level)	0	2588	3169	1372
-dorgesh_kaan	Dorgesh-Kaan (Lower level)	0	3198	3139	1052
-dorgesh_kaan	Dorgesh-Kaan (Middle level)	1	3198	3170	1053
-dorgesh_kaan	Dorgesh-Kaan (Upper level)	2	3198	3203	1373
-dorgesh_kaan_south	Dorgesh-Kaan South Dungeon	0	3198	3086
-dorgesh_kaan_south	Dorgesh-Kaan South Dungeon (upper)	3	3211	3110
+yanille_agility_dungeon	Yanille Agility Dungeon (upper level)	0	2591	3066	1201
+yanille_agility_dungeon	Yanille Agility Dungeon (lower level)	0	2610	3135	1372
+dorgesh_kaan	Dorgesh-Kaan (Lower level)	0	3326	3096	1052
+dorgesh_kaan	Dorgesh-Kaan (Middle level)	1	3326	3107	1053
+dorgesh_kaan	Dorgesh-Kaan (Upper level)	2	3326	3118	1373
+dorgesh_kaan_south	Dorgesh-Kaan South Dungeon	0	3290	3075
+dorgesh_kaan_south	Dorgesh-Kaan South Dungeon (upper)	3	3322	3059
 zanaris	Zanaris	0	3221	3157
 zanaris	Zanaris (upper)	1	3254	3182
 stronghold_of_security	Vault of War	0	3145	3415	1271
 stronghold_of_security	Catacomb of Famine	0	3145	3398	1358
 stronghold_of_security	Pit of Pestilence	0	3145	3381	1359
 stronghold_of_security	Sepulchre of Death	0	3145	3364	1360
-chasm_of_tears	Tears of Guthix	2	3245	3100
+chasm_of_tears	Tears of Guthix	2	3215	3141
 ancient_cavern	Ancient Cavern (lower)	0	2504	3490
 ancient_cavern	Ancient Cavern (upper)	1	2512	3486
 underground_pass	Underground Pass (1)	0	2406	3265	1377
@@ -28,17 +28,17 @@ karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Wyrms)	0	1311	3807	1090
 karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Hydras)	0	1311	3825	1090
 mining_guild	Mining Guild (ground)	0	3019	3339	1361
 mining_guild	Mining Guild (Amethyst Mine)	0	3030	3360	1361
-brimhaven_dungeon	Brimhaven Dungeon (Metal Dragons)	0	2745	3154	1016
-brimhaven_dungeon	Brimhaven Dungeon (Red Dragons)	0	2710	3170	1016
+brimhaven_dungeon	Brimhaven Dungeon (Metal Dragons)	0	2739	3180	1016
+brimhaven_dungeon	Brimhaven Dungeon (Red Dragons)	0	2739	3169	1016
 taverley_dungeon	Taverley Dungeon (Main level)	0	2884	3397	1162
 taverley_dungeon	Cerberus Lair	0	2870	3420	1162
 cam_torum	Cam Torum (City level)	1	1435	3145	1020
 neypotzli	Neypotzli (Moons of Peril)	0	1439	3279	1126
-haunted_mine	Haunted Mine (upper level)	0	3441	3232	227
-haunted_mine	Haunted Mine (Treus Dayth chamber)	0	3420	3245	227
-morytania_spider_cave	Morytania Spider Cave	0	3680	3425	1256
-morytania_spider_cave	Araxxor's Lair	0	3630	3415	1222
-shade_catacombs	Shade Catacombs	0	3484	3295	1266
+haunted_mine	Haunted Mine (upper level)	0	3439	3232	227
+haunted_mine	Haunted Mine (Treus Dayth chamber)	0	3430	3240	227
+morytania_spider_cave	Morytania Spider Cave	0	3666	3419	1256
+morytania_spider_cave	Araxxor's Lair	0	3648	3419	1222
+shade_catacombs	Shade Catacombs	0	3522	3292	1266
 vetions_rest	Vet'ion's Rest	0	3295	3802	1280
 keldagrim	Keldagrim (Grand Exchange)	0	2880	3780	1092
 keldagrim	Keldagrim (Palace)	1	2880	3800	1092
@@ -46,16 +46,16 @@ sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3727	3300
 sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3727	3870
 jormungands_prison	Jormungand's Prison	0	2465	4010
 ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043	1400
-ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2750	2760
-ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2750	2700
-mos_le_harmless_cave	Mos Le'Harmless (cave horrors)	0	3748	2973
-mos_le_harmless_cave	Mos Le'Harmless (eastern caverns)	0	3780	2980
-poison_waste_dungeon	Poison Waste Sewer (main level)	1	2346	3160
-poison_waste_dungeon	Poison Waste Sewer (lower level)	0	2260	3125
-ape_atoll_dungeon	Ape Atoll (Maniacal Monkeys)	1	2630	2800
+ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2661	2769
+ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2661	2780
+mos_le_harmless_cave	Mos Le'Harmless (cave horrors)	0	3752	2949
+mos_le_harmless_cave	Mos Le'Harmless (eastern caverns)	0	3857	2962
+poison_waste_dungeon	Poison Waste Sewer (main level)	1	2321	3117
+poison_waste_dungeon	Poison Waste Sewer (lower level)	0	2321	3108
+ape_atoll_dungeon	Ape Atoll (Maniacal Monkeys)	1	2661	2758
 ape_atoll_dungeon	Ape Atoll (Kruk catwalks)	2	2670	2820
 tonali_cavern	Tonali Cavern	0	1309	3104	1301
-dragon_nest	Dragon Nest	0	1289	3134	1303
+dragon_nest	Dragon Nest	0	1264	3103	1303
 troll_stronghold	Troll Stronghold (Entrance & Kitchen)	0	2839	3690	1172
 troll_stronghold	Troll Stronghold (Prison & Roof)	1	2831	3677	1172
 troll_stronghold	Troll Stronghold (God Wars Pass)	0	2827	3647	1172

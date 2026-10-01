@@ -305,7 +305,7 @@ public class MonsterIconManager
 		mapExact("king black dragon", ItemID.POH_TROPHYDROP_KBD);
 		mapExact("kbd", ItemID.POH_TROPHYDROP_KBD);
 		mapExact("zulrah", ItemID.SNAKEPET);
-		mapExact("vorkath", ItemID.CERT_SKINPASTE);
+		mapExact("vorkath", ItemID.VORKATHPET);
 		mapExact("general graardor", ItemID.BANDOSPET);
 		mapExact("bandos", ItemID.BANDOSPET);
 		mapExact("kree'arra", ItemID.ARMADYLPET);
@@ -316,8 +316,8 @@ public class MonsterIconManager
 		mapExact("k'ril tsutsaroth", ItemID.ZAMORAKPET);
 		mapExact("kril tsutsaroth", ItemID.ZAMORAKPET);
 		mapExact("zamorak", ItemID.ZAMORAKPET);
-		mapExact("corporeal beast", ItemID.ELYSIAN_SIGIL);
-		mapExact("corp", ItemID.ELYSIAN_SIGIL);
+		mapExact("corporeal beast", ItemID.COREPET);
+		mapExact("corp", ItemID.COREPET);
 
 		// Dagannoth Kings
 		mapExact("dagannoth prime", ItemID.PRIMEPET);
@@ -332,6 +332,7 @@ public class MonsterIconManager
 		mapExact("kraken", ItemID.KRAKENPET);
 		mapExact("cave kraken", ItemID.TOTS_CHARGED);
 		mapExact("thermonuclear smoke devil", ItemID.SMOKEPET);
+		mapExact("araxxor", ItemID.ARAXXORPET);
 		mapExact("grotesque guardians", ItemID.DAWNPET);
 		mapExact("dusk", ItemID.DAWNPET);
 		mapExact("dawn", ItemID.DUSKPET);
@@ -339,9 +340,14 @@ public class MonsterIconManager
 		// Demi-Bosses & Wilderness
 		mapExact("giant mole", ItemID.MOLEPET);
 		mapExact("kalphite queen", ItemID.POH_TROPHYDROP_KALPHITEQUEEN);
-		mapExact("chaos fanatic", ItemID.ODIUM_SHARD1);
+		mapExact("kq", ItemID.POH_TROPHYDROP_KALPHITEQUEEN);
+		mapExact("chaos elemental", ItemID.CHAOSELEPET);
+		mapExact("chaos fanatic", ItemID.CHAOSELEPET);
 		mapExact("crazy archaeologist", ItemID.MALEDICTION_SHARD2);
 		mapExact("deranged archaeologist", ItemID.MALEDICTION_SHARD2);
+		mapExact("the hueycoatl", ItemID.HUEYPET);
+		mapExact("hueycoatl", ItemID.HUEYPET);
+		mapExact("gemstone crab", ItemID.GEM_BAG);
 		mapExact("scorpia", ItemID.SCORPIA_PET);
 		mapExact("venenatis", ItemID.VENENATIS_PET);
 		mapExact("spindel", ItemID.VENENATIS_PET);
@@ -351,12 +357,20 @@ public class MonsterIconManager
 		mapExact("vetion", ItemID.VETION_PET);
 		mapExact("calvar'ion", ItemID.VETION_PET);
 		mapExact("calvarion", ItemID.VETION_PET);
-		mapExact("sarachnis", ItemID.SARACHNIS_CUDGEL);
-		mapExact("skotizo", ItemID.CATA_TOTEM);
+		mapExact("revenant maledictus", ItemID.WILD_CAVE_AMULET);
+		mapExact("sarachnis", ItemID.SARACHNISPET);
+		mapExact("skotizo", ItemID.SKOTIZOPET);
 		mapExact("hespori", ItemID.BOTTOMLESS_COMPOST_BUCKET);
 		mapExact("obor", ItemID.HILLGIANT_BOSS_CLUB);
 		mapExact("bryophyta", ItemID.NATURE_STAFF_CHARGED);
 		mapExact("scurrius", ItemID.SCURRIUSPET);
+		mapExact("shellbane gryphon", ItemID.GRYPHONBOSSPET);
+
+		// Moons of Peril
+		mapExact("blood moon", ItemID.BLOOD_MOON_HELM);
+		mapExact("eyatlalli", ItemID.BLOOD_MOON_HELM);
+		mapExact("blue moon", ItemID.FROST_MOON_HELM);
+		mapExact("eclipse moon", ItemID.ECLIPSE_MOON_HELM);
 
 		// Desert Treasure II & Modern Bosses
 		mapExact("duke sucellus", ItemID.DUKESUCELLUSPET);
@@ -366,11 +380,29 @@ public class MonsterIconManager
 		mapExact("whisperer", ItemID.WHISPERERPET);
 		mapExact("vardorvis", ItemID.VARDORVISPET);
 		mapExact("phantom muspah", ItemID.MUSPAHPET);
+		mapExact("muspah", ItemID.MUSPAHPET);
 		mapExact("nex", ItemID.NEXPET);
 		mapExact("the nightmare", ItemID.NIGHTMAREPET);
 		mapExact("nightmare of ashihama", ItemID.NIGHTMAREPET);
 		mapExact("phosani's nightmare", ItemID.NIGHTMAREPET);
 		mapExact("phosanis nightmare", ItemID.NIGHTMAREPET);
+		mapExact("amoxliatl", ItemID.AMOXLIATLPET);
+		mapExact("yama", ItemID.YAMA_SPECIAL_CONTRACT);
+		mapExact("doom of mokhaiotl", ItemID.ECHO_CRYSTAL);
+		mapExact("royal titans", ItemID.SIGIL_OF_TITANIUM_ATTUNED);
+		mapExact("brutus", ItemID.COW_SLIPPERS_RECOL_4);
+		mapExact("demonic brutus", ItemID.COW_SLIPPERS_RECOL_4);
+		mapExact("mad angel", ItemID.MADANGELPET);
+		mapExact("maggot king", ItemID.MAGGOTKINGPET);
+		mapExact("the mimic", ItemID.TRAIL_MIMIC_CASKET);
+		mapExact("mimic", ItemID.TRAIL_MIMIC_CASKET);
+		mapExact("crystalline hunllef", ItemID.GAUNTLETPET);
+		mapExact("corrupted hunllef", ItemID.GAUNTLETPET_CORRUPT);
+		mapExact("hunllef", ItemID.GAUNTLETPET);
+		mapExact("sol heredit", ItemID.SOLHEREDITPET);
+		mapExact("wintertodt", ItemID.PHOENIXPET);
+		mapExact("tempoross", ItemID.TEMPOROSSPET);
+		mapExact("zalcano", ItemID.ZALCANOPET);
 
 		// Barrows Brothers
 		mapExact("ahrim the blighted", ItemID.BARROWS_AHRIM_HEAD);
@@ -380,18 +412,43 @@ public class MonsterIconManager
 		mapExact("torag the corrupted", ItemID.BARROWS_TORAG_HEAD);
 		mapExact("verac the defiled", ItemID.BARROWS_VERAC_HEAD);
 
-		// Minigames & Raids
+		// Raids 1: Chambers of Xeric
+		mapExact("tekton", ItemID.TEKTONPET);
+		mapExact("vanguard", ItemID.VANGUARDPET);
+		mapExact("vespula", ItemID.VESPULAPET);
+		mapExact("vasa nistirio", ItemID.VASAPET);
+		mapExact("muttadile", ItemID.BCS_RIDDLE_EMBLEM_CROCODILE);
+		mapExact("great olm", ItemID.OLMPET);
+		mapExact("olm", ItemID.OLMPET);
+
+		// Raids 2: Theatre of Blood
+		mapExact("the maiden of sugadinti", ItemID.MAIDENPET);
+		mapExact("maiden of sugadinti", ItemID.MAIDENPET);
+		mapExact("pestilent bloat", ItemID.BLOATPET);
+		mapExact("bloat", ItemID.BLOATPET);
+		mapExact("nylocas vasilias", ItemID.NYLOCASPET);
+		mapExact("sotetseg", ItemID.SOTETSEGPET);
+		mapExact("xarpus", ItemID.XARPUSPET);
+		mapExact("verzik vitur", ItemID.VERZIKPET);
+		mapExact("verzik", ItemID.VERZIKPET);
+
+		// Raids 3: Tombs of Amascut
+		mapExact("akkha", ItemID.WARDENPET_AKKHA);
+		mapExact("ba ba", ItemID.WARDENPET_BABA);
+		mapExact("baba", ItemID.WARDENPET_BABA);
+		mapExact("kephri", ItemID.WARDENPET_KEPHRI);
+		mapExact("zebak", ItemID.WARDENPET_ZEBAK);
+		mapExact("tumeken's warden", ItemID.WARDENPET_TUMEKEN);
+		mapExact("tumekens warden", ItemID.WARDENPET_TUMEKEN);
+		mapExact("elidinis' warden", ItemID.WARDENPET_ELIDINIS);
+		mapExact("elidinis warden", ItemID.WARDENPET_ELIDINIS);
+		mapExact("warden", ItemID.WARDENPET_TUMEKEN);
+
+		// Minigames & Special Encounters
 		mapExact("tztok jad", ItemID.JAD_PET);
 		mapExact("jad", ItemID.JAD_PET);
 		mapExact("tzkal zuk", ItemID.INFERNOPET_ZUK);
 		mapExact("zuk", ItemID.INFERNOPET_ZUK);
-		mapExact("great olm", ItemID.OLMPET);
-		mapExact("olm", ItemID.OLMPET);
-		mapExact("verzik vitur", ItemID.VERZIKPET);
-		mapExact("verzik", ItemID.VERZIKPET);
-		mapExact("tumeken's warden", ItemID.WARDENPET_TUMEKEN);
-		mapExact("tumekens warden", ItemID.WARDENPET_TUMEKEN);
-		mapExact("warden", ItemID.WARDENPET_TUMEKEN);
 	}
 
 	private static void buildExactSlayerMappings()

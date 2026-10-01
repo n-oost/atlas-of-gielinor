@@ -24,6 +24,8 @@
  */
 package com.bettermap.map;
 
+import com.bettermap.data.DungeonPoiOverrides;
+import net.runelite.api.coords.WorldPoint;
 import com.bettermap.data.UndergroundZone;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -62,7 +64,7 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>canonical modeled-dungeon search targets from {@link UndergroundZone}</li>
  *   <li>curated entries from {@link PoiDetails}</li>
  * </ol>
- * Native icon rows win rendering ties. Distinct curated names at the same coordinate remain
+	 * Native icon rows win rendering ties, except labeled fairy rings. Distinct curated names remain
  * searchable aliases, so a generic marker does not erase the place's real name.
  *
  * <p>All data is bundled or read from the local tile store; runtime loading makes no web requests.
@@ -182,7 +184,7 @@ public class PoiIndex
 		final Set<Long> existingPoints = new HashSet<>();
 		// Downloaded packs can contain an older icon overlay. The bundled snapshot is authoritative.
 		InputStream bundledPois = PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois.tsv");
-		readTsv(bundledPois != null ? bundledPois : open(tileDir, "pois.tsv"), existingPoints);
+		readTsv(bundledPois != null ? bundledPois : open(tileDir, "pois.tsv"), existingPoints, false, false);
 		readTsv(PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois-additions.tsv"), existingPoints);
 		readTsv(PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois-legacy.tsv"), existingPoints);
 		// Keep bank catalogue names searchable without drawing a second icon a tile or two away.
@@ -194,23 +196,66 @@ public class PoiIndex
 		// MapMarkerRenderer draws the matching interactive layer symbol, so no second icon is added.
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (DungeonPoiOverrides.isButtonDeleted(zone, 0))
+			{
+				continue;
+			}
+			final WorldPoint p = DungeonPoiOverrides.getButtonPoint(zone, 0);
 			addSearchPoi(new Poi(
-				zone.getSurfacePoint().getX(),
-				zone.getSurfacePoint().getY(),
-				zone.getSurfacePoint().getPlane(),
+				p.getX(),
+				p.getY(),
+				p.getPlane(),
 				"dungeon",
 				zone.getName()));
 		}
 
+		// Fairy rings use their named metadata point and the transportation (blue arrow) icon.
+		// Remove the nearby generic cache marker before adding the labeled point.
 		for (Poi p : PoiDetails.getAllPois())
 		{
-			if (isOneTileDungeonDuplicate(p))
+			if (!isFairyRing(p)
+				|| DungeonPoiOverrides.isRawPoiDeleted(p.getName(), p.getX(), p.getY(), p.getPlane()))
+			{
+				continue;
+			}
+			final List<Poi> replaced = new ArrayList<>();
+			for (Poi existing : pois)
+			{
+				if ("transportation".equals(existing.key) && nearby(existing, p, 3))
+				{
+					replaced.add(existing);
+				}
+			}
+			for (Poi existing : replaced)
+			{
+				pois.remove(existing);
+				byKey.get(existing.key).remove(existing);
+				chunkMap.get(chunkKey(existing.plane, existing.x >> 6, existing.y >> 6)).remove(existing);
+				existingPoints.remove(packedPoint(existing.plane, existing.x, existing.y));
+			}
+			if (existingPoints.add(packedPoint(p.plane, p.x, p.y)))
+			{
+				addPoi(p);
+			}
+		}
+
+		for (Poi p : PoiDetails.getAllPois())
+		{
+			if (isFairyRing(p)
+				|| DungeonPoiOverrides.isRawPoiDeleted(p.getName(), p.getX(), p.getY(), p.getPlane()))
 			{
 				continue;
 			}
 			final boolean searchable = !isModeledDungeonInterior(p);
 			final long key = packedPoint(p.plane, p.x, p.y);
-			if (existingPoints.add(key))
+			if (hasNearbyPoi(p))
+			{
+				if (searchable)
+				{
+					addSearchPoi(p);
+				}
+			}
+			else if (existingPoints.add(key))
 			{
 				addPoi(p, searchable);
 			}
@@ -236,20 +281,55 @@ public class PoiIndex
 		log.debug("Loaded {} points of interest into index", pois.size());
 	}
 
-	/** The curated dungeon source is one tile west of its matching wiki entrance marker. */
-	private boolean isOneTileDungeonDuplicate(Poi poi)
+	private static boolean isFairyRing(Poi poi)
 	{
-		if (!isDungeonPoi(poi) || poi.y > InstanceMaps.GAP_MIN_Y)
-		{
-			return false;
-		}
+		return "transportation".equals(poi.key) && poi.name.contains("Fairy Ring (");
+	}
 
+	private static boolean nearby(Poi a, Poi b, int radius)
+	{
+		return a.plane == b.plane && Math.abs(a.x - b.x) <= radius && Math.abs(a.y - b.y) <= radius;
+	}
+
+	/** Supplementary sources often place the same icon a few tiles from its native centre. */
+	private boolean hasNearbyPoi(Poi poi)
+	{
 		for (Poi existing : pois)
 		{
-			if (isDungeonPoi(existing) && existing.plane == poi.plane
-				&& existing.x == poi.x + 1 && existing.y == poi.y)
+			if ("region_label".equals(poi.key) && !existing.name.equalsIgnoreCase(poi.name))
+			{
+				continue;
+			}
+			if ((existing.key.equals(poi.key) || (isDungeonPoi(existing) && isDungeonPoi(poi)))
+				&& nearby(existing, poi, 3))
 			{
 				return true;
+			}
+		}
+		// A moved dungeon button replaces the original entrance even when it moved more than
+		// three tiles (for example Poison Waste). Match each original entrance to its override.
+		if (isDungeonPoi(poi) && poi.y <= InstanceMaps.GAP_MIN_Y)
+		{
+			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
+			{
+				for (int i = 0; i < zone.getSurfacePoints().size(); i++)
+				{
+					final WorldPoint original = zone.getSurfacePoints().get(i);
+					final WorldPoint moved = DungeonPoiOverrides.getButtonPoint(zone, i);
+					if (original.getPlane() != poi.plane || moved.equals(original)
+						|| Math.abs(original.getX() - poi.x) > 3 || Math.abs(original.getY() - poi.y) > 3)
+					{
+						continue;
+					}
+					for (Poi existing : pois)
+					{
+						if (isDungeonPoi(existing) && existing.plane == moved.getPlane()
+							&& Math.abs(existing.x - moved.getX()) <= 3 && Math.abs(existing.y - moved.getY()) <= 3)
+						{
+							return true;
+						}
+					}
+				}
 			}
 		}
 		return false;
@@ -267,6 +347,11 @@ public class PoiIndex
 		{
 			return false;
 		}
+		return isModeledDungeonName(poi);
+	}
+
+	private static boolean isModeledDungeonName(Poi poi)
+	{
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
 			if (zone.getName().equalsIgnoreCase(poi.name))
@@ -277,12 +362,55 @@ public class PoiIndex
 		return false;
 	}
 
+	/** Replace icon-type labels with a known dungeon name before indexing the marker. */
+	private static Poi resolveDungeonName(Poi poi)
+	{
+		if (DungeonPoiOverrides.isRawPoiDeleted(poi.name, poi.x, poi.y, poi.plane)
+			|| !isDungeonPoi(poi) || !("Dungeon with map link".equalsIgnoreCase(poi.name)
+			|| "Dungeon".equalsIgnoreCase(poi.name)))
+		{
+			return poi;
+		}
+
+		String name = null;
+		int bestDistance = MATCH_RADIUS * MATCH_RADIUS + 1;
+		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
+		{
+			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
+			{
+				final WorldPoint entrance = DungeonPoiOverrides.getButtonPoint(zone, i);
+				final int dx = entrance.getX() - poi.x;
+				final int dy = entrance.getY() - poi.y;
+				final int distance = dx * dx + dy * dy;
+				if (entrance.getPlane() == poi.plane && distance < bestDistance)
+				{
+					name = zone.getName();
+					bestDistance = distance;
+				}
+			}
+		}
+		if (name == null)
+		{
+			final PoiDetails.Entry entry = PoiDetails.nearestEntry(poi.x, poi.y, poi.plane, 256, "dungeon");
+			if (entry != null)
+			{
+				name = entry.title;
+			}
+		}
+		return name == null ? poi : new Poi(poi.x, poi.y, poi.plane, poi.key, name);
+	}
+
 	private void readTsv(InputStream source, Set<Long> existingPoints)
 	{
 		readTsv(source, existingPoints, false);
 	}
 
 	private void readTsv(InputStream source, Set<Long> existingPoints, boolean bankSupplement)
+	{
+		readTsv(source, existingPoints, bankSupplement, true);
+	}
+
+	private void readTsv(InputStream source, Set<Long> existingPoints, boolean bankSupplement, boolean supplement)
 	{
 		if (source == null)
 		{
@@ -307,14 +435,15 @@ public class PoiIndex
 
 				try
 				{
-					final Poi poi = new Poi(
+					final Poi rawPoi = new Poi(
 						Integer.parseInt(parts[0]),
 						Integer.parseInt(parts[1]),
 						Integer.parseInt(parts[2]),
 						parts[3],
 						parts[4]);
+					final Poi poi = resolveDungeonName(rawPoi);
 					final long key = packedPoint(poi.plane, poi.x, poi.y);
-					if (bankSupplement && hasNearbyBank(poi))
+					if ((bankSupplement && hasNearbyBank(poi)) || (supplement && !bankSupplement && hasNearbyPoi(poi)))
 					{
 						addSearchPoi(poi);
 						continue;
@@ -327,7 +456,9 @@ public class PoiIndex
 						}
 						continue;
 					}
-					addPoi(poi);
+					// Modeled dungeons already get a canonical surface search target below.
+					addPoi(poi, !isModeledDungeonInterior(poi)
+						&& !(poi != rawPoi && isModeledDungeonName(poi)));
 				}
 				catch (NumberFormatException ignored)
 				{
@@ -372,7 +503,8 @@ public class PoiIndex
 
 	private void addSearchPoi(Poi poi)
 	{
-		final String identity = poi.plane + "\t" + poi.x + "\t" + poi.y + "\t" + poi.key + "\t" + poi.name;
+		final String searchKey = isDungeonPoi(poi) ? "dungeon" : poi.key;
+		final String identity = poi.plane + "\t" + poi.x + "\t" + poi.y + "\t" + searchKey + "\t" + poi.name;
 		if (searchIdentities.add(identity))
 		{
 			searchPois.add(poi);

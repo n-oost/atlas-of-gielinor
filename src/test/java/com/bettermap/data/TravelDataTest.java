@@ -149,7 +149,7 @@ public class TravelDataTest
 	@Test
 	public void testNodeCountsAndSpotChecks()
 	{
-		assertEquals("Total node count in ALL_NODES", 156, TravelData.ALL_NODES.size());
+		assertEquals("Total node count in ALL_NODES", 158, TravelData.ALL_NODES.size());
 
 		long charterCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.CHARTER_SHIP).count();
 		long ferryCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.FERRY).count();
@@ -172,7 +172,7 @@ public class TravelDataTest
 		assertEquals("Canoe node count", 5, canoeCount);
 		assertEquals("Mine Cart node count", 18, cartCount);
 		assertEquals("Magic Carpet node count", 9, carpetCount);
-		assertEquals("Quetzal node count", 12, quetzalCount);
+		assertEquals("Quetzal node count", 14, quetzalCount);
 		assertEquals("Swamp Boat node count", 6, swampCount);
 
 		// Charter ship destination symmetry check: each of the 16 charter nodes must have 15 destinations
@@ -181,6 +181,10 @@ public class TravelDataTest
 			if (node.getType() == TravelType.CHARTER_SHIP)
 			{
 				assertEquals("Charter node " + node.getName() + " should have 15 destinations", 15, node.getDestinations().size());
+			}
+			if (node.getType() == TravelType.QUETZAL)
+			{
+				assertEquals("Quetzal node " + node.getName() + " should have 14 destinations", 14, node.getDestinations().size());
 			}
 		}
 
@@ -197,14 +201,21 @@ public class TravelDataTest
 		assertNotNull("Spirit Tree Etceteria should exist", TravelData.findNodeNear(2608, 3857, 0, 2));
 		assertNotNull("Spirit Tree Myths' Guild should exist", TravelData.findNodeNear(2488, 2850, 0, 2));
 
-		// Spot check Quetzal registrations
-		assertNotNull("Quetzal Twilight Temple should exist", TravelData.findNodeNear(1460, 3280, 0, 2));
-		assertNotNull("Quetzal Sunset Coast should exist", TravelData.findNodeNear(1543, 3016, 0, 2));
-		assertNotNull("Quetzal The Teomat should exist", TravelData.findNodeNear(1445, 3171, 0, 2));
-		assertNotNull("Quetzal Outer Fortis should exist", TravelData.findNodeNear(1665, 3004, 0, 2));
-		assertNotNull("Quetzal Colossal Wyrm should exist", TravelData.findNodeNear(1705, 2911, 0, 2));
-		assertNotNull("Quetzal Salvager Overlook should exist", TravelData.findNodeNear(1610, 3307, 0, 2));
-		assertNotNull("Quetzal Auburnvale should exist", TravelData.findNodeNear(1368, 3350, 0, 2));
+		// Spot check Quetzal registrations (all 14 landing sites matching arrow POIs)
+		assertNotNull("Quetzal Civitas illa Fortis should exist", TravelData.findNodeNear(1700, 3142, 0, 2));
+		assertNotNull("Quetzal Hunter Guild should exist", TravelData.findNodeNear(1585, 3055, 0, 2));
+		assertNotNull("Quetzal Aldarin should exist", TravelData.findNodeNear(1389, 2899, 0, 2));
+		assertNotNull("Quetzal Cam Torum should exist", TravelData.findNodeNear(1448, 3108, 0, 2));
+		assertNotNull("Quetzal Fortis Colosseum should exist", TravelData.findNodeNear(1777, 3111, 0, 2));
+		assertNotNull("Quetzal Quetzacalli Gorge should exist", TravelData.findNodeNear(1512, 3222, 0, 2));
+		assertNotNull("Quetzal Sunset Coast should exist", TravelData.findNodeNear(1548, 2997, 0, 2));
+		assertNotNull("Quetzal The Teomat should exist", TravelData.findNodeNear(1437, 3169, 0, 2));
+		assertNotNull("Quetzal Outer Fortis should exist", TravelData.findNodeNear(1702, 3037, 0, 2));
+		assertNotNull("Quetzal Colossal Wyrm should exist", TravelData.findNodeNear(1672, 2933, 0, 2));
+		assertNotNull("Quetzal Salvager Overlook should exist", TravelData.findNodeNear(1613, 3302, 0, 2));
+		assertNotNull("Quetzal Auburnvale should exist", TravelData.findNodeNear(1411, 3363, 0, 2));
+		assertNotNull("Quetzal Tal Teklan should exist", TravelData.findNodeNear(1226, 3089, 0, 2));
+		assertNotNull("Quetzal Kastori should exist", TravelData.findNodeNear(1344, 3020, 0, 2));
 
 		// Spot check Magic Carpet registrations
 		assertNotNull("Magic Carpet Bedabin Camp should exist", TravelData.findNodeNear(3180, 3042, 0, 2));

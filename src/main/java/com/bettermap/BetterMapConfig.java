@@ -32,62 +32,109 @@ import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 import net.runelite.client.config.Range;
+import net.runelite.client.config.Units;
 
 @ConfigGroup("bettermap")
 public interface BetterMapConfig extends Config
 {
 	@ConfigSection(
 		name = "Map",
-		description = "Which map is drawn, and what is drawn on it.",
+		description = "Map window and access buttons.",
 		position = 0
 	)
 	String mapSection = "map";
 
 	@ConfigSection(
-		name = "Routing (Shortest Path by Skretzo)",
-		description = "Better Map's route engine uses a pinned, BSD-2-Clause copy of Shortest Path by Skretzo and contributors. "
-			+ "Choose one routing mode. The settings below apply only to Better Map routing. "
-			+ "Better Map is not affiliated with Shortest Path.",
-		position = 5
-	)
-	String pathfindingSection = "pathfinding";
-
-	@ConfigSection(
-		name = "Developer",
-		description = "Tools for tuning the dungeon layers. Safe to leave alone.",
-		position = 90,
+		name = "Map: Advanced",
+		description = "Dungeon appearance, coordinates and native map rendering.",
+		position = 1,
 		closedByDefault = true
 	)
-	String developerSection = "developer";
+	String mapAdvancedSection = "mapAdvanced";
 
 	@ConfigSection(
 		name = "Controls",
-		description = "Panning and zooming",
+		description = "Mouse buttons, scrolling and camera behavior.",
 		position = 10
 	)
 	String controlsSection = "controls";
 
 	@ConfigSection(
-		name = "Map Icons",
-		description = "Location badges, markers, monsters and sailing icons drawn over the map",
+		name = "Controls: Advanced",
+		description = "Initial zoom and disabling drag panning.",
+		position = 11,
+		closedByDefault = true
+	)
+	String controlsAdvancedSection = "controlsAdvanced";
+
+	@ConfigSection(
+		name = "Search & tooltips",
+		description = "Search locations and choose how hover details appear.",
 		position = 20
+	)
+	String finderSection = "finder";
+
+	@ConfigSection(
+		name = "Map layers",
+		description = "Choose which locations and markers appear on the map.",
+		position = 30
 	)
 	String iconsSection = "icons";
 
 	@ConfigSection(
-		name = "Developer / Debug",
-		description = "Diagnostics and pipeline inspection",
-		position = 30
+		name = "Map layers: Advanced",
+		description = "Marker labels, zoom thresholds and travel presentation.",
+		position = 31,
+		closedByDefault = true
 	)
-	String debugSection = "debug";
+	String iconsAdvancedSection = "iconsAdvanced";
+
+	@ConfigSection(
+		name = "Map layers: Zoom",
+		description = "Minimum zoom in pixels per tile. Lower values show locations farther out; 0 shows them at every zoom. Defaults match the original map behavior.",
+		position = 32,
+		closedByDefault = true
+	)
+	String iconsZoomSection = "iconsZoom";
+
+	@ConfigSection(
+		name = "Map layers: Label zoom",
+		description = "Minimum zoom in pixels per tile for marker names, codes and levels. The marker must also be visible.",
+		position = 33,
+		closedByDefault = true
+	)
+	String iconsLabelZoomSection = "iconsLabelZoom";
+
+	@ConfigSection(
+		name = "Routing (Shortest Path by Skretzo)",
+		description = "Choose a routing mode. Atlas of Gielinor uses a pinned BSD-2-Clause fork of Shortest Path by Skretzo and contributors. Local options apply only to Atlas routing.",
+		position = 40
+	)
+	String pathfindingSection = "pathfinding";
+
+	@ConfigSection(
+		name = "Routing: Advanced",
+		description = "Transport choices and calculation limits for Atlas of Gielinor routing. External mode reads these settings from Shortest Path.",
+		position = 41,
+		closedByDefault = true
+	)
+	String pathfindingAdvancedSection = "pathfindingAdvanced";
+
+	@ConfigSection(
+		name = "Developer",
+		description = "Dungeon tuning and diagnostics.",
+		position = 90,
+		closedByDefault = true
+	)
+	String developerSection = "developer";
 
 	@ConfigItem(
 		keyName = "useExternalShortestPathSettings",
 		name = "Use external plugin settings",
 		description = "Use the enabled Shortest Path plugin's saved routing settings. Keep that plugin enabled separately. "
-			+ "Enabling this turns off Better Map routing. Better Map calculates its map line with its pinned "
+			+ "Enabling this turns off Atlas of Gielinor routing. Atlas of Gielinor calculates its map line with its pinned "
 			+ "Skretzo Shortest Path fork; routes may differ from newer external versions.",
-		position = -1,
+		position = 0,
 		section = pathfindingSection
 	)
 	default boolean useExternalShortestPathSettings()
@@ -97,12 +144,12 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "enableShortestPath",
-		name = "Use Better Map routing",
-		description = "Calculate and draw routes on Better Map using a pinned, BSD-2-Clause fork of the Shortest Path engine "
-			+ "by Skretzo and contributors. Uses the settings below; sends destinations to Shortest Path if enabled. "
+		name = "Use Atlas of Gielinor routing",
+		description = "Calculate and draw routes on Atlas of Gielinor using a pinned, BSD-2-Clause fork of the Shortest Path engine "
+			+ "by Skretzo and contributors. Uses this plugin's Routing and Routing: Advanced settings; sends destinations to Shortest Path if enabled. "
 			+ "Enabling this turns off external settings mode. "
-			+ "Better Map is not affiliated with the Shortest Path project.",
-		position = 0,
+			+ "Atlas of Gielinor is not affiliated with the Shortest Path project.",
+		position = 1,
 		section = pathfindingSection
 	)
 	default boolean enableShortestPath()
@@ -114,7 +161,7 @@ public interface BetterMapConfig extends Config
 		keyName = "routeAvoidWilderness",
 		name = "Avoid wilderness",
 		description = "Whether the wilderness should be avoided if possible (otherwise, will e.g. use wilderness lever from Edgeville to Ardougne)",
-		position = 1,
+		position = 2,
 		section = pathfindingSection
 	)
 	default boolean routeAvoidWilderness()
@@ -126,8 +173,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseAgilityShortcuts",
 		name = "Use agility shortcuts",
 		description = "Whether to include agility shortcuts in the path. You must also have the required agility level",
-		position = 2,
-		section = pathfindingSection
+		position = 0,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseAgilityShortcuts()
 	{
@@ -138,8 +185,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseGrappleShortcuts",
 		name = "Use grapple shortcuts",
 		description = "Whether to include crossbow grapple agility shortcuts in the path. You must also have the required agility, ranged and strength levels",
-		position = 3,
-		section = pathfindingSection
+		position = 1,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseGrappleShortcuts()
 	{
@@ -150,8 +197,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseBoats",
 		name = "Use boats",
 		description = "Whether to include small boats in the path (e.g. the boat to Fishing Platform)",
-		position = 4,
-		section = pathfindingSection
+		position = 2,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseBoats()
 	{
@@ -162,8 +209,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseCanoes",
 		name = "Use canoes",
 		description = "Whether to include canoes in the path",
-		position = 5,
-		section = pathfindingSection
+		position = 3,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseCanoes()
 	{
@@ -174,8 +221,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseCharterShips",
 		name = "Use charter ships",
 		description = "Whether to include charter ships in the path",
-		position = 6,
-		section = pathfindingSection
+		position = 4,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseCharterShips()
 	{
@@ -186,8 +233,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseShips",
 		name = "Use ships",
 		description = "Whether to include passenger ships in the path (e.g. the customs ships to Karamja)",
-		position = 7,
-		section = pathfindingSection
+		position = 5,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseShips()
 	{
@@ -198,8 +245,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseFairyRings",
 		name = "Use fairy rings",
 		description = "Whether to include fairy rings in the path. You must also have completed the required quests or miniquests",
-		position = 8,
-		section = pathfindingSection
+		position = 6,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseFairyRings()
 	{
@@ -210,8 +257,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseGnomeGliders",
 		name = "Use gnome gliders",
 		description = "Whether to include gnome gliders in the path",
-		position = 9,
-		section = pathfindingSection
+		position = 7,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseGnomeGliders()
 	{
@@ -222,8 +269,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseHotAirBalloons",
 		name = "Use hot air balloons",
 		description = "Whether to include hot air balloons in the path",
-		position = 10,
-		section = pathfindingSection
+		position = 8,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseHotAirBalloons()
 	{
@@ -234,8 +281,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseMagicCarpets",
 		name = "Use magic carpets",
 		description = "Whether to include magic carpets in the path",
-		position = 11,
-		section = pathfindingSection
+		position = 9,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseMagicCarpets()
 	{
@@ -246,8 +293,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseMagicMushtrees",
 		name = "Use magic mushtrees",
 		description = "Whether to include Fossil Island Magic Mushtrees in the path",
-		position = 12,
-		section = pathfindingSection
+		position = 10,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseMagicMushtrees()
 	{
@@ -258,8 +305,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseMinecarts",
 		name = "Use minecarts",
 		description = "Whether to include minecarts in the path (e.g. the Keldagrim and Lovakengj minecart networks)",
-		position = 13,
-		section = pathfindingSection
+		position = 11,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseMinecarts()
 	{
@@ -270,8 +317,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseQuetzals",
 		name = "Use quetzals",
 		description = "Whether to include quetzals in the path",
-		position = 14,
-		section = pathfindingSection
+		position = 12,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseQuetzals()
 	{
@@ -282,8 +329,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseSpiritTrees",
 		name = "Use spirit trees",
 		description = "Whether to include spirit trees in the path",
-		position = 15,
-		section = pathfindingSection
+		position = 13,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseSpiritTrees()
 	{
@@ -294,7 +341,7 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationItems",
 		name = "Use teleportation items",
 		description = "Whether to include teleportation items from the player's inventory and equipment",
-		position = 16,
+		position = 3,
 		section = pathfindingSection
 	)
 	default TeleportationItem routeUseTeleportationItems()
@@ -306,8 +353,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationLevers",
 		name = "Use teleportation levers",
 		description = "Whether to include teleportation levers in the path (e.g. the lever from Edgeville to Wilderness)",
-		position = 17,
-		section = pathfindingSection
+		position = 14,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseTeleportationLevers()
 	{
@@ -318,8 +365,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationPortals",
 		name = "Use teleportation portals",
 		description = "Whether to include teleportation portals in the path (e.g. the portal from Ferox Enclave to Castle Wars)",
-		position = 18,
-		section = pathfindingSection
+		position = 15,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseTeleportationPortals()
 	{
@@ -330,8 +377,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationSpells",
 		name = "Use teleportation spells",
 		description = "Whether to include teleportation spells in the path",
-		position = 19,
-		section = pathfindingSection
+		position = 16,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseTeleportationSpells()
 	{
@@ -342,8 +389,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationSpellsHome",
 		name = "Use Home Teleport spells",
 		description = "Whether to include Home Teleport spells in the path",
-		position = 20,
-		section = pathfindingSection
+		position = 17,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseTeleportationSpellsHome()
 	{
@@ -354,8 +401,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseTeleportationMinigames",
 		name = "Use teleportation to minigames",
 		description = "Whether to include teleportation to minigames/activities/grouping in the path. These teleports share a 20 minute cooldown",
-		position = 21,
-		section = pathfindingSection
+		position = 18,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseTeleportationMinigames()
 	{
@@ -366,8 +413,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseWildernessObelisks",
 		name = "Use wilderness obelisks",
 		description = "Whether to include wilderness obelisks in the path",
-		position = 22,
-		section = pathfindingSection
+		position = 19,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseWildernessObelisks()
 	{
@@ -378,8 +425,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUseSeasonalTransports",
 		name = "Use seasonal transports",
 		description = "Whether to include seasonal transports like League teleports in the path",
-		position = 23,
-		section = pathfindingSection
+		position = 20,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeUseSeasonalTransports()
 	{
@@ -391,8 +438,8 @@ public interface BetterMapConfig extends Config
 		name = "Currency threshold",
 		description = "The maximum amount of currency to use on a single transportation method. "
 			+ "Affects coins, trading sticks, ecto-tokens and warrior guild tokens",
-		position = 24,
-		section = pathfindingSection
+		position = 21,
+		section = pathfindingAdvancedSection
 	)
 	default int routeCurrencyThreshold()
 	{
@@ -403,8 +450,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeCancelInstead",
 		name = "Cancel instead of recalculating",
 		description = "Whether the path should be cancelled rather than recalculated when the recalculate distance limit is exceeded",
-		position = 25,
-		section = pathfindingSection
+		position = 22,
+		section = pathfindingAdvancedSection
 	)
 	default boolean routeCancelInstead()
 	{
@@ -413,10 +460,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "routeRecalculateDistance",
-		name = "Recalculate distance",
-		description = "Distance from the path the player should be for it to be recalculated (-1 for never)",
-		position = 26,
-		section = pathfindingSection
+		name = "Recalculate after moving (tiles)",
+		description = "Recalculates after moving this many tiles from the last route calculation. -1 disables recalculation.",
+		position = 23,
+		section = pathfindingAdvancedSection
 	)
 	@Range(min = -1, max = 20000)
 	default int routeRecalculateDistance()
@@ -426,10 +473,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "routeFinishDistance",
-		name = "Finish distance",
-		description = "Distance from the target tile at which the path should be ended (-1 for never)",
-		position = 27,
-		section = pathfindingSection
+		name = "Finish within (tiles)",
+		description = "Clears the route when you are this many tiles from its destination. -1 disables automatic finishing.",
+		position = 24,
+		section = pathfindingAdvancedSection
 	)
 	@Range(min = -1, max = 50)
 	default int routeFinishDistance()
@@ -441,8 +488,8 @@ public interface BetterMapConfig extends Config
 		keyName = "routeUnreachableTargetDistance",
 		name = "Unreachable target distance",
 		description = "Distance from the target at which a finished path is considered not to reach the target",
-		position = 28,
-		section = pathfindingSection
+		position = 25,
+		section = pathfindingAdvancedSection
 	)
 	@Range(max = 20000)
 	default int routeUnreachableTargetDistance()
@@ -452,28 +499,15 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "routeCalculationCutoff",
-		name = "Calculation cutoff",
-		description = "The cutoff threshold in number of ticks (0.6 seconds) of no progress being made towards the "
-			+ "path target before the calculation will be stopped",
-		position = 29,
-		section = pathfindingSection
+		name = "Calculation timeout (ticks)",
+		description = "Stops route calculation after this many game ticks without progress. One tick is 0.6 seconds.",
+		position = 26,
+		section = pathfindingAdvancedSection
 	)
 	@Range(min = 1, max = 30)
 	default int routeCalculationCutoff()
 	{
 		return 5;
-	}
-
-	@ConfigItem(
-		keyName = "useCustomMap",
-		name = "Use Custom Map",
-		description = "Replaces the client world map with the installed map asset pack",
-		position = 1,
-		section = mapSection
-	)
-	default boolean useCustomMap()
-	{
-		return true;
 	}
 
 	@ConfigItem(
@@ -491,10 +525,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "hideGameMapRender",
-		name = "Hide Game Map Render",
-		description = "Stops the client drawing its own map underneath ours. Turn off if the map window misbehaves",
-		position = 2,
-		section = mapSection
+		name = "Hide native map rendering",
+		description = "Stops the game drawing its map underneath Atlas of Gielinor. Turn off to troubleshoot rendering problems.",
+		position = 0,
+		section = mapAdvancedSection
 	)
 	default boolean hideGameMapRender()
 	{
@@ -502,22 +536,10 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "hideMinimapOnOpen",
-		name = "Hide Minimap While Open",
-		description = "Hides the overview minimap in the top-right corner while the world map is open",
-		position = 3,
-		section = mapSection
-	)
-	default boolean hideMinimapOnOpen()
-	{
-		return false;
-	}
-
-	@ConfigItem(
 		keyName = "fullscreenMap",
 		name = "Fullscreen Map",
 		description = "Draws the map over the whole client instead of inside the game's small map window. Press Escape to close it",
-		position = 4,
+		position = 1,
 		section = mapSection
 	)
 	default boolean fullscreenMap()
@@ -527,10 +549,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showCoordinateOverlay",
-		name = "Show Status Line",
-		description = "Shows the current layer, zoom and cursor coordinates along the top-left of the map",
-		position = 5,
-		section = mapSection
+		name = "Show coordinates and zoom",
+		description = "Adds cursor coordinates and zoom to the map status line.",
+		position = 1,
+		section = mapAdvancedSection
 	)
 	default boolean showCoordinateOverlay()
 	{
@@ -539,10 +561,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showPlaneSwitcher",
-		name = "Show Floor Switcher",
-		description = "Displays the floor selector buttons (0 to 3) on the right side of the map",
-		position = 6,
-		section = mapSection
+		name = "Show layer buttons",
+		description = "Shows the Upper, Main and Lower layer buttons on the right side of the map.",
+		position = 2,
+		section = mapAdvancedSection
 	)
 	default boolean showPlaneSwitcher()
 	{
@@ -551,10 +573,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showTooltips",
-		name = "Hover Tooltips",
-		description = "Shows the name and details of whatever is under the cursor",
-		position = 7,
-		section = mapSection
+		name = "Show hover details",
+		description = "Shows names and details for map markers under the cursor.",
+		position = 3,
+		section = finderSection
 	)
 	default boolean showTooltips()
 	{
@@ -563,10 +585,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "expandedTooltips",
-		name = "Expanded Tooltips",
-		description = "Shows detailed tooltip information by default; turn off for icon-and-name tooltips",
-		position = 8,
-		section = mapSection
+		name = "Always show full details",
+		description = "Shows full tooltip details without holding the expansion modifier.",
+		position = 4,
+		section = finderSection
 	)
 	default boolean expandedTooltips()
 	{
@@ -575,10 +597,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "tooltipExpandModifier",
-		name = "Expand Tooltips With",
-		description = "Hold this modifier to temporarily show full tooltip details",
-		position = 9,
-		section = mapSection
+		name = "Hold for full details",
+		description = "Hold this key to expand a compact tooltip. Only needed when full details are not always shown.",
+		position = 5,
+		section = finderSection
 	)
 	default TooltipModifier tooltipExpandModifier()
 	{
@@ -594,7 +616,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showLargeUndergroundSymbols",
 		name = "Underground Layer Symbols",
 		description = "Draws dungeon entrance toggles and green regional underground-composite toggles",
-		position = 29,
+		position = 4,
 		section = iconsSection
 	)
 	default boolean showLargeUndergroundSymbols()
@@ -604,9 +626,9 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundHoverPreview",
-		name = "Layer Hover Preview",
-		description = "Hovering over layer symbols dynamically reveals the opposite plane on the map",
-		position = 10,
+		name = "Preview dungeons on hover",
+		description = "Hover dungeon or layer symbols to preview their map before opening them.",
+		position = 4,
 		section = mapSection
 	)
 	default boolean undergroundHoverPreview()
@@ -616,10 +638,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundOverlayOpacity",
-		name = "Hover Surface Opacity",
-		description = "How visible the overworld stays while previewing a dungeon on hover",
-		position = 11,
-		section = mapSection
+		name = "Preview background opacity",
+		description = "Visibility of the surface behind a dungeon hover preview, as a percentage.",
+		position = 4,
+		section = mapAdvancedSection
 	)
 	@Range(min = 10, max = 100)
 	default int undergroundOverlayOpacity()
@@ -629,10 +651,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundHoverBlur",
-		name = "Hover Overworld Blur",
-		description = "How much to blur the overworld while previewing a dungeon on hover. 0 disables",
-		position = 12,
-		section = mapSection
+		name = "Preview background blur",
+		description = "Blur of the surface behind a dungeon hover preview. 0 disables blur.",
+		position = 5,
+		section = mapAdvancedSection
 	)
 	@Range(min = 0, max = 8)
 	default int undergroundHoverBlur()
@@ -644,8 +666,8 @@ public interface BetterMapConfig extends Config
 		keyName = "undergroundSymbolSize",
 		name = "Dungeon Enter / Exit Size",
 		description = "Pixel size of dungeon enter and exit symbols. Smaller is less prominent",
-		position = 31,
-		section = iconsSection
+		position = 7,
+		section = iconsAdvancedSection
 	)
 	@Range(min = 8, max = 32)
 	default int undergroundSymbolSize()
@@ -655,10 +677,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showTravelRoutes",
-		name = "Travel Routes on Hover",
-		description = "Draws route lines, destination beacons and prices when hovering a travel station",
-		position = 27,
-		section = iconsSection
+		name = "Travel routes",
+		description = "Click a travel station to show its routes, destinations and prices.",
+		position = 8,
+		section = iconsAdvancedSection
 	)
 	default boolean showTravelRoutes()
 	{
@@ -669,8 +691,8 @@ public interface BetterMapConfig extends Config
 		keyName = "animateTravelRoutes",
 		name = "Animate Travel Routes",
 		description = "Animates route line dashes and pulsing destination beacons",
-		position = 30,
-		section = iconsSection
+		position = 10,
+		section = iconsAdvancedSection
 	)
 	default boolean animateTravelRoutes()
 	{
@@ -681,8 +703,8 @@ public interface BetterMapConfig extends Config
 		keyName = "showTravelPriceTags",
 		name = "Travel Price Badges",
 		description = "Shows destination name and exact cost badges next to each route endpoint",
-		position = 28,
-		section = iconsSection
+		position = 9,
+		section = iconsAdvancedSection
 	)
 	default boolean showTravelPriceTags()
 	{
@@ -691,9 +713,9 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showFinderOrb",
-		name = "Show Quick-Find Orb",
-		description = "Adds a search orb by the minimap that opens the location finder without the world map",
-		position = 14,
+		name = "Minimap search button",
+		description = "Shows a draggable search button beside the minimap. Opens search without opening the world map.",
+		position = 2,
 		section = mapSection
 	)
 	default boolean showFinderOrb()
@@ -703,10 +725,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showFinderButton",
-		name = "Show Find Button",
-		description = "Adds a search button to the map that finds locations by name and jumps the camera to them",
-		position = 15,
-		section = mapSection
+		name = "Map search button",
+		description = "Shows search inside the world map. Independent of the minimap search button.",
+		position = 0,
+		section = finderSection
 	)
 	default boolean showFinderButton()
 	{
@@ -716,8 +738,8 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "showSidebarPanel",
 		name = "Show Sidebar Panel",
-		description = "Displays the Better Map panel in RuneLite's sidebar",
-		position = 16,
+		description = "Displays the Atlas of Gielinor panel in RuneLite's sidebar",
+		position = 3,
 		section = mapSection
 	)
 	default boolean showSidebarPanel()
@@ -727,10 +749,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "finderSearchItems",
-		name = "Find Shops & Ground Items",
-		description = "Include the nearest shop that stocks an item, and nearby ground spawns of it, in Find results",
-		position = 22,
-		section = mapSection
+		name = "Include shops and item spawns",
+		description = "Includes shops stocking an item and ground item spawns in search results.",
+		position = 1,
+		section = finderSection
 	)
 	default boolean finderSearchItems()
 	{
@@ -739,10 +761,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "finderEchoChat",
-		name = "Echo Find Results To Chat",
-		description = "As you type in Find, print the 3 nearest matches (name and rough distance) to the game chat",
-		position = 23,
-		section = mapSection
+		name = "Print search results in chat",
+		description = "Prints the three nearest search results and their distances to game chat while searching.",
+		position = 2,
+		section = finderSection
 	)
 	default boolean finderEchoChat()
 	{
@@ -751,11 +773,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundTransparentVoid",
-		name = "See-through Dungeon Void",
-		description = "While a dungeon layer is open, knock its black void out to transparent and show a "
-			+ "dimmed, blurred surface behind it so the layer reads as a cutaway.",
-		position = 1,
-		section = developerSection
+		name = "Transparent dungeon background",
+		description = "Makes black space around dungeon tiles transparent so the surface remains visible behind the dungeon.",
+		position = 3,
+		section = mapAdvancedSection
 	)
 	default boolean undergroundTransparentVoid()
 	{
@@ -764,11 +785,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundLayerSurfaceOpacity",
-		name = "Dungeon Layer · Surface Opacity",
-		description = "How visible the surface stays behind an OPEN dungeon layer. Lower is darker. "
-			+ "0 hides it entirely (pure cutaway). Separate from the hover-preview opacity.",
-		position = 2,
-		section = developerSection
+		name = "Open dungeon background opacity",
+		description = "Visibility of the surface behind an open dungeon, as a percentage. 0 hides the surface.",
+		position = 6,
+		section = mapAdvancedSection
 	)
 	@Range(min = 0, max = 80)
 	default int undergroundLayerSurfaceOpacity()
@@ -778,10 +798,10 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "undergroundLayerSurfaceBlur",
-		name = "Dungeon Layer · Surface Blur",
-		description = "How much to blur the surface behind an OPEN dungeon layer. Higher is softer.",
-		position = 3,
-		section = developerSection
+		name = "Open dungeon background blur",
+		description = "Blur of the surface behind an open dungeon. 0 disables blur.",
+		position = 7,
+		section = mapAdvancedSection
 	)
 	@Range(min = 0, max = 12)
 	default int undergroundLayerSurfaceBlur()
@@ -794,7 +814,7 @@ public interface BetterMapConfig extends Config
 		name = "Dungeon Layer Tuner",
 		description = "While a dungeon layer is open: arrow keys slide its tiles over the surface, "
 			+ "[ and ] tighten/loosen its clip, R resets, P prints the corrected coordinates to chat.",
-		position = 4,
+		position = 0,
 		section = developerSection
 	)
 	default boolean undergroundTuner()
@@ -841,8 +861,8 @@ public interface BetterMapConfig extends Config
 		keyName = "defaultZoom",
 		name = "Default Zoom Level",
 		description = "Initial zoom level applied when opening the map on the player",
-		position = 2,
-		section = controlsSection
+		position = 0,
+		section = controlsAdvancedSection
 	)
 	@Range(min = 1, max = 5)
 	default int defaultZoom()
@@ -854,7 +874,7 @@ public interface BetterMapConfig extends Config
 		keyName = "invertZoom",
 		name = "Invert Zoom Direction",
 		description = "Inverts mouse wheel scroll direction for zooming in and out",
-		position = 3,
+		position = 2,
 		section = controlsSection
 	)
 	default boolean invertZoom()
@@ -866,7 +886,7 @@ public interface BetterMapConfig extends Config
 		keyName = "rememberMapPosition",
 		name = "Remember Map Position",
 		description = "Preserves your last panned position across opens instead of always re-centering on the player",
-		position = 4,
+		position = 3,
 		section = controlsSection
 	)
 	default boolean rememberMapPosition()
@@ -878,8 +898,8 @@ public interface BetterMapConfig extends Config
 		keyName = "dragToPan",
 		name = "Drag To Pan",
 		description = "Hold the pan button and drag to move the map, as in most modern map interfaces",
-		position = 5,
-		section = controlsSection
+		position = 1,
+		section = controlsAdvancedSection
 	)
 	default boolean dragToPan()
 	{
@@ -890,7 +910,7 @@ public interface BetterMapConfig extends Config
 		keyName = "panButton",
 		name = "Pan Button",
 		description = "Which mouse button drag-pans the map. Map buttons (close, floors, dungeons) stay on left click",
-		position = 6,
+		position = 0,
 		section = controlsSection
 	)
 	default PanButton panButton()
@@ -914,7 +934,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showPlayerMarker",
 		name = "Show Player Location",
 		description = "Draws an orientation arrow at your character's current location",
-		position = 2,
+		position = 0,
 		section = iconsSection
 	)
 	default boolean showPlayerMarker()
@@ -923,10 +943,476 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "shortcutMinZoom",
+		name = "Agility Shortcuts",
+		description = "Agility shortcut icons; controlled by their own category toggle. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 32,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double shortcutMinZoom()
+	{
+		return 0.20;
+	}
+
+	@ConfigItem(
+		keyName = "slayerMasterMinZoom",
+		name = "Skilling: Slayer Masters",
+		description = "Slayer master icons under Skilling. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 33,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double slayerMasterMinZoom()
+	{
+		return 1.0;
+	}
+
+	@ConfigItem(
+		keyName = "sailingLookoutMinZoom",
+		name = "Sailing Lookouts",
+		description = "Lookout point icons; ports, boats and task boards have separate settings. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 34,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double sailingLookoutMinZoom()
+	{
+		return 2.0;
+	}
+
+	@ConfigItem(
+		keyName = "bankMinZoom",
+		name = "Banks",
+		description = "Bank icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 10,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double bankMinZoom()
+	{
+		return 1.0;
+	}
+
+	@ConfigItem(
+		keyName = "shopMinZoom",
+		name = "Shops and Trade",
+		description = "Shop icons, traders and stock-indexed shops. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 11,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double shopMinZoom()
+	{
+		return 1.5;
+	}
+
+	@ConfigItem(
+		keyName = "skillingMinZoom",
+		name = "Skilling",
+		description = "Skilling icons, including agility courses and hunter areas. Slayer masters have a separate threshold; agility shortcuts have their own category. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 12,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double skillingMinZoom()
+	{
+		return 0.85;
+	}
+
+	@ConfigItem(
+		keyName = "travelMinZoom",
+		name = "Travel",
+		description = "Transport icons, house portals, mooring points and dungeon map links. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 13,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double travelMinZoom()
+	{
+		return 0.2;
+	}
+
+	@ConfigItem(
+		keyName = "questMinZoom",
+		name = "Quests and Tasks",
+		description = "Quest starts, task masters and holiday events. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 14,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double questMinZoom()
+	{
+		return 0.45;
+	}
+
+	@ConfigItem(
+		keyName = "activityMinZoom",
+		name = "Minigames and Raids Lobbies",
+		description = "Minigame and raids lobby icons under Quests and Activities. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 15,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double activityMinZoom()
+	{
+		return 0.6;
+	}
+
+	@ConfigItem(
+		keyName = "altarMinZoom",
+		name = "Altars",
+		description = "Altar icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 16,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double altarMinZoom()
+	{
+		return 1.2;
+	}
+
+	@ConfigItem(
+		keyName = "dungeonMinZoom",
+		name = "Dungeons",
+		description = "Dungeon and basement icons. Dungeon navigation buttons have a separate threshold. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 17,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double dungeonMinZoom()
+	{
+		return 1.0;
+	}
+
+	@ConfigItem(
+		keyName = "serviceMinZoom",
+		name = "Tutors and Services",
+		description = "Tutor, guide, cosmetic service, cargo bay and noticeboard icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 18,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double serviceMinZoom()
+	{
+		return 2.0;
+	}
+
+	@ConfigItem(
+		keyName = "otherMinZoom",
+		name = "Other Map Icons",
+		description = "Unidentified native map icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 19,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double otherMinZoom()
+	{
+		return 2.0;
+	}
+
+	@ConfigItem(
+		keyName = "majorPlaceMinZoom",
+		name = "Cities, Kingdoms and Islands",
+		description = "Major place names. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 20,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double majorPlaceMinZoom()
+	{
+		return 0.45;
+	}
+
+	@ConfigItem(
+		keyName = "localPlaceMinZoom",
+		name = "Districts and Landmarks",
+		description = "Smaller place names. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 21,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double localPlaceMinZoom()
+	{
+		return 3.0;
+	}
+
+	@ConfigItem(
+		keyName = "interiorPlaceMinZoom",
+		name = "Dungeon Room Names",
+		description = "Interior place names; rooms still require the dungeon to be visible or hovered. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 22,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double interiorPlaceMinZoom()
+	{
+		return 4.0;
+	}
+
+	@ConfigItem(
+		keyName = "bossMinZoom",
+		name = "Bosses and Raid Entrances",
+		description = "Boss pins and raid entrance buttons. Highlighted Slayer task bosses still ignore this threshold. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 23,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double bossMinZoom()
+	{
+		return 0.75;
+	}
+
+	@ConfigItem(
+		keyName = "slayerTaskIconMinZoom",
+		name = "Slayer Task Icons",
+		description = "Highlighted Slayer task monster icons. Task area overlays remain visible at every zoom. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 24,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double slayerTaskIconMinZoom()
+	{
+		return 0.3;
+	}
+
+	@ConfigItem(
+		keyName = "sailingPortMinZoom",
+		name = "Sailing Ports",
+		description = "Sailing port pins. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 25,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double sailingPortMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "portNoticeBoardMinZoom",
+		name = "Port Notice Boards",
+		description = "Dedicated Sailing task-board markers. Native noticeboard icons follow Tutors and Services. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 26,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double portNoticeBoardMinZoom()
+	{
+		return 0.8;
+	}
+
+	@ConfigItem(
+		keyName = "playerBoatMinZoom",
+		name = "Player Boats",
+		description = "Docked player boat markers. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 27,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double playerBoatMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "clueMinZoom",
+		name = "Clue Scroll Targets",
+		description = "Active clue target markers. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 28,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double clueMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "pluginMarkerMinZoom",
+		name = "Other Plugin Markers",
+		description = "Markers supplied by other RuneLite plugins. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 29,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double pluginMarkerMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "dungeonNavigationMinZoom",
+		name = "Dungeon Navigation Buttons",
+		description = "Dungeon entrances, regional previews and floor navigation buttons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 30,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double dungeonNavigationMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "travelStationMinZoom",
+		name = "Travel Network Stations",
+		description = "Travel network pins and route previews, separate from native Travel icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 31,
+		section = iconsZoomSection
+	)
+	@Units("px/tile")
+	default double travelStationMinZoom()
+	{
+		return 0.0;
+	}
+
+	@ConfigItem(
+		keyName = "fairyRingLabelMinZoom",
+		name = "Fairy Ring Codes",
+		description = "Fairy ring code labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 10,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double fairyRingLabelMinZoom()
+	{
+		return 1.0;
+	}
+
+	@ConfigItem(
+		keyName = "shortcutLabelMinZoom",
+		name = "Agility Shortcut Levels",
+		description = "Agility shortcut level labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 11,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double shortcutLabelMinZoom()
+	{
+		return 1.0;
+	}
+
+	@ConfigItem(
+		keyName = "bossLabelMinZoom",
+		name = "Boss Names",
+		description = "Boss name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 12,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double bossLabelMinZoom()
+	{
+		return 0.75;
+	}
+
+	@ConfigItem(
+		keyName = "monsterLabelMinZoom",
+		name = "Monster Names",
+		description = "Standard monster name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 13,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double monsterLabelMinZoom()
+	{
+		return 0.85;
+	}
+
+	@ConfigItem(
+		keyName = "slayerTaskLabelMinZoom",
+		name = "Slayer Task Names",
+		description = "Highlighted Slayer task names; these retain their independent visibility behavior. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 14,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double slayerTaskLabelMinZoom()
+	{
+		return 0.65;
+	}
+
+	@ConfigItem(
+		keyName = "groundItemLabelMinZoom",
+		name = "Ground Item Names",
+		description = "Ground item name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 15,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double groundItemLabelMinZoom()
+	{
+		return 14.0;
+	}
+
+	@ConfigItem(
+		keyName = "boatLabelMinZoom",
+		name = "Player Boat Names",
+		description = "Docked player boat name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 16,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double boatLabelMinZoom()
+	{
+		return 0.65;
+	}
+
+	@ConfigItem(
+		keyName = "clueLabelMinZoom",
+		name = "Clue Target Names",
+		description = "Clue target labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 17,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double clueLabelMinZoom()
+	{
+		return 0.45;
+	}
+
+	@ConfigItem(
+		keyName = "dungeonNavigationLabelMinZoom",
+		name = "Dungeon Navigation Names",
+		description = "Dungeon button labels inside a dungeon. Hover still reveals names at any zoom. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		position = 18,
+		section = iconsLabelZoomSection
+	)
+	@Units("px/tile")
+	default double dungeonNavigationLabelMinZoom()
+	{
+		return 1.5;
+	}
+
+	@ConfigItem(
+		keyName = "iconShortcuts",
+		name = "Agility Shortcuts",
+		description = "Agility shortcuts, independent of Skilling and Travel.",
+		position = 21,
+		section = iconsSection
+	)
+	default boolean iconShortcuts()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "iconSailing",
+		name = "Sailing Lookouts",
+		description = "Sailing lookout point icons. Ports, boats and notice boards have separate toggles.",
+		position = 22,
+		section = iconsSection
+	)
+	default boolean iconSailing()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "iconBanks",
 		name = "Banks",
 		description = "Bank icons",
-		position = 3,
+		position = 5,
 		section = iconsSection
 	)
 	default boolean iconBanks()
@@ -938,7 +1424,7 @@ public interface BetterMapConfig extends Config
 		keyName = "iconShops",
 		name = "Shops and Trade",
 		description = "Shops, traders, the Grand Exchange and price checkers",
-		position = 4,
+		position = 6,
 		section = iconsSection
 	)
 	default boolean iconShops()
@@ -949,8 +1435,8 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "iconSkilling",
 		name = "Skilling",
-		description = "Agility courses, agility shortcuts, hunter areas, fishing spots, mines, trees, ranges, anvils, and farming patches",
-		position = 5,
+		description = "Agility courses, hunter areas, Slayer masters, fishing spots, mines, trees, ranges, anvils, and farming patches",
+		position = 7,
 		section = iconsSection
 	)
 	default boolean iconSkilling()
@@ -961,8 +1447,8 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "iconTravel",
 		name = "Travel",
-		description = "Transport, dungeon entrances, agility shortcuts and house portals",
-		position = 6,
+		description = "Transport, dungeon map links, mooring points, sea currents and house portals",
+		position = 8,
 		section = iconsSection
 	)
 	default boolean iconTravel()
@@ -974,7 +1460,7 @@ public interface BetterMapConfig extends Config
 		keyName = "iconQuests",
 		name = "Quests and Activities",
 		description = "Quest starts, tasks and minigames",
-		position = 7,
+		position = 9,
 		section = iconsSection
 	)
 	default boolean iconQuests()
@@ -986,7 +1472,7 @@ public interface BetterMapConfig extends Config
 		keyName = "iconAltars",
 		name = "Altars",
 		description = "Altars",
-		position = 8,
+		position = 10,
 		section = iconsSection
 	)
 	default boolean iconAltars()
@@ -997,8 +1483,8 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "iconDungeons",
 		name = "Dungeons",
-		description = "Dungeon markers and slayer masters",
-		position = 9,
+		description = "Dungeon and basement markers",
+		position = 11,
 		section = iconsSection
 	)
 	default boolean iconDungeons()
@@ -1010,7 +1496,7 @@ public interface BetterMapConfig extends Config
 		keyName = "iconServices",
 		name = "Tutors and Services",
 		description = "Tutors, guides, poll booths and cosmetic services",
-		position = 10,
+		position = 12,
 		section = iconsSection
 	)
 	default boolean iconServices()
@@ -1022,7 +1508,7 @@ public interface BetterMapConfig extends Config
 		keyName = "iconOther",
 		name = "Other map icons",
 		description = "New game map icons whose labels are not yet available",
-		position = 11,
+		position = 13,
 		section = iconsSection
 	)
 	default boolean iconOther()
@@ -1034,7 +1520,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showPlaceNames",
 		name = "Place names",
 		description = "Draws region labels. Cities stay zoomed out; smaller areas appear as you zoom in. Dungeon rooms only show inside the dungeon or on hover",
-		position = 13,
+		position = 3,
 		section = iconsSection
 	)
 	default boolean showPlaceNames()
@@ -1046,7 +1532,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showBossLocations",
 		name = "Show Boss Markers",
 		description = "Marks major bosses across Gielinor with distinct icons and strategies",
-		position = 11,
+		position = 14,
 		section = iconsSection
 	)
 	default boolean showBossLocations()
@@ -1058,7 +1544,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showMonsterZones",
 		name = "Show Monster & Slayer Zones",
 		description = "Draws spawn area overlays and icons for all indexed monsters and slayer targets",
-		position = 12,
+		position = 15,
 		section = iconsSection
 	)
 	default boolean showMonsterZones()
@@ -1070,8 +1556,8 @@ public interface BetterMapConfig extends Config
 		keyName = "showMonsterIcons",
 		name = "Monster Icons",
 		description = "Displays authentic OSRS creature, boss, and slayer equipment icons on monster markers",
-		position = 14,
-		section = iconsSection
+		position = 0,
+		section = iconsAdvancedSection
 	)
 	default boolean showMonsterIcons()
 	{
@@ -1082,8 +1568,8 @@ public interface BetterMapConfig extends Config
 		keyName = "showMonsterLabels",
 		name = "Monster Name Badges",
 		description = "Shows monster names and combat levels below markers when zoomed in",
-		position = 15,
-		section = iconsSection
+		position = 1,
+		section = iconsAdvancedSection
 	)
 	default boolean showMonsterLabels()
 	{
@@ -1094,10 +1580,11 @@ public interface BetterMapConfig extends Config
 		keyName = "monsterZoneMinZoom",
 		name = "Monster Spawn Min Zoom",
 		description = "Minimum zoom (px/tile) before standard monster spawn areas appear. Higher = only when zoomed closer. Active Slayer task zones ignore this",
-		position = 16,
-		section = iconsSection
+		position = 0,
+		section = iconsZoomSection
 	)
-	@Range(min = 1, max = 24)
+	@Units("px/tile")
+	@Range(min = 0, max = 24)
 	default int monsterZoneMinZoom()
 	{
 		return 7;
@@ -1107,7 +1594,7 @@ public interface BetterMapConfig extends Config
 		keyName = "highlightSlayerTask",
 		name = "Highlight Slayer Task",
 		description = "Specially highlights spawn areas for monsters matching your active Slayer assignment and keeps them visible at all zoom levels",
-		position = 17,
+		position = 16,
 		section = iconsSection
 	)
 	default boolean highlightSlayerTask()
@@ -1131,8 +1618,8 @@ public interface BetterMapConfig extends Config
 		keyName = "showBoatNames",
 		name = "Show Boat Names",
 		description = "Draws name badges next to boat markers when zoomed in",
-		position = 19,
-		section = iconsSection
+		position = 6,
+		section = iconsAdvancedSection
 	)
 	default boolean showBoatNames()
 	{
@@ -1143,7 +1630,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showSailingPorts",
 		name = "Show Sailing Ports",
 		description = "Displays docking pins and details for Sailing ports across Gielinor",
-		position = 20,
+		position = 19,
 		section = iconsSection
 	)
 	default boolean showSailingPorts()
@@ -1155,7 +1642,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showPortNoticeBoards",
 		name = "Show Port Notice Boards",
 		description = "Displays port notice boards and typical task previews across major Sailing ports",
-		position = 21,
+		position = 20,
 		section = iconsSection
 	)
 	default boolean showPortNoticeBoards()
@@ -1167,7 +1654,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showGroundItems",
 		name = "Show Ground Item Spawns",
 		description = "Draws wiki ground item spawn tiles on the map once you zoom in close",
-		position = 22,
+		position = 17,
 		section = iconsSection
 	)
 	default boolean showGroundItems()
@@ -1179,10 +1666,11 @@ public interface BetterMapConfig extends Config
 		keyName = "groundItemMinZoom",
 		name = "Ground Item Min Zoom",
 		description = "Minimum zoom (px/tile) before ground item spawns appear. Higher = only when zoomed closer",
-		position = 23,
-		section = iconsSection
+		position = 1,
+		section = iconsZoomSection
 	)
-	@Range(min = 1, max = 24)
+	@Units("px/tile")
+	@Range(min = 0, max = 24)
 	default int groundItemMinZoom()
 	{
 		return 9;
@@ -1192,8 +1680,8 @@ public interface BetterMapConfig extends Config
 		keyName = "groundItemMinValue",
 		name = "Ground Item Min Value",
 		description = "Hides ground item spawns worth less than this in gp (GE price, or high alch for untradeables). 0 shows everything, buckets and cabbages included",
-		position = 24,
-		section = iconsSection
+		position = 5,
+		section = iconsAdvancedSection
 	)
 	@Range(min = 0, max = 100000)
 	default int groundItemMinValue()
@@ -1205,8 +1693,8 @@ public interface BetterMapConfig extends Config
 		keyName = "showGroundItemLabels",
 		name = "Ground Item Name Badges",
 		description = "Shows item names below ground item markers when zoomed in far",
-		position = 25,
-		section = iconsSection
+		position = 3,
+		section = iconsAdvancedSection
 	)
 	default boolean showGroundItemLabels()
 	{
@@ -1217,7 +1705,7 @@ public interface BetterMapConfig extends Config
 		keyName = "showClueScroll",
 		name = "Show Clue Scroll Target",
 		description = "Marks the solved location of your active clue scroll step on the map, using RuneLite's clue scroll plugin",
-		position = 26,
+		position = 2,
 		section = iconsSection
 	)
 	default boolean showClueScroll()
@@ -1230,7 +1718,7 @@ public interface BetterMapConfig extends Config
 		name = "Debug Panel",
 		description = "Draws a live panel on the map showing camera, tile and marker state",
 		position = 1,
-		section = debugSection
+		section = developerSection
 	)
 	default boolean debugOverlay()
 	{
@@ -1242,7 +1730,7 @@ public interface BetterMapConfig extends Config
 		name = "Debug Logging",
 		description = "Writes a one-line pipeline summary to the client log about once a second while the map is open",
 		position = 2,
-		section = debugSection
+		section = developerSection
 	)
 	default boolean debugLogging()
 	{

@@ -131,7 +131,7 @@ public class QuestHelperTracker
 	/**
 	 * True for Quest Helper's own world map point. Matches on the name the plugin sets, and falls
 	 * back to the class name for a build that ever stops setting it - the same shape as
-	 * {@code MapMarkerRenderer#isClueWorldMapPoint}. This reads {@link Class#getName()} only; it
+	 * {@code WorldMapPointMarkerRenderer#isClueWorldMapPoint}. This reads {@link Class#getName()} only; it
 	 * loads no Quest Helper type and reflects on nothing.
 	 */
 	static boolean isQuestHelperPoint(@Nullable WorldMapPoint point)

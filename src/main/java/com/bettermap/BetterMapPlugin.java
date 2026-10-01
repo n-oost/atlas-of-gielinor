@@ -24,6 +24,10 @@
  */
 package com.bettermap;
 
+import com.bettermap.data.DungeonPiece;
+import com.bettermap.data.DungeonPieceTransform;
+import java.awt.geom.Point2D;
+
 import com.bettermap.data.sailing.BoatTracker;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.TravelData;
@@ -63,10 +67,8 @@ import javax.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.HashTable;
 import net.runelite.api.MenuAction;
 import net.runelite.api.Player;
-import net.runelite.api.WidgetNode;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOpened;
@@ -93,7 +95,7 @@ import net.runelite.client.util.ImageUtil;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Better Map",
+	name = "Atlas of Gielinor",
 	internalName = "better-map",
 	description = "Replaces the world map with a slippy map: free zoom, drag panning, dungeon layers, monster zones and marker details",
 	tags = {"map", "worldmap", "zoom", "dungeon", "navigation"}
@@ -231,7 +233,7 @@ public class BetterMapPlugin extends Plugin
 
 		panel = new BetterMapPanel(this, poiIndex, monsterIndex, boatTracker);
 		navButton = NavigationButton.builder()
-			.tooltip("Better Map")
+			.tooltip("Atlas of Gielinor")
 			.icon(ImageUtil.loadImageResource(BetterMapPlugin.class, "icon.png"))
 			.priority(6)
 			.panel(panel)
@@ -314,7 +316,7 @@ public class BetterMapPlugin extends Plugin
 		});
 		mapAssets.shutDown();
 
-		log.info("Better Map stopped");
+		log.info("Atlas of Gielinor stopped");
 	}
 
 	/** One readable block at start-up saying whether every input to the map is actually there. */
@@ -330,8 +332,8 @@ public class BetterMapPlugin extends Plugin
 		log.debug("[BetterMap] monster idx : {} zones (omitted={})", monsterIndex.size(), monsterIndex.getDroppedZones());
 		log.debug("[BetterMap] shop index  : {} shops, loaded={}", shopIndex.size(), shopIndex.isLoaded());
 		log.debug("[BetterMap] ground items: {} spawn tiles, loaded={}", groundItemIndex.size(), groundItemIndex.isLoaded());
-		log.debug("[BetterMap] config      : customMap={} fullscreen={} hideGameRender={} skillingIcons={} ",
-			config.useCustomMap(), config.fullscreenMap(), config.hideGameMapRender(),
+		log.debug("[BetterMap] config      : fullscreen={} hideGameRender={} skillingIcons={} ",
+			config.fullscreenMap(), config.hideGameMapRender(),
 			config.iconSkilling());
 		log.info("[BetterMap] runelite world map overlay suppressed={}", suppressedRuneliteOverlay);
 
@@ -355,7 +357,7 @@ public class BetterMapPlugin extends Plugin
 		// Hiding has to be reapplied every frame, but restoring does not: once the widgets are
 		// back the client leaves them alone. Skipping the no-op restore keeps six widget lookups
 		// per frame off the path a player is on whenever the map is closed - which is most of it.
-		final boolean hideMap = config.useCustomMap() && config.hideGameMapRender();
+		final boolean hideMap = config.hideGameMapRender();
 		if (hideMap || mapWidgetsHidden)
 		{
 			setGameMapHidden(hideMap);
@@ -396,102 +398,38 @@ public class BetterMapPlugin extends Plugin
 
 	private void closeMapOnClientThread()
 	{
-		final Widget closeWidget = client.getWidget(InterfaceID.Worldmap.CLOSE);
-		final Widget mapWindow = client.getWidget(InterfaceID.Worldmap.WINDOW);
-		final Widget mapContainer = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
-		final Widget mapDisplay = client.getWidget(InterfaceID.Worldmap.MAP_DISPLAY);
-		final Widget mapOverlayWidget = client.getWidget(InterfaceID.Worldmap.MAP_OVERLAY);
-
-		log.debug("[BetterMap:close] BEFORE  CLOSE={} WINDOW={} MAP_CONTAINER={} DISPLAY={} OVERLAY={}",
-			widgetState(closeWidget), widgetState(mapWindow), widgetState(mapContainer),
-			widgetState(mapDisplay), widgetState(mapOverlayWidget));
-
-		// Fire the close button's onOp listener to run the engine's official close CS2 script.
-		// This cleans up map state and flips the minimap orb action back to "Open" in one step.
-		boolean triggeredScript = false;
-		if (closeWidget != null)
-		{
-			final Object[] listener = closeWidget.getOnOpListener();
-			if (listener != null)
-			{
-				try
-				{
-					client.createScriptEventBuilder(listener)
-						.setSource(closeWidget)
-						.setOp(1)
-						.build()
-						.run();
-					triggeredScript = true;
-					log.debug("[BetterMap:close] closeWidget OnOpListener executed");
-				}
-				catch (RuntimeException e)
-				{
-					log.warn("[BetterMap:close] failed to run closeWidget OnOpListener", e);
-				}
-			}
-		}
-
-		// Fall back to direct interface detachment if the script was unavailable or map remains open
-		boolean closed = triggeredScript && !isWorldMapOpen();
-		if (!closed)
-		{
-			closed = closeWorldMapInterface();
-			if (isWorldMapOpen())
-			{
-				log.warn("[BetterMap:close] still open — retrying closeInterface");
-				closed = closeWorldMapInterface() || closed;
-			}
-		}
-
-		log.debug("[BetterMap:close] AFTER  closed={} stillOpen={} MAP_CONTAINER={} WINDOW={}",
-			closed, isWorldMapOpen(),
-			widgetState(client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER)),
-			widgetState(client.getWidget(InterfaceID.Worldmap.WINDOW)));
-
+		inputHeartbeatTick = 0;
 		if (!isWorldMapOpen())
 		{
 			camera.setClosing(false);
 			camera.setActive(false);
 			mapOverlay.onMapClosed();
-			log.debug("[BetterMap:close] map interface gone — mouse grab released");
-		}
-		else
-		{
-			// Hold the closing latch so fullscreen overlay cannot re-arm input.
-			log.warn("[BetterMap:close] map still open — holding closing latch (mouse passthrough)");
-		}
-	}
-
-	private boolean closeWorldMapInterface()
-	{
-		final HashTable<WidgetNode> table = client.getComponentTable();
-		if (table == null)
-		{
-			log.warn("[BetterMap:close] component table null");
-			return false;
+			return;
 		}
 
-		for (WidgetNode node : table)
+		final Widget closeWidget = client.getWidget(InterfaceID.Worldmap.CLOSE);
+		if (closeWidget == null)
 		{
-			if (node != null && node.getId() == InterfaceID.WORLDMAP)
-			{
-				try
-				{
-					client.closeInterface(node, true);
-					log.debug("[BetterMap:close] closeInterface(WORLDMAP, unload=true) ok  modalMode={}",
-						node.getModalMode());
-					return true;
-				}
-				catch (RuntimeException e)
-				{
-					log.warn("[BetterMap:close] closeInterface failed", e);
-					return false;
-				}
-			}
+			log.warn("[BetterMap:close] native close button unavailable");
+			camera.setClosing(false);
+			return;
 		}
 
-		log.warn("[BetterMap:close] no WidgetNode for InterfaceID.WORLDMAP in component table");
-		return false;
+		try
+		{
+			// The onOp listener alone does not perform the native widget operation.
+			// Detaching the interface locally leaves the server's map open, making the
+			// next globe click close it instead of opening it. Dispatch the actual close
+			// operation and keep map input disabled until the server closes the interface.
+			client.menuAction(-1, InterfaceID.Worldmap.CLOSE, MenuAction.CC_OP,
+				1, -1, "Close", "");
+			log.debug("[BetterMap:close] native close operation dispatched");
+		}
+		catch (RuntimeException e)
+		{
+			camera.setClosing(false);
+			log.warn("[BetterMap:close] native close operation failed", e);
+		}
 	}
 
 	private boolean isWorldMapOpen()
@@ -515,18 +453,9 @@ public class BetterMapPlugin extends Plugin
 	{
 		hideWidget(InterfaceID.Worldmap.MAP_DISPLAY, hidden);
 		hideWidget(InterfaceID.Worldmap.MAP_OVERLAY, hidden);
-		if (hidden && config.hideMinimapOnOpen())
-		{
-			hideWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER, true);
-			hideWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY, true);
-		}
-		else if (!hidden)
-		{
-			// Always restore overview on close / shutDown, even if the config was toggled off
-			// while the map was open (otherwise those widgets can stick SelfHidden until relog).
-			hideWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER, false);
-			hideWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY, false);
-		}
+		// Restore overview widgets left hidden by the removed minimap setting.
+		hideWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER, false);
+		hideWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY, false);
 	}
 
 	private void hideWidget(int id, boolean hidden)
@@ -636,11 +565,6 @@ public class BetterMapPlugin extends Plugin
 			else
 			{
 				inputHeartbeatTick++;
-				if (inputHeartbeatTick == 1 || inputHeartbeatTick % 5 == 0)
-				{
-					log.warn("[BetterMap:close] tick — still open, retrying closeInterface (n={})", inputHeartbeatTick);
-					closeWorldMapInterface();
-				}
 				if (inputHeartbeatTick >= 15)
 				{
 					log.error("[BetterMap:close] giving up latch after {} ticks — releasing mouse (map may still show)", inputHeartbeatTick);
@@ -707,10 +631,6 @@ public class BetterMapPlugin extends Plugin
 			return;
 		}
 
-		if ("useCustomMap".equals(event.getKey()))
-		{
-			syncRuneliteOverlay();
-		}
 		if ("downloadMapAssets".equals(event.getKey()))
 		{
 			mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
@@ -767,21 +687,13 @@ public class BetterMapPlugin extends Plugin
 		}
 	}
 
-	/**
-	 * Detaches RuneLite's own world map overlay while ours is in charge, and puts it back when it
-	 * is not. Toggling the setting used to only take effect on the next plugin restart.
-	 */
+	/** Detach RuneLite's native markers while this plugin owns the world map. */
 	private void syncRuneliteOverlay()
 	{
-		if (config.useCustomMap() && !suppressedRuneliteOverlay)
+		if (!suppressedRuneliteOverlay)
 		{
 			overlayManager.remove(runeliteWorldMapOverlay);
 			suppressedRuneliteOverlay = true;
-		}
-		else if (!config.useCustomMap() && suppressedRuneliteOverlay)
-		{
-			overlayManager.add(runeliteWorldMapOverlay);
-			suppressedRuneliteOverlay = false;
 		}
 	}
 
@@ -825,10 +737,75 @@ public class BetterMapPlugin extends Plugin
 
 	public void centerMapOn(WorldPoint point)
 	{
-		camera.centerOn(point.getX(), point.getY());
+		if (point == null)
+		{
+			return;
+		}
+		UndergroundZone zone = InstanceMaps.isOverworldOverlay(point.getX(), point.getY())
+			? null : InstanceMaps.zoneForPoint(point.getX(), point.getY());
+		// Authored pieces can extend beyond the wiki's dungeon boxes.
+		if ((zone == null || dungeonPieceIndex.pieceAt(zone.getId(), point.getX(), point.getY(), point.getPlane(), null) == null)
+			&& !InstanceMaps.isOverworldOverlay(point.getX(), point.getY())
+			&& (point.getY() > InstanceMaps.GAP_MIN_Y || point.getY() < MapCamera.MIN_WORLD_Y))
+		{
+			for (UndergroundZone candidate : UndergroundZone.ALL_ZONES)
+			{
+				if (dungeonPieceIndex.pieceAt(candidate.getId(), point.getX(), point.getY(), point.getPlane(), null) != null)
+				{
+					zone = candidate;
+					break;
+				}
+			}
+		}
+		camera.clearUndergroundMode();
+		camera.setHoveredUnderground(null, true);
+		camera.setHoveredOverlayCluster(null);
 		camera.setPlane(point.getPlane());
+		if (zone != null)
+		{
+			camera.setUndergroundMode(zone);
+			camera.setPlane(point.getPlane());
+			final DungeonPiece piece = dungeonPieceIndex.pieceAt(
+				zone.getId(), point.getX(), point.getY(), point.getPlane(), null);
+			OverlayFloor selectedFloor = null;
+			for (OverlayFloor floor : OverlayFloor.all())
+			{
+				if (floor.zone != zone || floor.plane != point.getPlane())
+				{
+					continue;
+				}
+				if (piece == null || (floor.layerId != null && floor.layerId.equals(piece.layer)))
+				{
+					selectedFloor = floor;
+					break;
+				}
+				if (floor.layerId == null)
+				{
+					selectedFloor = floor;
+				}
+			}
+			if (selectedFloor != null)
+			{
+				camera.setActiveFloor(selectedFloor);
+			}
+			final int nudgeX = camera.getDungeonTuner().offsetX(zone);
+			final int nudgeY = camera.getDungeonTuner().offsetY(zone);
+			final Point2D display = piece == null
+				? new Point2D.Double(point.getX() + 0.5 - zone.getDeltaX() - nudgeX,
+					point.getY() + 0.5 - zone.getDeltaY() - nudgeY)
+				: DungeonPieceTransform.toDisplay(piece, point.getX() + 0.5, point.getY() + 0.5, nudgeX, nudgeY);
+			camera.centerOn(display.getX(), display.getY());
+		}
+		else
+		{
+			final WorldPoint display = point.equals(camera.getPlayerLocation())
+				? camera.getPlayerDisplayLocation() : null;
+			camera.centerOn(display != null ? display.getX() : point.getX(),
+				display != null ? display.getY() : point.getY());
+		}
 		camera.setZoom(Math.max(camera.getZoom(), REVEAL_ZOOM));
-		camera.flashAt(point);
+		camera.flashAt(new WorldPoint((int) Math.floor(camera.getCenterX()),
+			(int) Math.floor(camera.getCenterY()), camera.getPlane()));
 
 		// Keep the client roughly in step so its icon and region data stays loaded around us.
 		clientThread.invoke(() ->
@@ -866,6 +843,97 @@ public class BetterMapPlugin extends Plugin
 			centerMapOn(point);
 		}
 		clientThread.invoke(() -> shortestPathTracker.routeTo(point));
+	}
+
+	/** Place a route at the cursor without moving the map camera. */
+	public void placeRouteAt(int screenX, int screenY)
+	{
+		final Rectangle viewport = camera.getViewport();
+		if (!camera.isActive() || viewport == null || !viewport.contains(screenX, screenY))
+		{
+			return;
+		}
+		final WorldPoint point = routePointAt(camera.worldX(screenX, viewport), camera.worldY(screenY, viewport));
+		if (point != null)
+		{
+			clientThread.invoke(() -> shortestPathTracker.routeTo(point));
+		}
+	}
+
+	/** Reverse the same placement, rotation and flip used to draw the displayed dungeon tile. */
+	@Nullable
+	private WorldPoint routePointAt(double displayX, double displayY)
+	{
+		final List<UndergroundZone> zones = camera.getActiveUndergroundZone() != null
+			|| camera.getActiveOverlayCluster() != null || config.undergroundHoverPreview()
+			? camera.previewUndergroundZones() : java.util.Collections.emptyList();
+		for (int z = zones.size() - 1; z >= 0; z--)
+		{
+			final UndergroundZone zone = zones.get(z);
+			final int nudgeX = camera.getDungeonTuner().offsetX(zone);
+			final int nudgeY = camera.getDungeonTuner().offsetY(zone);
+			final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
+			final Integer layer = camera.floorLayerFor(zone);
+			final int plane = camera.getHoveredFloorPlane() != null && camera.getHoveredUndergroundZone() == zone
+				? camera.getHoveredFloorPlane() : camera.getActiveUndergroundZone() == zone
+					? camera.getPlane() : zone.getUndergroundPoint().getPlane();
+			boolean multiPlane = false;
+			int firstPlane = -1;
+			for (OverlayFloor floor : OverlayFloor.all())
+			{
+				if (floor.zone != zone)
+				{
+					continue;
+				}
+				if (firstPlane < 0)
+				{
+					firstPlane = floor.plane;
+				}
+				else if (floor.plane != firstPlane)
+				{
+					multiPlane = true;
+					break;
+				}
+			}
+			for (int p = pieces.size() - 1; p >= 0; p--)
+			{
+				final DungeonPiece piece = pieces.get(p);
+				if ((multiPlane && piece.plane != plane) || (layer != null && piece.layer != layer))
+				{
+					continue;
+				}
+				final Point2D nativePoint = DungeonPieceTransform.toNative(piece, displayX, displayY, nudgeX, nudgeY);
+				final int x = (int) Math.floor(nativePoint.getX());
+				final int y = (int) Math.floor(nativePoint.getY());
+				if (piece.containsNative(x, y))
+				{
+					return new WorldPoint(x, y, piece.plane);
+				}
+			}
+			if (pieces.isEmpty())
+			{
+				final int x = (int) Math.floor(displayX + zone.getDeltaX() + nudgeX);
+				final int y = (int) Math.floor(displayY + zone.getDeltaY() + nudgeY);
+				final boolean inside = zone.hasClipOverride()
+					? x >= zone.getClipMinX() && x <= zone.getClipMaxX()
+						&& y >= zone.getClipMinY() && y <= zone.getClipMaxY()
+					: InstanceMaps.clipMapsForZone(zone).isEmpty()
+						|| InstanceMaps.clipMapsForZone(zone).stream().anyMatch(map -> map.contains(x, y));
+				if (inside)
+				{
+					return new WorldPoint(x, y, zone.getUndergroundPoint().getPlane());
+				}
+			}
+		}
+		// Empty space in a dungeon cutaway is not a surface destination.
+		return zones.isEmpty()
+			? PrifddinasShift.toWorld((int) Math.floor(displayX), (int) Math.floor(displayY), camera.getPlane())
+			: null;
+	}
+
+	public void cancelRoute()
+	{
+		clientThread.invoke(shortestPathTracker::cancelRoute);
 	}
 
 	private void openWorldMapOnClientThread()
@@ -1034,7 +1102,7 @@ public class BetterMapPlugin extends Plugin
 			final MapFinder.Result r = hits.get(i);
 			final int d = r.getDistanceTiles();
 			final String dist = d >= 0 ? " (~" + d + " tiles)" : "";
-			final String head = i == 0 ? "Better Map \"" + query.trim() + "\": " : "  ";
+			final String head = i == 0 ? "Atlas of Gielinor \"" + query.trim() + "\": " : "  ";
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "",
 				head + (i + 1) + ". " + r.getName() + dist, null);
 		}
@@ -1098,7 +1166,8 @@ public class BetterMapPlugin extends Plugin
 
 		final int worldX = (int) Math.floor(camera.worldX(mouse.getX(), viewport));
 		final int worldY = (int) Math.floor(camera.worldY(mouse.getY(), viewport));
-		final WorldPoint targetPoint = PrifddinasShift.toWorld(worldX, worldY, camera.getPlane());
+		final WorldPoint targetPoint = routePointAt(
+			camera.worldX(mouse.getX(), viewport), camera.worldY(mouse.getY(), viewport));
 
 		resetMapMenu();
 		addRouteMenuEntry(targetPoint, false);
@@ -1152,6 +1221,17 @@ public class BetterMapPlugin extends Plugin
 
 	private void addRouteMenuEntry(WorldPoint point, boolean openMap)
 	{
+		if (shortestPathTracker != null && shortestPathTracker.hasTarget())
+		{
+			client.getMenu().createMenuEntry(-1)
+				.setOption("Cancel route")
+				.setType(MenuAction.RUNELITE)
+				.onClick(e -> cancelRoute());
+		}
+		if (point == null)
+		{
+			return;
+		}
 		client.getMenu().createMenuEntry(-1)
 			.setOption("Route here")
 			.setTarget("<col=ffff00>" + point.getX() + ", " + point.getY() + "</col>")

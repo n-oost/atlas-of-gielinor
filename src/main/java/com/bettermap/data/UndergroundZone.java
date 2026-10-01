@@ -621,7 +621,7 @@ public enum UndergroundZone
 	PRIFDDINAS_GRAND_LIBRARY(
 		"prifddinas_grand_library",
 		"Prifddinas Grand Library",
-		new WorldPoint(2240, 3328, 0),
+		new WorldPoint(2272, 3341, 0),
 		new WorldPoint(3232, 12512, 0),
 		9184,
 		45,
@@ -634,7 +634,7 @@ public enum UndergroundZone
 	PRIFDDINAS_UNDERGROUND(
 		"prifddinas_underground",
 		"Prifddinas Underground",
-		new WorldPoint(2199, 3257, 0),
+		new WorldPoint(2211, 3303, 0),
 		new WorldPoint(3232, 12450, 0),
 		9184,
 		50,
@@ -877,9 +877,9 @@ public enum UndergroundZone
 	TOMBS_OF_AMASCUT(
 		"tombs_of_amascut",
 		"Tombs of Amascut Lobby",
-		new WorldPoint(3493, 3090, 0),
+		new WorldPoint(3356, 2712, 0),
 		new WorldPoint(3344, 9130, 0),
-		6040,
+		6400,
 		40,
 		"Under Necropolis • Tombs of Amascut raid lobby",
 		3344,

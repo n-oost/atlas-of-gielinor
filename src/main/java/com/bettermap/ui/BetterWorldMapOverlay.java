@@ -24,6 +24,8 @@
  */
 package com.bettermap.ui;
 
+import com.bettermap.ui.markers.RaidBossDisplay;
+
 import static com.bettermap.ui.MapStyle.CARD_BG;
 import static com.bettermap.ui.MapStyle.CARD_EDGE;
 import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_BUTTON_SIZE;
@@ -121,11 +123,15 @@ public class BetterWorldMapOverlay extends Overlay
 		new LayerToggle("Banks", "iconBanks", BetterMapConfig::iconBanks),
 		new LayerToggle("Shops and trade", "iconShops", BetterMapConfig::iconShops),
 		new LayerToggle("Skilling icons", "iconSkilling", BetterMapConfig::iconSkilling),
+		new LayerToggle("Agility shortcuts", "iconShortcuts", BetterMapConfig::iconShortcuts),
+		new LayerToggle("Sailing lookouts", "iconSailing", BetterMapConfig::iconSailing),
 		new LayerToggle("Travel", "iconTravel", BetterMapConfig::iconTravel),
 		new LayerToggle("Quests", "iconQuests", BetterMapConfig::iconQuests),
 		new LayerToggle("Altars", "iconAltars", BetterMapConfig::iconAltars),
 		new LayerToggle("Dungeons", "iconDungeons", BetterMapConfig::iconDungeons),
 		new LayerToggle("Tutors and services", "iconServices", BetterMapConfig::iconServices),
+		new LayerToggle("Other map icons", "iconOther", BetterMapConfig::iconOther),
+		new LayerToggle("Clue target", "showClueScroll", BetterMapConfig::showClueScroll),
 		new LayerToggle("Place names", "showPlaceNames", BetterMapConfig::showPlaceNames),
 		new LayerToggle("Underground symbols", "showLargeUndergroundSymbols", BetterMapConfig::showLargeUndergroundSymbols),
 		new LayerToggle("Boss markers", "showBossLocations", BetterMapConfig::showBossLocations),
@@ -232,7 +238,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.markerRenderer = new MapMarkerRenderer(
 			client, config, camera, poiIndex, shopIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
 			clueScrollTracker, shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
-			finder, stats, dungeonPieceIndex);
+			stats, dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
 			questHelperTracker, slayerTaskTracker, poiIndex);
 		this.finderRenderer = new MapFinderRenderer(
@@ -255,12 +261,11 @@ public class BetterWorldMapOverlay extends Overlay
 		final Widget map = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
 		final WorldMap worldMap = client.getWorldMap();
 
-		if (!config.useCustomMap() || map == null || map.isHidden() || worldMap == null)
+		if (map == null || map.isHidden() || worldMap == null)
 		{
 			if (wasOpen || camera.isActive() || camera.isClosing())
 			{
-				log.debug("[BetterMap:overlay] map closed/unavailable  useCustom={} mapNull={} mapHidden={} worldMapNull={} wasActive={} closing={}",
-					config.useCustomMap(),
+				log.debug("[BetterMap:overlay] map closed/unavailable  mapNull={} mapHidden={} worldMapNull={} wasActive={} closing={}",
 					map == null,
 					map != null && map.isHidden(),
 					worldMap == null,
@@ -279,16 +284,9 @@ public class BetterWorldMapOverlay extends Overlay
 			return null;
 		}
 
-		if (camera.isClosing())
+		if (camera.isClosing() && raidBossDisplay != null)
 		{
-			// Close in progress but interface not gone yet — do not draw or grab mouse.
-			log.debug("[BetterMap:overlay] skipping draw — close latch held, map still present");
-			camera.setActive(false);
-			if (raidBossDisplay != null)
-			{
-				raidBossDisplay.close();
-			}
-			return null;
+			raidBossDisplay.close();
 		}
 
 		final Rectangle bounds = viewport(map);
@@ -311,7 +309,9 @@ public class BetterWorldMapOverlay extends Overlay
 
 		camera.setViewport(bounds);
 		updateNativePassthrough(bounds);
-		camera.setActive(true);
+		// Keep covering the native map until its interface is gone, while disabling
+		// map input as soon as close is requested.
+		camera.setActive(!camera.isClosing());
 
 		syncWithClient(worldMap, bounds);
 		final Runnable focus = finderFocusOnOpen;
@@ -339,6 +339,7 @@ public class BetterWorldMapOverlay extends Overlay
 			drawNotice(graphics, bounds,
 				"NO MAP DATA",
 				tileLoader.getStatus());
+			chromeRenderer.drawCloseButton(graphics, bounds, true);
 			graphics.setClip(previousClip);
 			return null;
 		}
@@ -737,14 +738,18 @@ public class BetterWorldMapOverlay extends Overlay
 	{
 		final List<Rectangle> rects = new ArrayList<>();
 
-		final int rightInset = layout.rightUiInset(bounds);
-		if (rightInset > 0)
+		Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
+		if (overview == null || overview.isHidden())
 		{
-			rects.add(new Rectangle(
-				(int) bounds.getMaxX() - rightInset,
-				(int) bounds.getMinY(),
-				rightInset,
-				bounds.height));
+			overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY);
+		}
+		if (overview != null && !overview.isHidden())
+		{
+			final Rectangle overviewBounds = overview.getBounds();
+			if (overviewBounds != null && overviewBounds.width > 0 && overviewBounds.height > 0)
+			{
+				rects.add(overviewBounds.intersection(bounds));
+			}
 		}
 
 		final Rectangle worldMapOrb = MinimapOrbs.worldMapOrbBounds(client);

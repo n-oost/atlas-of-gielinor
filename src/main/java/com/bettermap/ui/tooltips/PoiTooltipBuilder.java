@@ -186,7 +186,6 @@ public class PoiTooltipBuilder
 		if ("magic_mushtree".equals(key) || (title != null && title.toLowerCase().contains("mushtree"))) return "Magic mushtree";
 		if ("magic_carpet".equals(key) || (title != null && title.toLowerCase().contains("carpet"))) return "Magic carpet";
 		if ("minecart_network".equals(key) || (title != null && title.toLowerCase().contains("minecart"))) return "Minecart network";
-		if ("navigation_node".equals(key)) return "Navigation node";
 		if ("sea_current".equals(key)) return "Sea current";
 		if ("shipwright".equals(key)) return "Shipwright";
 		if ("cargo_bay".equals(key)) return "Cargo bay";

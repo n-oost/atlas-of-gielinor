@@ -564,7 +564,7 @@ public class PoiDetailsTest
 		final PoiIndex.Poi genericShortcut = new PoiIndex.Poi(1000, 1000, 0, "agility_short-cut", "Agility short-cut");
 		final PoiDetails.Detail genericDetail = PoiDetails.getDetail(genericShortcut, 1000, 1000, 0);
 		assertNotNull(genericDetail);
-		assertEquals("Travel", genericDetail.getCategory());
+		assertEquals("Agility shortcuts", genericDetail.getCategory());
 		assertTrue(genericDetail.getLines().stream().anyMatch(l -> l.contains("Agility skill guide")));
 	}
 

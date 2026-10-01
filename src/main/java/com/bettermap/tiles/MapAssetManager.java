@@ -78,7 +78,7 @@ public class MapAssetManager
 			catch (Exception e)
 			{
 				log.debug("[BetterMap] asset storage unavailable", e);
-				status(session, "Map asset storage is unavailable. Check the RuneLite log and restart Better Map.");
+				status(session, "Map asset storage is unavailable. Check the RuneLite log and restart Atlas of Gielinor.");
 			}
 		});
 	}
@@ -144,7 +144,7 @@ public class MapAssetManager
 		{
 			if (installed == null)
 			{
-				status(session, "Map assets are not installed or are invalid. Enable Download map assets in Better Map settings.");
+				status(session, "Map assets are not installed or are invalid. Enable Download map assets in Atlas of Gielinor settings.");
 			}
 			return;
 		}

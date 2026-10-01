@@ -25,6 +25,8 @@
 package com.bettermap.data;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 
 /**
  * Flip-then-rotate used by the dungeon-layer tuner. Positive {@code rot} is clockwise on screen
@@ -50,5 +52,35 @@ public final class DungeonPieceTransform
 			t.translate(-cx, -cy);
 		}
 		return t;
+	}
+
+	/** The tile renderer's transform expressed in map coordinates, where Y grows up. */
+	private static AffineTransform displayTransform(DungeonPiece piece, int nudgeX, int nudgeY)
+	{
+		final int[] b = piece.srcBounds();
+		return affine(-piece.rot, piece.flipX, piece.flipY,
+			(b[0] + b[2] + 1) / 2.0 + piece.dx - nudgeX,
+			(b[1] + b[3] + 1) / 2.0 + piece.dy - nudgeY);
+	}
+
+	public static Point2D toDisplay(DungeonPiece piece, double x, double y, int nudgeX, int nudgeY)
+	{
+		return displayTransform(piece, nudgeX, nudgeY).transform(
+			new Point2D.Double(x + piece.dx - nudgeX, y + piece.dy - nudgeY), null);
+	}
+
+	public static Point2D toNative(DungeonPiece piece, double x, double y, int nudgeX, int nudgeY)
+	{
+		try
+		{
+			final Point2D point = displayTransform(piece, nudgeX, nudgeY).inverseTransform(
+				new Point2D.Double(x, y), null);
+			return new Point2D.Double(point.getX() - piece.dx + nudgeX,
+				point.getY() - piece.dy + nudgeY);
+		}
+		catch (NoninvertibleTransformException e)
+		{
+			throw new IllegalStateException("Dungeon rotation and flip must be invertible", e);
+		}
 	}
 }

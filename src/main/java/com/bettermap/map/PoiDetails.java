@@ -1023,7 +1023,7 @@ public final class PoiDetails
 		addEntry("dungeon", "Woodcutting Guild Dungeon Entrance", "Dungeons", 1580, 3480, 0, "Type: Dungeon entrance / underground link", "Ent dungeon tree entrance • Woodcutting Guild");
 		addEntry("dungeon", "Cam Torum Main Entrance", "Dungeons", 1435, 3128, 0, "Type: Dungeon entrance / underground link", "Avium Savannah entrance to Cam Torum & Neypotzli");
 		addEntry("dungeon", "Lighthouse Dungeon Iron Ladder", "Dungeons", 2509, 3644, 0, "Type: Dungeon entrance / underground link", "Lighthouse entrance to Dagannoths lair");
-		addEntry("dungeon", "Tombs of Amascut Entrance", "Dungeons", 3493, 3090, 0, "Type: Dungeon entrance / underground link", "Necropolis entrance to Tombs of Amascut");
+		addEntry("dungeon", "Tombs of Amascut Entrance", "Dungeons", 3356, 2712, 0, "Type: Dungeon entrance / underground link", "Necropolis entrance to Tombs of Amascut");
 		addEntry("dungeon", "Lizardman Temple Entrance", "Dungeons", 1214, 3559, 0, "Type: Dungeon entrance / underground link", "Mount Quidamortem entrance to Lizardman Temple");
 		addEntry("dungeon", "Fenkenstrain's Dungeon Entrance", "Dungeons", 3509, 3448, 0, "Type: Dungeon entrance / underground link", "Fenkenstrain Castle gravestone entrance");
 		addEntry("dungeon", "Daeyalt Mine Entrance", "Dungeons", 3725, 3356, 0, "Type: Dungeon entrance / underground link", "Darkmeyer entrance to Daeyalt Essence Mine");
@@ -1279,94 +1279,94 @@ public final class PoiDetails
 		addEntry("agility_training", "Varrock Rooftop Course (Level 30)", "Skilling • Agility", 3220, 3414, 0, "Level requirement: Level 30 Agility", "Lap XP: 238 XP", "Activity: Rooftop Course • Marks of Grace: Yes");
 		addEntry("agility_training", "Werewolf Agility Course (Level 60)", "Skilling • Agility", 3543, 3463, 0, "Level requirement: Level 60 Agility", "Lap XP: 730 XP (with stick returned)", "Activity: Obstacle Course • Requires Ring of Charos");
 		addEntry("agility_training", "Wilderness Agility Course (Level 52)", "Skilling • Agility", 2998, 3916, 0, "Level requirement: Level 52 Agility", "Lap XP: 571.4 XP", "Activity: Obstacle Course • Wilderness PvP danger");
-		addEntry("agility_short-cut", "Mount Karuulm Lower Rocks (Level 29)", "Travel • Agility", 1325, 3782, 0, "Level requirement: Level 29 Agility", "Connects: Base of Mount Karuulm to middle plateau", "Quicker path to the Karuulm Slayer Dungeon and volcano");
-		addEntry("agility_short-cut", "Mount Karuulm Upper Rocks (Level 62)", "Travel • Agility", 1323, 3791, 0, "Level requirement: Level 62 Agility", "Connects: Middle plateau to top of Mount Karuulm", "Quick access to the Slayer Master Konar quo Maten");
-		addEntry("agility_short-cut", "River Hos Stepping Stones (Level 40)", "Travel • Agility", 1605, 3572, 0, "Level requirement: Level 40 Agility", "Connects: Shayzien Encampment across River Hos to Hosidius", "Fast crossing between western and eastern Great Kourend");
-		addEntry("agility_short-cut", "River Hos Stepping Stones (Level 40)", "Travel • Agility", 1613, 3570, 0, "Level requirement: Level 40 Agility", "Connects: Hosidius across River Hos to Shayzien", "Fast crossing between western and eastern Great Kourend");
-		addEntry("agility_short-cut", "Hosidius Stepping Stone (Level 45)", "Travel • Agility", 1722, 3509, 0, "Level requirement: Level 45 Agility", "Connects: Hosidius chapel and POH portal across stream", "Faster route between Hosidius estate and farmland");
-		addEntry("agility_short-cut", "Wintertodt Gap (Level 60)", "Travel • Agility", 1630, 4023, 0, "Level requirement: Level 60 Agility", "Connects: Wintertodt prison camp south and north areas", "Vault over gap in the frozen mountain perimeter");
-		addEntry("agility_short-cut", "Wintertodt Upper Gap (Level 60)", "Travel • Agility", 1630, 4023, 1, "Level requirement: Level 60 Agility", "Connects: Wintertodt upper perimeter platform", "Shortcut across the frozen upper walkway");
-		addEntry("agility_short-cut", "Dense Essence Mine West Rocks (Level 73)", "Travel • Agility", 1743, 3853, 0, "Level requirement: Level 73 Agility", "Connects: Arceuus Dense Runestone quarry (west side)", "High-level shortcut for faster Blood and Soul Runecrafting");
-		addEntry("agility_short-cut", "Dense Essence Mine North Rocks (Level 69)", "Travel • Agility", 1760, 3873, 0, "Level requirement: Level 69 Agility", "Connects: Arceuus Dense Runestone quarry (north side)", "Bypasses rocky ridges for faster essence transport");
-		addEntry("agility_short-cut", "Dense Essence Mine East Rocks (Level 52)", "Travel • Agility", 1771, 3851, 0, "Level requirement: Level 52 Agility", "Connects: Arceuus Dense Runestone quarry (east side)", "Bypasses lower cliff toward the Dark Altar path");
-		addEntry("agility_short-cut", "Dense Essence Mine Boulder (Level 49)", "Travel • Agility", 1775, 3888, 0, "Level requirement: Level 49 Agility", "Connects: Arceuus North path to Dense Runestone quarry", "Climb over boulder obstacle to reach mining area");
-		addEntry("agility_short-cut", "Zul-Andra Stepping Stone (Level 76)", "Travel • Agility", 2157, 3073, 0, "Level requirement: Level 76 Agility", "Connects: Zul-Andra pier to the eastern peninsula", "Quick access to Zulrah's shrine without fairy ring scroll");
-		addEntry("agility_short-cut", "Weiss Cliffside (Level 68)", "Travel • Agility", 2263, 4044, 0, "Level requirement: Level 68 Agility", "Connects: Weiss northern coast to the upper village", "Requirements: Making Friends with My Arm quest");
-		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Easy) (Level 59)", "Travel • Agility", 2346, 3300, 0, "Level requirement: Level 59 Agility", "Connects: Arandar mountain pass northern shortcut", "Requirements: Regicide quest completed", "Shortens path between Tirannwn and Kandarin");
-		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Medium) (Level 68)", "Travel • Agility", 2338, 3288, 0, "Level requirement: Level 68 Agility", "Connects: Arandar mountain pass middle shortcut", "Requirements: Regicide quest completed", "Shortens path between Tirannwn and Kandarin");
-		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Advanced) (Level 85)", "Travel • Agility", 2338, 3253, 0, "Level requirement: Level 85 Agility", "Connects: Arandar mountain pass southern shortcut", "Requirements: Regicide quest completed • Western Elite Diary task", "Direct route into Lletya and Isafdar forests");
-		addEntry("agility_short-cut", "Eagles' Peak Rocks (Level 25)", "Travel • Agility", 2321, 3499, 0, "Level requirement: Level 25 Agility", "Connects: Eagles' Peak north side to the western plains", "Faster path to the falconry and hunting grounds");
-		addEntry("agility_short-cut", "Neitiznot Rope Bridge (Level 40)", "Travel • Agility", 2316, 3828, 0, "Level requirement: Level 40 Agility", "Connects: Neitiznot town across chasm to northern islands", "Requirements: The Fremennik Isles quest (partial)");
-		addEntry("agility_short-cut", "Corsair Cove Rocks (Level 10)", "Travel • Agility", 2546, 2871, 0, "Level requirement: Level 10 Agility", "Connects: Corsair Cove settlement to Feldip Hills", "Bypasses the southern coast path");
-		addEntry("agility_short-cut", "Corsair Cove Resource Area Rocks (Level 30)", "Travel • Agility", 2487, 2898, 0, "Level requirement: Level 30 Agility", "Connects: Feldip Hills to Corsair Cove Resource Area", "Requirements: Dragon Slayer I completed (ogress caves)");
-		addEntry("agility_short-cut", "Observatory Rocks & Grapple (Level 23)", "Travel • Agility", 2448, 3155, 0, "Level requirement: Level 23 Agility, 28 Strength, 24 Ranged", "Connects: River bank to Observatory hill summit", "Requirements: Crossbow & Mith grapple (once) • Observatory Quest");
-		addEntry("agility_short-cut", "Tree Gnome Stronghold Loose Railing (Level 37)", "Travel • Agility", 2486, 3515, 0, "Level requirement: Level 37 Agility", "Connects: South-east Stronghold fence to outskirts", "Bypasses the Stronghold main entrance gates");
-		addEntry("agility_short-cut", "Yanille South Wall Climb (Level 69)", "Travel • Agility", 2553, 3072, 0, "Level requirement: Level 69 Agility (or 39 Agility with Mith grapple)", "Connects: South-west Yanille town wall to Gu'Tanoth outskirts", "Requirements: Medium Ardougne Diary task (with grapple)");
-		addEntry("agility_short-cut", "Yanille Underwall Tunnel (Level 16)", "Travel • Agility", 2575, 3109, 0, "Level requirement: Level 16 Agility", "Connects: Yanille northern wall to the Watchtower area", "Quick access from Watchtower teleport into Yanille");
-		addEntry("agility_short-cut", "East Ardougne Log Balance (Level 33)", "Travel • Agility", 2603, 3336, 0, "Level requirement: Level 33 Agility", "Connects: West bank of River Dougne to Ardougne Zoo / Monastery", "Crosses River Dougne south of East Ardougne castle");
-		addEntry("agility_short-cut", "Coal Trucks Log Balance (Level 20)", "Travel • Agility", 2599, 3475, 0, "Level requirement: Level 20 Agility", "Connects: Coal Trucks mining site across River McGrubor", "Fast route between Coal Trucks and Seers' Village bank");
-		addEntry("agility_short-cut", "Miscellania Stepping Stone (Level 55)", "Travel • Agility", 2573, 3862, 0, "Level requirement: Level 55 Agility", "Connects: Miscellania castle docks across water to Etceteria", "Bypasses the long wooden bridge between the islands");
-		addEntry("agility_short-cut", "Fremennik Province Log Balance (Level 48)", "Travel • Agility", 2722, 3591, 0, "Level requirement: Level 48 Agility", "Connects: River crossing between Seers' Village and Rellekka", "Quick route from McGrubor's Wood into Fremennik lands");
-		addEntry("agility_short-cut", "Rellekka Broken Fence (Level 57)", "Travel • Agility", 2689, 3697, 0, "Level requirement: Level 57 Agility", "Connects: Eastern Rellekka to Rock Crab coast and Slayer Cave", "Direct escape / entry through eastern Rellekka palisade");
-		addEntry("agility_short-cut", "Shilo Village Stepping Stone (Level 32)", "Travel • Agility", 2864, 2974, 0, "Level requirement: Level 32 Agility", "Connects: Shilo Village river bank to southern nature altar area", "Requirements: Shilo Village quest completed");
-		addEntry("agility_short-cut", "Karamja Volcano Strong Tree (Level 78)", "Travel • Agility", 2874, 3143, 0, "Level requirement: Level 78 Agility (or 52 Agility with Mith grapple)", "Connects: Musa Point across sea inlet to Harpie Bug Swarms", "Requirements: Hard Karamja Diary task (with grapple)");
-		addEntry("agility_short-cut", "Karamja River Grapple / Tree (Level 34)", "Travel • Agility", 2875, 3128, 0, "Level requirement: Level 34 Agility, 21 Strength, 42 Ranged", "Connects: Central Karamja jungle across river to Legends' Guild south", "Requirements: Crossbow & Mith grapple");
-		addEntry("agility_short-cut", "Kharazi Jungle Vine (Level 79)", "Travel • Agility", 2898, 2939, 0, "Level requirement: Level 79 Agility", "Connects: Southern cliff face into the deep Kharazi Jungle", "Requirements: Legends' Quest started or completed");
-		addEntry("agility_short-cut", "Karamja Stepping Stones (Level 30)", "Travel • Agility", 2925, 2946, 0, "Level requirement: Level 30 Agility", "Connects: Southern Karamja river crossing near Cairn Isle", "Fast crossing without navigating coastal marshes");
-		addEntry("agility_short-cut", "Tai Bwo Wannai Stepping Stones (Level 30)", "Travel • Agility", 2907, 3050, 0, "Level requirement: Level 30 Agility", "Connects: Jungle path south of Tai Bwo Wannai across river", "Quick access between village and Calquat farming patch");
-		addEntry("agility_short-cut", "Catherby Cliffside Rocks (Level 68)", "Travel • Agility", 2869, 3429, 0, "Level requirement: Level 68 Agility (or 32 Agility with Mith grapple)", "Connects: Catherby tree patch over cliff to Taverley", "High-value shortcut for Farming tree runs");
-		addEntry("agility_short-cut", "Troll Stronghold Rocks (Level 73)", "Travel • Agility", 2842, 3694, 0, "Level requirement: Level 73 Agility", "Connects: Troll Stronghold main entrance to the roof herb patch", "Requirements: Troll Stronghold quest completed", "Direct route to My Arm's disease-free herb patch");
-		addEntry("agility_short-cut", "Trollheim Easy Cliff Scramble (Level 41)", "Travel • Agility", 2870, 3670, 0, "Level requirement: Level 41 Agility", "Connects: Lower Trollheim path ascending toward the peak", "Requirements: Death Plateau quest (Climbing boots)");
-		addEntry("agility_short-cut", "Trollheim Medium Cliff Scramble (Level 43)", "Travel • Agility", 2877, 3666, 0, "Level requirement: Level 43 Agility", "Connects: Mid-level Trollheim mountain trail ascending to summit", "Requirements: Death Plateau quest");
-		addEntry("agility_short-cut", "Trollheim Advanced Cliff Scramble (Level 44)", "Travel • Agility", 2908, 3686, 0, "Level requirement: Level 44 Agility", "Connects: Upper Trollheim trail to the mountain plateau", "Quicker path to Eadgar's cave and God Wars Dungeon entrance");
-		addEntry("agility_short-cut", "Trollheim Hard Cliff Scramble (Level 47)", "Travel • Agility", 2903, 3680, 0, "Level requirement: Level 47 Agility", "Connects: Eastern Trollheim descent directly toward God Wars route", "Fastest route down Trollheim mountain");
-		addEntry("agility_short-cut", "Trollheim Hard Cliff Scramble (Level 47)", "Travel • Agility", 2887, 3684, 0, "Level requirement: Level 47 Agility", "Connects: Trollheim mountain ridge climb", "Bypasses winding mountain paths and thrower trolls");
-		addEntry("agility_short-cut", "Trollheim Mountain Path (Level 47)", "Travel • Agility", 2918, 3672, 0, "Level requirement: Level 47 Agility", "Connects: Trollheim south-east cliff descent", "Alternative descent from Trollheim summit");
-		addEntry("agility_short-cut", "Trollheim to Wilderness Rocks (Level 64)", "Travel • Agility", 2946, 3678, 0, "Level requirement: Level 64 Agility", "Connects: Trollheim eastern base to Level 21 Wilderness", "Requirements: Troll Stronghold quest (partial)");
-		addEntry("agility_short-cut", "Wilderness God Wars Dungeon Rocky Handholds (Level 60)", "Travel • Agility", 2929, 3760, 0, "Level requirement: Level 60 Agility (or 60 Strength)", "Connects: Level 28 Wilderness into the God Wars Dungeon entrance", "Requirements: Rope • Danger: Wilderness PvP area");
-		addEntry("agility_short-cut", "Wilderness God Wars Dungeon Rocky Handholds (Level 60)", "Travel • Agility", 2944, 3770, 0, "Level requirement: Level 60 Agility (or 60 Strength)", "Connects: God Wars Dungeon crevice climb to Wilderness surface", "Requirements: Rope • Danger: Wilderness PvP area");
-		addEntry("agility_short-cut", "Goblin Village Tight-Gap (Level 14)", "Travel • Agility", 2926, 3523, 0, "Level requirement: Level 14 Agility", "Connects: Burthorpe southern border to Chaos Temple / Goblin Village", "Requirements: Falador Easy Diary completed");
-		addEntry("agility_short-cut", "Falador Crumbling Wall (Level 5)", "Travel • Agility", 2937, 3357, 0, "Level requirement: Level 5 Agility", "Connects: Falador West Bank to the southern Taverley road", "Most famous shortcut: saves long walk around Falador city walls");
-		addEntry("agility_short-cut", "Falador Underwall Tunnel (Level 26)", "Travel • Agility", 2948, 3313, 0, "Level requirement: Level 26 Agility", "Connects: South-west Falador wall to the farm & crafting guild road", "Fast exit from south Falador");
-		addEntry("agility_short-cut", "Falador North Wall Climb (Level 52)", "Travel • Agility", 3032, 3391, 0, "Level requirement: Level 52 Agility (or 11 Agility with Mith grapple)", "Connects: North-east Falador Park over wall to Dwarven Mine & Barbarian Village", "Requirements: Medium Falador Diary task (with grapple)");
-		addEntry("agility_short-cut", "Draynor Village Underwall Tunnel (Level 42)", "Travel • Agility", 3069, 3261, 0, "Level requirement: Level 42 Agility", "Connects: Draynor Village willow trees to Port Sarim market", "Quick access between Draynor bank and Port Sarim docks");
-		addEntry("agility_short-cut", "Lava Maze Stepping Stone (Level 82)", "Travel • Agility", 3093, 3880, 0, "Level requirement: Level 82 Agility", "Connects: Level 46 Wilderness across lava to central Lava Maze", "Direct access to the Muddy Chest without running through the maze", "Danger: High-level Wilderness PvP");
-		addEntry("agility_short-cut", "Lava Dragon Isle Stepping Stones (Level 74)", "Travel • Agility", 3201, 3807, 0, "Level requirement: Level 74 Agility", "Connects: Level 36 Wilderness southern shore to Lava Dragon Isle", "Quicker escape and entry to Lava Dragon hunting grounds", "Danger: High-level Wilderness PvP");
-		addEntry("agility_short-cut", "Champions' Guild Stepping Stone (Level 31)", "Travel • Agility", 3151, 3362, 0, "Level requirement: Level 31 Agility", "Connects: Champions' Guild / Varrock south to wheat field & windmill", "Crosses River Lum south of Varrock");
-		addEntry("agility_short-cut", "Grand Exchange Underwall Tunnel (Level 21)", "Travel • Agility", 3140, 3515, 0, "Level requirement: Level 21 Agility", "Connects: North-west Grand Exchange directly to Edgeville", "Extremely popular shortcut between GE and Edgeville bank/furnace");
-		addEntry("agility_short-cut", "Lumbridge Swamp Stepping Stone (Level 66)", "Travel • Agility", 3211, 3135, 0, "Level requirement: Level 66 Agility", "Connects: Southern Lumbridge Swamp across River Lum to Al Kharid mine", "Fast route between Lumbridge Swamp Caves and Al Kharid");
-		addEntry("agility_short-cut", "River Lum Broken Raft (West) (Level 48)", "Travel • Agility", 3246, 3179, 0, "Level requirement: Level 48 Agility (or 8 Agility with Mith grapple)", "Connects: Lumbridge graveyard / east bank to Al Kharid palace gardens", "Grapple requires: 19 Strength, 37 Ranged, Crossbow & Mith grapple");
-		addEntry("agility_short-cut", "River Lum Broken Raft (East) (Level 48)", "Travel • Agility", 3259, 3179, 0, "Level requirement: Level 48 Agility (or 8 Agility with Mith grapple)", "Connects: Al Kharid palace gardens across River Lum to Lumbridge", "Grapple requires: 19 Strength, 37 Ranged, Crossbow & Mith grapple");
-		addEntry("agility_short-cut", "Varrock South Fence Jump (Level 13)", "Travel • Agility", 3240, 3334, 0, "Level requirement: Level 13 Agility", "Connects: South Varrock stone wall to the mining & farming fields", "Quick access to Varrock south gate area");
-		addEntry("agility_short-cut", "Al Kharid Palace Window (Level 70)", "Travel • Agility", 3294, 3158, 0, "Level requirement: Level 70 Agility", "Connects: Al Kharid Palace south window to the southern coast", "Requirements: Prince Ali Rescue quest completed");
-		addEntry("agility_short-cut", "Al Kharid Mine Cliff Scramble (Level 38)", "Travel • Agility", 3306, 3315, 0, "Level requirement: Level 38 Agility", "Connects: Al Kharid northern mine plateau to the scorpion pit below", "Direct descent into the mining site");
-		addEntry("agility_short-cut", "Mort Myre Swamp Stepping Stone (Level 50)", "Travel • Agility", 3419, 3326, 0, "Level requirement: Level 50 Agility", "Connects: Island in River Salve south-west of Mort Myre Swamp", "Quick crossing across the Salve river boundary");
-		addEntry("agility_short-cut", "Paterdomus Ornate Railing (Level 65)", "Travel • Agility", 3423, 3476, 0, "Level requirement: Level 65 Agility", "Connects: Paterdomus temple cellar to Mort Myre Swamp surface", "Requirements: Priest in Peril quest • Medium Morytania Diary task");
-		addEntry("agility_short-cut", "Slayer Tower Ivy Climb (Ground Floor) (Level 81)", "Travel • Agility", 3421, 3551, 0, "Level requirement: Level 81 Agility", "Connects: Slayer Tower ground floor outside wall directly to 2nd floor", "Bypasses lower floors directly to Nechryaels / Abyssal demons");
-		addEntry("agility_short-cut", "Slayer Tower Broken Window (Ground Floor) (Level 18)", "Travel • Agility", 3422, 3550, 0, "Level requirement: Level 18 Agility", "Connects: Slayer Tower entrance outside directly into Banshee room", "Fast access for Banshee Slayer tasks");
-		addEntry("agility_short-cut", "Slayer Tower Broken Window (1st Floor) (Level 18)", "Travel • Agility", 3422, 3550, 1, "Level requirement: Level 18 Agility", "Connects: Slayer Tower 1st floor window climb", "Shortcut between exterior walkway and Infernal Mage level");
-		addEntry("agility_short-cut", "Slayer Tower North Wall (Ground Floor) (Level 61)", "Travel • Agility", 3448, 3578, 0, "Level requirement: Level 61 Agility", "Connects: Slayer Tower northern exterior to interior stairs", "Quick access to upper Slayer Tower rooms");
-		addEntry("agility_short-cut", "Slayer Tower Spire Climb (Ground Floor) (Level 71)", "Travel • Agility", 3447, 3576, 0, "Level requirement: Level 71 Agility", "Connects: Slayer Tower north-east wall climb to top floor", "Fast route to Abyssal Demons and Gargoyles");
-		addEntry("agility_short-cut", "Slayer Tower North Wall (1st Floor) (Level 61)", "Travel • Agility", 3448, 3578, 1, "Level requirement: Level 61 Agility", "Connects: Slayer Tower 1st floor northern landing", "Quick transition between floors");
-		addEntry("agility_short-cut", "Slayer Tower Ivy Climb (2nd Floor) (Level 81)", "Travel • Agility", 3447, 3576, 2, "Level requirement: Level 81 Agility", "Connects: Slayer Tower top floor (Abyssal demons) directly to outside ground", "Fastest exit from upper Slayer Tower");
-		addEntry("agility_short-cut", "Burgh de Rott Low Fence (Level 25)", "Travel • Agility", 3471, 3219, 0, "Level requirement: Level 25 Agility", "Connects: Burgh de Rott north-west fence to swamp perimeter", "Requirements: Darkness of Hallowvale quest (partial)");
-		addEntry("agility_short-cut", "Mos Le'Harmless Estuary Stepping Stone (Level 60)", "Travel • Agility", 3711, 2970, 0, "Level requirement: Level 60 Agility", "Connects: Mos Le'Harmless town across estuary to Cave horrors & jungle", "Requirements: Cabin Fever quest completed");
-		addEntry("agility_short-cut", "Fossil Island Mushroom Meadow Stepping Stones (Level 50)", "Travel • Agility", 3664, 3810, 0, "Level requirement: Level 50 Agility", "Connects: Mushroom Meadow across water to western forest", "Requirements: Bone Voyage quest • Quicker Herbiboar tracking");
-		addEntry("agility_short-cut", "Fossil Island Museum Camp Crevice (Level 70)", "Travel • Agility", 3713, 3828, 0, "Level requirement: Level 70 Agility", "Connects: Museum Camp directly through cliff to hardwood tree patch", "Requirements: Bone Voyage quest completed", "High-value shortcut for Teak/Mahogany tree runs");
-		addEntry("agility_short-cut", "Fossil Island Museum Camp Crevice (Level 70)", "Travel • Agility", 3715, 3816, 0, "Level requirement: Level 70 Agility", "Connects: Hardwood tree patch through cliff to Museum Camp", "Requirements: Bone Voyage quest completed", "High-value shortcut for Teak/Mahogany tree runs");
-		addEntry("agility_short-cut", "Fossil Island Volcanic Meadow Crevice (Level 70)", "Travel • Agility", 3730, 3831, 0, "Level requirement: Level 70 Agility", "Connects: Museum Camp north path to Volcanic Meadow", "Requirements: Bone Voyage quest completed");
-		addEntry("agility_short-cut", "Fossil Island Volcanic Meadow Crevice (Level 70)", "Travel • Agility", 3745, 3831, 0, "Level requirement: Level 70 Agility", "Connects: Volcanic Meadow path toward the Volcanic Mine", "Requirements: Bone Voyage quest completed");
-		addEntry("agility_short-cut", "Fossil Island Volcanic Mine Rope (Level 64)", "Travel • Agility", 3781, 3822, 0, "Level requirement: Level 64 Agility", "Connects: Volcanic Meadow path across fissure to Volcanic Mine", "Requirements: Bone Voyage quest completed");
-		addEntry("agility_short-cut", "Taverley Wall Climbing Rocks (Level 66)", "Travel • Agility", 2945, 3439, 0, "Level requirement: Level 66 Agility", "Connects: Eastern Taverley wall directly into Taverley tree patch", "Fastest access to Taverley farming patch from Falador");
-		addEntry("agility_short-cut", "Draynor Manor Stepping Stones (Level 31)", "Travel • Agility", 3107, 3367, 0, "Level requirement: Level 31 Agility", "Connects: River Lum crossing north-west of Lumbridge to Draynor Manor", "Fast route between Champions' Guild / Lumbridge and Draynor");
-		addEntry("agility_short-cut", "Lumbridge Cow Field Fence (Level 13)", "Travel • Agility", 3236, 3295, 0, "Level requirement: Level 13 Agility", "Connects: Lumbridge north cow pen to Varrock south road", "Quick hop over the wooden fence");
-		addEntry("agility_short-cut", "Varrock Palace Garden Trellis (Level 35)", "Travel • Agility", 3228, 3471, 0, "Level requirement: Level 35 Agility", "Connects: Southern wall of Varrock Palace into the garden", "Direct access into the Varrock Palace grounds");
-		addEntry("agility_short-cut", "Barrows Dry Stone Wall (Level 72)", "Travel • Agility", 3546, 3282, 0, "Level requirement: Level 72 Agility", "Connects: South-western Barrows mound perimeter to swamp path", "Faster pathing during Barrows brother runs");
-		addEntry("agility_short-cut", "Pollnivneach River Stepping Stone (Level 71)", "Travel • Agility", 3373, 2957, 0, "Level requirement: Level 71 Agility", "Connects: River Elid crossing between Pollnivneach and Nardah", "Fast desert river crossing without carpet ride");
-		addEntry("agility_short-cut", "Waterbirth Island Rocks (Level 85)", "Travel • Agility", 2546, 3748, 0, "Level requirement: Level 85 Agility", "Connects: Waterbirth Island boat landing directly to second cave entrance", "Bypasses snare traps and monsters on the island surface");
-		addEntry("agility_short-cut", "Shilo Village North-East Rocks (Level 79)", "Travel • Agility", 2871, 3007, 0, "Level requirement: Level 79 Agility", "Connects: Shilo Village gem mine directly to eastern jungle", "High-level shortcut for quick entry to Shilo Village");
-		addEntry("agility_short-cut", "Wilderness Chaos Temple Lava Stepping Stone (Level 72)", "Travel • Agility", 3268, 3627, 0, "Level requirement: Level 72 Agility", "Connects: Level 13 Wilderness Chaos Temple across lava to Slayer Cave", "Danger: Wilderness PvP area");
-		addEntry("agility_short-cut", "Mausoleum Repaired Bridge (Level 69)", "Travel • Agility", 3505, 3558, 0, "Level requirement: Level 69 Agility", "Connects: Morytania mainland across water to the Mausoleum island", "Requirements: Priest in Peril / Nature Spirit / repairable bridge");
+		addEntry("agility_short-cut", "Mount Karuulm Lower Rocks (Level 29)", "Agility shortcuts", 1325, 3782, 0, "Level requirement: Level 29 Agility", "Connects: Base of Mount Karuulm to middle plateau", "Quicker path to the Karuulm Slayer Dungeon and volcano");
+		addEntry("agility_short-cut", "Mount Karuulm Upper Rocks (Level 62)", "Agility shortcuts", 1323, 3791, 0, "Level requirement: Level 62 Agility", "Connects: Middle plateau to top of Mount Karuulm", "Quick access to the Slayer Master Konar quo Maten");
+		addEntry("agility_short-cut", "River Hos Stepping Stones (Level 40)", "Agility shortcuts", 1605, 3572, 0, "Level requirement: Level 40 Agility", "Connects: Shayzien Encampment across River Hos to Hosidius", "Fast crossing between western and eastern Great Kourend");
+		addEntry("agility_short-cut", "River Hos Stepping Stones (Level 40)", "Agility shortcuts", 1613, 3570, 0, "Level requirement: Level 40 Agility", "Connects: Hosidius across River Hos to Shayzien", "Fast crossing between western and eastern Great Kourend");
+		addEntry("agility_short-cut", "Hosidius Stepping Stone (Level 45)", "Agility shortcuts", 1722, 3509, 0, "Level requirement: Level 45 Agility", "Connects: Hosidius chapel and POH portal across stream", "Faster route between Hosidius estate and farmland");
+		addEntry("agility_short-cut", "Wintertodt Gap (Level 60)", "Agility shortcuts", 1630, 4023, 0, "Level requirement: Level 60 Agility", "Connects: Wintertodt prison camp south and north areas", "Vault over gap in the frozen mountain perimeter");
+		addEntry("agility_short-cut", "Wintertodt Upper Gap (Level 60)", "Agility shortcuts", 1630, 4023, 1, "Level requirement: Level 60 Agility", "Connects: Wintertodt upper perimeter platform", "Shortcut across the frozen upper walkway");
+		addEntry("agility_short-cut", "Dense Essence Mine West Rocks (Level 73)", "Agility shortcuts", 1743, 3853, 0, "Level requirement: Level 73 Agility", "Connects: Arceuus Dense Runestone quarry (west side)", "High-level shortcut for faster Blood and Soul Runecrafting");
+		addEntry("agility_short-cut", "Dense Essence Mine North Rocks (Level 69)", "Agility shortcuts", 1760, 3873, 0, "Level requirement: Level 69 Agility", "Connects: Arceuus Dense Runestone quarry (north side)", "Bypasses rocky ridges for faster essence transport");
+		addEntry("agility_short-cut", "Dense Essence Mine East Rocks (Level 52)", "Agility shortcuts", 1771, 3851, 0, "Level requirement: Level 52 Agility", "Connects: Arceuus Dense Runestone quarry (east side)", "Bypasses lower cliff toward the Dark Altar path");
+		addEntry("agility_short-cut", "Dense Essence Mine Boulder (Level 49)", "Agility shortcuts", 1775, 3888, 0, "Level requirement: Level 49 Agility", "Connects: Arceuus North path to Dense Runestone quarry", "Climb over boulder obstacle to reach mining area");
+		addEntry("agility_short-cut", "Zul-Andra Stepping Stone (Level 76)", "Agility shortcuts", 2157, 3073, 0, "Level requirement: Level 76 Agility", "Connects: Zul-Andra pier to the eastern peninsula", "Quick access to Zulrah's shrine without fairy ring scroll");
+		addEntry("agility_short-cut", "Weiss Cliffside (Level 68)", "Agility shortcuts", 2263, 4044, 0, "Level requirement: Level 68 Agility", "Connects: Weiss northern coast to the upper village", "Requirements: Making Friends with My Arm quest");
+		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Easy) (Level 59)", "Agility shortcuts", 2346, 3300, 0, "Level requirement: Level 59 Agility", "Connects: Arandar mountain pass northern shortcut", "Requirements: Regicide quest completed", "Shortens path between Tirannwn and Kandarin");
+		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Medium) (Level 68)", "Agility shortcuts", 2338, 3288, 0, "Level requirement: Level 68 Agility", "Connects: Arandar mountain pass middle shortcut", "Requirements: Regicide quest completed", "Shortens path between Tirannwn and Kandarin");
+		addEntry("agility_short-cut", "Arandar Mountain Pass Rocks (Advanced) (Level 85)", "Agility shortcuts", 2338, 3253, 0, "Level requirement: Level 85 Agility", "Connects: Arandar mountain pass southern shortcut", "Requirements: Regicide quest completed • Western Elite Diary task", "Direct route into Lletya and Isafdar forests");
+		addEntry("agility_short-cut", "Eagles' Peak Rocks (Level 25)", "Agility shortcuts", 2321, 3499, 0, "Level requirement: Level 25 Agility", "Connects: Eagles' Peak north side to the western plains", "Faster path to the falconry and hunting grounds");
+		addEntry("agility_short-cut", "Neitiznot Rope Bridge (Level 40)", "Agility shortcuts", 2316, 3828, 0, "Level requirement: Level 40 Agility", "Connects: Neitiznot town across chasm to northern islands", "Requirements: The Fremennik Isles quest (partial)");
+		addEntry("agility_short-cut", "Corsair Cove Rocks (Level 10)", "Agility shortcuts", 2546, 2871, 0, "Level requirement: Level 10 Agility", "Connects: Corsair Cove settlement to Feldip Hills", "Bypasses the southern coast path");
+		addEntry("agility_short-cut", "Corsair Cove Resource Area Rocks (Level 30)", "Agility shortcuts", 2487, 2898, 0, "Level requirement: Level 30 Agility", "Connects: Feldip Hills to Corsair Cove Resource Area", "Requirements: Dragon Slayer I completed (ogress caves)");
+		addEntry("agility_short-cut", "Observatory Rocks & Grapple (Level 23)", "Agility shortcuts", 2448, 3155, 0, "Level requirement: Level 23 Agility, 28 Strength, 24 Ranged", "Connects: River bank to Observatory hill summit", "Requirements: Crossbow & Mith grapple (once) • Observatory Quest");
+		addEntry("agility_short-cut", "Tree Gnome Stronghold Loose Railing (Level 37)", "Agility shortcuts", 2486, 3515, 0, "Level requirement: Level 37 Agility", "Connects: South-east Stronghold fence to outskirts", "Bypasses the Stronghold main entrance gates");
+		addEntry("agility_short-cut", "Yanille South Wall Climb (Level 69)", "Agility shortcuts", 2553, 3072, 0, "Level requirement: Level 69 Agility (or 39 Agility with Mith grapple)", "Connects: South-west Yanille town wall to Gu'Tanoth outskirts", "Requirements: Medium Ardougne Diary task (with grapple)");
+		addEntry("agility_short-cut", "Yanille Underwall Tunnel (Level 16)", "Agility shortcuts", 2575, 3109, 0, "Level requirement: Level 16 Agility", "Connects: Yanille northern wall to the Watchtower area", "Quick access from Watchtower teleport into Yanille");
+		addEntry("agility_short-cut", "East Ardougne Log Balance (Level 33)", "Agility shortcuts", 2603, 3336, 0, "Level requirement: Level 33 Agility", "Connects: West bank of River Dougne to Ardougne Zoo / Monastery", "Crosses River Dougne south of East Ardougne castle");
+		addEntry("agility_short-cut", "Coal Trucks Log Balance (Level 20)", "Agility shortcuts", 2599, 3475, 0, "Level requirement: Level 20 Agility", "Connects: Coal Trucks mining site across River McGrubor", "Fast route between Coal Trucks and Seers' Village bank");
+		addEntry("agility_short-cut", "Miscellania Stepping Stone (Level 55)", "Agility shortcuts", 2573, 3862, 0, "Level requirement: Level 55 Agility", "Connects: Miscellania castle docks across water to Etceteria", "Bypasses the long wooden bridge between the islands");
+		addEntry("agility_short-cut", "Fremennik Province Log Balance (Level 48)", "Agility shortcuts", 2722, 3591, 0, "Level requirement: Level 48 Agility", "Connects: River crossing between Seers' Village and Rellekka", "Quick route from McGrubor's Wood into Fremennik lands");
+		addEntry("agility_short-cut", "Rellekka Broken Fence (Level 57)", "Agility shortcuts", 2689, 3697, 0, "Level requirement: Level 57 Agility", "Connects: Eastern Rellekka to Rock Crab coast and Slayer Cave", "Direct escape / entry through eastern Rellekka palisade");
+		addEntry("agility_short-cut", "Shilo Village Stepping Stone (Level 32)", "Agility shortcuts", 2864, 2974, 0, "Level requirement: Level 32 Agility", "Connects: Shilo Village river bank to southern nature altar area", "Requirements: Shilo Village quest completed");
+		addEntry("agility_short-cut", "Karamja Volcano Strong Tree (Level 78)", "Agility shortcuts", 2874, 3143, 0, "Level requirement: Level 78 Agility (or 52 Agility with Mith grapple)", "Connects: Musa Point across sea inlet to Harpie Bug Swarms", "Requirements: Hard Karamja Diary task (with grapple)");
+		addEntry("agility_short-cut", "Karamja River Grapple / Tree (Level 34)", "Agility shortcuts", 2875, 3128, 0, "Level requirement: Level 34 Agility, 21 Strength, 42 Ranged", "Connects: Central Karamja jungle across river to Legends' Guild south", "Requirements: Crossbow & Mith grapple");
+		addEntry("agility_short-cut", "Kharazi Jungle Vine (Level 79)", "Agility shortcuts", 2898, 2939, 0, "Level requirement: Level 79 Agility", "Connects: Southern cliff face into the deep Kharazi Jungle", "Requirements: Legends' Quest started or completed");
+		addEntry("agility_short-cut", "Karamja Stepping Stones (Level 30)", "Agility shortcuts", 2925, 2946, 0, "Level requirement: Level 30 Agility", "Connects: Southern Karamja river crossing near Cairn Isle", "Fast crossing without navigating coastal marshes");
+		addEntry("agility_short-cut", "Tai Bwo Wannai Stepping Stones (Level 30)", "Agility shortcuts", 2907, 3050, 0, "Level requirement: Level 30 Agility", "Connects: Jungle path south of Tai Bwo Wannai across river", "Quick access between village and Calquat farming patch");
+		addEntry("agility_short-cut", "Catherby Cliffside Rocks (Level 68)", "Agility shortcuts", 2869, 3429, 0, "Level requirement: Level 68 Agility (or 32 Agility with Mith grapple)", "Connects: Catherby tree patch over cliff to Taverley", "High-value shortcut for Farming tree runs");
+		addEntry("agility_short-cut", "Troll Stronghold Rocks (Level 73)", "Agility shortcuts", 2842, 3694, 0, "Level requirement: Level 73 Agility", "Connects: Troll Stronghold main entrance to the roof herb patch", "Requirements: Troll Stronghold quest completed", "Direct route to My Arm's disease-free herb patch");
+		addEntry("agility_short-cut", "Trollheim Easy Cliff Scramble (Level 41)", "Agility shortcuts", 2870, 3670, 0, "Level requirement: Level 41 Agility", "Connects: Lower Trollheim path ascending toward the peak", "Requirements: Death Plateau quest (Climbing boots)");
+		addEntry("agility_short-cut", "Trollheim Medium Cliff Scramble (Level 43)", "Agility shortcuts", 2877, 3666, 0, "Level requirement: Level 43 Agility", "Connects: Mid-level Trollheim mountain trail ascending to summit", "Requirements: Death Plateau quest");
+		addEntry("agility_short-cut", "Trollheim Advanced Cliff Scramble (Level 44)", "Agility shortcuts", 2908, 3686, 0, "Level requirement: Level 44 Agility", "Connects: Upper Trollheim trail to the mountain plateau", "Quicker path to Eadgar's cave and God Wars Dungeon entrance");
+		addEntry("agility_short-cut", "Trollheim Hard Cliff Scramble (Level 47)", "Agility shortcuts", 2903, 3680, 0, "Level requirement: Level 47 Agility", "Connects: Eastern Trollheim descent directly toward God Wars route", "Fastest route down Trollheim mountain");
+		addEntry("agility_short-cut", "Trollheim Hard Cliff Scramble (Level 47)", "Agility shortcuts", 2887, 3684, 0, "Level requirement: Level 47 Agility", "Connects: Trollheim mountain ridge climb", "Bypasses winding mountain paths and thrower trolls");
+		addEntry("agility_short-cut", "Trollheim Mountain Path (Level 47)", "Agility shortcuts", 2918, 3672, 0, "Level requirement: Level 47 Agility", "Connects: Trollheim south-east cliff descent", "Alternative descent from Trollheim summit");
+		addEntry("agility_short-cut", "Trollheim to Wilderness Rocks (Level 64)", "Agility shortcuts", 2946, 3678, 0, "Level requirement: Level 64 Agility", "Connects: Trollheim eastern base to Level 21 Wilderness", "Requirements: Troll Stronghold quest (partial)");
+		addEntry("agility_short-cut", "Wilderness God Wars Dungeon Rocky Handholds (Level 60)", "Agility shortcuts", 2929, 3760, 0, "Level requirement: Level 60 Agility (or 60 Strength)", "Connects: Level 28 Wilderness into the God Wars Dungeon entrance", "Requirements: Rope • Danger: Wilderness PvP area");
+		addEntry("agility_short-cut", "Wilderness God Wars Dungeon Rocky Handholds (Level 60)", "Agility shortcuts", 2944, 3770, 0, "Level requirement: Level 60 Agility (or 60 Strength)", "Connects: God Wars Dungeon crevice climb to Wilderness surface", "Requirements: Rope • Danger: Wilderness PvP area");
+		addEntry("agility_short-cut", "Goblin Village Tight-Gap (Level 14)", "Agility shortcuts", 2926, 3523, 0, "Level requirement: Level 14 Agility", "Connects: Burthorpe southern border to Chaos Temple / Goblin Village", "Requirements: Falador Easy Diary completed");
+		addEntry("agility_short-cut", "Falador Crumbling Wall (Level 5)", "Agility shortcuts", 2937, 3357, 0, "Level requirement: Level 5 Agility", "Connects: Falador West Bank to the southern Taverley road", "Most famous shortcut: saves long walk around Falador city walls");
+		addEntry("agility_short-cut", "Falador Underwall Tunnel (Level 26)", "Agility shortcuts", 2948, 3313, 0, "Level requirement: Level 26 Agility", "Connects: South-west Falador wall to the farm & crafting guild road", "Fast exit from south Falador");
+		addEntry("agility_short-cut", "Falador North Wall Climb (Level 52)", "Agility shortcuts", 3032, 3391, 0, "Level requirement: Level 52 Agility (or 11 Agility with Mith grapple)", "Connects: North-east Falador Park over wall to Dwarven Mine & Barbarian Village", "Requirements: Medium Falador Diary task (with grapple)");
+		addEntry("agility_short-cut", "Draynor Village Underwall Tunnel (Level 42)", "Agility shortcuts", 3069, 3261, 0, "Level requirement: Level 42 Agility", "Connects: Draynor Village willow trees to Port Sarim market", "Quick access between Draynor bank and Port Sarim docks");
+		addEntry("agility_short-cut", "Lava Maze Stepping Stone (Level 82)", "Agility shortcuts", 3093, 3880, 0, "Level requirement: Level 82 Agility", "Connects: Level 46 Wilderness across lava to central Lava Maze", "Direct access to the Muddy Chest without running through the maze", "Danger: High-level Wilderness PvP");
+		addEntry("agility_short-cut", "Lava Dragon Isle Stepping Stones (Level 74)", "Agility shortcuts", 3201, 3807, 0, "Level requirement: Level 74 Agility", "Connects: Level 36 Wilderness southern shore to Lava Dragon Isle", "Quicker escape and entry to Lava Dragon hunting grounds", "Danger: High-level Wilderness PvP");
+		addEntry("agility_short-cut", "Champions' Guild Stepping Stone (Level 31)", "Agility shortcuts", 3151, 3362, 0, "Level requirement: Level 31 Agility", "Connects: Champions' Guild / Varrock south to wheat field & windmill", "Crosses River Lum south of Varrock");
+		addEntry("agility_short-cut", "Grand Exchange Underwall Tunnel (Level 21)", "Agility shortcuts", 3140, 3515, 0, "Level requirement: Level 21 Agility", "Connects: North-west Grand Exchange directly to Edgeville", "Extremely popular shortcut between GE and Edgeville bank/furnace");
+		addEntry("agility_short-cut", "Lumbridge Swamp Stepping Stone (Level 66)", "Agility shortcuts", 3211, 3135, 0, "Level requirement: Level 66 Agility", "Connects: Southern Lumbridge Swamp across River Lum to Al Kharid mine", "Fast route between Lumbridge Swamp Caves and Al Kharid");
+		addEntry("agility_short-cut", "River Lum Broken Raft (West) (Level 48)", "Agility shortcuts", 3246, 3179, 0, "Level requirement: Level 48 Agility (or 8 Agility with Mith grapple)", "Connects: Lumbridge graveyard / east bank to Al Kharid palace gardens", "Grapple requires: 19 Strength, 37 Ranged, Crossbow & Mith grapple");
+		addEntry("agility_short-cut", "River Lum Broken Raft (East) (Level 48)", "Agility shortcuts", 3259, 3179, 0, "Level requirement: Level 48 Agility (or 8 Agility with Mith grapple)", "Connects: Al Kharid palace gardens across River Lum to Lumbridge", "Grapple requires: 19 Strength, 37 Ranged, Crossbow & Mith grapple");
+		addEntry("agility_short-cut", "Varrock South Fence Jump (Level 13)", "Agility shortcuts", 3240, 3334, 0, "Level requirement: Level 13 Agility", "Connects: South Varrock stone wall to the mining & farming fields", "Quick access to Varrock south gate area");
+		addEntry("agility_short-cut", "Al Kharid Palace Window (Level 70)", "Agility shortcuts", 3294, 3158, 0, "Level requirement: Level 70 Agility", "Connects: Al Kharid Palace south window to the southern coast", "Requirements: Prince Ali Rescue quest completed");
+		addEntry("agility_short-cut", "Al Kharid Mine Cliff Scramble (Level 38)", "Agility shortcuts", 3306, 3315, 0, "Level requirement: Level 38 Agility", "Connects: Al Kharid northern mine plateau to the scorpion pit below", "Direct descent into the mining site");
+		addEntry("agility_short-cut", "Mort Myre Swamp Stepping Stone (Level 50)", "Agility shortcuts", 3419, 3326, 0, "Level requirement: Level 50 Agility", "Connects: Island in River Salve south-west of Mort Myre Swamp", "Quick crossing across the Salve river boundary");
+		addEntry("agility_short-cut", "Paterdomus Ornate Railing (Level 65)", "Agility shortcuts", 3423, 3476, 0, "Level requirement: Level 65 Agility", "Connects: Paterdomus temple cellar to Mort Myre Swamp surface", "Requirements: Priest in Peril quest • Medium Morytania Diary task");
+		addEntry("agility_short-cut", "Slayer Tower Ivy Climb (Ground Floor) (Level 81)", "Agility shortcuts", 3421, 3551, 0, "Level requirement: Level 81 Agility", "Connects: Slayer Tower ground floor outside wall directly to 2nd floor", "Bypasses lower floors directly to Nechryaels / Abyssal demons");
+		addEntry("agility_short-cut", "Slayer Tower Broken Window (Ground Floor) (Level 18)", "Agility shortcuts", 3422, 3550, 0, "Level requirement: Level 18 Agility", "Connects: Slayer Tower entrance outside directly into Banshee room", "Fast access for Banshee Slayer tasks");
+		addEntry("agility_short-cut", "Slayer Tower Broken Window (1st Floor) (Level 18)", "Agility shortcuts", 3422, 3550, 1, "Level requirement: Level 18 Agility", "Connects: Slayer Tower 1st floor window climb", "Shortcut between exterior walkway and Infernal Mage level");
+		addEntry("agility_short-cut", "Slayer Tower North Wall (Ground Floor) (Level 61)", "Agility shortcuts", 3448, 3578, 0, "Level requirement: Level 61 Agility", "Connects: Slayer Tower northern exterior to interior stairs", "Quick access to upper Slayer Tower rooms");
+		addEntry("agility_short-cut", "Slayer Tower Spire Climb (Ground Floor) (Level 71)", "Agility shortcuts", 3447, 3576, 0, "Level requirement: Level 71 Agility", "Connects: Slayer Tower north-east wall climb to top floor", "Fast route to Abyssal Demons and Gargoyles");
+		addEntry("agility_short-cut", "Slayer Tower North Wall (1st Floor) (Level 61)", "Agility shortcuts", 3448, 3578, 1, "Level requirement: Level 61 Agility", "Connects: Slayer Tower 1st floor northern landing", "Quick transition between floors");
+		addEntry("agility_short-cut", "Slayer Tower Ivy Climb (2nd Floor) (Level 81)", "Agility shortcuts", 3447, 3576, 2, "Level requirement: Level 81 Agility", "Connects: Slayer Tower top floor (Abyssal demons) directly to outside ground", "Fastest exit from upper Slayer Tower");
+		addEntry("agility_short-cut", "Burgh de Rott Low Fence (Level 25)", "Agility shortcuts", 3471, 3219, 0, "Level requirement: Level 25 Agility", "Connects: Burgh de Rott north-west fence to swamp perimeter", "Requirements: Darkness of Hallowvale quest (partial)");
+		addEntry("agility_short-cut", "Mos Le'Harmless Estuary Stepping Stone (Level 60)", "Agility shortcuts", 3711, 2970, 0, "Level requirement: Level 60 Agility", "Connects: Mos Le'Harmless town across estuary to Cave horrors & jungle", "Requirements: Cabin Fever quest completed");
+		addEntry("agility_short-cut", "Fossil Island Mushroom Meadow Stepping Stones (Level 50)", "Agility shortcuts", 3664, 3810, 0, "Level requirement: Level 50 Agility", "Connects: Mushroom Meadow across water to western forest", "Requirements: Bone Voyage quest • Quicker Herbiboar tracking");
+		addEntry("agility_short-cut", "Fossil Island Museum Camp Crevice (Level 70)", "Agility shortcuts", 3713, 3828, 0, "Level requirement: Level 70 Agility", "Connects: Museum Camp directly through cliff to hardwood tree patch", "Requirements: Bone Voyage quest completed", "High-value shortcut for Teak/Mahogany tree runs");
+		addEntry("agility_short-cut", "Fossil Island Museum Camp Crevice (Level 70)", "Agility shortcuts", 3715, 3816, 0, "Level requirement: Level 70 Agility", "Connects: Hardwood tree patch through cliff to Museum Camp", "Requirements: Bone Voyage quest completed", "High-value shortcut for Teak/Mahogany tree runs");
+		addEntry("agility_short-cut", "Fossil Island Volcanic Meadow Crevice (Level 70)", "Agility shortcuts", 3730, 3831, 0, "Level requirement: Level 70 Agility", "Connects: Museum Camp north path to Volcanic Meadow", "Requirements: Bone Voyage quest completed");
+		addEntry("agility_short-cut", "Fossil Island Volcanic Meadow Crevice (Level 70)", "Agility shortcuts", 3745, 3831, 0, "Level requirement: Level 70 Agility", "Connects: Volcanic Meadow path toward the Volcanic Mine", "Requirements: Bone Voyage quest completed");
+		addEntry("agility_short-cut", "Fossil Island Volcanic Mine Rope (Level 64)", "Agility shortcuts", 3781, 3822, 0, "Level requirement: Level 64 Agility", "Connects: Volcanic Meadow path across fissure to Volcanic Mine", "Requirements: Bone Voyage quest completed");
+		addEntry("agility_short-cut", "Taverley Wall Climbing Rocks (Level 66)", "Agility shortcuts", 2945, 3439, 0, "Level requirement: Level 66 Agility", "Connects: Eastern Taverley wall directly into Taverley tree patch", "Fastest access to Taverley farming patch from Falador");
+		addEntry("agility_short-cut", "Draynor Manor Stepping Stones (Level 31)", "Agility shortcuts", 3107, 3367, 0, "Level requirement: Level 31 Agility", "Connects: River Lum crossing north-west of Lumbridge to Draynor Manor", "Fast route between Champions' Guild / Lumbridge and Draynor");
+		addEntry("agility_short-cut", "Lumbridge Cow Field Fence (Level 13)", "Agility shortcuts", 3236, 3295, 0, "Level requirement: Level 13 Agility", "Connects: Lumbridge north cow pen to Varrock south road", "Quick hop over the wooden fence");
+		addEntry("agility_short-cut", "Varrock Palace Garden Trellis (Level 35)", "Agility shortcuts", 3228, 3471, 0, "Level requirement: Level 35 Agility", "Connects: Southern wall of Varrock Palace into the garden", "Direct access into the Varrock Palace grounds");
+		addEntry("agility_short-cut", "Barrows Dry Stone Wall (Level 72)", "Agility shortcuts", 3546, 3282, 0, "Level requirement: Level 72 Agility", "Connects: South-western Barrows mound perimeter to swamp path", "Faster pathing during Barrows brother runs");
+		addEntry("agility_short-cut", "Pollnivneach River Stepping Stone (Level 71)", "Agility shortcuts", 3373, 2957, 0, "Level requirement: Level 71 Agility", "Connects: River Elid crossing between Pollnivneach and Nardah", "Fast desert river crossing without carpet ride");
+		addEntry("agility_short-cut", "Waterbirth Island Rocks (Level 85)", "Agility shortcuts", 2546, 3748, 0, "Level requirement: Level 85 Agility", "Connects: Waterbirth Island boat landing directly to second cave entrance", "Bypasses snare traps and monsters on the island surface");
+		addEntry("agility_short-cut", "Shilo Village North-East Rocks (Level 79)", "Agility shortcuts", 2871, 3007, 0, "Level requirement: Level 79 Agility", "Connects: Shilo Village gem mine directly to eastern jungle", "High-level shortcut for quick entry to Shilo Village");
+		addEntry("agility_short-cut", "Wilderness Chaos Temple Lava Stepping Stone (Level 72)", "Agility shortcuts", 3268, 3627, 0, "Level requirement: Level 72 Agility", "Connects: Level 13 Wilderness Chaos Temple across lava to Slayer Cave", "Danger: Wilderness PvP area");
+		addEntry("agility_short-cut", "Mausoleum Repaired Bridge (Level 69)", "Agility shortcuts", 3505, 3558, 0, "Level requirement: Level 69 Agility", "Connects: Morytania mainland across water to the Mausoleum island", "Requirements: Priest in Peril / Nature Spirit / repairable bridge");
 	}
 
 	/** Hunter training areas. */
@@ -1539,6 +1539,42 @@ public final class PoiDetails
 		addEntry("transportation", "Fairy Ring (DLP)", "Travel • Fairy Ring", 2923, 10455, 0, "Destination Code: DLP", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Fairy Ring (DLQ)", "Travel • Fairy Ring", 3422, 3018, 0, "Destination Code: DLQ", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Fairy Ring (DLR)", "Travel • Fairy Ring", 2212, 3101, 0, "Destination Code: DLR", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
+
+		// Sailing expansion - Barracuda Trials
+		addEntry("services", "Rum-dashed Ralph (Trial Master)", "Tutors and services", 3033, 2929, 0,
+			"Trial Master for The Tempor Tantrum (Barracuda Trial)",
+			"Location: The Storm Tempor (south of The Pandemonium)",
+			"Level requirement: Level 30 Sailing",
+			"Rewards: Whirlpool surprise (after Shark rank)");
+		addEntry("minigame", "The Tempor Tantrum (Barracuda Trials)", "Quests and activities", 3033, 2929, 0,
+			"Activity: Barracuda Trial boat race (Level 30 Sailing)",
+			"Trial Master: Rum-dashed Ralph",
+			"Requirements: Solo Skiff, Iron helm, Oak mast",
+			"Course: 3 laps dodging lightning and rocks",
+			"Ranks: Swordfish, Shark, Marlin");
+
+		addEntry("services", "Gurtob (Trial Master)", "Tutors and services", 2437, 3027, 0,
+			"Trial Master for The Jubbly Jive (Barracuda Trial)",
+			"Location: Backwater (south of Corsair Cove)",
+			"Level requirement: Level 55 Sailing");
+		addEntry("minigame", "The Jubbly Jive (Barracuda Trials)", "Quests and activities", 2437, 3027, 0,
+			"Activity: Barracuda Trial boat race (Level 55 Sailing)",
+			"Trial Master: Gurtob & Ros",
+			"Requirements: Solo Skiff, Mithril helm, Inoculation station",
+			"Course: Herd Jubblies with balloon toads across fetid waters",
+			"Ranks: Swordfish, Shark, Marlin");
+
+		addEntry("services", "Gwyna (Trial Master)", "Tutors and services", 2198, 3518, 0,
+			"Trial Master for The Gwenith Glide (Barracuda Trial)",
+			"Location: Porth Gwenith (crystal waters north of Gwenith)",
+			"Requirements: Level 72 Sailing and Regicide quest",
+			"Rewards: Gwyna's fabric roll (Crystal Glider Flag)");
+		addEntry("minigame", "The Gwenith Glide (Barracuda Trials)", "Quests and activities", 2198, 3518, 0,
+			"Activity: Barracuda Trial boat race (Level 72 Sailing)",
+			"Trial Master: Gwyna",
+			"Requirements: 72 Sailing, Regicide, Skiff, Adamant keel, Wind Catcher",
+			"Course: Navigate portals and crystals in high-speed waters",
+			"Ranks: Swordfish, Shark, Marlin");
 	}
 
 	/** Farming patches, by patch type. */
@@ -2211,19 +2247,20 @@ public final class PoiDetails
 		addEntry("transportation", "Railway Station", "Travel", 2941, 10179, 0, "Destination / Route: Railway Station", "Check travel route for fares or quest requirements");
 		addEntry("transportation", "Wilderness Lever to Ardougne/Edgeville", "Travel", 3154, 3924, 0, "Destination / Route: Wilderness Lever to Ardougne/Edgeville", "Check travel route for fares or quest requirements");
 		addEntry("transportation", "Return Portal", "Travel", 2083, 2732, 0, "Destination / Route: Return Portal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1388, 2899, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1410, 3363, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1701, 3037, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1671, 2933, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1447, 3108, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1776, 3111, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1584, 3055, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1343, 3020, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1511, 3222, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1612, 3302, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1547, 2997, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1436, 3169, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
-		addEntry("transportation", "Quetzal", "Travel", 1225, 3089, 0, "Destination / Route: Quetzal", "Check travel route for fares or quest requirements");
+		addEntry("transportation", "Quetzal Transport (Aldarin)", "Travel", 1389, 2899, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Auburnvale)", "Travel", 1411, 3363, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Cam Torum)", "Travel", 1448, 3108, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Civitas illa Fortis)", "Travel", 1700, 3142, 0, "Destination / Route: Quetzal Transport System", "Central Quetzal perch in Civitas illa Fortis", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Colossal Wyrm Remains)", "Travel", 1672, 2933, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Fortis Colosseum)", "Travel", 1777, 3111, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Hunter Guild)", "Travel", 1585, 3055, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Kastori)", "Travel", 1344, 3020, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Outer Fortis)", "Travel", 1702, 3037, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Quetzacalli Gorge)", "Travel", 1512, 3222, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Salvager Overlook)", "Travel", 1613, 3302, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Requires building the landing site");
+		addEntry("transportation", "Quetzal Transport (Sunset Coast)", "Travel", 1548, 2997, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (Tal Teklan)", "Travel", 1226, 3089, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
+		addEntry("transportation", "Quetzal Transport (The Teomat)", "Travel", 1437, 3169, 0, "Destination / Route: Quetzal Transport System", "Travel via Renu to Quetzal landing sites across Varlamore", "Unlocked during Twilight's Promise");
 	}
 
 	/** Quest start points, with requirements and rewards. */
@@ -2423,7 +2460,7 @@ public final class PoiDetails
 
 		if ("agility_short-cut".equals(key) || lowerName.contains("short-cut") || lowerName.contains("shortcut"))
 		{
-			return new Detail(name, "Travel", List.of(
+			return new Detail(name, "Agility shortcuts", List.of(
 				"Agility shortcut: bypass obstacles and travel routes faster",
 				"Check Agility skill guide for required level"
 			));
@@ -2542,7 +2579,7 @@ public final class PoiDetails
 						"View local announcements, activities, and task notices"
 					));
 				case "lookout_point":
-					return new Detail(name, "Places", List.of(
+					return new Detail(name, "Sailing", List.of(
 						"High vantage point for coastal, sea, and territory observation"
 					));
 				case "singing_bowl":
@@ -2576,11 +2613,6 @@ public final class PoiDetails
 						"Great Kourend minecart transit system",
 						"Requires minecart control scroll or 50% Lovakengj favour"
 					));
-				case "navigation_node":
-					return new Detail(name, "Travel", List.of(
-						"Open-sea navigational charting node",
-						"Chart nautical landmarks to complete your sea chart"
-					));
 				case "sea_current":
 					return new Detail(name, "Travel", List.of(
 						"Ocean speed current",
@@ -2609,7 +2641,7 @@ public final class PoiDetails
 						"Churn milk into cream, butter, or cheese"
 					));
 				case "slayer_master":
-					return new Detail(name, "Dungeons", List.of(
+					return new Detail(name, "Skilling • Slayer", List.of(
 						"Assigns Slayer tasks; each master has a combat level requirement",
 					"All Slayer Masters also sell Slayer equipment"
 					));

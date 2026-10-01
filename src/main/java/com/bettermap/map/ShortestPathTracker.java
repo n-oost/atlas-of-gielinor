@@ -210,6 +210,28 @@ public class ShortestPathTracker
 		}
 	}
 
+	public boolean hasTarget()
+	{
+		return target != null;
+	}
+
+	/** Cancel both the local calculation and the route shared with Shortest Path. */
+	public void cancelRoute()
+	{
+		clear();
+		if (isAvailable())
+		{
+			try
+			{
+				eventBus.post(new PluginMessage("shortestpath", "clear", Collections.emptyMap()));
+			}
+			catch (RuntimeException | LinkageError e)
+			{
+				log.debug("[BetterMap:route] Could not cancel route in Shortest Path", e);
+			}
+		}
+	}
+
 	private void postTargetIfAvailable(WorldPoint destination)
 	{
 		if (isAvailable())

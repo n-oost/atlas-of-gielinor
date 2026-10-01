@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,5 +74,33 @@ public class PoiIndexSearchTest
 
 		final List<PoiIndex.Poi> second = poiIndex.searchByName("Cook's Assistant", 50);
 		assertEquals(initialSize, second.size());
+	}
+
+	@Test
+	public void barracudaTrialsAreIndexedAndSearchable()
+	{
+		final List<PoiIndex.Poi> trials = poiIndex.searchByName("barracuda", 50);
+		assertTrue("Expected at least 3 Barracuda Trial results, got " + trials.size(), trials.size() >= 3);
+		assertTrue(trials.stream().anyMatch(p -> p.getName().contains("Tempor Tantrum")));
+		assertTrue(trials.stream().anyMatch(p -> p.getName().contains("Jubbly Jive")));
+		assertTrue(trials.stream().anyMatch(p -> p.getName().contains("Gwenith Glide")));
+
+		// Trial masters searchable in Finder
+		assertFalse("Rum-dashed Ralph should be searchable", poiIndex.searchByName("Ralph", 10).isEmpty());
+		assertFalse("Gurtob should be searchable", poiIndex.searchByName("Gurtob", 10).isEmpty());
+		assertFalse("Gwyna should be searchable", poiIndex.searchByName("Gwyna", 10).isEmpty());
+
+		// Details resolve with rich requirements
+		final PoiDetails.Detail tempor = PoiDetails.getDetailByPosition(3033, 2929, 0, 1);
+		assertNotNull(tempor);
+		assertTrue(tempor.getLines().stream().anyMatch(l -> l.contains("Level 30 Sailing")));
+
+		final PoiDetails.Detail jubbly = PoiDetails.getDetailByPosition(2437, 3027, 0, 1);
+		assertNotNull(jubbly);
+		assertTrue(jubbly.getLines().stream().anyMatch(l -> l.contains("Level 55 Sailing")));
+
+		final PoiDetails.Detail gwenith = PoiDetails.getDetailByPosition(2198, 3518, 0, 1);
+		assertNotNull(gwenith);
+		assertTrue(gwenith.getLines().stream().anyMatch(l -> l.contains("Level 72 Sailing")));
 	}
 }

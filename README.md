@@ -1,13 +1,22 @@
-# Better Map
+# Atlas of Gielinor
 
-A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin is designed to be a drop-in replacement for the RuneLite world map, with no other changes to the game. Enable **Download map assets** in Better Map settings to trigger download [Better Map asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
+#### Issued to all new citizens of Gielinor. 
 
-OMissing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
+A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin is designed to be a drop-in replacement for the RuneLite world map, with no other changes to the game. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
+
+Missing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
 
 ## AI-Disclusure
 Plugin was created with the help of AI tools. The author has verified the code and is responsible for its content. Map imagery is downloaded from the linked asset pack; there are no runtime calls to the Wiki API.
 
 ## Features
+
+### Settings
+
+Common settings are grouped under **Map**, **Controls**, **Search & tooltips**, **Map layers**, and
+**Routing**. Each **Advanced** section starts collapsed and contains appearance, marker detail,
+transport, or calculation controls. Dungeon tuning and diagnostics share one collapsed
+**Developer** section. Turn the plugin off to restore RuneLite's normal world map.
 
 ### Surface and underground on one map
 Better Overworld / Underworld map and control.
@@ -16,14 +25,14 @@ Better Overworld / Underworld map and control.
 
 ### Zoom from the whole world to one tile
 
-Better Map owns the camera: 0.04 to 24 pixels per game tile. Drag to pan, scroll to zoom about
+Atlas of Gielinor owns the camera: 0.14 to 24 pixels per game tile. Drag to pan, scroll to zoom about
 the cursor, right click to step back out.
 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
 ### Raid boss galleries
 
-Click **CoX · Bosses**, **ToB · Bosses**, or **ToA · Bosses** at the respective raid entrance to open its six boss cards. Hover a card for its boss tooltip; hold your configured tooltip expansion modifier for available combat details. Press **Esc** or click **×** to close the gallery. Enable **Show boss locations** and **Show tooltips** in Better Map settings.
+Click **CoX · Bosses**, **ToB · Bosses**, or **ToA · Bosses** at the respective raid entrance to open its six boss cards. Hover a card for its boss tooltip; hold your configured tooltip expansion modifier for available combat details. Press **Esc** or click **×** to close the gallery. Enable **Show boss locations** and **Show tooltips** in Atlas of Gielinor settings.
 
 ### Hover cards
 
@@ -52,15 +61,15 @@ from the quick-find orb by the minimap (drag it to reposition, click to open). T
 
 ### Walking routes
 
-Better Map calculates and draws its own route line using a pinned copy of the
+Atlas of Gielinor calculates and draws its own route line using a pinned copy of the
 [Shortest Path](https://github.com/Skretzo/shortest-path) engine and map data by Skretzo and
 contributors (BSD 2-Clause). Choose a mode in **Routing (Shortest Path by Skretzo)**:
 
-- **Use external plugin settings** requires Shortest Path to be enabled separately. Better Map reads
+- **Use external plugin settings** requires Shortest Path to be enabled separately. Atlas of Gielinor reads
   its saved routing settings and sends it the selected destination for its own in-game route.
   If the external plugin is disabled, routing pauses instead of falling back to local settings.
-- **Use Better Map routing** uses the bundled fork and Better Map's own routing settings.
-  It does not read settings from the external plugin. If Shortest Path is enabled, Better Map
+- **Use Atlas of Gielinor routing** uses the bundled fork and Atlas of Gielinor's own routing settings.
+  It does not read settings from the external plugin. If Shortest Path is enabled, Atlas of Gielinor
   sends it the selected destination so its route also appears in game.
 
 Enabling either mode disables the other; both off disables routing.
@@ -94,7 +103,7 @@ hover card.
 ### Markers from other plugins
 
 Markers registered by other RuneLite plugins ( clue scrolls, party
-members,quest helper) are drawn on Better Map's camera, along with the player orientation arrow.
+members,quest helper) are drawn on Atlas of Gielinor's camera, along with the player orientation arrow.
 
 <!-- ![](docs/gifs/plugin-markers.gif) -->
 

@@ -213,8 +213,8 @@ public class OverlayFloorTest
 			{
 				chasmTears++;
 				assertEquals(2, floor.plane);
-				assertEquals(3245, floor.worldX);
-				assertEquals(3100, floor.worldY);
+				assertEquals(3215, floor.worldX);
+				assertEquals(3141, floor.worldY);
 			}
 			if (floor.zone == UndergroundZone.ANCIENT_CAVERN && floor.plane == 0)
 			{
@@ -328,7 +328,7 @@ public class OverlayFloorTest
 		assertEquals(2, pw);
 		assertEquals(2, sish);
 		assertEquals(1, jorm);
-		assertEquals(4, ghor);
+		assertEquals(3, ghor);
 		assertEquals(1, tonali);
 		assertEquals(1, dragon);
 	}

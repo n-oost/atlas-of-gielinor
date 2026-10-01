@@ -11,3 +11,5 @@ nb-configuration.xml
 nbproject/
 *.class
 BUGS.md
+out/
+

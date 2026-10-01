@@ -26,14 +26,17 @@ package com.bettermap.ui.markers;
 
 import static com.bettermap.ui.MapStyle.CARD_BG;
 import static com.bettermap.ui.MapStyle.CARD_TEXT;
+import static com.bettermap.ui.MapStyle.ROUTE_LINE;
 import static com.bettermap.ui.MapStyle.ROUTE_SHADOW;
 import static com.bettermap.ui.MapStyle.SMALL;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.TravelData;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.ShortestPathTracker;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -41,57 +44,160 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 
-/**
- * Renders travel routes, animated dashed paths between transport hops,
- * destination beacons, and station pin markers.
- */
+/** Draws calculated paths, travel stations, and travel connections. */
+@Slf4j
 public class RouteMarkerRenderer
 {
 	private static final Color ROUTE_OUTLINE = new Color(18, 18, 18);
+
+	/**
+	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
+	 * Each renderer keeps its immutable outline strokes for reuse between frames.
+	 */
 	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
 	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
 
 	/** Route polylines are drawn round-capped so the joins between hops do not notch. */
-	public static final Stroke ROUTE_LINE_STROKE =
+	private static final Stroke ROUTE_LINE_STROKE =
 		new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-	public static final Stroke ROUTE_HALO_STROKE =
+	private static final Stroke ROUTE_HALO_STROKE =
 		new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
 	/** Dash phases for animated travel routes — one stroke per phase, no per-frame allocation. */
-	public static final int TRAVEL_DASH_PHASES = 14;
-	public static final Stroke[] TRAVEL_DASH_STROKES = buildTravelDashStrokes();
+	private static final int TRAVEL_DASH_PHASES = 14;
+	private static final Stroke TRAVEL_LINE_STROKE =
+		new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+	private static final Stroke TRAVEL_OUTLINE_STROKE =
+		new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+	private static final Stroke[] TRAVEL_DASH_STROKES = buildTravelDashStrokes();
 
-	public static Stroke[] buildTravelDashStrokes()
+
+	private final BetterMapConfig config;
+	private final MapCamera camera;
+	private final ShortestPathTracker shortestPathTracker;
+
+	public RouteMarkerRenderer(BetterMapConfig config, MapCamera camera, ShortestPathTracker shortestPathTracker)
+	{
+		this.config = config;
+		this.camera = camera;
+		this.shortestPathTracker = shortestPathTracker;
+	}
+
+	private static Stroke[] buildTravelDashStrokes()
 	{
 		final Stroke[] strokes = new Stroke[TRAVEL_DASH_PHASES];
 		for (int i = 0; i < TRAVEL_DASH_PHASES; i++)
 		{
-			strokes[i] = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.0f,
+			strokes[i] = new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.0f,
 				new float[]{ 8f, 6f }, i);
 		}
 		return strokes;
 	}
 
-	private final BetterMapConfig config;
-	private final MapCamera camera;
-
-	public RouteMarkerRenderer(BetterMapConfig config, MapCamera camera)
+	/** Draws Better Map's locally calculated route in its world projection. */
+	public boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)
 	{
-		this.config = config;
-		this.camera = camera;
+		if (!config.enableShortestPath() && !config.useExternalShortestPathSettings())
+		{
+			return false;
+		}
+		final List<WorldPoint> route = shortestPathTracker.route();
+		if (route.isEmpty())
+		{
+			return false;
+		}
+
+		final int plane = camera.getPlane();
+		final Stroke oldStroke = graphics.getStroke();
+		final Color oldColor = graphics.getColor();
+		boolean hasPointOnLayer = false;
+		int segments = 0;
+		WorldPoint previous = null;
+		WorldPoint firstPointOnLayer = null;
+		try
+		{
+			graphics.setStroke(ROUTE_LINE_STROKE);
+			for (WorldPoint point : route)
+			{
+				if (point.getPlane() != plane || !ViewWindow.isDrawable(camera, point.getX(), point.getY()))
+				{
+					previous = null;
+					continue;
+				}
+				hasPointOnLayer = true;
+				if (firstPointOnLayer == null)
+				{
+					firstPointOnLayer = point;
+				}
+				if (previous != null)
+				{
+					// Shortest Path includes teleport/transport endpoints in one list. Its own tile
+					// overlay leaves those hops disconnected, so do not draw a misleading continent-spanning line.
+					if (Math.abs(point.getX() - previous.getX()) > 1
+						|| Math.abs(point.getY() - previous.getY()) > 1)
+					{
+						final int x = (int) camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds);
+						final int y = (int) camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds);
+						graphics.setColor(ROUTE_LINE);
+						graphics.fillOval(x - 3, y - 3, 7, 7);
+						previous = point;
+						continue;
+					}
+					final double x1 = camera.screenX(previous.getX() + 0.5, previous.getY() + 0.5, bounds);
+					final double y1 = camera.screenY(previous.getX() + 0.5, previous.getY() + 0.5, bounds);
+					final double x2 = camera.screenX(point.getX() + 0.5, point.getY() + 0.5, bounds);
+					final double y2 = camera.screenY(point.getX() + 0.5, point.getY() + 0.5, bounds);
+					if (!Double.isFinite(x1) || !Double.isFinite(y1) || !Double.isFinite(x2) || !Double.isFinite(y2))
+					{
+						return true;
+					}
+					graphics.setColor(ROUTE_SHADOW);
+					graphics.setStroke(ROUTE_HALO_STROKE);
+					graphics.draw(new Line2D.Double(x1, y1, x2, y2));
+					graphics.setColor(ROUTE_LINE);
+					graphics.setStroke(ROUTE_LINE_STROKE);
+					graphics.draw(new Line2D.Double(x1, y1, x2, y2));
+					segments++;
+				}
+				previous = point;
+			}
+			if (!hasPointOnLayer)
+			{
+				// A valid route can belong to another plane or focused dungeon layer. It has
+				// nothing to draw in this view, which is not a projection failure.
+				return false;
+			}
+			if (segments == 0)
+			{
+				final int x = (int) camera.screenX(firstPointOnLayer.getX() + 0.5, firstPointOnLayer.getY() + 0.5, bounds);
+				final int y = (int) camera.screenY(firstPointOnLayer.getX() + 0.5, firstPointOnLayer.getY() + 0.5, bounds);
+				graphics.setColor(ROUTE_LINE);
+				graphics.fillOval(x - 3, y - 3, 7, 7);
+			}
+			return false;
+		}
+		catch (RuntimeException | LinkageError e)
+		{
+			log.debug("[BetterMap:route] route projection failed", e);
+			return true;
+		}
+		finally
+		{
+			graphics.setStroke(oldStroke);
+			graphics.setColor(oldColor);
+		}
 	}
 
-	/**
-	 * Small coloured pins at every travel station so routes are discoverable before hover.
-	 */
+	/** Small coloured pins at every travel station so routes are discoverable before hover. */
 	public void drawTravelStations(Graphics2D graphics, Rectangle bounds)
 	{
-		if (!config.showTravelRoutes())
+		if (!config.showTravelRoutes() || camera.getZoom() < config.travelStationMinZoom())
 		{
 			return;
 		}
@@ -111,8 +217,7 @@ public class RouteMarkerRenderer
 
 			final int mx = loc.getX();
 			final int my = loc.getY();
-			if (!camera.inView(mx, my, view.minX, view.maxX, view.minY, view.maxY)
-				|| !ViewWindow.isDrawable(camera, mx, my))
+			if (!camera.inView(mx, my, view.minX, view.maxX, view.minY, view.maxY) || !ViewWindow.isDrawable(camera, mx, my))
 			{
 				continue;
 			}
@@ -129,20 +234,27 @@ public class RouteMarkerRenderer
 			graphics.fillOval(x - 4, y - 4, 9, 9);
 			graphics.setColor(ROUTE_SHADOW);
 			graphics.drawOval(x - 4, y - 4, 9, 9);
+			if (node == camera.getSelectedTravelNode())
+			{
+				graphics.setColor(node.getType().getHighlightColor());
+				graphics.drawOval(x - 6, y - 6, 13, 13);
+			}
 		}
 	}
 
 	/**
-	 * Draws route lines, destination beacons, and price badges for the currently hovered travel station.
+	 * Draws route lines, destination beacons, and price badges for the selected or hovered travel station.
 	 */
 	public void drawTravelRoutes(Graphics2D graphics, Rectangle bounds)
 	{
-		if (!config.showTravelRoutes() || camera.getHoveredTravelNode() == null)
+		final TravelData.TravelNode node = camera.getSelectedTravelNode() != null
+			? camera.getSelectedTravelNode() : camera.getHoveredTravelNode();
+		if (!config.showTravelRoutes() || node == null
+			|| camera.getZoom() < config.travelStationMinZoom())
 		{
 			return;
 		}
 
-		final TravelData.TravelNode node = camera.getHoveredTravelNode();
 		final TravelData.TravelType type = node.getType();
 		final Color theme = type.getPrimaryColor();
 		final Color highlight = type.getHighlightColor();
@@ -165,16 +277,16 @@ public class RouteMarkerRenderer
 
 		final boolean animate = config.animateTravelRoutes();
 		final Stroke haloStroke = ROUTE_HALO_STROKE;
-		final Color haloColor = new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), 60);
+		final Color haloColor = new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), 100);
 		final Stroke lineStroke = animate
 			? TRAVEL_DASH_STROKES[(int) ((System.currentTimeMillis() / 40L) % TRAVEL_DASH_PHASES)]
-			: ROUTE_LINE_STROKE;
+			: TRAVEL_LINE_STROKE;
 
 		final float pulse = animate
 			? (float) (0.5 + 0.5 * Math.sin(System.currentTimeMillis() / 180.0))
 			: 0.5f;
 
-		// 1. Draw route arcs
+		// 1. Draw straight routes with a dark outline and animated highlights.
 		for (TravelData.TravelDestination dest : node.getDestinations())
 		{
 			final WorldPoint destLoc = dest.getLocation();
@@ -186,32 +298,28 @@ public class RouteMarkerRenderer
 			final double dx = camera.screenX(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 			final double dy = camera.screenY(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 
-			final double midX = (ox + dx) / 2.0;
-			final double midY = (oy + dy) / 2.0;
-			final double vx = dx - ox;
-			final double vy = dy - oy;
-			final double cx = midX - vy * 0.18;
-			final double cy = midY + vx * 0.18;
-
-			final QuadCurve2D.Double curve = new QuadCurve2D.Double(ox, oy, cx, cy, dx, dy);
+			final Line2D.Double line = new Line2D.Double(ox, oy, dx, dy);
 
 			if (!extendedBounds.contains(ox, oy)
 				&& !extendedBounds.contains(dx, dy)
-				&& !extendedBounds.intersectsLine(ox, oy, dx, dy)
-				&& !curve.intersects(extendedBounds.x, extendedBounds.y, extendedBounds.width, extendedBounds.height))
+				&& !extendedBounds.intersectsLine(ox, oy, dx, dy))
 			{
 				continue;
 			}
 
-			// Soft halo
+			graphics.setColor(ROUTE_OUTLINE);
+			graphics.setStroke(TRAVEL_OUTLINE_STROKE);
+			graphics.draw(line);
+
+			// Continuous coloured base keeps the route visible between animated dashes.
 			graphics.setColor(haloColor);
 			graphics.setStroke(haloStroke);
-			graphics.draw(curve);
+			graphics.draw(line);
 
 			// Route line
 			graphics.setColor(highlight);
 			graphics.setStroke(lineStroke);
-			graphics.draw(curve);
+			graphics.draw(line);
 		}
 
 		// 2. Draw destination beacons
@@ -271,18 +379,9 @@ public class RouteMarkerRenderer
 				final double dx = camera.screenX(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 				final double dy = camera.screenY(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 
-				final double midX = (ox + dx) / 2.0;
-				final double midY = (oy + dy) / 2.0;
-				final double vx = dx - ox;
-				final double vy = dy - oy;
-				final double cx = midX - vy * 0.18;
-				final double cy = midY + vx * 0.18;
-				final QuadCurve2D.Double curve = new QuadCurve2D.Double(ox, oy, cx, cy, dx, dy);
-
 				if (!extendedBounds.contains(ox, oy)
 					&& !extendedBounds.contains(dx, dy)
-					&& !extendedBounds.intersectsLine(ox, oy, dx, dy)
-					&& !curve.intersects(extendedBounds.x, extendedBounds.y, extendedBounds.width, extendedBounds.height))
+					&& !extendedBounds.intersectsLine(ox, oy, dx, dy))
 				{
 					continue;
 				}
@@ -296,7 +395,7 @@ public class RouteMarkerRenderer
 				}
 
 				final String cost = dest.getCost() != null ? dest.getCost() : "";
-				final String badgeText = cost.isEmpty() ? dest.getName() : dest.getName() + " \u2022 " + cost;
+				final String badgeText = cost.isEmpty() ? dest.getName() : dest.getName() + " • " + cost;
 				final int textW = fm.stringWidth(badgeText);
 				final int padX = 6;
 				final int padY = 2;
@@ -351,4 +450,5 @@ public class RouteMarkerRenderer
 	{
 		return loc == null || !ViewWindow.isDrawable(camera, loc.getX(), loc.getY());
 	}
+
 }

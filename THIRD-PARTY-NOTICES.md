@@ -2,7 +2,7 @@
 
 ## Shortest Path route engine and data
 
-Better Map includes a package-relocated copy of the Shortest Path pathfinding engine and its
+Atlas of Gielinor includes a package-relocated copy of the Shortest Path pathfinding engine and its
 collision, transport, destination, and league data from
 [Skretzo/shortest-path](https://github.com/Skretzo/shortest-path).
 
@@ -12,8 +12,8 @@ collision, transport, destination, and league data from
 - Java sources: `src/main/java/com/bettermap/pathfinding/`
 - Data and full license text: `src/main/resources/com/bettermap/pathfinding/`
 
-The copy is pinned; installed Shortest Path plugin updates do not replace it. In external-settings mode, Better Map sends
+The copy is pinned; installed Shortest Path plugin updates do not replace it. In external-settings mode, Atlas of Gielinor sends
 destinations to an enabled Shortest Path plugin through its public plugin-message API and reads
-its saved routing settings. Better Map routing mode uses only its own settings and does not send
-destinations to the external plugin. The two route calculations remain independent. Better Map is not
+its saved routing settings. Atlas of Gielinor routing mode uses only its own settings and does not send
+destinations to the external plugin. The two route calculations remain independent. Atlas of Gielinor is not
 affiliated with or endorsed by the Shortest Path project.

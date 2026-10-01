@@ -17,7 +17,7 @@
 2575	2219	0	fishing_spot	Lobster & Swordfish
 2565	2220	0	agility_short-cut	Agility short-cut
 2598	2220	0	cooking_range	Cooking range
-2978	2224	0	navigation_node	Navigation node
+2978	2224	0	fishing_spot	Fishing spot
 2614	2237	0	mining_site	Mining site
 2598	2239	0	mining_site	Sunstone & Iron
 2576	2240	0	spinning_wheel	Spinning wheel
@@ -37,7 +37,7 @@
 2985	2268	0	bank	Bank
 2345	2270	0	mooring_point	Mooring point - Rainbow's End
 3003	2276	0	fishing_spot	Fishing spot
-2196	2278	0	navigation_node	Navigation node
+2196	2278	0	fishing_spot	Fishing spot
 2983	2282	0	furnace	Furnace
 2584	2283	0	agility_short-cut	Agility short-cut
 2998	2288	0	mooring_point	Mooring point - The Onyx Crest
@@ -59,7 +59,7 @@
 3249	2352	0	mining_site	Mining site
 3175	2367	0	mooring_point	Mooring point - The Summer Shore
 3191	2371	0	transportation	Transportation
-2814	2373	0	navigation_node	Navigation node
+2814	2373	0	fishing_spot	Fishing spot
 3259	2375	0	hunter_training	Hunter training
 3191	2376	0	fishing_spot	Fishing spot
 3169	2386	0	fishing_spot	Fishing spot
@@ -98,7 +98,7 @@
 3247	2432	0	hunter_training	Hunter training
 3181	2433	0	agility_short-cut	Agility short-cut
 3195	2437	0	fishing_spot	Fishing spot
-1919	2439	0	navigation_node	Navigation node
+1919	2439	0	fishing_spot	Fishing spot
 3179	2445	0	transportation	Transportation
 3130	2446	0	rare_trees	Rare trees
 3265	2462	0	transportation	Transportation
@@ -118,7 +118,7 @@
 1887	2508	0	mooring_point	Mooring buoy
 3213	2509	0	hunter_training	Hunter training
 2809	2510	0	mooring_point	Mooring point - Red Rock
-3019	2510	0	navigation_node	Navigation node
+3019	2510	0	fishing_spot	Fishing spot
 3145	2520	0	rare_trees	Rare trees
 2533	2531	0	mooring_point	Mooring point - Isle of Bones
 3123	2532	0	hunter_training	Hunter training
@@ -131,7 +131,7 @@
 2074	2604	0	fishing_spot	Fishing spot
 2962	2604	0	quest_start	Troubled Tortugans
 2059	2606	0	mooring_point	Mooring point - Wintumber Island
-2784	2632	0	navigation_node	Navigation node
+2784	2632	0	fishing_spot	Fishing spot
 3052	2633	0	fishing_spot	Fishing spot
 2661	2637	0	minigame	Minigame
 3054	2639	0	quest_start	Crab Quest
@@ -147,10 +147,10 @@
 2652	2658	0	anvil	Anvil
 1766	2659	0	mooring_point	Mooring point - The Crown Jewel
 2666	2660	0	archery_shop	Archery shop
-1707	2662	0	navigation_node	Navigation node
+1707	2662	0	fishing_spot	Fishing spot
 1758	2662	0	hunter_training	Hunter training
 2650	2664	0	general_store	General store
-2272	2677	0	navigation_node	Navigation node
+2272	2677	0	fishing_spot	Fishing spot
 2660	2677	0	transportation	Transportation
 2652	2678	0	mooring_point	Mooring point - Void Knights' Outpost
 1564	2679	0	mooring_point	Mooring buoy
@@ -177,7 +177,7 @@
 2468	2721	0	mooring_point	Mooring point - Anglers' Retreat
 2921	2721	0	dungeon	Dungeon
 1173	2722	0	fishing_spot	Fishing spot
-1405	2723	0	navigation_node	Navigation node
+1405	2723	0	fishing_spot	Fishing spot
 2075	2723	0	rare_trees	Rare trees
 2470	2725	0	transportation	Transportation
 2892	2726	0	transportation	Transportation
@@ -221,7 +221,7 @@
 2780	2782	0	bank	Bank
 1594	2783	0	fishing_spot	Fishing spot
 3317	2783	0	water_source	Water source
-1867	2784	0	navigation_node	Navigation node
+1867	2784	0	fishing_spot	Fishing spot
 2218	2784	0	anvil	Anvil
 1165	2785	0	water_source	Water source
 1587	2786	0	rare_trees	Rare trees
@@ -362,7 +362,7 @@
 1474	2922	0	agility_short-cut	Agility short-cut
 1358	2924	0	brewery	Brewery
 1398	2924	0	poll_booth	Poll booth
-1494	2924	0	navigation_node	Navigation node
+1494	2924	0	fishing_spot	Fishing spot
 1389	2926	0	water_source	Water source
 3191	2926	0	quest_start	Enakhra's Lament
 1378	2927	0	bar	Pub/bar
@@ -1219,7 +1219,7 @@
 2930	3292	0	potters_wheel	Potters wheel
 1526	3293	0	bank	Bank
 1633	3293	0	water_source	Water source
-1842	3293	0	navigation_node	Navigation node
+1842	3293	0	fishing_spot	Fishing spot
 3037	3293	0	farming_shop	Farming shop
 2612	3294	0	general_store	General store
 2632	3294	0	dungeon_link	Dungeon with map link
@@ -1469,7 +1469,7 @@
 3039	3367	0	cooking_range	Cooking range
 3097	3367	0	cooking_range	Cooking range
 1367	3368	0	minigame	Minigame
-1565	3368	0	navigation_node	Navigation node
+1565	3368	0	fishing_spot	Fishing spot
 2510	3368	0	dummy	Dummy
 2947	3368	0	bank	Bank
 2957	3368	0	bar	Pub/bar
@@ -2158,7 +2158,7 @@
 2508	3635	0	quest_start	Horror from the Deep
 3139	3635	0	minigame	Minigame
 1561	3636	0	rare_trees	Rare trees
-2024	3637	0	navigation_node	Navigation node
+2024	3637	0	fishing_spot	Fishing spot
 3126	3637	0	altar	Altar
 2503	3638	0	transportation	Transportation
 2739	3639	0	rare_trees	Rare trees
@@ -2638,10 +2638,10 @@
 1821	3989	0	mooring_point	Mooring buoy
 2471	3994	0	transportation	Transportation
 2465	4012	0	dungeon_link	Dungeon with map link
-2815	4014	0	navigation_node	Navigation node
+2815	4014	0	fishing_spot	Fishing spot
 2846	4030	0	mooring_point	Mooring buoy
 2277	4034	0	transportation	Transportation
-1935	4040	0	navigation_node	Navigation node
+1935	4040	0	fishing_spot	Fishing spot
 2263	4044	0	agility_short-cut	Agility short-cut
 1955	4056	0	mooring_point	Mooring point - Brittle Isle
 2928	4056	0	mooring_point	Mooring point - Grimstone

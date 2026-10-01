@@ -1082,18 +1082,20 @@ public final class TravelData
 	/** 10. QUETZAL TRANSPORT (Varlamore) */
 	private static void addQuetzals(List<TravelNode> nodes)
 	{
-		final WorldPoint qzCivitas = new WorldPoint(1696, 3138, 0);
-		final WorldPoint qzHunter = new WorldPoint(1557, 3049, 0);
-		final WorldPoint qzAldarin = new WorldPoint(1420, 2930, 0);
-		final WorldPoint qzCamTorum = new WorldPoint(1435, 3131, 0);
-		final WorldPoint qzColosseum = new WorldPoint(1794, 3107, 0);
-		final WorldPoint qzTwilight = new WorldPoint(1460, 3280, 0);
-		final WorldPoint qzSunset = new WorldPoint(1543, 3016, 0);
-		final WorldPoint qzTeomat = new WorldPoint(1445, 3171, 0);
-		final WorldPoint qzOuterFortis = new WorldPoint(1665, 3004, 0);
-		final WorldPoint qzWyrm = new WorldPoint(1705, 2911, 0);
-		final WorldPoint qzSalvager = new WorldPoint(1610, 3307, 0);
-		final WorldPoint qzAuburnvale = new WorldPoint(1368, 3350, 0);
+		final WorldPoint qzCivitas = new WorldPoint(1700, 3142, 0);
+		final WorldPoint qzHunter = new WorldPoint(1585, 3055, 0);
+		final WorldPoint qzAldarin = new WorldPoint(1389, 2899, 0);
+		final WorldPoint qzCamTorum = new WorldPoint(1448, 3108, 0);
+		final WorldPoint qzColosseum = new WorldPoint(1777, 3111, 0);
+		final WorldPoint qzQuetzacalli = new WorldPoint(1512, 3222, 0);
+		final WorldPoint qzSunset = new WorldPoint(1548, 2997, 0);
+		final WorldPoint qzTeomat = new WorldPoint(1437, 3169, 0);
+		final WorldPoint qzOuterFortis = new WorldPoint(1702, 3037, 0);
+		final WorldPoint qzWyrm = new WorldPoint(1672, 2933, 0);
+		final WorldPoint qzSalvager = new WorldPoint(1613, 3302, 0);
+		final WorldPoint qzAuburnvale = new WorldPoint(1411, 3363, 0);
+		final WorldPoint qzTalTeklan = new WorldPoint(1226, 3089, 0);
+		final WorldPoint qzKastori = new WorldPoint(1344, 3020, 0);
 
 		final String qzWhistleCost = "Free (or Quetzal Whistle)";
 		final List<TravelDestination> qzDests = List.of(
@@ -1102,13 +1104,15 @@ public final class TravelData
 			new TravelDestination("Aldarin Nest", qzAldarin, qzWhistleCost),
 			new TravelDestination("Cam Torum Nest", qzCamTorum, qzWhistleCost, "Perilous Moons"),
 			new TravelDestination("Fortis Colosseum Nest", qzColosseum, qzWhistleCost),
-			new TravelDestination("Twilight Temple / Ralo's Rise", qzTwilight, qzWhistleCost),
+			new TravelDestination("Quetzacalli Gorge Nest", qzQuetzacalli, qzWhistleCost),
 			new TravelDestination("Sunset Coast Nest", qzSunset, qzWhistleCost),
 			new TravelDestination("The Teomat Nest", qzTeomat, qzWhistleCost),
 			new TravelDestination("Outer Fortis / Avium Savannah Nest", qzOuterFortis, qzWhistleCost),
 			new TravelDestination("Colossal Wyrm Remains Nest", qzWyrm, qzWhistleCost),
 			new TravelDestination("Salvager Overlook Nest", qzSalvager, qzWhistleCost),
-			new TravelDestination("Auburnvale Nest", qzAuburnvale, qzWhistleCost)
+			new TravelDestination("Auburnvale Nest", qzAuburnvale, qzWhistleCost),
+			new TravelDestination("Tal Teklan Nest", qzTalTeklan, qzWhistleCost),
+			new TravelDestination("Kastori Nest", qzKastori, qzWhistleCost)
 		);
 
 		nodes.add(new TravelNode("Quetzal Nest (Civitas illa Fortis)", qzCivitas, TravelType.QUETZAL, qzDests));
@@ -1116,13 +1120,15 @@ public final class TravelData
 		nodes.add(new TravelNode("Quetzal Nest (Aldarin)", qzAldarin, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Cam Torum)", qzCamTorum, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Fortis Colosseum)", qzColosseum, TravelType.QUETZAL, qzDests));
-		nodes.add(new TravelNode("Quetzal Nest (Twilight Temple)", qzTwilight, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Quetzacalli Gorge)", qzQuetzacalli, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Sunset Coast)", qzSunset, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (The Teomat)", qzTeomat, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Outer Fortis)", qzOuterFortis, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Colossal Wyrm Remains)", qzWyrm, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Salvager Overlook)", qzSalvager, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Auburnvale)", qzAuburnvale, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Tal Teklan)", qzTalTeklan, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Kastori)", qzKastori, TravelType.QUETZAL, qzDests));
 	}
 
 	/** 11. SWAMP and RIVER BOATS */

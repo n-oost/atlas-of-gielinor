@@ -91,11 +91,15 @@ public class LayerTogglesTest
 		assertTrue(keys.contains("iconBanks"));
 		assertTrue(keys.contains("iconShops"));
 		assertTrue(keys.contains("iconSkilling"));
+		assertTrue(keys.contains("iconShortcuts"));
+		assertTrue(keys.contains("iconSailing"));
 		assertTrue(keys.contains("iconTravel"));
 		assertTrue(keys.contains("iconQuests"));
 		assertTrue(keys.contains("iconAltars"));
 		assertTrue(keys.contains("iconDungeons"));
 		assertTrue(keys.contains("iconServices"));
+		assertTrue(keys.contains("iconOther"));
+		assertTrue(keys.contains("showClueScroll"));
 		assertTrue(keys.contains("showPlaceNames"));
 		assertTrue(keys.contains("showLargeUndergroundSymbols"));
 	}
@@ -118,6 +122,30 @@ public class LayerTogglesTest
 
 			@Override
 			public boolean iconShops()
+			{
+				return false;
+			}
+
+			@Override
+			public boolean iconOther()
+			{
+				return false;
+			}
+
+			@Override
+			public boolean showClueScroll()
+			{
+				return false;
+			}
+
+			@Override
+			public boolean iconShortcuts()
+			{
+				return false;
+			}
+
+			@Override
+			public boolean iconSailing()
 			{
 				return false;
 			}

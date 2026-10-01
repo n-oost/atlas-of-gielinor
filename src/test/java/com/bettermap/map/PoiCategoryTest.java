@@ -30,7 +30,7 @@ import org.junit.Test;
 
 /**
  * The wiki tags every location icon {@code category: "others"}, so Better Map defines the
- * grouping the settings panel switches on and off. These are the 108 icon keys the shipped
+ * grouping the settings panel switches on and off. These are the icon keys the shipped
  * dataset actually contains; every one of them must land in a real group, or a settings toggle
  * would silently fail to control part of the map.
  */
@@ -40,7 +40,7 @@ public class PoiCategoryTest
 		"agility_short-cut", "agility_training", "altar", "amulet_shop",
 		"anvil", "apothecary", "archery_shop", "axe_shop",
 		"bank", "bank_tutor", "bar", "bond_tutor",
-		"bounty_hunter_store", "brewery", "candle_shop", "chainmail_shop",
+		"bounty_hunter_store", "brewery", "candle_shop", "canoe_station", "cargo_bay", "chainmail_shop",
 		"clothes_shop", "combat_tutor", "cookery_shop", "cooking_range",
 		"cooking_tutor", "crafting_shop", "crafting_tutor", "dairy_churn",
 		"dairy_cow", "danger_tutor", "deadman_tutor", "dummy",
@@ -49,18 +49,18 @@ public class PoiCategoryTest
 		"fishing_tutor", "food_shop", "fur_trader", "furnace",
 		"garden_supplier", "gem_shop", "general_store", "grand_exchange",
 		"hairdresser", "helmet_shop", "herbalist", "holiday_event",
-		"holiday_item_trader", "house_portal", "hunter_shop", "hunter_training",
+		"holiday_item_trader", "hot_air_balloon", "house_portal", "hunter_shop", "hunter_training",
 		"hunting_tutor", "ironman_tutor", "jewellery", "junk_checker",
-		"kebab_seller", "kourend_task", "loom", "lumbridge_guide",
-		"mace_shop", "magic_shop", "makeover_mage", "minigame",
-		"mining_shop", "mining_site", "mining_tutor", "newspaper_trader",
-		"pet_insurance_shop", "platebody_shop", "platelegs_shop", "plateskirt_shop",
+		"kebab_seller", "kourend_task", "lookout_point", "loom", "lumbridge_guide",
+		"mace_shop", "magic_carpet", "magic_mushtree", "magic_shop", "makeover_mage", "minecart_network", "minigame",
+		"mining_shop", "mining_site", "mining_tutor", "mooring_point", "newspaper_trader",
+		"noticeboard", "pet_insurance_shop", "platebody_shop", "platelegs_shop", "plateskirt_shop",
 		"poll_booth", "potters_wheel", "prayer_tutor", "pricing_expert_herbs",
 		"pricing_expert_logs", "pricing_expert_ores", "pricing_expert_runes", "pricing_expert_weapons_and_armours",
 		"quest_start", "raids_lobby", "rare_trees", "rope_trader",
-		"sandpit", "sawmill", "scimitar_shop", "security_tutor",
-		"shield_shop", "silk_trader", "silver_shop", "slayer_master",
-		"smithing_tutor", "spice_shop", "spinning_wheel", "staff_shop",
+		"sandpit", "sawmill", "scimitar_shop", "sea_current", "security_tutor",
+		"shield_shop", "shipwright", "silk_trader", "silver_shop", "singing_bowl", "slayer_master",
+		"smithing_tutor", "spice_shop", "spinning_wheel", "staff_shop", "stagnant_water_source", "stonemason",
 		"sword_shop", "tannery", "task_master", "taxidermist",
 		"tea_trader", "thieving", "transportation", "vegetable_store", "water_source",
 		"windmill", "wine_trader", "woodcutting_stump", "woodcutting_tutor"
@@ -80,15 +80,20 @@ public class PoiCategoryTest
 	{
 		assertEquals(PoiCategory.BANKS, PoiCategory.of("bank"));
 		assertEquals(PoiCategory.TRAVEL, PoiCategory.of("transportation"));
-		assertEquals(PoiCategory.TRAVEL, PoiCategory.of("agility_short-cut"));
+		assertEquals(PoiCategory.SHORTCUTS, PoiCategory.of("agility_short-cut"));
+		assertEquals(PoiCategory.TRAVEL, PoiCategory.of("sea_current"));
 		assertEquals(PoiCategory.SKILLING, PoiCategory.of("fishing_spot"));
 		assertEquals(PoiCategory.SKILLING, PoiCategory.of("mining_site"));
 		assertEquals(PoiCategory.SKILLING, PoiCategory.of("thieving"));
 		assertEquals(PoiCategory.ALTARS, PoiCategory.of("altar"));
 		assertEquals(PoiCategory.QUESTS, PoiCategory.of("quest_start"));
-		assertEquals(PoiCategory.DUNGEONS, PoiCategory.of("slayer_master"));
+		assertEquals(PoiCategory.SKILLING, PoiCategory.of("slayer_master"));
 		assertEquals(PoiCategory.DUNGEONS, PoiCategory.of("basement"));
 		assertEquals(PoiCategory.PLACES, PoiCategory.of("region_label"));
+		assertEquals(PoiCategory.SAILING, PoiCategory.of("lookout_point"));
+		assertEquals(PoiCategory.SERVICES, PoiCategory.of("cargo_bay"));
+		assertEquals(PoiCategory.SERVICES, PoiCategory.of("noticeboard"));
+		assertEquals(PoiCategory.SHOPS, PoiCategory.of("shipwright"));
 	}
 
 	@Test

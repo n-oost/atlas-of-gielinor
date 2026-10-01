@@ -26,6 +26,7 @@ package com.bettermap;
 
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.SlayerTaskTracker;
 import java.awt.Rectangle;
 import java.lang.reflect.Field;
@@ -39,6 +40,7 @@ import net.runelite.api.Menu;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.NPC;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.MenuOpened;
 import net.runelite.client.plugins.slayer.SlayerPluginService;
 import static org.junit.Assert.assertEquals;
@@ -250,7 +252,9 @@ public class BetterMapContextMenuTest
 
 		setField(plugin, "client", client);
 		setField(plugin, "camera", camera);
+		setField(plugin, "dungeonPieceIndex", new com.bettermap.map.DungeonPieceIndex());
 		setField(plugin, "config", config);
+		setField(plugin, "shortestPathTracker", new ShortestPathTracker(null, null, null, null, config));
 		setField(plugin, "slayerTaskTracker", new SlayerTaskTracker(null, slayerService));
 	}
 
@@ -283,6 +287,7 @@ public class BetterMapContextMenuTest
 	public void contextMenuInDungeonHasSwitchToSurface()
 	{
 		camera.setUndergroundMode(UndergroundZone.LUMBRIDGE_SWAMP_CAVES);
+		camera.beginFrame();
 		assertTrue(camera.isViewingDungeonLayer());
 
 		final SimpleEntry cancel = new SimpleEntry();
@@ -302,6 +307,9 @@ public class BetterMapContextMenuTest
 	public void contextMenuInRegionalOverlayHasSwitchToSurface()
 	{
 		camera.setActiveOverlayCluster(com.bettermap.data.OverlayCluster.all().get(0));
+		final WorldPoint entrance = camera.getActiveOverlayCluster().members.get(0).getSurfacePoint();
+		camera.centerOn(entrance.getX(), entrance.getY());
+		camera.beginFrame();
 		assertTrue(camera.isViewingDungeonLayer());
 
 		final SimpleEntry cancel = new SimpleEntry();

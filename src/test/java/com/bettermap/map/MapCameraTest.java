@@ -303,6 +303,7 @@ public class MapCameraTest
 
 		camera.setZoom(1e-9);
 		assertEquals(MapCamera.MIN_ZOOM, camera.getZoom(), DELTA);
+		assertEquals(0.14, MapCamera.MIN_ZOOM, DELTA);
 	}
 
 	@Test

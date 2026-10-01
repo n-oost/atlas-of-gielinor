@@ -126,6 +126,7 @@ public class BoatTooltipBuilder
 
 		final String portTitle = port.getName();
 		final TooltipCard card = new TooltipCard(portTitle);
+		card.setPreserveCompactLines(true);
 		final String sailingHeader = port.getSailingLevelRequired() > 1
 			? "Level " + port.getSailingLevelRequired() + " Sailing"
 			: "Open Dock";

@@ -28,6 +28,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.bettermap.map.InstanceMaps;
+import com.bettermap.ui.markers.PoiMarkerRenderer;
 import org.junit.Test;
 
 public class PlaceNamesTest
@@ -35,82 +36,82 @@ public class PlaceNamesTest
 	@Test
 	public void zanarisRoomsStayOffTheOverworld()
 	{
-		assertTrue(MapMarkerRenderer.isInteriorPlaceLabel(4429));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.isInteriorPlaceLabel(4429));
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Otherworldly beings", 4427, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Queen's Chamber", 9504, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Puro-puro", 4446, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Tanglefeet", 4380, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Beware of the mushrooms", 4375, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Wire machine", 5270, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Agility course", 5248, 8.0, false, true));
 	}
 
 	@Test
 	public void dungeonRoomsAppearWhenTheInteriorIsFocused()
 	{
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 8.0, true, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Queen's Chamber", 9504, 8.0, true, false));
 	}
 
 	@Test
 	public void dungeonRoomsNeedCloserZoomEvenInside()
 	{
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 3.0, true, true));
 	}
 
 	@Test
 	public void citiesStayZoomedOutWhileDistrictsWait()
 	{
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge", 3234, 0.5, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge Swamp", 3168, 0.5, false, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge Swamp", 3168, 3.5, false, true));
 	}
 
 	@Test
 	public void islandsStayVisibleAtTheMajorPlaceZoom()
 	{
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Waterbirth Island", 3756, 0.5, false, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Dognose Island", 2648, 0.5, false, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Isle of Bones", 2533, 0.5, false, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Shimmering Atoll", 2786, 0.5, false, true));
-		assertTrue(MapMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Cursed Archipelago", 2581, 0.5, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"Waterbirth Island", 3756, 0.4, false, true));
 	}
 
 	@Test
 	public void surfaceEntranceNamesAreNotInterior()
 	{
-		assertFalse(MapMarkerRenderer.isInteriorPlaceLabel(3099));
+		assertFalse(PoiMarkerRenderer.isInteriorPlaceLabel(3099));
 		assertTrue(3099 < InstanceMaps.GAP_MIN_Y);
 	}
 
 	@Test
 	public void skipListStillHidesNoise()
 	{
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"exit", 3234, 8.0, false, true));
-		assertFalse(MapMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
 			"A", 3234, 8.0, false, true));
 	}
 }

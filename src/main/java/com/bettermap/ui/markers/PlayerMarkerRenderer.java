@@ -41,24 +41,23 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
+import net.runelite.api.WorldEntity;
+import net.runelite.api.WorldView;
+import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.gameval.VarbitID;
 
-/**
- * Renders the player position marker arrow, handling camera projection, rotation,
- * sailing boat heading adjustments, and surface/cave cutaway states.
- */
+/** Draws the player arrow in surface and dungeon views. */
 public class PlayerMarkerRenderer
 {
 	private static final Color PLAYER_FILL = new Color(255, 255, 255);
 	/** Translucent fill for the player arrow when it is projected onto an entrance, not a real fix. */
 	private static final Color PLAYER_FILL_BELOW = new Color(255, 255, 255, 90);
 	private static final Color PLAYER_EDGE = new Color(18, 18, 18);
-	private static final Stroke PLAYER_ARROW_EDGE = new BasicStroke(3.0f);
-
+	/** Dashed connector across a transport hop (teleport, fairy ring, stairs) between two walk runs. */
 	/** The player marker is drawn under a rotate(), so its outline never varies. */
 	private static final int[] PLAYER_ARROW_X = {0, -5, 0, 5};
 	private static final int[] PLAYER_ARROW_Y = {-8, 6, 3, 6};
+	private static final Stroke PLAYER_ARROW_EDGE = new BasicStroke(3.0f);
 
 	private final Client client;
 	private final BetterMapConfig config;
@@ -77,21 +76,8 @@ public class PlayerMarkerRenderer
 		this.dungeonPieceIndex = dungeonPieceIndex;
 	}
 
-	/**
-	 * Returns true if the local player is currently on board or steering a boat.
-	 */
-	public boolean isPlayerOnBoat()
-	{
-		return client != null && (
-			client.getVarbitValue(VarbitID.SAILING_PLAYER_IS_ON_PLAYER_BOAT) == 1
-			|| client.getVarbitValue(VarbitID.SAILING_BOARDED_BOAT) != 0
-		);
-	}
-
-	/**
-	 * Places the arrow with the same per-piece translation/rotation/flip used for dungeon tiles.
-	 */
-	public Point2D arrangedPlayerPoint(WorldPoint rawLocation, Rectangle bounds)
+	/** Place the arrow with the same per-piece translation/rotation/flip used for dungeon tiles. */
+	private Point2D arrangedPlayerPoint(WorldPoint rawLocation, Rectangle bounds)
 	{
 		final UndergroundZone zone = camera.getActiveUndergroundZone() != null
 			? camera.getActiveUndergroundZone()
@@ -122,9 +108,6 @@ public class PlayerMarkerRenderer
 		return transform.transform(point, null);
 	}
 
-	/**
-	 * Draws the player marker arrow according to orientation, location, and visibility state.
-	 */
 	public void drawPlayer(Graphics2D graphics, Rectangle bounds)
 	{
 		if (!config.showPlayerMarker())
@@ -185,13 +168,11 @@ public class PlayerMarkerRenderer
 		// net.runelite.api.coords.Angle: 0 is south, 512 west, 1024 north, 1536 east, which runs
 		// clockwise on a north-up map - the same sense as Graphics2D.rotate. The arrow polygon
 		// points north in its own frame, so orientation 0 needs a half turn to face south.
-		final double facing = (local.getOrientation() / 2048d) * 2 * Math.PI;
+		final double facing = playerFacing(local);
 		final AffineTransform previous = graphics.getTransform();
 		final Stroke oldStroke = graphics.getStroke();
 		graphics.translate(x, y);
-		// When steering or boarded on a boat, player orientation faces the helm/stern (reversed 180 degrees)
-		final double rotation = isPlayerOnBoat() ? facing : (Math.PI + facing);
-		graphics.rotate(rotation);
+		graphics.rotate(facing);
 
 		graphics.setColor(PLAYER_EDGE);
 		graphics.setStroke(PLAYER_ARROW_EDGE);
@@ -204,4 +185,33 @@ public class PlayerMarkerRenderer
 		graphics.setStroke(oldStroke);
 		graphics.setTransform(previous);
 	}
+
+	private double playerFacing(Player player)
+	{
+		final double facing = Math.PI + (player.getOrientation() / 2048d) * 2 * Math.PI;
+		final WorldView view = player.getWorldView();
+		final WorldView main = client.getTopLevelWorldView();
+		if (view == null || view.isTopLevel() || main == null)
+		{
+			return facing;
+		}
+
+		final WorldEntity entity = main.worldEntities().byIndex(view.getId());
+		final LocalPoint origin = player.getLocalLocation();
+		if (entity == null || origin == null)
+		{
+			return facing;
+		}
+
+		// Transform the player's facing vector from the boat deck into the overworld,
+		// just as WorldPointResolver resolves the boat's position into map coordinates.
+		final LocalPoint ahead = new LocalPoint(
+			origin.getX() + (int) Math.round(Math.sin(facing) * 128),
+			origin.getY() + (int) Math.round(Math.cos(facing) * 128), view);
+		final LocalPoint worldOrigin = entity.transformToMainWorld(origin);
+		final LocalPoint worldAhead = entity.transformToMainWorld(ahead);
+		return Math.atan2(worldAhead.getX() - worldOrigin.getX(),
+			worldAhead.getY() - worldOrigin.getY());
+	}
+
 }

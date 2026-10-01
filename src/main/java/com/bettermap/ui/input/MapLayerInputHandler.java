@@ -838,6 +838,12 @@ public class MapLayerInputHandler
 
 	public void updateHoveredTravelNode(Point point)
 	{
+		final BetterMapPlugin plugin = pluginProvider != null ? pluginProvider.get() : null;
+		if (plugin != null && camera.getZoom() < plugin.getConfig().travelStationMinZoom())
+		{
+			camera.setHoveredTravelNode(null);
+			return;
+		}
 		if (point == null)
 		{
 			camera.setHoveredTravelNode(null);

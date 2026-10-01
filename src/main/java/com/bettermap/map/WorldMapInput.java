@@ -26,7 +26,7 @@ package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
-import com.bettermap.ui.RaidBossDisplay;
+import com.bettermap.ui.markers.RaidBossDisplay;
 import com.bettermap.ui.input.MapContextMenuHandler;
 import com.bettermap.ui.input.MapDragController;
 import com.bettermap.ui.input.MapKeyHandler;
@@ -77,6 +77,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Inject
 	private RaidBossDisplay raidBossDisplay;
 	private boolean raidPressConsumed;
+	private boolean routePressConsumed;
 	private volatile Point cursor;
 	private Point travelClickOrigin;
 	private volatile boolean shiftDown;
@@ -172,6 +173,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	{
 		travelClickOrigin = null;
 		raidPressConsumed = false;
+		routePressConsumed = false;
 		if (contextMenuHandler.isClientMenuOpen())
 		{
 			return event;
@@ -261,7 +263,15 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 				}
 			}
 
-			if (config.showTravelRoutes())
+			if ((shiftDown || event.isShiftDown()) && pluginProvider != null && pluginProvider.get() != null)
+			{
+				pluginProvider.get().placeRouteAt(event.getX(), event.getY());
+				routePressConsumed = true;
+				event.consume();
+				return event;
+			}
+
+			if (config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom())
 			{
 				travelClickOrigin = event.getPoint();
 			}
@@ -331,7 +341,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseReleased(MouseEvent event)
 	{
-		if (raidPressConsumed)
+		if (raidPressConsumed || routePressConsumed)
 		{
 			event.consume();
 			return event;
@@ -444,9 +454,10 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseClicked(MouseEvent event)
 	{
-		if (raidPressConsumed)
+		if (raidPressConsumed || routePressConsumed)
 		{
 			raidPressConsumed = false;
+			routePressConsumed = false;
 			event.consume();
 		}
 		return event;
@@ -567,6 +578,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	public void focusLost()
 	{
 		travelClickOrigin = null;
+		routePressConsumed = false;
 		dragController.reset();
 		cursor = null;
 		camera.setShiftHeld(false);

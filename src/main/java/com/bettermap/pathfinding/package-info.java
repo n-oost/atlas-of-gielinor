@@ -12,7 +12,7 @@
  * in {@code resources/com/bettermap/pathfinding/LICENSE} for binary distributions.
  * Root {@code THIRD-PARTY-NOTICES.md} records the derivation in full.
  *
- * Better Map is not affiliated with or endorsed by the Shortest Path project. Bug reports for the
- * routing behaviour of Better Map should go to Better Map, not to Shortest Path.
+ * Atlas of Gielinor is not affiliated with or endorsed by the Shortest Path project. Bug reports for the
+ * routing behaviour of Atlas of Gielinor should go to Atlas of Gielinor, not to Shortest Path.
  */
 package com.bettermap.pathfinding;

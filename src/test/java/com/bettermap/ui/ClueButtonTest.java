@@ -388,6 +388,32 @@ public class ClueButtonTest
 		assertTrue("Clicking clue panel must consume event", panelClick.isConsumed());
 	}
 
+	@Test
+	public void missingAssetsCloseButtonIsAvailableInBothMapModes()
+	{
+		final TestConfig config = new TestConfig();
+		final MapCamera camera = new MapCamera();
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera,
+			new WorldMapInput(camera, config, null, null), new MapLayout(null, config),
+			new TestClueTracker(), noQuestStep(), null, null);
+		final Rectangle bounds = new Rectangle(0, 0, 800, 600);
+		final Graphics2D graphics = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB).createGraphics();
+		try
+		{
+			for (boolean fullscreen : new boolean[] {false, true})
+			{
+				config.fullscreenMap = fullscreen;
+				renderer.drawCloseButton(graphics, bounds, true);
+				assertNotNull(camera.getCloseButton());
+				assertTrue(bounds.contains(camera.getCloseButton()));
+			}
+		}
+		finally
+		{
+			graphics.dispose();
+		}
+	}
+
 	/** A tracker with no world map point manager: never reports a quest step. */
 	private static QuestHelperTracker noQuestStep()
 	{

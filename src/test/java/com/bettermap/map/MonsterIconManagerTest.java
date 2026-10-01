@@ -30,6 +30,7 @@ import net.runelite.api.ItemID;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -48,12 +49,12 @@ public class MonsterIconManagerTest
 	{
 		assertEquals(ItemID.KBD_HEADS, iconManager.resolveItemId("King Black Dragon", 276, 0));
 		assertEquals(ItemID.PET_SNAKELING, iconManager.resolveItemId("Zulrah", 725, 0));
-		assertEquals(ItemID.VORKATHS_HEAD, iconManager.resolveItemId("Vorkath", 732, 0));
+		assertEquals(ItemID.VORKI, iconManager.resolveItemId("Vorkath", 732, 0));
 		assertEquals(ItemID.PET_GENERAL_GRAARDOR, iconManager.resolveItemId("General Graardor", 624, 0));
 		assertEquals(ItemID.PET_KREEARRA, iconManager.resolveItemId("Kree'arra", 580, 0));
 		assertEquals(ItemID.PET_ZILYANA, iconManager.resolveItemId("Commander Zilyana", 596, 0));
 		assertEquals(ItemID.PET_KRIL_TSUTSAROTH, iconManager.resolveItemId("K'ril Tsutsaroth", 650, 0));
-		assertEquals(ItemID.ELYSIAN_SIGIL, iconManager.resolveItemId("Corporeal Beast", 785, 0));
+		assertEquals(ItemID.PET_DARK_CORE, iconManager.resolveItemId("Corporeal Beast", 785, 0));
 		assertEquals(ItemID.PET_DAGANNOTH_PRIME, iconManager.resolveItemId("Dagannoth Prime", 303, 0));
 		assertEquals(ItemID.ABYSSAL_ORPHAN, iconManager.resolveItemId("Abyssal Sire", 350, 85));
 		assertEquals(ItemID.HELLPUPPY, iconManager.resolveItemId("Cerberus", 318, 91));
@@ -65,6 +66,12 @@ public class MonsterIconManagerTest
 		assertEquals(ItemID.OLMLET, iconManager.resolveItemId("Great Olm", 1043, 0));
 		assertEquals(ItemID.LIL_ZIK, iconManager.resolveItemId("Verzik Vitur", 1040, 0));
 		assertEquals(ItemID.TUMEKENS_GUARDIAN, iconManager.resolveItemId("Tumeken's Warden", 544, 0));
+		assertEquals(ItemID.PET_CHAOS_ELEMENTAL, iconManager.resolveItemId("Chaos Elemental", 305, 0));
+		assertEquals(ItemID.SRARACHA, iconManager.resolveItemId("Sarachnis", 318, 0));
+		assertEquals(ItemID.SKOTOS, iconManager.resolveItemId("Skotizo", 321, 0));
+		assertEquals(ItemID.TINY_TEMPOR, iconManager.resolveItemId("Tempoross", 0, 0));
+		assertEquals(ItemID.YOUNGLLEF, iconManager.resolveItemId("Crystalline Hunllef", 674, 0));
+		assertEquals(ItemID.CORRUPTED_YOUNGLLEF, iconManager.resolveItemId("Corrupted Hunllef", 894, 0));
 	}
 
 	@Test
@@ -74,6 +81,10 @@ public class MonsterIconManagerTest
 		{
 			final int itemId = iconManager.resolveItemId(boss.getName(), boss.getCombatLevel(), 0);
 			assertTrue("Boss " + boss.getName() + " should resolve to a positive ItemID, got " + itemId, itemId > 0);
+			assertNotEquals("Boss " + boss.getName() + " should not fall back to generic SKULL",
+				ItemID.SKULL, itemId);
+			assertNotEquals("Boss " + boss.getName() + " should not fall back to generic BONES",
+				ItemID.BONES, itemId);
 		}
 	}
 

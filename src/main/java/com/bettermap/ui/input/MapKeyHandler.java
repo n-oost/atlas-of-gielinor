@@ -28,7 +28,6 @@ import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.DungeonTuner;
-import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import java.awt.event.KeyEvent;
 import javax.inject.Provider;
@@ -94,16 +93,7 @@ public class MapKeyHandler
 				? pluginProvider.get().getPlayerLocation() : null;
 			if (raw != null)
 			{
-				final WorldPoint here = camera.getPlayerDisplayLocation() != null
-					? camera.getPlayerDisplayLocation()
-					: (raw.getY() > InstanceMaps.GAP_MIN_Y
-						? new WorldPoint(
-							InstanceMaps.toDisplayX(raw.getX(), raw.getY(), 0, 0),
-							InstanceMaps.toDisplayY(raw.getX(), raw.getY(), 0, 0),
-							raw.getPlane())
-						: raw);
-				camera.centerOn(here.getX(), here.getY());
-				camera.setPlane(here.getPlane());
+				pluginProvider.get().goToPlayer();
 				event.consume();
 				return true;
 			}
@@ -155,7 +145,7 @@ public class MapKeyHandler
 			case KeyEvent.VK_P:
 				if (pluginProvider != null && pluginProvider.get() != null)
 				{
-					pluginProvider.get().printToChat("[Better Map tuner] " + tuner.describe(zone));
+					pluginProvider.get().printToChat("[Atlas of Gielinor tuner] " + tuner.describe(zone));
 				}
 				log.debug("[BetterMap tuner] {}", tuner.describe(zone));
 				break;

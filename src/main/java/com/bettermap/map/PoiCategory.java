@@ -39,6 +39,8 @@ public enum PoiCategory
 	BANKS("Banks"),
 	SHOPS("Shops and trade"),
 	SKILLING("Skilling"),
+	SHORTCUTS("Agility shortcuts"),
+	SAILING("Sailing"),
 	TRAVEL("Travel"),
 	QUESTS("Quests and activities"),
 	ALTARS("Altars"),
@@ -50,13 +52,13 @@ public enum PoiCategory
 	private static final Set<String> BANK_KEYS = keys("bank");
 
 	private static final Set<String> TRAVEL_KEYS = keys(
-		"transportation", "dungeon_link", "agility_short-cut", "house_portal", "mooring_point",
+		"transportation", "dungeon_link", "house_portal", "mooring_point",
 		"canoe_station", "hot_air_balloon", "magic_mushtree", "magic_carpet", "minecart_network",
-		"navigation_node", "sea_current");
+		"sea_current");
 
 	private static final Set<String> ALTAR_KEYS = keys("altar");
 
-	private static final Set<String> DUNGEON_KEYS = keys("dungeon", "basement", "slayer_master");
+	private static final Set<String> DUNGEON_KEYS = keys("dungeon", "basement");
 
 	private static final Set<String> QUEST_KEYS = keys(
 		"quest_start", "kourend_task", "task_master", "minigame", "raids_lobby", "holiday_event");
@@ -66,7 +68,7 @@ public enum PoiCategory
 		"anvil", "furnace", "spinning_wheel", "potters_wheel", "windmill", "dairy_churn", "dairy_cow",
 		"loom", "tannery", "sawmill", "woodcutting_stump", "dummy", "agility_training",
 		"stagnant_water_source", "stonemason",
-		"hunter_training", "brewery", "sandpit", "thieving", "singing_bowl");
+		"hunter_training", "brewery", "sandpit", "thieving", "singing_bowl", "slayer_master");
 
 	private static final Set<String> SHOP_KEYS = keys(
 		"general_store", "bar", "apothecary", "estate_agent", "grand_exchange", "junk_checker",
@@ -75,9 +77,9 @@ public enum PoiCategory
 		"shipwright");
 
 	private static final Set<String> SERVICE_KEYS = keys(
-		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth", "cargo_bay");
+		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth", "cargo_bay", "noticeboard");
 
-	private static final Set<String> PLACE_KEYS = keys("region_label", "lookout_point");
+	private static final Set<String> PLACE_KEYS = keys("region_label");
 
 	private final String displayName;
 
@@ -96,6 +98,15 @@ public enum PoiCategory
 		if (key == null)
 		{
 			return OTHER;
+		}
+
+		if ("agility_short-cut".equals(key))
+		{
+			return SHORTCUTS;
+		}
+		if ("lookout_point".equals(key))
+		{
+			return SAILING;
 		}
 
 		if (BANK_KEYS.contains(key))

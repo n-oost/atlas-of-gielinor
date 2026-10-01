@@ -35,35 +35,81 @@ import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.sailing.PortNoticeBoard;
 import com.bettermap.data.sailing.SailingPort;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.PoiIndex;
 import com.bettermap.ui.MapRenderStats;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.imageio.ImageIO;
-import net.runelite.client.ui.FontManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import javax.imageio.ImageIO;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.ui.FontManager;
 
-/**
- * Renders Sailing markers: docked player boats with health indicators, port icons,
- * and port notice board locations.
- */
+/** Draws sailing ports, notice boards, and owned boats. */
+@Slf4j
 public class BoatMarkerRenderer
 {
+	private final Set<Object> visibleTooltipTargets;
 
+	private static final Color BOAT_EDGE = new Color(14, 18, 26, 220);
+	private static final Color BOAT_FILL = new Color(38, 128, 205);
+	private static final Color BOAT_BORDER = new Color(255, 214, 110);
+	private static final Color BOAT_HULL_GOOD = new Color(55, 215, 115);
+	private static final Color BOAT_HULL_WARN = new Color(245, 185, 55);
+	private static final Color BOAT_HULL_BAD = new Color(235, 65, 65);
+	private static final Color PORT_EDGE = new Color(14, 20, 28, 220);
+	private static final Color PORT_FILL = new Color(32, 95, 145, 200);
+	private static final Color PORT_BORDER = new Color(130, 210, 255, 230);
+	private static final Color PORT_DOT = new Color(220, 245, 255);
+	private static final Color BOARD_EDGE = new Color(24, 18, 12, 220);
+	private static final Color BOARD_FILL = new Color(175, 115, 45, 220);
+	private static final Color BOARD_BORDER = new Color(255, 225, 140, 240);
+	private static final Color BOARD_GLYPH = new Color(255, 245, 220);
 	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
+	private static final SailingPort[] PORTS = SailingPort.values();
+
+	/**
+	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
+	 * Each renderer keeps its immutable outline strokes for reuse between frames.
+	 */
+	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
+	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
+	private static final Stroke MARKER_RING = new BasicStroke(1.5f);
+	private final BetterMapConfig config;
+	private final MapCamera camera;
+	private final PoiIndex poiIndex;
+	private final BoatTracker boatTracker;
+	private final MapRenderStats stats;
 	private BufferedImage boatSloopIcon;
 	private BufferedImage boatSkiffIcon;
 	private BufferedImage boatRaftIcon;
+
+	public BoatMarkerRenderer(
+		BetterMapConfig config,
+		MapCamera camera,
+		PoiIndex poiIndex,
+		BoatTracker boatTracker,
+		MapRenderStats stats,
+		Set<Object> visibleTooltipTargets)
+	{
+		this.config = config;
+		this.camera = camera;
+		this.poiIndex = poiIndex;
+		this.boatTracker = boatTracker;
+		this.stats = stats;
+		this.visibleTooltipTargets = visibleTooltipTargets;
+	}
 
 	private BufferedImage boatIcon(BoatType type)
 	{
@@ -97,19 +143,13 @@ public class BoatMarkerRenderer
 	private BufferedImage loadBoatIcon(String name)
 	{
 		BufferedImage icon = null;
-		try (InputStream in = BoatMarkerRenderer.class.getResourceAsStream("/com/bettermap/" + name + ".png"))
+		if (poiIndex != null)
 		{
-			if (in != null)
-			{
-				icon = ImageIO.read(in);
-			}
-		}
-		catch (IOException e)
-		{
+			icon = poiIndex.icon(name);
 		}
 		if (icon == null)
 		{
-			try (InputStream in = BoatMarkerRenderer.class.getResourceAsStream("/com/bettermap/poi/icons/" + name + ".png"))
+			try (InputStream in = BoatMarkerRenderer.class.getResourceAsStream("/com/bettermap/" + name + ".png"))
 			{
 				if (in != null)
 				{
@@ -118,46 +158,10 @@ public class BoatMarkerRenderer
 			}
 			catch (IOException e)
 			{
+				log.warn("Failed to load boat icon: {}", name, e);
 			}
 		}
 		return icon;
-	}
-	public static final Color BOAT_EDGE = new Color(14, 18, 26, 220);
-	public static final Color BOAT_FILL = new Color(38, 128, 205);
-	public static final Color BOAT_BORDER = new Color(255, 214, 110);
-	public static final Color BOAT_HULL_GOOD = new Color(55, 215, 115);
-	public static final Color BOAT_HULL_WARN = new Color(245, 185, 55);
-	public static final Color BOAT_HULL_BAD = new Color(235, 65, 65);
-	public static final Color PORT_EDGE = new Color(14, 20, 28, 220);
-	public static final Color PORT_FILL = new Color(32, 95, 145, 200);
-	public static final Color PORT_BORDER = new Color(130, 210, 255, 230);
-	public static final Color PORT_DOT = new Color(220, 245, 255);
-	public static final Color BOARD_EDGE = new Color(24, 18, 12, 220);
-	public static final Color BOARD_FILL = new Color(175, 115, 45, 220);
-	public static final Color BOARD_BORDER = new Color(255, 225, 140, 240);
-	public static final Color BOARD_GLYPH = new Color(255, 245, 220);
-
-	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
-	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
-	private static final Stroke MARKER_RING = new BasicStroke(1.5f);
-
-	private static final SailingPort[] PORTS = SailingPort.values();
-
-	private final BetterMapConfig config;
-	private final MapCamera camera;
-	private final BoatTracker boatTracker;
-	private final MapRenderStats stats;
-
-	public BoatMarkerRenderer(
-		BetterMapConfig config,
-		MapCamera camera,
-		BoatTracker boatTracker,
-		MapRenderStats stats)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.boatTracker = boatTracker;
-		this.stats = stats;
 	}
 
 	/**
@@ -165,7 +169,7 @@ public class BoatMarkerRenderer
 	 */
 	public void drawSailingPorts(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
-		if (!config.showSailingPorts())
+		if (!config.showSailingPorts() || camera.getZoom() < config.sailingPortMinZoom())
 		{
 			return;
 		}
@@ -191,8 +195,7 @@ public class BoatMarkerRenderer
 
 			final int px = loc.getX();
 			final int py = loc.getY();
-			if (!camera.inView(px, py, view.minX, view.maxX, view.minY, view.maxY)
-				|| !ViewWindow.isDrawable(camera, px, py))
+			if (!camera.inView(px, py, view.minX, view.maxX, view.minY, view.maxY) || !ViewWindow.isDrawable(camera, px, py))
 			{
 				continue;
 			}
@@ -207,7 +210,8 @@ public class BoatMarkerRenderer
 				continue;
 			}
 
-			final boolean hasDockedBoat = boatTracker != null && !boatTracker.getBoatsAt(port).isEmpty() && config.showBoatLocations();
+			final boolean hasDockedBoat = boatTracker != null && !boatTracker.getBoatsAt(port).isEmpty() && config.showBoatLocations()
+				&& camera.getZoom() >= config.playerBoatMinZoom();
 			if (!hasDockedBoat)
 			{
 				graphics.setColor(PORT_EDGE);
@@ -223,10 +227,8 @@ public class BoatMarkerRenderer
 				graphics.setColor(PORT_DOT);
 				graphics.fillOval(sx - 2, sy - 2, 4, 4);
 
-				if (stats != null)
-				{
-					stats.markersDrawn++;
-				}
+				visibleTooltipTargets.add(port);
+				stats.markersDrawn++;
 			}
 		}
 
@@ -234,11 +236,11 @@ public class BoatMarkerRenderer
 	}
 
 	/**
-	 * Distinct port notice board markers when zoomed reasonably in (zoom >= 0.8).
+	 * Distinct port notice board markers at the configured minimum zoom.
 	 */
 	public void drawPortNoticeBoards(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
-		if (!config.showPortNoticeBoards() || camera.getZoom() < 0.8)
+		if (!config.showPortNoticeBoards() || camera.getZoom() < config.portNoticeBoardMinZoom())
 		{
 			return;
 		}
@@ -264,8 +266,7 @@ public class BoatMarkerRenderer
 
 			final int bx = loc.getX();
 			final int by = loc.getY();
-			if (!camera.inView(bx, by, view.minX, view.maxX, view.minY, view.maxY)
-				|| !ViewWindow.isDrawable(camera, bx, by))
+			if (!camera.inView(bx, by, view.minX, view.maxX, view.minY, view.maxY) || !ViewWindow.isDrawable(camera, bx, by))
 			{
 				continue;
 			}
@@ -295,10 +296,8 @@ public class BoatMarkerRenderer
 			graphics.drawLine(sx - 3, sy, sx + 3, sy);
 			graphics.drawLine(sx - 3, sy + 2, sx + 1, sy + 2);
 
-			if (stats != null)
-			{
-				stats.markersDrawn++;
-			}
+			visibleTooltipTargets.add(board);
+			stats.markersDrawn++;
 		}
 
 		graphics.setStroke(oldStroke);
@@ -309,7 +308,8 @@ public class BoatMarkerRenderer
 	 */
 	public void drawPlayerBoats(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
-		if (!config.showBoatLocations() || boatTracker == null)
+		if (!config.showBoatLocations() || boatTracker == null
+			|| camera.getZoom() < config.playerBoatMinZoom())
 		{
 			return;
 		}
@@ -411,15 +411,13 @@ public class BoatMarkerRenderer
 			}
 
 			placed.add(rect);
-			if (stats != null)
-			{
-				stats.markersDrawn++;
-			}
+			visibleTooltipTargets.add(boat);
+			stats.markersDrawn++;
 
 			// Optional Name label chip below marker
-			if (config.showBoatNames() && camera.getZoom() >= 0.65)
+			if (config.showBoatNames() && camera.getZoom() >= config.boatLabelMinZoom())
 			{
-				final String label = "\u26f5 " + boat.getBoatName();
+				final String label = "⛵ " + boat.getBoatName();
 				graphics.setFont(SMALL);
 				final int textW = graphics.getFontMetrics().stringWidth(label);
 				final int textX = sx - textW / 2;
@@ -441,4 +439,5 @@ public class BoatMarkerRenderer
 
 		graphics.setStroke(oldStroke);
 	}
+
 }

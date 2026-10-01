@@ -24,6 +24,7 @@
  */
 package com.bettermap.ui.markers;
 
+import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import java.awt.Rectangle;
@@ -78,6 +79,28 @@ public final class ViewWindow
 		}
 		return InstanceMaps.inFocusedLayer(worldX, worldY,
 			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused());
+	}
+
+	/** Interior POIs appear only with their dungeon terrain, never on the plain surface map. */
+	public static boolean isPoiDrawable(MapCamera camera, int worldX, int worldY)
+	{
+		if (!isDrawable(camera, worldX, worldY))
+		{
+			return false;
+		}
+		if (worldY <= InstanceMaps.GAP_MIN_Y || !InstanceMaps.cameraOnOverworld(camera.getCenterY())
+			|| InstanceMaps.isOverworldOverlay(worldX, worldY))
+		{
+			return true;
+		}
+		for (UndergroundZone zone : camera.previewUndergroundZones())
+		{
+			if (InstanceMaps.belongsToZone(worldX, worldY, zone))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

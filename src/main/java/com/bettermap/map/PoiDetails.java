@@ -1490,7 +1490,7 @@ public final class PoiDetails
 		// Sailing expansion - Travel
 		addEntry("transportation", "The Great Conch - Fairy Ring (CJQ)", "Travel", 3177, 2367, 0, "Destination Code: CJQ", "Requirements: Fairytale II (partial) • Troubled Tortugans", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Grimstone - Fairy Ring (DLP)", "Travel", 2929, 4056, 0, "Destination Code: DLP", "Requirements: Fairytale II (partial) • Level 87 Sailing", "Staff: Dramen or Lunar staff");
-		addEntry("transportation", "Laguna Aurorae - Spirit Tree", "Travel", 1205, 2733, 0, "Destination: Laguna Aurorae Spirit Tree", "Requirements: Tree Gnome Village quest completed", "Activity: Fast travel across the Spirit Tree network");
+		addEntry("transportation", "Laguna Aurorae - Spirit Tree", "Travel", 1202, 2785, 0, "Destination: Laguna Aurorae Spirit Tree", "Requirements: Tree Gnome Village quest completed", "Activity: Fast travel across the Spirit Tree network");
 
 		addEntry("transportation", "Fairy Ring (AIQ)", "Travel • Fairy Ring", 2995, 3112, 0, "Destination Code: AIQ", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Fairy Ring (AIR)", "Travel • Fairy Ring", 2699, 3249, 0, "Destination Code: AIR", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
@@ -1539,6 +1539,13 @@ public final class PoiDetails
 		addEntry("transportation", "Fairy Ring (DLP)", "Travel • Fairy Ring", 2923, 10455, 0, "Destination Code: DLP", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Fairy Ring (DLQ)", "Travel • Fairy Ring", 3422, 3018, 0, "Destination Code: DLQ", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
 		addEntry("transportation", "Fairy Ring (DLR)", "Travel • Fairy Ring", 2212, 3101, 0, "Destination Code: DLR", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (AJQ)", "Travel • Fairy Ring", 2735, 5221, 0, "Destination Code: AJQ", "Requirements: Fairytale II - Cure a Queen (partial) • Death to the Dorgeshuun", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (BJR)", "Travel • Fairy Ring", 2650, 4730, 0, "Destination Code: BJR", "Requirements: Fairytale II - Cure a Queen (partial) • Holy Grail", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (BKQ)", "Travel • Fairy Ring", 3041, 4532, 0, "Destination Code: BKQ", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (BLQ)", "Travel • Fairy Ring", 3572, 4372, 0, "Destination Code: BLQ", "Requirements: Fairytale II - Cure a Queen (partial) • Land of the Goblins", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (CKP)", "Travel • Fairy Ring", 2075, 4848, 0, "Destination Code: CKP", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (DIR)", "Travel • Fairy Ring", 3038, 5348, 0, "Destination Code: DIR", "Requirements: Fairytale II - Cure a Queen (partial)", "Staff: Dramen or Lunar staff");
+		addEntry("transportation", "Fairy Ring (DLS)", "Travel • Fairy Ring", 3447, 9824, 0, "Destination Code: DLS", "Requirements: Fairytale II - Cure a Queen (partial) • In Search of the Myreque", "Staff: Dramen or Lunar staff");
 
 		// Sailing expansion - Barracuda Trials
 		addEntry("services", "Rum-dashed Ralph (Trial Master)", "Tutors and services", 3033, 2929, 0,

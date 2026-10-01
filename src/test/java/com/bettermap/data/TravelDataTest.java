@@ -149,7 +149,7 @@ public class TravelDataTest
 	@Test
 	public void testNodeCountsAndSpotChecks()
 	{
-		assertEquals("Total node count in ALL_NODES", 158, TravelData.ALL_NODES.size());
+		assertEquals("Total node count in ALL_NODES", 195, TravelData.ALL_NODES.size());
 
 		long charterCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.CHARTER_SHIP).count();
 		long ferryCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.FERRY).count();
@@ -166,8 +166,8 @@ public class TravelDataTest
 		assertEquals("Charter Ship node count", 16, charterCount);
 		assertEquals("Ferry node count", 48, ferryCount);
 		assertEquals("Gnome Glider node count", 6, gliderCount);
-		assertEquals("Spirit Tree node count", 12, treeCount);
-		assertEquals("Fairy Ring node count", 18, ringCount);
+		assertEquals("Spirit Tree node count", 13, treeCount);
+		assertEquals("Fairy Ring node count", 54, ringCount);
 		assertEquals("Hot Air Balloon node count", 6, balloonCount);
 		assertEquals("Canoe node count", 5, canoeCount);
 		assertEquals("Mine Cart node count", 18, cartCount);
@@ -196,10 +196,11 @@ public class TravelDataTest
 		assertNotNull("Land's End Charter should exist", TravelData.findNodeNear(1504, 3400, 0, 2));
 
 		// Spot check Spirit Tree registrations
-		assertNotNull("Spirit Tree Poison Waste should exist", TravelData.findNodeNear(2340, 3160, 0, 2));
-		assertNotNull("Spirit Tree Prifddinas should exist", TravelData.findNodeNear(3274, 6064, 0, 2));
-		assertNotNull("Spirit Tree Etceteria should exist", TravelData.findNodeNear(2608, 3857, 0, 2));
+		assertNotNull("Spirit Tree Poison Waste should exist", TravelData.findNodeNear(2339, 3109, 0, 2));
+		assertNotNull("Spirit Tree Prifddinas should exist", TravelData.findNodeNear(3274, 6123, 0, 2));
+		assertNotNull("Spirit Tree Etceteria should exist", TravelData.findNodeNear(2613, 3855, 0, 2));
 		assertNotNull("Spirit Tree Myths' Guild should exist", TravelData.findNodeNear(2488, 2850, 0, 2));
+		assertNotNull("Spirit Tree Laguna Aurorae should exist", TravelData.findNodeNear(1202, 2785, 0, 2));
 
 		// Spot check Quetzal registrations (all 14 landing sites matching arrow POIs)
 		assertNotNull("Quetzal Civitas illa Fortis should exist", TravelData.findNodeNear(1700, 3142, 0, 2));
@@ -233,8 +234,15 @@ public class TravelDataTest
 		assertNotNull("Fairy Ring CIR south of Mount Karuulm should exist", TravelData.findNodeNear(1302, 3762, 0, 2));
 		assertNotNull("Fairy Ring CIP Miscellania should exist", TravelData.findNodeNear(2513, 3884, 0, 2));
 		assertNotNull("Fairy Ring CKQ Aldarin should exist", TravelData.findNodeNear(1359, 2940, 0, 2));
-		assertNotNull("Fairy Ring ALQ Twilight Temple should exist", TravelData.findNodeNear(1427, 3266, 0, 2));
-		assertNotNull("Fairy Ring AJP Avium Savannah should exist", TravelData.findNodeNear(1720, 2950, 0, 2));
+		assertNotNull("Fairy Ring AIS Twilight Temple should exist", TravelData.findNodeNear(1429, 3324, 0, 2));
+		assertNotNull("Fairy Ring AJP Avium Savannah should exist", TravelData.findNodeNear(1651, 3010, 0, 2));
+		assertNotNull("Fairy Ring ALQ Haunted Woods should exist", TravelData.findNodeNear(3597, 3495, 0, 2));
+		assertNotNull("Fairy Ring AIQ Mudskipper Point should exist", TravelData.findNodeNear(2996, 3114, 0, 2));
+		assertNotNull("Fairy Ring AIR South of Ardougne should exist", TravelData.findNodeNear(2700, 3247, 0, 2));
+		assertNotNull("Fairy Ring CKR Tai Bwo Wannai should exist", TravelData.findNodeNear(2801, 3003, 0, 2));
+		assertNotNull("Fairy Ring CLR Ape Atoll should exist", TravelData.findNodeNear(2740, 2738, 0, 2));
+		assertNotNull("Fairy Ring DLP Grimstone should exist", TravelData.findNodeNear(2923, 10455, 0, 2));
+		assertNotNull("Fairy Ring DLS Myreque Hideout should exist", TravelData.findNodeNear(3447, 9824, 0, 2));
 
 		// Spot check Mine Carts
 		assertNotNull("Mine Cart Farming Guild should exist", TravelData.findNodeNear(1238, 3724, 0, 2));

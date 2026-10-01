@@ -801,105 +801,216 @@ public final class TravelData
 		final WorldPoint stVillage = new WorldPoint(2542, 3170, 0);
 		final WorldPoint stGE = new WorldPoint(3186, 3509, 0);
 		final WorldPoint stKhazard = new WorldPoint(2555, 3259, 0);
-		final WorldPoint stFeldip = new WorldPoint(2340, 3160, 0);
-		final WorldPoint stPrif = new WorldPoint(3274, 6064, 0);
-		final WorldPoint stMyths = new WorldPoint(2488, 2850, 0);
-		final WorldPoint stBrim = new WorldPoint(2800, 3204, 0);
-		final WorldPoint stHosidius = new WorldPoint(1693, 3538, 0);
-		final WorldPoint stPortSarim = new WorldPoint(3059, 3257, 0);
-		final WorldPoint stEtceteria = new WorldPoint(2608, 3857, 0);
-		final WorldPoint stGuild = new WorldPoint(1253, 3750, 0);
+		final WorldPoint stPoisonWaste = new WorldPoint(2339, 3109, 0);
+		final WorldPoint stPrif = new WorldPoint(3274, 6123, 0);
+		final WorldPoint stFeldip = new WorldPoint(2488, 2850, 0);
+		final WorldPoint stBrim = new WorldPoint(2800, 3203, 0);
+		final WorldPoint stHosidius = new WorldPoint(1693, 3540, 0);
+		final WorldPoint stPortSarim = new WorldPoint(3058, 3257, 0);
+		final WorldPoint stEtceteria = new WorldPoint(2613, 3855, 0);
+		final WorldPoint stGuild = new WorldPoint(1251, 3750, 0);
+		final WorldPoint stLaguna = new WorldPoint(1202, 2785, 0);
 
 		final List<TravelDestination> stDests = List.of(
-			new TravelDestination("Tree Gnome Stronghold", stStronghold, "Free", "Tree Gnome Village"),
+			new TravelDestination("Tree Gnome Stronghold", stStronghold, "Free", "The Grand Tree"),
 			new TravelDestination("Tree Gnome Village", stVillage, "Free", "Tree Gnome Village"),
 			new TravelDestination("Grand Exchange (Varrock)", stGE, "Free", "Tree Gnome Village"),
 			new TravelDestination("Battlefield of Khazard", stKhazard, "Free", "Tree Gnome Village"),
-			new TravelDestination("Poison Waste (Feldip)", stFeldip, "Free", "The Path of Glouphrie"),
+			new TravelDestination("Poison Waste (Feldip)", stPoisonWaste, "Free", "The Path of Glouphrie"),
 			new TravelDestination("Prifddinas", stPrif, "Free", "Song of the Elves"),
-			new TravelDestination("Feldip Hills (Myths' Guild)", stMyths, "Free", "Dragon Slayer II"),
+			new TravelDestination("Feldip Hills (Myths' Guild)", stFeldip, "Free", "Dragon Slayer II"),
 			new TravelDestination("Brimhaven Patch", stBrim, "Free", "83 Farming"),
 			new TravelDestination("Hosidius Patch", stHosidius, "Free", "83 Farming"),
 			new TravelDestination("Port Sarim Patch", stPortSarim, "Free", "83 Farming"),
 			new TravelDestination("Etceteria Patch", stEtceteria, "Free", "83 Farming"),
-			new TravelDestination("Farming Guild", stGuild, "Free", "85 Farming")
+			new TravelDestination("Farming Guild", stGuild, "Free", "85 Farming"),
+			new TravelDestination("Laguna Aurorae", stLaguna, "Free", "Pandemonium")
 		);
 
 		nodes.add(new TravelNode("Spirit Tree (Grand Exchange)", stGE, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Tree Gnome Stronghold)", stStronghold, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Tree Gnome Village)", stVillage, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Battlefield of Khazard)", stKhazard, TravelType.SPIRIT_TREE, stDests));
-		nodes.add(new TravelNode("Spirit Tree (Poison Waste)", stFeldip, TravelType.SPIRIT_TREE, stDests));
+		nodes.add(new TravelNode("Spirit Tree (Poison Waste)", stPoisonWaste, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Prifddinas)", stPrif, TravelType.SPIRIT_TREE, stDests));
-		nodes.add(new TravelNode("Spirit Tree (Myths' Guild)", stMyths, TravelType.SPIRIT_TREE, stDests));
+		nodes.add(new TravelNode("Spirit Tree (Myths' Guild)", stFeldip, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Brimhaven)", stBrim, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Hosidius)", stHosidius, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Port Sarim)", stPortSarim, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Etceteria)", stEtceteria, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Farming Guild)", stGuild, TravelType.SPIRIT_TREE, stDests));
+		nodes.add(new TravelNode("Spirit Tree (Laguna Aurorae)", stLaguna, TravelType.SPIRIT_TREE, stDests));
 	}
 
-	/** 5. FAIRY RINGS (Zanaris Hub + Key Rings) */
+	/** 5. FAIRY RINGS (Zanaris Hub + All Network Rings) */
 	private static void addFairyRings(List<TravelNode> nodes)
 	{
 		final WorldPoint frZanaris = new WorldPoint(2412, 4434, 0);
-		final WorldPoint frEdgeville = new WorldPoint(3129, 3496, 0);
-		final WorldPoint frTowerLife = new WorldPoint(2658, 3230, 0);
-		final WorldPoint frCanifis = new WorldPoint(3447, 3470, 0);
-		final WorldPoint frMortMyre = new WorldPoint(3469, 3431, 0);
-		final WorldPoint frWizards = new WorldPoint(3108, 3149, 0);
-		final WorldPoint frMiscellania = new WorldPoint(2513, 3884, 0);
-		final WorldPoint frLegends = new WorldPoint(2740, 3351, 0);
-		final WorldPoint frSinclair = new WorldPoint(2705, 3576, 0);
-		final WorldPoint frYanille = new WorldPoint(2528, 3127, 0);
-		final WorldPoint frPiscatoris = new WorldPoint(2319, 3619, 0);
-		final WorldPoint frArceuus = new WorldPoint(1639, 3868, 0);
-		final WorldPoint frChasm = new WorldPoint(1455, 3658, 0);
-		final WorldPoint frKaruulm = new WorldPoint(1302, 3762, 0);
-		final WorldPoint frQuidamortem = new WorldPoint(1295, 3493, 0);
-		final WorldPoint frAldarin = new WorldPoint(1359, 2940, 0);
-		final WorldPoint frTwilight = new WorldPoint(1427, 3266, 0);
-		final WorldPoint frWyrm = new WorldPoint(1720, 2950, 0);
+		final WorldPoint frAIQ = new WorldPoint(2996, 3114, 0);
+		final WorldPoint frAIR = new WorldPoint(2700, 3247, 0);
+		final WorldPoint frAIS = new WorldPoint(1429, 3324, 0);
+		final WorldPoint frAJP = new WorldPoint(1651, 3010, 0);
+		final WorldPoint frAJQ = new WorldPoint(2735, 5221, 0);
+		final WorldPoint frAJR = new WorldPoint(2780, 3613, 0);
+		final WorldPoint frAJS = new WorldPoint(2500, 3896, 0);
+		final WorldPoint frAKP = new WorldPoint(3284, 2706, 0);
+		final WorldPoint frAKQ = new WorldPoint(2319, 3619, 0);
+		final WorldPoint frAKR = new WorldPoint(1826, 3540, 0);
+		final WorldPoint frAKS = new WorldPoint(2571, 2956, 0);
+		final WorldPoint frALP = new WorldPoint(2503, 3636, 0);
+		final WorldPoint frALQ = new WorldPoint(3597, 3495, 0);
+		final WorldPoint frALR = new WorldPoint(3059, 4875, 0);
+		final WorldPoint frALS = new WorldPoint(2644, 3495, 0);
+		final WorldPoint frBIP = new WorldPoint(3410, 3324, 0);
+		final WorldPoint frBIQ = new WorldPoint(3251, 3095, 0);
+		final WorldPoint frBIS = new WorldPoint(2635, 3266, 0);
+		final WorldPoint frBJP = new WorldPoint(2264, 2976, 0);
+		final WorldPoint frBJR = new WorldPoint(2650, 4730, 0);
+		final WorldPoint frBJS = new WorldPoint(2150, 3070, 0);
+		final WorldPoint frBKP = new WorldPoint(2385, 3035, 0);
+		final WorldPoint frBKQ = new WorldPoint(3041, 4532, 0);
+		final WorldPoint frBKR = new WorldPoint(3469, 3431, 0);
+		final WorldPoint frBLP = new WorldPoint(2437, 5126, 0);
+		final WorldPoint frBLQ = new WorldPoint(3572, 4372, 0);
+		final WorldPoint frBLR = new WorldPoint(2740, 3351, 0);
+		final WorldPoint frBLS = new WorldPoint(1295, 3493, 0);
+		final WorldPoint frCIP = new WorldPoint(2513, 3884, 0);
+		final WorldPoint frCIQ = new WorldPoint(2528, 3127, 0);
+		final WorldPoint frCIR = new WorldPoint(1302, 3762, 0);
+		final WorldPoint frCIS = new WorldPoint(1639, 3868, 0);
+		final WorldPoint frCJQ = new WorldPoint(3178, 2447, 0);
+		final WorldPoint frCJR = new WorldPoint(2705, 3576, 0);
+		final WorldPoint frCKP = new WorldPoint(2075, 4848, 0);
+		final WorldPoint frCKQ = new WorldPoint(1359, 2941, 0);
+		final WorldPoint frCKR = new WorldPoint(2801, 3003, 0);
+		final WorldPoint frCKS = new WorldPoint(3447, 3470, 0);
+		final WorldPoint frCLP = new WorldPoint(3082, 3206, 0);
+		final WorldPoint frCLR = new WorldPoint(2740, 2738, 0);
+		final WorldPoint frCLS = new WorldPoint(2682, 3081, 0);
+		final WorldPoint frDIP = new WorldPoint(3037, 4763, 0);
+		final WorldPoint frDIR = new WorldPoint(3038, 5348, 0);
+		final WorldPoint frDIS = new WorldPoint(3108, 3149, 0);
+		final WorldPoint frDJP = new WorldPoint(2658, 3230, 0);
+		final WorldPoint frDJR = new WorldPoint(1455, 3658, 0);
+		final WorldPoint frDKP = new WorldPoint(2900, 3111, 0);
+		final WorldPoint frDKR = new WorldPoint(3129, 3496, 0);
+		final WorldPoint frDKS = new WorldPoint(2744, 3719, 0);
+		final WorldPoint frDLP = new WorldPoint(2923, 10455, 0);
+		final WorldPoint frDLQ = new WorldPoint(3423, 3016, 0);
+		final WorldPoint frDLR = new WorldPoint(2213, 3099, 0);
+		final WorldPoint frDLS = new WorldPoint(3447, 9824, 0);
 
 		final List<TravelDestination> frDests = List.of(
 			new TravelDestination("Zanaris Main Hub", frZanaris, "Free", "Fairytale II"),
-			new TravelDestination("DKR (Edgeville)", frEdgeville, "Free"),
-			new TravelDestination("DJP (Tower of Life / Ardougne)", frTowerLife, "Free"),
-			new TravelDestination("CKS (Canifis)", frCanifis, "Free"),
-			new TravelDestination("BKR (Mort Myre Swamp)", frMortMyre, "Free"),
-			new TravelDestination("DIS (Wizards' Tower / Draynor)", frWizards, "Free"),
-			new TravelDestination("CIP (Miscellania)", frMiscellania, "Free"),
-			new TravelDestination("BLR (Legends' Guild)", frLegends, "Free"),
-			new TravelDestination("CJR (Sinclair Mansion / Seers)", frSinclair, "Free"),
-			new TravelDestination("CIQ (Yanille / Feldip)", frYanille, "Free"),
-			new TravelDestination("AKQ (Piscatoris Fishing Colony)", frPiscatoris, "Free"),
-			new TravelDestination("CIS (Arceuus Library)", frArceuus, "Free"),
-			new TravelDestination("DJR (Chasm of Fire)", frChasm, "Free"),
-			new TravelDestination("CIR (South of Mount Karuulm)", frKaruulm, "Free"),
-			new TravelDestination("BLS (Mount Quidamortem / CoX)", frQuidamortem, "Free"),
-			new TravelDestination("CKQ (Aldarin)", frAldarin, "Free"),
-			new TravelDestination("ALQ (Twilight Temple / Ralos' Rise)", frTwilight, "Free"),
-			new TravelDestination("AJP (Avium Savannah / Colossal Wyrm)", frWyrm, "Free")
+			new TravelDestination("AIQ (Mudskipper Point)", frAIQ, "Free"),
+			new TravelDestination("AIR (South of Ardougne)", frAIR, "Free"),
+			new TravelDestination("AIS (Twilight Temple / Ralos' Rise)", frAIS, "Free"),
+			new TravelDestination("AJP (Avium Savannah / Colossal Wyrm)", frAJP, "Free", "Children of the Sun"),
+			new TravelDestination("AJQ (Dorgesh-Kaan Cave)", frAJQ, "Free", "Death to the Dorgeshuun"),
+			new TravelDestination("AJR (Fremennik Slayer Cave)", frAJR, "Free"),
+			new TravelDestination("AJS (Penguin Island / Iceberg)", frAJS, "Free"),
+			new TravelDestination("AKP (Necropolis / Desert South)", frAKP, "Free"),
+			new TravelDestination("AKQ (Piscatoris Fishing Colony)", frAKQ, "Free"),
+			new TravelDestination("AKR (Arceuus Northern Farm)", frAKR, "Free"),
+			new TravelDestination("AKS (Feldip Hills Hunter)", frAKS, "Free"),
+			new TravelDestination("ALP (Lighthouse)", frALP, "Free"),
+			new TravelDestination("ALQ (Haunted Woods / Morytania)", frALQ, "Free"),
+			new TravelDestination("ALR (Abyssal Area)", frALR, "Free"),
+			new TravelDestination("ALS (McGrubor's Wood)", frALS, "Free"),
+			new TravelDestination("BIP (Nature Island / Mort Myre)", frBIP, "Free"),
+			new TravelDestination("BIQ (Kalphite Hive)", frBIQ, "Free"),
+			new TravelDestination("BIS (Ardougne Zoo)", frBIS, "Free"),
+			new TravelDestination("BJP (Isle of Souls)", frBJP, "Free"),
+			new TravelDestination("BJR (Realm of the Fisher King)", frBJR, "Free", "Holy Grail"),
+			new TravelDestination("BJS (Zul-Andra / Poison Waste)", frBJS, "Free", "Regicide"),
+			new TravelDestination("BKP (South of Castle Wars)", frBKP, "Free"),
+			new TravelDestination("BKQ (Enchanted Valley)", frBKQ, "Free"),
+			new TravelDestination("BKR (Mort Myre Swamp)", frBKR, "Free", "Nature Spirit"),
+			new TravelDestination("BLP (TzHaar / Mor Ul Rek)", frBLP, "Free"),
+			new TravelDestination("BLQ (Yu'biusk)", frBLQ, "Free", "Land of the Goblins"),
+			new TravelDestination("BLR (Legends' Guild)", frBLR, "Free"),
+			new TravelDestination("BLS (Mount Quidamortem / CoX)", frBLS, "Free"),
+			new TravelDestination("CIP (Miscellania)", frCIP, "Free", "The Fremennik Trials"),
+			new TravelDestination("CIQ (Yanille / Feldip)", frCIQ, "Free"),
+			new TravelDestination("CIR (South of Mount Karuulm)", frCIR, "Free"),
+			new TravelDestination("CIS (Arceuus Library)", frCIS, "Free"),
+			new TravelDestination("CJQ (The Great Conch)", frCJQ, "Free", "Troubled Tortugans"),
+			new TravelDestination("CJR (Sinclair Mansion / Seers)", frCJR, "Free"),
+			new TravelDestination("CKP (Cosmic Entity's Plane)", frCKP, "Free"),
+			new TravelDestination("CKQ (Aldarin)", frCKQ, "Free", "Children of the Sun"),
+			new TravelDestination("CKR (Tai Bwo Wannai / Karamja)", frCKR, "Free"),
+			new TravelDestination("CKS (Canifis)", frCKS, "Free"),
+			new TravelDestination("CLP (Draynor Manor)", frCLP, "Free"),
+			new TravelDestination("CLR (Ape Atoll)", frCLR, "Free", "Monkey Madness I"),
+			new TravelDestination("CLS (Hazelmere's Island)", frCLS, "Free"),
+			new TravelDestination("DIP (Abyssal Nexus / Sire)", frDIP, "Free"),
+			new TravelDestination("DIR (Gorak Plane)", frDIR, "Free"),
+			new TravelDestination("DIS (Wizards' Tower / Draynor)", frDIS, "Free"),
+			new TravelDestination("DJP (Tower of Life / Ardougne)", frDJP, "Free"),
+			new TravelDestination("DJR (Chasm of Fire)", frDJR, "Free"),
+			new TravelDestination("DKP (Kar-Hewo / Musa Point)", frDKP, "Free"),
+			new TravelDestination("DKR (Edgeville)", frDKR, "Free"),
+			new TravelDestination("DKS (Snowy Hunter Area / Rellekka)", frDKS, "Free"),
+			new TravelDestination("DLP (Grimstone)", frDLP, "Free", "87 Sailing"),
+			new TravelDestination("DLQ (Nardah)", frDLQ, "Free"),
+			new TravelDestination("DLR (Poison Waste South / Isafdar)", frDLR, "Free", "Regicide"),
+			new TravelDestination("DLS (Myreque Hideout)", frDLS, "Free", "In Search of the Myreque")
 		);
 
 		nodes.add(new TravelNode("Fairy Ring (Zanaris)", frZanaris, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring DKR (Edgeville)", frEdgeville, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring DJP (Tower of Life)", frTowerLife, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CKS (Canifis)", frCanifis, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring BKR (Mort Myre Swamp)", frMortMyre, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring DIS (Wizards' Tower)", frWizards, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CIP (Miscellania)", frMiscellania, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring BLR (Legends' Guild)", frLegends, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CJR (Sinclair Mansion)", frSinclair, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CIQ (Yanille)", frYanille, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring AKQ (Piscatoris Colony)", frPiscatoris, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CIS (Arceuus Library)", frArceuus, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring DJR (Chasm of Fire)", frChasm, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CIR (South of Mount Karuulm)", frKaruulm, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring BLS (Mount Quidamortem)", frQuidamortem, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring CKQ (Aldarin)", frAldarin, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring ALQ (Twilight Temple)", frTwilight, TravelType.FAIRY_RING, frDests));
-		nodes.add(new TravelNode("Fairy Ring AJP (Avium Savannah)", frWyrm, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AIQ (Mudskipper Point)", frAIQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AIR (South of Ardougne)", frAIR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AIS (Twilight Temple)", frAIS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AJP (Avium Savannah)", frAJP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AJQ (Dorgesh-Kaan)", frAJQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AJR (Slayer Cave)", frAJR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AJS (Penguin Island)", frAJS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AKP (Necropolis)", frAKP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AKQ (Piscatoris Colony)", frAKQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AKR (Arceuus Farm)", frAKR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AKS (Feldip Hunter)", frAKS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring ALP (Lighthouse)", frALP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring ALQ (Haunted Woods)", frALQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring ALR (Abyssal Area)", frALR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring ALS (McGrubor's Wood)", frALS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BIP (Nature Island)", frBIP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BIQ (Kalphite Hive)", frBIQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BIS (Ardougne Zoo)", frBIS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BJP (Isle of Souls)", frBJP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BJR (Fisher King)", frBJR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BJS (Zul-Andra)", frBJS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BKP (Castle Wars)", frBKP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BKQ (Enchanted Valley)", frBKQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BKR (Mort Myre Swamp)", frBKR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BLP (TzHaar)", frBLP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BLQ (Yu'biusk)", frBLQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BLR (Legends' Guild)", frBLR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring BLS (Mount Quidamortem)", frBLS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CIP (Miscellania)", frCIP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CIQ (Yanille)", frCIQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CIR (South of Mount Karuulm)", frCIR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CIS (Arceuus Library)", frCIS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CJQ (The Great Conch)", frCJQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CJR (Sinclair Mansion)", frCJR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CKP (Cosmic Entity)", frCKP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CKQ (Aldarin)", frCKQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CKR (Tai Bwo Wannai)", frCKR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CKS (Canifis)", frCKS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CLP (Draynor Manor)", frCLP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CLR (Ape Atoll)", frCLR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CLS (Hazelmere's Island)", frCLS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DIP (Abyssal Nexus)", frDIP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DIR (Gorak Plane)", frDIR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DIS (Wizards' Tower)", frDIS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DJP (Tower of Life)", frDJP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DJR (Chasm of Fire)", frDJR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DKP (Kar-Hewo)", frDKP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DKR (Edgeville)", frDKR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DKS (Snowy Hunter Area)", frDKS, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DLP (Grimstone)", frDLP, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DLQ (Nardah)", frDLQ, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DLR (Poison Waste South)", frDLR, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring DLS (Myreque Hideout)", frDLS, TravelType.FAIRY_RING, frDests));
 	}
 
 	/** 6. HOT AIR BALLOONS (Enlightened Journey) */

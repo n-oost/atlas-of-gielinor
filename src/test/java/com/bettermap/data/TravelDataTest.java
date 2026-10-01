@@ -149,7 +149,7 @@ public class TravelDataTest
 	@Test
 	public void testNodeCountsAndSpotChecks()
 	{
-		assertEquals("Total node count in ALL_NODES", 119, TravelData.ALL_NODES.size());
+		assertEquals("Total node count in ALL_NODES", 156, TravelData.ALL_NODES.size());
 
 		long charterCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.CHARTER_SHIP).count();
 		long ferryCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.FERRY).count();
@@ -163,42 +163,54 @@ public class TravelDataTest
 		long quetzalCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.QUETZAL).count();
 		long swampCount = TravelData.ALL_NODES.stream().filter(n -> n.getType() == TravelType.SWAMP_BOAT).count();
 
-		assertEquals("Charter Ship node count", 13, charterCount);
-		assertEquals("Ferry node count", 37, ferryCount);
+		assertEquals("Charter Ship node count", 16, charterCount);
+		assertEquals("Ferry node count", 48, ferryCount);
 		assertEquals("Gnome Glider node count", 6, gliderCount);
-		assertEquals("Spirit Tree node count", 11, treeCount);
-		assertEquals("Fairy Ring node count", 15, ringCount);
+		assertEquals("Spirit Tree node count", 12, treeCount);
+		assertEquals("Fairy Ring node count", 18, ringCount);
 		assertEquals("Hot Air Balloon node count", 6, balloonCount);
 		assertEquals("Canoe node count", 5, canoeCount);
-		assertEquals("Mine Cart node count", 7, cartCount);
-		assertEquals("Magic Carpet node count", 7, carpetCount);
-		assertEquals("Quetzal node count", 6, quetzalCount);
+		assertEquals("Mine Cart node count", 18, cartCount);
+		assertEquals("Magic Carpet node count", 9, carpetCount);
+		assertEquals("Quetzal node count", 12, quetzalCount);
 		assertEquals("Swamp Boat node count", 6, swampCount);
 
-		// Charter ship destination symmetry check: each of the 13 charter nodes must have 12 destinations
+		// Charter ship destination symmetry check: each of the 16 charter nodes must have 15 destinations
 		for (TravelNode node : TravelData.ALL_NODES)
 		{
 			if (node.getType() == TravelType.CHARTER_SHIP)
 			{
-				assertEquals("Charter node " + node.getName() + " should have 12 destinations", 12, node.getDestinations().size());
+				assertEquals("Charter node " + node.getName() + " should have 15 destinations", 15, node.getDestinations().size());
 			}
 		}
 
 		// Spot check newly added Charter nodes
 		assertNotNull("Port Tyras Charter should exist", TravelData.findNodeNear(2139, 3120, 0, 2));
 		assertNotNull("Sunset Coast Charter should exist", TravelData.findNodeNear(1510, 2970, 0, 2));
+		assertNotNull("Aldarin Charter should exist", TravelData.findNodeNear(1446, 2975, 0, 2));
+		assertNotNull("Port Piscarilius Charter should exist", TravelData.findNodeNear(1824, 3691, 0, 2));
+		assertNotNull("Land's End Charter should exist", TravelData.findNodeNear(1504, 3400, 0, 2));
 
 		// Spot check Spirit Tree registrations
 		assertNotNull("Spirit Tree Poison Waste should exist", TravelData.findNodeNear(2340, 3160, 0, 2));
 		assertNotNull("Spirit Tree Prifddinas should exist", TravelData.findNodeNear(3274, 6064, 0, 2));
 		assertNotNull("Spirit Tree Etceteria should exist", TravelData.findNodeNear(2608, 3857, 0, 2));
+		assertNotNull("Spirit Tree Myths' Guild should exist", TravelData.findNodeNear(2488, 2850, 0, 2));
 
-		// Spot check Quetzal Twilight Temple registration
+		// Spot check Quetzal registrations
 		assertNotNull("Quetzal Twilight Temple should exist", TravelData.findNodeNear(1460, 3280, 0, 2));
+		assertNotNull("Quetzal Sunset Coast should exist", TravelData.findNodeNear(1543, 3016, 0, 2));
+		assertNotNull("Quetzal The Teomat should exist", TravelData.findNodeNear(1445, 3171, 0, 2));
+		assertNotNull("Quetzal Outer Fortis should exist", TravelData.findNodeNear(1665, 3004, 0, 2));
+		assertNotNull("Quetzal Colossal Wyrm should exist", TravelData.findNodeNear(1705, 2911, 0, 2));
+		assertNotNull("Quetzal Salvager Overlook should exist", TravelData.findNodeNear(1610, 3307, 0, 2));
+		assertNotNull("Quetzal Auburnvale should exist", TravelData.findNodeNear(1368, 3350, 0, 2));
 
 		// Spot check Magic Carpet registrations
 		assertNotNull("Magic Carpet Bedabin Camp should exist", TravelData.findNodeNear(3180, 3042, 0, 2));
 		assertNotNull("Magic Carpet Sophanem should exist", TravelData.findNodeNear(3286, 2813, 0, 2));
+		assertNotNull("Magic Carpet Menaphos Gates should exist", TravelData.findNodeNear(3232, 2813, 0, 2));
+		assertNotNull("Magic Carpet Uzer should exist", TravelData.findNodeNear(3469, 3112, 0, 2));
 		assertNotNull("Magic Carpet Ruins of Unkah should exist", TravelData.findNodeNear(3146, 2840, 0, 2));
 
 		// Spot check Fairy Rings registrations
@@ -209,6 +221,27 @@ public class TravelDataTest
 		assertNotNull("Fairy Ring DJR Chasm of Fire should exist", TravelData.findNodeNear(1455, 3658, 0, 2));
 		assertNotNull("Fairy Ring CIR south of Mount Karuulm should exist", TravelData.findNodeNear(1302, 3762, 0, 2));
 		assertNotNull("Fairy Ring CIP Miscellania should exist", TravelData.findNodeNear(2513, 3884, 0, 2));
+		assertNotNull("Fairy Ring CKQ Aldarin should exist", TravelData.findNodeNear(1359, 2940, 0, 2));
+		assertNotNull("Fairy Ring ALQ Twilight Temple should exist", TravelData.findNodeNear(1427, 3266, 0, 2));
+		assertNotNull("Fairy Ring AJP Avium Savannah should exist", TravelData.findNodeNear(1720, 2950, 0, 2));
+
+		// Spot check Mine Carts
+		assertNotNull("Mine Cart Farming Guild should exist", TravelData.findNodeNear(1238, 3724, 0, 2));
+		assertNotNull("Mine Cart Hosidius South should exist", TravelData.findNodeNear(1770, 3505, 0, 2));
+		assertNotNull("Mine Cart Kingstown should exist", TravelData.findNodeNear(1680, 3678, 0, 2));
+		assertNotNull("Mine Cart Kourend Woodland should exist", TravelData.findNodeNear(1579, 3433, 0, 2));
+		assertNotNull("Mine Cart Northern Tundras should exist", TravelData.findNodeNear(1636, 3939, 0, 2));
+		assertNotNull("Mine Cart Shayzien West should exist", TravelData.findNodeNear(1417, 3574, 0, 2));
+		assertNotNull("Mine Cart Mount Quidamortem should exist", TravelData.findNodeNear(1247, 3560, 0, 2));
+		assertNotNull("Mine Cart Keldagrim Hub should exist", TravelData.findNodeNear(2910, 10178, 0, 2));
+		assertNotNull("Mine Cart Grand Exchange should exist", TravelData.findNodeNear(3140, 3504, 0, 2));
+		assertNotNull("Mine Cart Ice Mountain should exist", TravelData.findNodeNear(3019, 9827, 0, 2));
+		assertNotNull("Mine Cart White Wolf Mountain should exist", TravelData.findNodeNear(2874, 9868, 0, 2));
+
+		// Spot check Gnome Gliders
+		final TravelNode apeGlider = TravelData.findNodeNear(2712, 2804, 0, 2);
+		assertNotNull("Ape Atoll glider should exist", apeGlider);
+		assertEquals("Ookookolly Undri (Ape Atoll Glider)", apeGlider.getName());
 
 		// Spot check Reverse Ferries
 		assertNotNull("Miscellania reverse ferry should exist", TravelData.findNodeNear(2581, 3846, 0, 2));
@@ -236,6 +269,17 @@ public class TravelDataTest
 		assertNotNull("Slepe ferry (Slepe) should exist", TravelData.findNodeNear(3724, 3302, 0, 2));
 		assertNotNull("Corsair rowboat (Port Sarim) should exist", TravelData.findNodeNear(3055, 3242, 0, 2));
 		assertNotNull("Corsair rowboat (Corsair Cove) should exist", TravelData.findNodeNear(2589, 2851, 0, 2));
+		assertNotNull("Cabin Boy Colin (Rimmington) should exist", TravelData.findNodeNear(2919, 3225, 0, 2));
+		assertNotNull("Antonia's Ferry (Sunset Coast) should exist", TravelData.findNodeNear(1539, 3037, 0, 2));
+		assertNotNull("Antonia's Ferry (Aldarin) should exist", TravelData.findNodeNear(1456, 2972, 0, 2));
+		assertNotNull("Holgart's Boat (Witchaven) should exist", TravelData.findNodeNear(2724, 3305, 0, 2));
+		assertNotNull("Holgart's Boat (Fishing Platform) should exist", TravelData.findNodeNear(2780, 3274, 0, 2));
+		assertNotNull("Kathy Corkat (Stronghold) should exist", TravelData.findNodeNear(2383, 3433, 0, 2));
+		assertNotNull("Kathy Corkat (Piscatoris) should exist", TravelData.findNodeNear(2344, 3650, 0, 2));
+		assertNotNull("Ghost Captain (Port Phasmatys) should exist", TravelData.findNodeNear(3704, 3488, 0, 2));
+		assertNotNull("Ghost Captain (Dragontooth) should exist", TravelData.findNodeNear(3792, 3560, 0, 2));
+		assertNotNull("Rowboat to Meiyerditch (Burgh de Rott) should exist", TravelData.findNodeNear(3523, 3168, 0, 2));
+		assertNotNull("Rowboat to Burgh de Rott (Meiyerditch) should exist", TravelData.findNodeNear(3597, 3171, 0, 2));
 		assertNotNull("Ungael boat (Rellekka) should exist", TravelData.findNodeNear(2624, 3682, 0, 2));
 		assertNotNull("Ungael boat (Ungael) should exist", TravelData.findNodeNear(2272, 4040, 0, 2));
 		assertNotNull("Iceberg submarine (Rellekka) should exist", TravelData.findNodeNear(2707, 3735, 0, 2));

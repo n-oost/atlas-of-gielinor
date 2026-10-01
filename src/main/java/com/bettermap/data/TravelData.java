@@ -48,13 +48,12 @@ public final class TravelData
 		CANOE("Canoe Station", new Color(180, 130, 70), new Color(220, 175, 115)),
 		MINE_CART("Mine Cart & Rail", new Color(210, 140, 90), new Color(240, 180, 130)),
 		MAGIC_CARPET("Magic Carpet", new Color(245, 215, 60), new Color(255, 235, 120)),
-		QUETZAL("Quetzal Transport", new Color(60, 220, 240), new Color(130, 240, 255)),
-		SWAMP_BOAT("Swamp / River Boat", new Color(130, 180, 90), new Color(175, 215, 135));
+		QUETZAL("Quetzal Transport", new Color(240, 100, 140), new Color(255, 150, 180)),
+		SWAMP_BOAT("Swamp & River Boat", new Color(120, 180, 90), new Color(170, 220, 140));
 
 		private final String displayName;
 		private final Color primaryColor;
 		private final Color highlightColor;
-		/** Primary with alpha 180 — travel station pins on the map reuse this every frame. */
 		private final Color pinColor;
 
 		TravelType(String displayName, Color primaryColor, Color highlightColor)
@@ -62,7 +61,11 @@ public final class TravelData
 			this.displayName = displayName;
 			this.primaryColor = primaryColor;
 			this.highlightColor = highlightColor;
-			this.pinColor = new Color(primaryColor.getRed(), primaryColor.getGreen(), primaryColor.getBlue(), 180);
+			this.pinColor = new Color(
+				Math.min(255, (int) (primaryColor.getRed() * 1.15f)),
+				Math.min(255, (int) (primaryColor.getGreen() * 1.15f)),
+				Math.min(255, (int) (primaryColor.getBlue() * 1.15f))
+			);
 		}
 
 		public String getDisplayName()
@@ -200,6 +203,9 @@ public final class TravelData
 		final WorldPoint prifCharter = new WorldPoint(2150, 3330, 0);
 		final WorldPoint tyrasCharter = new WorldPoint(2139, 3120, 0);
 		final WorldPoint sunsetCharter = new WorldPoint(1510, 2970, 0);
+		final WorldPoint aldarinCharter = new WorldPoint(1446, 2975, 0);
+		final WorldPoint piscCharter = new WorldPoint(1824, 3691, 0);
+		final WorldPoint landsEndCharter = new WorldPoint(1504, 3400, 0);
 
 		// Port Sarim Charter
 		nodes.add(new TravelNode("Port Sarim Charter", psCharter, TravelType.CHARTER_SHIP, List.of(
@@ -214,7 +220,10 @@ public final class TravelData
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "1,600 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "1,600 gp")
 		)));
 
 		// Catherby Charter
@@ -230,7 +239,10 @@ public final class TravelData
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Brimhaven Charter
@@ -246,7 +258,10 @@ public final class TravelData
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Port Khazard Charter
@@ -262,7 +277,29 @@ public final class TravelData
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
+		)));
+
+		// Musa Point Charter
+		nodes.add(new TravelNode("Musa Point Charter", musaCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "1,000 gp"),
+			new TravelDestination("Catherby", cathCharter, "1,000 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "200 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "400 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "400 gp", "Grand Tree started"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "1,600 gp", "Cabin Fever"),
+			new TravelDestination("Corsair Cove", corsCharter, "1,600 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Port Phasmatys Charter
@@ -273,31 +310,75 @@ public final class TravelData
 			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp"),
 			new TravelDestination("Port Khazard", khazCharter, "3,200 gp"),
 			new TravelDestination("Shipyard (Karamja)", shipCharter, "3,200 gp", "Grand Tree started"),
-			new TravelDestination("Mos Le'Harmless", mosCharter, "550 gp", "Cabin Fever"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
 			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
+		)));
+
+		// Shipyard (Karamja) Charter
+		nodes.add(new TravelNode("Shipyard Charter", shipCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "400 gp"),
+			new TravelDestination("Catherby", cathCharter, "1,600 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "400 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "400 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "800 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "1,600 gp", "Cabin Fever"),
+			new TravelDestination("Corsair Cove", corsCharter, "1,600 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Mos Le'Harmless Charter
 		nodes.add(new TravelNode("Mos Le'Harmless Charter", mosCharter, TravelType.CHARTER_SHIP, List.of(
-			new TravelDestination("Port Phasmatys", phasCharter, "550 gp", "Ghosts Ahoy"),
 			new TravelDestination("Port Sarim", psCharter, "1,600 gp"),
 			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
 			new TravelDestination("Brimhaven", brimCharter, "1,600 gp"),
 			new TravelDestination("Musa Point (Karamja)", musaCharter, "1,600 gp"),
 			new TravelDestination("Port Khazard", khazCharter, "1,600 gp"),
-			new TravelDestination("Shipyard (Karamja)", shipCharter, "550 gp", "Grand Tree started"),
-			new TravelDestination("Corsair Cove", corsCharter, "1,600 gp", "The Corsair Curse"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "1,600 gp", "Grand Tree started"),
+			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "1,600 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
+		)));
+
+		// Corsair Cove Charter
+		nodes.add(new TravelNode("Corsair Cove Charter", corsCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "1,600 gp"),
+			new TravelDestination("Catherby", cathCharter, "1,600 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "1,600 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "1,600 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "1,600 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "1,600 gp", "Grand Tree started"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
-		// Civitas illa Fortis Charter
+		// Civitas illa Fortis Charter (Varlamore)
 		nodes.add(new TravelNode("Civitas illa Fortis Charter", fortCharter, TravelType.CHARTER_SHIP, List.of(
 			new TravelDestination("Port Sarim", psCharter, "3,200 gp"),
 			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
@@ -310,71 +391,29 @@ public final class TravelData
 			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "500 gp", "Children of the Sun")
-		)));
-
-		// Musa Point Charter
-		nodes.add(new TravelNode("Musa Point Charter", musaCharter, TravelType.CHARTER_SHIP, List.of(
-			new TravelDestination("Port Sarim", psCharter, "1,000 gp"),
-			new TravelDestination("Catherby", cathCharter, "1,000 gp"),
-			new TravelDestination("Brimhaven", brimCharter, "200 gp"),
-			new TravelDestination("Port Khazard", khazCharter, "400 gp"),
-			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
-			new TravelDestination("Shipyard (Karamja)", shipCharter, "200 gp", "Grand Tree started"),
-			new TravelDestination("Mos Le'Harmless", mosCharter, "1,600 gp", "Cabin Fever"),
-			new TravelDestination("Corsair Cove", corsCharter, "1,600 gp", "The Corsair Curse"),
-			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
-			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
-		)));
-
-		// Shipyard (Karamja) Charter
-		nodes.add(new TravelNode("Shipyard Charter", shipCharter, TravelType.CHARTER_SHIP, List.of(
-			new TravelDestination("Port Sarim", psCharter, "400 gp", "Grand Tree started"),
-			new TravelDestination("Catherby", cathCharter, "1,600 gp"),
-			new TravelDestination("Brimhaven", brimCharter, "400 gp"),
-			new TravelDestination("Musa Point (Karamja)", musaCharter, "200 gp"),
-			new TravelDestination("Port Khazard", khazCharter, "800 gp"),
-			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
-			new TravelDestination("Mos Le'Harmless", mosCharter, "550 gp", "Cabin Fever"),
-			new TravelDestination("Corsair Cove", corsCharter, "1,600 gp", "The Corsair Curse"),
-			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
-			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
-		)));
-
-		// Corsair Cove Charter
-		nodes.add(new TravelNode("Corsair Cove Charter", corsCharter, TravelType.CHARTER_SHIP, List.of(
-			new TravelDestination("Port Sarim", psCharter, "1,600 gp"),
-			new TravelDestination("Catherby", cathCharter, "1,600 gp"),
-			new TravelDestination("Brimhaven", brimCharter, "1,600 gp"),
-			new TravelDestination("Musa Point (Karamja)", musaCharter, "1,600 gp"),
-			new TravelDestination("Port Khazard", khazCharter, "1,600 gp"),
-			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
-			new TravelDestination("Shipyard (Karamja)", shipCharter, "1,600 gp", "Grand Tree started"),
-			new TravelDestination("Mos Le'Harmless", mosCharter, "1,600 gp", "Cabin Fever"),
-			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
-			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "500 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "500 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Prifddinas Charter
 		nodes.add(new TravelNode("Prifddinas Charter", prifCharter, TravelType.CHARTER_SHIP, List.of(
-			new TravelDestination("Port Sarim", psCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Catherby", cathCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Brimhaven", brimCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Port Khazard", khazCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Sarim", psCharter, "3,200 gp"),
+			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "3,200 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "3,200 gp"),
 			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
 			new TravelDestination("Shipyard (Karamja)", shipCharter, "3,200 gp", "Grand Tree started"),
 			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
 			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Port Tyras Charter
@@ -390,7 +429,10 @@ public final class TravelData
 			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun")
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
 		)));
 
 		// Sunset Coast Charter
@@ -406,7 +448,67 @@ public final class TravelData
 			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
 			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "500 gp", "Children of the Sun"),
 			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
-			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide")
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "500 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
+		)));
+
+		// Aldarin Charter (Varlamore Part 2)
+		nodes.add(new TravelNode("Aldarin Charter", aldarinCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "3,200 gp"),
+			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "3,200 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "3,200 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "3,200 gp", "Grand Tree started"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
+			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "500 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "500 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "3,200 gp"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "3,200 gp")
+		)));
+
+		// Port Piscarilius Charter (Kourend)
+		nodes.add(new TravelNode("Port Piscarilius Charter", piscCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "1,600 gp"),
+			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "3,200 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "3,200 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "3,200 gp", "Grand Tree started"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
+			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Land's End (Kourend)", landsEndCharter, "500 gp")
+		)));
+
+		// Land's End Charter (Kourend)
+		nodes.add(new TravelNode("Land's End Charter", landsEndCharter, TravelType.CHARTER_SHIP, List.of(
+			new TravelDestination("Port Sarim", psCharter, "1,600 gp"),
+			new TravelDestination("Catherby", cathCharter, "3,200 gp"),
+			new TravelDestination("Brimhaven", brimCharter, "3,200 gp"),
+			new TravelDestination("Musa Point (Karamja)", musaCharter, "3,200 gp"),
+			new TravelDestination("Port Khazard", khazCharter, "3,200 gp"),
+			new TravelDestination("Port Phasmatys", phasCharter, "3,200 gp", "Ghosts Ahoy"),
+			new TravelDestination("Shipyard (Karamja)", shipCharter, "3,200 gp", "Grand Tree started"),
+			new TravelDestination("Mos Le'Harmless", mosCharter, "3,200 gp", "Cabin Fever"),
+			new TravelDestination("Corsair Cove", corsCharter, "3,200 gp", "The Corsair Curse"),
+			new TravelDestination("Civitas illa Fortis (Varlamore)", fortCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Prifddinas", prifCharter, "3,200 gp", "Song of the Elves"),
+			new TravelDestination("Port Tyras", tyrasCharter, "3,200 gp", "Regicide"),
+			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
+			new TravelDestination("Port Piscarilius (Kourend)", piscCharter, "500 gp")
 		)));
 	}
 
@@ -545,14 +647,19 @@ public final class TravelData
 			new TravelDestination("Ectofuntus / Port Phasmatys", ectofuntusFerry, "Free", "Priest in Peril")
 		)));
 
-		// Corsair Cove rowboat (Cabin Boy Jenkins / Captain Tock)
+		// Corsair Cove rowboat (Cabin Boy Jenkins / Captain Tock / Colin)
 		final WorldPoint psCorsairRowboat = new WorldPoint(3055, 3242, 0);
 		final WorldPoint corsairRowboat = new WorldPoint(2589, 2851, 0);
+		final WorldPoint rimmingtonColin = new WorldPoint(2919, 3225, 0);
 		nodes.add(new TravelNode("Corsair Rowboat (Port Sarim)", psCorsairRowboat, TravelType.FERRY, List.of(
 			new TravelDestination("Corsair Cove", corsairRowboat, "Free", "The Corsair Curse")
 		)));
 		nodes.add(new TravelNode("Corsair Rowboat (Corsair Cove)", corsairRowboat, TravelType.FERRY, List.of(
-			new TravelDestination("Port Sarim", psCorsairRowboat, "Free", "The Corsair Curse")
+			new TravelDestination("Port Sarim", psCorsairRowboat, "Free", "The Corsair Curse"),
+			new TravelDestination("Rimmington", rimmingtonColin, "Free", "The Corsair Curse")
+		)));
+		nodes.add(new TravelNode("Cabin Boy Colin (Rimmington)", rimmingtonColin, TravelType.FERRY, List.of(
+			new TravelDestination("Corsair Cove", corsairRowboat, "Free", "The Corsair Curse")
 		)));
 
 		// Torfinn's boat to Ungael (Vorkath)
@@ -599,6 +706,56 @@ public final class TravelData
 		nodes.add(new TravelNode("Isle of Souls Ferry", isleOfSoulsPier, TravelType.FERRY, List.of(
 			new TravelDestination("Land's End (Kourend)", landsEnd, "Free")
 		)));
+
+		// Antonia's Ferry: Sunset Coast ⇄ Aldarin (Varlamore Part 2)
+		final WorldPoint sunsetAntonia = new WorldPoint(1539, 3037, 0);
+		final WorldPoint aldarinAntonia = new WorldPoint(1456, 2972, 0);
+		nodes.add(new TravelNode("Antonia's Ferry (Sunset Coast)", sunsetAntonia, TravelType.FERRY, List.of(
+			new TravelDestination("Aldarin", aldarinAntonia, "20 gp", "Children of the Sun")
+		)));
+		nodes.add(new TravelNode("Antonia's Ferry (Aldarin)", aldarinAntonia, TravelType.FERRY, List.of(
+			new TravelDestination("Sunset Coast", sunsetAntonia, "20 gp", "Children of the Sun")
+		)));
+
+		// Holgart's Boat: Witchaven ⇄ Fishing Platform
+		final WorldPoint witchavenPier = new WorldPoint(2724, 3305, 0);
+		final WorldPoint fishingPlatformPier = new WorldPoint(2780, 3274, 0);
+		nodes.add(new TravelNode("Holgart's Boat (Witchaven)", witchavenPier, TravelType.FERRY, List.of(
+			new TravelDestination("Fishing Platform", fishingPlatformPier, "Free", "Sea Slug")
+		)));
+		nodes.add(new TravelNode("Holgart's Boat (Fishing Platform)", fishingPlatformPier, TravelType.FERRY, List.of(
+			new TravelDestination("Witchaven", witchavenPier, "Free", "Sea Slug")
+		)));
+
+		// Kathy Corkat's Boat: Tree Gnome Stronghold ⇄ Piscatoris
+		final WorldPoint strongholdCorkat = new WorldPoint(2383, 3433, 0);
+		final WorldPoint piscatorisCorkat = new WorldPoint(2344, 3650, 0);
+		nodes.add(new TravelNode("Kathy Corkat's Boat (Tree Gnome Stronghold)", strongholdCorkat, TravelType.FERRY, List.of(
+			new TravelDestination("Piscatoris Fishing Colony", piscatorisCorkat, "Free", "Swan Song")
+		)));
+		nodes.add(new TravelNode("Kathy Corkat's Boat (Piscatoris)", piscatorisCorkat, TravelType.FERRY, List.of(
+			new TravelDestination("Tree Gnome Stronghold", strongholdCorkat, "Free", "Swan Song")
+		)));
+
+		// Ghost Captain's Rowboat: Port Phasmatys ⇄ Dragontooth Island
+		final WorldPoint phasDragontooth = new WorldPoint(3704, 3488, 0);
+		final WorldPoint dragontoothPier = new WorldPoint(3792, 3560, 0);
+		nodes.add(new TravelNode("Ghost Captain's Rowboat (Port Phasmatys)", phasDragontooth, TravelType.FERRY, List.of(
+			new TravelDestination("Dragontooth Island", dragontoothPier, "Free (or 1-5 Ecto-tokens)", "Ghosts Ahoy")
+		)));
+		nodes.add(new TravelNode("Ghost Captain's Rowboat (Dragontooth Island)", dragontoothPier, TravelType.FERRY, List.of(
+			new TravelDestination("Port Phasmatys", phasDragontooth, "Free", "Ghosts Ahoy")
+		)));
+
+		// Rowboat to Meiyerditch: Burgh de Rott ⇄ Meiyerditch
+		final WorldPoint burghRowboat = new WorldPoint(3523, 3168, 0);
+		final WorldPoint meiyerditchRowboat = new WorldPoint(3597, 3171, 0);
+		nodes.add(new TravelNode("Rowboat to Meiyerditch (Burgh de Rott)", burghRowboat, TravelType.FERRY, List.of(
+			new TravelDestination("Meiyerditch / Icyene Graveyard", meiyerditchRowboat, "Free", "Darkness of Hallowvale")
+		)));
+		nodes.add(new TravelNode("Rowboat to Burgh de Rott (Meiyerditch)", meiyerditchRowboat, TravelType.FERRY, List.of(
+			new TravelDestination("Burgh de Rott", burghRowboat, "Free", "Darkness of Hallowvale")
+		)));
 	}
 
 	/** 3. GNOME GLIDERS (Hub: Grand Tree) */
@@ -616,23 +773,23 @@ public final class TravelData
 			new TravelDestination("Kar-Hewo (Al Kharid)", alkGlider, "Free", "The Grand Tree"),
 			new TravelDestination("Lemantolly Undri (Feldip Hills)", felGlider, "Free", "One Small Favour"),
 			new TravelDestination("Gandius (Karamja)", karGlider, "Free", "The Grand Tree"),
-			new TravelDestination("Lemanto Andra (Ape Atoll)", apeGlider, "Free", "Monkey Madness II")
+			new TravelDestination("Ookookolly Undri (Ape Atoll)", apeGlider, "Free", "Monkey Madness II")
 		);
 
 		nodes.add(new TravelNode("Ta Quir Priw (Grand Tree Glider Hub)", gtGlider, TravelType.GNOME_GLIDER, gtDests));
-		nodes.add(new TravelNode("Sindarpos (White Wolf Mtn Glider)", wwmGlider, TravelType.GNOME_GLIDER, List.of(
+		nodes.add(new TravelNode("Sindarpos (White Wolf Mountain Glider)", wwmGlider, TravelType.GNOME_GLIDER, List.of(
 			new TravelDestination("Ta Quir Priw (Grand Tree)", gtGlider, "Free")
 		)));
 		nodes.add(new TravelNode("Kar-Hewo (Al Kharid Glider)", alkGlider, TravelType.GNOME_GLIDER, List.of(
 			new TravelDestination("Ta Quir Priw (Grand Tree)", gtGlider, "Free")
 		)));
-		nodes.add(new TravelNode("Lemantolly Undri (Feldip Glider)", felGlider, TravelType.GNOME_GLIDER, List.of(
+		nodes.add(new TravelNode("Lemantolly Undri (Feldip Hills Glider)", felGlider, TravelType.GNOME_GLIDER, List.of(
 			new TravelDestination("Ta Quir Priw (Grand Tree)", gtGlider, "Free")
 		)));
 		nodes.add(new TravelNode("Gandius (Karamja Glider)", karGlider, TravelType.GNOME_GLIDER, List.of(
 			new TravelDestination("Ta Quir Priw (Grand Tree)", gtGlider, "Free")
 		)));
-		nodes.add(new TravelNode("Lemanto Andra (Ape Atoll Glider)", apeGlider, TravelType.GNOME_GLIDER, List.of(
+		nodes.add(new TravelNode("Ookookolly Undri (Ape Atoll Glider)", apeGlider, TravelType.GNOME_GLIDER, List.of(
 			new TravelDestination("Ta Quir Priw (Grand Tree)", gtGlider, "Free")
 		)));
 	}
@@ -646,6 +803,7 @@ public final class TravelData
 		final WorldPoint stKhazard = new WorldPoint(2555, 3259, 0);
 		final WorldPoint stFeldip = new WorldPoint(2340, 3160, 0);
 		final WorldPoint stPrif = new WorldPoint(3274, 6064, 0);
+		final WorldPoint stMyths = new WorldPoint(2488, 2850, 0);
 		final WorldPoint stBrim = new WorldPoint(2800, 3204, 0);
 		final WorldPoint stHosidius = new WorldPoint(1693, 3538, 0);
 		final WorldPoint stPortSarim = new WorldPoint(3059, 3257, 0);
@@ -659,6 +817,7 @@ public final class TravelData
 			new TravelDestination("Battlefield of Khazard", stKhazard, "Free", "Tree Gnome Village"),
 			new TravelDestination("Poison Waste (Feldip)", stFeldip, "Free", "The Path of Glouphrie"),
 			new TravelDestination("Prifddinas", stPrif, "Free", "Song of the Elves"),
+			new TravelDestination("Feldip Hills (Myths' Guild)", stMyths, "Free", "Dragon Slayer II"),
 			new TravelDestination("Brimhaven Patch", stBrim, "Free", "83 Farming"),
 			new TravelDestination("Hosidius Patch", stHosidius, "Free", "83 Farming"),
 			new TravelDestination("Port Sarim Patch", stPortSarim, "Free", "83 Farming"),
@@ -672,6 +831,7 @@ public final class TravelData
 		nodes.add(new TravelNode("Spirit Tree (Battlefield of Khazard)", stKhazard, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Poison Waste)", stFeldip, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Prifddinas)", stPrif, TravelType.SPIRIT_TREE, stDests));
+		nodes.add(new TravelNode("Spirit Tree (Myths' Guild)", stMyths, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Brimhaven)", stBrim, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Hosidius)", stHosidius, TravelType.SPIRIT_TREE, stDests));
 		nodes.add(new TravelNode("Spirit Tree (Port Sarim)", stPortSarim, TravelType.SPIRIT_TREE, stDests));
@@ -697,6 +857,9 @@ public final class TravelData
 		final WorldPoint frChasm = new WorldPoint(1455, 3658, 0);
 		final WorldPoint frKaruulm = new WorldPoint(1302, 3762, 0);
 		final WorldPoint frQuidamortem = new WorldPoint(1295, 3493, 0);
+		final WorldPoint frAldarin = new WorldPoint(1359, 2940, 0);
+		final WorldPoint frTwilight = new WorldPoint(1427, 3266, 0);
+		final WorldPoint frWyrm = new WorldPoint(1720, 2950, 0);
 
 		final List<TravelDestination> frDests = List.of(
 			new TravelDestination("Zanaris Main Hub", frZanaris, "Free", "Fairytale II"),
@@ -713,7 +876,10 @@ public final class TravelData
 			new TravelDestination("CIS (Arceuus Library)", frArceuus, "Free"),
 			new TravelDestination("DJR (Chasm of Fire)", frChasm, "Free"),
 			new TravelDestination("CIR (South of Mount Karuulm)", frKaruulm, "Free"),
-			new TravelDestination("BLS (Mount Quidamortem / CoX)", frQuidamortem, "Free")
+			new TravelDestination("BLS (Mount Quidamortem / CoX)", frQuidamortem, "Free"),
+			new TravelDestination("CKQ (Aldarin)", frAldarin, "Free"),
+			new TravelDestination("ALQ (Twilight Temple / Ralos' Rise)", frTwilight, "Free"),
+			new TravelDestination("AJP (Avium Savannah / Colossal Wyrm)", frWyrm, "Free")
 		);
 
 		nodes.add(new TravelNode("Fairy Ring (Zanaris)", frZanaris, TravelType.FAIRY_RING, frDests));
@@ -731,6 +897,9 @@ public final class TravelData
 		nodes.add(new TravelNode("Fairy Ring DJR (Chasm of Fire)", frChasm, TravelType.FAIRY_RING, frDests));
 		nodes.add(new TravelNode("Fairy Ring CIR (South of Mount Karuulm)", frKaruulm, TravelType.FAIRY_RING, frDests));
 		nodes.add(new TravelNode("Fairy Ring BLS (Mount Quidamortem)", frQuidamortem, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring CKQ (Aldarin)", frAldarin, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring ALQ (Twilight Temple)", frTwilight, TravelType.FAIRY_RING, frDests));
+		nodes.add(new TravelNode("Fairy Ring AJP (Avium Savannah)", frWyrm, TravelType.FAIRY_RING, frDests));
 	}
 
 	/** 6. HOT AIR BALLOONS (Enlightened Journey) */
@@ -784,7 +953,7 @@ public final class TravelData
 		nodes.add(new TravelNode("Canoe Station (Wilderness)", cnWilderness, TravelType.CANOE, cnDests));
 	}
 
-	/** 8. MINE CARTS and RAIL */
+	/** 8. MINE CARTS (Lovakengj Network, Keldagrim, Shilo) */
 	private static void addMineCarts(List<TravelNode> nodes)
 	{
 		final WorldPoint mcLovakengj = new WorldPoint(1518, 3737, 0);
@@ -792,29 +961,72 @@ public final class TravelData
 		final WorldPoint mcShayzien = new WorldPoint(1492, 3615, 0);
 		final WorldPoint mcHosidius = new WorldPoint(1656, 3543, 0);
 		final WorldPoint mcPisc = new WorldPoint(1797, 3758, 0);
-		final WorldPoint mcBrimCart = new WorldPoint(2758, 3214, 0);
-		final WorldPoint mcShilo = new WorldPoint(2834, 2954, 0);
+		final WorldPoint mcFarmGuild = new WorldPoint(1238, 3724, 0);
+		final WorldPoint mcHosSouth = new WorldPoint(1770, 3505, 0);
+		final WorldPoint mcKingstown = new WorldPoint(1680, 3678, 0);
+		final WorldPoint mcWoodland = new WorldPoint(1579, 3433, 0);
+		final WorldPoint mcTundras = new WorldPoint(1636, 3939, 0);
+		final WorldPoint mcShayWest = new WorldPoint(1417, 3574, 0);
+		final WorldPoint mcQuidamortem = new WorldPoint(1247, 3560, 0);
 
+		final String mcKourendCost = "20 gp / Free with The Forsaken Tower";
 		final List<TravelDestination> mcKourendDests = List.of(
-			new TravelDestination("Lovakengj Central Station", mcLovakengj, "50 gp / Free with 100% favor"),
-			new TravelDestination("Arceuus Station", mcArceuus, "50 gp / Free with 100% favor"),
-			new TravelDestination("Shayzien Station", mcShayzien, "50 gp / Free with 100% favor"),
-			new TravelDestination("Hosidius Station", mcHosidius, "50 gp / Free with 100% favor"),
-			new TravelDestination("Port Piscarilius Station", mcPisc, "50 gp / Free with 100% favor")
+			new TravelDestination("Lovakengj Central Station", mcLovakengj, mcKourendCost),
+			new TravelDestination("Arceuus Station", mcArceuus, mcKourendCost),
+			new TravelDestination("Shayzien East Station", mcShayzien, mcKourendCost),
+			new TravelDestination("Hosidius Station", mcHosidius, mcKourendCost),
+			new TravelDestination("Port Piscarilius Station", mcPisc, mcKourendCost),
+			new TravelDestination("Farming Guild Station", mcFarmGuild, mcKourendCost),
+			new TravelDestination("Hosidius South Station (Tithe Farm)", mcHosSouth, mcKourendCost),
+			new TravelDestination("Kingstown Station", mcKingstown, mcKourendCost),
+			new TravelDestination("Kourend Woodland Station", mcWoodland, mcKourendCost),
+			new TravelDestination("Northern Tundras Station (Wintertodt)", mcTundras, mcKourendCost),
+			new TravelDestination("Shayzien West Station (Wall)", mcShayWest, mcKourendCost),
+			new TravelDestination("Mount Quidamortem Station", mcQuidamortem, mcKourendCost)
 		);
 
 		nodes.add(new TravelNode("Mine Cart (Lovakengj Central)", mcLovakengj, TravelType.MINE_CART, mcKourendDests));
 		nodes.add(new TravelNode("Mine Cart (Arceuus)", mcArceuus, TravelType.MINE_CART, mcKourendDests));
-		nodes.add(new TravelNode("Mine Cart (Shayzien)", mcShayzien, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Shayzien East)", mcShayzien, TravelType.MINE_CART, mcKourendDests));
 		nodes.add(new TravelNode("Mine Cart (Hosidius)", mcHosidius, TravelType.MINE_CART, mcKourendDests));
 		nodes.add(new TravelNode("Mine Cart (Port Piscarilius)", mcPisc, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Farming Guild)", mcFarmGuild, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Hosidius South)", mcHosSouth, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Kingstown)", mcKingstown, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Kourend Woodland)", mcWoodland, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Northern Tundras)", mcTundras, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Shayzien West)", mcShayWest, TravelType.MINE_CART, mcKourendDests));
+		nodes.add(new TravelNode("Mine Cart (Mount Quidamortem)", mcQuidamortem, TravelType.MINE_CART, mcKourendDests));
 
 		// Shilo Village Cart
+		final WorldPoint mcBrimCart = new WorldPoint(2758, 3214, 0);
+		final WorldPoint mcShilo = new WorldPoint(2834, 2954, 0);
 		nodes.add(new TravelNode("Brimhaven Cart to Shilo", mcBrimCart, TravelType.MINE_CART, List.of(
 			new TravelDestination("Shilo Village", mcShilo, "10 - 200 gp", "Shilo Village quest")
 		)));
 		nodes.add(new TravelNode("Shilo Village Cart to Brimhaven", mcShilo, TravelType.MINE_CART, List.of(
 			new TravelDestination("Brimhaven", mcBrimCart, "10 - 200 gp", "Shilo Village quest")
+		)));
+
+		// Keldagrim Minecart System
+		final WorldPoint mcKeldHub = new WorldPoint(2910, 10178, 0);
+		final WorldPoint mcGrandExchange = new WorldPoint(3140, 3504, 0);
+		final WorldPoint mcIceMountain = new WorldPoint(3019, 9827, 0);
+		final WorldPoint mcWhiteWolf = new WorldPoint(2874, 9868, 0);
+
+		nodes.add(new TravelNode("Mine Cart (Keldagrim Hub)", mcKeldHub, TravelType.MINE_CART, List.of(
+			new TravelDestination("Grand Exchange (Trapdoor)", mcGrandExchange, "Free", "The Giant Dwarf"),
+			new TravelDestination("Ice Mountain / Dwarven Mines", mcIceMountain, "150 gp", "The Giant Dwarf"),
+			new TravelDestination("White Wolf Mountain", mcWhiteWolf, "150 gp", "Fishing Contest")
+		)));
+		nodes.add(new TravelNode("Mine Cart (Grand Exchange)", mcGrandExchange, TravelType.MINE_CART, List.of(
+			new TravelDestination("Keldagrim Hub", mcKeldHub, "Free", "The Giant Dwarf")
+		)));
+		nodes.add(new TravelNode("Mine Cart (Ice Mountain)", mcIceMountain, TravelType.MINE_CART, List.of(
+			new TravelDestination("Keldagrim Hub", mcKeldHub, "150 gp", "The Giant Dwarf")
+		)));
+		nodes.add(new TravelNode("Mine Cart (White Wolf Mountain)", mcWhiteWolf, TravelType.MINE_CART, List.of(
+			new TravelDestination("Keldagrim Hub", mcKeldHub, "150 gp", "Fishing Contest")
 		)));
 	}
 
@@ -827,10 +1039,14 @@ public final class TravelData
 		final WorldPoint carpNardah = new WorldPoint(3400, 2916, 0);
 		final WorldPoint carpBedabin = new WorldPoint(3180, 3042, 0);
 		final WorldPoint carpSoph = new WorldPoint(3286, 2813, 0);
+		final WorldPoint carpMenaphos = new WorldPoint(3232, 2813, 0);
+		final WorldPoint carpUzer = new WorldPoint(3469, 3112, 0);
 		final WorldPoint carpUnkah = new WorldPoint(3146, 2840, 0);
 
 		nodes.add(new TravelNode("Magic Carpet (Shantay Pass)", carpShantay, TravelType.MAGIC_CARPET, List.of(
-			new TravelDestination("Pollnivneach (North)", carpPolN, "200 gp (100 gp with Ring of Charos)")
+			new TravelDestination("Pollnivneach (North)", carpPolN, "200 gp (100 gp with Ring of Charos)"),
+			new TravelDestination("Bedabin Camp", carpBedabin, "200 gp"),
+			new TravelDestination("Uzer", carpUzer, "200 gp", "The Golem")
 		)));
 		nodes.add(new TravelNode("Magic Carpet (Pollnivneach North)", carpPolN, TravelType.MAGIC_CARPET, List.of(
 			new TravelDestination("Shantay Pass (Al Kharid)", carpShantay, "200 gp")
@@ -838,17 +1054,25 @@ public final class TravelData
 		nodes.add(new TravelNode("Magic Carpet (Pollnivneach South)", carpPolS, TravelType.MAGIC_CARPET, List.of(
 			new TravelDestination("Nardah", carpNardah, "200 gp"),
 			new TravelDestination("Bedabin Camp", carpBedabin, "200 gp"),
-			new TravelDestination("Sophanem / Menaphos", carpSoph, "200 gp", "Icthlarin's Little Helper"),
+			new TravelDestination("Sophanem", carpSoph, "200 gp", "Icthlarin's Little Helper"),
+			new TravelDestination("Menaphos Gates", carpMenaphos, "200 gp", "Icthlarin's Little Helper"),
 			new TravelDestination("Ruins of Unkah", carpUnkah, "200 gp")
 		)));
 		nodes.add(new TravelNode("Magic Carpet (Nardah)", carpNardah, TravelType.MAGIC_CARPET, List.of(
 			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp")
 		)));
 		nodes.add(new TravelNode("Magic Carpet (Bedabin Camp)", carpBedabin, TravelType.MAGIC_CARPET, List.of(
-			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp")
+			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp"),
+			new TravelDestination("Shantay Pass (Al Kharid)", carpShantay, "200 gp")
 		)));
 		nodes.add(new TravelNode("Magic Carpet (Sophanem)", carpSoph, TravelType.MAGIC_CARPET, List.of(
 			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp", "Icthlarin's Little Helper")
+		)));
+		nodes.add(new TravelNode("Magic Carpet (Menaphos Gates)", carpMenaphos, TravelType.MAGIC_CARPET, List.of(
+			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp", "Icthlarin's Little Helper")
+		)));
+		nodes.add(new TravelNode("Magic Carpet (Uzer)", carpUzer, TravelType.MAGIC_CARPET, List.of(
+			new TravelDestination("Shantay Pass (Al Kharid)", carpShantay, "200 gp", "The Golem")
 		)));
 		nodes.add(new TravelNode("Magic Carpet (Ruins of Unkah)", carpUnkah, TravelType.MAGIC_CARPET, List.of(
 			new TravelDestination("Pollnivneach (South)", carpPolS, "200 gp")
@@ -864,14 +1088,27 @@ public final class TravelData
 		final WorldPoint qzCamTorum = new WorldPoint(1435, 3131, 0);
 		final WorldPoint qzColosseum = new WorldPoint(1794, 3107, 0);
 		final WorldPoint qzTwilight = new WorldPoint(1460, 3280, 0);
+		final WorldPoint qzSunset = new WorldPoint(1543, 3016, 0);
+		final WorldPoint qzTeomat = new WorldPoint(1445, 3171, 0);
+		final WorldPoint qzOuterFortis = new WorldPoint(1665, 3004, 0);
+		final WorldPoint qzWyrm = new WorldPoint(1705, 2911, 0);
+		final WorldPoint qzSalvager = new WorldPoint(1610, 3307, 0);
+		final WorldPoint qzAuburnvale = new WorldPoint(1368, 3350, 0);
 
+		final String qzWhistleCost = "Free (or Quetzal Whistle)";
 		final List<TravelDestination> qzDests = List.of(
-			new TravelDestination("Civitas illa Fortis (Central Nest)", qzCivitas, "Free (or Quetzal Whistle)", "Children of the Sun"),
-			new TravelDestination("Hunter Guild Nest", qzHunter, "Free (or Quetzal Whistle)", "Hunter Rumours"),
-			new TravelDestination("Aldarin Nest", qzAldarin, "Free (or Quetzal Whistle)"),
-			new TravelDestination("Cam Torum Nest", qzCamTorum, "Free (or Quetzal Whistle)", "Perilous Moons"),
-			new TravelDestination("Fortis Colosseum Nest", qzColosseum, "Free (or Quetzal Whistle)"),
-			new TravelDestination("Twilight Temple / Ralo's Rise", qzTwilight, "Free (or Quetzal Whistle)")
+			new TravelDestination("Civitas illa Fortis (Central Nest)", qzCivitas, qzWhistleCost, "Children of the Sun"),
+			new TravelDestination("Hunter Guild Nest", qzHunter, qzWhistleCost, "Hunter Rumours"),
+			new TravelDestination("Aldarin Nest", qzAldarin, qzWhistleCost),
+			new TravelDestination("Cam Torum Nest", qzCamTorum, qzWhistleCost, "Perilous Moons"),
+			new TravelDestination("Fortis Colosseum Nest", qzColosseum, qzWhistleCost),
+			new TravelDestination("Twilight Temple / Ralo's Rise", qzTwilight, qzWhistleCost),
+			new TravelDestination("Sunset Coast Nest", qzSunset, qzWhistleCost),
+			new TravelDestination("The Teomat Nest", qzTeomat, qzWhistleCost),
+			new TravelDestination("Outer Fortis / Avium Savannah Nest", qzOuterFortis, qzWhistleCost),
+			new TravelDestination("Colossal Wyrm Remains Nest", qzWyrm, qzWhistleCost),
+			new TravelDestination("Salvager Overlook Nest", qzSalvager, qzWhistleCost),
+			new TravelDestination("Auburnvale Nest", qzAuburnvale, qzWhistleCost)
 		);
 
 		nodes.add(new TravelNode("Quetzal Nest (Civitas illa Fortis)", qzCivitas, TravelType.QUETZAL, qzDests));
@@ -880,6 +1117,12 @@ public final class TravelData
 		nodes.add(new TravelNode("Quetzal Nest (Cam Torum)", qzCamTorum, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Fortis Colosseum)", qzColosseum, TravelType.QUETZAL, qzDests));
 		nodes.add(new TravelNode("Quetzal Nest (Twilight Temple)", qzTwilight, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Sunset Coast)", qzSunset, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (The Teomat)", qzTeomat, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Outer Fortis)", qzOuterFortis, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Colossal Wyrm Remains)", qzWyrm, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Salvager Overlook)", qzSalvager, TravelType.QUETZAL, qzDests));
+		nodes.add(new TravelNode("Quetzal Nest (Auburnvale)", qzAuburnvale, TravelType.QUETZAL, qzDests));
 	}
 
 	/** 11. SWAMP and RIVER BOATS */

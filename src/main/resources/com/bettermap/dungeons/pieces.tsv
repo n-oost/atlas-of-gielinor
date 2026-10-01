@@ -250,7 +250,7 @@
 #L	1339	1	Mind altar	200
 #L	1340	1	Water altar	204
 #L	1341	1	Weiss	219
-#L	1342	1	Grimstone Dungeon	219
+#L	1342	1	Grimstone Dungeon	1400
 #L	1343	1	Chaos Druid Tower dungeon	210
 #L	1344	1	Crash Island Dungeon	237
 #L	1345	1	Wilderness Slayer Cave	241
@@ -290,18 +290,19 @@
 #L	1385	1	Yanille Agility Dungeon (2)	214
 #L	1386	1	Legends Guild Dungeon	100
 #L	1387	1	Poison Wastes Sewer	100
-# piece	layer	plane	label	srcMinX	srcMinY	srcMaxX	srcMaxY	dstDx	dstDy	rot	locked	flip	zone
 #L	1388	1	God Wars Dungeon (Saradomin)	1069
 #L	1389	1	Dagannoth Kings Lair	1195
 #L	1390	1	Abyssal Nexus	1275
 #L	1391	1	God Wars Dungeon (Nex)	1069
-#L	1392	1	Phantom Muspah	1023
-#L	1393	1	Duke Sucellus	1023
+#L	1392	1	Phantom Muspah	1400
+#L	1393	1	Duke Sucellus	1400
 #L	1394	1	The Scar (Leviathan)	1275
 #L	1395	1	Scorpia Cave	241
 #L	1397	1	Silk Chasm	241
 #L	1398	1	Skotizo Arena	1021
 #L	1399	1	Cerberus Lair	1162
+#L	1400	1	Ghorrock Dungeon	219
+# piece	layer	plane	label	srcMinX	srcMinY	srcMaxX	srcMaxY	dstDx	dstDy	rot	locked	flip	zone
 47	1020	0	Cam Torum under or above ground?	1393	9517	1494	9607	-4	-6381	0	1	0	cam_torum
 48	1126	0	Neypotzli — Earthbound Cavern (Hunter)	1343	9666	1408	9743	9	-6393	0	1	0	neypotzli
 49	1126	0	Neypotzli — Streambound Cavern (Fishing)	1472	9664	1535	9726	-17	-6393	0	1	0	neypotzli
@@ -328,7 +329,7 @@
 17	1301	0	Tiles (dump leftover) (island 5)	2536	9692	2551	9703	5709	-6421	0	0	0	-
 18	1301	0	Tiles (dump leftover) (island 6)	2532	9616	2539	9623	5709	-6421	0	0	0	-
 19	1007	0	Asgarnian Ice Dungeon	2820	9536	3087	9601	0	-6400	0	1	0	asgarnia_ice_cave
-20	1007	0	Asgarnian Ice Dungeon (island 2)	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
+20	1016	0	Rashiliyia's Tomb	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
 23	1008	0	Banana plantation	2684	9156	2743	9211	0	-6400	0	0	0	-
 24	1009	0	Barbarian Assault Room	1864	5448	1911	5494	647	-1889	0	1	0	barbarian_assault
 25	1009	0	Barbarian Assault Queen Room	1860	5388	1911	5427	647	-1825	0	1	0	barbarian_assault
@@ -511,7 +512,6 @@
 239	1301	1	Tiles (dump leftover) (island 2)	3876	9664	3887	9671	5698	-6422	0	0	0	-
 240	1204	0	Jiggig Dungeon	2436	9412	2491	9460	0	-6400	0	1	0	jiggig_dungeon
 241	1154	0	Smoke Dungeon	3165	9344	3330	9407	104	-6418	0	1	0	smoke_dungeon
-242	1140	0	Shadow Dungeon	2618	5056	2751	5120	-42	-1600	0	0	0	shadow_dungeon
 243	1156	0	Sophanem Dungeon	2236	4280	2312	4359	1020	-1514	0	0	0	sophanem_dungeon
 447	1156	0	Sophanem Dungeon (Maze)	2368	4225	2430	4286	888	-1506	0	0	0	sophanem_dungeon
 244	1158	0	Stalker Den	1240	9728	1339	9840	10	-6401	0	1	0	stalker_den
@@ -997,7 +997,7 @@
 885	1021	1	Sisterhood Sanctuary (Slepe Crypt)	3716	9664	3903	9837	0	-6400	0	1	0	sisterhood_sanctuary
 886	1021	0	The Nightmare of Ashihama Lair	3715	10240	3837	10302	0	-6400	0	1	0	sisterhood_sanctuary
 887	1022	0	Jormungand's Prison	2398	10370	2493	10468	0	-6400	0	1	0	jormungands_prison
-888	1023	0	Ghorrock Dungeon	2844	10441	2932	10489	0	-6400	0	1	0	ghorrock_dungeon
+888	1400	0	Ghorrock Dungeon	2844	10441	2932	10489	0	-6400	0	1	0	ghorrock_dungeon
 889	1379	0	Underground Pass (4 -Soulless Pit)	2304	9792	2367	9922	10	-6615	0	0	0	underground_pass
 899	1378	0	Underground Pass (3)	2359	9701	2428	9733	-53	-6422	0	0	0	underground_pass
 890	1020	0	Ruins of Tapoyauki	1568	9599	1724	9665	-26	-6407	0	0	0	underground_pass
@@ -1101,7 +1101,6 @@
 623	1250	0	Entrana Dungeon (island 2)	2819	9771	2845	9777	-2	-6399	0	1	0	-
 624	1250	0	Entrana Dungeon (island 3)	2822	9778	2843	9782	-2	-6399	0	1	0	-
 294	1305	0	Under Civitas illa Fortis (island 1)	1611	9472	1730	9533	0	-6400	0	1	0	fortis_barracks
-900	60	0	Wyrmscraig Cavern	2560	8576	2623	8671	-40	-6400	0	1	0	wyrmscraig_cavern
 901	1388	0	God Wars Dungeon (Saradomin)	2880	5248	2943	5311	36	-1563	0	0	0	god_wars_dungeon
 902	1389	0	Dagannoth Kings Lair	2880	4416	2943	4479	-367	-678	0	0	0	waterbirth_dungeon
 903	1390	0	Abyssal Nexus	2950	4740	3132	4866	65	-1274	0	1	0	abyss

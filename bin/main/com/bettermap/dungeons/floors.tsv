@@ -23,7 +23,7 @@ underground_pass	Underground Pass (4 - Soulless Pit)	0	2406	3234	1379
 underground_pass	Underground Pass (5 - Iban's Lair)	1	2406	3223	1380
 underground_pass	Underground Pass (6 - Well of Voyage)	0	2406	3211	1179
 waterbirth_dungeon	Waterbirth Island Dungeon (upper)	0	2544	3741	1195
-waterbirth_dungeon	Dagannoth Kings Lair	0	2544	3770	1195
+waterbirth_dungeon	Dagannoth Kings Lair	0	2544	3770	1389
 karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Wyrms)	0	1311	3807	1090
 karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Hydras)	0	1311	3825	1090
 mining_guild	Mining Guild (ground)	0	3019	3339	1361
@@ -45,7 +45,7 @@ keldagrim	Keldagrim (Palace)	1	2880	3800	1092
 sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3727	3300
 sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3727	3870
 jormungands_prison	Jormungand's Prison	0	2465	4010
-ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043
+ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043	1400
 ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2750	2760
 ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2750	2700
 mos_le_harmless_cave	Mos Le'Harmless (cave horrors)	0	3748	2973
@@ -59,3 +59,17 @@ dragon_nest	Dragon Nest	0	1289	3134	1303
 troll_stronghold	Troll Stronghold (Entrance & Kitchen)	0	2839	3690	1172
 troll_stronghold	Troll Stronghold (Prison & Roof)	1	2831	3677	1172
 troll_stronghold	Troll Stronghold (God Wars Pass)	0	2827	3647	1172
+god_wars_dungeon	God Wars Dungeon (main floor)	2	2917	3747	1069
+god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2943	3702	1388
+abyss	The Abyss	0	3105	3558	1275
+abyss	Abyssal Nexus	0	3172	3501	1390
+god_wars_dungeon	God Wars Dungeon (Nex)	0	2960	3640	1391
+ghorrock_dungeon	Phantom Muspah	0	2865	4073	1392
+ghorrock_dungeon	Duke Sucellus	0	2847	4048	1393
+abyss	The Scar (Leviathan)	0	3105	3567	1394
+taverley_dungeon	Taverley Dungeon	0	2884	3398	1162
+taverley_dungeon	Cerberus Lair	0	2850	3415	1399
+catacombs_of_kourend	Catacombs of Kourend	0	1636	3673	1021
+catacombs_of_kourend	Skotizo Arena	0	1636	3678	1398
+scorpia_cave	Scorpia Cave	0	3233	3941	1395
+silk_chasm	Silk Chasm	2	3320	3798	1397

@@ -45,7 +45,7 @@ keldagrim	Keldagrim (Palace)	1	2880	3800	1092
 sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3727	3300
 sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3727	3870
 jormungands_prison	Jormungand's Prison	0	2465	4010
-ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043
+ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043	1400
 ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2750	2760
 ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2750	2700
 mos_le_harmless_cave	Mos Le'Harmless (cave horrors)	0	3748	2973
@@ -64,7 +64,6 @@ god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2943	3702	1388
 abyss	The Abyss	0	3105	3558	1275
 abyss	Abyssal Nexus	0	3172	3501	1390
 god_wars_dungeon	God Wars Dungeon (Nex)	0	2960	3640	1391
-ghorrock_dungeon	Ghorrock Dungeon (entrance)	0	2847	4043	1023
 ghorrock_dungeon	Phantom Muspah	0	2865	4073	1392
 ghorrock_dungeon	Duke Sucellus	0	2847	4048	1393
 abyss	The Scar (Leviathan)	0	3105	3567	1394

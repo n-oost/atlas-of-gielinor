@@ -60,6 +60,7 @@ import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.MonsterIconManager;
 import com.bettermap.map.MonsterIndex;
 import com.bettermap.map.PoiCategory;
+import com.bettermap.map.PoiDetails;
 import com.bettermap.map.PoiIndex;
 import com.bettermap.map.ShopIndex;
 import com.bettermap.map.PrifddinasShift;
@@ -79,7 +80,7 @@ import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -92,11 +93,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.FontManager;
+import net.runelite.client.game.AgilityShortcut;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -173,6 +177,10 @@ class MapMarkerRenderer
 	private static final SailingPort[] PORTS = SailingPort.values();
 	/** Below this many pixels per game tile, icons are more clutter than information. */
 	private static final double ICON_ZOOM_THRESHOLD = 0.45;
+	private static final double POI_LABEL_ZOOM_THRESHOLD = 1.0;
+	private static final Map<Long, String> FAIRY_RING_CODES = poiLabels("transportation",
+		Pattern.compile("Fairy Ring \\(([A-Z]{3})\\)"));
+	private static final Map<Long, String> SHORTCUT_LEVELS = shortcutLevels();
 	/** Cities and kingdoms stay visible while zoomed out. */
 	static final double PLACE_MAJOR_ZOOM = ICON_ZOOM_THRESHOLD;
 	/** Districts and landmarks need a closer look, similar to monster spawn areas. */
@@ -217,6 +225,10 @@ class MapMarkerRenderer
 
 	/** Dash phases for animated travel routes — one stroke per phase, no per-frame allocation. */
 	private static final int TRAVEL_DASH_PHASES = 14;
+	private static final Stroke TRAVEL_LINE_STROKE =
+		new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+	private static final Stroke TRAVEL_OUTLINE_STROKE =
+		new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	private static final Stroke[] TRAVEL_DASH_STROKES = buildTravelDashStrokes();
 
 	private static Stroke[] buildTravelDashStrokes()
@@ -224,7 +236,7 @@ class MapMarkerRenderer
 		final Stroke[] strokes = new Stroke[TRAVEL_DASH_PHASES];
 		for (int i = 0; i < TRAVEL_DASH_PHASES; i++)
 		{
-			strokes[i] = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.0f,
+			strokes[i] = new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.0f,
 				new float[]{ 8f, 6f }, i);
 		}
 		return strokes;
@@ -524,6 +536,11 @@ class MapMarkerRenderer
 
 		forEachPoiInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, poi ->
 		{
+			if (config.showTravelRoutes() && camera.getSelectedTravelNode() != null
+				&& PoiCategory.of(poi.getKey()) != PoiCategory.TRAVEL)
+			{
+				return;
+			}
 			if (!shouldDrawPoiIcon(poi))
 			{
 				stats.iconsFiltered++;
@@ -547,15 +564,22 @@ class MapMarkerRenderer
 				return;
 			}
 
-			if (overlapsPlaced(placed, rect))
+			final String label = poiLabel(poi);
+			final Rectangle labelBounds = label != null ? poiLabelBounds(graphics, poi, rect, label) : null;
+			final Rectangle markerBounds = labelBounds != null ? rect.union(labelBounds) : rect;
+			if (overlapsPlaced(placed, markerBounds))
 			{
 				stats.iconsSkipped++;
 				return;
 			}
 
 			graphics.drawImage(icon, rect.x, rect.y, null);
-			placed.add(rect);
-			visiblePoiIcons.add(new PoiIconHit(rect, poi));
+			if (labelBounds != null)
+			{
+				drawPoiLabel(graphics, label, labelBounds);
+			}
+			placed.add(markerBounds);
+			visiblePoiIcons.add(new PoiIconHit(markerBounds, poi));
 			stats.iconsDrawn++;
 		});
 
@@ -586,6 +610,104 @@ class MapMarkerRenderer
 				stats.iconsDrawn++;
 			});
 		}
+	}
+
+	private static long poiLabelKey(int x, int y, int plane)
+	{
+		return ((long) plane << 32) | ((long) (x & 0xFFFF) << 16) | (y & 0xFFFF);
+	}
+
+	/** Prepare labels once; generic native POI names do not contain codes or levels. */
+	private static Map<Long, String> poiLabels(String key, Pattern pattern)
+	{
+		final Map<Long, String> labels = new HashMap<>();
+		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
+		{
+			if (key.equals(poi.getKey()))
+			{
+				final Matcher matcher = pattern.matcher(poi.getName());
+				if (matcher.find())
+				{
+					labels.put(poiLabelKey(poi.getX(), poi.getY(), poi.getPlane()), matcher.group(1));
+				}
+			}
+		}
+		return labels;
+	}
+
+	private static Map<Long, String> shortcutLevels()
+	{
+		final Map<Long, String> levels = poiLabels("agility_short-cut", Pattern.compile("\\(Level (\\d+)\\)"));
+		for (AgilityShortcut shortcut : AgilityShortcut.values())
+		{
+			final WorldPoint location = shortcut.getWorldMapLocation();
+			if (location != null)
+			{
+				levels.put(poiLabelKey(location.getX(), location.getY(), location.getPlane()),
+					Integer.toString(shortcut.getLevel()));
+			}
+		}
+		return levels;
+	}
+
+	private String poiLabel(PoiIndex.Poi poi)
+	{
+		if (camera.getFrameZoom() <= POI_LABEL_ZOOM_THRESHOLD)
+		{
+			return null;
+		}
+		final boolean shortcut = "agility_short-cut".equals(poi.getKey());
+		if (!shortcut && !"transportation".equals(poi.getKey()))
+		{
+			return null;
+		}
+		final Map<Long, String> labels = shortcut ? SHORTCUT_LEVELS : FAIRY_RING_CODES;
+		String label = null;
+		int nearestDistance = 5;
+		// Native icon centres can be a tile or two away from the metadata coordinate.
+		for (int dx = -2; dx <= 2; dx++)
+		{
+			for (int dy = -2; dy <= 2; dy++)
+			{
+				final int distance = dx * dx + dy * dy;
+				if (distance >= nearestDistance)
+				{
+					continue;
+				}
+				final String candidate = labels.get(poiLabelKey(poi.getX() + dx, poi.getY() + dy, poi.getPlane()));
+				if (candidate != null)
+				{
+					label = candidate;
+					nearestDistance = distance;
+				}
+			}
+		}
+		return label;
+	}
+
+	private static Rectangle poiLabelBounds(Graphics2D graphics, PoiIndex.Poi poi, Rectangle iconBounds, String label)
+	{
+		final boolean shortcut = "agility_short-cut".equals(poi.getKey());
+		final FontMetrics fm = graphics.getFontMetrics(TINY);
+		final int width = fm.stringWidth(label) + 6;
+		final int height = fm.getAscent() + fm.getDescent() + 2;
+		return new Rectangle(
+			shortcut ? iconBounds.x + iconBounds.width - width / 2 : iconBounds.x + (iconBounds.width - width) / 2,
+			shortcut ? iconBounds.y - height / 2 : iconBounds.y + iconBounds.height + 2,
+			width, height);
+	}
+
+	private static void drawPoiLabel(Graphics2D graphics, String label, Rectangle labelBounds)
+	{
+		final Font oldFont = graphics.getFont();
+		final Color oldColor = graphics.getColor();
+		graphics.setFont(TINY);
+		graphics.setColor(CARD_BG);
+		graphics.fillRoundRect(labelBounds.x, labelBounds.y, labelBounds.width, labelBounds.height, 4, 4);
+		graphics.setColor(PLACE_FILL);
+		graphics.drawString(label, labelBounds.x + 3, labelBounds.y + 1 + graphics.getFontMetrics().getAscent());
+		graphics.setFont(oldFont);
+		graphics.setColor(oldColor);
 	}
 
 	/** Reset before drawing markers so hidden targets cannot retain hover cards from the last frame. */
@@ -1374,6 +1496,10 @@ class MapMarkerRenderer
 		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
 			final MonsterLocationData monster = location.boss;
+			if (RaidBossDisplay.isRaidBoss(monster))
+			{
+				continue;
+			}
 			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
 				? null : UndergroundZone.byId(location.zoneId);
 			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
@@ -1831,20 +1957,26 @@ class MapMarkerRenderer
 			graphics.fillOval(x - 4, y - 4, 9, 9);
 			graphics.setColor(ROUTE_SHADOW);
 			graphics.drawOval(x - 4, y - 4, 9, 9);
+			if (node == camera.getSelectedTravelNode())
+			{
+				graphics.setColor(node.getType().getHighlightColor());
+				graphics.drawOval(x - 6, y - 6, 13, 13);
+			}
 		}
 	}
 
 	/**
-	 * Draws route lines, destination beacons, and price badges for the currently hovered travel station.
+	 * Draws route lines, destination beacons, and price badges for the selected or hovered travel station.
 	 */
 	void drawTravelRoutes(Graphics2D graphics, Rectangle bounds)
 	{
-		if (!config.showTravelRoutes() || camera.getHoveredTravelNode() == null)
+		final TravelData.TravelNode node = camera.getSelectedTravelNode() != null
+			? camera.getSelectedTravelNode() : camera.getHoveredTravelNode();
+		if (!config.showTravelRoutes() || node == null)
 		{
 			return;
 		}
 
-		final TravelData.TravelNode node = camera.getHoveredTravelNode();
 		final TravelData.TravelType type = node.getType();
 		final Color theme = type.getPrimaryColor();
 		final Color highlight = type.getHighlightColor();
@@ -1867,16 +1999,16 @@ class MapMarkerRenderer
 
 		final boolean animate = config.animateTravelRoutes();
 		final Stroke haloStroke = ROUTE_HALO_STROKE;
-		final Color haloColor = new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), 60);
+		final Color haloColor = new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), 100);
 		final Stroke lineStroke = animate
 			? TRAVEL_DASH_STROKES[(int) ((System.currentTimeMillis() / 40L) % TRAVEL_DASH_PHASES)]
-			: ROUTE_LINE_STROKE;
+			: TRAVEL_LINE_STROKE;
 
 		final float pulse = animate
 			? (float) (0.5 + 0.5 * Math.sin(System.currentTimeMillis() / 180.0))
 			: 0.5f;
 
-		// 1. Draw route arcs
+		// 1. Draw straight routes with a dark outline and animated highlights.
 		for (TravelData.TravelDestination dest : node.getDestinations())
 		{
 			final WorldPoint destLoc = dest.getLocation();
@@ -1888,32 +2020,28 @@ class MapMarkerRenderer
 			final double dx = camera.screenX(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 			final double dy = camera.screenY(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 
-			final double midX = (ox + dx) / 2.0;
-			final double midY = (oy + dy) / 2.0;
-			final double vx = dx - ox;
-			final double vy = dy - oy;
-			final double cx = midX - vy * 0.18;
-			final double cy = midY + vx * 0.18;
-
-			final QuadCurve2D.Double curve = new QuadCurve2D.Double(ox, oy, cx, cy, dx, dy);
+			final Line2D.Double line = new Line2D.Double(ox, oy, dx, dy);
 
 			if (!extendedBounds.contains(ox, oy)
 				&& !extendedBounds.contains(dx, dy)
-				&& !extendedBounds.intersectsLine(ox, oy, dx, dy)
-				&& !curve.intersects(extendedBounds.x, extendedBounds.y, extendedBounds.width, extendedBounds.height))
+				&& !extendedBounds.intersectsLine(ox, oy, dx, dy))
 			{
 				continue;
 			}
 
-			// Soft halo
+			graphics.setColor(ROUTE_OUTLINE);
+			graphics.setStroke(TRAVEL_OUTLINE_STROKE);
+			graphics.draw(line);
+
+			// Continuous coloured base keeps the route visible between animated dashes.
 			graphics.setColor(haloColor);
 			graphics.setStroke(haloStroke);
-			graphics.draw(curve);
+			graphics.draw(line);
 
 			// Route line
 			graphics.setColor(highlight);
 			graphics.setStroke(lineStroke);
-			graphics.draw(curve);
+			graphics.draw(line);
 		}
 
 		// 2. Draw destination beacons
@@ -1973,18 +2101,9 @@ class MapMarkerRenderer
 				final double dx = camera.screenX(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 				final double dy = camera.screenY(destLoc.getX() + 0.5, destLoc.getY() + 0.5, bounds);
 
-				final double midX = (ox + dx) / 2.0;
-				final double midY = (oy + dy) / 2.0;
-				final double vx = dx - ox;
-				final double vy = dy - oy;
-				final double cx = midX - vy * 0.18;
-				final double cy = midY + vx * 0.18;
-				final QuadCurve2D.Double curve = new QuadCurve2D.Double(ox, oy, cx, cy, dx, dy);
-
 				if (!extendedBounds.contains(ox, oy)
 					&& !extendedBounds.contains(dx, dy)
-					&& !extendedBounds.intersectsLine(ox, oy, dx, dy)
-					&& !curve.intersects(extendedBounds.x, extendedBounds.y, extendedBounds.width, extendedBounds.height))
+					&& !extendedBounds.intersectsLine(ox, oy, dx, dy))
 				{
 					continue;
 				}

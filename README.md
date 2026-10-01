@@ -1,12 +1,21 @@
-# Atlas of Gielinor
+<div align="center">
 
-#### Issued to all new citizens of Gielinor. 
+![Atlas of Gielinor](docs/banner.png)
+
+> **Atlas of Gielinor**  
+> *Examine: An cartographer's parchment charting the surface and underground realms of Gielinor.*
+
+[![RuneLite Plugin Hub](https://img.shields.io/badge/RuneLite-Plugin_Hub-1B263B?style=flat-square&color=3E3024)](https://runelite.net)
+[![OSRS Version](https://img.shields.io/badge/OSRS-Desktop-FED836?style=flat-square&color=2C2219&labelColor=4A3525)](https://oldschool.runescape.wiki)
+[![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-938265?style=flat-square&color=241D17)](LICENSE)
+
+</div>
 
 A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin is designed to be a drop-in replacement for the RuneLite world map, with no other changes to the game. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
 
 Missing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
 
-## AI-Disclusure
+## AI-Disclosure
 Plugin was created with the help of AI tools. The author has verified the code and is responsible for its content. Map imagery is downloaded from the linked asset pack; there are no runtime calls to the Wiki API.
 
 ## Features

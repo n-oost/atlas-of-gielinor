@@ -174,6 +174,51 @@ public class MapTooltipRenderer
 		drawTooltip(graphics, bounds, null);
 	}
 
+	private long raidStatsVersion = Long.MIN_VALUE;
+	private final java.util.Map<MonsterLocationData, MonsterIndex.Zone> raidStats =
+		new java.util.EnumMap<>(MonsterLocationData.class);
+
+	void drawRaidBossCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor,
+		MonsterLocationData boss, String raidName)
+	{
+		if (!config.showTooltips())
+		{
+			return;
+		}
+		final boolean compact = !config.expandedTooltips() && !input.isTooltipExpandModifierDown();
+		final BufferedImage icon = monsterIconManager != null ? monsterIconManager.getBossIcon(boss, 20) : null;
+		final boolean task = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskBoss(boss);
+		final int remaining = slayerTaskTracker == null ? 0 : slayerTaskTracker.getRemainingTaskAmount();
+		if (monsterIndex != null && raidStatsVersion != monsterIndex.getDataVersion())
+		{
+			raidStats.clear();
+			for (MonsterIndex.Zone zone : monsterIndex.getZones())
+			{
+				for (MonsterLocationData candidate : MapStyle.BOSSES)
+				{
+					if (RaidBossDisplay.isRaidBoss(candidate) && candidate.getName().equalsIgnoreCase(zone.getMonster()))
+					{
+						raidStats.putIfAbsent(candidate, zone);
+					}
+				}
+			}
+			raidStatsVersion = monsterIndex.getDataVersion();
+		}
+		final MonsterIndex.Zone stats = raidStats.get(boss);
+		final TooltipCard card = monsterTooltipBuilder.buildBossCard(boss, icon, task, remaining, compact,
+			stats);
+		card.setPreserveCompactLines(true);
+		if (boss.getCombatLevel() == 0)
+		{
+			card.setTitle(boss.getName());
+			card.getLines().removeIf(line -> line.startsWith("Difficulty:"));
+			card.addLine("Combat level scales with the raid");
+		}
+		card.getLines().removeIf(line -> line.startsWith("[Boss "));
+		card.getLines().add(0, "[Boss • " + raidName + "]");
+		drawCard(graphics, bounds, cursor, card);
+	}
+
 	void drawTooltip(Graphics2D graphics, Rectangle bounds, MapMarkerRenderer markerRenderer)
 	{
 		if (!config.showTooltips())
@@ -205,7 +250,17 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		if (drawUndergroundZoneCard(graphics, bounds, cursor))
+		final boolean travelFocused = config.showTravelRoutes() && camera.getSelectedTravelNode() != null;
+		if (travelFocused && camera.getHoveredTravelNode() != null)
+		{
+			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(camera.getHoveredTravelNode());
+			if (card != null)
+			{
+				drawCard(graphics, bounds, cursor, card);
+			}
+			return;
+		}
+		if (!travelFocused && drawUndergroundZoneCard(graphics, bounds, cursor))
 		{
 			return;
 		}
@@ -247,6 +302,11 @@ public class MapTooltipRenderer
 				drawCard(graphics, bounds, cursor, card);
 				return;
 			}
+		}
+
+		if (travelFocused)
+		{
+			return;
 		}
 
 		if (drawBoatCard(graphics, bounds, probe))
@@ -797,6 +857,10 @@ public class MapTooltipRenderer
 		for (BossLocationIndex.Location location : BossLocationIndex.all())
 		{
 			final MonsterLocationData monster = location.boss;
+			if (RaidBossDisplay.isRaidBoss(monster))
+			{
+				continue;
+			}
 			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex);
 			final UndergroundZone bossZone = UndergroundZone.byId(location.zoneId);
 			if (bossZone != null)

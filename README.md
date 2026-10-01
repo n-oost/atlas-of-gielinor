@@ -21,6 +21,10 @@ the cursor, right click to step back out.
 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
+### Raid boss galleries
+
+Click **CoX · Bosses**, **ToB · Bosses**, or **ToA · Bosses** at the respective raid entrance to open its six boss cards. Hover a card for its boss tooltip; hold your configured tooltip expansion modifier for available combat details. Press **Esc** or click **×** to close the gallery. Enable **Show boss locations** and **Show tooltips** in Better Map settings.
+
 ### Hover cards
 
 Hover anything on the map for shop stock, POI names, monster details (combat level, slayer level,

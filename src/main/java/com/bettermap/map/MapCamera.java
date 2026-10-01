@@ -454,6 +454,7 @@ public class MapCamera
 	private volatile Integer activeFloorLayer;
 	private volatile boolean hoveredSurfaceToUnderground = true;
 	private volatile TravelData.TravelNode hoveredTravelNode;
+	private volatile TravelData.TravelNode selectedTravelNode;
 
 	private volatile int plane;
 	private volatile double centerX = 3222;
@@ -568,6 +569,7 @@ public class MapCamera
 			hoveredOverlayCluster = null;
 			hoveredFloorPlane = null;
 			hoveredTravelNode = null;
+			selectedTravelNode = null;
 			layersButton = null;
 			layerToggleTargets = Collections.emptyList();
 			layerSymbolTargets = Collections.emptyList();
@@ -614,6 +616,11 @@ public class MapCamera
 	/** An explicit choice from the plane switcher, which then sticks. */
 	public synchronized void setPlane(int plane)
 	{
+		if (this.plane != Math.max(0, Math.min(3, plane)))
+		{
+			selectedTravelNode = null;
+			hoveredTravelNode = null;
+		}
 		this.activeFloorLayer = null;
 		this.plane = Math.max(0, Math.min(3, plane));
 		this.planeChosenByUser = true;
@@ -1739,6 +1746,48 @@ public class MapCamera
 	public void setHoveredTravelNode(TravelData.TravelNode node)
 	{
 		this.hoveredTravelNode = node;
+	}
+
+	public TravelData.TravelNode getSelectedTravelNode()
+	{
+		return selectedTravelNode;
+	}
+
+	public void setSelectedTravelNode(TravelData.TravelNode node)
+	{
+		this.selectedTravelNode = node;
+	}
+
+	/** Reveal the station and its destinations, leaving room around their pins and labels. */
+	public synchronized void fitTravelRoutes(TravelData.TravelNode node, Rectangle view)
+	{
+		final WorldPoint origin = node.getLocation();
+		double minX = InstanceMaps.toDisplayX(origin.getX() + 0.5, origin.getY() + 0.5, centerX, centerY);
+		double minY = InstanceMaps.toDisplayY(origin.getX() + 0.5, origin.getY() + 0.5, centerX, centerY);
+		double maxX = minX;
+		double maxY = minY;
+		for (TravelData.TravelDestination destination : node.getDestinations())
+		{
+			final WorldPoint location = destination.getLocation();
+			if (location == null || !InstanceMaps.inFocusedLayer(location.getX(), location.getY(),
+				getFocusedUndergroundZone(), isDungeonContentsFocused()))
+			{
+				continue;
+			}
+			final double x = InstanceMaps.toDisplayX(location.getX() + 0.5, location.getY() + 0.5, centerX, centerY);
+			final double y = InstanceMaps.toDisplayY(location.getX() + 0.5, location.getY() + 0.5, centerX, centerY);
+			minX = Math.min(minX, x);
+			maxX = Math.max(maxX, x);
+			minY = Math.min(minY, y);
+			maxY = Math.max(maxY, y);
+		}
+
+		final double width = view.getWidth() - 2 * Math.min(64, view.getWidth() * 0.15);
+		final double height = view.getHeight() - 2 * Math.min(64, view.getHeight() * 0.15);
+		zoom = clampZoom(Math.min(zoom, Math.min(width / Math.max(1, maxX - minX),
+			height / Math.max(1, maxY - minY))));
+		centerX = (minX + maxX) / 2;
+		centerY = (minY + maxY) / 2;
 	}
 
 	public synchronized void centerOn(double worldX, double worldY)

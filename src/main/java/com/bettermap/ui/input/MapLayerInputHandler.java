@@ -573,6 +573,11 @@ public class MapLayerInputHandler
 
 	public boolean clickedLayerSymbol(Point point)
 	{
+		if (camera.getSelectedTravelNode() != null && pluginProvider != null && pluginProvider.get() != null
+			&& pluginProvider.get().getConfig().showTravelRoutes())
+		{
+			return false;
+		}
 		for (MapCamera.LayerSymbolTarget target : camera.getLayerSymbolTargets())
 		{
 			if (target.getBounds() != null && target.getBounds().contains(point))

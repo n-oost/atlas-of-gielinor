@@ -26,6 +26,7 @@ package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
+import com.bettermap.ui.RaidBossDisplay;
 import com.bettermap.ui.input.MapContextMenuHandler;
 import com.bettermap.ui.input.MapDragController;
 import com.bettermap.ui.input.MapKeyHandler;
@@ -73,7 +74,11 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Getter
 	private final MapKeyHandler keyHandler;
 
+	@Inject
+	private RaidBossDisplay raidBossDisplay;
+	private boolean raidPressConsumed;
 	private volatile Point cursor;
+	private Point travelClickOrigin;
 	private volatile boolean shiftDown;
 	private volatile boolean altDown;
 	private volatile boolean ctrlDown;
@@ -165,6 +170,8 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mousePressed(MouseEvent event)
 	{
+		travelClickOrigin = null;
+		raidPressConsumed = false;
 		if (contextMenuHandler.isClientMenuOpen())
 		{
 			return event;
@@ -203,6 +210,14 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 			{
 				dbg("press NOT over map at {},{} (passthrough)", event.getX(), event.getY());
 			}
+			return event;
+		}
+
+		if (raidBossDisplay != null && raidBossDisplay.press(event.getPoint(), SwingUtilities.isLeftMouseButton(event)))
+		{
+			raidPressConsumed = true;
+			cursor = event.getPoint();
+			event.consume();
 			return event;
 		}
 
@@ -245,6 +260,11 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 					dbg("finder field unfocused by map click");
 				}
 			}
+
+			if (config.showTravelRoutes())
+			{
+				travelClickOrigin = event.getPoint();
+			}
 		}
 
 		if (contextMenuHandler.isRightClickOverFinder(event))
@@ -275,6 +295,10 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseDragged(MouseEvent event)
 	{
+		if (travelClickOrigin != null && travelClickOrigin.distanceSq(event.getPoint()) > 25)
+		{
+			travelClickOrigin = null;
+		}
 		if (dragController.isDraggingOrb())
 		{
 			final Point now = event.getPoint();
@@ -307,6 +331,23 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseReleased(MouseEvent event)
 	{
+		if (raidPressConsumed)
+		{
+			event.consume();
+			return event;
+		}
+		if (travelClickOrigin != null && SwingUtilities.isLeftMouseButton(event)
+			&& travelClickOrigin.distanceSq(event.getPoint()) <= 25 && overMap(event.getPoint()))
+		{
+			layerInputHandler.updateHoveredTravelNode(event.getPoint());
+			camera.setSelectedTravelNode(camera.getSelectedTravelNode() == camera.getHoveredTravelNode()
+				? null : camera.getHoveredTravelNode());
+			if (camera.getSelectedTravelNode() != null)
+			{
+				camera.fitTravelRoutes(camera.getSelectedTravelNode(), camera.getViewport());
+			}
+		}
+		travelClickOrigin = null;
 		if (dragController.isDraggingOrb())
 		{
 			final boolean moved = dragController.endOrbDrag();
@@ -352,6 +393,11 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseWheelEvent mouseWheelMoved(MouseWheelEvent event)
 	{
+		if (raidBossDisplay != null && raidBossDisplay.isOpen() && overMap(event.getPoint()))
+		{
+			event.consume();
+			return event;
+		}
 		final boolean over = overMap(event.getPoint());
 		if (dragController.handleMouseWheel(event, over))
 		{
@@ -364,6 +410,11 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseMoved(MouseEvent event)
 	{
+		if (raidBossDisplay != null && raidBossDisplay.isOpen() && overMap(event.getPoint()))
+		{
+			cursor = event.getPoint();
+			return event;
+		}
 		layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
 		if (camera.isFinderStandalone() && camera.isFinderPanelOpen())
 		{
@@ -393,6 +444,11 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseClicked(MouseEvent event)
 	{
+		if (raidPressConsumed)
+		{
+			raidPressConsumed = false;
+			event.consume();
+		}
 		return event;
 	}
 
@@ -469,6 +525,15 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	public void keyPressed(KeyEvent event)
 	{
 		setModifier(event.getKeyCode(), true);
+		if (raidBossDisplay != null && raidBossDisplay.isOpen() && camera.isActive())
+		{
+			if (event.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				raidBossDisplay.close();
+			}
+			event.consume();
+			return;
+		}
 		keyHandler.keyPressed(event);
 	}
 
@@ -501,6 +566,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public void focusLost()
 	{
+		travelClickOrigin = null;
 		dragController.reset();
 		cursor = null;
 		camera.setShiftHeld(false);

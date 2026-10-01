@@ -182,6 +182,9 @@ public class BetterWorldMapOverlay extends Overlay
 	private final MapChromeRenderer chromeRenderer;
 	private final MapFinderRenderer finderRenderer;
 	private final MapTooltipRenderer tooltipRenderer;
+	@Inject
+	private RaidBossDisplay raidBossDisplay;
+	private final WorldMapInput input;
 	private final MapDebugRenderer debugRenderer;
 	private final WorldMapPointReader worldMapPointReader;
 
@@ -218,6 +221,7 @@ public class BetterWorldMapOverlay extends Overlay
 		DungeonPieceIndex dungeonPieceIndex)
 	{
 		this.client = client;
+		this.input = input;
 		this.config = config;
 		this.tileLoader = tileLoader;
 		this.camera = camera;
@@ -268,6 +272,10 @@ public class BetterWorldMapOverlay extends Overlay
 				onMapClosed();
 			}
 			camera.setActive(false);
+			if (raidBossDisplay != null)
+			{
+				raidBossDisplay.close();
+			}
 			return null;
 		}
 
@@ -276,6 +284,10 @@ public class BetterWorldMapOverlay extends Overlay
 			// Close in progress but interface not gone yet — do not draw or grab mouse.
 			log.debug("[BetterMap:overlay] skipping draw — close latch held, map still present");
 			camera.setActive(false);
+			if (raidBossDisplay != null)
+			{
+				raidBossDisplay.close();
+			}
 			return null;
 		}
 
@@ -284,6 +296,10 @@ public class BetterWorldMapOverlay extends Overlay
 		{
 			log.debug("[BetterMap:overlay] bad bounds {} — deactivating", bounds);
 			camera.setActive(false);
+			if (raidBossDisplay != null)
+			{
+				raidBossDisplay.close();
+			}
 			return null;
 		}
 
@@ -338,23 +354,44 @@ public class BetterWorldMapOverlay extends Overlay
 			final List<Rectangle> placedPoiIcons = new ArrayList<>();
 			final List<Rectangle> placedMarkers = new ArrayList<>();
 			tileRenderer.drawTiles(graphics, bounds);
-			boolean routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
-			markerRenderer.drawPlaceNames(graphics, bounds);
+			if (!config.showTravelRoutes())
+			{
+				camera.setSelectedTravelNode(null);
+			}
+			final boolean travelFocused = config.showTravelRoutes() && camera.getSelectedTravelNode() != null;
+			boolean routeDrawFailure = false;
 			markerRenderer.beginFrame();
-			markerRenderer.drawWorldMapPoints(graphics, bounds, placedMarkers);
+			if (travelFocused)
+			{
+				graphics.setColor(new Color(0, 0, 0, 28));
+				graphics.fill(bounds);
+				camera.setLayerSymbolTargets(Collections.emptyList());
+			}
+			else
+			{
+				routeDrawFailure = markerRenderer.drawShortestPathRoute(graphics, bounds);
+				markerRenderer.drawPlaceNames(graphics, bounds);
+				markerRenderer.drawWorldMapPoints(graphics, bounds, placedMarkers);
+			}
 			markerRenderer.drawPoiIcons(graphics, bounds, placedPoiIcons);
-			markerRenderer.drawLargeLayerSymbols(graphics, bounds);
-			markerRenderer.drawMonsters(graphics, bounds, placedMarkers);
-			markerRenderer.drawMonsterZones(graphics, bounds, placedMarkers);
-			markerRenderer.drawGroundItems(graphics, bounds, placedMarkers);
+			if (!travelFocused)
+			{
+				markerRenderer.drawLargeLayerSymbols(graphics, bounds);
+				markerRenderer.drawMonsters(graphics, bounds, placedMarkers);
+				markerRenderer.drawMonsterZones(graphics, bounds, placedMarkers);
+				markerRenderer.drawGroundItems(graphics, bounds, placedMarkers);
+			}
 			markerRenderer.drawTravelStations(graphics, bounds);
 			markerRenderer.drawTravelRoutes(graphics, bounds);
-			markerRenderer.drawSailingPorts(graphics, bounds, placedMarkers);
-			markerRenderer.drawPortNoticeBoards(graphics, bounds, placedMarkers);
-			markerRenderer.drawPlayerBoats(graphics, bounds, placedMarkers);
-			markerRenderer.drawClueMarkers(graphics, bounds, placedMarkers);
-			markerRenderer.drawFlash(graphics, bounds);
-			markerRenderer.drawPlayer(graphics, bounds);
+			if (!travelFocused)
+			{
+				markerRenderer.drawSailingPorts(graphics, bounds, placedMarkers);
+				markerRenderer.drawPortNoticeBoards(graphics, bounds, placedMarkers);
+				markerRenderer.drawPlayerBoats(graphics, bounds, placedMarkers);
+				markerRenderer.drawClueMarkers(graphics, bounds, placedMarkers);
+				markerRenderer.drawFlash(graphics, bounds);
+				markerRenderer.drawPlayer(graphics, bounds);
+			}
 			chromeRenderer.drawPlaneSwitcher(graphics, bounds);
 			chromeRenderer.drawStatusChip(graphics, bounds);
 			chromeRenderer.drawClueButton(graphics, bounds);
@@ -366,7 +403,14 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
 			// drawUnmappedWarning(graphics, bounds);
-			tooltipRenderer.drawTooltip(graphics, bounds, markerRenderer);
+			if (raidBossDisplay == null || !raidBossDisplay.ownsHover(input.getCursor()))
+			{
+				tooltipRenderer.drawTooltip(graphics, bounds, markerRenderer);
+			}
+			if (raidBossDisplay != null)
+			{
+				raidBossDisplay.draw(graphics, bounds, input.getCursor(), tooltipRenderer);
+			}
 			if (routeDrawFailure)
 			{
 				drawNotice(graphics, bounds, "FAILED TO DRAW ROUTE");

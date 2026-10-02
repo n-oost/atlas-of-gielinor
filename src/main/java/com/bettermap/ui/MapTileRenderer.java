@@ -543,7 +543,8 @@ class MapTileRenderer
 			{
 				final Area punched = new Area(bounds);
 				punched.subtract(new Area(hole));
-				graphics.setClip(punched);
+				// Keep the overlay's native-close hole when narrowing the tile clip (Hub review F2).
+				graphics.clip(punched);
 			}
 		}
 
@@ -566,7 +567,7 @@ class MapTileRenderer
 			return;
 		}
 
-		graphics.setClip(dest.intersection(bounds));
+		graphics.clip(dest.intersection(bounds));
 		if (plane > 0)
 		{
 			drawTileLayer(graphics, bounds, plane, tileZoom, PrifddinasShift.OFFSET_X, PrifddinasShift.OFFSET_Y,

@@ -31,7 +31,6 @@ public class WorldMapInputFinderTest
 
 	private WorldPoint capturedCenterPoint;
 	private boolean capturedRoute;
-	private boolean capturedCloseMap;
 	private boolean clientMenuOpen;
 	private boolean dragToPan;
 	private WorldPoint mockPlayerLocation;
@@ -74,17 +73,10 @@ public class WorldMapInputFinderTest
 			}
 
 			@Override
-			public void closeMap()
-			{
-				capturedCloseMap = true;
-			}
-
-			@Override
 			public void routeTo(WorldPoint point, boolean openMap)
 			{
 				capturedCenterPoint = point;
 				capturedRoute = true;
-				capturedCloseMap = false;
 			}
 
 			@Override
@@ -187,12 +179,12 @@ public class WorldMapInputFinderTest
 		input.mousePressed(event);
 
 		assertEquals(point, capturedCenterPoint);
-		assertFalse("single click must leave the map up", capturedCloseMap);
+		assertTrue("Finder actions leave map input active", camera.isActive());
 		assertTrue(event.isConsumed());
 	}
 
 	@Test
-	public void doubleClickOnRowBodyCentersAndClosesTheMap()
+	public void doubleClickOnRowBodyRequestsRouteWithoutClosingMap()
 	{
 		camera.setFinderPanelOpen(true);
 		final WorldPoint point = new WorldPoint(3200, 3200, 0);
@@ -205,7 +197,7 @@ public class WorldMapInputFinderTest
 		assertTrue(second.isConsumed());
 		assertEquals(point, capturedCenterPoint);
 		assertTrue("double click requests a route", capturedRoute);
-		assertFalse("routing leaves the map open", capturedCloseMap);
+		assertTrue("Finder actions leave map input active", camera.isActive());
 	}
 
 	@Test
@@ -224,7 +216,7 @@ public class WorldMapInputFinderTest
 	}
 
 	@Test
-	public void shiftClickOnRowBodyCentersAndClosesMap()
+	public void shiftClickOnRowBodyCentersWithoutClosingMap()
 	{
 		camera.setFinderPanelOpen(true);
 		final WorldPoint point = new WorldPoint(3200, 3200, 0);
@@ -235,7 +227,7 @@ public class WorldMapInputFinderTest
 		input.mousePressed(event);
 
 		assertEquals(point, capturedCenterPoint);
-		assertTrue("shift click closes the map", capturedCloseMap);
+		assertTrue("shift click leaves map input active", camera.isActive());
 		assertTrue(event.isConsumed());
 	}
 
@@ -344,11 +336,11 @@ public class WorldMapInputFinderTest
 
 		assertTrue(event.isConsumed());
 		assertEquals(point, capturedCenterPoint);
-		assertFalse(capturedCloseMap);
+		assertTrue("Finder actions leave map input active", camera.isActive());
 	}
 
 	@Test
-	public void doubleClickOnFlyoutItemCentersAndClosesMap()
+	public void doubleClickOnFlyoutItemRequestsRouteWithoutClosingMap()
 	{
 		camera.setFinderPanelOpen(true);
 		final WorldPoint point = new WorldPoint(3211, 3450, 0);
@@ -361,7 +353,7 @@ public class WorldMapInputFinderTest
 		assertTrue(event.isConsumed());
 		assertEquals(point, capturedCenterPoint);
 		assertTrue(capturedRoute);
-		assertFalse(capturedCloseMap);
+		assertTrue("Finder actions leave map input active", camera.isActive());
 	}
 
 	@Test

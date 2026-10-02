@@ -223,10 +223,9 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 			return event;
 		}
 
-		dbg("press over map at {},{} button={} closeBtn={} fullscreen={}",
+		dbg("press over map at {},{} button={} fullscreen={}",
 			event.getX(), event.getY(),
 			buttonName(event),
-			camera.getCloseButton(),
 			config.fullscreenMap());
 
 		if (SwingUtilities.isLeftMouseButton(event))

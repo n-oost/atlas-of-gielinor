@@ -245,8 +245,6 @@ class MapChromeRenderer
 
 		this.topBarLeftChipsRight = chipsRight;
 
-		drawCloseButton(graphics, bounds, false);
-
 		// The tiles come from the game cache and the datasets from the wiki.
 		final List<String> credits = new ArrayList<>(3);
 		credits.add(WikiMapTiles.ATTRIBUTION);
@@ -261,31 +259,6 @@ class MapChromeRenderer
 				creditY);
 			creditY -= graphics.getFontMetrics().getHeight();
 		}
-	}
-
-	/** Keep the map closable even when its imagery is unavailable. */
-	void drawCloseButton(Graphics2D graphics, Rectangle bounds, boolean force)
-	{
-		if (!force && !config.fullscreenMap())
-		{
-			camera.setCloseButton(null);
-			return;
-		}
-		graphics.setFont(SMALL);
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		final String close = "✕  Close  (Esc)";
-		final int closeWidth = graphics.getFontMetrics().stringWidth(close);
-		final int rightInset = layout.rightUiInset(bounds);
-		final Rectangle button = new Rectangle(
-			(int) bounds.getMaxX() - closeWidth - 22 - rightInset,
-			(int) bounds.getMinY() + 8, closeWidth + 14, 20);
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 7, 7);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 7, 7);
-		graphics.setColor(CARD_TITLE);
-		graphics.drawString(close, button.x + 7, button.y + 14);
-		camera.setCloseButton(button);
 	}
 
 	/** A "Go to clue" button beside the status chip for RuneLite's solved clue target. */
@@ -307,7 +280,7 @@ class MapChromeRenderer
 		final int glyph = 12;
 		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
 
-		final int rightLimit = layout.topRightStripRight(graphics, bounds)
+		final int rightLimit = layout.topRightStripRight(bounds)
 			- (config.fullscreenMap() ? LEFT_TOOLBAR_BUTTON_SIZE + 8 : 0);
 		if (button.x + button.width > rightLimit)
 		{
@@ -362,7 +335,7 @@ class MapChromeRenderer
 		final int glyph = 12;
 		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
 
-		final int rightLimit = layout.topRightStripRight(graphics, bounds)
+		final int rightLimit = layout.topRightStripRight(bounds)
 			- (config.fullscreenMap() ? LEFT_TOOLBAR_BUTTON_SIZE + 8 : 0);
 		if (button.x + button.width > rightLimit)
 		{
@@ -418,7 +391,7 @@ class MapChromeRenderer
 		final int glyph = 12;
 		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
 
-		final int rightLimit = layout.topRightStripRight(graphics, bounds)
+		final int rightLimit = layout.topRightStripRight(bounds)
 			- (config.fullscreenMap() ? LEFT_TOOLBAR_BUTTON_SIZE + 8 : 0);
 		if (button.x + button.width > rightLimit)
 		{
@@ -756,7 +729,7 @@ class MapChromeRenderer
 
 		final int size = LEFT_TOOLBAR_BUTTON_SIZE;
 		final int top = (int) bounds.getMinY() + 8;
-		final int x = layout.topRightStripRight(graphics, bounds) - size;
+		final int x = layout.topRightStripRight(bounds) - size;
 		final Rectangle button = new Rectangle(x, top, size, size);
 		final boolean hidden = camera.isChatHidden();
 

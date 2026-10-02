@@ -538,7 +538,7 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "fullscreenMap",
 		name = "Fullscreen Map",
-		description = "Draws the map over the whole client instead of inside the game's small map window. Press Escape to close it",
+		description = "Draws the map over the whole client instead of inside the game's small map window. Use the game's map close button to close it",
 		position = 1,
 		section = mapSection
 	)

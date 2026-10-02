@@ -23,8 +23,10 @@ import com.bettermap.pathfinding.WorldPointUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -35,12 +37,13 @@ import net.runelite.client.events.PluginMessage;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginManager;
 
-/** Owns Better Map's route snapshot and sends targets to Shortest Path when it is enabled. */
+/** Owns Better Map's route snapshot and shares destination requests with Shortest Path. */
 @Slf4j
 @Singleton
 public class ShortestPathTracker
 {
 	private static final String PLUGIN_CLASS = "shortestpath.ShortestPathPlugin";
+	private static final String MESSAGE_SOURCE = "bettermapSource";
 
 	private final PluginManager pluginManager;
 	private final EventBus eventBus;
@@ -50,6 +53,7 @@ public class ShortestPathTracker
 	private volatile List<WorldPoint> route = Collections.emptyList();
 	private volatile boolean readFailed;
 	private volatile WorldPoint target;
+	private volatile Set<Integer> targets = Collections.emptySet();
 	private WorldPoint player;
 	private WorldPoint repathAnchor;
 	private long revision;
@@ -85,8 +89,12 @@ public class ShortestPathTracker
 		{
 			return;
 		}
-		if (config.reachedDistance() >= 0 && player.getPlane() == destination.getPlane()
-			&& player.distanceTo2D(destination) <= config.reachedDistance())
+		if (config.reachedDistance() >= 0 && targets.stream().anyMatch(point ->
+		{
+			WorldPoint candidate = WorldPointUtil.unpackWorldPoint(point);
+			return player.getPlane() == candidate.getPlane()
+				&& player.distanceTo2D(candidate) <= config.reachedDistance();
+		}))
 		{
 			clear();
 			return;
@@ -163,17 +171,65 @@ public class ShortestPathTracker
 		{
 			return false;
 		}
+		setTargets(Collections.singleton(WorldPointUtil.packWorldPoint(destination)));
+		postTargetIfAvailable(destination);
+		return true;
+	}
+
+	/** Mirror requests from helper plugins without sending them back to Shortest Path. */
+	public void onPluginMessage(PluginMessage event)
+	{
+		if (!"shortestpath".equals(event.getNamespace()) || !isRoutingEnabled()
+			|| Boolean.TRUE.equals(event.getData().get(MESSAGE_SOURCE)))
+		{
+			return;
+		}
+		if ("clear".equals(event.getName()))
+		{
+			clear();
+			return;
+		}
+		if (!"path".equals(event.getName()))
+		{
+			return;
+		}
+		Object value = event.getData().get("target");
+		Set<?> requested = value instanceof Set<?> ? (Set<?>) value : Collections.singleton(value);
+		Set<Integer> destinations = new LinkedHashSet<>();
+		for (Object point : requested)
+		{
+			int packed = point instanceof WorldPoint ? WorldPointUtil.packWorldPoint((WorldPoint) point)
+				: point instanceof Integer ? (Integer) point : WorldPointUtil.UNDEFINED;
+			if (packed == WorldPointUtil.UNDEFINED)
+			{
+				return;
+			}
+			destinations.add(packed);
+		}
+		if (!destinations.isEmpty())
+		{
+			setTargets(destinations);
+		}
+	}
+
+	private void setTargets(Set<Integer> destinations)
+	{
+		WorldPoint destination = WorldPointUtil.unpackWorldPoint(destinations.iterator().next());
 		synchronized (this)
 		{
 			revision++;
 			target = destination;
+			targets = Collections.unmodifiableSet(new LinkedHashSet<>(destinations));
 			route = Collections.emptyList();
 			repathAnchor = player;
 		}
 		readFailed = false;
 		planner.get().computeRoute(destination);
-		postTargetIfAvailable(destination);
-		return true;
+	}
+
+	public synchronized Set<Integer> getRouteTargets(WorldPoint expectedTarget)
+	{
+		return expectedTarget != null && expectedTarget.equals(target) ? targets : Collections.emptySet();
 	}
 
 	/** Recalculate with the active plugin's current routing settings. */
@@ -223,7 +279,7 @@ public class ShortestPathTracker
 		{
 			try
 			{
-				eventBus.post(new PluginMessage("shortestpath", "clear", Collections.emptyMap()));
+				eventBus.post(new PluginMessage("shortestpath", "clear", Collections.singletonMap(MESSAGE_SOURCE, true)));
 			}
 			catch (RuntimeException | LinkageError e)
 			{
@@ -239,7 +295,8 @@ public class ShortestPathTracker
 			try
 			{
 				Map<String, Object> data = new HashMap<>();
-				data.put("target", destination);
+				data.put("target", targets.size() > 1 ? targets : destination);
+				data.put(MESSAGE_SOURCE, true);
 				eventBus.post(new PluginMessage("shortestpath", "path", data));
 			}
 			catch (RuntimeException | LinkageError e)
@@ -281,6 +338,7 @@ public class ShortestPathTracker
 		{
 			revision++;
 			target = null;
+			targets = Collections.emptySet();
 			repathAnchor = null;
 			route = Collections.emptyList();
 			readFailed = false;

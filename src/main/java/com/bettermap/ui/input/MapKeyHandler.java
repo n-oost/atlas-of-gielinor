@@ -67,15 +67,8 @@ public class MapKeyHandler
 
 		if (event.getKeyCode() == KeyEvent.VK_ESCAPE)
 		{
-			if (camera.isActive() && config.fullscreenMap())
-			{
-				if (pluginProvider != null && pluginProvider.get() != null)
-				{
-					pluginProvider.get().closeMap();
-				}
-				event.consume();
-				return true;
-			}
+			// Hub review F2: leave genuine Escape input to the native client.
+			// Do not consume it and dispatch a replacement close action.
 			return false;
 		}
 

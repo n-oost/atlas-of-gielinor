@@ -125,13 +125,14 @@ public class RoutePlanner
 			return;
 		}
 		final long targetRevision = tracker.getRouteRevision(target);
-		if (targetRevision < 0)
+		final Set<Integer> targets = tracker.getRouteTargets(target);
+		if (targetRevision < 0 || targets.isEmpty())
 		{
 			return;
 		}
 		final int requestGeneration = generation.incrementAndGet();
 		cancelActive();
-		worker.execute(() -> runSearch(requestGeneration, targetRevision, target));
+		worker.execute(() -> runSearch(requestGeneration, targetRevision, targets));
 	}
 
 	/** Cancel an in-flight search and stop any result from being published. */
@@ -163,7 +164,7 @@ public class RoutePlanner
 		return requestGeneration != generation.get();
 	}
 
-	private void runSearch(int requestGeneration, long targetRevision, WorldPoint target)
+	private void runSearch(int requestGeneration, long targetRevision, Set<Integer> targets)
 	{
 		try
 		{
@@ -223,8 +224,7 @@ public class RoutePlanner
 				return;
 			}
 
-			final Pathfinder pathfinder = new Pathfinder(cfg, start[0],
-				Set.of(WorldPointUtil.packWorldPoint(target)));
+			final Pathfinder pathfinder = new Pathfinder(cfg, start[0], targets);
 			// Publish the cancel handle before the last generation check: a retarget that lands
 			// after this point runs cancelActive() and sees this pathfinder, so run() exits early.
 			synchronized (this)
@@ -262,9 +262,9 @@ public class RoutePlanner
 				final int unreachableThreshold = pathfindingConfig.unreachableTargetDistance();
 				if (unreachableThreshold >= 0)
 				{
-					final int targetPacked = WorldPointUtil.packWorldPoint(target);
-					final int endDistance = WorldPointUtil.distanceBetween2D(
-						packed[packed.length - 1], targetPacked);
+					final int endDistance = targets.stream().mapToInt(targetPacked ->
+						WorldPointUtil.distanceBetween2D(packed[packed.length - 1], targetPacked))
+						.min().orElse(Integer.MAX_VALUE);
 					if (endDistance > unreachableThreshold)
 					{
 						full = false;
@@ -276,7 +276,10 @@ public class RoutePlanner
 		}
 		catch (InterruptedException e)
 		{
-			Thread.currentThread().interrupt();
+			// Hub review F3: direct Thread.interrupt() was refused in plugin-hub PR #17378.
+			// Exit this cancelled task; finally clears it and generation guards reject stale results.
+			// Do not restore the usual re-interrupt idiom without renewed Hub approval.
+			return;
 		}
 		catch (ExecutionException | TimeoutException | RuntimeException | LinkageError e)
 		{

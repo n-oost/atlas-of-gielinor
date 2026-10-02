@@ -39,6 +39,13 @@ the cursor, right click to step back out.
 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
+### Closing the map
+
+Click the game's original map close button. It remains visible and clickable in fullscreen
+and while map assets are unavailable. Atlas does not provide a replacement close chip or
+close the map after a Finder selection. Escape follows the client's native behavior;
+when a boss gallery is open, Escape dismisses that gallery first.
+
 ### Raid boss galleries
 
 Click **CoX · Bosses**, **ToB · Bosses**, or **ToA · Bosses** at the respective raid entrance to open its six boss cards. Hover a card for its boss tooltip; hold your configured tooltip expansion modifier for available combat details. Press **Esc** or click **×** to close the gallery. Enable **Show boss locations** and **Show tooltips** in Atlas of Gielinor settings.

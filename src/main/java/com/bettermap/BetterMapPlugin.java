@@ -44,7 +44,6 @@ import com.bettermap.map.PoiDetails;
 import com.bettermap.map.PrifddinasShift;
 import java.util.ArrayList;
 import java.util.List;
-import net.runelite.api.MenuEntry;
 import com.bettermap.map.QuestHelperTracker;
 import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.SlayerTaskTracker;
@@ -83,6 +82,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.PluginChanged;
+import net.runelite.client.events.PluginMessage;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
@@ -388,50 +388,6 @@ public class BetterMapPlugin extends Plugin
 		hideWidget(InterfaceID.Chatbox.UNIVERSE, hidden);
 	}
 
-	public void closeMap()
-	{
-		log.debug("[BetterMap:close] closeMap() requested  camera.active={} fullscreen={}",
-			camera.isActive(), config.fullscreenMap());
-		camera.setClosing(true);
-		clientThread.invoke(this::closeMapOnClientThread);
-	}
-
-	private void closeMapOnClientThread()
-	{
-		inputHeartbeatTick = 0;
-		if (!isWorldMapOpen())
-		{
-			camera.setClosing(false);
-			camera.setActive(false);
-			mapOverlay.onMapClosed();
-			return;
-		}
-
-		final Widget closeWidget = client.getWidget(InterfaceID.Worldmap.CLOSE);
-		if (closeWidget == null)
-		{
-			log.warn("[BetterMap:close] native close button unavailable");
-			camera.setClosing(false);
-			return;
-		}
-
-		try
-		{
-			// The onOp listener alone does not perform the native widget operation.
-			// Detaching the interface locally leaves the server's map open, making the
-			// next globe click close it instead of opening it. Dispatch the actual close
-			// operation and keep map input disabled until the server closes the interface.
-			client.menuAction(-1, InterfaceID.Worldmap.CLOSE, MenuAction.CC_OP,
-				1, -1, "Close", "");
-			log.debug("[BetterMap:close] native close operation dispatched");
-		}
-		catch (RuntimeException e)
-		{
-			camera.setClosing(false);
-			log.warn("[BetterMap:close] native close operation failed", e);
-		}
-	}
-
 	private boolean isWorldMapOpen()
 	{
 		final Widget map = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
@@ -553,28 +509,7 @@ public class BetterMapPlugin extends Plugin
 
 		final boolean worldMapOpen = isWorldMapOpen();
 
-		if (camera.isClosing())
-		{
-			if (!isWorldMapOpen())
-			{
-				camera.setClosing(false);
-				camera.setActive(false);
-				mapOverlay.onMapClosed();
-				log.debug("[BetterMap:close] tick — interface gone, latch cleared");
-			}
-			else
-			{
-				inputHeartbeatTick++;
-				if (inputHeartbeatTick >= 15)
-				{
-					log.error("[BetterMap:close] giving up latch after {} ticks — releasing mouse (map may still show)", inputHeartbeatTick);
-					camera.setClosing(false);
-					camera.setActive(false);
-					inputHeartbeatTick = 0;
-				}
-			}
-		}
-		else if (!worldMapOpen && camera.isActive())
+		if (!worldMapOpen && camera.isActive())
 		{
 			// Overlay stops rendering when WORLDMAP closes, so render() cannot clear the grab.
 			camera.setActive(false);
@@ -588,11 +523,10 @@ public class BetterMapPlugin extends Plugin
 			{
 				final Widget map = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
 				final Rectangle view = camera.getViewport();
-				log.debug("[BetterMap:heartbeat] ACTIVE grab  fullscreen={} viewport={} map={} closeBtn={}",
+				log.debug("[BetterMap:heartbeat] ACTIVE grab  fullscreen={} viewport={} map={}",
 					config.fullscreenMap(),
 					view == null ? "null" : view.width + "x" + view.height,
-					widgetState(map),
-					camera.getCloseButton());
+					widgetState(map));
 			}
 		}
 		else
@@ -694,6 +628,16 @@ public class BetterMapPlugin extends Plugin
 		{
 			overlayManager.remove(runeliteWorldMapOverlay);
 			suppressedRuneliteOverlay = true;
+		}
+	}
+
+	@Subscribe
+	public void onPluginMessage(PluginMessage event)
+	{
+		if ("shortestpath".equals(event.getNamespace())
+			&& ("path".equals(event.getName()) || "clear".equals(event.getName())))
+		{
+			clientThread.invoke(() -> shortestPathTracker.onPluginMessage(event));
 		}
 	}
 
@@ -1126,10 +1070,19 @@ public class BetterMapPlugin extends Plugin
 
 	private void addMapContextMenuEntries(net.runelite.api.Point mouse)
 	{
+		// Hub review F1: append local entries; never clear or reorder the game's entries.
+		// The standalone Finder can overlap players, so pruning could remove Attack/Cast/Trade.
+		// Do not restore resetMapMenu() to tidy this menu (see PLUGIN_HUB_REVIEW.md, F1).
+		for (Rectangle passthrough : camera.getNativePassthrough())
+		{
+			if (passthrough != null && passthrough.contains(mouse.getX(), mouse.getY()))
+			{
+				return;
+			}
+		}
 		final WorldPoint finderTarget = finderTargetAt(mouse);
 		if (finderTarget != null)
 		{
-			resetMapMenu();
 			final boolean standalone = camera.isFinderStandalone();
 			addRouteMenuEntry(finderTarget, standalone);
 			client.getMenu().createMenuEntry(-1)
@@ -1169,7 +1122,6 @@ public class BetterMapPlugin extends Plugin
 		final WorldPoint targetPoint = routePointAt(
 			camera.worldX(mouse.getX(), viewport), camera.worldY(mouse.getY(), viewport));
 
-		resetMapMenu();
 		addRouteMenuEntry(targetPoint, false);
 
 		if (camera.isViewingDungeonLayer())
@@ -1237,24 +1189,6 @@ public class BetterMapPlugin extends Plugin
 			.setTarget("<col=ffff00>" + point.getX() + ", " + point.getY() + "</col>")
 			.setType(MenuAction.RUNELITE)
 			.onClick(e -> routeTo(point, openMap));
-	}
-
-	private void resetMapMenu()
-	{
-		final List<MenuEntry> clean = new ArrayList<>();
-		for (MenuEntry entry : client.getMenu().getMenuEntries())
-		{
-			if (entry.getType() == MenuAction.CANCEL || "Cancel".equalsIgnoreCase(entry.getOption()))
-			{
-				clean.add(entry);
-				break;
-			}
-		}
-		if (clean.isEmpty() && client.getMenu().getMenuEntries().length > 0)
-		{
-			clean.add(client.getMenu().getMenuEntries()[0]);
-		}
-		client.getMenu().setMenuEntries(clean.toArray(new MenuEntry[0]));
 	}
 
 	private void addEntityContextMenuEntries(net.runelite.api.Point mouse, int worldX, int worldY)

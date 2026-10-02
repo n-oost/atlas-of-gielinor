@@ -340,11 +340,8 @@ public class MapCamera
 
 	private volatile Rectangle viewport;
 	private volatile boolean active;
-	/** Set while closeMap is in progress so the overlay cannot re-arm the mouse grab. */
-	private volatile boolean closing;
 	private volatile Rectangle[] planeButtons = new Rectangle[0];
-	private volatile Rectangle closeButton;
-	/** Screen rects where clicks pass through to the client (minimap overview, world-map orb). */
+	/** Screen rects where clicks pass through to the client (native close, minimap overview, world-map orb). */
 	private volatile Rectangle[] nativePassthrough = new Rectangle[0];
 	private volatile Rectangle undergroundReturnButton;
 	/** "Go to clue" button, shown while the clue scroll plugin has a solved target. */
@@ -524,12 +521,6 @@ public class MapCamera
 
 	public void setActive(boolean active)
 	{
-		if (closing && active)
-		{
-			log.debug(
-				"[BetterMap:camera] ignoring setActive(true) — close in progress");
-			return;
-		}
 		// Overlay render calls setActive(true) every frame while the map is open. Only the
 		// inactive → active edge should dismiss the standalone quick-find card; repeating the
 		// wipe while already active closes the in-map Find panel on the next frame.
@@ -538,10 +529,9 @@ public class MapCamera
 		{
 			final Rectangle view = viewport;
 			log.debug(
-				"[BetterMap:camera] active {} -> {}  viewport={}  closeBtn={}",
+				"[BetterMap:camera] active {} -> {}  viewport={}",
 				this.active, active,
-				view == null ? "null" : view.x + "," + view.y + " " + view.width + "x" + view.height,
-				closeButton);
+				view == null ? "null" : view.x + "," + view.y + " " + view.width + "x" + view.height);
 		}
 		this.active = active;
 		if (becomingActive)
@@ -555,8 +545,7 @@ public class MapCamera
 		}
 		if (!active)
 		{
-			// Drop UI hit targets so a stale close/plane rect cannot swallow clicks next frame.
-			closeButton = null;
+			// Drop UI hit targets so a stale plane rect cannot swallow clicks next frame.
 			nativePassthrough = new Rectangle[0];
 			undergroundReturnButton = null;
 			clueButton = null;
@@ -591,25 +580,6 @@ public class MapCamera
 			}
 			clearFlash();
 			savedSurfaceZoom = null;
-		}
-	}
-
-	public boolean isClosing()
-	{
-		return closing;
-	}
-
-	public void setClosing(boolean closing)
-	{
-		if (this.closing != closing)
-		{
-			log.debug(
-				"[BetterMap:camera] closing {} -> {}", this.closing, closing);
-		}
-		this.closing = closing;
-		if (closing)
-		{
-			setActive(false);
 		}
 	}
 
@@ -802,16 +772,6 @@ public class MapCamera
 	public void setPlaneButtons(Rectangle[] planeButtons)
 	{
 		this.planeButtons = planeButtons;
-	}
-
-	public Rectangle getCloseButton()
-	{
-		return closeButton;
-	}
-
-	public void setCloseButton(Rectangle closeButton)
-	{
-		this.closeButton = closeButton;
 	}
 
 	public Rectangle[] getNativePassthrough()

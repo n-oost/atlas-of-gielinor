@@ -263,14 +263,13 @@ public class BetterWorldMapOverlay extends Overlay
 
 		if (map == null || map.isHidden() || worldMap == null)
 		{
-			if (wasOpen || camera.isActive() || camera.isClosing())
+			if (wasOpen || camera.isActive())
 			{
-				log.debug("[BetterMap:overlay] map closed/unavailable  mapNull={} mapHidden={} worldMapNull={} wasActive={} closing={}",
+				log.debug("[BetterMap:overlay] map closed/unavailable  mapNull={} mapHidden={} worldMapNull={} wasActive={}",
 					map == null,
 					map != null && map.isHidden(),
 					worldMap == null,
-					camera.isActive(),
-					camera.isClosing());
+					camera.isActive());
 			}
 			if (wasOpen)
 			{
@@ -282,11 +281,6 @@ public class BetterWorldMapOverlay extends Overlay
 				raidBossDisplay.close();
 			}
 			return null;
-		}
-
-		if (camera.isClosing() && raidBossDisplay != null)
-		{
-			raidBossDisplay.close();
 		}
 
 		final Rectangle bounds = viewport(map);
@@ -309,9 +303,8 @@ public class BetterWorldMapOverlay extends Overlay
 
 		camera.setViewport(bounds);
 		updateNativePassthrough(bounds);
-		// Keep covering the native map until its interface is gone, while disabling
-		// map input as soon as close is requested.
-		camera.setActive(!camera.isClosing());
+		// Native input owns closing; the tick handler releases input when the interface disappears.
+		camera.setActive(true);
 
 		syncWithClient(worldMap, bounds);
 		final Runnable focus = finderFocusOnOpen;
@@ -339,7 +332,6 @@ public class BetterWorldMapOverlay extends Overlay
 			drawNotice(graphics, bounds,
 				"NO MAP DATA",
 				tileLoader.getStatus());
-			chromeRenderer.drawCloseButton(graphics, bounds, true);
 			graphics.setClip(previousClip);
 			return null;
 		}
@@ -569,7 +561,7 @@ public class BetterWorldMapOverlay extends Overlay
 	}
 
 	/**
-	 * Called from {@link com.bettermap.BetterMapPlugin#closeMap()} because this overlay
+	 * Called when the native interface closes because this overlay
 	 * only renders while {@code InterfaceID.WORLDMAP} is open — {@code wasOpen} would otherwise
 	 * stay true across close/reopen and skip player recentering (map stuck at the bottom).
 	 */
@@ -701,42 +693,57 @@ public class BetterWorldMapOverlay extends Overlay
 		}
 	}
 
-	/** Map area minus the overview inset and map list, matching the client's own clipping. */
+	/** Keep native controls visible at their original click zones, including in fullscreen. */
 	private Shape clipArea(Rectangle rect)
 	{
-		if (config.fullscreenMap())
-		{
-			return rect;
-		}
-
-		final Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
-		final Widget mapList = client.getWidget(InterfaceID.Worldmap.MAPLIST_BOX_GRAPHIC0);
-
 		final Area area = new Area(rect);
-		boolean subtracted = false;
-
-		if (overview != null && !overview.isHidden())
+		if (!config.fullscreenMap())
 		{
-			area.subtract(new Area(overview.getBounds()));
-			subtracted = true;
+			final Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
+			final Widget mapList = client.getWidget(InterfaceID.Worldmap.MAPLIST_BOX_GRAPHIC0);
+			if (overview != null && !overview.isHidden())
+			{
+				area.subtract(new Area(overview.getBounds()));
+			}
+			if (mapList != null && !mapList.isHidden())
+			{
+				area.subtract(new Area(mapList.getBounds()));
+			}
 		}
-
-		if (mapList != null && !mapList.isHidden())
+		final Rectangle closeBounds = nativeCloseBounds();
+		if (closeBounds != null)
 		{
-			area.subtract(new Area(mapList.getBounds()));
-			subtracted = true;
+			area.subtract(new Area(closeBounds));
 		}
+		return area;
+	}
 
-		return subtracted ? area : rect;
+	private Rectangle nativeCloseBounds()
+	{
+		final Widget close = client.getWidget(InterfaceID.Worldmap.CLOSE);
+		if (close == null || close.isHidden())
+		{
+			return null;
+		}
+		final Rectangle bounds = close.getBounds();
+		return bounds != null && bounds.width > 0 && bounds.height > 0 ? bounds : null;
 	}
 
 	/**
 	 * Publishes screen rects where {@link WorldMapInput} must not grab clicks, so the client's
-	 * overview minimap and world-map orb still receive them (toggle/close).
+	 * overview minimap, native close button and world-map orb still receive them.
 	 */
 	private void updateNativePassthrough(Rectangle bounds)
 	{
 		final List<Rectangle> rects = new ArrayList<>();
+		// Hub review F2: expose the real close widget; the user's original event reaches the client.
+		// Do not replace this with menuAction, synthetic events, onOp or local interface detachment.
+		// Map PR #11551 refused menuAction; clipping and passthrough preserve the native click zone.
+		final Rectangle closeBounds = nativeCloseBounds();
+		if (closeBounds != null)
+		{
+			rects.add(closeBounds);
+		}
 
 		Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
 		if (overview == null || overview.isHidden())

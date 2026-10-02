@@ -159,3 +159,30 @@ New high-end PvM boss plugins are not accepted as a blanket policy.
 
 - No adult or overtly sexual content
 - No plugins that use player-provided IDs for their entire functionality (causes moderation issues)
+
+## Plugin Hub review guardrails (2026-10-01)
+
+These changes address F1-F3 in `PLUGIN_HUB_REVIEW.md`. Preserve the constraints below
+when fixing UI bugs; do not restore the removed implementations without explicit,
+current RuneLite reviewer approval. The review report describes the original commit;
+its finding line numbers are historical.
+
+1. **Preserve native menu entries.** `addMapContextMenuEntries` only appends local
+   `RUNELITE` entries. The standalone Finder overlaps gameplay, so clearing the menu
+   can remove player Trade/Attack/Cast options. Do not bring back `resetMapMenu`,
+   blanket `setMenuEntries`, or game-option pruning for cosmetic cleanup.
+   Rule: [Jagex guidelines](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
+2. **Native input owns map closing.** The overlay leaves a rendering hole and mouse
+   passthrough at the original `Worldmap.CLOSE` bounds. Never relocate or resize that
+   click zone, dispatch `client.menuAction`, synthesize events, run a close `onOp`,
+   or detach the native interface locally. The last approach desynchronizes map state;
+   the others reintroduce the refused action API. Finder actions pan without closing;
+   ordinary Escape is passed to the client, except for local plugin modal dismissal.
+   Precedents: [map PR #11551](https://github.com/runelite/plugin-hub/pull/11551#issuecomment-4263572073),
+   [Slayer Atlas #15925](https://github.com/runelite/plugin-hub/pull/15925#issuecomment-5724629082).
+   Tile renderer clips must intersect the existing clip so the native close hole survives.
+3. **Do not directly interrupt threads.** RoutePlanner exits its interrupted task and
+   keeps `finally` cleanup and request-generation guards. Do not reintroduce
+   `Thread.currentThread().interrupt()` as a standard Java cleanup improvement;
+   this is a Hub review restriction, not a claim that Java's usual idiom is unsafe.
+   Precedent: [#17378](https://github.com/runelite/plugin-hub/pull/17378#issuecomment-5916964003).

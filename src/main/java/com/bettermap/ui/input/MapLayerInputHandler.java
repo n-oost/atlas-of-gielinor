@@ -131,16 +131,6 @@ public class MapLayerInputHandler
 			return "finder-button";
 		}
 
-		final Rectangle close = camera.getCloseButton();
-		if (close != null && close.contains(point))
-		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().closeMap();
-			}
-			return "close-button";
-		}
-
 		final Rectangle returnBtn = camera.getUndergroundReturnButton();
 		if (returnBtn != null && returnBtn.contains(point))
 		{
@@ -367,6 +357,8 @@ public class MapLayerInputHandler
 
 	private void activateRow(WorldPoint point)
 	{
+		// Hub review F2: Finder pans only; closing requires genuine input on the native control.
+		// Do not restore shift-click auto-close or a programmatic widget operation.
 		cancelPendingQuickFinderClick();
 		if (pluginProvider != null && pluginProvider.get() != null)
 		{
@@ -422,26 +414,6 @@ public class MapLayerInputHandler
 		}
 	}
 
-	private void activateRowAndClose(WorldPoint point)
-	{
-		cancelPendingQuickFinderClick();
-		if (camera.isFinderStandalone())
-		{
-			activateRow(point);
-			return;
-		}
-		if (pluginProvider == null || pluginProvider.get() == null)
-		{
-			return;
-		}
-
-		pluginProvider.get().centerMapOn(point);
-		if (camera.isActive())
-		{
-			pluginProvider.get().closeMap();
-		}
-	}
-
 	public boolean clickedFlyoutItem(Point point, boolean shiftDown, int clickCount)
 	{
 		for (MapCamera.FlyoutTarget target : camera.getFlyoutTargets())
@@ -472,10 +444,6 @@ public class MapLayerInputHandler
 				else if (clickCount >= 2)
 				{
 					routeToRow(target.getPoint());
-				}
-				else if (shiftDown)
-				{
-					activateRowAndClose(target.getPoint());
 				}
 				else
 				{
@@ -522,10 +490,6 @@ public class MapLayerInputHandler
 					{
 						routeToRow(regCenter);
 					}
-					else if (shiftDown)
-					{
-						activateRowAndClose(regCenter);
-					}
 					else
 					{
 						activateRow(regCenter);
@@ -546,10 +510,6 @@ public class MapLayerInputHandler
 				else if (clickCount >= 2)
 				{
 					routeToRow(activatedPoint);
-				}
-				else if (shiftDown)
-				{
-					activateRowAndClose(activatedPoint);
 				}
 				else
 				{

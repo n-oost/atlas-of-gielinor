@@ -27,7 +27,6 @@ package com.bettermap.ui;
 import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_BUTTON_SIZE;
 
 import com.bettermap.BetterMapConfig;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import net.runelite.api.Client;
 import net.runelite.api.gameval.InterfaceID;
@@ -62,28 +61,16 @@ class MapLayout
 	{
 		return (int) bounds.getMinX() + 8 + slot * (LEFT_TOOLBAR_BUTTON_SIZE + LEFT_TOOLBAR_GAP);
 	}
-	/**
-	 * Right edge of the top-right button strip: left of the fullscreen "Close" chip when one is drawn,
-	 * otherwise the map's right edge inside the overview inset. Callers must have set {@link MapStyle#SMALL} on
-	 * the graphics first (the fullscreen case measures the close chip's text).
-	 */
-	int topRightStripRight(Graphics2D graphics, Rectangle bounds)
+	/** Right edge of the button strip, inside the overview inset. */
+	int topRightStripRight(Rectangle bounds)
 	{
-		final int rightInset = rightUiInset(bounds);
-		if (config.fullscreenMap())
-		{
-			// Sit just left of the "Close (Esc)" chip drawn by drawStatusChip.
-			final int closeW = graphics.getFontMetrics().stringWidth("✕  Close  (Esc)");
-			final int closeLeft = (int) bounds.getMaxX() - closeW - 22 - rightInset;
-			return closeLeft - 8;
-		}
-		return (int) bounds.getMaxX() - 8 - rightInset;
+		return (int) bounds.getMaxX() - 8 - rightUiInset(bounds);
 	}
 
 	/**
 	 * Space to leave clear on the right for the overview minimap (and a fallback when its
 	 * widget bounds are missing). Uses distance from the canvas right edge to the overview's
-	 * left edge — not just overview width — so the close button sits beside the minimap.
+	 * left edge — not just overview width — so plugin controls sit beside the minimap.
 	 */
 	int rightUiInset(Rectangle bounds)
 	{

@@ -45,6 +45,21 @@ tasks.register('run', JavaExec) {
 	args "--developer-mode", "--debug"
 }
 
+// Package the plugin for RuneLite's developer-mode sideload directory. Use
+// this with RSProx's client, which supplies the local server connection.
+tasks.register('installLocalPlugin') {
+	dependsOn tasks.named('jar')
+
+	doLast {
+		def sideloadDirectory = new File(System.getProperty('user.home'), '.runelite/sideloaded-plugins')
+		project.copy {
+			from tasks.named('jar').get().archiveFile
+			into sideloadDirectory
+		}
+		println "Installed plugin jar to ${sideloadDirectory}"
+	}
+}
+
 tasks.register('shadowJar', Jar) {
 	dependsOn configurations.testRuntimeClasspath
 	manifest {

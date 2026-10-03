@@ -909,7 +909,7 @@ class MapFinderRenderer
 		graphics.setColor(hover ? CARD_TITLE : CARD_EDGE);
 		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 4, 4);
 		graphics.setColor(CARD_TEXT);
-		final String label = "Open on map";
+		final String label = "Show on map";
 		graphics.drawString(label, button.x + (button.width - fm.stringWidth(label)) / 2,
 			button.y + (button.height + fm.getAscent() - fm.getDescent()) / 2);
 		return button;

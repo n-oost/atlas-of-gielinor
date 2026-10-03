@@ -24,6 +24,7 @@
  */
 package com.bettermap.map;
 
+import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.TravelData;
 import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.OverlayFloor;
@@ -338,6 +339,29 @@ public class MapCamera
 	/** True when the player is above the overworld but no reliable authored interior owns the point. */
 	private volatile boolean interiorMapUnavailable;
 
+		/** One row in the Player Boats dropdown menu. */
+	public static final class BoatDropdownTarget
+	{
+		private final Rectangle bounds;
+		private final PlayerBoat boat;
+
+		public BoatDropdownTarget(Rectangle bounds, PlayerBoat boat)
+		{
+			this.bounds = bounds;
+			this.boat = boat;
+		}
+
+		public Rectangle getBounds()
+		{
+			return bounds;
+		}
+
+		public PlayerBoat getBoat()
+		{
+			return boat;
+		}
+	}
+
 	private volatile Rectangle viewport;
 	private volatile boolean active;
 	private volatile Rectangle[] planeButtons = new Rectangle[0];
@@ -349,6 +373,13 @@ public class MapCamera
 	private volatile Rectangle questButton;
 	/** "Go to Player" chip: pans and flashes the map on the local player. */
 	private volatile Rectangle playerButton;
+	/** "Go to Destination" button, shown while an active route/destination is set. */
+	private volatile Rectangle destinationButton;
+	/** "Player Boats" button, shown while the player owns boats. */
+	private volatile Rectangle boatsButton;
+	private volatile boolean boatsDropdownOpen;
+	private volatile Rectangle boatsDropdownBounds;
+	private volatile List<BoatDropdownTarget> boatDropdownTargets = Collections.emptyList();
 	/** Collapsible clue panel on fullscreen map. */
 	private volatile boolean cluePanelCollapsed;
 	private volatile Rectangle cluePanelBounds;
@@ -578,6 +609,11 @@ public class MapCamera
 				hoveredRowKey = null;
 				resetFinderScroll();
 			}
+						destinationButton = null;
+			boatsButton = null;
+			boatsDropdownOpen = false;
+			boatsDropdownBounds = null;
+			boatDropdownTargets = Collections.emptyList();
 			clearFlash();
 			savedSurfaceZoom = null;
 		}
@@ -825,6 +861,56 @@ public class MapCamera
 	public void setPlayerButton(Rectangle playerButton)
 	{
 		this.playerButton = playerButton;
+	}
+
+		public Rectangle getDestinationButton()
+	{
+		return destinationButton;
+	}
+
+	public void setDestinationButton(Rectangle destinationButton)
+	{
+		this.destinationButton = destinationButton;
+	}
+
+	public Rectangle getBoatsButton()
+	{
+		return boatsButton;
+	}
+
+	public void setBoatsButton(Rectangle boatsButton)
+	{
+		this.boatsButton = boatsButton;
+	}
+
+	public boolean isBoatsDropdownOpen()
+	{
+		return boatsDropdownOpen;
+	}
+
+	public void setBoatsDropdownOpen(boolean boatsDropdownOpen)
+	{
+		this.boatsDropdownOpen = boatsDropdownOpen;
+	}
+
+	public Rectangle getBoatsDropdownBounds()
+	{
+		return boatsDropdownBounds;
+	}
+
+	public void setBoatsDropdownBounds(Rectangle boatsDropdownBounds)
+	{
+		this.boatsDropdownBounds = boatsDropdownBounds;
+	}
+
+	public List<BoatDropdownTarget> getBoatDropdownTargets()
+	{
+		return boatDropdownTargets;
+	}
+
+	public void setBoatDropdownTargets(List<BoatDropdownTarget> boatDropdownTargets)
+	{
+		this.boatDropdownTargets = boatDropdownTargets != null ? boatDropdownTargets : Collections.emptyList();
 	}
 
 	public boolean isCluePanelCollapsed()

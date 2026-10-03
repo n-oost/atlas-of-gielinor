@@ -251,6 +251,11 @@ public class MapTooltipRenderer
 		{
 			return;
 		}
+		final Rectangle boatsPanel = camera.getBoatsDropdownBounds();
+		if (boatsPanel != null && boatsPanel.contains(cursor))
+		{
+			return;
+		}
 
 		final boolean travelFocused = config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom()
 			&& camera.getSelectedTravelNode() != null;

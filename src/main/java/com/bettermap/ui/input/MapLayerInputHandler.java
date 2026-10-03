@@ -99,6 +99,7 @@ public class MapLayerInputHandler
 			if (opening)
 			{
 				camera.setFinderPanelOpen(false);
+				camera.setBoatsDropdownOpen(false);
 			}
 			return "layers-gear";
 		}
@@ -123,6 +124,7 @@ public class MapLayerInputHandler
 			if (opening)
 			{
 				camera.setLayersPanelOpen(false);
+				camera.setBoatsDropdownOpen(false);
 				if (finder != null && pluginProvider != null && pluginProvider.get() != null)
 				{
 					finder.updateQuery("", pluginProvider.get().getPlayerLocation());
@@ -166,6 +168,58 @@ public class MapLayerInputHandler
 				pluginProvider.get().goToPlayer();
 			}
 			return "go-to-player";
+		}
+
+		final Rectangle destBtn = camera.getDestinationButton();
+		if (destBtn != null && destBtn.contains(point))
+		{
+			if (pluginProvider != null && pluginProvider.get() != null)
+			{
+				pluginProvider.get().goToDestination();
+			}
+			return "go-to-destination";
+		}
+
+		if (camera.isBoatsDropdownOpen())
+		{
+			final Rectangle boatsBtn = camera.getBoatsButton();
+			if (boatsBtn != null && boatsBtn.contains(point))
+			{
+				camera.setBoatsDropdownOpen(false);
+				return "boats-button-toggle";
+			}
+
+			final Rectangle dropdown = camera.getBoatsDropdownBounds();
+			if (dropdown != null && dropdown.contains(point))
+			{
+				for (com.bettermap.map.MapCamera.BoatDropdownTarget target : camera.getBoatDropdownTargets())
+				{
+					if (target.getBounds().contains(point))
+					{
+						if (pluginProvider != null && pluginProvider.get() != null)
+						{
+							pluginProvider.get().goToBoat(target.getBoat());
+						}
+						camera.setBoatsDropdownOpen(false);
+						return "boat-dropdown-select";
+					}
+				}
+				return "boat-dropdown";
+			}
+			camera.setBoatsDropdownOpen(false);
+		}
+
+		final Rectangle boatsBtn = camera.getBoatsButton();
+		if (boatsBtn != null && boatsBtn.contains(point))
+		{
+			final boolean opening = !camera.isBoatsDropdownOpen();
+			camera.setBoatsDropdownOpen(opening);
+			if (opening)
+			{
+				camera.setLayersPanelOpen(false);
+				camera.setFinderPanelOpen(false);
+			}
+			return "boats-button-toggle";
 		}
 
 		final Rectangle cluePanBtn = camera.getCluePanelPanButton();

@@ -2067,6 +2067,198 @@ public enum UndergroundZone
 		8672,
 		new WorldPoint(2530, 2205, 0),
 		new WorldPoint(2562, 2203, 0)
+	),
+	DEEPFIN_MINE(
+		"deepfin_mine",
+		"Deepfin Mine",
+		new WorldPoint(1924, 2758, 0),
+		new WorldPoint(2015, 9187, 0),
+		6400,
+		55,
+		"Under Deepfin Point • Deepfin Mine"
+	),
+	PANDEMONIUM_CAVE(
+		"pandemonium_cave",
+		"Pandemonium Cave",
+		new WorldPoint(3070, 2986, 0),
+		new WorldPoint(3043, 9384, 0),
+		6400,
+		55,
+		"Under The Pandemonium • low-level cavern"
+	),
+	HERE_BE_MINOTAURS(
+		"here_be_minotaurs",
+		"Here be minotaurs",
+		new WorldPoint(1959, 3117, 0),
+		new WorldPoint(1947, 9505, 0),
+		6400,
+		55,
+		"Under Minotaurs' Rest • minotaur cavern"
+	),
+	YNYSDAIL_CAVERN(
+		"ynysdail_cavern",
+		"Ynysdail Cavern",
+		new WorldPoint(2223, 3466, 0),
+		new WorldPoint(2271, 9875, 0),
+		6400,
+		55,
+		"Under Ynysdail • Aquanite cavern"
+	),
+	GRYPHON_CAVE(
+		"gryphon_cave",
+		"Gryphon Cave",
+		new WorldPoint(3120, 2490, 0),
+		new WorldPoint(3227, 8861, 0),
+		6400,
+		55,
+		"Under The Great Conch • gryphon caves",
+		new WorldPoint(3234, 2418, 0)
+	),
+	KURASK_LAIR(
+		"kurask_lair",
+		"Kurask Lair",
+		new WorldPoint(1203, 2733, 0),
+		new WorldPoint(1181, 9195, 0),
+		6400,
+		55,
+		"Under Laguna Aurorae • Kurask lair"
+	),
+	SHELLBANE_GRYPHON_CAVE(
+		"shellbane_gryphon_cave",
+		"Shellbane Gryphon Cave",
+		new WorldPoint(3175, 2478, 0),
+		new WorldPoint(3177, 8873, 0),
+		6400,
+		55,
+		"Under The Great Conch • Shellbane gryphon cave"
+	),
+	SUNBLEAK_CAVE(
+		"sunbleak_cave",
+		"Sunbleak Cave",
+		new WorldPoint(2190, 2327, 0),
+		new WorldPoint(2225, 8737, 0),
+		6400,
+		55,
+		"Under Sunbleak Island • mining cavern"
+	),
+	JOGRE_DUNGEON(
+		"jogre_dungeon",
+		"Jogre Dungeon",
+		new WorldPoint(2824, 3118, 0),
+		new WorldPoint(2848, 9504, 0),
+		6400,
+		55,
+		"Under Karamja • Jogre Dungeon"
+	),
+	SCABARAS_DUNGEON(
+		"scabaras_dungeon",
+		"Scabaras Dungeon",
+		new WorldPoint(3407, 2848, 0),
+		new WorldPoint(3403, 9247, 0),
+		6400,
+		55,
+		"Under the Desert • Scabaras Dungeon"
+	),
+	WEREWOLF_AGILITY_COURSE(
+		"werewolf_agility_course",
+		"Werewolf Agility Course",
+		new WorldPoint(3542, 3461, 0),
+		new WorldPoint(3551, 9887, 0),
+		6400,
+		55,
+		"Under Morytania • Werewolf Agility Course"
+	),
+	MYREQUE_HIDEOUT(
+		"myreque_hideout",
+		"Myreque Hideout",
+		new WorldPoint(3508, 3448, 0),
+		new WorldPoint(3495, 9835, 0),
+		6400,
+		55,
+		"Under Morytania • Myreque Hideout",
+		new WorldPoint(3494, 3464, 0)
+	),
+	SHAYZIEN_PRISON(
+		"shayzien_prison",
+		"Shayzien Prison",
+		new WorldPoint(1464, 3569, 0),
+		new WorldPoint(1437, 9951, 0),
+		6400,
+		55,
+		"Under Shayzien • prison dungeon"
+	),
+	XERICS_LOOKOUT_BASEMENT(
+		"xerics_lookout_basement",
+		"Xeric's Lookout basement",
+		new WorldPoint(1589, 3526, 0),
+		new WorldPoint(1563, 9953, 0),
+		6400,
+		55,
+		"Under Xeric's Lookout"
+	),
+	FORTIS_COLOSSEUM(
+		"fortis_colosseum",
+		"Fortis Colosseum",
+		new WorldPoint(1824, 3107, 0),
+		new WorldPoint(1825, 9507, 0),
+		6400,
+		55,
+		"Under Civitas illa Fortis • Fortis Colosseum"
+	),
+	ENTRANA_DUNGEON(
+		"entrana_dungeon",
+		"Entrana Dungeon",
+		new WorldPoint(2819, 3374, 0),
+		new WorldPoint(2847, 9755, 0),
+		6400,
+		55,
+		"Under Entrana • Entrana Dungeon"
+	),
+	ALCHEMICAL_SOCIETY(
+		"alchemical_society",
+		"Alchemical Society",
+		new WorldPoint(1389, 2918, 0),
+		new WorldPoint(1373, 9315, 0),
+		6400,
+		55,
+		"Under Varlamore • Alchemical Society"
+	),
+	QUIDAMORTEM_CAVE(
+		"quidamortem_cave",
+		"Quidamortem Cave",
+		new WorldPoint(1213, 3559, 0),
+		new WorldPoint(1180, 9956, 0),
+		6400,
+		55,
+		"Under Mount Quidamortem • cave entrance"
+	),
+	RUINS_OF_UZER_BASEMENT(
+		"ruins_of_uzer_basement",
+		"Ruins of Uzer basement",
+		new WorldPoint(3492, 3090, 0),
+		new WorldPoint(2721, 4900, 0),
+		6400,
+		55,
+		"Under the Ruins of Uzer"
+	),
+	TUTORIAL_ISLAND_DUNGEON(
+		"tutorial_island_dungeon",
+		"Tutorial Island dungeon",
+		new WorldPoint(3087, 3119, 0),
+		new WorldPoint(3093, 9513, 0),
+		6400,
+		40,
+		"Under Tutorial Island • mine and combat training area",
+		new WorldPoint(3110, 3126, 0)
+	),
+	CORAL_NURSERIES(
+		"coral_nurseries",
+		"Coral Nurseries",
+		new WorldPoint(3272, 2463, 0),
+		new WorldPoint(3297, 8859, 0),
+		6400,
+		55,
+		"Under The Great Conch • Coral Nurseries"
 	);
 
 	private final String id;

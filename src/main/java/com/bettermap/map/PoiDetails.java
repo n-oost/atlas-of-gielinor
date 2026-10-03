@@ -243,10 +243,10 @@ public final class PoiDetails
 			"Requires: 51 Thieving (optional shortcut) or long walk",
 			"Bring food and armour"));
 		reqs.put("Taverley Dungeon", List.of(
-			"Requires: Dusty key (from Jail in Edgeville Dungeon)",
+			"Requires: Dusty key (from Velrak in Taverley jail) or 70 Agility shortcut",
 			"Light source recommended"));
 		reqs.put("Edgeville Dungeon", List.of(
-			"Requires: Brass key for the locked door (H.A.M. area)",
+			"Requires: Brass key for the surface shortcut door south of Edgeville",
 			"Light source recommended"));
 		reqs.put("Waterbirth Dungeon", List.of(
 			"Requires: Rellekka / Fremennik boat access and combat gear",
@@ -408,13 +408,13 @@ public final class PoiDetails
 			"Requires: Legends' Quest started or completed",
 			"Shadow warriors and dungeon access"));
 		reqs.put("Woodcutting Guild dungeon", List.of(
-			"Requires: 60 Woodcutting, 75% Hosidius favour",
+			"Requires: 60 Woodcutting",
 			"Ents and Woodcutting dungeon below"));
 		reqs.put("Woodcutting Guild Dungeon", List.of(
-			"Requires: 60 Woodcutting, 75% Hosidius favour",
+			"Requires: 60 Woodcutting",
 			"Ents and Woodcutting dungeon below"));
 		reqs.put("WC Guild dungeon", List.of(
-			"Requires: 60 Woodcutting, 75% Hosidius favour",
+			"Requires: 60 Woodcutting",
 			"Ents and Woodcutting dungeon below"));
 		reqs.put("Wizards' Guild basement", List.of(
 			"Requires: Level 66 Magic (Magic guild entrance)",
@@ -2297,7 +2297,7 @@ public final class PoiDetails
 		addEntry("quest_start", "Monkey Madness I", "Quest Start • Master", 2522, 3498, 0, "Start: King Narnode Shareen in Tree Gnome Stronghold", "Difficulty: Master • Length: Long", "Reward: 3 Quest Points", "Requirements: The Grand Tree, Tree Gnome Village", "Unlocks: Dragon scimitar & Monkey greegree");
 		addEntry("quest_start", "Fishing Contest", "Quest Start • Novice", 2566, 3461, 0, "Start: Vestri at McGrubor's Wood / Dwarf entrance", "Difficulty: Novice • Length: Short", "Reward: 1 Quest Point", "Requirements: 10 Fishing, Garlic, Fishing rod, Red vine worms");
 		addEntry("quest_start", "Elemental Workshop I", "Quest Start • Novice", 2740, 3445, 0, "Start: Slashed book in Seers' Village library", "Difficulty: Novice • Length: Short", "Reward: 1 Quest Point", "Requirements: 20 Mining, 20 Smithing, 20 Crafting, Elemental shield");
-		addEntry("quest_start", "One Small Favour", "Quest Start • Experienced", 2718, 3470, 0, "Start: Yanni Salika in Shilo Village", "Difficulty: Experienced • Length: Very Long", "Reward: 2 Quest Points", "Requirements: 36 Agility, 25 Crafting, 18 Herblore, 30 Smithing", "Unlocks: Steel key ring, 2x 10,000 XP lamps");
+		addEntry("quest_start", "One Small Favour", "Quest Start • Experienced", 2835, 2985, 0, "Start: Yanni Salika in Shilo Village", "Difficulty: Experienced • Length: Very Long", "Reward: 2 Quest Points", "Requirements: 36 Agility, 25 Crafting, 18 Herblore, 30 Smithing", "Unlocks: Steel key ring, 2x 10,000 XP lamps");
 		addEntry("quest_start", "Waterfall Quest", "Quest Start • Intermediate", 2517, 3574, 0, "Start: Almera south-west of Baxtorian Falls", "Difficulty: Intermediate • Length: Medium", "Reward: 1 Quest Point", "Requirements: Rope, 6x Air, 6x Water, 6x Earth runes", "Reward: +13,750 Attack & Strength XP");
 		addEntry("quest_start", "Merlin's Crystal", "Quest Start • Intermediate", 2839, 3538, 0, "Start: King Arthur in Camelot Castle", "Difficulty: Intermediate • Length: Medium", "Reward: 6 Quest Points", "Requirements: Excalibur sword, Black candle, Bat bones, Tinderbox");
 		addEntry("quest_start", "Holy Grail", "Quest Start • Intermediate", 2839, 3532, 0, "Start: King Arthur in Camelot Castle", "Difficulty: Intermediate • Length: Medium", "Reward: 2 Quest Points", "Requirements: Merlin's Crystal completion, 20 Attack");

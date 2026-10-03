@@ -35,6 +35,11 @@ import static com.bettermap.ui.MapStyle.SMALL;
 import static com.bettermap.ui.MapStyle.TEXT_DIM;
 
 import com.bettermap.BetterMapConfig;
+import com.bettermap.data.sailing.BoatTracker;
+import com.bettermap.data.sailing.PlayerBoat;
+import com.bettermap.data.sailing.SailingPort;
+import com.bettermap.map.ShortestPathTracker;
+import net.runelite.api.Client;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.ClueScrollTracker;
 import com.bettermap.map.InstanceMaps;
@@ -77,11 +82,22 @@ class MapChromeRenderer
 	private final QuestHelperTracker questHelperTracker;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final PoiIndex poiIndex;
+	private final ShortestPathTracker shortestPathTracker;
+	private final BoatTracker boatTracker;
+	private final Client client;
 	private int topBarLeftChipsRight;
 
 	MapChromeRenderer(BetterMapConfig config, MapCamera camera, WorldMapInput input, MapLayout layout,
 		ClueScrollTracker clueScrollTracker, QuestHelperTracker questHelperTracker,
 		SlayerTaskTracker slayerTaskTracker, PoiIndex poiIndex)
+	{
+		this(config, camera, input, layout, clueScrollTracker, questHelperTracker, slayerTaskTracker, poiIndex, null, null, null);
+	}
+
+	MapChromeRenderer(BetterMapConfig config, MapCamera camera, WorldMapInput input, MapLayout layout,
+		ClueScrollTracker clueScrollTracker, QuestHelperTracker questHelperTracker,
+		SlayerTaskTracker slayerTaskTracker, PoiIndex poiIndex,
+		ShortestPathTracker shortestPathTracker, BoatTracker boatTracker, Client client)
 	{
 		this.config = config;
 		this.camera = camera;
@@ -91,6 +107,29 @@ class MapChromeRenderer
 		this.questHelperTracker = questHelperTracker;
 		this.slayerTaskTracker = slayerTaskTracker;
 		this.poiIndex = poiIndex;
+		this.shortestPathTracker = shortestPathTracker;
+		this.boatTracker = boatTracker;
+		this.client = client;
+	}
+
+	private int nextTopChipX(Rectangle bounds, Rectangle... previousChips)
+	{
+		int maxX = 0;
+		if (previousChips != null)
+		{
+			for (Rectangle chip : previousChips)
+			{
+				if (chip != null)
+				{
+					maxX = Math.max(maxX, chip.x + chip.width);
+				}
+			}
+		}
+		if (maxX > 0)
+		{
+			return maxX + 6;
+		}
+		return topBarLeftChipsRight > 0 ? topBarLeftChipsRight + 8 : (int) bounds.getMinX() + 8;
 	}
 
 	/** Dev dungeon-layer tuner readout: current nudge and the paste-ready corrected coordinates. */
@@ -381,12 +420,7 @@ class MapChromeRenderer
 
 		final String label = "Go to Player";
 		final int textW = graphics.getFontMetrics().stringWidth(label);
-		final Rectangle questChip = camera.getQuestButton();
-		final Rectangle clueChip = camera.getClueButton();
-		final Rectangle anchor = questChip != null ? questChip : clueChip;
-		final int x = anchor != null
-			? anchor.x + anchor.width + 6
-			: (topBarLeftChipsRight > 0 ? topBarLeftChipsRight + 8 : (int) bounds.getMinX() + 8);
+		final int x = nextTopChipX(bounds, camera.getQuestButton(), camera.getClueButton());
 		final int y = (int) bounds.getMinY() + 8;
 		final int glyph = 12;
 		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
@@ -419,6 +453,219 @@ class MapChromeRenderer
 		graphics.drawString(label, button.x + 7 + glyph + 8, button.y + 14);
 
 		camera.setPlayerButton(button);
+	}
+
+	/**
+	 * "Go to Destination" chip. Pans the map to the active route / Shortest Path destination.
+	 * Sits on the top bar alongside the other destination chips.
+	 */
+	void drawDestinationButton(Graphics2D graphics, Rectangle bounds)
+	{
+		if (shortestPathTracker == null || !shortestPathTracker.isRoutingEnabled()
+			|| !shortestPathTracker.hasTarget() || shortestPathTracker.target() == null)
+		{
+			camera.setDestinationButton(null);
+			return;
+		}
+
+		graphics.setFont(SMALL);
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final String label = "Go to Destination";
+		final int textW = graphics.getFontMetrics().stringWidth(label);
+		final int x = nextTopChipX(bounds, camera.getPlayerButton(), camera.getQuestButton(), camera.getClueButton());
+		final int y = (int) bounds.getMinY() + 8;
+		final int glyph = 12;
+		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
+
+		final int rightLimit = layout.topRightStripRight(bounds)
+			- (config.fullscreenMap() ? LEFT_TOOLBAR_BUTTON_SIZE + 8 : 0);
+		if (button.x + button.width > rightLimit)
+		{
+			camera.setDestinationButton(null);
+			return;
+		}
+
+		graphics.setColor(CARD_BG);
+		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 7, 7);
+		graphics.setColor(CARD_TITLE);
+		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 7, 7);
+
+		// Cyan waypoint / destination target glyph (concentric rings), matching the route line.
+		final int cx = button.x + 7 + glyph / 2;
+		final int cy = button.y + button.height / 2;
+		final int r = glyph / 2;
+		graphics.setColor(MapStyle.ROUTE_LINE);
+		graphics.drawOval(cx - r, cy - r, glyph, glyph);
+		graphics.fillOval(cx - 2, cy - 2, 4, 4);
+
+		graphics.setColor(CARD_TITLE);
+		graphics.drawString(label, button.x + 7 + glyph + 8, button.y + 14);
+
+		camera.setDestinationButton(button);
+	}
+
+	/**
+	 * "Player Boats" chip with dropdown. Shows a dropdown list of all owned boats with
+	 * their name and current location. Clicking a boat pans to its location on the map.
+	 */
+	void drawBoatsButton(Graphics2D graphics, Rectangle bounds)
+	{
+		if (!config.showBoatLocations() || boatTracker == null || boatTracker.getOwnedBoats().isEmpty())
+		{
+			camera.setBoatsButton(null);
+			camera.setBoatsDropdownOpen(false);
+			camera.setBoatsDropdownBounds(null);
+			camera.setBoatDropdownTargets(Collections.emptyList());
+			return;
+		}
+
+		graphics.setFont(SMALL);
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		final boolean open = camera.isBoatsDropdownOpen();
+		final String label = "Player Boats " + (open ? "\u25B4" : "\u25BE");
+		final int textW = graphics.getFontMetrics().stringWidth(label);
+		final int x = nextTopChipX(bounds, camera.getDestinationButton(), camera.getPlayerButton(),
+			camera.getQuestButton(), camera.getClueButton());
+		final int y = (int) bounds.getMinY() + 8;
+		final int glyph = 12;
+		final Rectangle button = new Rectangle(x, y, glyph + 8 + textW + 14, 20);
+
+		final int rightLimit = layout.topRightStripRight(bounds)
+			- (config.fullscreenMap() ? LEFT_TOOLBAR_BUTTON_SIZE + 8 : 0);
+		if (button.x + button.width > rightLimit)
+		{
+			camera.setBoatsButton(null);
+			camera.setBoatsDropdownOpen(false);
+			camera.setBoatsDropdownBounds(null);
+			camera.setBoatDropdownTargets(Collections.emptyList());
+			return;
+		}
+
+		graphics.setColor(open ? CARD_EDGE : CARD_BG);
+		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 7, 7);
+		graphics.setColor(CARD_TITLE);
+		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 7, 7);
+
+		// Boat glyph: sailboat icon
+		final int cx = button.x + 7 + glyph / 2;
+		final int cy = button.y + button.height / 2;
+		graphics.setColor(open ? Color.BLACK : CARD_TITLE);
+		final int[] hullX = {cx - 5, cx + 5, cx + 3, cx - 3};
+		final int[] hullY = {cy + 2, cy + 2, cy + 5, cy + 5};
+		graphics.fillPolygon(hullX, hullY, 4);
+		graphics.drawLine(cx, cy + 1, cx, cy - 5);
+		final int[] sailX = {cx, cx + 4, cx};
+		final int[] sailY = {cy - 5, cy - 1, cy + 1};
+		graphics.setColor(open ? Color.BLACK : Color.WHITE);
+		graphics.fillPolygon(sailX, sailY, 3);
+
+		graphics.setColor(open ? Color.BLACK : CARD_TITLE);
+		graphics.drawString(label, button.x + 7 + glyph + 8, button.y + 14);
+
+		camera.setBoatsButton(button);
+	}
+
+	void drawBoatsDropdown(Graphics2D graphics, Rectangle bounds)
+	{
+		if (!camera.isBoatsDropdownOpen() || camera.getBoatsButton() == null
+			|| boatTracker == null || !config.showBoatLocations())
+		{
+			camera.setBoatsDropdownBounds(null);
+			camera.setBoatDropdownTargets(Collections.emptyList());
+			return;
+		}
+
+		final List<PlayerBoat> boats = boatTracker.getOwnedBoats();
+		if (boats.isEmpty())
+		{
+			camera.setBoatsDropdownOpen(false);
+			camera.setBoatsDropdownBounds(null);
+			camera.setBoatDropdownTargets(Collections.emptyList());
+			return;
+		}
+
+		final Rectangle btn = camera.getBoatsButton();
+		graphics.setFont(SMALL);
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		final FontMetrics fm = graphics.getFontMetrics();
+
+		int maxTextW = 140;
+		for (PlayerBoat boat : boats)
+		{
+			final String name = boat.getBoatName() != null ? boat.getBoatName() : "Boat " + boat.getBoatId();
+			final String loc = boat.getPort() != null
+				? boat.getPort().getName()
+				: SailingPort.resolvePortName(client, boat.getPortId());
+			maxTextW = Math.max(maxTextW, fm.stringWidth(name));
+			maxTextW = Math.max(maxTextW, fm.stringWidth(loc));
+		}
+
+		final int rowH = 34;
+		final int padY = 6;
+		final int panelW = Math.max(180, maxTextW + 36);
+		final int panelH = padY * 2 + boats.size() * rowH;
+
+		int panelX = btn.x;
+		if (panelX + panelW > bounds.getMaxX() - 8)
+		{
+			panelX = (int) bounds.getMaxX() - 8 - panelW;
+		}
+		final int panelY = btn.y + btn.height + 4;
+		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
+
+		graphics.setColor(CARD_BG);
+		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+		graphics.setColor(CARD_EDGE);
+		graphics.drawRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+
+		final Point cursor = input.getCursor();
+		final List<MapCamera.BoatDropdownTarget> targets = new ArrayList<>(boats.size());
+		int rowY = panel.y + padY;
+
+		for (PlayerBoat boat : boats)
+		{
+			final Rectangle row = new Rectangle(panel.x + 4, rowY, panel.width - 8, rowH - 2);
+			final boolean hover = cursor != null && row.contains(cursor);
+
+			if (hover)
+			{
+				graphics.setColor(CHIP_BG);
+				graphics.fillRoundRect(row.x, row.y, row.width, row.height, 4, 4);
+				graphics.setColor(CARD_EDGE);
+				graphics.drawRoundRect(row.x, row.y, row.width, row.height, 4, 4);
+			}
+
+			// Boat icon / glyph on the left
+			final int icx = row.x + 12;
+			final int icy = row.y + rowH / 2 - 1;
+			graphics.setColor(CARD_TITLE);
+			final int[] hullX = {icx - 5, icx + 5, icx + 3, icx - 3};
+			final int[] hullY = {icy + 2, icy + 2, icy + 5, icy + 5};
+			graphics.fillPolygon(hullX, hullY, 4);
+		graphics.drawLine(icx, icy + 1, icx, icy - 5);
+			final int[] sailX = {icx, icx + 4, icx};
+			final int[] sailY = {icy - 5, icy - 1, icy + 1};
+			graphics.setColor(Color.WHITE);
+			graphics.fillPolygon(sailX, sailY, 3);
+
+			final String name = boat.getBoatName() != null ? boat.getBoatName() : "Boat " + boat.getBoatId();
+			final String loc = boat.getPort() != null
+				? boat.getPort().getName()
+				: SailingPort.resolvePortName(client, boat.getPortId());
+
+			graphics.setColor(hover ? CARD_TITLE : CARD_TEXT);
+			graphics.drawString(name, row.x + 24, row.y + 13);
+			graphics.setColor(TEXT_DIM);
+			graphics.drawString(loc, row.x + 24, row.y + 26);
+
+			targets.add(new MapCamera.BoatDropdownTarget(row, boat));
+			rowY += rowH;
+		}
+
+		camera.setBoatsDropdownBounds(panel);
+		camera.setBoatDropdownTargets(targets);
 	}
 
 	/**

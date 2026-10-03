@@ -2729,100 +2729,15 @@
 2933	4815	0	transportation	Transportation
 2884	4851	0	transportation	Transportation
 2932	4854	0	transportation	Transportation
-3913	4864	0	quest_start	Romeo & Juliet
-3972	4864	0	bar	Pub/bar
-4027	4868	0	water_source	Water source
-3930	4869	0	bar	Pub/bar
-3951	4870	0	cooking_range	Cooking range
-3985	4870	0	clothes_shop	Clothes shop
-3910	4871	0	sword_shop	Sword shop
-3971	4872	0	minigame	Minigame
-3899	4875	0	apothecary	Apothecary
-3941	4875	0	cooking_range	Cooking range
-3957	4875	0	magic_shop	Magic shop
-3951	4876	0	anvil	Anvil
-3983	4876	0	quest_start	Family Crest
 3060	4877	0	transportation	Transportation
-3974	4879	0	water_source	Water source
-3857	4881	0	quest_start	Gertrude's Cat
-3942	4881	0	cooking_range	Cooking range
-3860	4882	0	cooking_range	Cooking range
-3854	4883	0	quest_start	Gertrude's Cat
-3975	4885	0	tea_trader	Tea trader
-3924	4886	0	agility_training	Agility training
-3920	4887	0	general_store	General store
-3929	4887	0	task_master	Task Master
 2077	4888	0	quest_start	Stronghold of Security
-3907	4888	0	clothes_shop	Clothes shop
 2085	4891	0	dungeon	Dungeon
-3958	4892	0	bank	Bank
-3890	4895	0	smithing_tutor	Smithing Tutor
-3915	4895	0	quest_start	Romeo & Juliet
-3937	4895	0	archery_shop	Archery shop
-3955	4895	0	poll_booth	Poll booth
 2081	4896	0	quest_start	Stronghold of Security
-3909	4896	0	quest_start	Demon Slayer
-3924	4897	0	noticeboard	Noticeboard
-3864	4899	0	cooking_range	Cooking range
-3892	4899	0	anvil	Anvil
-3915	4899	0	water_source	Water source
-3929	4900	0	quest_start	Children of the Sun
-3925	4904	0	newspaper_trader	Newspaper trader
-3942	4906	0	water_source	Water source
 2134	4907	0	bank	Bank
-3932	4907	0	anvil	Anvil
-3959	4907	0	dummy	Dummy
-3921	4908	0	fur_trader	Fur trader
-3907	4909	0	staff_shop	Staff shop
-3884	4910	0	poll_booth	Poll booth
-3933	4912	0	platebody_shop	Platebody shop
-3890	4913	0	bank	Bank
-3846	4918	0	cookery_shop	Cookery shop
-3852	4919	0	bank	Bank
-3842	4921	0	water_source	Water source
-3964	4922	0	quest_start	Bone Voyage
-4013	4922	0	dungeon_link	Dungeon with map link
-3846	4923	0	windmill	Windmill
-3851	4926	0	cooking_range	Cooking range
-4012	4926	0	quest_start	A Soul's Bane
-3931	4929	0	farming_patch	Farming patch
-3941	4930	0	dungeon_link	Dungeon with map link
-3874	4933	0	bond_tutor	Bond Tutor
-3960	4934	0	hairdresser	hairdresser
-3911	4935	0	water_source	Water source
-3922	4935	0	water_source	Water source
-3894	4942	0	water_source	Water source
-4009	4942	0	rare_trees	Rare trees
-3945	4943	0	minigame	Minigame
-3975	4943	0	rare_trees	Rare trees
-3847	4945	0	minigame	Minigame
-3886	4945	0	hot_air_balloon	Hot air balloon
-3924	4945	0	quest_start	Priest in Peril
-3953	4945	0	rare_trees	Rare trees
 4144	4945	0	cooking_range	Cooking range
-3944	4948	0	estate_agent	Estate Agent
-3932	4949	0	quest_start	Garden of Tranquillity
-4003	4952	0	transportation	Transportation
 1942	4956	0	water_source	Water source
-3958	4956	0	altar	Altar
 1948	4957	0	bank	Bank
-3981	4960	0	bar	Pub/bar
-3990	4960	0	cooking_range	Cooking range
-3971	4966	0	rare_trees	Rare trees
-4005	4966	0	sawmill	Sawmill
-3913	4967	0	quest_start	Shield of Arrav
-3928	4968	0	water_source	Water source
-3925	4969	0	cooking_range	Cooking range
 1939	4972	0	anvil	Anvil
-3913	4972	0	rare_trees	Rare trees
-3986	4973	0	quest_start	Defender of Varrock
-3926	4975	0	rare_trees	Rare trees
-3844	4976	0	transportation	Transportation
-3909	4976	0	rare_trees	Rare trees
-3934	4976	0	dungeon_link	Dungeon with map link
-3867	4979	0	bounty_hunter_store	Bounty Hunter Store
-3889	4982	0	transportation	Transportation
-3844	4987	0	agility_short-cut	Agility short-cut
 2152	5018	0	water_source	Water source
 2145	5024	0	general_store	General store
 2162	5061	0	fishing_spot	Fishing spot
@@ -4017,23 +3932,10 @@
 2113	4729	1	dungeon	Dungeon
 1818	4834	1	transportation	Transportation
 2075	4850	1	transportation	Transportation
-3906	4873	1	cooking_range	Cooking range
 2070	4891	1	raids_lobby	Raids Lobby
-3852	4921	1	dairy_churn	Dairy churn
-3848	4925	1	cooking_range	Cooking range
-3908	4943	1	dummy	Dummy
-3860	4953	1	pricing_expert_herbs	Pricing expert (herbs)
-3877	4953	1	pricing_expert_runes	Pricing expert (runes)
-3871	4959	1	grand_exchange	Grand Exchange
 3051	4961	1	clothes_shop	Clothes shop
-3856	4961	1	pricing_expert_logs	Pricing expert (logs)
-3866	4964	1	bank	Bank
-3912	4966	1	altar	Altar
 3039	4967	1	poll_booth	Poll booth
-3860	4970	1	pricing_expert_weapons_and_armours	Pricing expert (weapons and armours)
-3877	4970	1	pricing_expert_ores	Pricing expert (ores)
 3041	4972	1	bank	Bank
-3866	4972	1	poll_booth	Poll booth
 2142	5107	1	water_source	Water source
 2920	5275	1	agility_short-cut	Agility short-cut
 2696	5277	1	transportation	Transportation
@@ -4236,7 +4138,6 @@
 2966	4380	2	dungeon_link	Dungeon with map link
 2386	4628	2	mining_site	Mining site
 2930	4712	2	quest_start	Mage Arena II
-3917	4962	2	dummy	Dummy
 2872	5280	2	agility_short-cut	Agility short-cut
 2913	5300	2	agility_short-cut	Agility short-cut
 2822	5302	2	altar	Altar

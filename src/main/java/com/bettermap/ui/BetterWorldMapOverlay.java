@@ -240,7 +240,7 @@ public class BetterWorldMapOverlay extends Overlay
 			clueScrollTracker, shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
 			stats, dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
-			questHelperTracker, slayerTaskTracker, poiIndex);
+			questHelperTracker, slayerTaskTracker, poiIndex, shortestPathTracker, boatTracker, client);
 		this.finderRenderer = new MapFinderRenderer(
 			client, config, camera, input, poiIndex, slayerTaskTracker, finder);
 		this.tooltipRenderer = new MapTooltipRenderer(
@@ -390,9 +390,12 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawClueButton(graphics, bounds);
 			chromeRenderer.drawQuestButton(graphics, bounds);
 			chromeRenderer.drawPlayerButton(graphics, bounds);
+			chromeRenderer.drawDestinationButton(graphics, bounds);
+			chromeRenderer.drawBoatsButton(graphics, bounds);
 			chromeRenderer.drawLayersPanel(graphics, bounds);
 			chromeRenderer.drawChatButton(graphics, bounds);
 			chromeRenderer.drawCluePanel(graphics, bounds);
+			chromeRenderer.drawBoatsDropdown(graphics, bounds);
 			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
 			// drawUnmappedWarning(graphics, bounds);

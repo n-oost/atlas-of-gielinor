@@ -29,6 +29,7 @@ import com.bettermap.data.DungeonPieceTransform;
 import java.awt.geom.Point2D;
 
 import com.bettermap.data.sailing.BoatTracker;
+import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.TravelData;
 import com.bettermap.data.UndergroundZone;
@@ -57,6 +58,7 @@ import com.bettermap.tiles.MapAssetManager;
 import com.bettermap.ui.BetterMapPanel;
 import com.bettermap.ui.BetterWorldMapOverlay;
 import com.bettermap.ui.QuickFinderOverlay;
+import com.bettermap.ui.RouteMinimapOverlay;
 import com.google.inject.Provides;
 import java.awt.Rectangle;
 import java.util.concurrent.ScheduledExecutorService;
@@ -130,6 +132,9 @@ public class BetterMapPlugin extends Plugin
 
 	@Inject
 	private QuickFinderOverlay quickFinderOverlay;
+
+	@Inject
+	private RouteMinimapOverlay routeMinimapOverlay;
 
 	@Inject
 	private WorldMapInput input;
@@ -226,6 +231,7 @@ public class BetterMapPlugin extends Plugin
 
 		overlayManager.add(mapOverlay);
 		overlayManager.add(quickFinderOverlay);
+		overlayManager.add(routeMinimapOverlay);
 		mouseManager.registerMouseListener(input);
 		mouseManager.registerMouseWheelListener(input);
 		keyManager.registerKeyListener(input);
@@ -287,6 +293,7 @@ public class BetterMapPlugin extends Plugin
 		panel = null;
 		overlayManager.remove(mapOverlay);
 		overlayManager.remove(quickFinderOverlay);
+		overlayManager.remove(routeMinimapOverlay);
 		mouseManager.unregisterMouseListener(input);
 		mouseManager.unregisterMouseWheelListener(input);
 		keyManager.unregisterKeyListener(input);
@@ -762,16 +769,29 @@ public class BetterMapPlugin extends Plugin
 		});
 	}
 
-	/** Open Better Map's world-map interface and center it on a Finder destination. */
+	/** Show a Finder destination, retaining it until the user opens the native world map. */
 	public void openMapAt(WorldPoint point)
 	{
+		if (point == null)
+		{
+			return;
+		}
 		if (!camera.isActive())
 		{
-			mapOverlay.setFinderFocusOnOpen(() -> centerMapOn(point));
+			// The orb's onOp listener only plays a sound; opening is a native widget action.
+			// Keep genuine input responsible for that action, as for native map closing.
+			mapOverlay.setFinderFocusOnOpen(() ->
+			{
+				camera.setFinderStandalone(false);
+				camera.setFinderPanelOpen(false);
+				centerMapOn(point);
+			});
+			clientThread.invoke(() -> client.addChatMessage(ChatMessageType.GAMEMESSAGE, "",
+				"Atlas of Gielinor: Click the world map orb to show your selected destination.", null));
+			return;
 		}
 		camera.setFinderStandalone(false);
 		camera.setFinderPanelOpen(false);
-		clientThread.invoke(this::openWorldMapOnClientThread);
 		centerMapOn(point);
 	}
 
@@ -880,42 +900,6 @@ public class BetterMapPlugin extends Plugin
 		clientThread.invoke(shortestPathTracker::cancelRoute);
 	}
 
-	private void openWorldMapOnClientThread()
-	{
-		if (isWorldMapOpen())
-		{
-			return;
-		}
-		final int[] orbIds = {
-			InterfaceID.Orbs.ORB_WORLDMAP,
-			InterfaceID.Orbs.WORLDMAP,
-			InterfaceID.OrbsNomap.ORB_WORLDMAP,
-			InterfaceID.OrbsNomap.WORLDMAP
-		};
-		for (int id : orbIds)
-		{
-			final Widget orb = client.getWidget(id);
-			if (orb == null || orb.getOnOpListener() == null)
-			{
-				continue;
-			}
-			try
-			{
-				client.createScriptEventBuilder(orb.getOnOpListener())
-					.setSource(orb)
-					.setOp(1)
-					.build()
-					.run();
-				return;
-			}
-			catch (RuntimeException e)
-			{
-				log.debug("[BetterMap] could not run world-map orb listener", e);
-			}
-		}
-		log.debug("[BetterMap] no world-map orb listener available to open the map");
-	}
-
 
 	/**
 	 * Pans and flashes the map on the local player, following them into an instance layer if that is
@@ -980,6 +964,40 @@ public class BetterMapPlugin extends Plugin
 		}
 		centerMapOn(step);
 	}
+
+	/**
+	 * Pans the map to the active route / Shortest Path destination.
+	 * Bound to the on-map "Go to Destination" chip.
+	 */
+	public void goToDestination()
+	{
+		if (shortestPathTracker == null)
+		{
+			return;
+		}
+		final WorldPoint dest = shortestPathTracker.target();
+		if (dest != null)
+		{
+			centerMapOn(dest);
+		}
+	}
+
+	/**
+	 * Pans the map to the specified player boat's port location.
+	 */
+	public void goToBoat(PlayerBoat boat)
+	{
+		if (boat == null || boat.getPort() == null)
+		{
+			return;
+		}
+		final WorldPoint loc = boat.getPort().getNavigationLocation();
+		if (loc != null)
+		{
+			centerMapOn(loc);
+		}
+	}
+
 
 	/** Flip a {@code bettermap.*} boolean from the on-map Layers panel. The overlay re-reads config each frame. */
 	public void setLayerEnabled(String key, boolean value)
@@ -1086,7 +1104,7 @@ public class BetterMapPlugin extends Plugin
 			final boolean standalone = camera.isFinderStandalone();
 			addRouteMenuEntry(finderTarget, standalone);
 			client.getMenu().createMenuEntry(-1)
-				.setOption("Open on map")
+				.setOption("Show on map")
 				.setTarget("<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>")
 				.setType(MenuAction.RUNELITE)
 				.onClick(e ->

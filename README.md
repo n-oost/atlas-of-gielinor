@@ -71,7 +71,7 @@ from the map.
 ### Find
 
 Search locations, monsters, shops and ground-item spawns by name, from the in-map Find card or
-from the quick-find orb by the minimap (drag it to reposition, click to open). Type location, monster, shop, item. Click or hit enter to open map and open up on location. Can work with shortest route plugin.
+from the quick-find orb by the minimap (drag it to reposition, click to open). Type location, monster, shop, item. Click or hit enter to select a destination, then click the native world-map orb to display it. Route calculates a path to the destination and displays it when you open the map. Can work with shortest route plugin.
 
 ![Find](docs/gifs/ground-item-search.gif)
 

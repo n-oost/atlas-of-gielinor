@@ -1558,35 +1558,44 @@ public final class PoiDetails
 			"Location: The Storm Tempor (south of The Pandemonium)",
 			"Level requirement: Level 30 Sailing",
 			"Rewards: Whirlpool surprise (after Shark rank)");
-		addEntry("minigame", "The Tempor Tantrum (Barracuda Trials)", "Quests and activities", 3033, 2929, 0,
-			"Activity: Barracuda Trial boat race (Level 30 Sailing)",
+		addEntry("minigame", "The Tempor Tantrum (Barracuda Trials)", "Quests and activities", 3034, 2929, 0,
+			"Activity: Barracuda Trial boat race",
+			"Requires Level 30 Sailing",
 			"Trial Master: Rum-dashed Ralph",
-			"Requirements: Solo Skiff, Iron helm, Oak mast",
-			"Course: 3 laps dodging lightning and rocks",
-			"Ranks: Swordfish, Shark, Marlin");
+			"Location: The Storm Tempor",
+			"Requirements: Iron helm, oak masts and linen sails",
+			"Swordfish: Stormy key",
+			"Shark: Barrel stand",
+			"Marlin: Ralph's fabric roll");
 
 		addEntry("services", "Gurtob (Trial Master)", "Tutors and services", 2437, 3027, 0,
 			"Trial Master for The Jubbly Jive (Barracuda Trial)",
 			"Location: Backwater (south of Corsair Cove)",
 			"Level requirement: Level 55 Sailing");
-		addEntry("minigame", "The Jubbly Jive (Barracuda Trials)", "Quests and activities", 2437, 3027, 0,
-			"Activity: Barracuda Trial boat race (Level 55 Sailing)",
-			"Trial Master: Gurtob & Ros",
-			"Requirements: Solo Skiff, Mithril helm, Inoculation station",
-			"Course: Herd Jubblies with balloon toads across fetid waters",
-			"Ranks: Swordfish, Shark, Marlin");
+		addEntry("minigame", "The Jubbly Jive (Barracuda Trials)", "Quests and activities", 2439, 3030, 0,
+			"Activity: Barracuda Trial boat race",
+			"Requires Level 55 Sailing",
+			"Trial Master: Gurtob",
+			"Location: Backwater",
+			"Requirements: Inoculation station, mithril helm",
+			"Swordfish: Fetid key",
+			"Shark: Captured wind mote",
+			"Marlin: Gurtob's fabric roll");
 
 		addEntry("services", "Gwyna (Trial Master)", "Tutors and services", 2198, 3518, 0,
 			"Trial Master for The Gwenith Glide (Barracuda Trial)",
 			"Location: Porth Gwenith (crystal waters north of Gwenith)",
 			"Requirements: Level 72 Sailing and Regicide quest",
 			"Rewards: Gwyna's fabric roll (Crystal Glider Flag)");
-		addEntry("minigame", "The Gwenith Glide (Barracuda Trials)", "Quests and activities", 2198, 3518, 0,
-			"Activity: Barracuda Trial boat race (Level 72 Sailing)",
+		addEntry("minigame", "The Gwenith Glide (Barracuda Trials)", "Quests and activities", 2253, 3459, 0,
+			"Activity: Barracuda Trial boat race",
+			"Requires Level 72 Sailing",
 			"Trial Master: Gwyna",
-			"Requirements: 72 Sailing, Regicide, Skiff, Adamant keel, Wind Catcher",
-			"Course: Navigate portals and crystals in high-speed waters",
-			"Ranks: Swordfish, Shark, Marlin");
+			"Location: Porth Gwenith",
+			"Requirements: Adamant keel; Regicide quest",
+			"Swordfish: Serrated key",
+			"Shark: Heart of Ithell",
+			"Marlin: Gwyna's fabric roll");
 	}
 
 	/** Farming patches, by patch type. */

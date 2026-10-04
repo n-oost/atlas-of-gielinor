@@ -51,7 +51,7 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
  */
 public class PoiTooltipBuilder
 {
-	private static final Pattern MOORING_LEVEL_REQUIREMENT = Pattern.compile("(?i)^Requires Level (\\d+) Sailing$");
+	private static final Pattern SAILING_LEVEL_REQUIREMENT = Pattern.compile("(?i)^Requires Level (\\d+) Sailing$");
 	private static final Pattern MINING_LEVEL_REQUIREMENT = Pattern.compile("^Requires Level (\\d+) Mining$");
 
 	/**
@@ -166,6 +166,20 @@ public class PoiTooltipBuilder
 		final String cat = detail != null ? detail.getCategory() : "";
 		final List<String> lines = detail != null ? detail.getLines() : Collections.emptyList();
 
+		if (title.endsWith(" (Barracuda Trials)"))
+		{
+			final String trialName = title.substring(0, title.length() - " (Barracuda Trials)".length());
+			for (String line : lines)
+			{
+				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
+				if (level.matches())
+				{
+					return trialName + " (" + level.group(1) + " Sailing)";
+				}
+			}
+			return trialName;
+		}
+
 		if ("Wyrmscraig chest".equalsIgnoreCase(poiName) || "Wyrmscraig chest".equalsIgnoreCase(title))
 		{
 			return "Bank chest";
@@ -185,7 +199,7 @@ public class PoiTooltipBuilder
 			final String mooringName = poiName != null ? poiName : (title != null ? title : "Mooring point");
 			for (String line : lines)
 			{
-				final Matcher level = MOORING_LEVEL_REQUIREMENT.matcher(line.trim());
+				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
 				if (level.matches())
 				{
 					return mooringName + " (" + level.group(1) + " Sailing)";

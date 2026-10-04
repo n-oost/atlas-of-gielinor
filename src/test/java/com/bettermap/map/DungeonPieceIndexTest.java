@@ -34,6 +34,8 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Collections;
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +44,12 @@ import static org.junit.Assert.assertTrue;
 
 public class DungeonPieceIndexTest
 {
+	@After
+	public void clearRoutingSnapshot()
+	{
+		InstanceMaps.setRoutingPieces(Collections.emptyList());
+	}
+
 	private static final String FIXTURE =
 		"# comment ignored\n"
 			+ "#L\t1\t1\tTaverley Dungeon\t-1\n"

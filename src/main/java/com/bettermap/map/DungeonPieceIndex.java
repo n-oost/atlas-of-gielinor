@@ -74,6 +74,15 @@ public class DungeonPieceIndex
 		{
 			byZone.clear();
 			byZone.putAll(prepared.byZone);
+			final List<DungeonPiece> routingPieces = new ArrayList<>();
+			for (Map.Entry<String, List<DungeonPiece>> entry : byZone.entrySet())
+			{
+				if (entry.getKey().equals(UndergroundZone.canonicalZoneId(entry.getKey())))
+				{
+					routingPieces.addAll(entry.getValue());
+				}
+			}
+			InstanceMaps.setRoutingPieces(routingPieces);
 			loaded = true;
 		}
 	}

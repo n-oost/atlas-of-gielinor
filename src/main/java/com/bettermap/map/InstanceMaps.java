@@ -24,11 +24,14 @@
  */
 package com.bettermap.map;
 
+import com.bettermap.data.DungeonPiece;
+import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.tiles.WikiMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -69,10 +72,12 @@ public final class InstanceMaps
 
 	private static final Map<UndergroundZone, WikiMap> PRIMARY_MAP = new EnumMap<>(UndergroundZone.class);
 	private static final Map<UndergroundZone, List<WikiMap>> MAPS_BY_ZONE = new EnumMap<>(UndergroundZone.class);
+	private static final Map<String, List<UndergroundZone>> ZONES_BY_ID = new HashMap<>();
+	private static volatile Map<Long, List<DungeonPiece>> piecesByRegion = Collections.emptyMap();
 
 	/**
 	 * The wiki boxes a dungeon's view should paint and hit-test against, wider than {@link #PRIMARY_MAP}:
-	 * every zone-owning box that contains the zone's own underground anchor. Taverley Dungeon and the
+	 * every wiki box that contains the zone's own underground anchor. Taverley Dungeon and the
 	 * Dwarven Mines are one connected complex whose boxes overlap, so entering from the Dwarven side
 	 * must still show the Taverley half instead of clipping it away. One hop only — no transitive
 	 * closure, which would chain most of the +6400 band into a single box.
@@ -81,17 +86,16 @@ public final class InstanceMaps
 
 	static
 	{
-		final Map<WikiMap, UndergroundZone> ownerOfMap = new EnumMap<>(WikiMap.class);
+		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
+		{
+			ZONES_BY_ID.computeIfAbsent(zone.getCanonicalId(), id -> new ArrayList<>()).add(zone);
+		}
 		for (WikiMap map : WikiMap.VALUES)
 		{
 			if (map == WikiMap.SURFACE || map.getMapId() < 0)
 			{
 				continue;
 			}
-			UndergroundZone nearest = null;
-			long nearestDist = Long.MAX_VALUE;
-			final int cx = (map.getMinX() + map.getMaxX()) / 2;
-			final int cy = (map.getMinY() + map.getMaxY()) / 2;
 			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 			{
 				final int ux = zone.getUndergroundPoint().getX();
@@ -100,27 +104,14 @@ public final class InstanceMaps
 				{
 					continue;
 				}
-				final long dist = distSq(cx, cy, ux, uy);
-				if (dist < nearestDist)
+				// Regional wiki maps contain several independent dungeons. Every enclosed
+				// anchor needs access to the map; its centre cannot select a single owner.
+				MAPS_BY_ZONE.computeIfAbsent(zone, z -> new ArrayList<>()).add(map);
+				final WikiMap current = PRIMARY_MAP.get(zone);
+				if (current == null || map.area() < current.area())
 				{
-					nearestDist = dist;
-					nearest = zone;
+					PRIMARY_MAP.put(zone, map);
 				}
-			}
-			if (nearest != null)
-			{
-				ownerOfMap.put(map, nearest);
-				MAPS_BY_ZONE.computeIfAbsent(nearest, z -> new ArrayList<>()).add(map);
-			}
-		}
-		for (Map.Entry<WikiMap, UndergroundZone> entry : ownerOfMap.entrySet())
-		{
-			final WikiMap map = entry.getKey();
-			final UndergroundZone zone = entry.getValue();
-			final WikiMap current = PRIMARY_MAP.get(zone);
-			if (current == null || map.area() < current.area())
-			{
-				PRIMARY_MAP.put(zone, map);
 			}
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
@@ -128,9 +119,9 @@ public final class InstanceMaps
 			final int ux = zone.getUndergroundPoint().getX();
 			final int uy = zone.getUndergroundPoint().getY();
 			final List<WikiMap> clip = new ArrayList<>();
-			for (WikiMap map : ownerOfMap.keySet())
+			for (WikiMap map : WikiMap.VALUES)
 			{
-				if (map.contains(ux, uy))
+				if (map != WikiMap.SURFACE && map.getMapId() >= 0 && map.contains(ux, uy))
 				{
 					clip.add(map);
 				}
@@ -146,6 +137,46 @@ public final class InstanceMaps
 
 	private InstanceMaps()
 	{
+	}
+
+	/** Publish the same loaded footprints used by the renderer, including disk overrides. */
+	static void setRoutingPieces(List<DungeonPiece> pieces)
+	{
+		final Map<Long, List<DungeonPiece>> regions = new HashMap<>();
+		for (DungeonPiece piece : pieces)
+		{
+			if (UndergroundZone.byId(piece.zoneId) == null)
+			{
+				continue;
+			}
+			final int[] bounds = piece.srcBounds();
+			for (int rx = bounds[0] >> 6; rx <= bounds[2] >> 6; rx++)
+			{
+				for (int ry = bounds[1] >> 6; ry <= bounds[3] >> 6; ry++)
+				{
+					regions.computeIfAbsent(regionKey(rx, ry), key -> new ArrayList<>()).add(piece);
+				}
+			}
+		}
+		piecesByRegion = regions;
+	}
+
+	private static long regionKey(int regionX, int regionY)
+	{
+		return ((long) regionX << 32) | (regionY & 0xffffffffL);
+	}
+
+	public static DungeonPiece pieceForPoint(UndergroundZone zone, int x, int y, int plane, Integer layer)
+	{
+		for (DungeonPiece piece : piecesByRegion.getOrDefault(regionKey(x >> 6, y >> 6), Collections.emptyList()))
+		{
+			if (UndergroundZone.zonesMatch(piece.zoneId, zone.getId()) && piece.plane == plane
+				&& (layer == null || piece.layer == layer) && piece.containsNative(x, y))
+			{
+				return piece;
+			}
+		}
+		return null;
 	}
 
 	public static boolean cameraIsInside(WikiMap map, double worldX, double worldY)
@@ -173,9 +204,37 @@ public final class InstanceMaps
 
 	public static UndergroundZone zoneForPoint(double worldX, double worldY)
 	{
+		return zoneForPoint(worldX, worldY, -1);
+	}
+
+	/** Resolve a player destination without borrowing a footprint from another plane. */
+	public static UndergroundZone zoneForPoint(double worldX, double worldY, int plane)
+	{
 		final int x = (int) Math.floor(worldX);
 		final int y = (int) Math.floor(worldY);
-		final UndergroundZone clipped = zoneForClipOverride(x, y);
+		UndergroundZone authored = null;
+		long authoredDist = Long.MAX_VALUE;
+		for (DungeonPiece piece : piecesByRegion.getOrDefault(regionKey(x >> 6, y >> 6), Collections.emptyList()))
+		{
+			if ((plane >= 0 && piece.plane != plane) || !piece.containsNative(x, y))
+			{
+				continue;
+			}
+			for (UndergroundZone zone : ZONES_BY_ID.get(UndergroundZone.canonicalZoneId(piece.zoneId)))
+			{
+				final long dist = distSq(x, y, zone.getUndergroundPoint().getX(), zone.getUndergroundPoint().getY());
+				if (dist < authoredDist)
+				{
+					authored = zone;
+					authoredDist = dist;
+				}
+			}
+		}
+		if (authored != null)
+		{
+			return authored;
+		}
+		final UndergroundZone clipped = zoneForClipOverride(x, y, plane);
 		if (clipped != null)
 		{
 			return clipped;
@@ -199,6 +258,13 @@ public final class InstanceMaps
 			}
 			final UndergroundZone zone = entry.getKey();
 			final long dist = distSq(x, y, zone.getUndergroundPoint().getX(), zone.getUndergroundPoint().getY());
+			// Composite wiki rectangles include unrelated islands. Only explicit footprints
+			// may claim remote child rooms; a fallback must stay near this zone's anchor.
+			if (!supportsPlane(zone, plane)
+				|| zone.hasClipOverride() || dist > (long) zone.getRadius() * zone.getRadius())
+			{
+				continue;
+			}
 			if (dist < bestDist)
 			{
 				bestDist = dist;
@@ -241,7 +307,18 @@ public final class InstanceMaps
 		{
 			return false;
 		}
-		// A hand-authored clip box (Mor Ul Rek) defines the zone's extent directly.
+		// Remote child floors (such as Duke) have authored footprints outside the
+		// parent clip. Use the same ownership priority as zoneForPoint.
+		for (DungeonPiece piece : piecesByRegion.getOrDefault(
+			regionKey(worldX >> 6, worldY >> 6), Collections.emptyList()))
+		{
+			if (UndergroundZone.zonesMatch(piece.zoneId, zone.getId())
+				&& piece.containsNative(worldX, worldY))
+			{
+				return true;
+			}
+		}
+		// A hand-authored clip box defines the remaining zone extent directly.
 		if (zone.hasClipOverride())
 		{
 			return worldX >= zone.getClipMinX() && worldX <= zone.getClipMaxX()
@@ -289,13 +366,13 @@ public final class InstanceMaps
 				: inFocusedLayer(x, y, focus, dungeonContents)) ? lookup.apply(x, y) : null);
 	}
 
-	private static UndergroundZone zoneForClipOverride(int worldX, int worldY)
+	private static UndergroundZone zoneForClipOverride(int worldX, int worldY, int plane)
 	{
 		UndergroundZone best = null;
 		long bestDist = Long.MAX_VALUE;
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (!zone.hasClipOverride())
+			if (!zone.hasClipOverride() || !supportsPlane(zone, plane))
 			{
 				continue;
 			}
@@ -312,6 +389,22 @@ public final class InstanceMaps
 			}
 		}
 		return best;
+	}
+
+	private static boolean supportsPlane(UndergroundZone zone, int plane)
+	{
+		if (plane < 0 || zone.getUndergroundPoint().getPlane() == plane)
+		{
+			return true;
+		}
+		for (OverlayFloor floor : OverlayFloor.all())
+		{
+			if (floor.zone == zone && floor.plane == plane)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static long distSq(int x1, int y1, int x2, int y2)

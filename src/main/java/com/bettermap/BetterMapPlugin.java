@@ -693,7 +693,7 @@ public class BetterMapPlugin extends Plugin
 			return;
 		}
 		UndergroundZone zone = InstanceMaps.isOverworldOverlay(point.getX(), point.getY())
-			? null : InstanceMaps.zoneForPoint(point.getX(), point.getY());
+			? null : InstanceMaps.zoneForPoint(point.getX(), point.getY(), point.getPlane());
 		// Authored pieces can extend beyond the wiki's dungeon boxes.
 		if ((zone == null || dungeonPieceIndex.pieceAt(zone.getId(), point.getX(), point.getY(), point.getPlane(), null) == null)
 			&& !InstanceMaps.isOverworldOverlay(point.getX(), point.getY())

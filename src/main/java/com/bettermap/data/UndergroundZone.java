@@ -1,4 +1,52 @@
 /*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  * Copyright (c) 2026, n-oost
  * All rights reserved.
  *
@@ -453,10 +501,10 @@ public enum UndergroundZone
 		6400,
 		45,
 		"West of Castle Wars • smoke devils; Thermonuclear boss instance is entrance-only",
-		2376,
-		9414,
-		2427,
-		9468
+		2340,
+		9407,
+		2432,
+		9473
 	),
 	OBSERVATORY_DUNGEON(
 		"observatory_dungeon",
@@ -600,7 +648,7 @@ public enum UndergroundZone
 		"barbarian_assault",
 		"Barbarian Assault",
 		new WorldPoint(2533, 3573, 0),
-		new WorldPoint(1888, 5440, 0),
+		new WorldPoint(2584, 5273, 0),
 		0,
 		55,
 		"Barbarian Outpost • Barbarian Assault minigame"
@@ -609,7 +657,7 @@ public enum UndergroundZone
 		"tarn_lair",
 		"Lair of Tarn Razorlor",
 		new WorldPoint(3439, 3232, 0),
-		new WorldPoint(3246, 4590, 0),
+		new WorldPoint(3300, 4640, 0),
 		0,
 		60,
 		"Abandoned Mine • Tarn Razorlor, Salve amulet (e)",
@@ -946,16 +994,16 @@ public enum UndergroundZone
 	),
 	FENKENSTRAIN_DUNGEON(
 		"fenkenstrain_dungeon",
-		"Fenkenstrain's Castle Dungeon",
-		new WorldPoint(3509, 3448, 0),
-		new WorldPoint(3509, 9848, 0),
+		"Experiment Cave",
+		new WorldPoint(3575, 3526, 0),
+		new WorldPoint(3530, 9950, 0),
 		6400,
-		45,
-		"Under Castle Fenkenstrain • Experiments cave, memorial gravestone link",
-		3520,
-		9856,
-		3583,
-		9919
+		80,
+		"South-east of Fenkenstrain's Castle • Memorial grave entrance, Experiments",
+		3464,
+		9922,
+		3581,
+		9981
 	),
 	WILDERNESS_AGILITY_DUNGEON(
 		"wilderness_agility_dungeon",
@@ -1371,10 +1419,10 @@ public enum UndergroundZone
 		"sourhog_cave",
 		"Sourhog Cave",
 		new WorldPoint(3149, 3347, 0),
-		new WorldPoint(3149, 9747, 0),
+		new WorldPoint(3168, 9696, 0),
 		6400,
 		40,
-		"West of Lumbridge • sourhogs, Animal Magnetism"
+		"East of Draynor Manor • sourhogs, A Porcine of Interest"
 	),
 	PATERDOMUS_BASEMENT(
 		"paterdomus_basement",
@@ -1389,11 +1437,56 @@ public enum UndergroundZone
 	WATER_MILL_CELLAR(
 		"water_mill_cellar",
 		"Water mill cellar",
-		new WorldPoint(3166, 3307, 0),
-		new WorldPoint(3166, 9695, 0),
+		new WorldPoint(3230, 3286, 0),
+		new WorldPoint(3231, 9688, 0),
 		6400,
 		35,
-		"Under the mill north of Lumbridge • mill cellar, goblins, quest"
+		"Under Groats' farm • Death to the Dorgeshuun"
+	),
+	CHAMPIONS_GUILD_BASEMENT(
+		"champions_guild_basement",
+		"Champions' Guild Basement",
+		new WorldPoint(3188, 3355, 0),
+		new WorldPoint(3144, 9736, 0),
+		6400,
+		40,
+		"Under the Champions' Guild • Champions' Challenge"
+	),
+	VARROCK_MUSEUM_BASEMENT(
+		"varrock_museum_basement",
+		"Varrock Museum Basement",
+		new WorldPoint(3256, 3451, 0),
+		new WorldPoint(1544, 4872, 0),
+		0,
+		60,
+		"Under Varrock Museum • specimen cleaning and natural history exhibits"
+	),
+	VARROCK_RAT_PITS(
+		"varrock_rat_pits",
+		"Varrock Rat Pits",
+		new WorldPoint(3262, 3401, 0),
+		new WorldPoint(2912, 5088, 0),
+		0,
+		96,
+		"Under Varrock • Ratcatchers rat pits"
+	),
+	VTAM_CORPORATION(
+		"vtam_corporation",
+		"VTAM Corporation",
+		new WorldPoint(3243, 3383, 0),
+		new WorldPoint(3243, 9783, 0),
+		6400,
+		20,
+		"Under Varrock • Shield of Arrav hideout"
+	),
+	SORCERESS_GARDEN(
+		"sorceress_garden",
+		"Sorceress's Garden",
+		new WorldPoint(3320, 3141, 0),
+		new WorldPoint(2912, 5472, 0),
+		0,
+		96,
+		"Apprentice teleport in Al Kharid • four seasonal gardens"
 	),
 	DIGSITE_DUNGEON(
 		"digsite_dungeon",
@@ -2250,6 +2343,159 @@ public enum UndergroundZone
 		40,
 		"Under Tutorial Island • mine and combat training area",
 		new WorldPoint(3110, 3126, 0)
+	),
+	POLAR_EAGLE_LAIR(
+		"polar_eagle_lair",
+		"Polar Eagle Lair",
+		new WorldPoint(2743, 3831, 0),
+		new WorldPoint(2727, 10217, 0),
+		6386,
+		40,
+		"Rellekka Hunter area • Eagle transport system, polar eagle nest"
+	),
+	RANTZS_CAVE(
+		"rantzs_cave",
+		"Rantz's Cave",
+		new WorldPoint(2630, 2980, 0),
+		new WorldPoint(2640, 9391, 0),
+		6411,
+		35,
+		"Feldip Hills • Rantz and Big Chompy Bird Hunting"
+	),
+	HARMONY_ISLAND_BASEMENT(
+		"harmony_island_basement",
+		"Harmony Island Basement",
+		new WorldPoint(3805, 2844, 0),
+		new WorldPoint(3785, 9225, 0),
+		6381,
+		40,
+		"Harmony Island • The Great Brain Robbery underground rooms"
+	),
+	PENGUIN_BASE(
+		"penguin_base",
+		"KGP Headquarters",
+		new WorldPoint(2638, 4011, 0),
+		new WorldPoint(2655, 10390, 0),
+		6379,
+		55,
+		"Iceberg • Enter the avalanche in a clockwork penguin suit, Cold War"
+	),
+	TUNNEL_OF_CHAOS(
+		"tunnel_of_chaos",
+		"Tunnel of Chaos",
+		new WorldPoint(3284, 3469, 0),
+		new WorldPoint(3165, 5210, 0),
+		1741,
+		45,
+		"East of Varrock • Saradomin statue, What Lies Below, Chaos Altar shortcut"
+	),
+	UNGAEL_LABORATORY(
+		"ungael_laboratory",
+		"Ungael Laboratory",
+		new WorldPoint(2272, 4064, 0),
+		new WorldPoint(2270, 10465, 0),
+		6401,
+		45,
+		"Under Ungael • Dragon Slayer II, Dragonkin laboratory"
+	),
+	GENIE_CAVE(
+		"genie_cave",
+		"Genie Cave",
+		new WorldPoint(3374, 2905, 0),
+		new WorldPoint(3370, 9310, 0),
+		6405,
+		30,
+		"West of Nardah • Rope into the crevice, Spirits of the Elid"
+	),
+	BLACK_KNIGHT_CATACOMBS(
+		"black_knight_catacombs",
+		"Black Knight Catacombs",
+		new WorldPoint(3020, 3514, 0),
+		new WorldPoint(4143, 4853, 1),
+		1339,
+		45,
+		"Under Black Knights' Fortress • While Guthix Sleeps, Dark Squall"
+	),
+	ARTIOS_LAIR(
+		"artios_lair",
+		"Hunter's End (Artio)",
+		new WorldPoint(3115, 3675, 0),
+		new WorldPoint(1758, 11552, 0),
+		7877,
+		45,
+		"Wilderness • Artio's singles-plus bear lair"
+	),
+	SPINDELS_LAIR(
+		"spindels_lair",
+		"Web Chasm (Spindel)",
+		new WorldPoint(3182, 3745, 0),
+		new WorldPoint(1632, 11555, 2),
+		7810,
+		45,
+		"Wilderness • Spindel's singles-plus spider lair"
+	),
+	CHARRED_DUNGEON(
+		"charred_dungeon",
+		"Charred Dungeon",
+		new WorldPoint(2637, 2416, 0),
+		new WorldPoint(2691, 8884, 0),
+		6468,
+		80,
+		"Under Charred Island • Charred Dungeon"
+	),
+	FARMING_GUILD_SEED_VAULT(
+		"farming_guild_seed_vault",
+		"Farming Guild Seed Vault",
+		new WorldPoint(1247, 3740, 0),
+		new WorldPoint(1265, 10160, 0),
+		6420,
+		30,
+		"Farming Guild • Seed vault beneath the central tier"
+	),
+	DESERT_MINING_CAMP_DUNGEON(
+		"desert_mining_camp_dungeon",
+		"Desert Mining Camp Dungeon",
+		new WorldPoint(3288, 3021, 0),
+		new WorldPoint(3280, 9415, 0),
+		6394,
+		65,
+		"Inside the Desert Mining Camp • The Tourist Trap, slave mines"
+	),
+	CRASH_SITE_CAVERN(
+		"crash_site_cavern",
+		"Crash Site Cavern",
+		new WorldPoint(2436, 3520, 0),
+		new WorldPoint(2113, 5663, 0),
+		2143,
+		120,
+		"Through the northern Gnome Stronghold fence • Follow the path north-east, Demonic Gorillas"
+	),
+	LIBRARY_HISTORICAL_ARCHIVE(
+		"library_historical_archive",
+		"Library Historical Archive",
+		new WorldPoint(1624, 3808, 0),
+		new WorldPoint(1575, 10200, 0),
+		6392,
+		55,
+		"Arceuus Library • Speak to Archeio to enter the historical archive"
+	),
+	BRINE_RAT_CAVERN(
+		"brine_rat_cavern",
+		"Brine Rat Cavern",
+		new WorldPoint(2748, 3736, 0),
+		new WorldPoint(2718, 10145, 0),
+		6409,
+		65,
+		"North-east of Rellekka • Dig by the windswept tree, Olaf's Quest"
+	),
+	MONKEY_MADNESS_HANGAR(
+		"monkey_madness_hangar",
+		"Underground Military Glider Hangar",
+		new WorldPoint(2484, 3487, 1),
+		new WorldPoint(2588, 4513, 0),
+		1026,
+		55,
+		"Grand Tree • Speak to Daero at Blurberry Bar, Monkey Madness"
 	),
 	CORAL_NURSERIES(
 		"coral_nurseries",

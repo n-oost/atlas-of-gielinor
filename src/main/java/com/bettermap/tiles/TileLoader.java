@@ -505,30 +505,34 @@ public class TileLoader
 				return;
 			}
 
-			// No tile file on disk: synthesize this one from the parent zoom instead.
+			// Packs may omit an intermediate zoom. Try each ancestor instead of
+			// treating an absent immediate parent as absent terrain.
 			if (zoom >= 1)
 			{
-				final int parentX = tileX >> 1;
-				final int parentY = tileY >> 1;
-				final long parentKey = key(plane, zoom - 1, parentX, parentY);
-				BufferedImage parentImg = memory.get(parentKey);
-				if (parentImg == null)
+				for (int parentZoom = zoom - 1; parentZoom >= 0; parentZoom--)
 				{
-					parentImg = baseTiles.get(parentKey);
-				}
-				if (parentImg == null)
-				{
-					final String parentPath = WikiMapTiles.cachePath(plane, zoom - 1, parentX, parentY);
-					parentImg = paths.contains(parentPath) ? TileStore.read(directory, parentPath) : null;
-				}
-
-				if (parentImg != null && parentImg.getWidth() >= 256 && parentImg.getHeight() >= 256)
-				{
-					final int subX = (tileX & 1);
-					final int subY = (tileY & 1);
-					final int cropX = subX * 128;
-					final int cropY = (1 - subY) * 128;
-					final BufferedImage sub = parentImg.getSubimage(cropX, cropY, 128, 128);
+					final int divisions = 1 << (zoom - parentZoom);
+					final int parentX = tileX >> (zoom - parentZoom);
+					final int parentY = tileY >> (zoom - parentZoom);
+					final long parentKey = key(plane, parentZoom, parentX, parentY);
+					BufferedImage parentImg = memory.get(parentKey);
+					if (parentImg == null)
+					{
+						parentImg = baseTiles.get(parentKey);
+					}
+					if (parentImg == null)
+					{
+						final String parentPath = WikiMapTiles.cachePath(plane, parentZoom, parentX, parentY);
+						parentImg = paths.contains(parentPath) ? TileStore.read(directory, parentPath) : null;
+					}
+					if (parentImg == null || parentImg.getWidth() < 256 || parentImg.getHeight() < 256)
+					{
+						continue;
+					}
+					final int size = 256 / divisions;
+					final int cropX = (tileX & (divisions - 1)) * size;
+					final int cropY = (divisions - 1 - (tileY & (divisions - 1))) * size;
+					final BufferedImage sub = parentImg.getSubimage(cropX, cropY, size, size);
 
 					final BufferedImage upscaled = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
 					final Graphics2D g = upscaled.createGraphics();

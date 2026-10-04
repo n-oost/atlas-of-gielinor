@@ -29,7 +29,10 @@ import com.bettermap.data.TravelData;
 import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
+import com.bettermap.data.DungeonPiece;
+import com.bettermap.data.DungeonPieceTransform;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Singleton;
@@ -336,6 +339,7 @@ public class MapCamera
 	/** Last mapped interior observed while the map was open; used to react only to transitions. */
 	private volatile UndergroundZone observedPlayerUndergroundZone;
 	private volatile int observedPlayerPlane = -1;
+	private volatile int observedPlayerPieceLayer = -1;
 	/** True when the player is above the overworld but no reliable authored interior owns the point. */
 	private volatile boolean interiorMapUnavailable;
 
@@ -714,7 +718,7 @@ public class MapCamera
 		final UndergroundZone playerZone = player == null
 			|| InstanceMaps.isOverworldOverlay(player.getX(), player.getY())
 			? null
-			: InstanceMaps.zoneForPoint(player.getX(), player.getY());
+			: InstanceMaps.zoneForPoint(player.getX(), player.getY(), player.getPlane());
 		final double displayX = player == null ? centerX
 			: InstanceMaps.toDisplayX(player.getX(), player.getY(), 0, 0);
 		final double displayY = player == null ? centerY
@@ -726,11 +730,16 @@ public class MapCamera
 		final boolean unavailable = player != null && playerZone == null && !displayOnSurface;
 
 		final int playerPlane = player == null ? -1 : player.getPlane();
-		if (playerZone != observedPlayerUndergroundZone || playerPlane != observedPlayerPlane)
+		final DungeonPiece playerPiece = playerZone == null ? null : InstanceMaps.pieceForPoint(
+			playerZone, player.getX(), player.getY(), playerPlane, null);
+		final int playerPieceLayer = playerPiece == null ? -1 : playerPiece.layer;
+		if (playerZone != observedPlayerUndergroundZone || playerPlane != observedPlayerPlane
+			|| playerPieceLayer != observedPlayerPieceLayer)
 		{
 			final UndergroundZone previous = observedPlayerUndergroundZone;
 			observedPlayerUndergroundZone = playerZone;
 			observedPlayerPlane = playerPlane;
+			observedPlayerPieceLayer = playerPieceLayer;
 			if (playerZone != null)
 			{
 				WorldPoint entrance = playerZone.getSurfacePoint();
@@ -747,13 +756,39 @@ public class MapCamera
 				}
 				setUndergroundMode(playerZone, entrance);
 				setPlane(player.getPlane());
+				OverlayFloor playerFloor = null;
 				for (OverlayFloor floor : OverlayFloor.all())
 				{
-					if (floor.zone == playerZone && floor.plane == player.getPlane())
+					if (floor.zone != playerZone || floor.plane != player.getPlane())
 					{
-						setActiveFloor(floor);
+						continue;
+					}
+					if (playerPiece == null || (floor.layerId != null && floor.layerId == playerPieceLayer))
+					{
+						playerFloor = floor;
 						break;
 					}
+					if (floor.layerId == null && playerFloor == null)
+					{
+						playerFloor = floor;
+					}
+				}
+				if (playerFloor != null)
+				{
+					setActiveFloor(playerFloor);
+				}
+				// Authored pieces may be offset or rotated independently of the zone entrance.
+				// Frame the same projected player point that the tile and marker renderers use.
+				final DungeonPiece piece = InstanceMaps.pieceForPoint(playerZone,
+					player.getX(), player.getY(), player.getPlane(), activeFloorLayer);
+				if (piece != null)
+				{
+					final Point2D point = DungeonPieceTransform.toDisplay(piece,
+						player.getX() + 0.5, player.getY() + 0.5,
+						dungeonTuner.offsetX(playerZone), dungeonTuner.offsetY(playerZone));
+					centerX = point.getX();
+					centerY = point.getY();
+					clampCenter();
 				}
 			}
 			else if (previous != null && activeUndergroundZone == previous)
@@ -779,6 +814,7 @@ public class MapCamera
 		}
 		observedPlayerUndergroundZone = null;
 		observedPlayerPlane = -1;
+		observedPlayerPieceLayer = -1;
 		interiorMapUnavailable = false;
 	}
 

@@ -54,7 +54,7 @@ public enum PoiCategory
 	private static final Set<String> TRAVEL_KEYS = keys(
 		"transportation", "dungeon_link", "house_portal", "mooring_point",
 		"canoe_station", "hot_air_balloon", "magic_mushtree", "magic_carpet", "minecart_network",
-		"sea_current");
+		"sea_current", "teleport");
 
 	private static final Set<String> ALTAR_KEYS = keys("altar");
 
@@ -68,7 +68,8 @@ public enum PoiCategory
 		"anvil", "furnace", "spinning_wheel", "potters_wheel", "windmill", "dairy_churn", "dairy_cow",
 		"loom", "tannery", "sawmill", "woodcutting_stump", "dummy", "agility_training",
 		"stagnant_water_source", "stonemason",
-		"hunter_training", "brewery", "sandpit", "thieving", "singing_bowl", "slayer_master");
+		"hunter_training", "brewery", "sandpit", "thieving", "singing_bowl", "slayer_master",
+		"runecrafting_altar", "salvaging");
 
 	private static final Set<String> SHOP_KEYS = keys(
 		"general_store", "bar", "apothecary", "estate_agent", "grand_exchange", "junk_checker",

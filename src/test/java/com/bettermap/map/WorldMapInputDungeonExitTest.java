@@ -224,7 +224,7 @@ public class WorldMapInputDungeonExitTest
 	}
 
 	@Test
-	public void clickingActiveRegionalCompositeAgainTurnsItOff()
+	public void clickingRegionalCompositeAgainKeepsItsDungeonsOpen()
 	{
 		final OverlayCluster cluster = new OverlayCluster(
 			"asgarnia", "Asgarnia underground", 2800, 3120, 3110, 3525,
@@ -236,8 +236,8 @@ public class WorldMapInputDungeonExitTest
 		assertEquals(cluster, camera.getActiveOverlayCluster());
 
 		input.mousePressed(leftPressAt(400, 300));
-		assertNull(camera.getActiveOverlayCluster());
-		assertFalse(camera.isClusterPreview());
+		assertEquals(cluster, camera.getActiveOverlayCluster());
+		assertTrue(camera.isUndergroundZoneOpen(UndergroundZone.TAVERLEY_DUNGEON));
 	}
 
 	@Test

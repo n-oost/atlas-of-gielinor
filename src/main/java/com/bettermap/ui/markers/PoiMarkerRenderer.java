@@ -28,6 +28,7 @@ import static com.bettermap.ui.MapStyle.CARD_BG;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.DungeonPiece;
+import com.bettermap.data.DungeonPieceTransform;
 import com.bettermap.data.DungeonPoiOverrides;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
@@ -94,6 +95,7 @@ public class PoiMarkerRenderer
 	private final MapRenderStats stats;
 	private final DungeonPieceIndex dungeonPieceIndex;
 	private final List<PoiIconHit> visiblePoiIcons = new ArrayList<>();
+	private final List<ShopIconHit> visibleShopIcons = new ArrayList<>();
 
 	public PoiMarkerRenderer(
 		BetterMapConfig config,
@@ -122,6 +124,49 @@ public class PoiMarkerRenderer
 	private void forEachPoiInView(int plane, int minX, int maxX, int minY, int maxY,
 		boolean projectDungeons, Consumer<PoiIndex.Poi> consumer)
 	{
+		if (camera.isUndergroundModeActive())
+		{
+			for (UndergroundZone zone : camera.previewUndergroundZones())
+			{
+				final java.util.Set<String> seen = new java.util.HashSet<>();
+				final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
+				if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
+				{
+					final int x = zone.getUndergroundPoint().getX();
+					final int y = zone.getUndergroundPoint().getY();
+					final int radius = zone.getRadius();
+					poiIndex.forEachInArea(zone.getUndergroundPoint().getPlane(),
+						x - radius, x + radius, y - radius, y + radius, poi ->
+						{
+							if (InstanceMaps.belongsToZone(poi.getX(), poi.getY(), zone))
+							{
+								consumer.accept(poi.withDisplayPoint(new java.awt.geom.Point2D.Double(
+									poi.getX() + 0.5 - zone.getDeltaX(), poi.getY() + 0.5 - zone.getDeltaY()), false));
+							}
+						});
+				}
+				for (DungeonPiece piece : pieces)
+				{
+					if (!camera.isDungeonPieceVisible(zone, piece)) continue;
+					for (int[] rect : piece.rects)
+					{
+						poiIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], poi ->
+						{
+							final java.awt.geom.Point2D point = DungeonPieceTransform.toDisplay(piece,
+								poi.getX() + 0.5, poi.getY() + 0.5,
+								camera.getDungeonTuner().offsetX(zone), camera.getDungeonTuner().offsetY(zone));
+							final String key = poi.getKey() + ":" + poi.getName() + ":" + point;
+							if (point.getX() >= minX && point.getX() <= maxX
+								&& point.getY() >= minY && point.getY() <= maxY && seen.add(key))
+							{
+								consumer.accept(poi.withDisplayPoint(point, zone.getId().startsWith("native_")));
+							}
+						});
+					}
+				}
+			}
+			return;
+		}
 		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(),
 			projectDungeons,
 			(qMinX, qMaxX, qMinY, qMaxY) -> poiIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, poi ->
@@ -131,6 +176,20 @@ public class PoiMarkerRenderer
 					consumer.accept(poi);
 				}
 			}));
+	}
+
+	private double poiScreenX(PoiIndex.Poi poi, Rectangle bounds)
+	{
+		return poi.getDisplayPoint() == null
+			? camera.screenX(poi.getX() + 0.5, poi.getY() + 0.5, bounds)
+			: camera.screenX(poi.getDisplayPoint().getX(), bounds);
+	}
+
+	private double poiScreenY(PoiIndex.Poi poi, Rectangle bounds)
+	{
+		return poi.getDisplayPoint() == null
+			? camera.screenY(poi.getX() + 0.5, poi.getY() + 0.5, bounds)
+			: camera.screenY(poi.getDisplayPoint().getY(), bounds);
 	}
 
 	private void forEachShopInView(int plane, int minX, int maxX, int minY, int maxY,
@@ -155,7 +214,8 @@ public class PoiMarkerRenderer
 	public void drawPoiIcons(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
 		visiblePoiIcons.clear();
-		if (!anyPoiCategoryEnabled())
+		visibleShopIcons.clear();
+		if (!camera.isTravelViewActive() && !anyPoiCategoryEnabled())
 		{
 			return;
 		}
@@ -191,8 +251,8 @@ public class PoiMarkerRenderer
 			}
 
 			final Rectangle rect = new Rectangle(
-				(int) Math.round(camera.screenX(poi.getX() + 0.5, poi.getY() + 0.5, bounds)) - icon.getWidth() / 2,
-				(int) Math.round(camera.screenY(poi.getX() + 0.5, poi.getY() + 0.5, bounds)) - icon.getHeight() / 2,
+				(int) Math.round(poiScreenX(poi, bounds)) - icon.getWidth() / 2,
+				(int) Math.round(poiScreenY(poi, bounds)) - icon.getHeight() / 2,
 				icon.getWidth(),
 				icon.getHeight());
 
@@ -220,7 +280,7 @@ public class PoiMarkerRenderer
 			stats.iconsDrawn++;
 		});
 
-		if (config.iconShops() && camera.getZoom() >= minZoomForPoi("general_store")
+		if (!camera.isTravelViewActive() && config.iconShops() && camera.getZoom() >= minZoomForPoi("general_store")
 			&& !(config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom()
 				&& camera.getSelectedTravelNode() != null)
 			&& shopIndex != null && shopIndex.isLoaded())
@@ -233,9 +293,11 @@ public class PoiMarkerRenderer
 					return;
 				}
 
+				final double sx = shop.getX() + 0.5 + shop.getDisplayOffsetX();
+				final double sy = shop.getY() + 0.5 + shop.getDisplayOffsetY();
 				final Rectangle rect = new Rectangle(
-					(int) Math.round(camera.screenX(shop.getX() + 0.5, shop.getY() + 0.5, bounds)) - icon.getWidth() / 2,
-					(int) Math.round(camera.screenY(shop.getX() + 0.5, shop.getY() + 0.5, bounds)) - icon.getHeight() / 2,
+					(int) Math.round(camera.screenX(sx, sy, bounds)) - icon.getWidth() / 2,
+					(int) Math.round(camera.screenY(sx, sy, bounds)) - icon.getHeight() / 2,
 					icon.getWidth(),
 					icon.getHeight());
 
@@ -247,6 +309,7 @@ public class PoiMarkerRenderer
 				graphics.drawImage(icon, rect.x, rect.y, null);
 				placed.add(rect);
 				visibleTooltipTargets.add(shop);
+				visibleShopIcons.add(new ShopIconHit(rect, shop));
 				stats.iconsDrawn++;
 			});
 		}
@@ -292,7 +355,7 @@ public class PoiMarkerRenderer
 
 	private String poiLabel(PoiIndex.Poi poi)
 	{
-		if (camera.getFrameZoom() <= ("agility_short-cut".equals(poi.getKey())
+		if (!camera.isTravelViewActive() && camera.getFrameZoom() <= ("agility_short-cut".equals(poi.getKey())
 			? config.shortcutLabelMinZoom() : config.fairyRingLabelMinZoom()))
 		{
 			return null;
@@ -386,6 +449,33 @@ public class PoiMarkerRenderer
 		}
 	}
 
+	private static final class ShopIconHit
+	{
+		private final Rectangle bounds;
+		private final ShopIndex.Shop shop;
+
+		private ShopIconHit(Rectangle bounds, ShopIndex.Shop shop)
+		{
+			this.bounds = bounds;
+			this.shop = shop;
+		}
+	}
+
+	public ShopIndex.Shop visibleShopIconAt(java.awt.Point cursor)
+	{
+		for (int i = visibleShopIcons.size() - 1; i >= 0; i--)
+		{
+			final ShopIconHit hit = visibleShopIcons.get(i);
+			final Rectangle r = hit.bounds;
+			if (cursor.x >= r.x - 3 && cursor.x <= r.x + r.width + 3
+				&& cursor.y >= r.y - 3 && cursor.y <= r.y + r.height + 3)
+			{
+				return hit.shop;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Cache region labels ("Lumbridge", "Araxxor") drawn as outlined map text. These are not
 	 * icon badges — {@link #shouldDrawPoiIcon} still returns false for {@code region_label}.
@@ -417,12 +507,13 @@ public class PoiMarkerRenderer
 				return;
 			}
 			final String name = poi.getName();
-			if (!isDrawablePlaceName(name))
+			if (!poi.isNativeLayout() && !isDrawablePlaceName(name))
 			{
 				return;
 			}
-			if (!shouldDrawPlaceName(name, poi.getY(), zoom, dungeonFocused, cameraOnOverworld,
-				configuredMinZoomForPlace(name, poi.getY())))
+			if (poi.isNativeLayout() ? zoom < config.interiorPlaceMinZoom()
+				: !shouldDrawPlaceName(name, poi.getY(), zoom, dungeonFocused, cameraOnOverworld,
+					configuredMinZoomForPlace(name, poi.getY())))
 			{
 				return;
 			}
@@ -431,8 +522,8 @@ public class PoiMarkerRenderer
 			final FontMetrics fm = major ? fmBold : fmSmall;
 			graphics.setFont(major ? boldFont : smallFont);
 
-			final int sx = (int) Math.round(camera.screenX(poi.getX() + 0.5, poi.getY() + 0.5, bounds));
-			final int sy = (int) Math.round(camera.screenY(poi.getX() + 0.5, poi.getY() + 0.5, bounds));
+			final int sx = (int) Math.round(poiScreenX(poi, bounds));
+			final int sy = (int) Math.round(poiScreenY(poi, bounds));
 			final int textW = fm.stringWidth(name);
 			final int textX = sx - textW / 2;
 			final int textY = sy + fm.getAscent() / 2 - 1;
@@ -597,6 +688,13 @@ public class PoiMarkerRenderer
 		{
 			return false;
 		}
+		if (camera != null && camera.isTravelViewActive())
+		{
+			final PoiCategory category = PoiCategory.of(poi.getKey());
+			return (category == PoiCategory.TRAVEL || category == PoiCategory.SHORTCUTS)
+				&& ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY())
+				&& !DungeonPoiOverrides.isRawPoiDeleted(poi.getName(), poi.getX(), poi.getY(), poi.getPlane());
+		}
 		if (camera != null && camera.getZoom() < minZoomForPoi(poi.getKey()))
 		{
 			return false;
@@ -610,7 +708,7 @@ public class PoiMarkerRenderer
 		{
 			return false;
 		}
-		if (poi.getY() <= InstanceMaps.GAP_MIN_Y && coveredByDungeonPreview(poi.getX(), poi.getY()))
+		if (poi.getDisplayPoint() == null && poi.getY() <= InstanceMaps.GAP_MIN_Y && coveredByDungeonPreview(poi.getX(), poi.getY()))
 		{
 			return false;
 		}
@@ -634,6 +732,7 @@ public class PoiMarkerRenderer
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 			{
 				if (DungeonPoiOverrides.isButtonDeleted(zone, i))
@@ -680,8 +779,7 @@ public class PoiMarkerRenderer
 			final Integer layer = selectedLayer != null ? selectedLayer : OverlayFloor.defaultLayerFor(zone);
 			for (DungeonPiece piece : pieces)
 			{
-				if (piece.plane != zone.getUndergroundPoint().getPlane()
-					|| (layer != null && piece.layer != layer))
+				if (!camera.isDungeonPieceVisible(zone, piece))
 				{
 					continue;
 				}

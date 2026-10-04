@@ -72,7 +72,7 @@ public class OverlayClusterTest
 		boolean foundMorytania = false;
 		for (OverlayCluster cluster : OverlayCluster.all())
 		{
-			if (!"zanaris".equals(cluster.id))
+			if (!"zanaris".equals(cluster.id) && !cluster.id.startsWith("native_"))
 			{
 				assertTrue(cluster.id + " should composite multiple nearby dungeons",
 					cluster.members.size() >= 2);
@@ -147,6 +147,7 @@ public class OverlayClusterTest
 	{
 		for (OverlayCluster cluster : OverlayCluster.all())
 		{
+			if (cluster.id.startsWith("native_")) continue;
 			assertTrue("regional composite is too wide: " + cluster.id, cluster.maxX - cluster.minX <= 800);
 			assertTrue("regional composite is too tall: " + cluster.id, cluster.maxY - cluster.minY <= 800);
 		}
@@ -178,7 +179,7 @@ public class OverlayClusterTest
 	}
 
 	@Test
-	public void clickingClusterPansToIconNotBboxCentre()
+	public void clickingClusterPreservesPositionAndOpensMembers()
 	{
 		final OverlayCluster cluster = new OverlayCluster(
 			"lumbridge", "Lumbridge", 3060, 3050, 3280, 3320,
@@ -186,8 +187,8 @@ public class OverlayClusterTest
 			3224, 3236);
 		final MapCamera camera = new MapCamera();
 		camera.setActiveOverlayCluster(cluster);
-		assertEquals(3224.0, camera.getCenterX(), 0.01);
-		assertEquals(3236.0, camera.getCenterY(), 0.01);
+		assertEquals(3222.0, camera.getCenterX(), 0.01);
+		assertEquals(3218.0, camera.getCenterY(), 0.01);
 		assertTrue(camera.isClusterPreview());
 		assertSame(cluster, camera.getActiveOverlayCluster());
 	}

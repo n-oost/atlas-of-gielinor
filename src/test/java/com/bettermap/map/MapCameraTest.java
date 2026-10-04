@@ -172,7 +172,7 @@ public class MapCameraTest
 	@Test
 	public void playerChangingFloorInsideSameZoneUpdatesTheAutomaticLayer()
 	{
-		final WorldPoint point = UndergroundZone.TAVERLEY_DUNGEON.getUndergroundPoint();
+		final WorldPoint point = UndergroundZone.ANCIENT_CAVERN.getUndergroundPoint();
 		camera.setPlayerLocation(point);
 		camera.followPlayerInterior();
 
@@ -180,7 +180,7 @@ public class MapCameraTest
 		camera.followPlayerInterior();
 
 		assertEquals(1, camera.getPlane());
-		assertSame(UndergroundZone.TAVERLEY_DUNGEON, camera.getActiveUndergroundZone());
+		assertSame(UndergroundZone.ANCIENT_CAVERN, camera.getActiveUndergroundZone());
 	}
 
 	@Test

@@ -370,7 +370,8 @@ public final class PoiDetails
 			"Basalt and salt mining for icy portal nexus"));
 		reqs.put("Mage Arena Bank", List.of(
 			"Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)",
-			"Kolodion's Mage Arena and god cape arena"));
+			"Kolodion's Mage Arena and god cape arena",
+			"Teleport lever connects surface and underground bank"));
 		reqs.put("Mage Arena", List.of(
 			"Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)",
 			"Kolodion's Mage Arena and god cape arena"));
@@ -573,6 +574,7 @@ public final class PoiDetails
 		addMiningSites();
 		addTransportLinks();
 		addQuestStarts();
+		addAuditedCombinedPois();
 	}
 
 	/** Woodcutting spots for the trees worth walking to. */
@@ -936,7 +938,10 @@ public final class PoiDetails
 		addEntry("dungeon", "Shayzien Crypt", "Dungeons", 1483, 3549, 0, "Type: Dungeon entrance / underground link", "Shayzien zombies and skeletal warriors under the cemetery");
 		addEntry("dungeon", "Shayzien Prison", "Dungeons", 1464, 3569, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Shellbane Gryphon Cave", "Dungeons", 3175, 2478, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
-		addEntry("dungeon", "Shilo Village mine", "Dungeons", 2823, 3001, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
+		addEntry("mining_site", "Shilo Village mine", "Skilling • Mining", 2823, 3001, 0,
+			"Resources: 7 surface gem rocks", "Requires Level 40 Mining", "Requires completion of Shilo Village", "Tools: Pickaxe",
+			"Underground extension: 48 additional gem rocks",
+			"Access requires the Medium Karamja Diary");
 		addEntry("dungeon", "Silk Chasm", "Dungeons", 3320, 3798, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Sisterhood Sanctuary", "Dungeons", 3727, 3300, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
 		addEntry("dungeon", "Sisterhood Sanctuary", "Dungeons", 3724, 3356, 0, "Type: Dungeon entrance / underground link", "May require light source, rope, or combat gear");
@@ -2135,6 +2140,83 @@ public final class PoiDetails
 		addEntry("mining_site", "Daeyalt Essence Mining Site", "Skilling • Mining", 2356, 10347, 2, "Ores available: Daeyalt Essence", "Tool needed: Pickaxe (Bronze to Crystal)", "Daeyalt Essence mine");
 	}
 
+
+	/** Audited combined POIs where teleport or feature details are consolidated into the canonical marker. */
+	private static void addAuditedCombinedPois()
+	{
+		addEntry("house_portal", "House/POH portal", "Travel • House Portal", 1422, 2963, 0,
+			"Player-owned house portal (Varlamore)",
+			"Teleports: Teleport to House (spell/tab), Construction cape, Max cape");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 1648, 3665, 0,
+			"Achievement Diary task master: Elise (Varlamore Diary)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (A. Elise)");
+		addEntry("minigame", "Minigame", "Activities • Minigame", 2399, 5177, 0,
+			"TzHaar Fight Pit (Mor Ul Rek)",
+			"Safe minigame: fight other players to be the last standing",
+			"Teleport destination: TzHaar Fight Pit Minigame Teleport");
+		addEntry("minigame", "Minigame", "Activities • Minigame", 2400, 5982, 0,
+			"Hallowed Sepulchre (Darkmeyer Agility minigame)",
+			"Requires completion of Sins of the Father",
+			"Teleport destination: Hallowed crystal shard");
+		addEntry("dungeon_link", "Mage Arena Bank", "Dungeons • Mage Arena", 2539, 4712, 0,
+			"Kolodion's Mage Arena and god cape arena (Wilderness lvl 51)",
+			"Requires knife or slash weapon to cut webs",
+			"Teleport lever connects underground bank to surface");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 2659, 3627, 0,
+			"Achievement Diary task master: Thorodin (Fremennik Diary)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Thorodin)");
+		addEntry("quest_start", "Between a Rock...", "Quest Start • Experienced", 2824, 10168, 0,
+			"Start: Talk to Dondakan the Dwarf at Keldagrim south-west mine",
+			"Difficulty: Experienced • Length: Medium",
+			"Reward: 2 Quest Points, 5,000 Defence experience",
+			"Requirements: Dwarf Cannon, Fishing Contest, 30 Defence",
+			"Teleport destination: Ring of wealth (Dondakan's Rock)");
+		addEntry("house_portal", "House/POH portal", "Travel • House Portal", 2892, 3465, 0,
+			"Player-owned house portal (Taverley)",
+			"Teleports: Teleport to House (spell/tab), Construction cape, Max cape");
+		addEntry("house_portal", "House/POH portal", "Travel • House Portal", 2952, 3224, 0,
+			"Player-owned house portal (Rimmington)",
+			"Teleports: Teleport to House (spell/tab), Construction cape, Max cape");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 2978, 3347, 0,
+			"Achievement Diary task master: Sir Rebral (Falador Diary)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Sir Rebral)");
+		addEntry("dungeon_link", "Mage Arena Bank", "Dungeons • Mage Arena", 3090, 3956, 0,
+			"Wilderness lever to Mage Arena Bank (Deep Wilderness lvl 51)",
+			"Requires knife or slash weapon to cut webs",
+			"Teleport lever connects surface to underground bank");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 3096, 3227, 0,
+			"Achievement Diary task master: Twiggy O'Korn (Lumbridge & Draynor)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Twiggy O'Korn)");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 3225, 3415, 0,
+			"Achievement Diary task master: Toby (Varrock Diary)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Toby)");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 3234, 3214, 0,
+			"Achievement Diary task master: Hatius Cosaintus (Lumbridge & Draynor)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Hatius Cosaintus)");
+		addEntry("house_portal", "House/POH portal", "Travel • House Portal", 3239, 6077, 0,
+			"Player-owned house portal (Prifddinas)",
+			"Requires completion of Song of the Elves",
+			"Teleports: Teleport to House (spell/tab), Construction cape, Max cape");
+		addEntry("task_master", "Task Master", "Quests & Diaries • Task Master", 3465, 3478, 0,
+			"Achievement Diary task master: Carl Le-sabrè (Desert Diary)",
+			"Claim tier rewards: easy, medium, hard, elite",
+			"Teleport destination: Achievement diary cape (Carl Le-sabrè)");
+		addEntry("dungeon_link", "Pool of Slime", "Dungeons • Ectofuntus", 3683, 9888, 0,
+			"Ectofuntus underground slime pool",
+			"Used for collecting buckets of slime for Ectofuntus worship",
+			"Teleport destination: Morytania legs 4 (Slime)");
+		addEntry("slayer_master", "Duradel", "Slayer • Slayer Master", 2869, 2982, 1,
+			"Slayer Master: Duradel (Shilo Village, level 2)",
+			"Requires Level 100 Combat and 50 Slayer",
+			"Teleport destination: Karamja gloves 4 (Duradel)");
+	}
+
 	/** Fixed travel links: fairy rings, spirit trees, ships, carpets, quetzals. */
 	private static void addTransportLinks()
 	{
@@ -2358,9 +2440,54 @@ public final class PoiDetails
 	 */
 	public static Detail getDetail(PoiIndex.Poi poi, int worldX, int worldY, int plane)
 	{
+		final Detail nativeDetail = getNativeDetail(poi, worldX, worldY, plane);
+		if (poi == null || "mooring_point".equals(poi.getKey()))
+		{
+			return nativeDetail;
+		}
+		final Detail imported = WorldMapSupplement.detail(poi);
+		if (imported == null || nativeDetail == null)
+		{
+			return nativeDetail == null ? imported : nativeDetail;
+		}
+		final List<String> lines = new ArrayList<>(nativeDetail.getLines());
+		for (String line : imported.getLines())
+		{
+			if (!lines.contains(line) && !line.equals(nativeDetail.getTitle()))
+			{
+				lines.add(line);
+			}
+		}
+		return new Detail(nativeDetail.getTitle(), nativeDetail.getCategory(), lines);
+	}
+
+	private static Detail getNativeDetail(PoiIndex.Poi poi, int worldX, int worldY, int plane)
+	{
 		if (poi == null)
 		{
 			return getDetailByPosition(worldX, worldY, plane, 6);
+		}
+
+		// Mooring markers can share a tile with curated island activities. Their cache marker
+		// identity is the dock; an exact-coordinate detail for a mine, cave, or skilling spot
+		// must not replace the mooring tooltip.
+		if ("mooring_point".equals(poi.getKey()))
+		{
+			return detailFromCategory(poi);
+		}
+
+		// 1. Direct exact lookup by coordinate key (matching marker type)
+		final Entry exact = EXACT_MAP.get(pointKey(worldX, worldY, plane));
+		if (exact != null && typeMatches(exact.type, poi.getKey()))
+		{
+			return entryToDetail(exact);
+		}
+
+		// 2. Exact match on POI's own world coordinate (matching marker type)
+		final Entry poiExact = EXACT_MAP.get(pointKey(poi.getX(), poi.getY(), poi.getPlane()));
+		if (poiExact != null && typeMatches(poiExact.type, poi.getKey()))
+		{
+			return entryToDetail(poiExact);
 		}
 
 		if ("quest_start".equals(poi.getKey()))
@@ -2370,21 +2497,6 @@ public final class PoiDetails
 			{
 				return questDetail;
 			}
-		}
-
-
-		// 1. Direct exact lookup by coordinate key
-		final Entry exact = EXACT_MAP.get(pointKey(worldX, worldY, plane));
-		if (exact != null)
-		{
-			return entryToDetail(exact);
-		}
-
-		// 2. Exact match on POI's own world coordinate
-		final Entry poiExact = EXACT_MAP.get(pointKey(poi.getX(), poi.getY(), poi.getPlane()));
-		if (poiExact != null)
-		{
-			return entryToDetail(poiExact);
 		}
 
 		// 3. Proximity lookup within 12 tiles (chunked; dungeon_link matches dungeon entries)
@@ -2414,6 +2526,11 @@ public final class PoiDetails
 	 */
 	private static Detail detailFromCategory(PoiIndex.Poi poi)
 	{
+		final Detail imported = "mooring_point".equals(poi.getKey()) ? null : WorldMapSupplement.detail(poi);
+		if (imported != null)
+		{
+			return imported;
+		}
 		final String key = poi.getKey();
 		final String name = poi.getName();
 		final String lowerName = name.toLowerCase(Locale.ROOT);
@@ -2847,6 +2964,17 @@ public final class PoiDetails
 			));
 		}
 		final int level = poi != null ? getMooringLevel(poi.getX(), poi.getY()) : 0;
+		if ("Mooring point - The Summer Shore".equalsIgnoreCase(name))
+		{
+			final List<String> lines = new ArrayList<>();
+			lines.add("Mooring point for docking and disembarking player vessels");
+			if (level > 0)
+			{
+				lines.add("Requires Level " + level + " Sailing");
+			}
+			lines.add("Requires completion of Troubled Tortugans");
+			return new Detail(name, "Travel", lines);
+		}
 		if (level > 0)
 		{
 			return new Detail(name, "Travel", List.of(

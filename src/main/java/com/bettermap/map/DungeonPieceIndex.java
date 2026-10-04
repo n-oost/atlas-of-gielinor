@@ -74,10 +74,12 @@ public class DungeonPieceIndex
 		{
 			byZone.clear();
 			byZone.putAll(prepared.byZone);
+			InstanceMaps.setDisplayPieces(new HashMap<>(byZone));
 			final List<DungeonPiece> routingPieces = new ArrayList<>();
 			for (Map.Entry<String, List<DungeonPiece>> entry : byZone.entrySet())
 			{
-				if (entry.getKey().equals(UndergroundZone.canonicalZoneId(entry.getKey())))
+				if (!entry.getKey().startsWith("native_")
+					&& entry.getKey().equals(UndergroundZone.canonicalZoneId(entry.getKey())))
 				{
 					routingPieces.addAll(entry.getValue());
 				}
@@ -91,6 +93,17 @@ public class DungeonPieceIndex
 	{
 		byZone.clear();
 		loaded = false;
+		try (InputStream nativeIn = DungeonPieceIndex.class.getResourceAsStream("/com/bettermap/dungeons/native-pieces.tsv"))
+		{
+			if (nativeIn != null)
+			{
+				index(parse(new InputStreamReader(nativeIn, StandardCharsets.UTF_8)).pieces);
+			}
+		}
+		catch (IOException e)
+		{
+			log.debug("Could not read native map sections", e);
+		}
 
 		final InputStream in = open(tileDir);
 		if (in == null)

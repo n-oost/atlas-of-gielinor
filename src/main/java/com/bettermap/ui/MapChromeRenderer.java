@@ -180,7 +180,7 @@ class MapChromeRenderer
 			return;
 		}
 
-		final Rectangle[] buttons = new Rectangle[3];
+		final Rectangle[] buttons = new Rectangle[4];
 		final int btnWidth = 46;
 		final int btnHeight = 20;
 		final int gap = 3;
@@ -191,13 +191,14 @@ class MapChromeRenderer
 		graphics.setFont(SMALL);
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		final String[] labels = {"Upper", "Main", "Lower"};
+		final String[] labels = {"Upper", "Main", "Lower", "Travel"};
+		final boolean isTravelActive = camera.isTravelViewActive();
 		final boolean isLowerActive = camera.isUndergroundModeActive() || camera.getActiveOverlayCluster() != null;
-		final boolean isUpperActive = !isLowerActive && camera.getPlane() == 1;
-		final boolean isMainActive = !isLowerActive && camera.getPlane() == 0;
-		final boolean[] active = {isUpperActive, isMainActive, isLowerActive};
+		final boolean isUpperActive = !isTravelActive && !isLowerActive && camera.getPlane() == 1;
+		final boolean isMainActive = !isTravelActive && !isLowerActive && camera.getPlane() == 0;
+		final boolean[] active = {isUpperActive, isMainActive, isLowerActive, isTravelActive};
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < buttons.length; i++)
 		{
 			final Rectangle button = new Rectangle(x, y, btnWidth, btnHeight);
 			buttons[i] = button;
@@ -229,7 +230,7 @@ class MapChromeRenderer
 	{
 		graphics.setFont(SMALL);
 
-		final StringBuilder text = new StringBuilder(camera.isUndergroundModeActive()
+		final StringBuilder text = new StringBuilder(camera.isTravelViewActive() ? "World Map (Travel)" : camera.isUndergroundModeActive()
 			? "World Map (Underground)"
 			: camera.isInteriorMapUnavailable()
 				? "World Map • Interior map unavailable"

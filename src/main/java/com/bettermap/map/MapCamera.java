@@ -477,6 +477,11 @@ public class MapCamera
 	private volatile long flashStartMillis;
 
 	private volatile UndergroundZone activeUndergroundZone;
+	private volatile boolean lowerView;
+	private volatile boolean travelView;
+	private volatile List<UndergroundZone> openUndergroundZones = Collections.emptyList();
+	private final java.util.Map<UndergroundZone, OverlayFloor> selectedDungeonFloors = new java.util.concurrent.ConcurrentHashMap<>();
+	private final java.util.Map<String, UndergroundZone> nativeDungeonVariants = new java.util.concurrent.ConcurrentHashMap<>();
 	private volatile WorldPoint activeUndergroundSurfacePoint;
 	private volatile OverlayCluster activeOverlayCluster;
 	private volatile UndergroundZone hoveredUndergroundZone;
@@ -632,6 +637,7 @@ public class MapCamera
 			hoveredTravelNode = null;
 		}
 		this.activeFloorLayer = null;
+		selectedDungeonFloors.clear();
 		this.plane = Math.max(0, Math.min(3, plane));
 		this.planeChosenByUser = true;
 	}
@@ -639,7 +645,7 @@ public class MapCamera
 	/** Follows the player's floor, but never overrides a plane the user picked. */
 	public synchronized void setPlaneFromPlayer(int plane)
 	{
-		if (!planeChosenByUser)
+		if (!planeChosenByUser && !travelView)
 		{
 			this.plane = Math.max(0, Math.min(3, plane));
 		}
@@ -714,6 +720,7 @@ public class MapCamera
 	 */
 	public synchronized void followPlayerInterior()
 	{
+		if (travelView) return;
 		final WorldPoint player = playerLocation;
 		final UndergroundZone playerZone = player == null
 			|| InstanceMaps.isOverworldOverlay(player.getX(), player.getY())
@@ -1477,7 +1484,66 @@ public class MapCamera
 
 	public boolean isUndergroundModeActive()
 	{
-		return activeUndergroundZone != null;
+		return lowerView;
+	}
+
+	/** Browsing Lower is independent of whether any layout is open. */
+	public synchronized void enterLowerView()
+	{
+		travelView = false;
+		lowerView = true;
+		selectedTravelNode = null;
+		hoveredTravelNode = null;
+		activeFloorLayer = null;
+		hoveredUndergroundZone = null;
+		hoveredOverlayCluster = null;
+	}
+
+	public boolean isTravelViewActive()
+	{
+		return travelView;
+	}
+
+	/** Travel browsing uses the surface camera without changing its position or zoom. */
+	public synchronized void enterTravelView()
+	{
+		final double previousZoom = zoom;
+		clearUndergroundMode();
+		zoom = previousZoom;
+		travelView = true;
+		plane = 0;
+		planeChosenByUser = true;
+		selectedTravelNode = null;
+		hoveredTravelNode = null;
+		layerSymbolTargets = Collections.emptyList();
+	}
+
+	public boolean isUndergroundZoneOpen(UndergroundZone zone)
+	{
+		for (UndergroundZone open : openUndergroundZones)
+		{
+			if (open.getSelectionId().equals(zone.getSelectionId())) return true;
+		}
+		return false;
+	}
+
+	public synchronized void toggleUndergroundZone(UndergroundZone zone, WorldPoint entrance)
+	{
+		if (!isUndergroundZoneOpen(zone))
+		{
+			setUndergroundMode(zone, entrance);
+			return;
+		}
+		final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
+		zones.removeIf(open -> open.getSelectionId().equals(zone.getSelectionId()));
+		openUndergroundZones = Collections.unmodifiableList(zones);
+		if (activeUndergroundZone != null && activeUndergroundZone.getSelectionId().equals(zone.getSelectionId()))
+		{
+			activeUndergroundZone = zones.isEmpty() ? null : zones.get(zones.size() - 1);
+			activeFloorLayer = null;
+		}
+		hoveredUndergroundZone = null;
+		hoveredOverlayCluster = null;
 	}
 
 	public synchronized void setUndergroundMode(UndergroundZone zone)
@@ -1488,6 +1554,11 @@ public class MapCamera
 	/** Opens a dungeon from a particular surface entrance while keeping its projected map anchor. */
 	public synchronized void setUndergroundMode(UndergroundZone zone, WorldPoint entrance)
 	{
+		if (zone != null)
+		{
+			zone = nativeDungeonVariants.getOrDefault(zone.getSelectionId(), zone);
+		}
+		final boolean browsing = lowerView;
 		this.activeFloorLayer = null;
 		if (zone == null)
 		{
@@ -1502,6 +1573,14 @@ public class MapCamera
 			}
 			return;
 		}
+		travelView = false;
+		lowerView = true;
+		if (!openUndergroundZones.contains(zone))
+		{
+			final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
+			zones.add(zone);
+			openUndergroundZones = Collections.unmodifiableList(zones);
+		}
 		if (this.activeUndergroundZone == null)
 		{
 			this.savedSurfaceZoom = this.zoom;
@@ -1512,16 +1591,26 @@ public class MapCamera
 		// Render the committed view exactly like the hover preview: the dungeon tiles are
 		// composited onto the surface entrance via the zone delta, so the camera stays on
 		// surface coordinates and frames the entrance rather than leaping ~6400 tiles north.
-		this.centerX = activeUndergroundSurfacePoint.getX();
-		this.centerY = activeUndergroundSurfacePoint.getY();
+		if (!browsing)
+		{
+			this.centerX = activeUndergroundSurfacePoint.getX();
+			this.centerY = activeUndergroundSurfacePoint.getY();
+			this.zoom = clampZoom(Math.max(this.zoom, dungeonTargetZoom(zone)));
+		}
 		this.plane = zone.getUndergroundPoint().getPlane();
 		this.planeChosenByUser = true;
-		this.zoom = clampZoom(Math.max(this.zoom, dungeonTargetZoom(zone)));
 		clampCenter();
 	}
 
 	public synchronized void clearUndergroundMode()
 	{
+		travelView = false;
+		nativeDungeonVariants.clear();
+		selectedDungeonFloors.clear();
+		lowerView = false;
+		openUndergroundZones = Collections.emptyList();
+		hoveredUndergroundZone = null;
+		hoveredOverlayCluster = null;
 		this.activeFloorLayer = null;
 		final UndergroundZone previous = this.activeUndergroundZone;
 		final WorldPoint previousSurfacePoint = this.activeUndergroundSurfacePoint;
@@ -1623,7 +1712,7 @@ public class MapCamera
 
 	public boolean isViewingDungeonLayer()
 	{
-		return activeUndergroundZone != null || activeOverlayCluster != null || !InstanceMaps.cameraOnOverworld(centerY);
+		return lowerView || !InstanceMaps.cameraOnOverworld(centerY);
 	}
 
 	public UndergroundZone getDungeonZone()
@@ -1655,7 +1744,15 @@ public class MapCamera
 	 */
 	public UndergroundZone getFocusedUndergroundZone()
 	{
-		return activeUndergroundZone != null ? activeUndergroundZone : hoveredUndergroundZone;
+		if (activeUndergroundZone != null)
+		{
+			return activeUndergroundZone;
+		}
+		if (lowerView)
+		{
+			return null;
+		}
+		return hoveredUndergroundZone;
 	}
 
 	/**
@@ -1667,7 +1764,11 @@ public class MapCamera
 		{
 			return true;
 		}
-		return hoveredUndergroundZone != null && hoveredSurfaceToUnderground;
+		if (lowerView)
+		{
+			return true;
+		}
+		return (hoveredUndergroundZone != null || hoveredOverlayCluster != null) && hoveredSurfaceToUnderground;
 	}
 
 	public UndergroundZone getHoveredUndergroundZone()
@@ -1723,15 +1824,42 @@ public class MapCamera
 		setUndergroundMode(floor.zone);
 		setPlane(floor.plane);
 		this.activeFloorLayer = floor.layerId;
+		selectedDungeonFloors.put(floor.zone, floor);
 	}
 
 	public Integer floorLayerFor(UndergroundZone zone)
 	{
+		if (lowerView)
+		{
+			final OverlayFloor floor = selectedDungeonFloors.get(zone);
+			return floor == null ? null : floor.layerId;
+		}
 		if (hoveredFloorPlane != null && hoveredUndergroundZone == zone)
 		{
 			return hoveredFloorLayer;
 		}
 		return activeUndergroundZone == zone ? activeFloorLayer : null;
+	}
+
+	/** Native composites contain all their arranged floors; authored zones retain floor controls. */
+	public boolean isDungeonPieceVisible(UndergroundZone zone, DungeonPiece piece)
+	{
+		if (zone.getId().startsWith("native_")) return true;
+		final OverlayFloor selected = selectedDungeonFloors.get(zone);
+		if (selected != null)
+		{
+			return piece.plane == selected.plane && (selected.layerId == null || piece.layer == selected.layerId);
+		}
+		boolean multiPlane = false;
+		for (OverlayFloor floor : OverlayFloor.all())
+		{
+			if (floor.zone == zone && floor.plane != zone.getUndergroundPoint().getPlane())
+			{
+				multiPlane = true;
+				break;
+			}
+		}
+		return !multiPlane || piece.plane == zone.getUndergroundPoint().getPlane();
 	}
 
 	public Integer getHoveredFloorPlane()
@@ -1774,6 +1902,10 @@ public class MapCamera
 	 */
 	public List<UndergroundZone> previewUndergroundZones()
 	{
+		if (lowerView)
+		{
+			return openUndergroundZones;
+		}
 		if (activeUndergroundZone != null)
 		{
 			return Collections.singletonList(activeUndergroundZone);
@@ -1807,13 +1939,24 @@ public class MapCamera
 
 	public synchronized void setActiveOverlayCluster(OverlayCluster cluster)
 	{
-		this.activeUndergroundZone = null;
 		this.activeOverlayCluster = cluster;
 		if (cluster != null)
 		{
-			this.centerX = cluster.iconX;
-			this.centerY = cluster.iconY;
-			this.hoveredOverlayCluster = cluster;
+			enterLowerView();
+			final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
+			for (UndergroundZone zone : cluster.members)
+			{
+				if (zone.getId().contains("__"))
+				{
+					nativeDungeonVariants.put(zone.getSelectionId(), zone);
+				}
+				zones.removeIf(open -> open.getSelectionId().equals(zone.getSelectionId()));
+				if (!zones.contains(zone))
+				{
+					zones.add(zone);
+				}
+			}
+			openUndergroundZones = Collections.unmodifiableList(zones);
 			this.hoveredUndergroundZone = null;
 			this.hoveredFloorPlane = null;
 			this.hoveredSurfaceToUnderground = true;

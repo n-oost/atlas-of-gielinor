@@ -30,6 +30,7 @@ import static com.bettermap.ui.MapStyle.CARD_TITLE;
 import static com.bettermap.ui.MapStyle.SMALL;
 
 import com.bettermap.BetterMapConfig;
+import com.bettermap.data.DungeonPoiOverrides;
 import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
@@ -141,6 +142,45 @@ public class LayerMarkerRenderer
 	 * Overworld: dungeon {@code !} at each zone entrance (hover peeks, click enters) and a green
 	 * {@code !} for connected-zone clusters. Underground: return-to-surface chips.
 	 */
+	private boolean isSubterraneanVisible(UndergroundZone zone)
+	{
+		if (!zone.isSubterranean())
+		{
+			return true;
+		}
+		if (camera.isUndergroundModeActive())
+		{
+			return true;
+		}
+		final UndergroundZone parent = zone.getParentZone();
+		if (parent != null)
+		{
+			if (camera.isUndergroundZoneOpen(parent)
+				|| camera.getHoveredUndergroundZone() == parent
+				|| camera.getActiveUndergroundZone() == parent)
+			{
+				return true;
+			}
+		}
+		if (camera.isUndergroundZoneOpen(zone)
+			|| camera.getHoveredUndergroundZone() == zone
+			|| camera.getActiveUndergroundZone() == zone)
+			{
+				return true;
+			}
+		final OverlayCluster hoveredCluster = camera.getHoveredOverlayCluster();
+		if (hoveredCluster != null && (hoveredCluster.members.contains(zone) || (parent != null && hoveredCluster.members.contains(parent))))
+		{
+			return true;
+		}
+		final OverlayCluster activeCluster = camera.getActiveOverlayCluster();
+		if (activeCluster != null && (activeCluster.members.contains(zone) || (parent != null && activeCluster.members.contains(parent))))
+		{
+			return true;
+		}
+		return false;
+	}
+
 	public void drawLargeLayerSymbols(Graphics2D graphics, Rectangle bounds)
 	{
 		if (!config.showLargeUndergroundSymbols() || camera.getZoom() < config.dungeonNavigationMinZoom())
@@ -151,7 +191,7 @@ public class LayerMarkerRenderer
 			return;
 		}
 
-		final boolean onSurface = !camera.isUndergroundModeActive() && camera.getCenterY() < 4200;
+		final boolean onSurface = camera.getCenterY() < 4200;
 		final List<MapCamera.LayerSymbolTarget> targets = new ArrayList<>();
 		final int size = Math.max(8, Math.min(32, config.undergroundSymbolSize()));
 		final int radius = glyph(size, 8);
@@ -167,37 +207,54 @@ public class LayerMarkerRenderer
 
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (!onSurface && focused != null && zone != focused)
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
+			if (!onSurface && focused != null && zone != focused && zone.getParentZone() != focused)
+			{
+				continue;
+			}
+			if (onSurface && !isSubterraneanVisible(zone))
 			{
 				continue;
 			}
 
 			final List<WorldPoint> anchors = onSurface
 				? zone.getSurfacePoints()
-				: zone.getSurfacePoints();
-			for (WorldPoint anchor : anchors)
+				: (zone.isSubterranean() ? Collections.singletonList(zone.getUndergroundPoint()) : zone.getSurfacePoints());
+			for (int i = 0; i < anchors.size(); i++)
 			{
-			final int sx = (int) Math.round(camera.screenX(anchor.getX() + 0.5, anchor.getY() + 0.5, bounds));
-			final int sy = (int) Math.round(camera.screenY(anchor.getX() + 0.5, anchor.getY() + 0.5, bounds));
+				if (onSurface && DungeonPoiOverrides.isButtonDeleted(zone, i))
+				{
+					continue;
+				}
+				final WorldPoint anchor = onSurface
+					? DungeonPoiOverrides.getButtonPoint(zone, i)
+					: anchors.get(i);
+				if (anchor == null)
+				{
+					continue;
+				}
+				final int sx = (int) Math.round(camera.screenX(anchor.getX() + 0.5, anchor.getY() + 0.5, bounds));
+				final int sy = (int) Math.round(camera.screenY(anchor.getX() + 0.5, anchor.getY() + 0.5, bounds));
 
-			final Rectangle rect = onSurface
-				? dungeonIconRect(anchor.getX(), anchor.getY(), bounds, size)
-				: new Rectangle(sx - size / 2, sy - size / 2, size, size);
-			if (!bounds.intersects(rect))
-			{
-				continue;
-			}
+				final boolean showDungeonIcon = onSurface || zone.getParentZone() == focused;
+				final Rectangle rect = showDungeonIcon
+					? dungeonIconRect(anchor.getX(), anchor.getY(), bounds, size)
+					: new Rectangle(sx - size / 2, sy - size / 2, size, size);
+				if (!bounds.intersects(rect))
+				{
+					continue;
+				}
 
-			final boolean isSurfaceToUnderground = onSurface;
+				final boolean isSurfaceToUnderground = showDungeonIcon;
 			targets.add(new MapCamera.LayerSymbolTarget(rect, zone, anchor, isSurfaceToUnderground));
 
 			final boolean isHovered = camera.getHoveredUndergroundZone() == zone
 				&& camera.isHoveredSurfaceToUnderground() == isSurfaceToUnderground
 				&& camera.getHoveredFloorPlane() == null;
 
-			if (onSurface)
+			if (showDungeonIcon)
 			{
-				final BufferedImage icon = dungeonExclamation(false);
+				final BufferedImage icon = dungeonExclamation(camera.isUndergroundZoneOpen(zone));
 				if (isHovered)
 				{
 					graphics.setColor(CARD_TITLE);
@@ -283,7 +340,7 @@ public class LayerMarkerRenderer
 				final boolean matchesHoveredZone = camera.getHoveredUndergroundZone() == floor.zone
 					&& camera.isHoveredSurfaceToUnderground();
 				final boolean matchesHoveredCluster = hoveredCluster != null && hoveredCluster.members.contains(floor.zone);
-				final boolean matchesActiveCluster = activeCluster != null && activeCluster.members.contains(floor.zone);
+				final boolean matchesActiveCluster = camera.isUndergroundZoneOpen(floor.zone);
 				if (!matchesHoveredZone && !matchesHoveredCluster && !matchesActiveCluster)
 				{
 					continue;
@@ -365,7 +422,7 @@ public class LayerMarkerRenderer
 		final List<MapCamera.LayerSymbolTarget> drawn = new ArrayList<>();
 		for (OverlayCluster cluster : OverlayCluster.all())
 		{
-			if (cluster.members.size() < 2)
+			if (cluster.members.isEmpty())
 			{
 				continue;
 			}
@@ -380,7 +437,8 @@ public class LayerMarkerRenderer
 			}
 			drawn.add(new MapCamera.LayerSymbolTarget(rect, cluster));
 
-			final boolean isHovered = hovered == cluster || active == cluster;
+			final boolean isHovered = hovered == cluster
+				|| cluster.members.stream().allMatch(camera::isUndergroundZoneOpen);
 			if (isHovered)
 			{
 				graphics.setColor(REGION_EDGE_HOVER);

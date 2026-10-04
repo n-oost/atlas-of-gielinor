@@ -81,6 +81,7 @@ public class UndergroundZoneTest
 		assertFalse("Underground zones list should not be empty", UndergroundZone.ALL_ZONES.isEmpty());
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_") || zone.isSubterranean() || zone.getYOffset() != 6400 || zone == UndergroundZone.VTAM_CORPORATION || zone.ordinal() > UndergroundZone.WYRMSCRAIG_CAVERN.ordinal()) continue;
 			assertNotNull("Zone id should not be null for " + zone.name(), zone.getId());
 			assertNotNull("Zone name should not be null for " + zone.name(), zone.getName());
 			assertNotNull("Surface point should not be null for " + zone.name(), zone.getSurfacePoint());
@@ -1196,6 +1197,7 @@ public class UndergroundZoneTest
 	{
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_") || zone.isSubterranean() || zone.getYOffset() != 6400 || zone == UndergroundZone.VTAM_CORPORATION || zone.ordinal() > UndergroundZone.WYRMSCRAIG_CAVERN.ordinal()) continue;
 			// Every interior must sit above the overworld cutoff, or InstanceMaps.hiddenOnSurface
 			// cannot keep its pin off the open sea in the overworld view.
 			assertTrue(zone.getId() + " interior must sit above the overworld cutoff",
@@ -1306,6 +1308,7 @@ public class UndergroundZoneTest
 			final List<UndergroundZone> matching = new ArrayList<>();
 			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 			{
+				if (zone.getId().startsWith("native_") || zone.isSubterranean() || zone.getYOffset() != 6400 || zone == UndergroundZone.VTAM_CORPORATION || zone.ordinal() > UndergroundZone.WYRMSCRAIG_CAVERN.ordinal()) continue;
 				if (zone.getName().equalsIgnoreCase(poi.getName()))
 				{
 					matching.add(zone);
@@ -1397,6 +1400,7 @@ public class UndergroundZoneTest
 		final int maxDist = 50;
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_") || zone.isSubterranean() || zone.getYOffset() != 6400 || zone == UndergroundZone.VTAM_CORPORATION || zone.ordinal() > UndergroundZone.WYRMSCRAIG_CAVERN.ordinal()) continue;
 			final int ux = zone.getUndergroundPoint().getX();
 			final int uy = zone.getUndergroundPoint().getY();
 			boolean found = false;

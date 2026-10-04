@@ -73,6 +73,17 @@ public final class ViewWindow
 	 */
 	public static boolean isDrawable(MapCamera camera, int worldX, int worldY)
 	{
+		if (camera.isUndergroundModeActive())
+		{
+			for (UndergroundZone zone : camera.previewUndergroundZones())
+			{
+				if (InstanceMaps.belongsToZone(worldX, worldY, zone))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 		if (InstanceMaps.hiddenOnSurface(worldX, worldY, camera.getCenterX(), camera.getCenterY()))
 		{
 			return false;
@@ -84,6 +95,16 @@ public final class ViewWindow
 	/** Interior POIs appear only with their dungeon terrain, never on the plain surface map. */
 	public static boolean isPoiDrawable(MapCamera camera, int worldX, int worldY)
 	{
+		// Dungeon POIs use their underground world coordinates even when their entrance is
+		// previewed over the surface. Keep them out of the overworld until that dungeon's
+		// contents are explicitly opened (the hover/focus state) or the camera is underground.
+		if (worldY > InstanceMaps.GAP_MIN_Y
+			&& InstanceMaps.cameraOnOverworld(camera.getCenterY())
+			&& !InstanceMaps.isOverworldOverlay(worldX, worldY)
+			&& !camera.isDungeonContentsFocused())
+		{
+			return false;
+		}
 		if (!isDrawable(camera, worldX, worldY))
 		{
 			return false;

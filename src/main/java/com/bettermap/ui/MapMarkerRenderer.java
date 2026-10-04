@@ -131,6 +131,11 @@ class MapMarkerRenderer
 		return poiMarkerRenderer.visiblePoiIconAt(cursor);
 	}
 
+	ShopIndex.Shop visibleShopIconAt(java.awt.Point cursor)
+	{
+		return poiMarkerRenderer.visibleShopIconAt(cursor);
+	}
+
 	void drawMonsters(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
 		monsterMarkerRenderer.drawMonsters(graphics, bounds, placed);

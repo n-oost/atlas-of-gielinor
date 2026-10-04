@@ -88,6 +88,7 @@ public final class InstanceMaps
 	{
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_")) continue;
 			ZONES_BY_ID.computeIfAbsent(zone.getCanonicalId(), id -> new ArrayList<>()).add(zone);
 		}
 		for (WikiMap map : WikiMap.VALUES)
@@ -98,6 +99,7 @@ public final class InstanceMaps
 			}
 			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 			{
+				if (zone.getId().startsWith("native_")) continue;
 				final int ux = zone.getUndergroundPoint().getX();
 				final int uy = zone.getUndergroundPoint().getY();
 				if (!map.contains(ux, uy))
@@ -116,6 +118,7 @@ public final class InstanceMaps
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_")) continue;
 			final int ux = zone.getUndergroundPoint().getX();
 			final int uy = zone.getUndergroundPoint().getY();
 			final List<WikiMap> clip = new ArrayList<>();
@@ -137,6 +140,18 @@ public final class InstanceMaps
 
 	private InstanceMaps()
 	{
+	}
+
+	private static volatile Map<String, List<DungeonPiece>> displayPieces = Collections.emptyMap();
+
+	static void setDisplayPieces(Map<String, List<DungeonPiece>> pieces)
+	{
+		displayPieces = pieces;
+	}
+
+	public static List<DungeonPiece> displayPiecesFor(UndergroundZone zone)
+	{
+		return displayPieces.getOrDefault(zone.getCanonicalId(), Collections.emptyList());
 	}
 
 	/** Publish the same loaded footprints used by the renderer, including disk overrides. */
@@ -307,6 +322,17 @@ public final class InstanceMaps
 		{
 			return false;
 		}
+		if (zone.getId().startsWith("native_"))
+		{
+			for (DungeonPiece piece : displayPiecesFor(zone))
+			{
+				if (piece.containsNative(worldX, worldY))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 		// Remote child floors (such as Duke) have authored footprints outside the
 		// parent clip. Use the same ownership priority as zoneForPoint.
 		for (DungeonPiece piece : piecesByRegion.getOrDefault(
@@ -372,6 +398,7 @@ public final class InstanceMaps
 		long bestDist = Long.MAX_VALUE;
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_")) continue;
 			if (!zone.hasClipOverride() || !supportsPlane(zone, plane))
 			{
 				continue;
@@ -576,6 +603,7 @@ public final class InstanceMaps
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_")) continue;
 			final WikiMap map = mapForZone(zone);
 			if (map == null)
 			{
@@ -624,6 +652,7 @@ public final class InstanceMaps
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().startsWith("native_")) continue;
 			final WikiMap map = mapForZone(zone);
 			if (map == null || cameraIsInside(map, cameraX, cameraY))
 			{

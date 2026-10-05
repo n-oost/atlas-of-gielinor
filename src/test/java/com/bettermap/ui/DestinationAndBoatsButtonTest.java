@@ -68,7 +68,6 @@ public class DestinationAndBoatsButtonTest
 		boolean showPlayerMarker = true;
 		boolean showBoatLocations = true;
 		boolean enableShortestPath = true;
-		boolean useExternalShortestPathSettings = false;
 		boolean fullscreenMap = false;
 
 		@Override
@@ -96,12 +95,6 @@ public class DestinationAndBoatsButtonTest
 		}
 
 		@Override
-		public boolean useExternalShortestPathSettings()
-		{
-			return useExternalShortestPathSettings;
-		}
-
-		@Override
 		public boolean fullscreenMap()
 		{
 			return fullscreenMap;
@@ -115,7 +108,7 @@ public class DestinationAndBoatsButtonTest
 
 		TestShortestPathTracker()
 		{
-			super(null, null, null, null, null);
+			super(null, null, null);
 		}
 
 		@Override

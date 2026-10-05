@@ -261,7 +261,7 @@ public class BetterMapContextMenuTest
 		setField(plugin, "camera", camera);
 		setField(plugin, "dungeonPieceIndex", new com.bettermap.map.DungeonPieceIndex());
 		setField(plugin, "config", config);
-		setField(plugin, "shortestPathTracker", new ShortestPathTracker(null, null, null, null, config));
+		setField(plugin, "shortestPathTracker", new ShortestPathTracker(null, null, config));
 		setField(plugin, "slayerTaskTracker", new SlayerTaskTracker(null, slayerService));
 	}
 

@@ -70,8 +70,8 @@ or third-party map imagery. No redistribution permission is inferred solely from
 
 ## Existing upstream notices
 
-Shortest Path's code/data notice is preserved in `pathfinding/LICENSE` with its pinned
-revision in `pathfinding/UPSTREAM_VERSION`.
+Shortest Path's extracted teleport POI data notice is preserved in `poi/shortest-path-data-LICENSE`;
+`poi/teleport-locations.tsv` records its source revision. The routing engine is not bundled.
 RuneLite world-map metadata preserves original notices in the `copyrightAndLicences`
 section of `poi/runelite-world-map-data.json`, alongside its `sourceRevision`.
 

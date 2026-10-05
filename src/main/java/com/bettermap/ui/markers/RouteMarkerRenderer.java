@@ -100,10 +100,10 @@ public class RouteMarkerRenderer
 		return strokes;
 	}
 
-	/** Draws Better Map's locally calculated route in its world projection. */
+	/** Draws Shortest Path's returned coordinates in Atlas's world projection. */
 	public boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)
 	{
-		if (!config.enableShortestPath() && !config.useExternalShortestPathSettings())
+		if (!shortestPathTracker.isRoutingEnabled())
 		{
 			return false;
 		}

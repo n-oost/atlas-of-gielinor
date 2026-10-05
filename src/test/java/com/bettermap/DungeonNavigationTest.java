@@ -69,7 +69,7 @@ public class DungeonNavigationTest
 				action.getAsBoolean();
 			}
 		});
-		setField("shortestPathTracker", new ShortestPathTracker(null, null, null, null, config)
+		setField("shortestPathTracker", new ShortestPathTracker(null, null, config)
 		{
 			@Override
 			public boolean routeTo(WorldPoint destination)

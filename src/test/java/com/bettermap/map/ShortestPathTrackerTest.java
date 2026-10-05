@@ -1,88 +1,110 @@
 package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
-import com.bettermap.pathfinding.WorldPointUtil;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.eventbus.EventBus;
+import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.PluginMessage;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ShortestPathTrackerTest
 {
 	private static final BetterMapConfig ENABLED = new BetterMapConfig() {};
 
 	@Test
-	public void externalModeRequiresEnabledPluginEvenIfLocalToggleAlsoTrue()
+	public void routingRequiresEnabledHubPlugin()
 	{
-		BetterMapConfig external = new BetterMapConfig()
-		{
-			@Override
-			public boolean useExternalShortestPathSettings()
-			{
-				return true;
-			}
-		};
-		ShortestPathTracker unavailable = new ShortestPathTracker(null, null, null, null, external);
+		ShortestPathTracker unavailable = new ShortestPathTracker(null, null, ENABLED);
 		assertFalse(unavailable.isRoutingEnabled());
 		assertFalse(unavailable.routeTo(new WorldPoint(3200, 3200, 0)));
-		ShortestPathTracker available = new ShortestPathTracker(null, null, null, null, external)
+		ShortestPathTracker available = new ShortestPathTracker(null, null, ENABLED)
 		{
 			@Override
-			public boolean isAvailable()
-			{
-				return true;
-			}
+			public boolean isAvailable() { return true; }
 		};
 		assertTrue(available.isRoutingEnabled());
 	}
 
 	@Test
-	public void bothTogglesOffDisablesRouting()
+	public void toggleOffDisablesRouting()
 	{
 		BetterMapConfig disabled = new BetterMapConfig()
 		{
 			@Override
-			public boolean enableShortestPath()
-			{
-				return false;
-			}
+			public boolean enableShortestPath() { return false; }
 		};
-		ShortestPathTracker tracker = new ShortestPathTracker(null, null, null, null, disabled);
+		ShortestPathTracker tracker = new ShortestPathTracker(null, null, disabled)
+		{
+			@Override
+			public boolean isAvailable() { return true; }
+		};
 		assertFalse(tracker.isRoutingEnabled());
 		assertFalse(tracker.routeTo(new WorldPoint(3200, 3200, 0)));
 	}
 
-	@Test
-	public void routeSnapshotUsesLocalPathAndRejectsOldResults()
+	public static class Hub
 	{
-		RoutePlanner planner = new RoutePlanner(null, null, null, null)
+		final EventBus bus = new EventBus();
+		final List<PluginMessage> queries = new ArrayList<>();
+		final ShortestPathTracker tracker;
+		WorldPoint destination;
+
+		Hub()
 		{
-			@Override
-			public synchronized void computeRoute(WorldPoint target)
+			tracker = new ShortestPathTracker(null, bus, ENABLED)
 			{
+				@Override
+				public boolean isAvailable() { return true; }
+			};
+			bus.register(this);
+		}
+
+		@Subscribe
+		public void onPluginMessage(PluginMessage message)
+		{
+			if ("path".equals(message.getName())) destination = (WorldPoint) message.getData().get("target");
+			else if ("clear".equals(message.getName())) destination = null;
+			else if ("query".equals(message.getName())) queries.add(message);
+			else if ("getTarget".equals(message.getName()) && destination != null)
+			{
+				tracker.onPluginMessage(new PluginMessage("shortestpath", "currentTarget",
+					Map.of("id", message.getData().get("id"), "set", true, "target", List.of(destination))));
 			}
-		};
-		try
-		{
-			ShortestPathTracker tracker = new ShortestPathTracker(null, null, () -> planner, () -> null, ENABLED);
-			WorldPoint first = new WorldPoint(3200, 3200, 0);
-			WorldPoint second = new WorldPoint(3202, 3200, 0);
-			assertTrue(tracker.routeTo(first));
-			long oldRevision = tracker.getRouteRevision(first);
-			assertTrue(tracker.routeTo(second));
-			long currentRevision = tracker.getRouteRevision(second);
-			int[] points = {WorldPointUtil.packWorldPoint(first), WorldPointUtil.packWorldPoint(second)};
-			tracker.publishRouteIfCurrent(oldRevision, points, ShortestPathTracker.RouteStatus.READY);
-			assertTrue(tracker.route().isEmpty());
-			tracker.publishRouteIfCurrent(currentRevision, points, ShortestPathTracker.RouteStatus.READY);
-			assertEquals(Arrays.asList(first, second), tracker.route());
-			assertFalse(tracker.readFailed());
 		}
-		finally
+
+		void ticks(WorldPoint player)
 		{
-			planner.shutdown();
+			for (int i = 0; i < 5; i++) tracker.update(player);
 		}
+
+		void result(PluginMessage query, List<WorldPoint> points)
+		{
+			tracker.onPluginMessage(new PluginMessage("shortestpath", "result",
+				Map.of("id", query.getData().get("id"), "reached", true, "path", points)));
+		}
+	}
+
+	@Test
+	public void routeSnapshotUsesHubCoordinatesAndRejectsOldResults()
+	{
+		Hub hub = new Hub();
+		WorldPoint first = new WorldPoint(3200, 3200, 0);
+		WorldPoint second = new WorldPoint(3202, 3200, 0);
+		assertTrue(hub.tracker.routeTo(first));
+		hub.ticks(first);
+		assertTrue(hub.tracker.routeTo(second));
+		hub.ticks(first);
+		hub.result(hub.queries.get(0), List.of(first));
+		assertTrue(hub.tracker.route().isEmpty());
+		hub.result(hub.queries.get(1), List.of(first, second));
+		assertEquals(List.of(first, second), hub.tracker.route());
+		assertFalse(hub.tracker.readFailed());
+		hub.tracker.cancelRoute();
+		hub.result(hub.queries.get(1), List.of(first, second));
+		assertTrue(hub.tracker.route().isEmpty());
 	}
 }

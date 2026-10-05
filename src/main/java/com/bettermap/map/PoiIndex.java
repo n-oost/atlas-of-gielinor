@@ -25,8 +25,7 @@
 package com.bettermap.map;
 
 import com.bettermap.data.DungeonPoiOverrides;
-import com.bettermap.pathfinding.transport.parser.TransportRecord;
-import com.bettermap.pathfinding.transport.parser.TsvParser;
+import com.bettermap.data.BundledTsv;
 import net.runelite.api.coords.WorldPoint;
 import com.bettermap.data.UndergroundZone;
 import java.awt.image.BufferedImage;
@@ -605,56 +604,14 @@ public class PoiIndex
 	/** Loads the bundled teleport catalogue on the POI loading thread, grouped by landing tile. */
 	private void loadTeleportLocations()
 	{
-		final Map<String, Set<String>> locations = new LinkedHashMap<>();
-		final String[] sources = {
-			"teleportation_spells", "teleportation_spells_home", "teleportation_items",
-			"teleportation_minigames", "teleportation_portals", "teleportation_portals_poh",
-			"teleportation_levers", "teleportation_boxes", "wilderness_obelisks"
-		};
-		for (String source : sources)
+		try
 		{
-			try (InputStream stream = PoiIndex.class.getResourceAsStream(
-				"/com/bettermap/pathfinding/transports/" + source + ".tsv"))
-			{
-				if (stream == null) continue;
-				final String contents = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
-				for (TransportRecord record : new TsvParser().parse(contents))
-				{
-					String label = record.getDisplayInfo();
-					if (label == null || label.isBlank())
-					{
-						label = source.contains("obelisks") ? "Wilderness obelisk"
-							: source.contains("levers") ? "Teleport lever"
-							: source.contains("boxes") ? "Teleport box" : "Teleport portal";
-					}
-					final String destination = record.getDestination();
-					if (destination != null && !destination.isBlank())
-					{
-						locations.computeIfAbsent(destination.trim(), key -> new LinkedHashSet<>()).add(label);
-					}
-					final String origin = record.getOrigin();
-					if (origin != null && !origin.isBlank())
-					{
-						locations.computeIfAbsent(origin.trim(), key -> new LinkedHashSet<>()).add(label);
-					}
-				}
-			}
-			catch (IOException e)
-			{
-				log.debug("Unreadable teleport catalogue {}", source, e);
-			}
-		}
-		for (Map.Entry<String, Set<String>> entry : locations.entrySet())
-		{
-			final String[] point = entry.getKey().split("\\s+");
-			if (point.length != 3) continue;
-			try
+			for (String[] point : BundledTsv.read("/com/bettermap/poi/teleport-locations.tsv", 4))
 			{
 				final int x = Integer.parseInt(point[0]);
 				final int y = Integer.parseInt(point[1]);
 				final int plane = Integer.parseInt(point[2]);
-				if (x <= 0 || y <= 0 || plane < 0 || plane > 3) continue;
-				final String label = String.join(" | ", entry.getValue());
+				final String label = point[3];
 				final long packed = packedPoint(plane, x, y);
 				if (CONSOLIDATED_TELEPORT_TILES.contains(packed))
 				{
@@ -669,10 +626,10 @@ public class PoiIndex
 				}
 				addPoi(new Poi(x, y, plane, "teleport", label), false);
 			}
-			catch (NumberFormatException e)
-			{
-				log.debug("Invalid teleport point {}", entry.getKey());
-			}
+		}
+		catch (IOException | NumberFormatException e)
+		{
+			log.debug("Unreadable teleport locations", e);
 		}
 	}
 

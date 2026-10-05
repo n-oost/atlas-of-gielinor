@@ -60,7 +60,6 @@ import com.bettermap.tiles.MapAssetManager;
 import com.bettermap.ui.BetterMapPanel;
 import com.bettermap.ui.BetterWorldMapOverlay;
 import com.bettermap.ui.QuickFinderOverlay;
-import com.bettermap.ui.RouteMinimapOverlay;
 import com.google.inject.Provides;
 import java.awt.Rectangle;
 import java.util.concurrent.ScheduledExecutorService;
@@ -140,9 +139,6 @@ public class BetterMapPlugin extends Plugin
 
 	@Inject
 	private QuickFinderOverlay quickFinderOverlay;
-
-	@Inject
-	private RouteMinimapOverlay routeMinimapOverlay;
 
 	@Inject
 	private WorldMapInput input;
@@ -231,10 +227,14 @@ public class BetterMapPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		input.getLayerInputHandler().startUp();
-		// Resolve conflicting saved settings deterministically on startup.
-		if (config.useExternalShortestPathSettings() && config.enableShortestPath())
+		// Preserve users who enabled the previous external-settings mode.
+		if (!Boolean.TRUE.equals(configManager.getConfiguration("bettermap", "shortestPathHubMigration", Boolean.class)))
 		{
-			configManager.setConfiguration("bettermap", "enableShortestPath", false);
+			if (Boolean.TRUE.equals(configManager.getConfiguration("bettermap", "useExternalShortestPathSettings", Boolean.class)))
+			{
+				configManager.setConfiguration("bettermap", "enableShortestPath", true);
+			}
+			configManager.setConfiguration("bettermap", "shortestPathHubMigration", true);
 		}
 		shortestPathTracker.startUp();
 		mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
@@ -243,7 +243,6 @@ public class BetterMapPlugin extends Plugin
 
 		overlayManager.add(mapOverlay);
 		overlayManager.add(quickFinderOverlay);
-		overlayManager.add(routeMinimapOverlay);
 		mouseManager.registerMouseListener(input);
 		mouseManager.registerMouseWheelListener(input);
 		keyManager.registerKeyListener(input);
@@ -309,7 +308,6 @@ public class BetterMapPlugin extends Plugin
 		panel = null;
 		overlayManager.remove(mapOverlay);
 		overlayManager.remove(quickFinderOverlay);
-		overlayManager.remove(routeMinimapOverlay);
 		mouseManager.unregisterMouseListener(input);
 		mouseManager.unregisterMouseWheelListener(input);
 		keyManager.unregisterKeyListener(input);
@@ -590,10 +588,7 @@ public class BetterMapPlugin extends Plugin
 
 		if ("shortestpath".equals(event.getGroup()))
 		{
-			if (config.useExternalShortestPathSettings())
-			{
-				clientThread.invoke(shortestPathTracker::refreshRoute);
-			}
+			clientThread.invoke(shortestPathTracker::refreshRoute);
 			return;
 		}
 		if (!"bettermap".equals(event.getGroup()))
@@ -609,27 +604,9 @@ public class BetterMapPlugin extends Plugin
 		{
 			syncSidebarPanel();
 		}
-		boolean externalModeChanged = "useExternalShortestPathSettings".equals(event.getKey());
-		boolean localModeChanged = "enableShortestPath".equals(event.getKey());
-		if (externalModeChanged && config.useExternalShortestPathSettings() && config.enableShortestPath())
+		if ("enableShortestPath".equals(event.getKey()))
 		{
-			configManager.setConfiguration("bettermap", "enableShortestPath", false);
-		}
-		else if (localModeChanged && config.enableShortestPath() && config.useExternalShortestPathSettings())
-		{
-			configManager.setConfiguration("bettermap", "useExternalShortestPathSettings", false);
-		}
-		if (externalModeChanged || localModeChanged
-			|| (event.getKey().startsWith("route") && !config.useExternalShortestPathSettings()))
-		{
-			clientThread.invoke(() ->
-			{
-				shortestPathTracker.refreshRoute();
-				if (externalModeChanged)
-				{
-					shortestPathTracker.repostTarget();
-				}
-			});
+			clientThread.invoke(shortestPathTracker::refreshRoute);
 		}
 	}
 
@@ -680,9 +657,9 @@ public class BetterMapPlugin extends Plugin
 					{
 						shortestPathTracker.cancelRoute();
 					}
-					else if ("path".equals(event.getName()))
+					else if ("path".equals(event.getName()) && shortestPathTracker.isRoutingEnabled())
 					{
-						shortestPathTracker.onPluginMessage(new PluginMessage("shortestpath", event.getName(), event.getData()));
+						eventBus.post(new PluginMessage("shortestpath", "path", event.getData()));
 					}
 					java.util.Map<String, Object> response = new java.util.HashMap<>(getRouteState());
 					if (event.getData().containsKey("requestId")) response.put("requestId", event.getData().get("requestId"));
@@ -692,7 +669,7 @@ public class BetterMapPlugin extends Plugin
 			return;
 		}
 		if ("shortestpath".equals(event.getNamespace())
-			&& ("path".equals(event.getName()) || "clear".equals(event.getName())))
+			&& ("currentTarget".equals(event.getName()) || "result".equals(event.getName()) || "clear".equals(event.getName())))
 		{
 			clientThread.invoke(() -> shortestPathTracker.onPluginMessage(event));
 		}
@@ -710,17 +687,7 @@ public class BetterMapPlugin extends Plugin
 		boatTracker.onPluginChanged(event);
 		if ("shortestpath.ShortestPathPlugin".equals(event.getPlugin().getClass().getName()))
 		{
-			clientThread.invoke(() ->
-			{
-				if (config.useExternalShortestPathSettings())
-				{
-					shortestPathTracker.refreshRoute();
-				}
-				if (event.isLoaded())
-				{
-					shortestPathTracker.repostTarget();
-				}
-			});
+			clientThread.invoke(shortestPathTracker::refreshRoute);
 		}
 	}
 

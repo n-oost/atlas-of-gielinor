@@ -25,99 +25,77 @@
 package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
-import com.bettermap.pathfinding.WorldPointUtil;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.events.PluginMessage;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginManager;
 
-/** Owns Better Map's route snapshot and shares destination requests with Shortest Path. */
-@Slf4j
+/** Client-thread message bridge to the separately installed Shortest Path Hub plugin. */
 @Singleton
 public class ShortestPathTracker
 {
-	private static final String PLUGIN_CLASS = "shortestpath.ShortestPathPlugin";
-	private static final String MESSAGE_SOURCE = "bettermapSource";
-
 	private final PluginManager pluginManager;
 	private final EventBus eventBus;
-	private final Provider<RoutePlanner> planner;
-	private final Provider<SyncedPathfindingConfig> routingConfig;
-	private final BetterMapConfig mapConfig;
-	private volatile List<WorldPoint> route = Collections.emptyList();
-	private volatile boolean readFailed;
-	private RouteStatus routeStatus;
-	private volatile WorldPoint target;
-	private volatile Set<Integer> targets = Collections.emptySet();
-	private WorldPoint player;
-	private WorldPoint repathAnchor;
+	private final BetterMapConfig config;
+	private final String session = "atlas-" + UUID.randomUUID();
+	private List<WorldPoint> route = Collections.emptyList();
+	private Set<WorldPoint> targets = Collections.emptySet();
+	private WorldPoint anchor;
+	private WorldPoint externalStart;
+	private String targetRequest;
+	private String pathRequest;
+	private int tick;
+	private int queryTick;
+	private int pollTick = -5;
 	private long revision;
-
-	public enum RouteStatus
-	{
-		READY, UNREACHABLE, FAILED
-	}
+	private boolean refresh;
+	private boolean readFailed;
+	private String status = "IDLE";
 
 	@Inject
-	public ShortestPathTracker(PluginManager pluginManager, EventBus eventBus,
-		Provider<RoutePlanner> planner, Provider<SyncedPathfindingConfig> routingConfig,
-		BetterMapConfig mapConfig)
+	public ShortestPathTracker(PluginManager pluginManager, EventBus eventBus, BetterMapConfig config)
 	{
 		this.pluginManager = pluginManager;
 		this.eventBus = eventBus;
-		this.planner = planner;
-		this.routingConfig = routingConfig;
-		this.mapConfig = mapConfig;
+		this.config = config;
 	}
 
-	/** Refresh after the player location is sampled on the client thread. */
-	public void update(WorldPoint player)
+	public void startUp()
 	{
-		this.player = player;
-		WorldPoint destination = target;
-		if (destination == null || player == null)
+		clear();
+		pollTick = tick - 5;
+	}
+
+	public void shutDown()
+	{
+		clear();
+	}
+
+	public boolean isAvailable()
+	{
+		if (pluginManager == null) return false;
+		for (Plugin plugin : pluginManager.getPlugins())
 		{
-			return;
+			if ("shortestpath.ShortestPathPlugin".equals(plugin.getClass().getName())
+				&& pluginManager.isPluginEnabled(plugin)) return true;
 		}
-		SyncedPathfindingConfig config = routingConfig.get();
-		if (!isRoutingEnabled())
-		{
-			return;
-		}
-		if (config.reachedDistance() >= 0 && targets.stream().anyMatch(point ->
-		{
-			WorldPoint candidate = WorldPointUtil.unpackWorldPoint(point);
-			return player.getPlane() == candidate.getPlane()
-				&& player.distanceTo2D(candidate) <= config.reachedDistance();
-		}))
-		{
-			clear();
-			return;
-		}
-		int distance = config.recalculateDistance();
-		if (distance >= 0 && (repathAnchor == null || repathAnchor.getPlane() != player.getPlane()
-			|| repathAnchor.distanceTo2D(player) > distance))
-		{
-			if (config.cancelInstead())
-			{
-				clear();
-				return;
-			}
-			repathAnchor = player;
-			planner.get().computeRoute(destination);
-		}
+		return false;
+	}
+
+	public boolean isRoutingEnabled()
+	{
+		return config.enableShortestPath() && isAvailable();
 	}
 
 	public List<WorldPoint> route()
@@ -125,15 +103,14 @@ public class ShortestPathTracker
 		return route;
 	}
 
-	/** Target destination point of the current route, or null when not routing. */
 	public WorldPoint target()
 	{
-		final List<WorldPoint> currentRoute = route;
-		if (!currentRoute.isEmpty())
-		{
-			return currentRoute.get(currentRoute.size() - 1);
-		}
-		return target;
+		return targets.isEmpty() ? null : targets.iterator().next();
+	}
+
+	public boolean hasTarget()
+	{
+		return !targets.isEmpty();
 	}
 
 	public boolean readFailed()
@@ -141,246 +118,158 @@ public class ShortestPathTracker
 		return readFailed;
 	}
 
-	/** Consistent, immutable state for cross-plugin route consumers. WorldPoint values are global. */
-	public synchronized Map<String, Object> snapshot()
+	public Map<String, Object> snapshot()
 	{
 		Map<String, Object> state = new HashMap<>();
 		state.put("revision", revision);
-		state.put("requestedTarget", target);
-		state.put("targets", targets);
+		state.put("requestedTarget", target());
+		state.put("targets", targets.stream().map(point -> (point.getX() & 0x7FFF)
+			| ((point.getY() & 0x7FFF) << 15) | ((point.getPlane() & 3) << 30))
+			.collect(Collectors.toUnmodifiableSet()));
 		state.put("target", target());
 		state.put("path", route);
 		state.put("enabled", isRoutingEnabled());
 		state.put("readFailed", readFailed);
-		state.put("status", target == null ? "IDLE" : !isRoutingEnabled() ? "DISABLED"
-			: routeStatus == null ? "CALCULATING" : routeStatus.name());
+		state.put("status", !isRoutingEnabled() ? "DISABLED" : status);
 		return Collections.unmodifiableMap(state);
 	}
 
-	public void startUp()
+	/** Poll the external destination; only ask for coordinates when its route needs refreshing. */
+	public void update(WorldPoint player)
 	{
-		planner.get().startUp();
-	}
-
-	public void shutDown()
-	{
-		clear();
-		planner.get().shutdown();
-	}
-
-	/** External mode never silently falls back to Better Map's own settings. */
-	public boolean isRoutingEnabled()
-	{
-		return mapConfig.useExternalShortestPathSettings()
-			? isAvailable() : mapConfig.enableShortestPath();
-	}
-
-	public boolean isAvailable()
-	{
-		if (pluginManager == null)
-		{
-			return false;
-		}
-		try
-		{
-			for (Plugin plugin : pluginManager.getPlugins())
-			{
-				if (plugin.getClass().getName().equals(PLUGIN_CLASS) && pluginManager.isPluginEnabled(plugin))
-				{
-					return true;
-				}
-			}
-		}
-		catch (RuntimeException | LinkageError e)
-		{
-			log.debug("[BetterMap:route] Could not check Shortest Path availability", e);
-		}
-		return false;
-	}
-
-	/** Calculate Better Map's route and hand the target to Shortest Path when enabled. */
-	public boolean routeTo(WorldPoint destination)
-	{
-		if (destination == null || !isRoutingEnabled())
-		{
-			return false;
-		}
-		setTargets(Collections.singleton(WorldPointUtil.packWorldPoint(destination)));
-		postTargetIfAvailable(destination);
-		return true;
-	}
-
-	/** Mirror requests from helper plugins without sending them back to Shortest Path. */
-	public void onPluginMessage(PluginMessage event)
-	{
-		if (!"shortestpath".equals(event.getNamespace()) || !isRoutingEnabled()
-			|| Boolean.TRUE.equals(event.getData().get(MESSAGE_SOURCE)))
-		{
-			return;
-		}
-		if ("clear".equals(event.getName()))
+		tick++;
+		if (!isRoutingEnabled())
 		{
 			clear();
 			return;
 		}
-		if (!"path".equals(event.getName()))
+		if (tick - pollTick >= 5)
 		{
-			return;
+			pollTick = tick;
+			targetRequest = session + "-target-" + tick;
+			eventBus.post(new PluginMessage("shortestpath", "getTarget", Map.of("id", targetRequest)));
 		}
-		Object value = event.getData().get("target");
-		Set<?> requested = value instanceof Set<?> ? (Set<?>) value : Collections.singleton(value);
-		Set<Integer> destinations = new LinkedHashSet<>();
-		for (Object point : requested)
+		if (pathRequest != null && tick - queryTick >= 50)
 		{
-			int packed = point instanceof WorldPoint ? WorldPointUtil.packWorldPoint((WorldPoint) point)
-				: point instanceof Integer ? (Integer) point : WorldPointUtil.UNDEFINED;
-			if (packed == WorldPointUtil.UNDEFINED)
-			{
-				return;
-			}
-			destinations.add(packed);
+			pathRequest = null;
+			readFailed = true;
+			status = "FAILED";
 		}
-		if (!destinations.isEmpty())
+		if (player != null && hasTarget() && pathRequest == null && tick - queryTick >= 5
+			&& (refresh || anchor == null || player.getPlane() != anchor.getPlane()
+				|| player.distanceTo2D(anchor) >= 5))
 		{
-			setTargets(destinations);
+			refresh = false;
+			anchor = player;
+			queryTick = tick;
+			pathRequest = session + "-path-" + (++revision);
+			status = "CALCULATING";
+			eventBus.post(new PluginMessage("shortestpath", "query",
+				Map.of("id", pathRequest, "start", player, "target", targets)));
 		}
 	}
 
-	private void setTargets(Set<Integer> destinations)
+	public boolean routeTo(WorldPoint destination)
 	{
-		WorldPoint destination = WorldPointUtil.unpackWorldPoint(destinations.iterator().next());
-		synchronized (this)
-		{
-			revision++;
-			target = destination;
-			routeStatus = null;
-			targets = Collections.unmodifiableSet(new LinkedHashSet<>(destinations));
-			route = Collections.emptyList();
-			repathAnchor = player;
-		}
-		readFailed = false;
-		planner.get().computeRoute(destination);
+		if (destination == null || !isRoutingEnabled()) return false;
+		clear();
+		targets = Collections.singleton(destination);
+		refresh = true;
+		status = "CALCULATING";
+		pollTick = queryTick = tick;
+		eventBus.post(new PluginMessage("shortestpath", "path", Map.of("target", destination)));
+		return true;
 	}
 
-	public synchronized Set<Integer> getRouteTargets(WorldPoint expectedTarget)
-	{
-		return expectedTarget != null && expectedTarget.equals(target) ? targets : Collections.emptySet();
-	}
-
-	/** Recalculate with the active plugin's current routing settings. */
-	public void refreshRoute()
-	{
-		WorldPoint destination = target;
-		if (destination == null)
-		{
-			return;
-		}
-		synchronized (this)
-		{
-			revision++;
-			route = Collections.emptyList();
-			routeStatus = null;
-			repathAnchor = player;
-			readFailed = false;
-		}
-		if (isRoutingEnabled())
-		{
-			planner.get().computeRoute(destination);
-		}
-		else
-		{
-			planner.get().cancel();
-		}
-	}
-
-	public void repostTarget()
-	{
-		WorldPoint destination = target;
-		if (destination != null && isRoutingEnabled())
-		{
-			postTargetIfAvailable(destination);
-		}
-	}
-
-	public boolean hasTarget()
-	{
-		return target != null;
-	}
-
-	/** Cancel both the local calculation and the route shared with Shortest Path. */
 	public void cancelRoute()
 	{
 		clear();
-		if (isAvailable())
-		{
-			try
-			{
-				eventBus.post(new PluginMessage("shortestpath", "clear", Collections.singletonMap(MESSAGE_SOURCE, true)));
-			}
-			catch (RuntimeException | LinkageError e)
-			{
-				log.debug("[BetterMap:route] Could not cancel route in Shortest Path", e);
-			}
-		}
+		if (isAvailable()) eventBus.post(new PluginMessage("shortestpath", "clear"));
 	}
 
-	private void postTargetIfAvailable(WorldPoint destination)
+	public void refreshRoute()
 	{
-		if (isAvailable())
-		{
-			try
-			{
-				Map<String, Object> data = new HashMap<>();
-				data.put("target", targets.size() > 1 ? targets : destination);
-				data.put(MESSAGE_SOURCE, true);
-				eventBus.post(new PluginMessage("shortestpath", "path", data));
-			}
-			catch (RuntimeException | LinkageError e)
-			{
-				log.debug("[BetterMap:route] Could not request route from Shortest Path", e);
-			}
-		}
+		pathRequest = null;
+		refresh = true;
+		pollTick = tick - 5;
+		if (!isRoutingEnabled()) clear();
 	}
 
-	public synchronized long getRouteRevision(WorldPoint expectedTarget)
+	public void onPluginMessage(PluginMessage event)
 	{
-		return expectedTarget != null && expectedTarget.equals(target) ? revision : -1;
-	}
-
-	public synchronized void publishRouteIfCurrent(long expectedRevision, int[] points, RouteStatus status)
-	{
-		if (expectedRevision != revision || target == null)
+		if (!"shortestpath".equals(event.getNamespace()) || !isRoutingEnabled()) return;
+		Map<String, Object> data = event.getData();
+		if ("currentTarget".equals(event.getName()) && targetRequest != null
+			&& targetRequest.equals(data.get("id")))
 		{
-			return;
+			targetRequest = null;
+			if (!Boolean.TRUE.equals(data.get("set")))
+			{
+				clear();
+				return;
+			}
+			Object value = data.get("target");
+			if (!(value instanceof List<?>)) return;
+			Set<WorldPoint> next = new LinkedHashSet<>();
+			for (Object point : (List<?>) value)
+			{
+				if (!(point instanceof WorldPoint)) return;
+				next.add((WorldPoint) point);
+			}
+			if (next.isEmpty()) return;
+			WorldPoint start = data.get("start") instanceof WorldPoint ? (WorldPoint) data.get("start") : null;
+			if (!next.equals(targets))
+			{
+				clear();
+				targets = Collections.unmodifiableSet(next);
+				status = "CALCULATING";
+				refresh = true;
+			}
+			if (!java.util.Objects.equals(start, externalStart)) refresh = true;
+			externalStart = start;
 		}
-		routeStatus = status;
-		if (points == null || points.length == 0)
+		else if ("result".equals(event.getName()) && pathRequest != null
+			&& pathRequest.equals(data.get("id")))
 		{
-			route = Collections.emptyList();
-			readFailed = status == RouteStatus.FAILED;
-			return;
+			pathRequest = null;
+			Object value = data.get("path");
+			if (!(value instanceof List<?>))
+			{
+				readFailed = true;
+				status = "FAILED";
+				return;
+			}
+			List<?> points = (List<?>) value;
+			for (Object point : points)
+			{
+				if (!(point instanceof WorldPoint))
+				{
+					readFailed = true;
+					status = "FAILED";
+					return;
+				}
+			}
+			@SuppressWarnings("unchecked")
+			List<WorldPoint> path = (List<WorldPoint>) points;
+			route = List.copyOf(path);
+			readFailed = path.isEmpty() && !Boolean.TRUE.equals(data.get("reached"));
+			status = readFailed ? "FAILED" : Boolean.TRUE.equals(data.get("reached")) ? "READY" : "UNREACHABLE";
+			if ("CANCELLED".equals(data.get("reason"))) refresh = true;
 		}
-		List<WorldPoint> snapshot = new ArrayList<>(points.length);
-		for (int point : points)
-		{
-			snapshot.add(WorldPointUtil.unpackWorldPoint(point));
-		}
-		route = Collections.unmodifiableList(snapshot);
-		readFailed = false;
+		else if ("clear".equals(event.getName())) clear();
 	}
 
 	private void clear()
 	{
-		synchronized (this)
-		{
-			revision++;
-			target = null;
-			routeStatus = null;
-			targets = Collections.emptySet();
-			repathAnchor = null;
-			route = Collections.emptyList();
-			readFailed = false;
-		}
-		planner.get().cancel();
+		revision++;
+		targets = Collections.emptySet();
+		route = Collections.emptyList();
+		targetRequest = null;
+		pathRequest = null;
+		anchor = null;
+		externalStart = null;
+		refresh = false;
+		readFailed = false;
+		status = "IDLE";
 	}
 }

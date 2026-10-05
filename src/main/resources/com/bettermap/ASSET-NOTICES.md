@@ -11,10 +11,12 @@ Credit: OSRS Wiki contributors at https://oldschool.runescape.wiki/.
 
 - `data/monsters.json.gz`: monster records retain `wiki_url` links to individual source
   articles. Records group spawn coordinates into named map zones and include reference details.
-- `data/shops.json.gz` and `data/shop_data_complete.json`: their recorded source is
+- `data/shops.json.gz`: its recorded source is
   OSRS Wiki Category:Shops (Infobox Shop): https://oldschool.runescape.wiki/w/Category:Shops.
-  The complete dataset retains `wiki_title` source titles. Atlas assigns locations and
-  selects fields for map tooltips.
+  Atlas assigns locations and selects fields for map tooltips. The complete import snapshot,
+  including `wiki_title` source titles and five unplaced shops, is archived outside the plugin's
+  runtime resources. Its source-history copy remains available at:
+  https://github.com/n-oost/atlas-of-gielinor/blob/bb262ad5302fe635f2530c6c431690ce7b5af1f2/src/main/resources/com/bettermap/data/shop_data_complete.json
 - `data/ground_items.json.gz`: its recorded sources are OSRS Wiki ItemSpawnLine templates,
   osrsreboxed-db, and real-time prices. Atlas groups items by spawn tile. The source metadata
   does not record exact upstream revisions or the price provider.

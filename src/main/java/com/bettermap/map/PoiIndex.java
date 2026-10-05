@@ -25,6 +25,8 @@
 package com.bettermap.map;
 
 import com.bettermap.data.DungeonPoiOverrides;
+import com.bettermap.pathfinding.transport.parser.TransportRecord;
+import com.bettermap.pathfinding.transport.parser.TsvParser;
 import net.runelite.api.coords.WorldPoint;
 import com.bettermap.data.UndergroundZone;
 import java.awt.image.BufferedImage;
@@ -41,6 +43,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -75,6 +78,27 @@ public class PoiIndex
 {
 	/** How far from a cursor a point of interest can be and still be the thing being pointed at. */
 	private static final int MATCH_RADIUS = 6;
+
+	private static final Set<Long> CONSOLIDATED_TELEPORT_TILES = Set.of(
+		packedPoint(0, 1422, 2963), // POH portal (Varlamore)
+		packedPoint(0, 1648, 3665), // Elise (Varlamore Diary)
+		packedPoint(0, 2399, 5177), // TzHaar Fight Pit
+		packedPoint(0, 2400, 5982), // Hallowed Sepulchre
+		packedPoint(0, 2539, 4712), // Mage Arena Bank Lever (underground)
+		packedPoint(0, 2659, 3627), // Thorodin (Fremennik Diary)
+		packedPoint(0, 2824, 10168), // Dondakan (Between a Rock...)
+		packedPoint(0, 2892, 3465), // POH portal (Taverley)
+		packedPoint(0, 2952, 3224), // POH portal (Rimmington)
+		packedPoint(0, 2978, 3347), // Sir Rebral (Falador Diary)
+		packedPoint(0, 3090, 3956), // Mage Arena Bank Lever (surface)
+		packedPoint(0, 3096, 3227), // Twiggy O'Korn (Draynor Diary)
+		packedPoint(0, 3225, 3415), // Toby (Varrock Diary)
+		packedPoint(0, 3234, 3214), // Hatius Cosaintus (Lumbridge Diary)
+		packedPoint(0, 3239, 6077), // POH portal (Prifddinas)
+		packedPoint(0, 3465, 3478), // Carl Le-sabrè (Desert Diary)
+		packedPoint(0, 3683, 9888), // Ectofuntus Pool of Slime
+		packedPoint(1, 2869, 2982)  // Duradel (Karamja Slayer Master)
+	);
 
 	private final List<Poi> pois = new ArrayList<>();
 	/** Search-only aliases that share a rendered point with an earlier source. */
@@ -190,13 +214,14 @@ public class PoiIndex
 		// Keep bank catalogue names searchable without drawing a second icon a tile or two away.
 		readTsv(open(tileDir, "pois-banks.tsv"), existingPoints, true);
 		// Cache labels fill gaps the native icon layer misses.
+		readTsv(PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + "pois-native-labels.tsv"), existingPoints);
 		readTsv(open(tileDir, "pois-cache.tsv"), existingPoints);
 
 		// UndergroundZone owns modeled dungeon entrance coordinates. These aliases power Finder;
 		// MapMarkerRenderer draws the matching interactive layer symbol, so no second icon is added.
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (DungeonPoiOverrides.isButtonDeleted(zone, 0))
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_") || DungeonPoiOverrides.isButtonDeleted(zone, 0))
 			{
 				continue;
 			}
@@ -267,6 +292,33 @@ public class PoiIndex
 			}
 		}
 
+		loadTeleportLocations();
+		loadWorldMapSupplement();
+
+		// Group 10 distinct overlap: offset Laughing Miner pub display position
+		for (int i = 0; i < pois.size(); i++)
+		{
+			final Poi p = pois.get(i);
+			if (p.getPlane() == 0 && p.getX() == 2914 && p.getY() == 10193 && "bar".equals(p.getKey()))
+			{
+				final Poi offsetPoi = p.withDisplayPoint(new java.awt.geom.Point2D.Double(2914.5 - 0.35, 10193.5), false);
+				pois.set(i, offsetPoi);
+				final List<Poi> byKeyList = byKey.get("bar");
+				if (byKeyList != null)
+				{
+					final int idx = byKeyList.indexOf(p);
+					if (idx >= 0) byKeyList.set(idx, offsetPoi);
+				}
+				final List<Poi> chunkList = chunkMap.get(chunkKey(0, 2914 >> 6, 10193 >> 6));
+				if (chunkList != null)
+				{
+					final int idx = chunkList.indexOf(p);
+					if (idx >= 0) chunkList.set(idx, offsetPoi);
+				}
+				break;
+			}
+		}
+
 		// Decode on the loading thread; rendering only looks up prepared images.
 		for (String key : byKey.keySet())
 		{
@@ -312,6 +364,7 @@ public class PoiIndex
 		{
 			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 			{
+				if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 				for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 				{
 					final WorldPoint original = zone.getSurfacePoints().get(i);
@@ -354,6 +407,7 @@ public class PoiIndex
 	{
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 			if (zone.getName().equalsIgnoreCase(poi.name))
 			{
 				return true;
@@ -376,6 +430,7 @@ public class PoiIndex
 		int bestDistance = MATCH_RADIUS * MATCH_RADIUS + 1;
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 			{
 				final WorldPoint entrance = DungeonPoiOverrides.getButtonPoint(zone, i);
@@ -548,6 +603,80 @@ public class PoiIndex
 		return ordered;
 	}
 
+	/** Loads the bundled teleport catalogue on the POI loading thread, grouped by landing tile. */
+	private void loadTeleportLocations()
+	{
+		final Map<String, Set<String>> locations = new LinkedHashMap<>();
+		final String[] sources = {
+			"teleportation_spells", "teleportation_spells_home", "teleportation_items",
+			"teleportation_minigames", "teleportation_portals", "teleportation_portals_poh",
+			"teleportation_levers", "teleportation_boxes", "wilderness_obelisks"
+		};
+		for (String source : sources)
+		{
+			try (InputStream stream = PoiIndex.class.getResourceAsStream(
+				"/com/bettermap/pathfinding/transports/" + source + ".tsv"))
+			{
+				if (stream == null) continue;
+				final String contents = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+				for (TransportRecord record : new TsvParser().parse(contents))
+				{
+					String label = record.getDisplayInfo();
+					if (label == null || label.isBlank())
+					{
+						label = source.contains("obelisks") ? "Wilderness obelisk"
+							: source.contains("levers") ? "Teleport lever"
+							: source.contains("boxes") ? "Teleport box" : "Teleport portal";
+					}
+					final String destination = record.getDestination();
+					if (destination != null && !destination.isBlank())
+					{
+						locations.computeIfAbsent(destination.trim(), key -> new LinkedHashSet<>()).add(label);
+					}
+					final String origin = record.getOrigin();
+					if (origin != null && !origin.isBlank())
+					{
+						locations.computeIfAbsent(origin.trim(), key -> new LinkedHashSet<>()).add(label);
+					}
+				}
+			}
+			catch (IOException e)
+			{
+				log.debug("Unreadable teleport catalogue {}", source, e);
+			}
+		}
+		for (Map.Entry<String, Set<String>> entry : locations.entrySet())
+		{
+			final String[] point = entry.getKey().split("\\s+");
+			if (point.length != 3) continue;
+		try
+			{
+				final int x = Integer.parseInt(point[0]);
+				final int y = Integer.parseInt(point[1]);
+				final int plane = Integer.parseInt(point[2]);
+				if (x <= 0 || y <= 0 || plane < 0 || plane > 3) continue;
+				final String label = String.join(" | ", entry.getValue());
+				final long packed = packedPoint(plane, x, y);
+				if (CONSOLIDATED_TELEPORT_TILES.contains(packed))
+				{
+					addSearchPoi(new Poi(x, y, plane, "teleport", label));
+					continue;
+				}
+				if (plane == 0 && x == 2914 && y == 10193)
+				{
+					addPoi(new Poi(x, y, plane, "teleport", label)
+						.withDisplayPoint(new java.awt.geom.Point2D.Double(2914.5 + 0.35, 10193.5), false), false);
+					continue;
+				}
+				addPoi(new Poi(x, y, plane, "teleport", label), false);
+			}
+			catch (NumberFormatException e)
+			{
+				log.debug("Invalid teleport point {}", entry.getKey());
+			}
+		}
+	}
+
 	/** The icon image for a group, or null when it was not prefetched. */
 	public synchronized BufferedImage icon(String key)
 	{
@@ -558,6 +687,59 @@ public class PoiIndex
 		return icons.get(key);
 	}
 
+	private void loadWorldMapSupplement()
+	{
+		for (WorldMapSupplement.Entry entry : WorldMapSupplement.entries())
+		{
+			final Poi supplement = entry.poi();
+			if (DungeonPoiOverrides.isRawPoiDeleted(supplement.name, supplement.x, supplement.y, supplement.plane))
+			{
+				continue;
+			}
+			boolean covered = hasNearbyPoi(supplement);
+			if (!covered)
+			{
+				// Curated aliases describe the same destination even when the vanilla icon is offset.
+				final String identity = WorldMapSupplement.identity(supplement.name);
+				for (Poi alias : searchPois)
+				{
+					if (!identity.isEmpty() && WorldMapSupplement.compatible(supplement.key, alias.key)
+						&& nearby(alias, supplement, 16)
+						&& identity.equals(WorldMapSupplement.identity(alias.name)))
+					{
+						covered = true;
+						break;
+					}
+				}
+			}
+			if (!covered)
+			{
+				for (Poi existing : pois)
+				{
+					if ((WorldMapSupplement.compatible(supplement.key, existing.key)
+						|| "teleport".equals(supplement.key)
+							&& CONSOLIDATED_TELEPORT_TILES.contains(packedPoint(existing.plane, existing.x, existing.y)))
+						&& nearby(existing, supplement, 3))
+					{
+						covered = true;
+						break;
+					}
+				}
+			}
+			if (covered || isModeledDungeonInterior(supplement))
+			{
+				if (!isModeledDungeonName(supplement))
+				{
+					addSearchPoi(supplement);
+				}
+			}
+			else
+			{
+				addPoi(supplement);
+			}
+		}
+	}
+
 	private BufferedImage loadIcon(String key)
 	{
 		if (icons.containsKey(key))
@@ -566,7 +748,10 @@ public class PoiIndex
 		}
 
 		BufferedImage image = null;
-		final String iconKey = "basement".equals(key) ? "dungeon_link" : key;
+		final String iconKey = "teleport".equals(key) ? "house_portal"
+			: "runecrafting_altar".equals(key) ? "altar"
+			: "salvaging".equals(key) ? "cargo_bay"
+			: "basement".equals(key) ? "dungeon_link" : key;
 		try (InputStream in = open(tileDir, "icons/" + iconKey + ".png"))
 		{
 			if (in != null)
@@ -742,6 +927,26 @@ public class PoiIndex
 		private final int plane;
 		private final String key;
 		private final String name;
+		private java.awt.geom.Point2D displayPoint;
+		private boolean nativeLayout;
+
+		public Poi withDisplayPoint(java.awt.geom.Point2D point, boolean nativeLayout)
+		{
+			final Poi projected = new Poi(x, y, plane, key, name);
+			projected.displayPoint = point;
+			projected.nativeLayout = nativeLayout;
+			return projected;
+		}
+
+		public boolean isNativeLayout()
+		{
+			return nativeLayout;
+		}
+
+		public java.awt.geom.Point2D getDisplayPoint()
+		{
+			return displayPoint;
+		}
 
 		public Poi(int x, int y, int plane, String key, String name)
 		{

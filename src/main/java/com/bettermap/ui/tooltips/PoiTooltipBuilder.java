@@ -51,6 +51,9 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
  */
 public class PoiTooltipBuilder
 {
+	private static final Pattern SAILING_LEVEL_REQUIREMENT = Pattern.compile("(?i)^Requires Level (\\d+) Sailing$");
+	private static final Pattern MINING_LEVEL_REQUIREMENT = Pattern.compile("^Requires Level (\\d+) Mining$");
+
 	/**
 	 * Builds a tooltip card for a shop and its inventory/neighbouring shops.
 	 */
@@ -163,6 +166,20 @@ public class PoiTooltipBuilder
 		final String cat = detail != null ? detail.getCategory() : "";
 		final List<String> lines = detail != null ? detail.getLines() : Collections.emptyList();
 
+		if (title.endsWith(" (Barracuda Trials)"))
+		{
+			final String trialName = title.substring(0, title.length() - " (Barracuda Trials)".length());
+			for (String line : lines)
+			{
+				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
+				if (level.matches())
+				{
+					return trialName + " (" + level.group(1) + " Sailing)";
+				}
+			}
+			return trialName;
+		}
+
 		if ("Wyrmscraig chest".equalsIgnoreCase(poiName) || "Wyrmscraig chest".equalsIgnoreCase(title))
 		{
 			return "Bank chest";
@@ -179,7 +196,16 @@ public class PoiTooltipBuilder
 			{
 				return "Ship boarding plank";
 			}
-			return "Mooring point";
+			final String mooringName = poiName != null ? poiName : (title != null ? title : "Mooring point");
+			for (String line : lines)
+			{
+				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
+				if (level.matches())
+				{
+					return mooringName + " (" + level.group(1) + " Sailing)";
+				}
+			}
+			return mooringName;
 		}
 		if ("canoe_station".equals(key) || (title != null && title.toLowerCase().contains("canoe"))) return "Canoe station";
 		if ("hot_air_balloon".equals(key) || (title != null && title.toLowerCase().contains("balloon"))) return "Hot air balloon";
@@ -235,6 +261,17 @@ public class PoiTooltipBuilder
 		// 2. Mining sites -> minerals
 		if ("mining_site".equals(key) || (cat != null && cat.contains("Mining")) || (title != null && title.toLowerCase().contains("mine")))
 		{
+			if (title != null && lines != null)
+			{
+				for (String line : lines)
+				{
+					final Matcher requirement = MINING_LEVEL_REQUIREMENT.matcher(line.trim());
+					if (requirement.matches())
+					{
+						return title + " (" + requirement.group(1) + " Mining)";
+					}
+				}
+			}
 			if (lines != null)
 			{
 				for (String line : lines)

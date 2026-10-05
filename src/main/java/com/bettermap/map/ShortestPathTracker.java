@@ -58,6 +58,7 @@ public class ShortestPathTracker
 	private final BetterMapConfig mapConfig;
 	private volatile List<WorldPoint> route = Collections.emptyList();
 	private volatile boolean readFailed;
+	private RouteStatus routeStatus;
 	private volatile WorldPoint target;
 	private volatile Set<Integer> targets = Collections.emptySet();
 	private WorldPoint player;
@@ -138,6 +139,22 @@ public class ShortestPathTracker
 	public boolean readFailed()
 	{
 		return readFailed;
+	}
+
+	/** Consistent, immutable state for cross-plugin route consumers. WorldPoint values are global. */
+	public synchronized Map<String, Object> snapshot()
+	{
+		Map<String, Object> state = new HashMap<>();
+		state.put("revision", revision);
+		state.put("requestedTarget", target);
+		state.put("targets", targets);
+		state.put("target", target());
+		state.put("path", route);
+		state.put("enabled", isRoutingEnabled());
+		state.put("readFailed", readFailed);
+		state.put("status", target == null ? "IDLE" : !isRoutingEnabled() ? "DISABLED"
+			: routeStatus == null ? "CALCULATING" : routeStatus.name());
+		return Collections.unmodifiableMap(state);
 	}
 
 	public void startUp()
@@ -236,6 +253,7 @@ public class ShortestPathTracker
 		{
 			revision++;
 			target = destination;
+			routeStatus = null;
 			targets = Collections.unmodifiableSet(new LinkedHashSet<>(destinations));
 			route = Collections.emptyList();
 			repathAnchor = player;
@@ -261,6 +279,7 @@ public class ShortestPathTracker
 		{
 			revision++;
 			route = Collections.emptyList();
+			routeStatus = null;
 			repathAnchor = player;
 			readFailed = false;
 		}
@@ -334,6 +353,7 @@ public class ShortestPathTracker
 		{
 			return;
 		}
+		routeStatus = status;
 		if (points == null || points.length == 0)
 		{
 			route = Collections.emptyList();
@@ -355,6 +375,7 @@ public class ShortestPathTracker
 		{
 			revision++;
 			target = null;
+			routeStatus = null;
 			targets = Collections.emptySet();
 			repathAnchor = null;
 			route = Collections.emptyList();

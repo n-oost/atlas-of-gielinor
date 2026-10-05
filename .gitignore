@@ -1,15 +1,32 @@
-.gradle
-build
+# Gradle
+.gradle/
+build/
+
+# IDE / Editor files
 .idea/
-bin
-bin/
+*.iml
 .project
 .settings/
 .classpath
 nbactions.xml
 nb-configuration.xml
 nbproject/
-*.class
-BUGS.md
 out/
+.vscode/
 
+# Build artifacts
+bin/
+*.class
+
+# Agent files & local instructions
+.agents/
+.gemini/
+AGENTS.md
+agent.md
+
+# Documentation / Scratch
+BUGS.md
+
+# OS files
+.DS_Store
+Thumbs.db

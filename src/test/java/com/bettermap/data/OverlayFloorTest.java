@@ -324,11 +324,11 @@ public class OverlayFloorTest
 		assertEquals(1, cam);
 		assertEquals(1, ney);
 		assertEquals(2, haunted);
-		assertEquals(2, keld);
+		assertEquals(3, keld);
 		assertEquals(2, pw);
-		assertEquals(2, sish);
+		assertEquals(3, sish);
 		assertEquals(1, jorm);
-		assertEquals(3, ghor);
+		assertEquals(4, ghor);
 		assertEquals(1, tonali);
 		assertEquals(1, dragon);
 	}

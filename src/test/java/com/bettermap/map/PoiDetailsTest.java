@@ -37,6 +37,45 @@ import org.junit.Test;
 public class PoiDetailsTest
 {
 	@Test
+	public void mooringMarkerKeepsItsIdentityWhenAnActivitySharesItsExactTile()
+	{
+		final PoiIndex.Poi marker = new PoiIndex.Poi(
+			2998, 2288, 0, "mooring_point", "Mooring point - The Onyx Crest");
+		final PoiDetails.Detail detail = PoiDetails.getDetail(marker, marker.getX(), marker.getY(), marker.getPlane());
+
+		assertNotNull(detail);
+		assertEquals(marker.getName(), detail.getTitle());
+		assertEquals("Travel", detail.getCategory());
+		assertTrue(detail.getLines().stream().anyMatch(line -> line.contains("Mooring point")));
+		assertFalse(detail.getLines().stream().anyMatch(line -> line.contains("Mining Site")));
+	}
+
+	@Test
+	public void summerShoreMooringIncludesItsQuestAccessCondition()
+	{
+		final PoiIndex.Poi marker = new PoiIndex.Poi(
+			3175, 2367, 0, "mooring_point", "Mooring point - The Summer Shore");
+		final PoiDetails.Detail detail = PoiDetails.getDetail(marker, marker.getX(), marker.getY(), marker.getPlane());
+
+		assertTrue(detail.getLines().contains("Requires Level 45 Sailing"));
+		assertTrue(detail.getLines().contains("Requires completion of Troubled Tortugans"));
+	}
+
+	@Test
+	public void shiloVillageMineUsesMiningDetailsAtItsExactMarkerTile()
+	{
+		final PoiIndex.Poi marker = new PoiIndex.Poi(2823, 3001, 0, "mining_site", "Mining site");
+		final PoiDetails.Detail detail = PoiDetails.getDetail(marker, marker.getX(), marker.getY(), marker.getPlane());
+
+		assertNotNull(detail);
+		assertEquals("Shilo Village mine", detail.getTitle());
+		assertEquals("Skilling • Mining", detail.getCategory());
+		assertTrue(detail.getLines().contains("Requires Level 40 Mining"));
+		assertTrue(detail.getLines().contains("Requires completion of Shilo Village"));
+		assertFalse(detail.getLines().stream().anyMatch(line -> line.contains("Dungeon")));
+	}
+
+	@Test
 	public void basementsUseTheirOwnPoiKey()
 	{
 		for (PoiIndex.Poi poi : PoiDetails.getAllPois())

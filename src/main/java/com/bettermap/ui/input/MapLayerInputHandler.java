@@ -587,6 +587,7 @@ public class MapLayerInputHandler
 
 	public boolean clickedLayerSymbol(Point point)
 	{
+		if (camera.isTravelViewActive()) return false;
 		if (camera.getSelectedTravelNode() != null && pluginProvider != null && pluginProvider.get() != null
 			&& pluginProvider.get().getConfig().showTravelRoutes())
 		{
@@ -598,20 +599,19 @@ public class MapLayerInputHandler
 			{
 				if (target.isRegion())
 				{
-					if (camera.getActiveOverlayCluster() == target.getCluster())
-					{
-						camera.setActiveOverlayCluster(null);
-						camera.setHoveredOverlayCluster(null);
-					}
-					else
-					{
-						camera.setActiveOverlayCluster(target.getCluster());
-					}
+					camera.setActiveOverlayCluster(target.getCluster());
 					return true;
 				}
 				if (target.isSurfaceToUnderground())
 				{
-					camera.setUndergroundMode(target.getZone(), target.getSurfacePoint());
+					if (target.isFloor())
+					{
+						camera.setUndergroundMode(target.getZone(), target.getSurfacePoint());
+					}
+					else
+					{
+						camera.toggleUndergroundZone(target.getZone(), target.getSurfacePoint());
+					}
 					if (target.isFloor())
 					{
 						camera.setActiveFloor(target.getFloor());
@@ -686,16 +686,16 @@ public class MapLayerInputHandler
 			return true;
 		}
 
-		// Button 2: "Lower" (nearest underground cluster)
+		if (buttons.length > 3 && buttons[3] != null && buttons[3].contains(point))
+		{
+			camera.enterTravelView();
+			return true;
+		}
+
+		// Button 2: Lower browsing, including an empty selection.
 		if (buttons[2] != null && buttons[2].contains(point))
 		{
-			final OverlayCluster nearest = OverlayCluster.nearestCluster(camera.getCenterX(), camera.getCenterY());
-			if (nearest != null)
-			{
-				camera.clearUndergroundMode();
-				camera.setActiveOverlayCluster(nearest);
-				log.debug("[BetterMap] floor button Lower clicked -> activated cluster {}", nearest.name);
-			}
+			camera.enterLowerView();
 			return true;
 		}
 
@@ -853,7 +853,7 @@ public class MapLayerInputHandler
 	public void updateHoveredTravelNode(Point point)
 	{
 		final BetterMapPlugin plugin = pluginProvider != null ? pluginProvider.get() : null;
-		if (plugin != null && camera.getZoom() < plugin.getConfig().travelStationMinZoom())
+		if (!camera.isTravelViewActive() && plugin != null && plugin.getConfig() != null && camera.getZoom() < plugin.getConfig().travelStationMinZoom())
 		{
 			camera.setHoveredTravelNode(null);
 			return;
@@ -871,13 +871,13 @@ public class MapLayerInputHandler
 			return;
 		}
 
-		final int worldX = (int) Math.floor(camera.worldX(point.x, view));
-		final int worldY = (int) Math.floor(camera.worldY(point.y, view));
-		final int radius = (int) Math.max(3, Math.ceil(12 / Math.max(0.4, camera.getZoom())));
+		final double worldX = camera.worldX(point.x, view);
+		final double worldY = camera.worldY(point.y, view);
+		final double radius = Math.max(3.0, 12.0 / Math.max(0.4, camera.getZoom()));
 
-		final TravelData.TravelNode node = InstanceMaps.firstHit(worldX, worldY,
+		final TravelData.TravelNode node = InstanceMaps.firstHit((int) Math.floor(worldX), (int) Math.floor(worldY),
 			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(),
-			(x, y) -> TravelData.findNodeNear(x, y, camera.getPlane(), radius));
+			(x, y) -> TravelData.findNodeNear(worldX, worldY, camera.getPlane(), radius));
 		camera.setHoveredTravelNode(node);
 	}
 

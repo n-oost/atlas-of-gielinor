@@ -158,13 +158,13 @@ public class MapTooltipRenderer
 	private <T> T hit(int worldX, int worldY, BiFunction<Integer, Integer, T> lookup)
 	{
 		return InstanceMaps.firstHit(worldX, worldY,
-			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(), lookup);
+			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(),
+			(x, y) -> layerAllows(x, y) ? lookup.apply(x, y) : null);
 	}
 
 	private boolean layerAllows(int worldX, int worldY)
 	{
-		return InstanceMaps.inFocusedLayer(worldX, worldY,
-			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused());
+		return com.bettermap.ui.markers.ViewWindow.isDrawable(camera, worldX, worldY);
 	}
 
 	/**
@@ -257,8 +257,8 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		final boolean travelFocused = config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom()
-			&& camera.getSelectedTravelNode() != null;
+		final boolean travelFocused = camera.isTravelViewActive() || (config.showTravelRoutes()
+			&& camera.getZoom() >= config.travelStationMinZoom() && camera.getSelectedTravelNode() != null);
 		if (travelFocused && camera.getHoveredTravelNode() != null)
 		{
 			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(camera.getHoveredTravelNode());
@@ -286,6 +286,14 @@ public class MapTooltipRenderer
 		final PoiIndex.Poi drawnPoi = markerRenderer != null ? markerRenderer.visiblePoiIconAt(cursor) : null;
 		if (drawnPoi != null)
 		{
+			if (camera.isTravelViewActive() && "teleport".equals(drawnPoi.getKey()))
+			{
+				final TooltipCard card = new TooltipCard("Teleport destination", poiIndex.icon("teleport"));
+				for (String name : drawnPoi.getName().split(" \\| ")) card.addLine(name);
+				card.addLine("Requires the corresponding spell, item or unlock.");
+				drawCard(graphics, bounds, cursor, card);
+				return;
+			}
 			if (shopIndex != null && PoiCategory.of(drawnPoi.getKey()) == PoiCategory.SHOPS)
 			{
 				final ShopIndex.Shop shop = shopIndex.nearest(drawnPoi.getX(), drawnPoi.getY(), plane, 3);
@@ -316,8 +324,25 @@ public class MapTooltipRenderer
 			}
 		}
 
+		final ShopIndex.Shop drawnShop = markerRenderer != null ? markerRenderer.visibleShopIconAt(cursor) : null;
+		if (drawnShop != null && shopIndex != null)
+		{
+			final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
+			final TooltipCard shopCard = poiTooltipBuilder.buildShopCard(drawnShop, shopIndex.othersNear(drawnShop, 6, 2), poiIndex, findQuery);
+			if (shopCard != null)
+			{
+				if (!compact)
+				{
+					shopCard.addLine(drawnShop.getX() + ", " + drawnShop.getY() + " (Floor " + plane + ")");
+				}
+				drawCard(graphics, bounds, cursor, shopCard);
+				return;
+			}
+		}
+
 		if (travelFocused)
 		{
+			if (camera.isTravelViewActive()) drawBoatCard(graphics, bounds, probe);
 			return;
 		}
 
@@ -822,7 +847,7 @@ public class MapTooltipRenderer
 
 	private PlayerBoat boatNear(int worldX, int worldY, int plane)
 	{
-		if (!config.showBoatLocations() || boatTracker == null)
+		if ((!camera.isTravelViewActive() && !config.showBoatLocations()) || boatTracker == null)
 		{
 			return null;
 		}
@@ -844,7 +869,7 @@ public class MapTooltipRenderer
 
 	private SailingPort portNear(int worldX, int worldY, int plane)
 	{
-		if (!config.showSailingPorts())
+		if (!camera.isTravelViewActive() && !config.showSailingPorts())
 		{
 			return null;
 		}

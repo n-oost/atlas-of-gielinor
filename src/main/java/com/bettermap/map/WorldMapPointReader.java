@@ -46,6 +46,10 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
  *
  * <p>Callers within one overlay frame share a single snapshot via {@link #beginPass()} — the map
  * draw and tooltip used to each walk {@code removeIf} independently (~2× per frame).
+ *
+ * <p>Points owned by RuneLite's World Map plugin are omitted from Better Map's snapshot. Better
+ * Map supplies its own POIs and details; other plugins' markers remain available. The manager
+ * itself is unchanged, so RuneLite's native map can still use its registered points.
  */
 @Singleton
 public class WorldMapPointReader
@@ -75,7 +79,11 @@ public class WorldMapPointReader
 		scratch.clear();
 		manager.removeIf(point ->
 		{
-			scratch.add(point);
+			// MapPoint is package-private, so identify its owning package without importing it.
+			if (!point.getClass().getName().startsWith("net.runelite.client.plugins.worldmap."))
+			{
+				scratch.add(point);
+			}
 			return false;
 		});
 		snapshot = scratch;

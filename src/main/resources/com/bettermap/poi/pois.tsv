@@ -369,7 +369,7 @@
 1401	2927	0	bank	Bank
 1478	2927	0	dungeon_link	Dungeon with map link
 1734	2929	0	altar	Altar
-3034	2929	0	sea_current	Sea current
+3034	2929	0	minigame	The Tempor Tantrum (Barracuda Trials)
 1650	2930	0	agility_training	Agility training
 1430	2933	0	water_source	Water source
 1672	2933	0	transportation	Transportation
@@ -534,7 +534,7 @@
 3097	3025	0	bank_tutor	Bank Tutor
 2575	3028	0	dungeon	Dungeon
 3108	3028	0	ironman_tutor	Ironman Tutor
-2439	3030	0	sea_current	Sea current
+2439	3030	0	minigame	The Jubbly Jive (Barracuda Trials)
 2546	3032	0	agility_short-cut	Agility short-cut
 1329	3033	0	rare_trees	Rare trees
 1554	3033	0	quest_start	At First Light
@@ -1744,7 +1744,7 @@
 1780	3457	0	transportation	Transportation
 3227	3457	0	farming_patch	Farming patch
 3237	3458	0	dungeon_link	Dungeon with map link
-2253	3459	0	sea_current	Sea current
+2253	3459	0	minigame	The Gwenith Glide (Barracuda Trials)
 2466	3459	0	task_master	Task Master
 2479	3459	0	transportation	Transportation
 2694	3460	0	altar	Altar

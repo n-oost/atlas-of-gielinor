@@ -173,11 +173,28 @@ public final class OverlayCluster
 				final List<UndergroundZone> members = new ArrayList<>();
 				for (String raw : f[6].split(","))
 				{
-					final UndergroundZone zone = UndergroundZone.byId(raw.trim());
+					UndergroundZone zone = UndergroundZone.byId(raw.trim());
 					if (zone != null)
 					{
-						members.add(zone);
+						if (zone.getId().startsWith("native_"))
+						{
+							final int sep = zone.getId().indexOf("__");
+							final String candidate = sep < 0 ? zone.getId().substring(7) : zone.getId().substring(sep + 2);
+							final UndergroundZone authored = UndergroundZone.byId(candidate);
+							if (authored != null && !authored.getId().startsWith("native_"))
+							{
+								zone = authored;
+							}
+						}
+						if (!members.contains(zone))
+						{
+							members.add(zone);
+						}
 					}
+				}
+				if (members.size() > 1)
+				{
+					members.removeIf(z -> z.getId().startsWith("native_") && !z.getId().contains("__"));
 				}
 				if (members.isEmpty())
 				{
@@ -230,7 +247,14 @@ public final class OverlayCluster
 
 	private static List<OverlayCluster> loadResource()
 	{
-		final InputStream in = OverlayCluster.class.getResourceAsStream(RESOURCE);
+		final List<OverlayCluster> clusters = new ArrayList<>(loadResource(RESOURCE));
+		clusters.addAll(loadResource("/com/bettermap/dungeons/native-overlays.tsv"));
+		return Collections.unmodifiableList(clusters);
+	}
+
+	private static List<OverlayCluster> loadResource(String resource)
+	{
+		final InputStream in = OverlayCluster.class.getResourceAsStream(resource);
 		if (in == null)
 		{
 			return Collections.emptyList();

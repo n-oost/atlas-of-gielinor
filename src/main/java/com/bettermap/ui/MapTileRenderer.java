@@ -127,7 +127,13 @@ class MapTileRenderer
 		final boolean hoverPreview = config.undergroundHoverPreview() && hoveredZone != null;
 		final boolean clusterPreview = config.undergroundHoverPreview() && camera.isClusterPreview();
 
-		if (activeUnderground != null)
+		if (camera.isTravelViewActive())
+		{
+			drawSurfaceBackdrop(graphics, bounds, tileZoom,
+				config.undergroundLayerSurfaceOpacity() / 100f,
+				config.undergroundLayerSurfaceBlur());
+		}
+		else if (camera.isUndergroundModeActive())
 		{
 			// Clicked: dungeon tiles composited onto the surface entrance, solid, with the
 			// overworld pushed back by the dim/blur settings.
@@ -136,7 +142,7 @@ class MapTileRenderer
 			final boolean keyVoid = config.undergroundTransparentVoid() || tuning;
 			final float opacity = tuning ? 0.6f : config.undergroundLayerSurfaceOpacity() / 100f;
 			final int blur = tuning ? 2 : config.undergroundLayerSurfaceBlur();
-			drawUndergroundLayer(graphics, bounds, Collections.singletonList(activeUnderground),
+			drawUndergroundLayer(graphics, bounds, camera.previewUndergroundZones(),
 				tileZoom, keyVoid, opacity, blur);
 		}
 		else if (camera.isViewingPlayerInteriorFromSurface()
@@ -217,6 +223,7 @@ class MapTileRenderer
 			{
 				continue;
 			}
+			if (zone.getId().startsWith("native_")) continue;
 
 			final int ox = zone.getDeltaX() + nudgeX;
 			final int oy = zone.getDeltaY() + nudgeY;
@@ -333,7 +340,8 @@ class MapTileRenderer
 
 		for (DungeonPiece piece : pieces)
 		{
-			if ((multiPlane && piece.plane != planeFilter) || (floorLayer != null && piece.layer != floorLayer))
+			if (camera.isUndergroundModeActive() ? !camera.isDungeonPieceVisible(zone, piece)
+				: (multiPlane && piece.plane != planeFilter) || (floorLayer != null && piece.layer != floorLayer))
 			{
 				continue;
 			}

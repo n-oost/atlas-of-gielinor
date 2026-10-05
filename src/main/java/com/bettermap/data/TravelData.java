@@ -136,13 +136,33 @@ public final class TravelData
 		private final WorldPoint location;
 		private final TravelType type;
 		private final List<TravelDestination> destinations;
+		private final double displayOffsetX;
+		private final double displayOffsetY;
 
-		public TravelNode(String name, WorldPoint location, TravelType type, List<TravelDestination> destinations)
+		public TravelNode(String name, WorldPoint location, TravelType type, List<TravelDestination> destinations,
+			double displayOffsetX, double displayOffsetY)
 		{
 			this.name = name;
 			this.location = location;
 			this.type = type;
 			this.destinations = Collections.unmodifiableList(new ArrayList<>(destinations));
+			this.displayOffsetX = displayOffsetX;
+			this.displayOffsetY = displayOffsetY;
+		}
+
+		public TravelNode(String name, WorldPoint location, TravelType type, List<TravelDestination> destinations)
+		{
+			this(name, location, type, destinations, 0.0, 0.0);
+		}
+
+		public double getDisplayOffsetX()
+		{
+			return displayOffsetX;
+		}
+
+		public double getDisplayOffsetY()
+		{
+			return displayOffsetY;
 		}
 
 		public String getName()
@@ -490,7 +510,7 @@ public final class TravelData
 			new TravelDestination("Sunset Coast (Varlamore)", sunsetCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Aldarin (Varlamore)", aldarinCharter, "3,200 gp", "Children of the Sun"),
 			new TravelDestination("Land's End (Kourend)", landsEndCharter, "500 gp")
-		)));
+		), -0.35, 0.0));
 
 		// Land's End Charter (Kourend)
 		nodes.add(new TravelNode("Land's End Charter", landsEndCharter, TravelType.CHARTER_SHIP, List.of(
@@ -578,7 +598,7 @@ public final class TravelData
 		nodes.add(new TravelNode("Veos's Ship (Port Piscarilius)", piscPort, TravelType.FERRY, List.of(
 			new TravelDestination("Port Sarim", psVeos, "Free"),
 			new TravelDestination("Land's End (Kourend)", landsEnd, "Free")
-		)));
+		), 0.35, 0.0));
 
 		// Ardougne ⇄ Brimhaven Customs
 		nodes.add(new TravelNode("Ardougne Harbor Customs", ardCustoms, TravelType.FERRY, List.of(
@@ -1297,10 +1317,10 @@ public final class TravelData
 	/**
 	 * Finds the nearest travel node to a given world coordinate within maxRadius tiles.
 	 */
-	public static TravelNode findNodeNear(int worldX, int worldY, int plane, int maxRadius)
+	public static TravelNode findNodeNear(double worldX, double worldY, int plane, double maxRadius)
 	{
 		TravelNode best = null;
-		int bestDistSq = maxRadius * maxRadius;
+		double bestDistSq = maxRadius * maxRadius;
 
 		for (TravelNode node : ALL_NODES)
 		{
@@ -1309,13 +1329,15 @@ public final class TravelData
 				continue;
 			}
 
-			final int dx = node.getLocation().getX() - worldX;
-			final int dy = node.getLocation().getY() - worldY;
+			final double nx = node.getLocation().getX() + 0.5 + node.getDisplayOffsetX();
+			final double ny = node.getLocation().getY() + 0.5 + node.getDisplayOffsetY();
+			final double dx = nx - worldX;
+			final double dy = ny - worldY;
 			if (Math.abs(dx) > maxRadius || Math.abs(dy) > maxRadius)
 			{
 				continue;
 			}
-			final int distSq = dx * dx + dy * dy;
+			final double distSq = dx * dx + dy * dy;
 
 			if (distSq <= bestDistSq)
 			{
@@ -1325,5 +1347,10 @@ public final class TravelData
 		}
 
 		return best;
+	}
+
+	public static TravelNode findNodeNear(int worldX, int worldY, int plane, int maxRadius)
+	{
+		return findNodeNear(worldX + 0.5, worldY + 0.5, plane, (double) maxRadius);
 	}
 }

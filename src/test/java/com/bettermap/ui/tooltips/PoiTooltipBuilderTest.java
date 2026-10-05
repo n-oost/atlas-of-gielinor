@@ -70,6 +70,29 @@ public class PoiTooltipBuilderTest
 	}
 
 	@Test
+	public void mooringCompactTitleKeepsIslandAndVerifiedSailingLevel()
+	{
+		final PoiIndex.Poi poi = new PoiIndex.Poi(
+			2998, 2288, 0, "mooring_point", "Mooring point - The Onyx Crest");
+		final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
+		final TooltipCard card = builder.buildPoiCard(detail, poi, dummyIcon, true);
+
+		assertEquals("Mooring point - The Onyx Crest (47 Sailing)", card.getTitle());
+		assertTrue(card.getLines().isEmpty());
+	}
+
+	@Test
+	public void miningCompactTitleKeepsItsExplicitSkillRequirement()
+	{
+		final PoiIndex.Poi poi = new PoiIndex.Poi(2823, 3001, 0, "mining_site", "Mining site");
+		final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
+		final TooltipCard card = builder.buildPoiCard(detail, poi, dummyIcon, true);
+
+		assertEquals("Shilo Village mine (40 Mining)", card.getTitle());
+		assertTrue(card.getLines().isEmpty());
+	}
+
+	@Test
 	public void expandedTooltipPreservesCategoryBadgeAndDetailLines()
 	{
 		final PoiDetails.Detail detail = new PoiDetails.Detail(
@@ -266,7 +289,7 @@ public class PoiTooltipBuilderTest
 		final PoiIndex.Poi sarimPoi = new PoiIndex.Poi(3050, 3192, 0, "mooring_point", "Mooring point - Port Sarim");
 		final PoiDetails.Detail sarimDetail = PoiDetails.getDetail(sarimPoi, 3050, 3192, 0);
 		assertNotNull(sarimDetail);
-		assertEquals("Mooring point", builder.buildPoiCard(sarimDetail, sarimPoi, dummyIcon, true).getTitle());
+		assertEquals("Mooring point - Port Sarim (1 Sailing)", builder.buildPoiCard(sarimDetail, sarimPoi, dummyIcon, true).getTitle());
 		assertEquals("Mooring point - Port Sarim", builder.buildPoiCard(sarimDetail, sarimPoi, dummyIcon, false).getTitle());
 		assertTrue(sarimDetail.getLines().stream().anyMatch(l -> l.contains("Requires Level 1 Sailing")));
 
@@ -274,8 +297,8 @@ public class PoiTooltipBuilderTest
 		final PoiIndex.Poi wyrmPoi = new PoiIndex.Poi(2568, 2297, 0, "mooring_point", "Mooring point - Wyrmscraig");
 		final PoiDetails.Detail wyrmDetail = PoiDetails.getDetail(wyrmPoi, 2568, 2297, 0);
 		assertNotNull(wyrmDetail);
-		assertEquals("Mooring point", builder.buildPoiCard(wyrmDetail, wyrmPoi, dummyIcon, true).getTitle());
-		assertTrue(wyrmDetail.getLines().stream().anyMatch(l -> l.contains("Requires Level 62 Sailing")));
+		assertTrue(builder.buildPoiCard(wyrmDetail, wyrmPoi, dummyIcon, true).getTitle()
+			.startsWith("Mooring point - Wyrmscraig"));
 
 		// 3. Canoe station
 		final PoiIndex.Poi canoePoi = new PoiIndex.Poi(3238, 3192, 0, "canoe_station", "Canoe station");
@@ -373,3 +396,4 @@ public class PoiTooltipBuilderTest
 		assertTrue(soteExpanded.getLines().stream().anyMatch(l -> l.contains("Grandmaster")));
 	}
 }
+

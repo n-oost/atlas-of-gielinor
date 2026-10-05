@@ -197,7 +197,7 @@ public class RouteMarkerRenderer
 	/** Small coloured pins at every travel station so routes are discoverable before hover. */
 	public void drawTravelStations(Graphics2D graphics, Rectangle bounds)
 	{
-		if (!config.showTravelRoutes() || camera.getZoom() < config.travelStationMinZoom())
+		if (!camera.isTravelViewActive() && (!config.showTravelRoutes() || camera.getZoom() < config.travelStationMinZoom()))
 		{
 			return;
 		}
@@ -222,8 +222,10 @@ public class RouteMarkerRenderer
 				continue;
 			}
 
-			final int x = (int) camera.screenX(mx + 0.5, my + 0.5, bounds);
-			final int y = (int) camera.screenY(mx + 0.5, my + 0.5, bounds);
+			final double sx = mx + 0.5 + node.getDisplayOffsetX();
+			final double sy = my + 0.5 + node.getDisplayOffsetY();
+			final int x = (int) camera.screenX(sx, sy, bounds);
+			final int y = (int) camera.screenY(sx, sy, bounds);
 			if (!bounds.contains(x, y))
 			{
 				continue;
@@ -249,8 +251,8 @@ public class RouteMarkerRenderer
 	{
 		final TravelData.TravelNode node = camera.getSelectedTravelNode() != null
 			? camera.getSelectedTravelNode() : camera.getHoveredTravelNode();
-		if (!config.showTravelRoutes() || node == null
-			|| camera.getZoom() < config.travelStationMinZoom())
+		if (node == null || (!camera.isTravelViewActive()
+			&& (!config.showTravelRoutes() || camera.getZoom() < config.travelStationMinZoom())))
 		{
 			return;
 		}
@@ -267,8 +269,8 @@ public class RouteMarkerRenderer
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		final WorldPoint originLoc = node.getLocation();
-		final double ox = camera.screenX(originLoc.getX() + 0.5, originLoc.getY() + 0.5, bounds);
-		final double oy = camera.screenY(originLoc.getX() + 0.5, originLoc.getY() + 0.5, bounds);
+		final double ox = camera.screenX(originLoc.getX() + 0.5 + node.getDisplayOffsetX(), originLoc.getY() + 0.5 + node.getDisplayOffsetY(), bounds);
+		final double oy = camera.screenY(originLoc.getX() + 0.5 + node.getDisplayOffsetX(), originLoc.getY() + 0.5 + node.getDisplayOffsetY(), bounds);
 
 		final int margin = 400;
 		final Rectangle extendedBounds = new Rectangle(

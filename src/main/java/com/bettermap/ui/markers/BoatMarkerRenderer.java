@@ -169,7 +169,7 @@ public class BoatMarkerRenderer
 	 */
 	public void drawSailingPorts(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
-		if (!config.showSailingPorts() || camera.getZoom() < config.sailingPortMinZoom())
+		if (!camera.isTravelViewActive() && (!config.showSailingPorts() || camera.getZoom() < config.sailingPortMinZoom()))
 		{
 			return;
 		}
@@ -308,8 +308,8 @@ public class BoatMarkerRenderer
 	 */
 	public void drawPlayerBoats(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
-		if (!config.showBoatLocations() || boatTracker == null
-			|| camera.getZoom() < config.playerBoatMinZoom())
+		if (boatTracker == null || (!camera.isTravelViewActive()
+			&& (!config.showBoatLocations() || camera.getZoom() < config.playerBoatMinZoom())))
 		{
 			return;
 		}

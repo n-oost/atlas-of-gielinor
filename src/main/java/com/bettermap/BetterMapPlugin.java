@@ -119,6 +119,10 @@ public class BetterMapPlugin extends Plugin
 	private ConfigManager configManager;
 
 	@Inject
+	private net.runelite.client.eventbus.EventBus eventBus;
+
+
+	@Inject
 	private OverlayManager overlayManager;
 
 	@Inject
@@ -641,11 +645,38 @@ public class BetterMapPlugin extends Plugin
 	@Subscribe
 	public void onPluginMessage(PluginMessage event)
 	{
+		if ("bettermap".equals(event.getNamespace()))
+		{
+			if ("path".equals(event.getName()) || "clear".equals(event.getName()) || "getState".equals(event.getName()))
+			{
+				clientThread.invoke(() ->
+				{
+					if ("clear".equals(event.getName()))
+					{
+						shortestPathTracker.cancelRoute();
+					}
+					else if ("path".equals(event.getName()))
+					{
+						shortestPathTracker.onPluginMessage(new PluginMessage("shortestpath", event.getName(), event.getData()));
+					}
+					java.util.Map<String, Object> response = new java.util.HashMap<>(getRouteState());
+					if (event.getData().containsKey("requestId")) response.put("requestId", event.getData().get("requestId"));
+					eventBus.post(new PluginMessage("bettermap", "state", java.util.Collections.unmodifiableMap(response)));
+				});
+			}
+			return;
+		}
 		if ("shortestpath".equals(event.getNamespace())
 			&& ("path".equals(event.getName()) || "clear".equals(event.getName())))
 		{
 			clientThread.invoke(() -> shortestPathTracker.onPluginMessage(event));
 		}
+	}
+
+	/** Read on the client thread. The returned state and route are immutable snapshots. */
+	public java.util.Map<String, Object> getRouteState()
+	{
+		return shortestPathTracker.snapshot();
 	}
 
 	@Subscribe
@@ -693,7 +724,7 @@ public class BetterMapPlugin extends Plugin
 			return;
 		}
 		UndergroundZone zone = InstanceMaps.isOverworldOverlay(point.getX(), point.getY())
-			? null : InstanceMaps.zoneForPoint(point.getX(), point.getY());
+			? null : InstanceMaps.zoneForPoint(point.getX(), point.getY(), point.getPlane());
 		// Authored pieces can extend beyond the wiki's dungeon boxes.
 		if ((zone == null || dungeonPieceIndex.pieceAt(zone.getId(), point.getX(), point.getY(), point.getPlane(), null) == null)
 			&& !InstanceMaps.isOverworldOverlay(point.getX(), point.getY())
@@ -828,8 +859,7 @@ public class BetterMapPlugin extends Plugin
 	@Nullable
 	private WorldPoint routePointAt(double displayX, double displayY)
 	{
-		final List<UndergroundZone> zones = camera.getActiveUndergroundZone() != null
-			|| camera.getActiveOverlayCluster() != null || config.undergroundHoverPreview()
+		final List<UndergroundZone> zones = camera.isUndergroundModeActive() || config.undergroundHoverPreview()
 			? camera.previewUndergroundZones() : java.util.Collections.emptyList();
 		for (int z = zones.size() - 1; z >= 0; z--)
 		{
@@ -862,7 +892,8 @@ public class BetterMapPlugin extends Plugin
 			for (int p = pieces.size() - 1; p >= 0; p--)
 			{
 				final DungeonPiece piece = pieces.get(p);
-				if ((multiPlane && piece.plane != plane) || (layer != null && piece.layer != layer))
+				if (camera.isUndergroundModeActive() ? !camera.isDungeonPieceVisible(zone, piece)
+					: (multiPlane && piece.plane != plane) || (layer != null && piece.layer != layer))
 				{
 					continue;
 				}
@@ -1293,7 +1324,7 @@ public class BetterMapPlugin extends Plugin
 					}
 					else
 					{
-						camera.setUndergroundMode(zone, target.getSurfacePoint());
+						camera.toggleUndergroundZone(zone, target.getSurfacePoint());
 					}
 				});
 			final OverlayFloor next = nextFloor(zone, target.getFloor());

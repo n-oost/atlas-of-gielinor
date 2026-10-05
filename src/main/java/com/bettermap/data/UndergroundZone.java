@@ -1,4 +1,52 @@
 /*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  * Copyright (c) 2026, n-oost
  * All rights reserved.
  *
@@ -559,11 +607,12 @@ public enum UndergroundZone
 	DORGESH_KAAN_SOUTH(
 		"dorgesh_kaan_south",
 		"Dorgesh-Kaan South Dungeon",
-		new WorldPoint(3193, 3112, 0),
+		new WorldPoint(3290, 3077, 0),
 		new WorldPoint(2715, 5241, 0),
 		0,
 		70,
-		"South of Dorgesh-Kaan • molanisks, Kalphite Hive tunnel"
+		"South of Dorgesh-Kaan • molanisks, Kalphite Hive tunnel",
+		new WorldPoint(3193, 3112, 0)
 	),
 	ROGUES_DEN(
 		"rogues_den",
@@ -600,7 +649,7 @@ public enum UndergroundZone
 		"barbarian_assault",
 		"Barbarian Assault",
 		new WorldPoint(2533, 3573, 0),
-		new WorldPoint(1888, 5440, 0),
+		new WorldPoint(2584, 5273, 0),
 		0,
 		55,
 		"Barbarian Outpost • Barbarian Assault minigame"
@@ -608,8 +657,8 @@ public enum UndergroundZone
 	TARN_LAIR(
 		"tarn_lair",
 		"Lair of Tarn Razorlor",
-		new WorldPoint(3439, 3232, 0),
-		new WorldPoint(3246, 4590, 0),
+		new WorldPoint(3430, 3240, 0),
+		new WorldPoint(3300, 4640, 0),
 		0,
 		60,
 		"Abandoned Mine • Tarn Razorlor, Salve amulet (e)",
@@ -824,7 +873,7 @@ public enum UndergroundZone
 	NEYPOTZLI(
 		"neypotzli",
 		"Neypotzli (Moons of Peril)",
-		new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1439, 3279, 0),
 		new WorldPoint(1439, 9660, 0),
 		6381,
 		85,
@@ -955,7 +1004,8 @@ public enum UndergroundZone
 		3520,
 		9856,
 		3583,
-		9919
+		9919,
+		new WorldPoint(3575, 3526, 0)
 	),
 	WILDERNESS_AGILITY_DUNGEON(
 		"wilderness_agility_dungeon",
@@ -1371,10 +1421,10 @@ public enum UndergroundZone
 		"sourhog_cave",
 		"Sourhog Cave",
 		new WorldPoint(3149, 3347, 0),
-		new WorldPoint(3149, 9747, 0),
+		new WorldPoint(3168, 9696, 0),
 		6400,
 		40,
-		"West of Lumbridge • sourhogs, Animal Magnetism"
+		"East of Draynor Manor • sourhogs, A Porcine of Interest"
 	),
 	PATERDOMUS_BASEMENT(
 		"paterdomus_basement",
@@ -1393,7 +1443,53 @@ public enum UndergroundZone
 		new WorldPoint(3166, 9695, 0),
 		6400,
 		35,
-		"Under the mill north of Lumbridge • mill cellar, goblins, quest"
+		"Under the mill north of Lumbridge • mill cellar, goblins, quest",
+		new WorldPoint(3230, 3286, 0)
+	),
+	CHAMPIONS_GUILD_BASEMENT(
+		"champions_guild_basement",
+		"Champions' Guild Basement",
+		new WorldPoint(3188, 3355, 0),
+		new WorldPoint(3144, 9736, 0),
+		6400,
+		40,
+		"Under the Champions' Guild • Champions' Challenge"
+	),
+	VARROCK_MUSEUM_BASEMENT(
+		"varrock_museum_basement",
+		"Varrock Museum Basement",
+		new WorldPoint(3256, 3451, 0),
+		new WorldPoint(1544, 4872, 0),
+		0,
+		60,
+		"Under Varrock Museum • specimen cleaning and natural history exhibits"
+	),
+	VARROCK_RAT_PITS(
+		"varrock_rat_pits",
+		"Varrock Rat Pits",
+		new WorldPoint(3262, 3401, 0),
+		new WorldPoint(2912, 5088, 0),
+		0,
+		96,
+		"Under Varrock • Ratcatchers rat pits"
+	),
+	VTAM_CORPORATION(
+		"vtam_corporation",
+		"VTAM Corporation",
+		new WorldPoint(3243, 3383, 0),
+		new WorldPoint(3243, 9783, 0),
+		6400,
+		20,
+		"Under Varrock • Shield of Arrav hideout"
+	),
+	SORCERESS_GARDEN(
+		"sorceress_garden",
+		"Sorceress's Garden",
+		new WorldPoint(3320, 3141, 0),
+		new WorldPoint(2912, 5472, 0),
+		0,
+		96,
+		"Apprentice teleport in Al Kharid • four seasonal gardens"
 	),
 	DIGSITE_DUNGEON(
 		"digsite_dungeon",
@@ -1408,7 +1504,7 @@ public enum UndergroundZone
 	CHASM_OF_TEARS(
 		"chasm_of_tears",
 		"Chasm of Tears",
-		new WorldPoint(3219, 3132, 0),
+		new WorldPoint(3187, 3124, 0),
 		new WorldPoint(3219, 9532, 2),
 		6400,
 		35,
@@ -1416,7 +1512,8 @@ public enum UndergroundZone
 		3210,
 		9487,
 		3262,
-		9533
+		9533,
+		new WorldPoint(3219, 3132, 0)
 	),
 	MINING_GUILD(
 		"mining_guild",
@@ -1455,7 +1552,8 @@ public enum UndergroundZone
 		3718,
 		5682,
 		3738,
-		5702
+		5702,
+		new WorldPoint(3020, 3360, 0)
 	),
 	SCRUBFOOT_CAVE(
 		"scrubfoot_cave",
@@ -2176,7 +2274,8 @@ public enum UndergroundZone
 		6400,
 		55,
 		"Under Morytania • Myreque Hideout",
-		new WorldPoint(3494, 3464, 0)
+		new WorldPoint(3494, 3464, 0),
+		new WorldPoint(3488, 3231, 0)
 	),
 	SHAYZIEN_PRISON(
 		"shayzien_prison",
@@ -2237,7 +2336,7 @@ public enum UndergroundZone
 		"Ruins of Uzer basement",
 		new WorldPoint(3492, 3090, 0),
 		new WorldPoint(2721, 4900, 0),
-		6400,
+		1810,
 		55,
 		"Under the Ruins of Uzer"
 	),
@@ -2251,6 +2350,159 @@ public enum UndergroundZone
 		"Under Tutorial Island • mine and combat training area",
 		new WorldPoint(3110, 3126, 0)
 	),
+	POLAR_EAGLE_LAIR(
+		"polar_eagle_lair",
+		"Polar Eagle Lair",
+		new WorldPoint(2743, 3831, 0),
+		new WorldPoint(2727, 10217, 0),
+		6386,
+		40,
+		"Rellekka Hunter area • Eagle transport system, polar eagle nest"
+	),
+	RANTZS_CAVE(
+		"rantzs_cave",
+		"Rantz's Cave",
+		new WorldPoint(2630, 2980, 0),
+		new WorldPoint(2640, 9391, 0),
+		6411,
+		35,
+		"Feldip Hills • Rantz and Big Chompy Bird Hunting"
+	),
+	HARMONY_ISLAND_BASEMENT(
+		"harmony_island_basement",
+		"Harmony Island Basement",
+		new WorldPoint(3805, 2844, 0),
+		new WorldPoint(3785, 9225, 0),
+		6381,
+		40,
+		"Harmony Island • The Great Brain Robbery underground rooms"
+	),
+	PENGUIN_BASE(
+		"penguin_base",
+		"KGP Headquarters",
+		new WorldPoint(2638, 4011, 0),
+		new WorldPoint(2655, 10390, 0),
+		6379,
+		55,
+		"Iceberg • Enter the avalanche in a clockwork penguin suit, Cold War"
+	),
+	TUNNEL_OF_CHAOS(
+		"tunnel_of_chaos",
+		"Tunnel of Chaos",
+		new WorldPoint(3284, 3469, 0),
+		new WorldPoint(3165, 5210, 0),
+		1741,
+		45,
+		"East of Varrock • Saradomin statue, What Lies Below, Chaos Altar shortcut"
+	),
+	UNGAEL_LABORATORY(
+		"ungael_laboratory",
+		"Ungael Laboratory",
+		new WorldPoint(2272, 4064, 0),
+		new WorldPoint(2270, 10465, 0),
+		6401,
+		45,
+		"Under Ungael • Dragon Slayer II, Dragonkin laboratory"
+	),
+	GENIE_CAVE(
+		"genie_cave",
+		"Genie Cave",
+		new WorldPoint(3374, 2905, 0),
+		new WorldPoint(3370, 9310, 0),
+		6405,
+		30,
+		"West of Nardah • Rope into the crevice, Spirits of the Elid"
+	),
+	BLACK_KNIGHT_CATACOMBS(
+		"black_knight_catacombs",
+		"Black Knight Catacombs",
+		new WorldPoint(3020, 3514, 0),
+		new WorldPoint(4143, 4853, 1),
+		1339,
+		45,
+		"Under Black Knights' Fortress • While Guthix Sleeps, Dark Squall"
+	),
+	ARTIOS_LAIR(
+		"artios_lair",
+		"Hunter's End (Artio)",
+		new WorldPoint(3115, 3675, 0),
+		new WorldPoint(1758, 11552, 0),
+		7877,
+		45,
+		"Wilderness • Artio's singles-plus bear lair"
+	),
+	SPINDELS_LAIR(
+		"spindels_lair",
+		"Web Chasm (Spindel)",
+		new WorldPoint(3182, 3745, 0),
+		new WorldPoint(1632, 11555, 2),
+		7810,
+		45,
+		"Wilderness • Spindel's singles-plus spider lair"
+	),
+	CHARRED_DUNGEON(
+		"charred_dungeon",
+		"Charred Dungeon",
+		new WorldPoint(2637, 2416, 0),
+		new WorldPoint(2691, 8884, 0),
+		6468,
+		80,
+		"Under Charred Island • Charred Dungeon"
+	),
+	FARMING_GUILD_SEED_VAULT(
+		"farming_guild_seed_vault",
+		"Farming Guild Seed Vault",
+		new WorldPoint(1247, 3740, 0),
+		new WorldPoint(1265, 10160, 0),
+		6420,
+		30,
+		"Farming Guild • Seed vault beneath the central tier"
+	),
+	DESERT_MINING_CAMP_DUNGEON(
+		"desert_mining_camp_dungeon",
+		"Desert Mining Camp Dungeon",
+		new WorldPoint(3288, 3021, 0),
+		new WorldPoint(3280, 9415, 0),
+		6394,
+		65,
+		"Inside the Desert Mining Camp • The Tourist Trap, slave mines"
+	),
+	CRASH_SITE_CAVERN(
+		"crash_site_cavern",
+		"Crash Site Cavern",
+		new WorldPoint(2436, 3520, 0),
+		new WorldPoint(2113, 5663, 0),
+		2143,
+		120,
+		"Through the northern Gnome Stronghold fence • Follow the path north-east, Demonic Gorillas"
+	),
+	LIBRARY_HISTORICAL_ARCHIVE(
+		"library_historical_archive",
+		"Library Historical Archive",
+		new WorldPoint(1624, 3808, 0),
+		new WorldPoint(1575, 10200, 0),
+		6392,
+		55,
+		"Arceuus Library • Speak to Archeio to enter the historical archive"
+	),
+	BRINE_RAT_CAVERN(
+		"brine_rat_cavern",
+		"Brine Rat Cavern",
+		new WorldPoint(2748, 3736, 0),
+		new WorldPoint(2718, 10145, 0),
+		6409,
+		65,
+		"North-east of Rellekka • Dig by the windswept tree, Olaf's Quest"
+	),
+	MONKEY_MADNESS_HANGAR(
+		"monkey_madness_hangar",
+		"Underground Military Glider Hangar",
+		new WorldPoint(2484, 3487, 1),
+		new WorldPoint(2588, 4513, 0),
+		1026,
+		55,
+		"Grand Tree • Speak to Daero at Blurberry Bar, Monkey Madness"
+	),
 	CORAL_NURSERIES(
 		"coral_nurseries",
 		"Coral Nurseries",
@@ -2259,7 +2511,493 @@ public enum UndergroundZone
 		6400,
 		55,
 		"Under The Great Conch • Coral Nurseries"
-	);
+	),
+
+	AIR_ALTAR(
+		"air_altar",
+		"Air Altar",
+		new WorldPoint(2985, 3292, 0),
+		new WorldPoint(2844, 4833, 0),
+		1541,
+		50,
+		"South-west of Falador - Mysterious ruins air altar"
+	),
+	WATER_ALTAR(
+		"water_altar",
+		"Water Altar",
+		new WorldPoint(3182, 3165, 0),
+		new WorldPoint(2718, 4834, 0),
+		1669,
+		50,
+		"Lumbridge Swamp - Mysterious ruins water altar"
+	),
+	EARTH_ALTAR(
+		"earth_altar",
+		"Earth Altar",
+		new WorldPoint(3306, 3474, 0),
+		new WorldPoint(2656, 4838, 0),
+		1364,
+		50,
+		"North-east of Varrock - Mysterious ruins earth altar"
+	),
+	FIRE_ALTAR(
+		"fire_altar",
+		"Fire Altar",
+		new WorldPoint(3313, 3255, 0),
+		new WorldPoint(2584, 4838, 0),
+		1583,
+		50,
+		"Al Kharid - Mysterious ruins fire altar"
+	),
+	BODY_ALTAR(
+		"body_altar",
+		"Body Altar",
+		new WorldPoint(3053, 3445, 0),
+		new WorldPoint(2522, 4837, 0),
+		1392,
+		50,
+		"West of Edgeville Monastery - Mysterious ruins body altar"
+	),
+	LAW_ALTAR(
+		"law_altar",
+		"Law Altar",
+		new WorldPoint(2858, 3379, 0),
+		new WorldPoint(2464, 4832, 0),
+		1453,
+		50,
+		"Entrana - Mysterious ruins law altar"
+	),
+	NATURE_ALTAR(
+		"nature_altar",
+		"Nature Altar",
+		new WorldPoint(2869, 3018, 0),
+		new WorldPoint(2400, 4841, 0),
+		1823,
+		50,
+		"Karamja - Mysterious ruins nature altar"
+	),
+	CHAOS_ALTAR(
+		"chaos_altar",
+		"Chaos Altar",
+		new WorldPoint(3060, 3591, 0),
+		new WorldPoint(2270, 4840, 0),
+		1249,
+		50,
+		"Wilderness - Mysterious ruins chaos altar"
+	),
+	ENCHANTED_VALLEY(
+		"enchanted_valley",
+		"Enchanted Valley",
+		new WorldPoint(3035, 4520, 0),
+		new WorldPoint(3035, 4520, 0),
+		0,
+		50,
+		"Fairy ring BKQ - Enchanted Valley"
+	),
+	MOGRE_CAMP(
+		"mogre_camp",
+		"Mogre Camp",
+		new WorldPoint(2990, 3110, 0),
+		new WorldPoint(2975, 9495, 0),
+		6385,
+		50,
+		"Mudskipper Point - Mogre Camp diving cavern"
+	),
+	KENDALS_LAIR(
+		"kendals_lair",
+		"Kendal's Lair",
+		new WorldPoint(2780, 3680, 0),
+		new WorldPoint(2855, 10080, 0),
+		6400,
+		50,
+		"North of Mountain Camp - The Kendal's cave"
+	),
+	NATIVE_ANCIENT_CAVERN("native_ancient_cavern", "Ancient Cavern", new WorldPoint(2511, 3511, 0),
+		new WorldPoint(1752, 5336, 0), 1825, 64,
+		"Native OSRS map selector: Ancient Cavern"),
+	NATIVE_ANCIENT_CAVERN_ANCIENT_CAVERN("native_ancient_cavern__ancient_cavern", "Ancient Cavern", new WorldPoint(2511, 3511, 0),
+		new WorldPoint(1768, 5366, 0), 1855, 64, "Native section of Ancient Cavern"),
+	NATIVE_ARDOUGNE_UNDERGROUND("native_ardougne_underground", "Ardougne Underground", new WorldPoint(2634, 3321, 0),
+		new WorldPoint(2560, 9600, 0), 6279, 128,
+		"Native OSRS map selector: Ardougne Underground"),
+	NATIVE_ARDOUGNE_UNDERGROUND_ARDOUGNE_UNDERGROUND("native_ardougne_underground__ardougne_underground", "Ardougne Sewers", new WorldPoint(2632, 3294, 0),
+		new WorldPoint(2632, 9694, 0), 6400, 64, "Native section of Ardougne Underground"),
+	NATIVE_ARDOUGNE_UNDERGROUND_CHAOS_DRUID_TOWER("native_ardougne_underground__chaos_druid_tower", "Chaos Druid Tower Dungeon", new WorldPoint(2562, 3356, 0),
+		new WorldPoint(2562, 9756, 0), 6400, 64, "Native section of Ardougne Underground"),
+	NATIVE_ARDOUGNE_UNDERGROUND_CLOCK_TOWER_DUNGEON("native_ardougne_underground__clock_tower_dungeon", "Clock Tower Dungeon", new WorldPoint(2568, 3229, 0),
+		new WorldPoint(2568, 9627, 0), 6398, 64, "Native section of Ardougne Underground"),
+	NATIVE_ARDOUGNE_UNDERGROUND_GOBLIN_CAVE("native_ardougne_underground__goblin_cave", "Goblin Cave", new WorldPoint(2622, 3393, 0),
+		new WorldPoint(2622, 9793, 0), 6400, 64, "Native section of Ardougne Underground"),
+	NATIVE_ARDOUGNE_UNDERGROUND_LEGENDS_GUILD_DUNGEON("native_ardougne_underground__legends_guild_dungeon", "Legends' Guild Dungeon", new WorldPoint(2724, 3375, 0),
+		new WorldPoint(2724, 9775, 0), 6400, 64, "Native section of Ardougne Underground"),
+	NATIVE_ASGARNIA_ICE_DUNGEON("native_asgarnia_ice_dungeon", "Asgarnia Ice Cave", new WorldPoint(2971, 3240, 0),
+		new WorldPoint(3064, 9576, 0), 6336, 136,
+		"Native OSRS map selector: Asgarnia Ice Cave"),
+	NATIVE_ASGARNIA_ICE_DUNGEON_ASGARNIA_ICE_CAVE("native_asgarnia_ice_dungeon__asgarnia_ice_cave", "Asgarnian Ice Dungeon", new WorldPoint(3007, 3150, 0),
+		new WorldPoint(3007, 9550, 0), 6400, 64, "Native section of Asgarnia Ice Cave"),
+	NATIVE_ASGARNIA_ICE_DUNGEON_KARAMJA_DUNGEON("native_asgarnia_ice_dungeon__karamja_dungeon", "Karamja and Crandor Dungeon", new WorldPoint(2855, 3168, 0),
+		new WorldPoint(2855, 9568, 0), 6400, 64, "Native section of Asgarnia Ice Cave"),
+	NATIVE_ASGARNIA_ICE_DUNGEON_MELZARS_MAZE_BASEMENT("native_asgarnia_ice_dungeon__melzars_maze_basement", "Melzar's Maze Basement", new WorldPoint(2924, 3250, 0),
+		new WorldPoint(2924, 9650, 0), 6400, 64, "Native section of Asgarnia Ice Cave"),
+	NATIVE_ASGARNIA_ICE_DUNGEON_PORT_SARIM_RAT_PITS("native_asgarnia_ice_dungeon__port_sarim_rat_pits", "Port Sarim Rat Pits", new WorldPoint(3018, 3231, 0),
+		new WorldPoint(2962, 9650, 0), 6419, 64, "Native section of Asgarnia Ice Cave"),
+	NATIVE_BRAINDEATH_ISLAND("native_braindeath_island", "Braindeath Island", new WorldPoint(3680, 3530, 0),
+		new WorldPoint(2112, 5056, 0), 1526, 64,
+		"Native OSRS map selector: Braindeath Island"),
+	NATIVE_DORGESHKAAN("native_dorgeshkaan", "Dorgesh-Kaan", new WorldPoint(3230, 3215, 0),
+		new WorldPoint(2704, 5336, 0), 2121, 128,
+		"Native OSRS map selector: Dorgesh-Kaan"),
+	NATIVE_DORGESHKAAN_DORGESH_KAAN("native_dorgeshkaan__dorgesh_kaan", "Dorgesh-Kaan", new WorldPoint(3230, 3215, 0),
+		new WorldPoint(2752, 5344, 0), 2129, 64, "Native section of Dorgesh-Kaan"),
+	NATIVE_DWARVEN_MINES("native_dwarven_mines", "Dwarven Mines", new WorldPoint(3032, 3385, 0),
+		new WorldPoint(3008, 9664, 0), 6279, 136,
+		"Native OSRS map selector: Dwarven Mines"),
+	NATIVE_DWARVEN_MINES_MINING_GUILD("native_dwarven_mines__mining_guild", "Mining Guild", new WorldPoint(3019, 3339, 0),
+		new WorldPoint(3019, 9739, 0), 6400, 64, "Native section of Dwarven Mines"),
+	NATIVE_DWARVEN_MINES_TAVERLEY_DUNGEON("native_dwarven_mines__taverley_dungeon", "Taverley Dungeon", new WorldPoint(2884, 3398, 0),
+		new WorldPoint(2884, 9798, 0), 6400, 64, "Native section of Dwarven Mines"),
+	NATIVE_GODWARS("native_godwars", "God Wars Dungeon", new WorldPoint(2917, 3747, 0),
+		new WorldPoint(2848, 5336, 2), 1589, 112,
+		"Native OSRS map selector: God Wars Dungeon"),
+	NATIVE_GODWARS_GOD_WARS_DUNGEON("native_godwars__god_wars_dungeon", "God Wars Dungeon", new WorldPoint(2917, 3747, 0),
+		new WorldPoint(2881, 5310, 2), 1563, 64, "Native section of God Wars Dungeon"),
+	NATIVE_KELDAGRIM("native_keldagrim", "Keldagrim", new WorldPoint(2728, 3715, 0),
+		new WorldPoint(2816, 10176, 0), 6461, 84,
+		"Native OSRS map selector: Keldagrim"),
+	NATIVE_KELDAGRIM_KELDAGRIM("native_keldagrim__keldagrim", "Keldagrim (Dwarven Capital)", new WorldPoint(2728, 3715, 0),
+		new WorldPoint(2867, 10190, 0), 6475, 64, "Native section of Keldagrim"),
+	NATIVE_MISTHALIN_UNDERGROUND("native_misthalin_underground", "Misthalin Underground", new WorldPoint(3171, 3295, 0),
+		new WorldPoint(3072, 9728, 0), 6433, 268,
+		"Native OSRS map selector: Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_ASGARNIA_ICE_CAVE("native_misthalin_underground__asgarnia_ice_cave", "Asgarnian Ice Dungeon", new WorldPoint(3007, 3150, 0),
+		new WorldPoint(3007, 9550, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_CHAMPIONS_GUILD_BASEMENT("native_misthalin_underground__champions_guild_basement", "Champions' Guild Basement", new WorldPoint(3188, 3355, 0),
+		new WorldPoint(3144, 9736, 0), 6381, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_CHASM_OF_TEARS("native_misthalin_underground__chasm_of_tears", "Chasm of Tears", new WorldPoint(3219, 3132, 0),
+		new WorldPoint(3219, 9532, 2), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_DRAYNOR_MANOR_BASEMENT("native_misthalin_underground__draynor_manor_basement", "Draynor Manor Basement", new WorldPoint(3092, 3361, 0),
+		new WorldPoint(3117, 9753, 0), 6392, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_DRAYNOR_SEWERS("native_misthalin_underground__draynor_sewers", "Draynor Sewers", new WorldPoint(3118, 3244, 0),
+		new WorldPoint(3118, 9644, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_HAM_HIDEOUT("native_misthalin_underground__ham_hideout", "H.A.M. Hideout", new WorldPoint(3165, 3252, 0),
+		new WorldPoint(3149, 9652, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_LUMBRIDGE_CELLAR("native_misthalin_underground__lumbridge_cellar", "Lumbridge Castle Cellar", new WorldPoint(3218, 3218, 0),
+		new WorldPoint(3210, 9616, 0), 6398, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_LUMBRIDGE_SWAMP_CAVES("native_misthalin_underground__lumbridge_swamp_caves", "Lumbridge Swamp Caves", new WorldPoint(3168, 3172, 0),
+		new WorldPoint(3168, 9572, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_SOURHOG_CAVE("native_misthalin_underground__sourhog_cave", "Sourhog Cave", new WorldPoint(3149, 3347, 0),
+		new WorldPoint(3168, 9696, 0), 6349, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_VARROCK_SEWERS("native_misthalin_underground__varrock_sewers", "Varrock Sewers", new WorldPoint(3237, 3459, 0),
+		new WorldPoint(3237, 9859, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_VTAM_CORPORATION("native_misthalin_underground__vtam_corporation", "VTAM Corporation", new WorldPoint(3243, 3383, 0),
+		new WorldPoint(3243, 9783, 0), 6400, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_WATER_MILL_CELLAR("native_misthalin_underground__water_mill_cellar", "Water mill cellar", new WorldPoint(3230, 3286, 0),
+		new WorldPoint(3231, 9688, 0), 6402, 64, "Native section of Misthalin Underground"),
+	NATIVE_MISTHALIN_UNDERGROUND_WIZARDS_TOWER_BASEMENT("native_misthalin_underground__wizards_tower_basement", "Wizards' Tower Basement", new WorldPoint(3104, 3162, 0),
+		new WorldPoint(3104, 9576, 0), 6414, 64, "Native section of Misthalin Underground"),
+	NATIVE_MOLE("native_mole", "Mole Hole", new WorldPoint(2985, 3387, 0),
+		new WorldPoint(1728, 5120, 0), 1733, 64,
+		"Native OSRS map selector: Mole Hole"),
+	NATIVE_MOLE_MOLE_HOLE("native_mole__mole_hole", "Mole Hole", new WorldPoint(2985, 3387, 0),
+		new WorldPoint(1760, 5180, 0), 1793, 64, "Native section of Mole Hole"),
+	NATIVE_MORYTANIA_UNDERGROUND("native_morytania_underground", "Morytania Underground", new WorldPoint(3576, 3433, 0),
+		new WorldPoint(3456, 9920, 0), 6487, 264,
+		"Native OSRS map selector: Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_ECTOFUNTUS_DUNGEON("native_morytania_underground__ectofuntus_dungeon", "Ectofuntus Dungeon", new WorldPoint(3659, 3524, 0),
+		new WorldPoint(3674, 9893, 0), 6369, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_FENKENSTRAIN_DUNGEON("native_morytania_underground__fenkenstrain_dungeon", "Experiment Cave", new WorldPoint(3575, 3526, 0),
+		new WorldPoint(3530, 9950, 0), 6424, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_HAUNTED_MINE("native_morytania_underground__haunted_mine", "Haunted Mine", new WorldPoint(3441, 3232, 0),
+		new WorldPoint(3436, 9637, 0), 6405, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_MEIYERDITCH_LABORATORIES("native_morytania_underground__meiyerditch_laboratories", "Meiyerditch Laboratories", new WorldPoint(3628, 3350, 0),
+		new WorldPoint(3628, 9750, 0), 6400, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_MORYTANIA_SPIDER_CAVE("native_morytania_underground__morytania_spider_cave", "Morytania Spider Cave", new WorldPoint(3657, 3407, 0),
+		new WorldPoint(3670, 9830, 0), 6423, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_MYREQUE_HIDEOUT("native_morytania_underground__myreque_hideout", "Myreque Hideout", new WorldPoint(3508, 3448, 0),
+		new WorldPoint(3495, 9835, 0), 6387, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_PATERDOMUS_BASEMENT("native_morytania_underground__paterdomus_basement", "Paterdomus Basement", new WorldPoint(3405, 3506, 0),
+		new WorldPoint(3405, 9906, 0), 6400, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_SHADE_CATACOMBS("native_morytania_underground__shade_catacombs", "Shade Catacombs", new WorldPoint(3485, 3321, 0),
+		new WorldPoint(3484, 9721, 0), 6400, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_SISTERHOOD_SANCTUARY("native_morytania_underground__sisterhood_sanctuary", "Sisterhood Sanctuary", new WorldPoint(3727, 3300, 0),
+		new WorldPoint(3727, 9700, 1), 6400, 64, "Native section of Morytania Underground"),
+	NATIVE_MORYTANIA_UNDERGROUND_WEREWOLF_AGILITY_COURSE("native_morytania_underground__werewolf_agility_course", "Werewolf Agility Course", new WorldPoint(3542, 3461, 0),
+		new WorldPoint(3551, 9887, 0), 6426, 64, "Native section of Morytania Underground"),
+	NATIVE_MOSLEHARMLESS_CAVE("native_mosleharmless_cave", "Mos Le'Harmless Cave", new WorldPoint(3749, 2973, 0),
+		new WorldPoint(3712, 9344, 0), 6371, 64,
+		"Native OSRS map selector: Mos Le'Harmless Cave"),
+	NATIVE_MOSLEHARMLESS_CAVE_MOS_LE_HARMLESS_CAVE("native_mosleharmless_cave__mos_le_harmless_cave", "Mos Le'Harmless Cave", new WorldPoint(3749, 2973, 0),
+		new WorldPoint(3748, 9373, 0), 6400, 64, "Native section of Mos Le'Harmless Cave"),
+	NATIVE_OURANIA("native_ourania", "Ourania Altar", new WorldPoint(2451, 3231, 0),
+		new WorldPoint(3008, 5568, 0), 2337, 32,
+		"Native OSRS map selector: Ourania Altar"),
+	NATIVE_OURANIA_OURANIA_ALTAR("native_ourania__ourania_altar", "Ourania Altar (ZMI)", new WorldPoint(2451, 3231, 0),
+		new WorldPoint(3022, 5582, 0), 2351, 64, "Native section of Ourania Altar"),
+	NATIVE_SLAYER_CAVE("native_slayer_cave", "Fremennik Slayer Cave", new WorldPoint(2796, 3615, 0),
+		new WorldPoint(2704, 10008, 0), 6393, 64,
+		"Native OSRS map selector: Fremennik Slayer Cave"),
+	NATIVE_SLAYER_CAVE_FREMENNIK_SLAYER_DUNGEON("native_slayer_cave__fremennik_slayer_dungeon", "Fremennik Slayer Dungeon", new WorldPoint(2796, 3615, 0),
+		new WorldPoint(2808, 10002, 0), 6387, 64, "Native section of Fremennik Slayer Cave"),
+	NATIVE_SOS("native_sos", "Stronghold of Security", new WorldPoint(3081, 3420, 0),
+		new WorldPoint(2160, 5264, 0), 1844, 176,
+		"Native OSRS map selector: Stronghold of Security"),
+	NATIVE_SOS_STRONGHOLD_OF_SECURITY("native_sos__stronghold_of_security", "Stronghold of Security", new WorldPoint(3081, 3420, 0),
+		new WorldPoint(1860, 5230, 0), 1810, 64, "Native section of Stronghold of Security"),
+	NATIVE_STRONGHOLD_UNDERGROUND("native_stronghold_underground", "Stronghold Underground", new WorldPoint(2393, 3487, 0),
+		new WorldPoint(2240, 9984, 0), 6497, 148,
+		"Native OSRS map selector: Stronghold Underground"),
+	NATIVE_STRONGHOLD_UNDERGROUND_BRIMSTAIL_CAVE("native_stronghold_underground__brimstail_cave", "Brimstail's Cave", new WorldPoint(2402, 3419, 0),
+		new WorldPoint(2409, 9812, 0), 6393, 64, "Native section of Stronghold Underground"),
+	NATIVE_STRONGHOLD_UNDERGROUND_GRAND_TREE_TUNNELS("native_stronghold_underground__grand_tree_tunnels", "Grand Tree Tunnels", new WorldPoint(2464, 3497, 0),
+		new WorldPoint(2464, 9897, 0), 6400, 64, "Native section of Stronghold Underground"),
+	NATIVE_STRONGHOLD_UNDERGROUND_KRAKEN_COVE("native_stronghold_underground__kraken_cove", "Kraken Cove", new WorldPoint(2278, 3611, 0),
+		new WorldPoint(2278, 10011, 0), 6400, 64, "Native section of Stronghold Underground"),
+	NATIVE_STRONGHOLD_UNDERGROUND_STRONGHOLD_SLAYER_DUNGEON("native_stronghold_underground__stronghold_slayer_dungeon", "Stronghold Slayer Dungeon", new WorldPoint(2430, 3424, 0),
+		new WorldPoint(2429, 9824, 0), 6400, 64, "Native section of Stronghold Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND("native_taverley_underground", "Taverley Underground", new WorldPoint(2873, 3450, 0),
+		new WorldPoint(2816, 9728, 0), 6278, 204,
+		"Native OSRS map selector: Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_ENTRANA_DUNGEON("native_taverley_underground__entrana_dungeon", "Entrana Dungeon", new WorldPoint(2819, 3374, 0),
+		new WorldPoint(2847, 9755, 0), 6381, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_HEROES_GUILD_MINE("native_taverley_underground__heroes_guild_mine", "Heroes' Guild Mine", new WorldPoint(2893, 3507, 0),
+		new WorldPoint(2893, 9907, 0), 6400, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_ICE_QUEEN_LAIR("native_taverley_underground__ice_queen_lair", "Ice Queen's Lair", new WorldPoint(2847, 3516, 0),
+		new WorldPoint(2847, 9916, 0), 6400, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_MINING_GUILD("native_taverley_underground__mining_guild", "Mining Guild", new WorldPoint(3019, 3339, 0),
+		new WorldPoint(3019, 9739, 0), 6400, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_TAVERLEY_DUNGEON("native_taverley_underground__taverley_dungeon", "Taverley Dungeon", new WorldPoint(2884, 3398, 0),
+		new WorldPoint(2884, 9798, 0), 6400, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_WARRIORS_GUILD_BASEMENT("native_taverley_underground__warriors_guild_basement", "Warriors' Guild Basement", new WorldPoint(2834, 3542, 0),
+		new WorldPoint(2907, 9968, 0), 6426, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_WHITE_KNIGHTS_CASTLE_CRYPT("native_taverley_underground__white_knights_castle_crypt", "White Knight's Castle Crypt", new WorldPoint(2964, 3331, 0),
+		new WorldPoint(2964, 9731, 0), 6400, 64, "Native section of Taverley Underground"),
+	NATIVE_TAVERLEY_UNDERGROUND_WHITE_WOLF_TUNNEL("native_taverley_underground__white_wolf_tunnel", "White Wolf Tunnel", new WorldPoint(2876, 3482, 0),
+		new WorldPoint(2876, 9878, 0), 6396, 64, "Native section of Taverley Underground"),
+	NATIVE_TOLNA("native_tolna", "Tolna's Rift", new WorldPoint(3309, 3450, 0),
+		new WorldPoint(3072, 5248, 0), 1798, 32,
+		"Native OSRS map selector: Tolna's Rift"),
+	NATIVE_TROLL_STRONGHOLD("native_troll_stronghold", "Troll Stronghold", new WorldPoint(2839, 3690, 0),
+		new WorldPoint(2848, 10072, 0), 6382, 96,
+		"Native OSRS map selector: Troll Stronghold"),
+	NATIVE_TROLL_STRONGHOLD_KELDAGRIM("native_troll_stronghold__keldagrim", "Keldagrim (Dwarven Capital)", new WorldPoint(2728, 3715, 0),
+		new WorldPoint(2867, 10190, 0), 6475, 64, "Native section of Troll Stronghold"),
+	NATIVE_TZHAAR_AREA("native_tzhaar_area", "Mor Ul Rek", new WorldPoint(2860, 3170, 0),
+		new WorldPoint(2368, 5120, 0), 1950, 96,
+		"Native OSRS map selector: Mor Ul Rek"),
+	NATIVE_TZHAAR_AREA_TZHAAR_CITY("native_tzhaar_area__tzhaar_city", "TzHaar City / Mor Ul Rek", new WorldPoint(2860, 3170, 0),
+		new WorldPoint(2496, 5140, 0), 1970, 64, "Native section of Mor Ul Rek"),
+	NATIVE_UNDEAD_DUNGEON("native_undead_dungeon", "Lair of Tarn Razorlor", new WorldPoint(3439, 3232, 0),
+		new WorldPoint(3144, 4568, 0), 1336, 128,
+		"Native OSRS map selector: Lair of Tarn Razorlor"),
+	NATIVE_WATERBIRTH("native_waterbirth", "Waterbirth Dungeon", new WorldPoint(2545, 3755, 0),
+		new WorldPoint(2432, 10112, 0), 6357, 268,
+		"Native OSRS map selector: Waterbirth Dungeon"),
+	NATIVE_WATERBIRTH_WATERBIRTH_DUNGEON("native_waterbirth__waterbirth_dungeon", "Waterbirth Island Dungeon", new WorldPoint(2545, 3755, 0),
+		new WorldPoint(2520, 9920, 0), 6165, 64, "Native section of Waterbirth Dungeon"),
+	NATIVE_WILDERNESS_DUNGEONS("native_wilderness_dungeons", "Wilderness Dungeons", new WorldPoint(3098, 3819, 0),
+		new WorldPoint(2944, 10304, 0), 6485, 264,
+		"Native OSRS map selector: Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_CORPOREAL_BEAST("native_wilderness_dungeons__corporeal_beast", "Corporeal Beast Lair", new WorldPoint(3202, 3681, 0),
+		new WorldPoint(2967, 4382, 2), 701, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_DEEP_WILDERNESS_DUNGEON("native_wilderness_dungeons__deep_wilderness_dungeon", "Deep Wilderness Dungeon", new WorldPoint(3045, 3927, 0),
+		new WorldPoint(3045, 10327, 0), 6400, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_KING_BLACK_DRAGON_LAIR("native_wilderness_dungeons__king_black_dragon_lair", "King Black Dragon Lair", new WorldPoint(3017, 3849, 0),
+		new WorldPoint(2272, 4705, 0), 856, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_LAVA_MAZE_DUNGEON("native_wilderness_dungeons__lava_maze_dungeon", "Lava Maze Dungeon", new WorldPoint(3069, 3856, 0),
+		new WorldPoint(3068, 10256, 0), 6400, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_MAGE_ARENA_BANK("native_wilderness_dungeons__mage_arena_bank", "Mage Arena Bank", new WorldPoint(3099, 3934, 0),
+		new WorldPoint(2525, 4705, 0), 771, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_REVENANT_CAVES("native_wilderness_dungeons__revenant_caves", "Revenant Caves", new WorldPoint(3126, 3832, 0),
+		new WorldPoint(3250, 10235, 0), 6403, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_SCORPIA_CAVE("native_wilderness_dungeons__scorpia_cave", "Scorpia cave", new WorldPoint(3244, 3949, 0),
+		new WorldPoint(3243, 10349, 0), 6400, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_SILK_CHASM("native_wilderness_dungeons__silk_chasm", "Silk Chasm", new WorldPoint(3320, 3798, 0),
+		new WorldPoint(3423, 10203, 2), 6405, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_TROLL_STRONGHOLD("native_wilderness_dungeons__troll_stronghold", "Troll Stronghold", new WorldPoint(2839, 3690, 0),
+		new WorldPoint(3012, 10112, 0), 6422, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_WEB_CHASM("native_wilderness_dungeons__web_chasm", "Web Chasm", new WorldPoint(3184, 3745, 0),
+		new WorldPoint(3187, 10127, 0), 6382, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_WILDERNESS_GOD_WARS_DUNGEON("native_wilderness_dungeons__wilderness_god_wars_dungeon", "Wilderness God Wars Dungeon", new WorldPoint(3017, 3738, 0),
+		new WorldPoint(3017, 10138, 0), 6400, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_WILDERNESS_DUNGEONS_WILDERNESS_SLAYER_CAVE("native_wilderness_dungeons__wilderness_slayer_cave", "Wilderness Slayer Cave", new WorldPoint(3260, 3710, 0),
+		new WorldPoint(3373, 10106, 0), 6396, 64, "Native section of Wilderness Dungeons"),
+	NATIVE_YANILLE_UNDERGROUND("native_yanille_underground", "Yanille Underground", new WorldPoint(2525, 3089, 0),
+		new WorldPoint(2304, 9408, 0), 6319, 168,
+		"Native OSRS map selector: Yanille Underground"),
+	NATIVE_YANILLE_UNDERGROUND_SMOKE_DEVIL_DUNGEON("native_yanille_underground__smoke_devil_dungeon", "Smoke Devil Dungeon", new WorldPoint(2412, 3061, 0),
+		new WorldPoint(2412, 9461, 0), 6400, 64, "Native section of Yanille Underground"),
+	NATIVE_YANILLE_UNDERGROUND_WIZARDS_GUILD_BASEMENT("native_yanille_underground__wizards_guild_basement", "Wizards' Guild Basement", new WorldPoint(2594, 3085, 0),
+		new WorldPoint(2594, 9485, 0), 6400, 64, "Native section of Yanille Underground"),
+	NATIVE_YANILLE_UNDERGROUND_YANILLE_AGILITY_DUNGEON("native_yanille_underground__yanille_agility_dungeon", "Yanille Agility Dungeon", new WorldPoint(2569, 3121, 0),
+		new WorldPoint(2569, 9525, 0), 6404, 64, "Native section of Yanille Underground"),
+	NATIVE_ZANARIS("native_zanaris", "Zanaris", new WorldPoint(3201, 3169, 0),
+		new WorldPoint(2368, 4352, 0), 1183, 64,
+		"Native OSRS map selector: Zanaris"),
+	NATIVE_ZANARIS_ZANARIS("native_zanaris__zanaris", "Zanaris", new WorldPoint(3201, 3169, 0),
+		new WorldPoint(2412, 4434, 0), 1265, 64, "Native section of Zanaris"),
+	NATIVE_PRIFDDINAS("native_prifddinas", "Prifddinas", new WorldPoint(2240, 3275, 0),
+		new WorldPoint(3136, 5952, 0), 2677, 128,
+		"Native OSRS map selector: Prifddinas"),
+	NATIVE_FOSSIL_UNDERGROUND("native_fossil_underground", "Fossil Island Underground", new WorldPoint(3680, 3854, 0),
+		new WorldPoint(3584, 10240, 0), 6386, 176,
+		"Native OSRS map selector: Fossil Island Underground"),
+	NATIVE_FOSSIL_UNDERGROUND_FOSSIL_ISLAND_UNDERGROUND("native_fossil_underground__fossil_island_underground", "Fossil Island Caverns / Wyvern Cave", new WorldPoint(3680, 3854, 0),
+		new WorldPoint(3660, 10250, 0), 6396, 64, "Native section of Fossil Island Underground"),
+	NATIVE_FELDIP_UNDERGROUND("native_feldip_underground", "Feldip Hills Underground", new WorldPoint(2504, 2891, 0),
+		new WorldPoint(2048, 8960, 1), 6069, 128,
+		"Native OSRS map selector: Feldip Hills Underground"),
+	NATIVE_FELDIP_UNDERGROUND_CORSAIR_COVE_DUNGEON("native_feldip_underground__corsair_cove_dungeon", "Corsair Cove Dungeon", new WorldPoint(2483, 2889, 0),
+		new WorldPoint(1971, 9035, 1), 6146, 64, "Native section of Feldip Hills Underground"),
+	NATIVE_FELDIP_UNDERGROUND_RED_CHINCHOMPA_HUNTING_GROUND("native_feldip_underground__red_chinchompa_hunting_ground", "Red Chinchompa Hunting Ground", new WorldPoint(2525, 2894, 0),
+		new WorldPoint(2525, 9294, 0), 6400, 64, "Native section of Feldip Hills Underground"),
+	NATIVE_KOUREND_UNDERGROUND("native_kourend_underground", "Kourend Underground", new WorldPoint(1599, 3595, 0),
+		new WorldPoint(1536, 9856, 0), 6261, 320,
+		"Native OSRS map selector: Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_CATACOMBS_OF_KOUREND("native_kourend_underground__catacombs_of_kourend", "Catacombs of Kourend", new WorldPoint(1636, 3673, 0),
+		new WorldPoint(1664, 10048, 0), 6375, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_CHASM_OF_FIRE("native_kourend_underground__chasm_of_fire", "Chasm of Fire", new WorldPoint(1435, 3671, 0),
+		new WorldPoint(1435, 10071, 0), 6400, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_CRABCLAW_CAVES("native_kourend_underground__crabclaw_caves", "Crabclaw Caves", new WorldPoint(1646, 3449, 0),
+		new WorldPoint(1646, 9848, 0), 6399, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_FORTHOS_DUNGEON("native_kourend_underground__forthos_dungeon", "Forthos Dungeon", new WorldPoint(1701, 3574, 0),
+		new WorldPoint(1800, 9950, 0), 6376, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_GIANTS_DEN("native_kourend_underground__giants_den", "Giants' Den", new WorldPoint(1420, 3588, 0),
+		new WorldPoint(1432, 9913, 0), 6325, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_THE_WARRENS("native_kourend_underground__the_warrens", "The Warrens", new WorldPoint(1775, 3730, 0),
+		new WorldPoint(1775, 10130, 0), 6400, 64, "Native section of Kourend Underground"),
+	NATIVE_KOUREND_UNDERGROUND_WOODCUTTING_GUILD_DUNGEON("native_kourend_underground__woodcutting_guild_dungeon", "Woodcutting Guild Dungeon", new WorldPoint(1580, 3480, 0),
+		new WorldPoint(1580, 9880, 0), 6400, 64, "Native section of Kourend Underground"),
+	NATIVE_KEBOS_UNDERGROUND("native_kebos_underground", "Kebos Underground", new WorldPoint(1298, 3736, 0),
+		new WorldPoint(1216, 10112, 0), 6376, 200,
+		"Native OSRS map selector: Kebos Underground"),
+	NATIVE_KEBOS_UNDERGROUND_FARMING_GUILD_SEED_VAULT("native_kebos_underground__farming_guild_seed_vault", "Farming Guild Seed Vault", new WorldPoint(1247, 3740, 0),
+		new WorldPoint(1265, 10160, 0), 6420, 64, "Native section of Kebos Underground"),
+	NATIVE_KEBOS_UNDERGROUND_HESPORI_CAVE("native_kebos_underground__hespori_cave", "Hespori Cave", new WorldPoint(1248, 3737, 0),
+		new WorldPoint(1248, 10089, 0), 6352, 64, "Native section of Kebos Underground"),
+	NATIVE_KEBOS_UNDERGROUND_KARUULM_SLAYER_DUNGEON("native_kebos_underground__karuulm_slayer_dungeon", "Karuulm Slayer Dungeon", new WorldPoint(1311, 3807, 0),
+		new WorldPoint(1311, 10207, 0), 6400, 64, "Native section of Kebos Underground"),
+	NATIVE_KEBOS_UNDERGROUND_LIZARDMAN_CAVES("native_kebos_underground__lizardman_caves", "Lizardman Caves", new WorldPoint(1306, 3574, 0),
+		new WorldPoint(1308, 9963, 0), 6389, 64, "Native section of Kebos Underground"),
+	NATIVE_PRIFDDINAS_UNDERGROUND("native_prifddinas_underground", "Prifddinas Underground", new WorldPoint(2211, 3303, 0),
+		new WorldPoint(3136, 12352, 0), 9049, 96,
+		"Native OSRS map selector: Prifddinas Underground"),
+	NATIVE_PRIFDDINAS_UNDERGROUND_PRIFDDINAS_UNDERGROUND("native_prifddinas_underground__prifddinas_underground", "Prifddinas Underground", new WorldPoint(2211, 3303, 0),
+		new WorldPoint(3232, 12450, 0), 9147, 64, "Native section of Prifddinas Underground"),
+	NATIVE_GRAND_LIBRARY("native_grand_library", "Prifddinas Grand Library", new WorldPoint(2272, 3341, 0),
+		new WorldPoint(2560, 6080, 0), 2739, 256,
+		"Native OSRS map selector: Prifddinas Grand Library"),
+	NATIVE_BR_DEFAULT("native_br_default", "LMS Desert Island", new WorldPoint(3145, 3630, 0),
+		new WorldPoint(3392, 5760, 0), 2130, 64,
+		"Native OSRS map selector: LMS Desert Island"),
+	NATIVE_BR_DARK_VARROCK("native_br_dark_varrock", "LMS Wild Varrock", new WorldPoint(3155, 3640, 0),
+		new WorldPoint(3456, 6016, 0), 2376, 96,
+		"Native OSRS map selector: LMS Wild Varrock"),
+	NATIVE_CAMDOZAAL("native_camdozaal", "Ruins of Camdozaal", new WorldPoint(2998, 3493, 0),
+		new WorldPoint(2880, 5824, 0), 2331, 96,
+		"Native OSRS map selector: Ruins of Camdozaal"),
+	NATIVE_CAMDOZAAL_CAMDOZAAL("native_camdozaal__camdozaal", "Ruins of Camdozaal", new WorldPoint(2998, 3493, 0),
+		new WorldPoint(2976, 5824, 0), 2331, 64, "Native section of Ruins of Camdozaal"),
+	NATIVE_THE_ABYSS("native_the_abyss", "The Abyss", new WorldPoint(3105, 3558, 0),
+		new WorldPoint(3072, 4736, 0), 1178, 96,
+		"Native OSRS map selector: The Abyss"),
+	NATIVE_THE_ABYSS_ABYSS("native_the_abyss__abyss", "The Abyss", new WorldPoint(3105, 3558, 0),
+		new WorldPoint(3040, 4832, 0), 1274, 64, "Native section of The Abyss"),
+	NATIVE_DESERT_UNDERGROUND("native_desert_underground", "Kharidian Desert Underground", new WorldPoint(3315, 3023, 0),
+		new WorldPoint(3328, 9088, 0), 6065, 200,
+		"Native OSRS map selector: Kharidian Desert Underground"),
+	NATIVE_DESERT_UNDERGROUND_KALPHITE_CAVE("native_desert_underground__kalphite_cave", "Kalphite Cave", new WorldPoint(3319, 3122, 0),
+		new WorldPoint(3282, 9493, 0), 6371, 64, "Native section of Kharidian Desert Underground"),
+	NATIVE_DESERT_UNDERGROUND_KALPHITE_LAIR("native_desert_underground__kalphite_lair", "Kalphite Lair", new WorldPoint(3226, 3108, 0),
+		new WorldPoint(3483, 9510, 0), 6402, 64, "Native section of Kharidian Desert Underground"),
+	NATIVE_DESERT_UNDERGROUND_TOMBS_OF_AMASCUT("native_desert_underground__tombs_of_amascut", "Tombs of Amascut Lobby", new WorldPoint(3356, 2712, 0),
+		new WorldPoint(3344, 9130, 0), 6418, 64, "Native section of Kharidian Desert Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND("native_varlamore_underground", "Varlamore Underground", new WorldPoint(1487, 3139, 0),
+		new WorldPoint(1216, 9728, 0), 6589, 288,
+		"Native OSRS map selector: Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_ALCHEMICAL_SOCIETY("native_varlamore_underground__alchemical_society", "Alchemical Society", new WorldPoint(1389, 2918, 0),
+		new WorldPoint(1373, 9315, 0), 6397, 64, "Native section of Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_CAM_TORUM("native_varlamore_underground__cam_torum", "Cam Torum", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1439, 9509, 1), 6381, 64, "Native section of Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_DRAGON_NEST("native_varlamore_underground__dragon_nest", "Dragon Nest", new WorldPoint(1289, 3134, 0),
+		new WorldPoint(1247, 9503, 0), 6369, 64, "Native section of Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_FORTIS_BARRACKS("native_varlamore_underground__fortis_barracks", "Fortis Barracks", new WorldPoint(1640, 3166, 0),
+		new WorldPoint(1641, 9576, 0), 6410, 64, "Native section of Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_FORTIS_COLOSSEUM("native_varlamore_underground__fortis_colosseum", "Fortis Colosseum", new WorldPoint(1824, 3107, 0),
+		new WorldPoint(1825, 9507, 0), 6400, 64, "Native section of Varlamore Underground"),
+	NATIVE_VARLAMORE_UNDERGROUND_STALKER_DEN("native_varlamore_underground__stalker_den", "Stalker Den", new WorldPoint(1296, 3374, 0),
+		new WorldPoint(1286, 9775, 0), 6401, 64, "Native section of Varlamore Underground"),
+	NATIVE_CAM_TORUM("native_cam_torum", "Cam Torum", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1408, 9536, 1), 6408, 76,
+		"Native OSRS map selector: Cam Torum"),
+	NATIVE_CAM_TORUM_CAM_TORUM("native_cam_torum__cam_torum", "Cam Torum", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1439, 9509, 1), 6381, 64, "Native section of Cam Torum"),
+	NATIVE_NEYPOTZLI("native_neypotzli", "Neypotzli", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1344, 9600, 0), 6472, 132,
+		"Native OSRS map selector: Neypotzli"),
+	NATIVE_NEYPOTZLI_CAM_TORUM("native_neypotzli__cam_torum", "Cam Torum", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1439, 9509, 1), 6381, 64, "Native section of Neypotzli"),
+	NATIVE_NEYPOTZLI_NEYPOTZLI("native_neypotzli__neypotzli", "Neypotzli (Moons of Peril)", new WorldPoint(1435, 3128, 0),
+		new WorldPoint(1439, 9660, 0), 6532, 64, "Native section of Neypotzli"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND("native_ardent_ocean_underground", "Ardent Ocean Underground", new WorldPoint(2858, 3113, 0),
+		new WorldPoint(2688, 9408, 0), 6295, 276,
+		"Native OSRS map selector: Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_ASGARNIA_ICE_CAVE("native_ardent_ocean_underground__asgarnia_ice_cave", "Asgarnian Ice Dungeon", new WorldPoint(3007, 3150, 0),
+		new WorldPoint(3007, 9550, 0), 6400, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_BRIMHAVEN_DUNGEON("native_ardent_ocean_underground__brimhaven_dungeon", "Brimhaven Dungeon", new WorldPoint(2744, 3154, 0),
+		new WorldPoint(2713, 9564, 0), 6410, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_JOGRE_DUNGEON("native_ardent_ocean_underground__jogre_dungeon", "Jogre Dungeon", new WorldPoint(2824, 3118, 0),
+		new WorldPoint(2848, 9504, 0), 6386, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_KARAMJA_DUNGEON("native_ardent_ocean_underground__karamja_dungeon", "Karamja and Crandor Dungeon", new WorldPoint(2855, 3168, 0),
+		new WorldPoint(2855, 9568, 0), 6400, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_PANDEMONIUM_CAVE("native_ardent_ocean_underground__pandemonium_cave", "Pandemonium Cave", new WorldPoint(3070, 2986, 0),
+		new WorldPoint(3043, 9384, 0), 6398, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_ARDENT_OCEAN_UNDERGROUND_SHILO_VILLAGE_GEM_MINE("native_ardent_ocean_underground__shilo_village_gem_mine", "Shilo Village Gem Mine", new WorldPoint(2824, 2998, 0),
+		new WorldPoint(2838, 9387, 0), 6389, 64, "Native section of Ardent Ocean Underground"),
+	NATIVE_UNQUIET_OCEAN_UNDERGROUND("native_unquiet_ocean_underground", "Unquiet Ocean Underground", new WorldPoint(2868, 2399, 0),
+		new WorldPoint(3072, 8832, 0), 6433, 320,
+		"Native OSRS map selector: Unquiet Ocean Underground"),
+	NATIVE_UNQUIET_OCEAN_UNDERGROUND_CHARRED_DUNGEON("native_unquiet_ocean_underground__charred_dungeon", "Charred Dungeon", new WorldPoint(2637, 2416, 0),
+		new WorldPoint(2691, 8884, 0), 6468, 64, "Native section of Unquiet Ocean Underground"),
+	NATIVE_UNQUIET_OCEAN_UNDERGROUND_GRYPHON_CAVE("native_unquiet_ocean_underground__gryphon_cave", "Gryphon Cave", new WorldPoint(3120, 2490, 0),
+		new WorldPoint(3227, 8861, 0), 6371, 64, "Native section of Unquiet Ocean Underground"),
+	NATIVE_UNQUIET_OCEAN_UNDERGROUND_SHELLBANE_GRYPHON_CAVE("native_unquiet_ocean_underground__shellbane_gryphon_cave", "Shellbane Gryphon Cave", new WorldPoint(3175, 2478, 0),
+		new WorldPoint(3177, 8873, 0), 6395, 64, "Native section of Unquiet Ocean Underground"),
+	NATIVE_UNQUIET_OCEAN_UNDERGROUND_WYRMSCRAIG_CAVERN("native_unquiet_ocean_underground__wyrmscraig_cavern", "Wyrmscraig Cavern", new WorldPoint(2540, 2213, 0),
+		new WorldPoint(2580, 8613, 0), 6400, 64, "Native section of Unquiet Ocean Underground"),
+	NATIVE_SHROUDED_OCEAN_UNDERGROUND("native_shrouded_ocean_underground", "Shrouded Ocean Underground", new WorldPoint(2141, 2668, 0),
+		new WorldPoint(2048, 9152, 0), 6484, 192,
+		"Native OSRS map selector: Shrouded Ocean Underground"),
+	NATIVE_SHROUDED_OCEAN_UNDERGROUND_DEEPFIN_MINE("native_shrouded_ocean_underground__deepfin_mine", "Deepfin Mine", new WorldPoint(1924, 2758, 0),
+		new WorldPoint(2015, 9187, 0), 6429, 64, "Native section of Shrouded Ocean Underground"),
+	NATIVE_SHROUDED_OCEAN_UNDERGROUND_ISLE_OF_SOULS_DUNGEON("native_shrouded_ocean_underground__isle_of_souls_dungeon", "Isle of Souls Dungeon", new WorldPoint(2309, 2919, 0),
+		new WorldPoint(2135, 9320, 0), 6401, 64, "Native section of Shrouded Ocean Underground"),
+	NATIVE_SHROUDED_OCEAN_UNDERGROUND_SUNBLEAK_CAVE("native_shrouded_ocean_underground__sunbleak_cave", "Sunbleak Cave", new WorldPoint(2190, 2327, 0),
+		new WorldPoint(2225, 8737, 0), 6410, 64, "Native section of Shrouded Ocean Underground"),
+	NATIVE_SUNSET_OCEAN_UNDERGROUND("native_sunset_ocean_underground", "Sunset Ocean Underground", new WorldPoint(1203, 2733, 0),
+		new WorldPoint(1152, 9152, 0), 6419, 32,
+		"Native OSRS map selector: Sunset Ocean Underground"),
+	NATIVE_SUNSET_OCEAN_UNDERGROUND_KURASK_LAIR("native_sunset_ocean_underground__kurask_lair", "Kurask Lair", new WorldPoint(1203, 2733, 0),
+		new WorldPoint(1181, 9195, 0), 6462, 64, "Native section of Sunset Ocean Underground"),
+	NATIVE_WESTERN_OCEAN_UNDERGROUND("native_western_ocean_underground", "Western Ocean Underground", new WorldPoint(2091, 3291, 0),
+		new WorldPoint(2048, 10048, 0), 6757, 192,
+		"Native OSRS map selector: Western Ocean Underground"),
+	NATIVE_WESTERN_OCEAN_UNDERGROUND_HERE_BE_MINOTAURS("native_western_ocean_underground__here_be_minotaurs", "Here be minotaurs", new WorldPoint(1959, 3117, 0),
+		new WorldPoint(1947, 9505, 0), 6388, 64, "Native section of Western Ocean Underground"),
+	NATIVE_WESTERN_OCEAN_UNDERGROUND_YNYSDAIL_CAVERN("native_western_ocean_underground__ynysdail_cavern", "Ynysdail Cavern", new WorldPoint(2223, 3466, 0),
+		new WorldPoint(2271, 9875, 0), 6409, 64, "Native section of Western Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND("native_northern_ocean_underground", "Northern Ocean Underground", new WorldPoint(2666, 3974, 0),
+		new WorldPoint(2368, 10368, 0), 6394, 416,
+		"Native OSRS map selector: Northern Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND_GHORROCK_DUNGEON("native_northern_ocean_underground__ghorrock_dungeon", "Ghorrock Dungeon", new WorldPoint(2847, 4043, 0),
+		new WorldPoint(2888, 10465, 0), 6422, 64, "Native section of Northern Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND_JORMUNGANDS_PRISON("native_northern_ocean_underground__jormungands_prison", "Jormungand's Prison", new WorldPoint(2465, 4010, 0),
+		new WorldPoint(2445, 10419, 0), 6409, 64, "Native section of Northern Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND_MISCELLANIA_UNDERGROUND("native_northern_ocean_underground__miscellania_underground", "Miscellania Underground", new WorldPoint(2512, 3865, 0),
+		new WorldPoint(2512, 10265, 0), 6400, 64, "Native section of Northern Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE("native_northern_ocean_underground__penguin_base", "KGP Headquarters", new WorldPoint(2638, 4011, 0),
+		new WorldPoint(2655, 10390, 0), 6379, 64, "Native section of Northern Ocean Underground"),
+	NATIVE_NORTHERN_OCEAN_UNDERGROUND_WEISS_SALT_MINE("native_northern_ocean_underground__weiss_salt_mine", "Weiss Salt Mine", new WorldPoint(2869, 3941, 0),
+		new WorldPoint(2845, 10351, 0), 6410, 64, "Native section of Northern Ocean Underground");
 
 	private final String id;
 	private final String name;
@@ -2489,6 +3227,37 @@ public enum UndergroundZone
 		return canonicalZoneId(this.id);
 	}
 
+	/** A native section shares its entrance control with the corresponding authored dungeon. */
+	public String getSelectionId()
+	{
+		final int separator = id.indexOf("__");
+		return canonicalZoneId(separator < 0 ? id : id.substring(separator + 2));
+	}
+
+	public UndergroundZone getParentZone()
+	{
+		switch (this)
+		{
+			case DORGESH_KAAN_SOUTH:
+				return DORGESH_KAAN;
+			case CHASM_OF_TEARS:
+				return LUMBRIDGE_SWAMP_CAVES;
+			case NEYPOTZLI:
+				return CAM_TORUM;
+			case TARN_LAIR:
+				return HAUNTED_MINE;
+			case MOTHERLODE_MINE:
+				return DWARVEN_MINES;
+			default:
+				return null;
+		}
+	}
+
+	public boolean isSubterranean()
+	{
+		return getParentZone() != null;
+	}
+
 	public static UndergroundZone byId(String id)
 	{
 		return id == null ? null : BY_ID.get(id);
@@ -2504,6 +3273,7 @@ public enum UndergroundZone
 
 		for (UndergroundZone zone : ALL_ZONES)
 		{
+			if (zone.id.startsWith("native_")) continue;
 			for (WorldPoint surface : zone.surfacePoints)
 			{
 				final int dx = surface.getX() - worldX;
@@ -2530,6 +3300,7 @@ public enum UndergroundZone
 
 		for (UndergroundZone zone : ALL_ZONES)
 		{
+			if (zone.id.startsWith("native_")) continue;
 			final int dx = zone.undergroundPoint.getX() - worldX;
 			final int dy = zone.undergroundPoint.getY() - worldY;
 			final int distSq = dx * dx + dy * dy;

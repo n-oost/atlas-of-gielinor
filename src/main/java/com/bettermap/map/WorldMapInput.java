@@ -270,7 +270,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 				return event;
 			}
 
-			if (config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom())
+			if (camera.isTravelViewActive() || (config.showTravelRoutes() && camera.getZoom() >= config.travelStationMinZoom()))
 			{
 				travelClickOrigin = event.getPoint();
 			}

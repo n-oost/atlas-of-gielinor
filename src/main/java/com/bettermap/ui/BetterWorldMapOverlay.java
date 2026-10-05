@@ -347,11 +347,12 @@ public class BetterWorldMapOverlay extends Overlay
 			final List<Rectangle> placedPoiIcons = new ArrayList<>();
 			final List<Rectangle> placedMarkers = new ArrayList<>();
 			tileRenderer.drawTiles(graphics, bounds);
-			if (!config.showTravelRoutes())
+			if (!config.showTravelRoutes() && !camera.isTravelViewActive())
 			{
 				camera.setSelectedTravelNode(null);
 			}
-			final boolean travelFocused = config.showTravelRoutes() && camera.getSelectedTravelNode() != null;
+			final boolean travelFocused = camera.isTravelViewActive()
+				|| (config.showTravelRoutes() && camera.getSelectedTravelNode() != null);
 			boolean routeDrawFailure = false;
 			markerRenderer.beginFrame();
 			if (travelFocused)
@@ -376,6 +377,12 @@ public class BetterWorldMapOverlay extends Overlay
 			}
 			markerRenderer.drawTravelStations(graphics, bounds);
 			markerRenderer.drawTravelRoutes(graphics, bounds);
+			if (camera.isTravelViewActive())
+			{
+				markerRenderer.drawSailingPorts(graphics, bounds, placedMarkers);
+				markerRenderer.drawPlayerBoats(graphics, bounds, placedMarkers);
+				markerRenderer.drawPlayer(graphics, bounds);
+			}
 			if (!travelFocused)
 			{
 				markerRenderer.drawSailingPorts(graphics, bounds, placedMarkers);
@@ -399,11 +406,11 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
 			// drawUnmappedWarning(graphics, bounds);
-			if (raidBossDisplay == null || !raidBossDisplay.ownsHover(input.getCursor()))
+			if (camera.isTravelViewActive() || raidBossDisplay == null || !raidBossDisplay.ownsHover(input.getCursor()))
 			{
 				tooltipRenderer.drawTooltip(graphics, bounds, markerRenderer);
 			}
-			if (raidBossDisplay != null)
+			if (raidBossDisplay != null && !camera.isTravelViewActive())
 			{
 				raidBossDisplay.draw(graphics, bounds, input.getCursor(), tooltipRenderer);
 			}

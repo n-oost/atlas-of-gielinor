@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
 /**
  * The fixed travel networks: charter ships, passenger ferries, gnome gliders, spirit trees,
@@ -61,9 +62,13 @@ public final class TravelData
 		QUETZAL("Quetzal Transport", new Color(240, 100, 140), new Color(255, 150, 180)),
 		SWAMP_BOAT("Swamp & River Boat", new Color(120, 180, 90), new Color(170, 220, 140));
 
+		@Getter
 		private final String displayName;
+		@Getter
 		private final Color primaryColor;
+		@Getter
 		private final Color highlightColor;
+		@Getter
 		private final Color pinColor;
 
 		TravelType(String displayName, Color primaryColor, Color highlightColor)
@@ -78,32 +83,20 @@ public final class TravelData
 			);
 		}
 
-		public String getDisplayName()
-		{
-			return displayName;
-		}
 
-		public Color getPrimaryColor()
-		{
-			return primaryColor;
-		}
 
-		public Color getHighlightColor()
-		{
-			return highlightColor;
-		}
 
-		public Color getPinColor()
-		{
-			return pinColor;
-		}
 	}
 
 	public static final class TravelDestination
 	{
+		@Getter
 		private final String name;
+		@Getter
 		private final WorldPoint location;
+		@Getter
 		private final String cost;
+		@Getter
 		private final String requirement;
 
 		public TravelDestination(String name, WorldPoint location, String cost, String requirement)
@@ -119,34 +112,24 @@ public final class TravelData
 			this(name, location, cost, null);
 		}
 
-		public String getName()
-		{
-			return name;
-		}
 
-		public WorldPoint getLocation()
-		{
-			return location;
-		}
 
-		public String getCost()
-		{
-			return cost;
-		}
 
-		public String getRequirement()
-		{
-			return requirement;
-		}
 	}
 
 	public static final class TravelNode
 	{
+		@Getter
 		private final String name;
+		@Getter
 		private final WorldPoint location;
+		@Getter
 		private final TravelType type;
+		@Getter
 		private final List<TravelDestination> destinations;
+		@Getter
 		private final double displayOffsetX;
+		@Getter
 		private final double displayOffsetY;
 
 		public TravelNode(String name, WorldPoint location, TravelType type, List<TravelDestination> destinations,
@@ -165,39 +148,20 @@ public final class TravelData
 			this(name, location, type, destinations, 0.0, 0.0);
 		}
 
-		public double getDisplayOffsetX()
-		{
-			return displayOffsetX;
-		}
 
-		public double getDisplayOffsetY()
-		{
-			return displayOffsetY;
-		}
 
-		public String getName()
-		{
-			return name;
-		}
 
-		public WorldPoint getLocation()
-		{
-			return location;
-		}
 
-		public TravelType getType()
-		{
-			return type;
-		}
 
-		public List<TravelDestination> getDestinations()
-		{
-			return destinations;
-		}
 	}
 
 	public static volatile List<TravelNode> ALL_NODES = Collections.emptyList();
 	private static volatile boolean loaded;
+
+	public static boolean isLoaded()
+	{
+		return loaded;
+	}
 
 	/** Load on the startup worker; rendering only reads the published station list. */
 	public static void load()

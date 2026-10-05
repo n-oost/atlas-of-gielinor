@@ -38,6 +38,7 @@ import java.util.List;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
+import lombok.Getter;
 
 /**
  * Our own world map camera. Once the plugin takes the map over this - not the client - decides
@@ -64,11 +65,17 @@ public class MapCamera
 
 	public static final class LayerSymbolTarget
 	{
+		@Getter
 		private final Rectangle bounds;
+		@Getter
 		private final UndergroundZone zone;
+		@Getter
 		private final WorldPoint surfacePoint;
+		@Getter
 		private final OverlayCluster cluster;
+		@Getter
 		private final OverlayFloor floor;
+		@Getter
 		private final boolean surfaceToUnderground;
 
 		public LayerSymbolTarget(Rectangle bounds, UndergroundZone zone, boolean surfaceToUnderground)
@@ -107,30 +114,10 @@ public class MapCamera
 			this.surfaceToUnderground = true;
 		}
 
-		public Rectangle getBounds()
-		{
-			return bounds;
-		}
 
-		public UndergroundZone getZone()
-		{
-			return zone;
-		}
 
-		public WorldPoint getSurfacePoint()
-		{
-			return surfacePoint;
-		}
 
-		public OverlayCluster getCluster()
-		{
-			return cluster;
-		}
 
-		public OverlayFloor getFloor()
-		{
-			return floor;
-		}
 
 		public boolean isRegion()
 		{
@@ -142,16 +129,14 @@ public class MapCamera
 			return floor != null;
 		}
 
-		public boolean isSurfaceToUnderground()
-		{
-			return surfaceToUnderground;
-		}
 	}
 
 	/** A single checkbox row in the on-map "Layers" panel, published for the input listener to hit-test. */
 	public static final class LayerToggleTarget
 	{
+		@Getter
 		private final Rectangle bounds;
+		@Getter
 		private final String configKey;
 		private final boolean currentValue;
 
@@ -162,15 +147,7 @@ public class MapCamera
 			this.currentValue = currentValue;
 		}
 
-		public Rectangle getBounds()
-		{
-			return bounds;
-		}
 
-		public String getConfigKey()
-		{
-			return configKey;
-		}
 
 		public boolean getCurrentValue()
 		{
@@ -181,12 +158,19 @@ public class MapCamera
 	/** One result row in the on-map Finder: the row body jumps, the walk chip hands off to Shortest Path. */
 	public static final class FinderResultTarget
 	{
+		@Getter
 		private final Rectangle rowBounds;
+		@Getter
 		private final Rectangle walkBounds;
+		@Getter
 		private final Rectangle mapBounds;
+		@Getter
 		private final WorldPoint point;
+		@Getter
 		private final String name;
+		@Getter
 		private final MapFinder.Result result;
+		@Getter
 		private final MapRegion region;
 
 		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name)
@@ -215,50 +199,28 @@ public class MapCamera
 			this.region = region;
 		}
 
-		public Rectangle getRowBounds()
-		{
-			return rowBounds;
-		}
 
-		public Rectangle getWalkBounds()
-		{
-			return walkBounds;
-		}
 
-		public Rectangle getMapBounds()
-		{
-			return mapBounds;
-		}
 
-		public WorldPoint getPoint()
-		{
-			return point;
-		}
 
-		public String getName()
-		{
-			return name;
-		}
 
-		public MapFinder.Result getResult()
-		{
-			return result;
-		}
 
-		public MapRegion getRegion()
-		{
-			return region;
-		}
 	}
 
 	/** One row in the Finder flyout submenu card. */
 	public static final class FlyoutTarget
 	{
+		@Getter
 		private final Rectangle rowBounds;
+		@Getter
 		private final Rectangle walkBounds;
+		@Getter
 		private final Rectangle mapBounds;
+		@Getter
 		private final WorldPoint point;
+		@Getter
 		private final String name;
+		@Getter
 		private final MapFinder.Result result;
 
 		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result)
@@ -281,35 +243,11 @@ public class MapCamera
 			this(rowBounds, walkBounds, point, name, null);
 		}
 
-		public Rectangle getRowBounds()
-		{
-			return rowBounds;
-		}
 
-		public Rectangle getWalkBounds()
-		{
-			return walkBounds;
-		}
 
-		public Rectangle getMapBounds()
-		{
-			return mapBounds;
-		}
 
-		public WorldPoint getPoint()
-		{
-			return point;
-		}
 
-		public String getName()
-		{
-			return name;
-		}
 
-		public MapFinder.Result getResult()
-		{
-			return result;
-		}
 	}
 
 	/**
@@ -324,6 +262,7 @@ public class MapCamera
 	 * <p>Cached rather than read live because the render and Swing paths that need it are not on
 	 * the client thread, and {@code getWorldLocation} asserts that they are.
 	 */
+	@Getter
 	private volatile WorldPoint playerLocation;
 
 	/**
@@ -332,21 +271,26 @@ public class MapCamera
 	 * surface anchor for instances with no {@link com.bettermap.data.UndergroundZone} mapping: the
 	 * player marker projects here and {@link #exitDungeonToSurface()} lands here.
 	 */
+	@Getter
 	private volatile WorldPoint lastSurfaceLocation;
 
 	/** True while the local player stands in an instanced region. Written client thread, read Swing. */
+	@Getter
 	private volatile boolean playerInInstance;
 	/** Last mapped interior observed while the map was open; used to react only to transitions. */
 	private volatile UndergroundZone observedPlayerUndergroundZone;
 	private volatile int observedPlayerPlane = -1;
 	private volatile int observedPlayerPieceLayer = -1;
 	/** True when the player is above the overworld but no reliable authored interior owns the point. */
+	@Getter
 	private volatile boolean interiorMapUnavailable;
 
 		/** One row in the Player Boats dropdown menu. */
 	public static final class BoatDropdownTarget
 	{
+		@Getter
 		private final Rectangle bounds;
+		@Getter
 		private final PlayerBoat boat;
 
 		public BoatDropdownTarget(Rectangle bounds, PlayerBoat boat)
@@ -355,47 +299,57 @@ public class MapCamera
 			this.boat = boat;
 		}
 
-		public Rectangle getBounds()
-		{
-			return bounds;
-		}
 
-		public PlayerBoat getBoat()
-		{
-			return boat;
-		}
 	}
 
+	@Getter
 	private volatile Rectangle viewport;
 	private volatile boolean active;
 	private volatile Rectangle[] planeButtons = new Rectangle[0];
 	/** Screen rects where clicks pass through to the client (native close, minimap overview, world-map orb). */
+	@Getter
 	private volatile Rectangle[] nativePassthrough = new Rectangle[0];
+	@Getter
 	private volatile Rectangle undergroundReturnButton;
 	/** "Go to clue" button, shown while the clue scroll plugin has a solved target. */
+	@Getter
 	private volatile Rectangle clueButton;
 	private volatile Rectangle questButton;
 	/** "Go to Player" chip: pans and flashes the map on the local player. */
 	private volatile Rectangle playerButton;
 	/** "Go to Destination" button, shown while an active route/destination is set. */
+	@Getter
 	private volatile Rectangle destinationButton;
 	/** "Player Boats" button, shown while the player owns boats. */
+	@Getter
 	private volatile Rectangle boatsButton;
+	@Getter
 	private volatile boolean boatsDropdownOpen;
+	@Getter
 	private volatile Rectangle boatsDropdownBounds;
+	@Getter
 	private volatile List<BoatDropdownTarget> boatDropdownTargets = Collections.emptyList();
 	/** Collapsible clue panel on fullscreen map. */
+	@Getter
 	private volatile boolean cluePanelCollapsed;
+	@Getter
 	private volatile Rectangle cluePanelBounds;
+	@Getter
 	private volatile Rectangle cluePanelHeaderBounds;
+	@Getter
 	private volatile Rectangle cluePanelPanButton;
+	@Getter
 	private volatile List<LayerSymbolTarget> layerSymbolTargets = Collections.emptyList();
 
 	/** On-map "Layers" panel: the gear toggle, whether the panel is expanded, and its rows. */
+	@Getter
 	private volatile Rectangle layersButton;
+	@Getter
 	private volatile boolean layersPanelOpen;
+	@Getter
 	private volatile List<LayerToggleTarget> layerToggleTargets = Collections.emptyList();
 	/** Outer bounds of the expanded panel, so the overlay can suppress hovercards behind it. */
+	@Getter
 	private volatile Rectangle layersPanelBounds;
 
 	/**
@@ -404,15 +358,21 @@ public class MapCamera
 	 * button is the way out. Transient on purpose: {@link #setActive(boolean)} clears it, so
 	 * closing the map always gives the chat back.
 	 */
+	@Getter
 	private volatile Rectangle chatButton;
 	private volatile boolean chatHidden;
 
+	@Getter
 	private volatile Rectangle finderButton;
 	/** The quick-find orb by the minimap, published by {@code QuickFinderOverlay} while the map is closed. */
+	@Getter
 	private volatile Rectangle quickFinderOrb;
 	/** User drag offset for the quick-find orb, in canvas pixels from its default spot below the world-map orb. */
+	@Getter
 	private volatile int finderOrbOffsetX;
+	@Getter
 	private volatile int finderOrbOffsetY;
+	@Getter
 	private volatile boolean finderPanelOpen;
 	/**
 	 * True while the finder card is up on its own, without the world map behind it - the minimap's
@@ -423,6 +383,7 @@ public class MapCamera
 	 * that asks "may the finder take this click / this keystroke" wants
 	 * {@link #isFinderInteractive()}, not {@code isActive()}.
 	 */
+	@Getter
 	private volatile boolean finderStandalone;
 	/**
 	 * True while the search field owns the keyboard. Distinct from {@link #finderPanelOpen}: the
@@ -436,17 +397,28 @@ public class MapCamera
 	 * this is how Shift+Enter is told apart from plain Enter.
 	 */
 	private volatile boolean shiftHeld;
+	@Getter
 	private volatile Rectangle finderPanelBounds;
+	@Getter
 	private volatile Rectangle finderFieldBounds;
+	@Getter
 	private volatile List<FinderResultTarget> finderResultTargets = Collections.emptyList();
+	@Getter
 	private volatile Rectangle finderChipBank;
+	@Getter
 	private volatile Rectangle finderChipSlayer;
+	@Getter
 	private volatile Rectangle finderChipTravel;
+	@Getter
 	private volatile Rectangle finderChipLast;
+	@Getter
 	private volatile String hoveredRowKey;
+	@Getter
 	private volatile Rectangle finderFlyoutBounds;
 	/** Flyout panel plus bridge corridor to the hovered row — keeps hover sticky while crossing the gap. */
+	@Getter
 	private volatile Rectangle finderFlyoutHitBounds;
+	@Getter
 	private volatile List<FlyoutTarget> flyoutTargets = Collections.emptyList();
 
 	/** Finder body rows visible before the user hits Expand. */
@@ -462,20 +434,31 @@ public class MapCamera
 	/** Hover time on an expandable row before the flyout submenu opens. */
 	public static final long FINDER_FLYOUT_DWELL_MS = 1000L;
 
+	@Getter
 	private volatile int finderBodyScrollOffset;
+	@Getter
 	private volatile int finderFlyoutScrollOffset;
+	@Getter
 	private volatile boolean finderBodyExpanded;
 	private volatile int finderBodyItemCount;
 	private volatile int finderFlyoutItemCount;
+	@Getter
 	private volatile String finderScrollKey = "";
+	@Getter
 	private volatile Rectangle finderBodyViewport;
+	@Getter
 	private volatile Rectangle finderFlyoutViewport;
+	@Getter
 	private volatile Rectangle finderExpandButton;
+	@Getter
 	private volatile long finderLastEdgeScrollMs;
 
+	@Getter
 	private volatile WorldPoint flashPoint;
+	@Getter
 	private volatile long flashStartMillis;
 
+	@Getter
 	private volatile UndergroundZone activeUndergroundZone;
 	private volatile boolean lowerView;
 	private volatile boolean travelView;
@@ -483,20 +466,32 @@ public class MapCamera
 	private final java.util.Map<UndergroundZone, OverlayFloor> selectedDungeonFloors = new java.util.concurrent.ConcurrentHashMap<>();
 	private final java.util.Map<String, UndergroundZone> nativeDungeonVariants = new java.util.concurrent.ConcurrentHashMap<>();
 	private volatile WorldPoint activeUndergroundSurfacePoint;
+	@Getter
 	private volatile OverlayCluster activeOverlayCluster;
+	@Getter
 	private volatile UndergroundZone hoveredUndergroundZone;
+	@Getter
 	private volatile OverlayCluster hoveredOverlayCluster;
+	@Getter
 	private volatile Integer hoveredFloorPlane;
 	private volatile Integer hoveredFloorLayer;
 	private volatile Integer activeFloorLayer;
+	@Getter
 	private volatile boolean hoveredSurfaceToUnderground = true;
+	@Getter
 	private volatile TravelData.TravelNode hoveredTravelNode;
+	@Getter
 	private volatile TravelData.TravelNode selectedTravelNode;
 
+	@Getter
 	private volatile int plane;
+	@Getter
 	private volatile double centerX = 3222;
+	@Getter
 	private volatile double centerY = 3218;
+	@Getter
 	private volatile double zoom = 2.0;
+	@Getter
 	private volatile Double savedSurfaceZoom;
 	private volatile boolean planeChosenByUser;
 
@@ -517,25 +512,9 @@ public class MapCamera
 		frameZoom = zoom;
 	}
 
-	public int getPlane()
-	{
-		return plane;
-	}
 
-	public double getCenterX()
-	{
-		return centerX;
-	}
 
-	public double getCenterY()
-	{
-		return centerY;
-	}
 
-	public double getZoom()
-	{
-		return zoom;
-	}
 
 	/** The zoom frozen for the current frame by {@link #beginFrame()} — matches what is projected. */
 	public double getFrameZoom()
@@ -543,10 +522,6 @@ public class MapCamera
 		return frameZoom;
 	}
 
-	public Rectangle getViewport()
-	{
-		return viewport;
-	}
 
 	public void setViewport(Rectangle viewport)
 	{
@@ -651,10 +626,6 @@ public class MapCamera
 		}
 	}
 
-	public WorldPoint getPlayerLocation()
-	{
-		return playerLocation;
-	}
 
 	/**
 	 * The player'''s location projected to the overworld display coordinates.
@@ -690,10 +661,6 @@ public class MapCamera
 		this.playerLocation = playerLocation;
 	}
 
-	public WorldPoint getLastSurfaceLocation()
-	{
-		return lastSurfaceLocation;
-	}
 
 	public void setLastSurfaceLocation(WorldPoint lastSurfaceLocation)
 	{
@@ -703,10 +670,6 @@ public class MapCamera
 		}
 	}
 
-	public boolean isPlayerInInstance()
-	{
-		return playerInInstance;
-	}
 
 	public void setPlayerInInstance(boolean playerInInstance)
 	{
@@ -825,10 +788,6 @@ public class MapCamera
 		interiorMapUnavailable = false;
 	}
 
-	public boolean isInteriorMapUnavailable()
-	{
-		return interiorMapUnavailable;
-	}
 
 	/** The interior the player physically occupies, even while they manually view its surface. */
 	public UndergroundZone getObservedPlayerUndergroundZone()
@@ -853,30 +812,18 @@ public class MapCamera
 		this.planeButtons = planeButtons;
 	}
 
-	public Rectangle[] getNativePassthrough()
-	{
-		return nativePassthrough;
-	}
 
 	public void setNativePassthrough(Rectangle[] nativePassthrough)
 	{
 		this.nativePassthrough = nativePassthrough != null ? nativePassthrough : new Rectangle[0];
 	}
 
-	public Rectangle getUndergroundReturnButton()
-	{
-		return undergroundReturnButton;
-	}
 
 	public void setUndergroundReturnButton(Rectangle undergroundReturnButton)
 	{
 		this.undergroundReturnButton = undergroundReturnButton;
 	}
 
-	public Rectangle getClueButton()
-	{
-		return clueButton;
-	}
 
 	public void setClueButton(Rectangle clueButton)
 	{
@@ -906,90 +853,54 @@ public class MapCamera
 		this.playerButton = playerButton;
 	}
 
-		public Rectangle getDestinationButton()
-	{
-		return destinationButton;
-	}
 
 	public void setDestinationButton(Rectangle destinationButton)
 	{
 		this.destinationButton = destinationButton;
 	}
 
-	public Rectangle getBoatsButton()
-	{
-		return boatsButton;
-	}
 
 	public void setBoatsButton(Rectangle boatsButton)
 	{
 		this.boatsButton = boatsButton;
 	}
 
-	public boolean isBoatsDropdownOpen()
-	{
-		return boatsDropdownOpen;
-	}
 
 	public void setBoatsDropdownOpen(boolean boatsDropdownOpen)
 	{
 		this.boatsDropdownOpen = boatsDropdownOpen;
 	}
 
-	public Rectangle getBoatsDropdownBounds()
-	{
-		return boatsDropdownBounds;
-	}
 
 	public void setBoatsDropdownBounds(Rectangle boatsDropdownBounds)
 	{
 		this.boatsDropdownBounds = boatsDropdownBounds;
 	}
 
-	public List<BoatDropdownTarget> getBoatDropdownTargets()
-	{
-		return boatDropdownTargets;
-	}
 
 	public void setBoatDropdownTargets(List<BoatDropdownTarget> boatDropdownTargets)
 	{
 		this.boatDropdownTargets = boatDropdownTargets != null ? boatDropdownTargets : Collections.emptyList();
 	}
 
-	public boolean isCluePanelCollapsed()
-	{
-		return cluePanelCollapsed;
-	}
 
 	public void setCluePanelCollapsed(boolean cluePanelCollapsed)
 	{
 		this.cluePanelCollapsed = cluePanelCollapsed;
 	}
 
-	public Rectangle getCluePanelBounds()
-	{
-		return cluePanelBounds;
-	}
 
 	public void setCluePanelBounds(Rectangle cluePanelBounds)
 	{
 		this.cluePanelBounds = cluePanelBounds;
 	}
 
-	public Rectangle getCluePanelHeaderBounds()
-	{
-		return cluePanelHeaderBounds;
-	}
 
 	public void setCluePanelHeaderBounds(Rectangle cluePanelHeaderBounds)
 	{
 		this.cluePanelHeaderBounds = cluePanelHeaderBounds;
 	}
 
-	public Rectangle getCluePanelPanButton()
-	{
-		return cluePanelPanButton;
-	}
 
 	public void setCluePanelPanButton(Rectangle cluePanelPanButton)
 	{
@@ -1004,60 +915,36 @@ public class MapCamera
 		return dungeonTuner;
 	}
 
-	public List<LayerSymbolTarget> getLayerSymbolTargets()
-	{
-		return layerSymbolTargets;
-	}
 
 	public void setLayerSymbolTargets(List<LayerSymbolTarget> targets)
 	{
 		this.layerSymbolTargets = targets != null ? targets : Collections.emptyList();
 	}
 
-	public Rectangle getLayersButton()
-	{
-		return layersButton;
-	}
 
 	public void setLayersButton(Rectangle layersButton)
 	{
 		this.layersButton = layersButton;
 	}
 
-	public boolean isLayersPanelOpen()
-	{
-		return layersPanelOpen;
-	}
 
 	public void setLayersPanelOpen(boolean layersPanelOpen)
 	{
 		this.layersPanelOpen = layersPanelOpen;
 	}
 
-	public List<LayerToggleTarget> getLayerToggleTargets()
-	{
-		return layerToggleTargets;
-	}
 
 	public void setLayerToggleTargets(List<LayerToggleTarget> targets)
 	{
 		this.layerToggleTargets = targets != null ? targets : Collections.emptyList();
 	}
 
-	public Rectangle getLayersPanelBounds()
-	{
-		return layersPanelBounds;
-	}
 
 	public void setLayersPanelBounds(Rectangle layersPanelBounds)
 	{
 		this.layersPanelBounds = layersPanelBounds;
 	}
 
-	public Rectangle getChatButton()
-	{
-		return chatButton;
-	}
 
 	public void setChatButton(Rectangle chatButton)
 	{
@@ -1075,35 +962,19 @@ public class MapCamera
 		this.chatHidden = chatHidden;
 	}
 
-	public Rectangle getFinderButton()
-	{
-		return finderButton;
-	}
 
 	public void setFinderButton(Rectangle finderButton)
 	{
 		this.finderButton = finderButton;
 	}
 
-	public Rectangle getQuickFinderOrb()
-	{
-		return quickFinderOrb;
-	}
 
 	public void setQuickFinderOrb(Rectangle quickFinderOrb)
 	{
 		this.quickFinderOrb = quickFinderOrb;
 	}
 
-	public int getFinderOrbOffsetX()
-	{
-		return finderOrbOffsetX;
-	}
 
-	public int getFinderOrbOffsetY()
-	{
-		return finderOrbOffsetY;
-	}
 
 	public void setFinderOrbOffset(int x, int y)
 	{
@@ -1111,15 +982,7 @@ public class MapCamera
 		this.finderOrbOffsetY = y;
 	}
 
-	public boolean isFinderPanelOpen()
-	{
-		return finderPanelOpen;
-	}
 
-	public boolean isFinderStandalone()
-	{
-		return finderStandalone;
-	}
 
 	public void setFinderStandalone(boolean finderStandalone)
 	{
@@ -1195,20 +1058,12 @@ public class MapCamera
 		this.shiftHeld = shiftHeld;
 	}
 
-	public Rectangle getFinderPanelBounds()
-	{
-		return finderPanelBounds;
-	}
 
 	public void setFinderPanelBounds(Rectangle finderPanelBounds)
 	{
 		this.finderPanelBounds = finderPanelBounds;
 	}
 
-	public Rectangle getFinderFieldBounds()
-	{
-		return finderFieldBounds;
-	}
 
 	public void setFinderFieldBounds(Rectangle finderFieldBounds)
 	{
@@ -1216,120 +1071,72 @@ public class MapCamera
 	}
 
 
-	public List<FinderResultTarget> getFinderResultTargets()
-	{
-		return finderResultTargets;
-	}
 
 	public void setFinderResultTargets(List<FinderResultTarget> targets)
 	{
 		this.finderResultTargets = targets != null ? targets : Collections.emptyList();
 	}
 
-	public Rectangle getFinderChipBank()
-	{
-		return finderChipBank;
-	}
 
 	public void setFinderChipBank(Rectangle finderChipBank)
 	{
 		this.finderChipBank = finderChipBank;
 	}
 
-	public Rectangle getFinderChipSlayer()
-	{
-		return finderChipSlayer;
-	}
 
 	public void setFinderChipSlayer(Rectangle finderChipSlayer)
 	{
 		this.finderChipSlayer = finderChipSlayer;
 	}
 
-	public Rectangle getFinderChipTravel()
-	{
-		return finderChipTravel;
-	}
 
 	public void setFinderChipTravel(Rectangle finderChipTravel)
 	{
 		this.finderChipTravel = finderChipTravel;
 	}
 
-	public Rectangle getFinderChipLast()
-	{
-		return finderChipLast;
-	}
 
 	public void setFinderChipLast(Rectangle finderChipLast)
 	{
 		this.finderChipLast = finderChipLast;
 	}
 
-	public String getHoveredRowKey()
-	{
-		return hoveredRowKey;
-	}
 
 	public void setHoveredRowKey(String hoveredRowKey)
 	{
 		this.hoveredRowKey = hoveredRowKey;
 	}
 
-	public Rectangle getFinderFlyoutBounds()
-	{
-		return finderFlyoutBounds;
-	}
 
 	public void setFinderFlyoutBounds(Rectangle finderFlyoutBounds)
 	{
 		this.finderFlyoutBounds = finderFlyoutBounds;
 	}
 
-	public Rectangle getFinderFlyoutHitBounds()
-	{
-		return finderFlyoutHitBounds;
-	}
 
 	public void setFinderFlyoutHitBounds(Rectangle finderFlyoutHitBounds)
 	{
 		this.finderFlyoutHitBounds = finderFlyoutHitBounds;
 	}
 
-	public List<FlyoutTarget> getFlyoutTargets()
-	{
-		return flyoutTargets;
-	}
 
 	public void setFlyoutTargets(List<FlyoutTarget> targets)
 	{
 		this.flyoutTargets = targets != null ? targets : Collections.emptyList();
 	}
 
-	public int getFinderBodyScrollOffset()
-	{
-		return finderBodyScrollOffset;
-	}
 
 	public void setFinderBodyScrollOffset(int finderBodyScrollOffset)
 	{
 		this.finderBodyScrollOffset = Math.max(0, finderBodyScrollOffset);
 	}
 
-	public int getFinderFlyoutScrollOffset()
-	{
-		return finderFlyoutScrollOffset;
-	}
 
 	public void setFinderFlyoutScrollOffset(int finderFlyoutScrollOffset)
 	{
 		this.finderFlyoutScrollOffset = Math.max(0, finderFlyoutScrollOffset);
 	}
 
-	public boolean isFinderBodyExpanded()
-	{
-		return finderBodyExpanded;
-	}
 
 	public void toggleFinderBodyExpanded()
 	{
@@ -1347,50 +1154,30 @@ public class MapCamera
 		this.finderFlyoutItemCount = Math.max(0, finderFlyoutItemCount);
 	}
 
-	public String getFinderScrollKey()
-	{
-		return finderScrollKey;
-	}
 
 	public void setFinderScrollKey(String finderScrollKey)
 	{
 		this.finderScrollKey = finderScrollKey != null ? finderScrollKey : "";
 	}
 
-	public Rectangle getFinderBodyViewport()
-	{
-		return finderBodyViewport;
-	}
 
 	public void setFinderBodyViewport(Rectangle finderBodyViewport)
 	{
 		this.finderBodyViewport = finderBodyViewport;
 	}
 
-	public Rectangle getFinderFlyoutViewport()
-	{
-		return finderFlyoutViewport;
-	}
 
 	public void setFinderFlyoutViewport(Rectangle finderFlyoutViewport)
 	{
 		this.finderFlyoutViewport = finderFlyoutViewport;
 	}
 
-	public Rectangle getFinderExpandButton()
-	{
-		return finderExpandButton;
-	}
 
 	public void setFinderExpandButton(Rectangle finderExpandButton)
 	{
 		this.finderExpandButton = finderExpandButton;
 	}
 
-	public long getFinderLastEdgeScrollMs()
-	{
-		return finderLastEdgeScrollMs;
-	}
 
 	public void setFinderLastEdgeScrollMs(long finderLastEdgeScrollMs)
 	{
@@ -1461,15 +1248,7 @@ public class MapCamera
 		this.flashStartMillis = System.currentTimeMillis();
 	}
 
-	public WorldPoint getFlashPoint()
-	{
-		return flashPoint;
-	}
 
-	public long getFlashStartMillis()
-	{
-		return flashStartMillis;
-	}
 
 	public void clearFlash()
 	{
@@ -1477,10 +1256,6 @@ public class MapCamera
 		this.flashStartMillis = 0L;
 	}
 
-	public UndergroundZone getActiveUndergroundZone()
-	{
-		return activeUndergroundZone;
-	}
 
 	public boolean isUndergroundModeActive()
 	{
@@ -1729,10 +1504,6 @@ public class MapCamera
 		return zone;
 	}
 
-	public Double getSavedSurfaceZoom()
-	{
-		return savedSurfaceZoom;
-	}
 
 	public void setSavedSurfaceZoom(Double savedSurfaceZoom)
 	{
@@ -1771,10 +1542,6 @@ public class MapCamera
 		return (hoveredUndergroundZone != null || hoveredOverlayCluster != null) && hoveredSurfaceToUnderground;
 	}
 
-	public UndergroundZone getHoveredUndergroundZone()
-	{
-		return hoveredUndergroundZone;
-	}
 
 	/**
 	 * The zone the dev tuner acts on: the committed layer, or the dungeon symbol under the cursor
@@ -1789,10 +1556,6 @@ public class MapCamera
 		return hoveredSurfaceToUnderground ? hoveredUndergroundZone : null;
 	}
 
-	public boolean isHoveredSurfaceToUnderground()
-	{
-		return hoveredSurfaceToUnderground;
-	}
 
 	public void setHoveredUnderground(UndergroundZone zone, boolean surfaceToUnderground)
 	{
@@ -1862,10 +1625,6 @@ public class MapCamera
 		return !multiPlane || piece.plane == zone.getUndergroundPoint().getPlane();
 	}
 
-	public Integer getHoveredFloorPlane()
-	{
-		return hoveredFloorPlane;
-	}
 
 	public boolean isHoveredFloor(OverlayFloor floor)
 	{
@@ -1880,10 +1639,6 @@ public class MapCamera
 		return hoveredFloorLayer == null || java.util.Objects.equals(hoveredFloorLayer, floor.layerId);
 	}
 
-	public OverlayCluster getHoveredOverlayCluster()
-	{
-		return hoveredOverlayCluster;
-	}
 
 	public void setHoveredOverlayCluster(OverlayCluster cluster)
 	{
@@ -1932,10 +1687,6 @@ public class MapCamera
 			&& (activeOverlayCluster != null || hoveredOverlayCluster != null);
 	}
 
-	public OverlayCluster getActiveOverlayCluster()
-	{
-		return activeOverlayCluster;
-	}
 
 	public synchronized void setActiveOverlayCluster(OverlayCluster cluster)
 	{
@@ -1963,20 +1714,12 @@ public class MapCamera
 		}
 	}
 
-	public TravelData.TravelNode getHoveredTravelNode()
-	{
-		return hoveredTravelNode;
-	}
 
 	public void setHoveredTravelNode(TravelData.TravelNode node)
 	{
 		this.hoveredTravelNode = node;
 	}
 
-	public TravelData.TravelNode getSelectedTravelNode()
-	{
-		return selectedTravelNode;
-	}
 
 	public void setSelectedTravelNode(TravelData.TravelNode node)
 	{

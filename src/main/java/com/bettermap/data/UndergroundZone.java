@@ -72,11 +72,7 @@
  */
 package com.bettermap.data;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Collections;
@@ -84,13 +80,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.runelite.api.coords.WorldPoint;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The major underground zones and dungeons, each pairing a surface entrance with the coordinates
  * of its interior. The mapping runs both ways, which is what lets the map peek at a dungeon on
  * hover and swap to it on click.
  */
-@lombok.extern.slf4j.Slf4j
+@Slf4j
 public enum UndergroundZone
 {
 	LUMBRIDGE_CELLAR,
@@ -475,7 +473,7 @@ public enum UndergroundZone
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE,
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND_WEISS_SALT_MINE;
 
-	@lombok.AllArgsConstructor
+	@AllArgsConstructor
 	private static final class Metadata
 	{
 		private final String id;
@@ -492,7 +490,7 @@ public enum UndergroundZone
 		private final int clipMaxY;
 	}
 
-	@lombok.AllArgsConstructor
+	@AllArgsConstructor
 	private static final class Catalog
 	{
 		private final Map<UndergroundZone, Metadata> metadata;
@@ -518,36 +516,22 @@ public enum UndergroundZone
 		}
 		final Map<UndergroundZone, Metadata> prepared = new EnumMap<>(UndergroundZone.class);
 		final Map<String, UndergroundZone> ids = new HashMap<>();
-		try (InputStream stream = UndergroundZone.class.getResourceAsStream("/com/bettermap/dungeons/zones.tsv"))
+		try
 		{
-			if (stream == null)
+			for (String[] f : BundledTsv.read("/com/bettermap/dungeons/zones.tsv", 16))
 			{
-				throw new IOException("Missing dungeon catalog");
-			}
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
-			{
-				String line;
-				while ((line = reader.readLine()) != null)
+				if ((f.length - 16) % 3 != 0) throw new IOException("Invalid dungeon entrances");
+				final UndergroundZone zone = valueOf(f[0]);
+				final WorldPoint surface = point(f, 3);
+				final List<WorldPoint> entrances = new ArrayList<>();
+				entrances.add(surface);
+				for (int i = 16; i < f.length; i += 3) entrances.add(point(f, i));
+				final Metadata metadata = new Metadata(f[1], f[2], surface, Collections.unmodifiableList(entrances),
+					point(f, 6), Integer.parseInt(f[9]), Integer.parseInt(f[10]), f[11],
+					Integer.parseInt(f[12]), Integer.parseInt(f[13]), Integer.parseInt(f[14]), Integer.parseInt(f[15]));
+				if (prepared.put(zone, metadata) != null || ids.put(metadata.id, zone) != null)
 				{
-					if (Thread.currentThread().isInterrupted()) return;
-					if (line.isEmpty() || line.charAt(0) == '#') continue;
-					final String[] f = line.split("\\t", -1);
-					if (f.length < 16 || (f.length - 16) % 3 != 0)
-					{
-						throw new IOException("Invalid dungeon catalog row");
-					}
-					final UndergroundZone zone = valueOf(f[0]);
-					final WorldPoint surface = point(f, 3);
-					final List<WorldPoint> entrances = new ArrayList<>();
-					entrances.add(surface);
-					for (int i = 16; i < f.length; i += 3) entrances.add(point(f, i));
-					final Metadata metadata = new Metadata(f[1], f[2], surface, Collections.unmodifiableList(entrances),
-						point(f, 6), Integer.parseInt(f[9]), Integer.parseInt(f[10]), f[11],
-						Integer.parseInt(f[12]), Integer.parseInt(f[13]), Integer.parseInt(f[14]), Integer.parseInt(f[15]));
-					if (prepared.put(zone, metadata) != null || ids.put(metadata.id, zone) != null)
-					{
-						throw new IOException("Duplicate dungeon catalog entry");
-					}
+					throw new IOException("Duplicate dungeon catalog entry");
 				}
 			}
 			if (prepared.size() != values().length) throw new IOException("Incomplete dungeon catalog");

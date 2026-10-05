@@ -37,6 +37,13 @@ import org.junit.Test;
 
 public class OverlayClusterTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private static final String FIXTURE =
 		"# comment\n"
 			+ "lumbridge\tLumbridge\t3060\t3050\t3280\t3320\t"

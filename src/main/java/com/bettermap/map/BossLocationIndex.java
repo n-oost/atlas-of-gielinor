@@ -128,6 +128,40 @@ public final class BossLocationIndex
 			this.y = y;
 		}
 
+		public boolean visibleInFocusedLayer(MapCamera camera)
+		{
+			if (zoneId == null || zoneId.isEmpty())
+			{
+				return true;
+			}
+			final UndergroundZone zone = UndergroundZone.byId(zoneId);
+			if (zone == null || camera.getFocusedUndergroundZone() != zone)
+			{
+				return false;
+			}
+			final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
+			final int visiblePlane = hoveredPlane != null ? hoveredPlane
+				: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
+			if (plane != visiblePlane)
+			{
+				return false;
+			}
+			final Integer layer = camera.floorLayerFor(zone);
+			return layer == null || layer == this.layer;
+		}
+
+		/** Apply the same authored position and tuning to drawing and tooltip hit testing. */
+		public Point2D displayPoint(DungeonPieceIndex pieces, DungeonTuner tuner)
+		{
+			final Point2D point = displayPoint(pieces);
+			final UndergroundZone zone = UndergroundZone.byId(zoneId);
+			if (zone != null)
+			{
+				point.setLocation(point.getX() - tuner.offsetX(zone), point.getY() - tuner.offsetY(zone));
+			}
+			return point;
+		}
+
 		public Point2D displayPoint(DungeonPieceIndex pieces)
 		{
 			if (zoneId.isEmpty() || pieces == null)

@@ -175,12 +175,7 @@ public class MonsterMarkerRenderer
 			}
 			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
 				? null : UndergroundZone.byId(location.zoneId);
-			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
-			if (bossZone != null)
-			{
-				display.setLocation(display.getX() - camera.getDungeonTuner().offsetX(bossZone),
-					display.getY() - camera.getDungeonTuner().offsetY(bossZone));
-			}
+			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex, camera.getDungeonTuner());
 			final boolean wrongPlane = bossZone == null && location.plane != plane;
 			if (wrongPlane)
 			{
@@ -275,24 +270,9 @@ public class MonsterMarkerRenderer
 
 	private boolean bossVisibleInFocusedLayer(BossLocationIndex.Location location)
 	{
-		if (location.zoneId == null || location.zoneId.isEmpty())
-		{
-			return ViewWindow.isDrawable(camera, location.x, location.y);
-		}
-		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
-		if (zone == null || camera.getFocusedUndergroundZone() != zone)
-		{
-			return false;
-		}
-		final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
-		final int visiblePlane = hoveredPlane != null ? hoveredPlane
-			: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
-		if (location.plane != visiblePlane)
-		{
-			return false;
-		}
-		final Integer layer = camera.floorLayerFor(zone);
-		return layer == null || layer == location.layer;
+		return location.zoneId == null || location.zoneId.isEmpty()
+			? ViewWindow.isDrawable(camera, location.x, location.y)
+			: location.visibleInFocusedLayer(camera);
 	}
 
 	/** Bosses and slayer targets, with details on hover and item sprites on the map. */

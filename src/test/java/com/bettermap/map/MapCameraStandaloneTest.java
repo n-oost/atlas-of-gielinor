@@ -32,6 +32,13 @@ import org.junit.Test;
 /** The standalone quick-find card must outlive the per-frame {@code setActive(false)} while the map is closed. */
 public class MapCameraStandaloneTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	@Test
 	public void setActiveFalseKeepsTheStandaloneCardUp()
 	{

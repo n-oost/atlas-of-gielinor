@@ -55,6 +55,13 @@ import org.junit.Test;
 
 public class DestinationAndBoatsButtonTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private static class TestConfig implements BetterMapConfig
 	{
 		boolean showClueScroll = false;

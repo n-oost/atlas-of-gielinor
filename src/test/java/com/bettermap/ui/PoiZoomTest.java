@@ -43,6 +43,13 @@ import static org.junit.Assert.assertTrue;
 
 public class PoiZoomTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private static final String[] KEYS = {
 		"bank", "general_store", "fishing_spot", "agility_short-cut", "lookout_point",
 		"transportation", "quest_start", "minigame", "raids_lobby", "altar",

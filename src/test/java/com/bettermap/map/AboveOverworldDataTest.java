@@ -49,6 +49,13 @@ import org.junit.Test;
  */
 public class AboveOverworldDataTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	/** Lumbridge: the overworld, as far from the band as a camera gets. */
 	private static final double CAM_X = 3222;
 	private static final double CAM_Y = 3218;

@@ -25,7 +25,6 @@
 package com.bettermap.ui.input;
 
 import com.bettermap.BetterMapPlugin;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.TravelData;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;

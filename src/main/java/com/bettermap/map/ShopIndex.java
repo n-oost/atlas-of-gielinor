@@ -40,6 +40,7 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
 /**
  * Shops from the bundled wiki-derived dataset ({@code shops.json}).
@@ -59,30 +60,16 @@ public class ShopIndex
 		this.gson = gson;
 	}
 
-
 	private static final String RESOURCE = "/com/bettermap/data/shops.json.gz";
 	private static final int CLIP = 88;
 
 	private final List<Shop> shops = new ArrayList<>();
 	private final Map<Long, List<Shop>> chunkMap = new HashMap<>();
 
+	@Getter
 	private volatile boolean loaded;
+	@Getter
 	private volatile long dataVersion;
-
-	public long getDataVersion()
-	{
-		return dataVersion;
-	}
-
-	private static long chunkKey(int plane, int chunkX, int chunkY)
-	{
-		return (((long) plane & 0x3L) << 32) | (((long) (chunkX & 0xFFFF) << 16)) | ((long) (chunkY & 0xFFFF));
-	}
-
-	public boolean isLoaded()
-	{
-		return loaded;
-	}
 
 	public synchronized int size()
 	{
@@ -98,31 +85,7 @@ public class ShopIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Shop> consumer)
 	{
-		final int minChunkX = minWorldX >> 6;
-		final int maxChunkX = maxWorldX >> 6;
-		final int minChunkY = minWorldY >> 6;
-		final int maxChunkY = maxWorldY >> 6;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Shop> chunkShops = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkShops == null)
-				{
-					continue;
-				}
-
-				for (Shop shop : chunkShops)
-				{
-					if (shop.x >= minWorldX && shop.x <= maxWorldX
-						&& shop.y >= minWorldY && shop.y <= maxWorldY)
-					{
-						consumer.accept(shop);
-					}
-				}
-			}
-		}
+		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, s -> s.x, s -> s.y, consumer);
 	}
 
 	/** Parses the bundled dataset. Call off the client thread. */
@@ -179,7 +142,6 @@ public class ShopIndex
 			return;
 		}
 
-
 		// Consolidate same-owner shop pairs at the same location (Groups 22, 24, 25, 28, 32)
 		final List<Shop> consolidated = consolidateSameOwnerShops(parsed);
 
@@ -189,7 +151,7 @@ public class ShopIndex
 		final Map<Long, List<Shop>> spatial = new HashMap<>();
 		for (Shop shop : consolidated)
 		{
-			spatial.computeIfAbsent(chunkKey(shop.plane, shop.x >> 6, shop.y >> 6), k -> new ArrayList<>())
+			spatial.computeIfAbsent(MapChunkKey.ofWorldPoint(shop.plane, shop.x, shop.y), k -> new ArrayList<>())
 				.add(shop);
 		}
 
@@ -251,7 +213,7 @@ public class ShopIndex
 		{
 			for (int cy = minChunkY; cy <= maxChunkY; cy++)
 			{
-				final List<Shop> chunkShops = chunkMap.get(chunkKey(plane, cx, cy));
+				final List<Shop> chunkShops = chunkMap.get(MapChunkKey.of(plane, cx, cy));
 				if (chunkShops == null)
 				{
 					continue;
@@ -305,7 +267,7 @@ public class ShopIndex
 		{
 			for (int cy = minChunkY; cy <= maxChunkY && found.size() < limit; cy++)
 			{
-				final List<Shop> chunkShops = chunkMap.get(chunkKey(of.plane, cx, cy));
+				final List<Shop> chunkShops = chunkMap.get(MapChunkKey.of(of.plane, cx, cy));
 				if (chunkShops == null)
 				{
 					continue;
@@ -337,20 +299,12 @@ public class ShopIndex
 	/** One SKU in a shop's inventory, with default stock and shop sell price when known. */
 	public static final class StockItem
 	{
+		@Getter
 		private String name;
+		@Getter
 		private int stock;
 		/** Shop sell price in coins at default stock, or {@code 0} when unknown. */
 		private int sell;
-
-		public String getName()
-		{
-			return name;
-		}
-
-		public int getStock()
-		{
-			return stock;
-		}
 
 		/** Shop sell price in coins, or {@code 0} when unknown. */
 		public int getSell()
@@ -388,77 +342,53 @@ public class ShopIndex
 
 	public static final class Shop
 	{
+		@Getter
 		private String name;
+		@Getter
 		private String owner;
+		@Getter
 		private String location;
+		@Getter
 		private String icon;
+		@Getter
 		private boolean members;
+		@Getter
 		private String special;
 		private List<String> services;
 		private List<String> notable;
+		@Getter
 		private String bulk;
 		@SerializedName("bulk_stock")
+		@Getter
 		private int bulkStock;
 		@SerializedName("stock_total")
+		@Getter
 		private int stockTotal;
 		/** Full inventory rows from the wiki StoreLine table (may be empty for service shops). */
 		private List<StockItem> stock;
 		@SerializedName("sell_pct")
+		@Getter
 		private int sellPct;
 		@SerializedName("buy_pct")
 		private int buyPct;
+		@Getter
 		private int x;
+		@Getter
 		private int y;
+		@Getter
 		private int plane;
+		@Getter
 		private boolean approx;
 
+		@Getter
 		private double displayOffsetX;
+		@Getter
 		private double displayOffsetY;
-
-		public double getDisplayOffsetX()
-		{
-			return displayOffsetX;
-		}
-
-		public double getDisplayOffsetY()
-		{
-			return displayOffsetY;
-		}
 
 		public void setDisplayOffset(double dx, double dy)
 		{
 			this.displayOffsetX = dx;
 			this.displayOffsetY = dy;
-		}
-
-		public String getName()
-		{
-			return name;
-		}
-
-		public String getOwner()
-		{
-			return owner;
-		}
-
-		public String getLocation()
-		{
-			return location;
-		}
-
-		public String getIcon()
-		{
-			return icon;
-		}
-
-		public boolean isMembers()
-		{
-			return members;
-		}
-
-		public String getSpecial()
-		{
-			return special;
 		}
 
 		public List<String> getServices()
@@ -471,49 +401,9 @@ public class ShopIndex
 			return notable == null ? Collections.emptyList() : notable;
 		}
 
-		public String getBulk()
-		{
-			return bulk;
-		}
-
-		public int getBulkStock()
-		{
-			return bulkStock;
-		}
-
-		public int getStockTotal()
-		{
-			return stockTotal;
-		}
-
-		public int getX()
-		{
-			return x;
-		}
-
-		public int getY()
-		{
-			return y;
-		}
-
-		public int getPlane()
-		{
-			return plane;
-		}
-
-		public boolean isApprox()
-		{
-			return approx;
-		}
-
 		public List<StockItem> getStock()
 		{
 			return stock == null ? Collections.emptyList() : stock;
-		}
-
-		public int getSellPct()
-		{
-			return sellPct;
 		}
 
 		/**
@@ -714,7 +604,6 @@ public class ShopIndex
 			return text.substring(0, CLIP - 1) + "…";
 		}
 	}
-
 
 	private static long tileKey(int plane, int x, int y)
 	{

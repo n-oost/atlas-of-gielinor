@@ -25,6 +25,7 @@
 package com.bettermap.data;
 
 import net.runelite.api.coords.WorldPoint;
+import lombok.Getter;
 
 public enum MonsterLocationData
 {
@@ -123,11 +124,17 @@ public enum MonsterLocationData
 	TUMEKEN_S_WARDEN("Tumeken's Warden", 489, "Raids - Tombs of Amascut lobby; room unavailable", new WorldPoint(3357, 9117, 0)),
 	ELIDINIS_WARDEN("Elidinis' Warden", 489, "Raids - Tombs of Amascut lobby; room unavailable", new WorldPoint(3364, 9117, 0));
 
+	@Getter
 	private final String name;
+	@Getter
 	private final int combatLevel;
+	@Getter
 	private final String weaknessStrategy;
+	@Getter
 	private final String locationName;
+	@Getter
 	private final WorldPoint worldPoint;
+	@Getter
 	private final String keyDrops;
 
 	MonsterLocationData(String name, int combatLevel, String locationName, WorldPoint worldPoint)
@@ -145,12 +152,6 @@ public enum MonsterLocationData
 		this.keyDrops = keyDrops;
 	}
 
-	public String getName() { return name; }
-	public int getCombatLevel() { return combatLevel; }
-	public String getWeaknessStrategy() { return weaknessStrategy; }
-	public String getLocationName() { return locationName; }
-	public WorldPoint getWorldPoint() { return worldPoint; }
-	public String getKeyDrops() { return keyDrops; }
 
 	@Override
 	public String toString()

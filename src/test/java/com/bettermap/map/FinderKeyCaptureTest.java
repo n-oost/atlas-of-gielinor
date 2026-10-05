@@ -18,6 +18,13 @@ import com.bettermap.BetterMapPlugin;
 
 public class FinderKeyCaptureTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private static class FakeHost implements ChatboxInputHost
 	{
 		String prompt;

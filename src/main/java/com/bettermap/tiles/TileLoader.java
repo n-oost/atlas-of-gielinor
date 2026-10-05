@@ -48,6 +48,7 @@ import javax.imageio.ImageIO;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.util.Filepath;
+import lombok.Getter;
 
 /** Decodes the verified installed asset pack and bundled cavern tiles off the client thread. */
 @Slf4j
@@ -99,9 +100,11 @@ public class TileLoader
 	private final java.util.concurrent.atomic.AtomicLong failures = new java.util.concurrent.atomic.AtomicLong();
 
 	private volatile NavigableSet<Integer> availableZooms = Collections.emptyNavigableSet();
+	@Getter
 	private volatile Filepath tileDir;
 	private volatile List<String> installedPaths = Collections.emptyList();
 	private volatile Set<String> installedTilePaths = Collections.emptySet();
+	@Getter
 	private volatile String status = "Map assets are not installed.";
 	private volatile ExecutorService executor;
 
@@ -260,10 +263,6 @@ public class TileLoader
 		clear(scaled);
 	}
 
-	public Filepath getTileDir()
-	{
-		return tileDir;
-	}
 
 	/** Cache hits since start-up, for the debug panel. */
 	public long getCacheHits()
@@ -324,10 +323,6 @@ public class TileLoader
 		status = message;
 	}
 
-	public String getStatus()
-	{
-		return status;
-	}
 
 	/** True only after a verified installed pack has been activated. */
 	public boolean hasTiles()

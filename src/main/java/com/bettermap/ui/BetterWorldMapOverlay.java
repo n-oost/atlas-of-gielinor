@@ -26,8 +26,6 @@ package com.bettermap.ui;
 
 import com.bettermap.ui.markers.RaidBossDisplay;
 
-import static com.bettermap.ui.MapStyle.CARD_BG;
-import static com.bettermap.ui.MapStyle.CARD_EDGE;
 import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_BUTTON_SIZE;
 import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_FINDER;
 import static com.bettermap.ui.MapStyle.SMALL;
@@ -42,6 +40,7 @@ import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.MapData;
 import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.MapFinder;
 import com.bettermap.map.MonsterIconManager;
@@ -64,7 +63,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -258,7 +256,7 @@ public class BetterWorldMapOverlay extends Overlay
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-		if (!com.bettermap.map.MapData.isReady()) return null;
+		if (!MapData.isReady()) return null;
 		final Widget map = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
 		final WorldMap worldMap = client.getWorldMap();
 
@@ -406,7 +404,6 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawBoatsDropdown(graphics, bounds);
 			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
-			// drawUnmappedWarning(graphics, bounds);
 			if (camera.isTravelViewActive() || raidBossDisplay == null || !raidBossDisplay.ownsHover(input.getCursor()))
 			{
 				tooltipRenderer.drawTooltip(graphics, bounds, markerRenderer);
@@ -641,34 +638,6 @@ public class BetterWorldMapOverlay extends Overlay
 	public void drawStandaloneFinder(Graphics2D graphics, Rectangle anchor, Rectangle bounds)
 	{
 		finderRenderer.drawFinder(graphics, bounds, anchor, false);
-	}
-
-	/**
-	 * Says so when the player is somewhere with no published map, rather than letting the
-	 * surface fallback look like their actual surroundings.
-	 */
-	private void drawUnmappedWarning(Graphics2D graphics, Rectangle bounds)
-	{
-		final Point where = unmappedPosition;
-		if (where == null)
-		{
-			return;
-		}
-
-		final String text = "Location (" + where.getX() + ", " + where.getY() + ") is outside world bounds";
-
-		graphics.setFont(SMALL);
-		final int width = graphics.getFontMetrics().stringWidth(text);
-		final int x = (int) bounds.getCenterX() - (width + 14) / 2;
-		final int y = (int) bounds.getMinY() + 34;
-
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(x, y, width + 14, 20, 7, 7);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(x, y, width + 14, 20, 7, 7);
-		graphics.setColor(TEXT_WARN);
-		graphics.drawString(text, x + 7, y + 14);
 	}
 
 	private void drawNotice(Graphics2D graphics, Rectangle bounds, String... lines)

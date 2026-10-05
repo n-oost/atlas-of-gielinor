@@ -42,7 +42,6 @@ import com.bettermap.map.ShortestPathTracker;
 import net.runelite.api.Client;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.ClueScrollTracker;
-import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import com.bettermap.map.PoiIndex;
 import com.bettermap.map.QuestHelperTracker;

@@ -147,18 +147,7 @@ public class Transport
 
 		Transport builtTransport = builder.build();
 
-		this.origin = builtTransport.origin;
-		this.destination = builtTransport.destination;
-		this.skillLevels = builtTransport.skillLevels;
-		this.quests = builtTransport.quests;
-		this.itemRequirements = builtTransport.itemRequirements;
-		this.type = builtTransport.type;
-		this.duration = builtTransport.duration;
-		this.displayInfo = builtTransport.displayInfo;
-		this.isConsumable = builtTransport.isConsumable;
-		this.maxWildernessLevel = builtTransport.maxWildernessLevel;
-		this.objectInfo = builtTransport.objectInfo;
-		this.varRequirements = builtTransport.varRequirements;
+		copyFieldsFrom(builtTransport);
 	}
 
 	Transport(TransportRecord record, TransportType transportType)
@@ -221,19 +210,24 @@ public class Transport
 		}
 
 		Transport builtTransport = builder.build();
-		this.origin = builtTransport.origin;
-		this.destination = builtTransport.destination;
-		this.skillLevels = builtTransport.skillLevels;
-		this.quests = builtTransport.quests;
-		this.itemRequirements = builtTransport.itemRequirements;
-		this.type = builtTransport.type;
-		this.duration = builtTransport.duration;
-		this.displayInfo = builtTransport.displayInfo;
-		this.isConsumable = builtTransport.isConsumable;
-		this.maxWildernessLevel = builtTransport.maxWildernessLevel;
-		this.objectInfo = builtTransport.objectInfo;
-		this.varRequirements = builtTransport.varRequirements;
+		copyFieldsFrom(builtTransport);
 		this.regionOverride = builtTransport.regionOverride;
+	}
+
+	private void copyFieldsFrom(Transport source)
+	{
+		this.origin = source.origin;
+		this.destination = source.destination;
+		this.skillLevels = source.skillLevels;
+		this.quests = source.quests;
+		this.itemRequirements = source.itemRequirements;
+		this.type = source.type;
+		this.duration = source.duration;
+		this.displayInfo = source.displayInfo;
+		this.isConsumable = source.isConsumable;
+		this.maxWildernessLevel = source.maxWildernessLevel;
+		this.objectInfo = source.objectInfo;
+		this.varRequirements = source.varRequirements;
 	}
 
 	private Transport()

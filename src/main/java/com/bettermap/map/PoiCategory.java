@@ -27,6 +27,7 @@ package com.bettermap.map;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Getter;
 
 /**
  * Groups location icons into something a settings panel can switch on and off.
@@ -82,6 +83,7 @@ public enum PoiCategory
 
 	private static final Set<String> PLACE_KEYS = keys("region_label");
 
+	@Getter
 	private final String displayName;
 
 	PoiCategory(String displayName)
@@ -89,10 +91,6 @@ public enum PoiCategory
 		this.displayName = displayName;
 	}
 
-	public String getDisplayName()
-	{
-		return displayName;
-	}
 
 	public static PoiCategory of(String key)
 	{

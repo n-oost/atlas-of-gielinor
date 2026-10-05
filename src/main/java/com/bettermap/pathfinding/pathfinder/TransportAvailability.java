@@ -8,6 +8,7 @@ import java.util.Set;
 import com.bettermap.pathfinding.PrimitiveIntHashMap;
 import com.bettermap.pathfinding.WorldPointUtil;
 import com.bettermap.pathfinding.transport.Transport;
+import lombok.Getter;
 
 public final class TransportAvailability
 {
@@ -21,8 +22,11 @@ public final class TransportAvailability
 	// displayTransports is the coarse display view used by overlays and getTransports(): POH origin
 	// tiles are collapsed into the landing tile only. The two maps share their Transport[] arrays
 	// for every non-POH origin.
+	@Getter
 	private final PrimitiveIntHashMap<Transport[]> transportsPacked;
+	@Getter
 	private final PrimitiveIntHashMap<Transport[]> displayTransports;
+	@Getter
 	private final Transport[] usableTeleports;
 
 	TransportAvailability(
@@ -35,20 +39,8 @@ public final class TransportAvailability
 		this.usableTeleports = usableTeleports;
 	}
 
-	public PrimitiveIntHashMap<Transport[]> getTransportsPacked()
-	{
-		return transportsPacked;
-	}
 
-	public PrimitiveIntHashMap<Transport[]> getDisplayTransports()
-	{
-		return displayTransports;
-	}
 
-	public Transport[] getUsableTeleports()
-	{
-		return usableTeleports;
-	}
 
 	/**
 	 * The transports that start at the given origin tile in the display view, or an empty array.

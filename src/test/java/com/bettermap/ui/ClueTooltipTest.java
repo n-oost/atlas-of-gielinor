@@ -45,6 +45,13 @@ import static org.junit.Assert.assertTrue;
 
 public class ClueTooltipTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private static class TooltipTestConfig implements BetterMapConfig
 	{
 		boolean showTooltips = true;

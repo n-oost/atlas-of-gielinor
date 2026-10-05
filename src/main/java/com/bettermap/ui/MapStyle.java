@@ -25,14 +25,8 @@
 package com.bettermap.ui;
 
 import com.bettermap.data.MonsterLocationData;
-import com.bettermap.data.sailing.SailingPort;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Stroke;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import net.runelite.client.ui.FontManager;
 
 /**

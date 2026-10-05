@@ -40,6 +40,7 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
 /**
  * Ground item spawns, from the bundled wiki-derived dataset: 370 items over 4,361 world tiles.
@@ -63,29 +64,15 @@ public class GroundItemIndex
 		this.gson = gson;
 	}
 
-
 	private static final String RESOURCE = "/com/bettermap/data/ground_items.json.gz";
 
 	private final List<Spawn> spawns = new ArrayList<>();
 	private final Map<Long, List<Spawn>> chunkMap = new HashMap<>();
 
+	@Getter
 	private volatile boolean loaded;
+	@Getter
 	private volatile long dataVersion;
-
-	public long getDataVersion()
-	{
-		return dataVersion;
-	}
-
-	private static long chunkKey(int plane, int chunkX, int chunkY)
-	{
-		return (((long) plane & 0x3L) << 32) | (((long) (chunkX & 0xFFFF) << 16)) | ((long) (chunkY & 0xFFFF));
-	}
-
-	public boolean isLoaded()
-	{
-		return loaded;
-	}
 
 	public synchronized int size()
 	{
@@ -143,7 +130,7 @@ public class GroundItemIndex
 		final Map<Long, List<Spawn>> spatial = new HashMap<>();
 		for (Spawn spawn : parsed)
 		{
-			spatial.computeIfAbsent(chunkKey(spawn.plane, spawn.x >> 6, spawn.y >> 6), k -> new ArrayList<>())
+			spatial.computeIfAbsent(MapChunkKey.ofWorldPoint(spawn.plane, spawn.x, spawn.y), k -> new ArrayList<>())
 				.add(spawn);
 		}
 
@@ -191,49 +178,11 @@ public class GroundItemIndex
 	/** The spawn tile nearest this point on the given plane worth at least {@code minValue}, or null. */
 	public synchronized Spawn nearest(int worldX, int worldY, int plane, int radius, int minValue)
 	{
-		final int minChunkX = (worldX - radius) >> 6;
-		final int maxChunkX = (worldX + radius) >> 6;
-		final int minChunkY = (worldY - radius) >> 6;
-		final int maxChunkY = (worldY + radius) >> 6;
-
-		Spawn best = null;
-		int bestDistance = Integer.MAX_VALUE;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Spawn> chunkSpawns = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkSpawns == null)
-				{
-					continue;
-				}
-
-				for (Spawn spawn : chunkSpawns)
-				{
-					if (spawn.getValue() < minValue)
-					{
-						continue;
-					}
-
-					final int dx = Math.abs(spawn.x - worldX);
-					final int dy = Math.abs(spawn.y - worldY);
-					if (dx > radius || dy > radius)
-					{
-						continue;
-					}
-
-					final int distance = dx * dx + dy * dy;
-					if (distance < bestDistance)
-					{
-						bestDistance = distance;
-						best = spawn;
-					}
-				}
-			}
-		}
-
-		return best;
+		return MapChunkKey.findNearest(
+			chunkMap, plane, worldX, worldY, radius,
+			s -> s.x, s -> s.y,
+			s -> s.getValue() >= minValue
+		);
 	}
 
 	/**
@@ -243,72 +192,24 @@ public class GroundItemIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Spawn> consumer)
 	{
-		final int minChunkX = minWorldX >> 6;
-		final int maxChunkX = maxWorldX >> 6;
-		final int minChunkY = minWorldY >> 6;
-		final int maxChunkY = maxWorldY >> 6;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Spawn> chunkSpawns = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkSpawns == null)
-				{
-					continue;
-				}
-
-				for (Spawn spawn : chunkSpawns)
-				{
-					if (spawn.x >= minWorldX && spawn.x <= maxWorldX
-						&& spawn.y >= minWorldY && spawn.y <= maxWorldY)
-					{
-						consumer.accept(spawn);
-					}
-				}
-			}
-		}
+		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, s -> s.x, s -> s.y, consumer);
 	}
 
 	/** One world tile and everything that respawns on it. */
 	public static final class Spawn
 	{
+		@Getter
 		private int x;
+		@Getter
 		private int y;
+		@Getter
 		private int plane;
+		@Getter
 		private String location;
+		@Getter
 		private boolean members;
+		@Getter
 		private List<Item> items;
-
-		public int getX()
-		{
-			return x;
-		}
-
-		public int getY()
-		{
-			return y;
-		}
-
-		public int getPlane()
-		{
-			return plane;
-		}
-
-		public String getLocation()
-		{
-			return location;
-		}
-
-		public boolean isMembers()
-		{
-			return members;
-		}
-
-		public List<Item> getItems()
-		{
-			return items;
-		}
 
 		/** The item the marker is drawn as: the dataset sorts most valuable first. */
 		public Item getPrimary()
@@ -351,38 +252,22 @@ public class GroundItemIndex
 	/** One item on a spawn tile. */
 	public static final class Item
 	{
+		@Getter
 		private int id;
+		@Getter
 		private String name;
 		@SerializedName("qty")
 		private int quantity;
 		@SerializedName("alch")
+		@Getter
 		private int highAlch;
 		@SerializedName("ge")
+		@Getter
 		private int gePrice;
-
-		public int getId()
-		{
-			return id;
-		}
-
-		public String getName()
-		{
-			return name;
-		}
 
 		public int getQuantity()
 		{
 			return Math.max(1, quantity);
-		}
-
-		public int getHighAlch()
-		{
-			return highAlch;
-		}
-
-		public int getGePrice()
-		{
-			return gePrice;
 		}
 
 		/** GE price where there is one, else high alch — untradeables have no GE price. */

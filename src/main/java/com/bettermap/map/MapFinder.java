@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.coords.WorldPoint;
+import lombok.Getter;
 
 @Singleton
 public class MapFinder
@@ -50,10 +51,14 @@ public class MapFinder
 	private final BetterMapConfig config;
 
 
+	@Getter
 	private volatile String query = "";
+	@Getter
 	private volatile List<Result> results = Collections.emptyList();
 	private List<Result> queryMatches = Collections.emptyList();
+	@Getter
 	private volatile int matchCount;
+	@Getter
 	private volatile int locationMatchCount;
 	private WorldPoint resultOrigin;
 	private long searchDataVersion = Long.MIN_VALUE;
@@ -91,25 +96,9 @@ public class MapFinder
 		return config == null || config.finderSearchItems();
 	}
 
-	public String getQuery()
-	{
-		return query;
-	}
 
-	public List<Result> getResults()
-	{
-		return results;
-	}
 
-	public int getMatchCount()
-	{
-		return matchCount;
-	}
 
-	public int getLocationMatchCount()
-	{
-		return locationMatchCount;
-	}
 
 	public boolean isBrowseLoading()
 	{
@@ -737,11 +726,17 @@ public class MapFinder
 			MINERAL
 		}
 
+		@Getter
 		private final String name;
+		@Getter
 		private final String groupKey;
+		@Getter
 		private final WorldPoint point;
+		@Getter
 		private final int distanceTiles;
+		@Getter
 		private final int tier;
+		@Getter
 		private final Kind kind;
 		private final List<Result> children;
 		/** Optional hover strip line (e.g. shop item cost/stock); null when unused. */
@@ -801,35 +796,11 @@ public class MapFinder
 			return new Result(name, groupKey, point, distanceTiles, tier, kind, children, detail, sellGp);
 		}
 
-		public String getName()
-		{
-			return name;
-		}
 
-		public String getGroupKey()
-		{
-			return groupKey;
-		}
 
-		public WorldPoint getPoint()
-		{
-			return point;
-		}
 
-		public int getDistanceTiles()
-		{
-			return distanceTiles;
-		}
 
-		public int getTier()
-		{
-			return tier;
-		}
 
-		public Kind getKind()
-		{
-			return kind;
-		}
 
 		/** Child rows when this result groups duplicates. Empty for a plain leaf. */
 		public List<Result> getChildren()

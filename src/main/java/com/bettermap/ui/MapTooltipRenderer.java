@@ -894,15 +894,10 @@ public class MapTooltipRenderer
 			{
 				continue;
 			}
-			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex);
+			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex, camera.getDungeonTuner());
 			final UndergroundZone bossZone = UndergroundZone.byId(location.zoneId);
-			if (bossZone != null)
-			{
-				point.setLocation(point.getX() - camera.getDungeonTuner().offsetX(bossZone),
-					point.getY() - camera.getDungeonTuner().offsetY(bossZone));
-			}
 			if (bossZone == null && location.plane != camera.getPlane()
-				|| !bossVisibleInFocusedLayer(location)
+				|| !location.visibleInFocusedLayer(camera)
 				|| !layerAllows(location.x, location.y) && (location.zoneId == null || location.zoneId.isEmpty()))
 			{
 				continue;
@@ -915,28 +910,6 @@ public class MapTooltipRenderer
 		}
 
 		return null;
-	}
-
-	private boolean bossVisibleInFocusedLayer(BossLocationIndex.Location location)
-	{
-		if (location.zoneId == null || location.zoneId.isEmpty())
-		{
-			return true;
-		}
-		final UndergroundZone zone = UndergroundZone.byId(location.zoneId);
-		if (zone == null || camera.getFocusedUndergroundZone() != zone)
-		{
-			return false;
-		}
-		final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
-		final int visiblePlane = hoveredPlane != null ? hoveredPlane
-			: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
-		if (location.plane != visiblePlane)
-		{
-			return false;
-		}
-		final Integer layer = camera.floorLayerFor(zone);
-		return layer == null || layer == location.layer;
 	}
 
 	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, TooltipCard card)

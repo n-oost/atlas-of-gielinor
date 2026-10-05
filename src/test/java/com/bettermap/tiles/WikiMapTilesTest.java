@@ -28,10 +28,34 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class WikiMapTilesTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+	}
+
 	private static final double DELTA = 1e-9;
+
+	/** Fingerprint of the original catalogue, including enum order and every bounding box. */
+	@Test
+	public void resourcePreservesAllOriginalMapBounds() throws Exception
+	{
+		final StringBuilder snapshot = new StringBuilder();
+		for (WikiMap map : WikiMap.values())
+		{
+			snapshot.append(map.name()).append('\t').append(map.getMapId()).append('\t').append(map.getDisplayName())
+				.append('\t').append(map.getMinX()).append('\t').append(map.getMinY())
+				.append('\t').append(map.getMaxX()).append('\t').append(map.getMaxY()).append('\n');
+		}
+		final byte[] digest = MessageDigest.getInstance("SHA-256").digest(snapshot.toString().getBytes(StandardCharsets.UTF_8));
+		assertEquals("0a241ef4e59702ab47cce11d46ae5ab61fd25e1dcb098b76af83c4c07d796821", String.format("%064x", new BigInteger(1, digest)));
+	}
 
 	@Test
 	public void oneGameTileIsTwoToThePowerOfTheZoom()

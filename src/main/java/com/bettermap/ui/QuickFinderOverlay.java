@@ -31,6 +31,7 @@ import static com.bettermap.ui.MapStyle.TEXT_DIM;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.MapData;
 import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -80,7 +81,7 @@ public class QuickFinderOverlay extends Overlay
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-		if (!com.bettermap.map.MapData.isReady()) return null;
+		if (!MapData.isReady()) return null;
 		// The full world map has its own in-map Find button; the orb is the map-closed entry point.
 		if (!config.showFinderOrb() || camera.isActive())
 		{

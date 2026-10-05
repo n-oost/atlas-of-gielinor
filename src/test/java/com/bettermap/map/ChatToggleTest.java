@@ -36,6 +36,13 @@ import org.junit.Test;
  */
 public class ChatToggleTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	private MapCamera camera;
 
 	@Before

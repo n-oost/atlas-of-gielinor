@@ -37,13 +37,13 @@ import com.bettermap.map.ClueScrollTracker;
 import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.FinderKeyCapture;
 import com.bettermap.map.MapCamera;
+import com.bettermap.map.MapData;
 import com.bettermap.map.MapFinder;
 import com.bettermap.map.MonsterIconManager;
 import com.bettermap.map.MonsterIndex;
 import com.bettermap.map.PoiIndex;
 import com.bettermap.map.PoiDetails;
 import com.bettermap.map.PrifddinasShift;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +96,7 @@ import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
 import net.runelite.client.util.ImageUtil;
+import lombok.Getter;
 
 @Slf4j
 @PluginDescriptor(
@@ -115,6 +116,7 @@ public class BetterMapPlugin extends Plugin
 	private ClientThread clientThread;
 
 	@Inject
+	@Getter
 	private BetterMapConfig config;
 
 	@Inject
@@ -192,6 +194,7 @@ public class BetterMapPlugin extends Plugin
 	private GroundItemIndex groundItemIndex;
 
 	@Inject
+	@Getter
 	private BoatTracker boatTracker;
 
 	@Inject
@@ -376,7 +379,7 @@ public class BetterMapPlugin extends Plugin
 		// Hiding has to be reapplied every frame, but restoring does not: once the widgets are
 		// back the client leaves them alone. Skipping the no-op restore keeps widget lookups
 		// per frame off the path a player is on whenever the map is closed - which is most of it.
-		final boolean hideMap = config.hideGameMapRender() && com.bettermap.map.MapData.isReady();
+		final boolean hideMap = config.hideGameMapRender() && MapData.isReady();
 		if (hideMap || mapWidgetsHidden)
 		{
 			setGameMapHidden(hideMap);
@@ -721,10 +724,6 @@ public class BetterMapPlugin extends Plugin
 		}
 	}
 
-	public BoatTracker getBoatTracker()
-	{
-		return boatTracker;
-	}
 
 	/** Back out to the surface layer, showing the whole world. */
 	public void returnToSurface()
@@ -1411,10 +1410,6 @@ public class BetterMapPlugin extends Plugin
 		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", text, null);
 	}
 
-	public BetterMapConfig getConfig()
-	{
-		return config;
-	}
 
 	/** True while RuneLite's context menu owns mouse clicks. */
 	public boolean isClientMenuOpen()

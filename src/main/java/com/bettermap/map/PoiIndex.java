@@ -52,6 +52,7 @@ import java.util.TreeMap;
 import javax.imageio.ImageIO;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
 /**
  * Names for the things on the map.
@@ -67,10 +68,10 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>canonical modeled-dungeon search targets from {@link UndergroundZone}</li>
  *   <li>curated entries from {@link PoiDetails}</li>
  * </ol>
-	 * Native icon rows win rendering ties, except labeled fairy rings. Distinct curated names remain
+ * Native icon rows win rendering ties, except labeled fairy rings. Distinct curated names remain
  * searchable aliases, so a generic marker does not erase the place's real name.
  *
- * <p>All data is bundled or read from the local tile store; runtime loading makes no web requests.
+ * <p>All data is bundled or read from the local tile store; runtime loading makes no web requests.</
  */
 @Slf4j
 @Singleton
@@ -110,16 +111,12 @@ public class PoiIndex
 
 	private File tileDir;
 	private boolean loaded;
+	@Getter
 	private volatile long dataVersion;
-
-	public long getDataVersion()
-	{
-		return dataVersion;
-	}
 
 	private static long chunkKey(int plane, int chunkX, int chunkY)
 	{
-		return (((long) plane & 0x3L) << 32) | (((long) (chunkX & 0xFFFF) << 16)) | ((long) (chunkY & 0xFFFF));
+		return MapChunkKey.of(plane, chunkX, chunkY);
 	}
 
 	/** Root of the bundled POI data inside the jar. */
@@ -171,7 +168,7 @@ public class PoiIndex
 	{
 		final PoiIndex prepared = new PoiIndex();
 		prepared.loadData(tileDir);
-		if (Thread.currentThread().isInterrupted())
+		if (!MapData.isReady() || Thread.currentThread().isInterrupted())
 		{
 			return;
 		}
@@ -484,7 +481,7 @@ public class PoiIndex
 					continue;
 				}
 
-				final String[] parts = line.split("\t", 5);
+				final String[] parts = line.split("\\t", 5);
 				if (parts.length < 5)
 				{
 					continue;
@@ -651,7 +648,7 @@ public class PoiIndex
 		{
 			final String[] point = entry.getKey().split("\\s+");
 			if (point.length != 3) continue;
-		try
+			try
 			{
 				final int x = Integer.parseInt(point[0]);
 				final int y = Integer.parseInt(point[1]);
@@ -814,44 +811,7 @@ public class PoiIndex
 	 */
 	public synchronized Poi nearest(int worldX, int worldY, int plane, int radius)
 	{
-		final int minChunkX = (worldX - radius) >> 6;
-		final int maxChunkX = (worldX + radius) >> 6;
-		final int minChunkY = (worldY - radius) >> 6;
-		final int maxChunkY = (worldY + radius) >> 6;
-
-		Poi best = null;
-		int bestDistance = Integer.MAX_VALUE;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Poi> chunkPois = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkPois == null)
-				{
-					continue;
-				}
-
-				for (Poi poi : chunkPois)
-				{
-					final int dx = Math.abs(poi.x - worldX);
-					final int dy = Math.abs(poi.y - worldY);
-					if (dx > radius || dy > radius)
-					{
-						continue;
-					}
-
-					final int distance = dx * dx + dy * dy;
-					if (distance < bestDistance)
-					{
-						bestDistance = distance;
-						best = poi;
-					}
-				}
-			}
-		}
-
-		return best;
+		return MapChunkKey.findNearest(chunkMap, plane, worldX, worldY, radius, p -> p.x, p -> p.y, null);
 	}
 
 	/**
@@ -871,30 +831,7 @@ public class PoiIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		java.util.function.Consumer<Poi> consumer)
 	{
-		final int minChunkX = minWorldX >> 6;
-		final int maxChunkX = maxWorldX >> 6;
-		final int minChunkY = minWorldY >> 6;
-		final int maxChunkY = maxWorldY >> 6;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Poi> chunkPois = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkPois == null)
-				{
-					continue;
-				}
-
-				for (Poi poi : chunkPois)
-				{
-					if (poi.x >= minWorldX && poi.x <= maxWorldX && poi.y >= minWorldY && poi.y <= maxWorldY)
-					{
-						consumer.accept(poi);
-					}
-				}
-			}
-		}
+		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, p -> p.x, p -> p.y, consumer);
 	}
 
 	/** Names containing {@code query} (case-insensitive), at most {@code cap} of them. */
@@ -924,12 +861,19 @@ public class PoiIndex
 
 	public static final class Poi
 	{
+		@Getter
 		private final int x;
+		@Getter
 		private final int y;
+		@Getter
 		private final int plane;
+		@Getter
 		private final String key;
+		@Getter
 		private final String name;
+		@Getter
 		private java.awt.geom.Point2D displayPoint;
+		@Getter
 		private boolean nativeLayout;
 
 		public Poi withDisplayPoint(java.awt.geom.Point2D point, boolean nativeLayout)
@@ -940,16 +884,6 @@ public class PoiIndex
 			return projected;
 		}
 
-		public boolean isNativeLayout()
-		{
-			return nativeLayout;
-		}
-
-		public java.awt.geom.Point2D getDisplayPoint()
-		{
-			return displayPoint;
-		}
-
 		public Poi(int x, int y, int plane, String key, String name)
 		{
 			this.x = x;
@@ -957,31 +891,6 @@ public class PoiIndex
 			this.plane = plane;
 			this.key = key;
 			this.name = name;
-		}
-
-		public int getX()
-		{
-			return x;
-		}
-
-		public int getY()
-		{
-			return y;
-		}
-
-		public int getPlane()
-		{
-			return plane;
-		}
-
-		public String getKey()
-		{
-			return key;
-		}
-
-		public String getName()
-		{
-			return name;
 		}
 	}
 }

@@ -44,6 +44,13 @@ import static org.junit.Assert.assertTrue;
 
 public class DungeonPieceIndexTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	@After
 	public void clearRoutingSnapshot()
 	{

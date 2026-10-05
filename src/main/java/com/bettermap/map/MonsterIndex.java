@@ -52,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>A zone's {@code map_id} is parsed but unused: the map draws every plane in one continuous
  * coordinate space, so a zone needs no layer resolution. The only zones dropped are those the
- * dataset gives no spawn coordinates for.
+ * dataset gives no spawn coordinates for.</p>
  */
 @Slf4j
 @Singleton
@@ -66,17 +66,11 @@ public class MonsterIndex
 		this.gson = gson;
 	}
 
-
 	private static final String RESOURCE = "/com/bettermap/data/monsters.json.gz";
 
 	private final List<Zone> zones = new ArrayList<>();
 	private final Map<String, List<Zone>> byMonster = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<Long, List<Zone>> chunkMap = new HashMap<>();
-
-	private static long chunkKey(int plane, int chunkX, int chunkY)
-	{
-		return (((long) plane & 0x3L) << 32) | (((long) (chunkX & 0xFFFF) << 16)) | ((long) (chunkY & 0xFFFF));
-	}
 
 	private volatile boolean loaded;
 	private volatile long dataVersion;
@@ -197,7 +191,7 @@ public class MonsterIndex
 		for (Zone zone : parsed)
 		{
 			grouped.computeIfAbsent(zone.monster, k -> new ArrayList<>()).add(zone);
-			spatial.computeIfAbsent(chunkKey(zone.plane, zone.x >> 6, zone.y >> 6), k -> new ArrayList<>()).add(zone);
+			spatial.computeIfAbsent(MapChunkKey.ofWorldPoint(zone.plane, zone.x, zone.y), k -> new ArrayList<>()).add(zone);
 		}
 
 		synchronized (this)
@@ -259,44 +253,7 @@ public class MonsterIndex
 	/** The zone whose marker is nearest this point on the given plane, or null. */
 	public synchronized Zone nearest(int plane, int worldX, int worldY, int radius)
 	{
-		final int minChunkX = (worldX - radius) >> 6;
-		final int maxChunkX = (worldX + radius) >> 6;
-		final int minChunkY = (worldY - radius) >> 6;
-		final int maxChunkY = (worldY + radius) >> 6;
-
-		Zone best = null;
-		int bestDistance = Integer.MAX_VALUE;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Zone> chunkZones = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkZones == null)
-				{
-					continue;
-				}
-
-				for (Zone zone : chunkZones)
-				{
-					final int dx = Math.abs(zone.x - worldX);
-					final int dy = Math.abs(zone.y - worldY);
-					if (dx > radius || dy > radius)
-					{
-						continue;
-					}
-
-					final int distance = dx * dx + dy * dy;
-					if (distance < bestDistance)
-					{
-						bestDistance = distance;
-						best = zone;
-					}
-				}
-			}
-		}
-
-		return best;
+		return MapChunkKey.findNearest(chunkMap, plane, worldX, worldY, radius, Zone::getX, Zone::getY, null);
 	}
 
 	/**
@@ -307,34 +264,7 @@ public class MonsterIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Zone> consumer)
 	{
-		final int minChunkX = minWorldX >> 6;
-		final int maxChunkX = maxWorldX >> 6;
-		final int minChunkY = minWorldY >> 6;
-		final int maxChunkY = maxWorldY >> 6;
-
-		for (int cx = minChunkX; cx <= maxChunkX; cx++)
-		{
-			for (int cy = minChunkY; cy <= maxChunkY; cy++)
-			{
-				final List<Zone> chunkZones = chunkMap.get(chunkKey(plane, cx, cy));
-				if (chunkZones == null)
-				{
-					continue;
-				}
-
-				for (Zone zone : chunkZones)
-				{
-					if (zone.plane != plane)
-					{
-						continue;
-					}
-					if (zone.x >= minWorldX && zone.x <= maxWorldX && zone.y >= minWorldY && zone.y <= maxWorldY)
-					{
-						consumer.accept(zone);
-					}
-				}
-			}
-		}
+		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, Zone::getX, Zone::getY, consumer);
 	}
 
 	/** One monster in one place. */

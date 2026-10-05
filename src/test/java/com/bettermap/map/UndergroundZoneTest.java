@@ -26,6 +26,10 @@ package com.bettermap.map;
 
 import com.bettermap.data.UndergroundZone;
 import java.awt.Rectangle;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import net.runelite.api.coords.WorldPoint;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.BeforeClass;
@@ -39,10 +43,43 @@ import static org.junit.Assert.assertTrue;
 
 public class UndergroundZoneTest
 {
+	@org.junit.BeforeClass
+	public static void loadMapData()
+	{
+		com.bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+	}
+
 	@BeforeClass
 	public static void loadCuratedDetails()
 	{
 		PoiDetails.load();
+	}
+
+	/** Fingerprint captured from all original enum constructor values before extraction. */
+	@Test
+	public void resourcePreservesAllOriginalDungeonMetadata() throws Exception
+	{
+		final StringBuilder snapshot = new StringBuilder();
+		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
+		{
+			snapshot.append(zone.name()).append('\t').append(zone.getId()).append('\t').append(zone.getName());
+			final WorldPoint surface = zone.getSurfacePoint();
+			final WorldPoint underground = zone.getUndergroundPoint();
+			snapshot.append('\t').append(surface.getX()).append('\t').append(surface.getY()).append('\t').append(surface.getPlane());
+			snapshot.append('\t').append(underground.getX()).append('\t').append(underground.getY()).append('\t').append(underground.getPlane());
+			snapshot.append('\t').append(zone.getYOffset()).append('\t').append(zone.getRadius()).append('\t').append(zone.getDescription());
+			snapshot.append('\t').append(zone.getClipMinX()).append('\t').append(zone.getClipMinY())
+				.append('\t').append(zone.getClipMaxX()).append('\t').append(zone.getClipMaxY());
+			for (int i = 1; i < zone.getSurfacePoints().size(); i++)
+			{
+				final WorldPoint entrance = zone.getSurfacePoints().get(i);
+				snapshot.append('\t').append(entrance.getX()).append('\t').append(entrance.getY()).append('\t').append(entrance.getPlane());
+			}
+			snapshot.append('\n');
+		}
+		final byte[] digest = MessageDigest.getInstance("SHA-256").digest(snapshot.toString().getBytes(StandardCharsets.UTF_8));
+		assertEquals("69d8524b4e8464d50d604c79a52c25fd97bb15444822d8c9dc527300f0c1d4a0", String.format("%064x", new BigInteger(1, digest)));
 	}
 
 	@Test

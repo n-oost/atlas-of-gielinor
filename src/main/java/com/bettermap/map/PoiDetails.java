@@ -24,11 +24,8 @@
  */
 package com.bettermap.map;
 
-import java.io.BufferedReader;
+import com.bettermap.data.BundledTsv;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,6 +38,7 @@ import java.util.regex.Pattern;
 import java.util.Map;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
 
 /**
  * Curated details for points of interest: quest names, difficulty and starting NPCs, rare trees
@@ -90,8 +88,11 @@ public final class PoiDetails
 
 	public static final class Detail
 	{
+		@Getter
 		private final String title;
+		@Getter
 		private final String category;
+		@Getter
 		private final List<String> lines;
 
 		public Detail(String title, String category, List<String> lines)
@@ -99,21 +100,6 @@ public final class PoiDetails
 			this.title = title;
 			this.category = category;
 			this.lines = lines != null ? lines : Collections.emptyList();
-		}
-
-		public String getTitle()
-		{
-			return title;
-		}
-
-		public String getCategory()
-		{
-			return category;
-		}
-
-		public List<String> getLines()
-		{
-			return lines;
 		}
 	}
 
@@ -145,11 +131,18 @@ public final class PoiDetails
 		private final Set<String> entryKeys = new HashSet<>(1200);
 		private final Map<Long, Entry> exactMap = new HashMap<>(1200);
 		private final Map<Long, List<Entry>> chunkMap = new HashMap<>(1200);
+		private final Map<String, List<String>> dungeonRequirements = new HashMap<>();
+		private int[][] moorings = new int[0][];
 		private Map<String, Detail> questDetails = Collections.emptyMap();
 		private boolean loaded;
 	}
 
 	private static volatile Indexes data = new Indexes();
+
+	public static boolean isLoaded()
+	{
+		return data.loaded;
+	}
 
 	private static long pointKey(int x, int y, int plane)
 	{
@@ -158,357 +151,7 @@ public final class PoiDetails
 
 	private static long chunkKey(int plane, int chunkX, int chunkY)
 	{
-		return (((long) plane & 0x3L) << 32) | (((long) (chunkX & 0xFFFF) << 16)) | ((long) (chunkY & 0xFFFF));
-	}
-
-	/** Known item / quest requirements for dungeon entrances, keyed by curated title. */
-	private static final Map<String, List<String>> DUNGEON_REQUIREMENTS = buildDungeonRequirements();
-
-	private static Map<String, List<String>> buildDungeonRequirements()
-	{
-		final Map<String, List<String>> reqs = new HashMap<>();
-		reqs.put("Kalphite Lair", List.of(
-			"Requires: Rope on the entrance hole (Kalphite Queen lair)",
-			"Light source recommended underground"));
-		reqs.put("Kalphite Cave", List.of(
-			"Requires: Shantay pass or desert access",
-			"Light source recommended"));
-		reqs.put("Brimhaven Dungeon", List.of(
-			"Requires: 875 coins to Dunstan (or Cabin Fever completed)",
-			"Antipoison and food recommended"));
-		reqs.put("God Wars Dungeon", List.of(
-			"Requires: 40 Agility, 60 Strength, or 60 Ranged to cross the bridge",
-			"Protection from Zamorak for the main chamber"));
-		reqs.put("Gryphon Dungeon", List.of(
-			"Requires: Children of the Sun (Varlamore access)",
-			"Shellbane gryphons inside — bring antidote or antipoison"));
-		reqs.put("Shellbane Gryphon Cave", List.of(
-			"Requires: Children of the Sun (Varlamore access)",
-			"Antipoison strongly recommended"));
-		reqs.put("Giants' Den", List.of(
-			"Requires: Combat gear",
-			"Hill giants, Moss giants, Fire giants under Shayzien"));
-		reqs.put("Fortis Barracks", List.of(
-			"Requires: Children of the Sun (Varlamore access)",
-			"Subterranean barracks & training tunnels under Civitas illa Fortis"));
-		reqs.put("Lizardman Temple", List.of(
-			"Requires: Combat gear (Lizardman Shamans)",
-			"Stone chests: lockpicks and Shayzien armour recommended"));
-		reqs.put("Lizardman Caves", List.of(
-			"Requires: Combat gear / Molch fishing gear",
-			"Lizardmen & cavern tunnels under Lizardman Settlement"));
-		reqs.put("Shayzien Crypts", List.of(
-			"Requires: Combat gear",
-			"Shayzien zombies and skeletal warriors under the cemetery"));
-		reqs.put("Shayzien Crypt", List.of(
-			"Requires: Combat gear",
-			"Shayzien zombies and skeletal warriors under the cemetery"));
-		reqs.put("Myths' Guild Dungeon", List.of(
-			"Requires: Dragon Slayer II completed",
-			"Wrath altar, green & blue dragons, adamant & rune dragons"));
-		reqs.put("Myths' Guild dungeon", List.of(
-			"Requires: Dragon Slayer II completed",
-			"Wrath altar, green & blue dragons, adamant & rune dragons"));
-		reqs.put("Hunter Guild Caverns", List.of(
-			"Requires: 46 Hunter (Hunters' Rumours)",
-			"Hunter Guild master, whistle recharging & guild cavers"));
-		reqs.put("Lithkren Vault", List.of(
-			"Requires: Dragon Slayer II",
-			"Adamant & Rune dragons, Dragon forge & ancient vault"));
-		reqs.put("Weiss Salt Mine", List.of(
-			"Requires: Making Friends with My Arm",
-			"Troll salt mine • Efreeti fire & basalt mining"));
-		reqs.put("Salt Mine", List.of(
-			"Requires: Making Friends with My Arm",
-			"Troll salt mine • Efreeti fire & basalt mining"));
-		reqs.put("Jaldraocht Pyramid", List.of(
-			"Requires: Desert Treasure I",
-			"Ancient Magicks pyramid • Azzanadra's altar"));
-		reqs.put("River Elid Dungeon", List.of(
-			"Requires: Spirits of the Elid",
-			"Water spirits dungeon • Ancestral shrine & statuette"));
-		reqs.put("Shadow Dungeon", List.of(
-			"Requires: Ring of visibility, Desert Treasure I",
-			"Shadow diamond cavern • Damis & shadow hounds"));
-		reqs.put("Draynor Manor Basement", List.of(
-			"Requires: Ernest the Chicken",
-			"Professor Oddenstein's basement • Lever puzzle & oil can"));
-		reqs.put("Draynor Manor basement", List.of(
-			"Requires: Ernest the Chicken",
-			"Professor Oddenstein's basement • Lever puzzle & oil can"));
-		reqs.put("Enakhra's Temple", List.of(
-			"Requires: Enakhra's Lament",
-			"Ancient Mahjarrat temple • Bone room & fountain puzzles"));
-		reqs.put("Port Sarim Rat Pits", List.of(
-			"Requires: Ratcatchers",
-			"Felkrash's rat pit • Pet cat gambling minigame"));
-		reqs.put("King Black Dragon Lair", List.of(
-			"Requires: Wilderness entrance / lever",
-			"King Black Dragon boss lair • Dragonfire shield & visage"));
-		reqs.put("Hespori Cave", List.of(
-			"Requires: 65 Farming, Hespori seed",
-			"Hespori boss arena • Bottomless compost bucket & anima seeds"));
-		reqs.put("Stalker Den", List.of(
-			"Requires: The Twilight's Blade",
-			"Stalker boss dungeon • Twilight Emissaries quest cavern"));
-		reqs.put("Ancient Cavern", List.of(
-			"Requires: Barbarian Training (Fishing)",
-			"Bring heavy boots and a hatchet"));
-		reqs.put("Asgarnian Ice Dungeon", List.of(
-			"Requires: 51 Thieving (optional shortcut) or long walk",
-			"Bring food and armour"));
-		reqs.put("Taverley Dungeon", List.of(
-			"Requires: Dusty key (from Velrak in Taverley jail) or 70 Agility shortcut",
-			"Light source recommended"));
-		reqs.put("Edgeville Dungeon", List.of(
-			"Requires: Brass key for the surface shortcut door south of Edgeville",
-			"Light source recommended"));
-		reqs.put("Waterbirth Dungeon", List.of(
-			"Requires: Rellekka / Fremennik boat access and combat gear",
-			"Bring food, prayer potions, and armour for Dagannoths"));
-		reqs.put("Waterbirth Island Dungeon", List.of(
-			"Requires: Rellekka / Fremennik boat access and combat gear",
-			"Bring food, prayer potions, and armour for Dagannoths"));
-		reqs.put("Waterbirth Dungeon (sub-levels)", List.of(
-			"Requires: Rellekka / Fremennik boat access and combat gear",
-			"Bring food, prayer potions, and armour for Dagannoths"));
-		reqs.put("Fremennik Slayer Dungeon", List.of(
-			"Requires: Fremennik Trials",
-			"Bring a light source"));
-		reqs.put("Smoke Dungeon", List.of(
-			"Requires: Facemask or Slayer helmet (smoke damage)",
-			"Bring a rope and light source"));
-		reqs.put("Iorwerth Dungeon", List.of(
-			"Requires: Song of the Elves",
-			"Bring food and armour"));
-		reqs.put("Mole Hole", List.of(
-			"Requires: Spade to dig into mole hills in Falador Park",
-			"Light source required (Bullseye lantern recommended)"));
-		reqs.put("Giant Mole", List.of(
-			"Requires: Spade to dig into mole hills in Falador Park",
-			"Light source required (Bullseye lantern recommended)"));
-		reqs.put("Mole Hole (Giant Mole)", List.of(
-			"Requires: Spade to dig into mole hills in Falador Park",
-			"Light source required (Bullseye lantern recommended)"));
-		reqs.put("Karuulm Slayer Dungeon", List.of(
-			"Requires: Boots of stone/brimstone/granite (or Kourend Elite Diary)",
-			"Protects against burning heat damage on dungeon floors"));
-		reqs.put("Kraken Cove", List.of(
-			"Requires: Level 87 Slayer",
-			"Fishing explosive to disturb Cave kraken (boss requires Slayer task)"));
-		reqs.put("Kraken (boss)", List.of(
-			"Requires: Level 87 Slayer",
-			"Fishing explosive to disturb Cave kraken (boss requires Slayer task)"));
-		reqs.put("Smoke Devil Dungeon", List.of(
-			"Requires: Level 93 Slayer, Facemask or Slayer helmet",
-			"Protects against toxic smoke; boss requires Slayer task"));
-		reqs.put("Thermonuclear Smoke Devil (boss)", List.of(
-			"Requires: Level 93 Slayer, Facemask or Slayer helmet",
-			"Protects against toxic smoke; boss requires Slayer task"));
-		reqs.put("King Black Dragon Lair", List.of(
-			"Requires: Slash weapon for webs (Wilderness lvl 44)",
-			"Anti-dragon shield and Antifire potions strongly recommended"));
-		reqs.put("KBD Lair", List.of(
-			"Requires: Slash weapon for webs (Wilderness lvl 44)",
-			"Anti-dragon shield and Antifire potions strongly recommended"));
-		reqs.put("Revenant Caves", List.of(
-			"Requires: 100,000 coins entry fee (Wilderness level 17–40)",
-			"Bracelet of ethereum protects against revenant aggression"));
-		reqs.put("Wilderness God Wars Dungeon", List.of(
-			"Requires: 60 Strength or 60 Agility, plus a Rope (Wilderness lvl 28)",
-			"Ecumenical key or 40 killcount required for boss rooms"));
-		reqs.put("Wilderness GWD", List.of(
-			"Requires: 60 Strength or 60 Agility, plus a Rope (Wilderness lvl 28)",
-			"Ecumenical key or 40 killcount required for boss rooms"));
-		reqs.put("Ruins of Camdozaal", List.of(
-			"Requires: Below Ice Mountain quest completed",
-			"Barronite mace, mining, fishing, and Golem activities below"));
-		reqs.put("Camdozaal", List.of(
-			"Requires: Below Ice Mountain quest completed",
-			"Barronite mace, mining, fishing, and Golem activities below"));
-		reqs.put("Cam Torum", List.of(
-			"Requires: Children of the Sun & Twilight's Promise quests",
-			"Underground Varlamore settlement leading to Neypotzli"));
-		reqs.put("Neypotzli", List.of(
-			"Requires: Perilous Moons quest started or completed",
-			"Moons of Peril boss encounters and Lunar Chest inside"));
-		reqs.put("Cam Torum / Neypotzli", List.of(
-			"Requires: Children of the Sun & Perilous Moons quests",
-			"Underground Varlamore city and Moons of Peril dungeon"));
-		reqs.put("Tombs of Amascut", List.of(
-			"Requires: Beneath Cursed Sands quest completed",
-			"Raid party lobby for Tombs of Amascut"));
-		reqs.put("Tombs of Amascut (ToA)", List.of(
-			"Requires: Beneath Cursed Sands quest completed",
-			"Raid party lobby for Tombs of Amascut"));
-		reqs.put("ToA", List.of(
-			"Requires: Beneath Cursed Sands quest completed",
-			"Raid party lobby for Tombs of Amascut"));
-		reqs.put("Theatre of Blood", List.of(
-			"Requires: Priest in Peril and A Taste of Hope (Morytania access)",
-			"Raid party lobby for Theatre of Blood"));
-		reqs.put("Theatre of Blood (ToB)", List.of(
-			"Requires: Priest in Peril and A Taste of Hope (Morytania access)",
-			"Raid party lobby for Theatre of Blood"));
-		reqs.put("ToB", List.of(
-			"Requires: Priest in Peril and A Taste of Hope (Morytania access)",
-			"Raid party lobby for Theatre of Blood"));
-		reqs.put("Volcanic Mine", List.of(
-			"Requires: Bone Voyage quest, 150 Museum Kudos, 50 Mining",
-			"Unfiltered Fossil Island minigame access"));
-		reqs.put("Sisterhood Sanctuary", List.of(
-			"Requires: Priest in Peril (Morytania & Slepe access)",
-			"The Nightmare of Ashihama boss encounter below"));
-		reqs.put("The Nightmare", List.of(
-			"Requires: Priest in Peril (Morytania & Slepe access)",
-			"The Nightmare of Ashihama boss encounter below"));
-		reqs.put("Sisterhood Sanctuary (Nightmare)", List.of(
-			"Requires: Priest in Peril (Morytania & Slepe access)",
-			"The Nightmare of Ashihama boss encounter below"));
-		reqs.put("Underground Pass", List.of(
-			"Requires: Biohazard / Underground Pass quest started",
-			"Rope, Bow & Arrows, and Agility boosts recommended"));
-		reqs.put("Temple of Ikov", List.of(
-			"Requires: Pendant of Lucien, Light source, Bow and Ice arrows",
-			"Temple of Ikov quest"));
-		reqs.put("Lumbridge Swamp Caves", List.of(
-			"Requires: Light source (protected), Rope or Spade",
-			"Spiny helmet recommended against Wall beasts"));
-		reqs.put("Ice Queen's Lair", List.of(
-			"Requires: 50 Mining (Heroes' Quest)",
-			"Ice gloves strongly recommended"));
-		reqs.put("Troll Stronghold", List.of(
-			"Requires: Death Plateau quest, Climbing boots",
-			"Troll Stronghold quest and God Wars route"));
-		reqs.put("Salt Mine", List.of(
-			"Requires: Making Friends with My Arm, 60 Mining, 72 Firemaking",
-			"Basalt and salt mining for icy portal nexus"));
-		reqs.put("Mage Arena Bank", List.of(
-			"Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)",
-			"Kolodion's Mage Arena and god cape arena",
-			"Teleport lever connects surface and underground bank"));
-		reqs.put("Mage Arena", List.of(
-			"Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)",
-			"Kolodion's Mage Arena and god cape arena"));
-		reqs.put("Scabaras Dungeon", List.of(
-			"Requires: Contact! quest started, Light source, Tinderbox",
-			"Waterskins and antipoison recommended for desert dungeon"));
-		reqs.put("Scabaras", List.of(
-			"Requires: Contact! quest started, Light source, Tinderbox",
-			"Waterskins and antipoison recommended for desert dungeon"));
-		reqs.put("Slayer Tower basement", List.of(
-			"Requires: Slayer Tower basement key",
-			"High-level Slayer monsters inside"));
-		reqs.put("Slayer Tower Basement", List.of(
-			"Requires: Slayer Tower basement key",
-			"High-level Slayer monsters inside"));
-		reqs.put("Mining Guild basement", List.of(
-			"Requires: Level 60 Mining",
-			"Amethyst crystals and superior mineral veins"));
-		reqs.put("Mining Guild Basement", List.of(
-			"Requires: Level 60 Mining",
-			"Amethyst crystals and superior mineral veins"));
-		reqs.put("Heroes' Guild mine", List.of(
-			"Requires: Heroes' Quest, 50 Mining",
-			"Runite and Mithril rocks below"));
-		reqs.put("Heroes' Guild Mine", List.of(
-			"Requires: Heroes' Quest, 50 Mining",
-			"Runite and Mithril rocks below"));
-		reqs.put("Legends' Guild dungeon", List.of(
-			"Requires: Legends' Quest started or completed",
-			"Shadow warriors and dungeon access"));
-		reqs.put("Legends' Guild Dungeon", List.of(
-			"Requires: Legends' Quest started or completed",
-			"Shadow warriors and dungeon access"));
-		reqs.put("Legends' Guild", List.of(
-			"Requires: Legends' Quest started or completed",
-			"Shadow warriors and dungeon access"));
-		reqs.put("Woodcutting Guild dungeon", List.of(
-			"Requires: 60 Woodcutting",
-			"Ents and Woodcutting dungeon below"));
-		reqs.put("Woodcutting Guild Dungeon", List.of(
-			"Requires: 60 Woodcutting",
-			"Ents and Woodcutting dungeon below"));
-		reqs.put("WC Guild dungeon", List.of(
-			"Requires: 60 Woodcutting",
-			"Ents and Woodcutting dungeon below"));
-		reqs.put("Wizards' Guild basement", List.of(
-			"Requires: Level 66 Magic (Magic guild entrance)",
-			"Zombies and rune portals in Yanille"));
-		reqs.put("Wizards' Guild Basement", List.of(
-			"Requires: Level 66 Magic (Magic guild entrance)",
-			"Zombies and rune portals in Yanille"));
-		reqs.put("Ourania Cave", List.of(
-			"Requires: Food, combat/prayer defence recommended",
-			"Ourania / ZMI runecrafting altar and banking Zamorakian monks"));
-		reqs.put("Ourania Cave (ZMI)", List.of(
-			"Requires: Food, combat/prayer defence recommended",
-			"Ourania / ZMI runecrafting altar and banking Zamorakian monks"));
-		reqs.put("ZMI", List.of(
-			"Requires: Food, combat/prayer defence recommended",
-			"Ourania / ZMI runecrafting altar and banking Zamorakian monks"));
-		reqs.put("Sourhog Cave", List.of(
-			"Requires: A Porcine of Interest quest",
-			"Spiny helmet or Slayer helmet required against sourhogs"));
-		reqs.put("Lighthouse basement", List.of(
-			"Requires: Horror from the Deep quest, Light source",
-			"Dagannoth training cave"));
-		reqs.put("Lighthouse Basement", List.of(
-			"Requires: Horror from the Deep quest, Light source",
-			"Dagannoth training cave"));
-		reqs.put("Hallowed Sepulchre", List.of(
-			"Requires: Sins of the Father quest completed",
-			"Agility levels 52–92 (Floors 1–5)",
-			"Hallowed marks, Hallowed tools, Ring of endurance"));
-		reqs.put("Lunar Isle Mine", List.of(
-			"Requires: Lunar Diplomacy quest started / Fremennik access, Pickaxe",
-			"Lunar ore, gem rocks, and rune essence mine under Lunar Isle"));
-		reqs.put("Scorpia Cave", List.of(
-			"Requires: Slash weapon for webs, Antipoison, combat gear (Wilderness lvl 54)",
-			"Scorpia boss lair and Scorpia's offspring"));
-		reqs.put("Scorpia cave", List.of(
-			"Requires: Slash weapon for webs, Antipoison, combat gear (Wilderness lvl 54)",
-			"Scorpia boss lair and Scorpia's offspring"));
-		reqs.put("Silk Chasm", List.of(
-			"Requires: Wilderness access (lvl 35), Crush weapon / Magic, Antipoison",
-			"Spindel (solitary Venenatis) boss lair"));
-		reqs.put("Escape Caves", List.of(
-			"Requires: Wilderness access (lvl 21-40), Wilderness Slayer / bossing gear",
-			"Wilderness escape network connecting boss lairs and deep escape exits"));
-		reqs.put("Callisto's Den", List.of(
-			"Requires: Wilderness access (lvl 40), Magic / Ranged combat gear",
-			"Callisto boss lair in the Wilderness"));
-		reqs.put("Callisto Den", List.of(
-			"Requires: Wilderness access (lvl 40), Magic / Ranged combat gear",
-			"Callisto boss lair in the Wilderness"));
-		reqs.put("Vet'ion's Rest", List.of(
-			"Requires: Wilderness access (lvl 35), Crush weapon, Salve amulet",
-			"Vet'ion boss lair in the Wilderness"));
-		reqs.put("Vetions Rest", List.of(
-			"Requires: Wilderness access (lvl 35), Crush weapon, Salve amulet",
-			"Vet'ion boss lair in the Wilderness"));
-		reqs.put("Zemouregal's Base", List.of(
-			"Requires: Defender of Varrock quest, Hartwin / Arrav",
-			"Armoured zombies training and Zemouregal's fortress underneath Silvarea"));
-		reqs.put("Shade Catacombs", List.of(
-			"Requires: Shades of Mort'ton quest, Shade keys, Coffin / Oil",
-			"Chests, shade remains, and pyre burning rewards under Mort'ton"));
-		reqs.put("Giants' Foundry", List.of(
-			"Requires: Sleeping Giants quest, Kovac, Moulds and metal bars",
-			"Giants' Foundry minigame: smith colossal weapons for rewards"));
-		reqs.put("Giants Foundry", List.of(
-			"Requires: Sleeping Giants quest, Kovac, Moulds and metal bars",
-			"Giants' Foundry minigame: smith colossal weapons for rewards"));
-		reqs.put("Ice Troll Caves", List.of(
-			"Requires: The Fremennik Isles quest, Combat gear",
-			"Neitiznot Ice Troll cave network and Ice Troll King link"));
-		reqs.put("Ice Troll Dungeon", List.of(
-			"Requires: The Fremennik Isles quest, Combat gear",
-			"Neitiznot Ice Troll cave network and Ice Troll King link"));
-		reqs.put("Werewolf Agility Course", List.of(
-			"Requires: Creature of Fenkenstrain, Ring of Charos",
-			"Level 60 Agility (730 XP per lap with stick)"));
-		return Collections.unmodifiableMap(reqs);
+		return MapChunkKey.of(plane, chunkX, chunkY);
 	}
 
 	private static boolean isDungeonKey(String key)
@@ -541,7 +184,7 @@ public final class PoiDetails
 		List<String> lines = entry.lines;
 		if (isDungeonKey(entry.type))
 		{
-			final List<String> specific = DUNGEON_REQUIREMENTS.get(entry.title);
+			final List<String> specific = data.dungeonRequirements.get(entry.title);
 			if (specific != null)
 			{
 				lines = specific;
@@ -585,47 +228,26 @@ public final class PoiDetails
 			return;
 		}
 		final Indexes prepared = new Indexes();
-		try (InputStream stream = PoiDetails.class.getResourceAsStream(
-			"/com/bettermap/poi/curated-details.tsv"))
+		try
 		{
-			if (stream == null)
+			for (String[] fields : BundledTsv.read("/com/bettermap/poi/curated-details.tsv", 6))
 			{
-				throw new IOException("Missing curated POI details resource");
+				addEntry(prepared, fields[0], fields[1], fields[2],
+					Integer.parseInt(fields[3]), Integer.parseInt(fields[4]), Integer.parseInt(fields[5]),
+					Arrays.copyOfRange(fields, 6, fields.length));
 			}
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)))
+			for (String[] fields : BundledTsv.read("/com/bettermap/poi/dungeon-requirements.tsv", 1))
 			{
-				String line;
-				int lineNumber = 0;
-				while ((line = reader.readLine()) != null)
-				{
-					lineNumber++;
-					if (Thread.currentThread().isInterrupted())
-					{
-						return;
-					}
-					if (line.isEmpty() || line.charAt(0) == '#')
-					{
-						continue;
-					}
-					final String[] fields = line.split("\\t", -1);
-					if (fields.length < 6)
-					{
-						throw new IOException("Invalid curated POI details at line " + lineNumber);
-					}
-					addEntry(prepared, fields[0], fields[1], fields[2],
-						Integer.parseInt(fields[3]), Integer.parseInt(fields[4]), Integer.parseInt(fields[5]),
-						Arrays.copyOfRange(fields, 6, fields.length));
-				}
+				prepared.dungeonRequirements.put(fields[0], List.of(Arrays.copyOfRange(fields, 1, fields.length)));
 			}
-			if (Thread.currentThread().isInterrupted())
+			final List<int[]> moorings = new ArrayList<>();
+			for (String[] fields : BundledTsv.read("/com/bettermap/poi/mooring-levels.tsv", 3))
 			{
-				return;
+				moorings.add(new int[]{Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), Integer.parseInt(fields[2])});
 			}
+			prepared.moorings = moorings.toArray(new int[0][]);
 			prepared.questDetails = QuestDetailsData.load();
-			if (Thread.currentThread().isInterrupted())
-			{
-				return;
-			}
+			if (Thread.currentThread().isInterrupted()) return;
 			prepared.loaded = true;
 			data = prepared;
 		}
@@ -745,7 +367,7 @@ public final class PoiDetails
 		final String name = poi.getName();
 		final String lowerName = name.toLowerCase(Locale.ROOT);
 
-		final List<String> dungeonReq = DUNGEON_REQUIREMENTS.get(name);
+		final List<String> dungeonReq = data.dungeonRequirements.get(name);
 		if (dungeonReq != null)
 		{
 			return new Detail(name, "Dungeons", dungeonReq);
@@ -763,7 +385,7 @@ public final class PoiDetails
 		if ("dungeon".equals(key) || "dungeon_link".equals(key)
 			|| lowerName.contains("dungeon") || lowerName.contains("cave"))
 		{
-			final List<String> specific = DUNGEON_REQUIREMENTS.get(name);
+			final List<String> specific = data.dungeonRequirements.get(name);
 			if (specific != null)
 			{
 				return new Detail(name, "Dungeons", specific);
@@ -963,7 +585,7 @@ public final class PoiDetails
 				case "kourend_task":
 					return new Detail(name, "Quests and activities", List.of(
 						"Kourend & Kebos Diary task location",
-					"Claim diary rewards from Elise at Kourend Castle"
+						"Claim diary rewards from Elise at Kourend Castle"
 					));
 				case "minigame":
 					return new Detail(name, "Quests and activities", List.of(
@@ -972,7 +594,7 @@ public final class PoiDetails
 				case "task_master":
 					return new Detail(name, "Quests and activities", List.of(
 						"Achievement Diary task master: claim tier rewards",
-					"Tiers: easy, medium, hard, elite"
+						"Tiers: easy, medium, hard, elite"
 					));
 				case "dairy_churn":
 					return new Detail(name, "Skilling • Cooking", List.of(
@@ -981,7 +603,7 @@ public final class PoiDetails
 				case "slayer_master":
 					return new Detail(name, "Skilling • Slayer", List.of(
 						"Assigns Slayer tasks; each master has a combat level requirement",
-					"All Slayer Masters also sell Slayer equipment"
+						"All Slayer Masters also sell Slayer equipment"
 					));
 				case "potters_wheel":
 					return new Detail(name, "Skilling • Crafting", List.of(
@@ -1052,7 +674,7 @@ public final class PoiDetails
 	 *
 	 * <p>When {@code typeHint} is non-null, an entry is accepted only if its type matches the hint
 	 * or it is within 4 tiles ({@code dist <= 16}). Uses strict {@code <} for ties so the first
-	 * visited entry wins (chunk order), matching the spatial-index parity tests.
+	 * visited entry wins (chunk order), matching the spatial-index parity tests.</p>
 	 */
 	static Entry nearestEntry(int worldX, int worldY, int plane, int maxDistSq, String typeHint)
 	{
@@ -1125,30 +747,11 @@ public final class PoiDetails
 		return best;
 	}
 
-	private static final int[][] MOORINGS = {
-		{3050, 3192, 1}, {3069, 2986, 1}, {1506, 3402, 5}, {1726, 3452, 5},
-		{2960, 3147, 10}, {1845, 3687, 15}, {2905, 3226, 18}, {2796, 3412, 20},
-		{2757, 3229, 25}, {2671, 3265, 28}, {2685, 3161, 30}, {2746, 3304, 34},
-		{2878, 3335, 36}, {1774, 3141, 38}, {2579, 2843, 40}, {3061, 2639, 40},
-		{2749, 2951, 42}, {1892, 3429, 42}, {1511, 2975, 44}, {2971, 2603, 45},
-		{3174, 2367, 45}, {3354, 2216, 45}, {1452, 2970, 46}, {1872, 2985, 46},
-		{2997, 2288, 47}, {3143, 2824, 48}, {1557, 2771, 49}, {2651, 2678, 50},
-		{1860, 3306, 50}, {2467, 2721, 51}, {2848, 2327, 52}, {2808, 2510, 52},
-		{1958, 3117, 54}, {2282, 2823, 55}, {2532, 2531, 56}, {1202, 2733, 58},
-		{2660, 2395, 60}, {2318, 2774, 61}, {2630, 3705, 62}, {2567, 2297, 62},
-		{2773, 8607, 62}, {2058, 2606, 63}, {1765, 2659, 64}, {2611, 3840, 65},
-		{2144, 3120, 66}, {2097, 3188, 66}, {1923, 2758, 67}, {2412, 3780, 68},
-		{2308, 3783, 68}, {2344, 2270, 69}, {2158, 3324, 70}, {2189, 2327, 72},
-		{2222, 3466, 73}, {2543, 3765, 74}, {2303, 3690, 75}, {2151, 3880, 76},
-		{2080, 3690, 76}, {2150, 3530, 79}, {2860, 3972, 80}, {1954, 4056, 81},
-		{2927, 4056, 87}
-	};
-
 	private static int getMooringLevel(int x, int y)
 	{
 		int bestDist = 30 * 30;
 		int bestLvl = 0;
-		for (int[] m : MOORINGS)
+		for (int[] m : data.moorings)
 		{
 			int dx = m[0] - x;
 			int dy = m[1] - y;

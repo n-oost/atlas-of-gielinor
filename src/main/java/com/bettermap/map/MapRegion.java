@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import lombok.Getter;
 
 /**
  * The named places the Finder browses by — "Varrock", "Falador", "Hosidius".
@@ -166,6 +167,7 @@ public enum MapRegion
 		ISLANDS("Islands"),
 		WILDERNESS("Wilderness");
 
+		@Getter
 		private final String displayName;
 
 		Kingdom(String displayName)
@@ -173,15 +175,15 @@ public enum MapRegion
 			this.displayName = displayName;
 		}
 
-		public String getDisplayName()
-		{
-			return displayName;
-		}
 	}
 
+	@Getter
 	private final String displayName;
+	@Getter
 	private final Kingdom kingdom;
+	@Getter
 	private final int centerX;
+	@Getter
 	private final int centerY;
 	private final int halfWidth;
 	private final int halfHeight;
@@ -214,25 +216,9 @@ public enum MapRegion
 		return fallback;
 	}
 
-	public String getDisplayName()
-	{
-		return displayName;
-	}
 
-	public Kingdom getKingdom()
-	{
-		return kingdom;
-	}
 
-	public int getCenterX()
-	{
-		return centerX;
-	}
 
-	public int getCenterY()
-	{
-		return centerY;
-	}
 
 	public int getMinX()
 	{

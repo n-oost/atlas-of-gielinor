@@ -1,0 +1,488 @@
+# Revision 241 native selector labels
+1128	10168	0	region_label	Greater demons
+1138	10276	0	region_label	Fire giants
+1160	10202	0	region_label	Drakes
+1166	10228	0	region_label	Middle level
+1166	10292	0	region_label	Upper level
+1182	9200	0	region_label	Kurask Lair
+1183	10145	0	region_label	Sulphur lizards
+1184	10073	0	region_label	Hespori
+1196	10201	0	region_label	Drakes
+1198	10265	0	region_label	Hellhounds
+1263	10158	0	region_label	Wyrms
+1273	10189	0	region_label	Wyrms
+1308	9947	0	region_label	Lizardman Caves
+1310	9874	0	region_label	Black demons
+1310	10269	0	region_label	Hydras
+1311	9503	0	region_label	Dragon Nest
+1311	10241	0	region_label	Hydras
+1312	9892	0	region_label	Voice of Yama
+1312	9919	0	region_label	Lower level
+1312	9984	0	region_label	Greater demons
+1312	10015	0	region_label	Middle level
+1312	10031	0	region_label	Lizardman Temple
+1312	10088	0	region_label	Lesser demons
+1312	10111	0	region_label	Upper level
+1312	10207	0	region_label	Tasakaal
+1312	10292	0	region_label	Lower level
+1350	9711	0	region_label	Stalker Den
+1360	9316	0	region_label	Moonrise Brewery and Winery
+1366	9568	0	region_label	Ancient Prison
+1368	10270	0	region_label	Alchemical Hydra
+1376	9892	0	region_label	Yama
+1377	9700	0	region_label	Earthbound Cavern
+1393	9635	0	region_label	The Blood Moon
+1394	9327	0	region_label	Alchemical Society
+1414	9590	1	region_label	Highlord's Chamber
+1424	9803	0	region_label	Moss giants
+1435	9822	0	region_label	Hill giants
+1440	9518	1	region_label	City Entrance
+1440	9556	1	region_label	Market
+1440	9568	1	region_label	Cam Torum
+1440	9600	1	region_label	Neypotzli Entrance
+1441	9569	0	region_label	Antechamber
+1441	9683	0	region_label	The Blue Moon
+1451	9329	0	region_label	Villa Lucens
+1457	9802	0	region_label	Moss giants
+1457	9843	0	region_label	Fire giants
+1472	9919	0	region_label	Lower level
+1472	10015	0	region_label	Middle level
+1472	10111	0	region_label	Upper level
+1481	9506	1	region_label	Wolf Den
+1489	9635	0	region_label	The Eclipse Moon
+1505	9700	0	region_label	Streambound Cavern
+1508	9542	1	region_label	Mine
+1514	9583	0	region_label	Ancient Shrine
+1558	9459	1	region_label	Hunter Guild
+1565	9891	0	region_label	Ents
+1602	10059	0	region_label	Steel dragons
+1603	10044	0	region_label	Shades
+1613	10010	0	region_label	Spectres
+1615	9994	0	region_label	Banshees
+1622	10084	0	region_label	Brutal black, blue & red dragons
+1626	10028	0	region_label	Bloodvelds
+1634	10068	0	region_label	Fire giants
+1635	10012	0	region_label	Hill giants
+1639	10048	0	region_label	Skeletons
+1640	10033	0	region_label	Animated axes
+1641	9576	0	region_label	Barracks
+1642	9994	0	region_label	Ankou
+1648	10095	0	region_label	Bronze & iron dragons
+1650	10018	0	region_label	Cyclopes & Axes
+1650	10065	0	region_label	Hellhounds
+1653	10037	0	region_label	Hill giants
+1660	10008	0	region_label	Moss giants
+1663	10075	0	region_label	Hill giants
+1664	9997	0	region_label	Dagannoth
+1664	10025	0	region_label	Ghosts
+1664	10048	0	region_label	Altar
+1670	10091	0	region_label	Abyssal demons
+1681	10073	0	region_label	Bloodvelds
+1683	9823	0	region_label	Crabclaw Caves
+1685	9516	0	region_label	Crypt
+1686	10044	0	region_label	Moss giants
+1688	9999	0	region_label	Jellies
+1691	10017	0	region_label	Bloodvelds
+1694	10064	0	region_label	Ghosts
+1700	10083	0	region_label	Nechryael
+1701	10102	0	region_label	Greater demons
+1714	9997	0	region_label	Sand crabs
+1715	10025	0	region_label	Dust devils
+1719	10068	0	region_label	Lesser demons
+1722	10087	0	region_label	Black demons
+1724	10054	0	region_label	Jellies
+1738	5356	0	region_label	Waterfiends
+1743	5375	0	region_label	Lower level
+1760	5188	0	region_label	Here be a big mole
+1773	5332	0	region_label	Brutal green dragons
+1801	9939	0	region_label	Undead druids
+1801	9950	0	region_label	Altar
+1807	5439	0	region_label	Upper level
+1811	9951	0	region_label	Bone Burner
+1811	9968	0	region_label	Undead druids
+1815	5354	0	region_label	Ancient Forge
+1822	9936	0	region_label	Red dragons
+1825	9509	0	region_label	Fortis Colosseum
+1826	5402	0	region_label	Mithril dragons
+1834	10143	0	region_label	The Warrens
+1842	9960	0	region_label	Temple Spiders
+1844	9902	0	region_label	Sarachnis
+1850	9939	0	region_label	Undead druids
+1888	5184	0	region_label	War
+1894	9003	1	region_label	Baby dragons
+1907	5227	0	region_label	Gift of Peace
+1920	5088	0	region_label	Famine
+1926	5125	0	region_label	Grain of Plenty
+1936	8992	1	region_label	Dragons
+1952	4992	0	region_label	Pestilence
+1952	5027	0	region_label	Box of Health
+1966	9042	1	region_label	Ogresses
+1984	4896	0	region_label	Death
+1992	4928	0	region_label	Cradle of Life
+2011	8989	1	region_label	Ogresses
+2015	9700	0	region_label	Here be minotaurs
+2016	9194	0	region_label	Deepfin Mine
+2026	9083	1	region_label	Chinchompas
+2060	9006	1	region_label	Bank vault
+2081	10009	0	region_label	Buccaneers' Laboratory
+2147	10337	0	region_label	Essence Mine
+2149	5081	0	region_label	Dead people
+2152	5102	0	region_label	Distillery
+2159	5170	0	region_label	Nothing interesting happens here
+2227	8994	0	region_label	Sunbleak Cave
+2249	9266	0	region_label	Fire giants
+2255	9242	0	region_label	Blue dragons
+2271	9881	0	region_label	Ynysdail Cavern
+2282	9232	0	region_label	Iron dragons
+2286	9272	0	region_label	Greater demons
+2362	9456	0	region_label	Thermonuclear Smoke Devil
+2383	4380	0	region_label	Tanglefeet
+2386	4427	0	region_label	Otherworldly beings
+2398	5160	0	region_label	Fight Pit
+2400	5092	0	region_label	Fight Cave
+2400	10272	0	region_label	Trolls
+2401	9779	0	region_label	Fire giants
+2401	9827	0	region_label	Brimstail
+2408	9438	0	region_label	Smoke devils
+2420	10390	0	region_label	Basilisk Knights
+2420	10422	0	region_label	Dagannoth
+2422	4375	0	region_label	Beware of the mushrooms
+2424	9793	0	region_label	Hellhounds
+2428	4446	0	region_label	Puro-puro
+2447	4429	0	region_label	Throne room
+2449	10441	0	region_label	Dagannoth
+2452	4478	0	region_label	Shrine
+2455	10388	0	region_label	Basilisk Knights
+2457	9788	0	region_label	Aberrant Spectres
+2459	9832	0	region_label	Bloodvelds
+2464	10402	0	region_label	Basilisks
+2467	10147	0	region_label	Dagannoth
+2479	9806	0	region_label	Ankou
+2479	10406	0	region_label	Basilisks
+2479	10439	0	region_label	Dagannoth
+2482	4452	0	region_label	Market
+2496	5017	0	region_label	The Inferno
+2496	5140	0	region_label	Mor Ul Rek
+2496	10112	0	region_label	Sub-level 1
+2506	10145	0	region_label	Wallasalki
+2518	10258	0	region_label	Miscellania Expansion
+2522	10122	0	region_label	Dagannoth
+2523	10165	0	region_label	Giant rock crabs
+2536	9448	0	region_label	Poison spiders
+2546	9951	0	region_label	Wallasalki
+2547	10067	0	region_label	Wallasalki
+2554	9859	0	region_label	Wallasalki
+2564	9935	0	region_label	Giant rock crabs
+2568	9966	0	region_label	Dagannoth
+2569	9753	0	region_label	Bats
+2570	9499	0	region_label	Greater demons
+2570	9563	0	region_label	Fire giants
+2578	10038	0	region_label	Dagannoth
+2583	9659	0	region_label	Dungeon rats
+2585	9738	0	region_label	Ogres
+2586	9489	0	region_label	Wizards' Guild
+2586	9608	0	region_label	Ogres
+2588	10074	0	region_label	Giant rock crabs
+2594	9823	0	region_label	Here be goblins
+2595	9599	0	region_label	Upper level
+2599	9832	0	region_label	Dagannoth
+2600	10275	0	region_label	Sea snakes
+2601	9861	0	region_label	Dagannoth
+2601	9950	0	region_label	Dagannoth
+2605	9578	0	region_label	Baby green dragons
+2606	9638	0	region_label	Spiders
+2614	9524	0	region_label	Salarin the Twisted
+2622	9880	0	region_label	Dagannoth
+2623	6207	0	region_label	Lower level
+2640	9728	0	region_label	Sub-level 5
+2640	9824	0	region_label	Sub-level 4
+2640	9920	0	region_label	Sub-level 3
+2640	10016	0	region_label	Sub-level 2
+2644	9702	0	region_label	Ardougne Sewers
+2647	9744	0	region_label	Dagannoth
+2650	9776	0	region_label	Rock lobsters
+2656	9440	0	region_label	Bronze, iron & steel dragons
+2656	10400	0	region_label	Here be penguins
+2659	9635	0	region_label	Rat Pits
+2663	9570	0	region_label	Moss giants
+2664	9495	0	region_label	Fire giants
+2664	9640	0	region_label	Sub-level 6
+2664	9664	0	region_label	Dagannoth Kings
+2666	9523	0	region_label	Dogs
+2675	9682	0	region_label	Zombies & rocks
+2686	9885	0	region_label	Key Master
+2686	9909	0	region_label	Beware of the dog
+2691	9958	0	region_label	Rock lobsters
+2692	5304	0	region_label	Ur-meg
+2696	9848	0	region_label	Rock lobsters
+2697	5319	0	region_label	Bone collector
+2699	9688	0	region_label	Hobgoblins
+2700	9774	0	region_label	Shadow warriors
+2701	10001	0	region_label	Kurask
+2702	9738	0	region_label	Rock lobsters
+2704	5368	0	region_label	Oldak's teleportation laboratory
+2705	10032	0	region_label	Jellies
+2708	9940	0	region_label	Kurask
+2710	9521	0	region_label	Red dragons
+2712	9485	0	region_label	Black demons
+2715	5270	0	region_label	Wire machine
+2716	5344	0	region_label	Ur-zek & Ur-taal
+2716	10011	0	region_label	Turoth
+2718	9959	0	region_label	Upper level
+2718	9984	0	region_label	Lower level
+2719	5322	0	region_label	Market
+2719	9744	0	region_label	Pit scorpions
+2720	5248	2	region_label	Agility course
+2720	5375	0	region_label	Lower level
+2721	9446	0	region_label	Iron & steel dragons
+2723	5331	0	region_label	Ur-vass
+2724	10064	0	region_label	Rock lobsters
+2736	9497	0	region_label	Bronze dragons
+2744	10004	0	region_label	Basilisks
+2746	5342	0	region_label	Tegdak
+2751	8801	0	region_label	Charred Dungeon
+2760	5341	0	region_label	Station
+2761	10012	0	region_label	Pyrefiends
+2782	5431	0	region_label	Council chamber
+2784	5439	0	region_label	Middle level
+2784	9568	0	region_label	Agility Arena
+2785	8639	0	region_label	Wyrmscraig Cavern
+2792	10001	0	region_label	Cave crawlers
+2792	10037	0	region_label	Cockatrice
+2796	10019	0	region_label	Rock slugs
+2797	5430	0	region_label	Ur-tag
+2800	9628	0	region_label	Black dragons
+2806	5401	0	region_label	Nursery
+2812	9836	0	region_label	Fire Obelisk
+2815	6207	0	region_label	Middle level
+2826	10076	0	region_label	Jail
+2827	10213	0	region_label	Black Guard H.Q.
+2832	5344	0	region_label	Bandos's Stronghold
+2834	9561	0	region_label	Lesser demons
+2834	9586	0	region_label	Red Spiders
+2836	9610	0	region_label	Lesser demons
+2836	9653	0	region_label	Skeletons
+2836	10166	0	region_label	Dondakan's rock
+2837	5280	0	region_label	Armadyl's Eyrie
+2839	9829	0	region_label	Black dragons
+2842	9766	0	region_label	Zombies
+2842	10141	0	region_label	River Kelda
+2845	10343	0	region_label	Salt Mine
+2846	10084	0	region_label	Trolls
+2848	5503	0	region_label	Upper level
+2848	9504	0	region_label	Jogres
+2851	9752	0	region_label	Greater demons
+2853	9872	0	region_label	Mountain dwarves
+2856	9638	0	region_label	Elvarg
+2856	10004	0	region_label	Cyclopes
+2856	10084	0	region_label	Goutweed store
+2857	9572	0	region_label	Skeletons
+2857	9806	0	region_label	Poison spiders
+2860	9948	0	region_label	Ice Queen's Lair
+2861	9737	0	region_label	Dramen Tree
+2861	9845	0	region_label	Hellhounds
+2862	10225	0	region_label	Library
+2863	9780	0	region_label	Black demons
+2872	5479	0	region_label	Zanik's bedroom
+2875	5184	0	region_label	Ancient Prison
+2879	10201	0	region_label	Palace
+2890	10467	0	region_label	Grimstone Dungeon
+2895	9833	0	region_label	Cauldron of Thunder
+2900	9663	0	region_label	Upper level
+2908	9689	0	region_label	Black Knights' Base
+2908	9807	0	region_label	Blue dragons
+2908	9872	0	region_label	Nora T. Hagg's cellar
+2909	5363	0	region_label	Zamorak's Fortress
+2912	9432	0	region_label	Jogres
+2912	9471	0	region_label	Upper level
+2912	10086	0	region_label	Burntmeat's Kitchen
+2914	10188	0	region_label	Brewery
+2916	5238	0	region_label	Saradomin's Encampment
+2918	9889	0	region_label	Fountain of Heroes
+2920	9770	0	region_label	Chaos dwarves
+2924	5814	0	region_label	Camdozaal Mines
+2928	10170	0	region_label	Minecarts
+2930	9625	0	region_label	Blue dragons
+2930	9644	0	region_label	Melzar's Maze
+2930	10194	0	region_label	Blast Furnace
+2934	9852	0	region_label	Chaos druids
+2935	9754	0	region_label	Poisonous scorpions
+2937	5773	0	region_label	Offering Altar
+2938	9790	0	region_label	Lesser demons
+2956	5806	0	region_label	Ramarno
+2957	10146	0	region_label	Troll generals
+2962	9784	0	region_label	Animated axes
+2965	9565	0	region_label	Ice giants
+2966	9738	0	region_label	Crypt
+2966	10098	0	region_label	God Wars Dungeon
+2969	9819	0	region_label	Hammerspike's hangout
+2970	4794	0	region_label	Sire
+2971	5823	0	region_label	Camdozaal Vault
+2980	4857	0	region_label	Sire
+2985	9806	0	region_label	Boot
+2990	9576	0	region_label	Pirates
+2994	9571	0	region_label	Muggers
+2999	10350	0	region_label	Agility course spikes
+3007	6207	0	region_label	Upper level
+3010	5798	0	region_label	Golem Workshop
+3018	5578	0	region_label	Lizards & Zamorak fighters
+3019	9587	0	region_label	Hobgoblins
+3021	10328	0	region_label	Shadow spiders
+3022	10248	0	region_label	Greater demons
+3022	10354	0	region_label	Wine of Zamorak
+3029	10312	0	region_label	Chaos dwarves
+3034	9736	0	region_label	Mining Guild
+3040	9632	0	region_label	Rat Pits
+3046	10321	0	region_label	Hill giants
+3048	10272	0	region_label	Black dragons
+3051	9577	0	region_label	Ice warriors & giants
+3052	9809	0	region_label	Beware of the scorpions
+3053	10346	0	region_label	Fire giants
+3057	9547	0	region_label	Skeletal wyverns
+3058	9776	0	region_label	Access to Falador
+3060	5578	0	region_label	Altar
+3070	9387	0	region_label	The Pandemonium
+3070	10261	0	region_label	Poison spiders
+3072	9763	0	region_label	Draynor Manor basement
+3080	9892	0	region_label	Dave's Basement of Doom
+3086	9932	0	region_label	Chronozon
+3087	5263	0	region_label	Hopelessness
+3087	5293	0	region_label	Anger
+3088	9951	0	region_label	Poison spiders
+3092	9965	0	region_label	Black demons
+3102	9561	0	region_label	Wizards' Tower
+3104	9655	0	region_label	Draynor Sewers
+3104	9727	0	region_label	Lower level
+3105	4858	0	region_label	Sire
+3106	9581	0	region_label	Upper level
+3107	8868	0	region_label	Gryphons
+3109	9942	0	region_label	Skeletons
+3109	10344	0	region_label	Mage Arena bank
+3110	4793	0	region_label	Sire
+3110	9838	0	region_label	Hill giants
+3112	9932	0	region_label	Chaos druids
+3112	10273	0	region_label	King Black Dragon
+3119	9996	0	region_label	Earth warriors
+3121	9899	0	region_label	Skeletons & zombies
+3122	5258	0	region_label	Confusion
+3122	5298	0	region_label	Fear
+3123	9865	0	region_label	Hobgoblins
+3130	9935	0	region_label	Thugs
+3134	9955	0	region_label	Red Spiders
+3165	12431	0	region_label	Dark beasts
+3166	4547	0	region_label	Exit
+3167	9635	0	region_label	H.A.M. Cult
+3168	9680	0	region_label	Motherlode Mine
+3168	9696	0	region_label	Sourhog Cave
+3168	9758	0	region_label	Champions' Challenge
+3179	8876	0	region_label	Shellbane  Gryphon
+3179	9884	0	region_label	Red Spiders
+3182	4618	0	region_label	Terror dogs
+3183	12456	0	region_label	Waterfiends
+3184	4544	0	region_label	Lower level
+3184	12405	0	region_label	Elves
+3186	9493	0	region_label	Soldiers
+3196	9822	0	region_label	Bank vault
+3200	9432	0	region_label	Queen's Chamber
+3200	9463	0	region_label	Kalphite Lair
+3200	9727	0	region_label	Upper level
+3219	12369	0	region_label	Kurask
+3220	6009	0	region_label	Iorwerth Camp
+3220	9620	0	region_label	Lumbridge Castle cellar
+3222	9498	0	region_label	Guardians
+3223	6161	0	region_label	Gwenith
+3223	12422	0	region_label	Nechryael
+3225	12491	0	region_label	The Gauntlet
+3227	12397	0	region_label	Dark beasts
+3228	12459	0	region_label	Nechryael
+3230	9517	2	region_label	Chasm of Tears
+3230	9546	0	region_label	Giant frogs
+3232	8801	0	region_label	Gryphons
+3235	10347	0	region_label	Beware of the scorpions
+3238	12437	0	region_label	Bloodvelds
+3239	9872	0	region_label	Rats
+3240	9704	0	region_label	Watermill cellar
+3245	9773	0	region_label	VTAM Corporation
+3251	12421	0	region_label	Bloodvelds
+3253	12468	0	region_label	Moss giants
+3254	12384	0	region_label	Kurask
+3260	9522	2	region_label	Tears of Guthix
+3263	9904	0	region_label	Here be dead stuff
+3264	4544	0	region_label	Middle level
+3264	6016	0	region_label	Tirannwn
+3264	6080	0	region_label	Prifddinas
+3264	9630	0	region_label	Goblin Maze
+3291	12451	0	region_label	Zalcano
+3295	10202	1	region_label	Vet'ion's Rest
+3298	8864	0	region_label	Coral Nurseries
+3298	12389	0	region_label	Trahaearn Mine
+3300	9869	0	region_label	Scurrius The Rat King
+3306	10082	0	region_label	Corporeal Beast
+3327	9632	0	region_label	Mine
+3336	10106	0	region_label	Greater nechryael
+3337	10136	0	region_label	Lesser demons
+3341	10058	0	region_label	Ice giants
+3341	10164	0	region_label	Abyssal demons
+3342	9485	0	region_label	Guardians
+3344	4544	0	region_label	Upper level
+3359	10080	0	region_label	Ankou
+3359	10328	0	region_label	Callisto's Den
+3361	10121	0	region_label	Black demons
+3362	9503	0	region_label	Kalphite Cave
+3363	6047	0	region_label	Arandar
+3364	10161	0	region_label	Black dragons
+3372	9530	0	region_label	Soldiers
+3394	9486	0	region_label	Soldiers
+3395	9930	0	region_label	Bloodvelds
+3397	9980	0	region_label	Nechryael
+3402	10127	0	region_label	Green dragons
+3406	5804	0	region_label	Debtor Hideout
+3407	9869	0	region_label	Mausoleum
+3414	10073	0	region_label	Green dragons
+3423	10203	2	region_label	Silk Chasm
+3424	9924	0	region_label	Slayer Tower
+3430	10151	0	region_label	Greater demons
+3431	5845	0	region_label	The Mountain
+3431	10105	0	region_label	Jellies
+3441	10124	0	region_label	Dust devils
+3444	10085	0	region_label	Hellhounds
+3447	9970	0	region_label	Abyssal demons
+3452	9935	0	region_label	Gargoyles
+3456	5824	0	region_label	Desert Island
+3458	9583	0	region_label	Kovac
+3463	5767	0	region_label	Rocky Outcrop
+3476	5791	0	region_label	Moser Settlement
+3488	9672	0	region_label	Shades
+3496	6072	0	region_label	Hut
+3497	6118	0	region_label	Old Manor
+3500	5873	0	region_label	Trinity Outpost
+3500	6169	0	region_label	Trading Post
+3519	9960	0	region_label	Here be odd stuff
+3537	9889	0	region_label	Obstacle course
+3552	6107	0	region_label	Town Center
+3552	6120	0	region_label	Wild Varrock
+3552	6160	0	region_label	Dark Warrior's Palace
+3560	9866	0	region_label	Skullball
+3567	6054	0	region_label	Stone Circle
+3594	6113	0	region_label	Blank Tower
+3598	6067	0	region_label	Court of Chaos
+3598	6164	0	region_label	Pillars of Sacrifice
+3616	10208	0	region_label	Wyverns
+3616	10272	1	region_label	Wyverns Task Only
+3632	9815	0	region_label	Araxxor
+3667	9824	0	region_label	Here be spiders
+3680	9888	0	region_label	Ectofuntus
+3720	9864	0	region_label	Brewery
+3772	10288	1	region_label	Underwater
+3775	9407	0	region_label	Cave horrors & albino bats
+3787	10156	1	region_label	A
+3808	9747	1	region_label	Shura
+3808	9762	1	region_label	The Nightmare
+3808	9831	1	region_label	Greater demons
+3808	10112	1	region_label	Lower level
+3815	10172	1	region_label	B
+3830	10157	1	region_label	C
+3847	9762	1	region_label	Lesser demons
+3866	9775	1	region_label	Pyrefiends
+3872	10208	1	region_label	Volcano Mine
+3904	10176	1	region_label	Upper level

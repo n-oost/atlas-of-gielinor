@@ -1,0 +1,729 @@
+# Revision 241 native selector sections; source/display extents from native-cache.json.
+100000	0	0	Ancient Cavern	1736	5320	1791	5375	719	-1865	0	1	0	native_ancient_cavern__ancient_cavern
+100001	0	0	Ancient Cavern	1728	5312	1791	5319	719	-1865	0	1	0	native_ancient_cavern
+100001	0	0	Ancient Cavern	1728	5320	1735	5375	719	-1865	0	1	0	native_ancient_cavern
+100002	0	1	Ancient Cavern	1728	5280	1791	5375	783	-1801	0	1	0	native_ancient_cavern__ancient_cavern
+100003	0	1	Ancient Cavern	1728	5248	1791	5279	783	-1801	0	1	0	native_ancient_cavern
+100004	0	0	Ardougne Underground	2560	9600	2623	9663	10	-6407	0	1	0	native_ardougne_underground__clock_tower_dungeon
+100005	0	0	Ardougne Underground	2560	9728	2591	9759	10	-6407	0	1	0	native_ardougne_underground__chaos_druid_tower
+100006	0	0	Ardougne Underground	2624	9600	2687	9615	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2496	9632	2559	9639	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2496	9640	2511	9663	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2528	9664	2551	9687	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2560	9664	2599	9671	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2688	9664	2751	9727	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2560	9688	2567	9695	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2584	9696	2591	9727	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2592	9728	2623	9759	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2560	9760	2623	9791	10	-6407	0	1	0	native_ardougne_underground
+100006	0	0	Ardougne Underground	2688	9784	2751	9791	10	-6407	0	1	0	native_ardougne_underground
+100007	0	0	Ardougne Underground	2560	9792	2623	9855	10	-6407	0	1	0	native_ardougne_underground__goblin_cave
+100008	0	0	Ardougne Underground	2624	9616	2687	9663	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2512	9640	2559	9663	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2552	9664	2559	9671	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2600	9664	2687	9671	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2552	9672	2687	9687	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2568	9688	2687	9695	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100008	0	0	Ardougne Underground	2592	9696	2687	9727	10	-6407	0	1	0	native_ardougne_underground__ardougne_underground
+100009	0	0	Ardougne Underground	2688	9728	2751	9783	10	-6407	0	1	0	native_ardougne_underground__legends_guild_dungeon
+100010	0	0	Asgarnia Ice Cave	2936	9536	2983	9559	-45	-6360	0	1	0	native_asgarnia_ice_dungeon__asgarnia_ice_cave
+100010	0	0	Asgarnia Ice Cave	3016	9536	3071	9559	-45	-6360	0	1	0	native_asgarnia_ice_dungeon__asgarnia_ice_cave
+100010	0	0	Asgarnia Ice Cave	2936	9560	3071	9599	-45	-6360	0	1	0	native_asgarnia_ice_dungeon__asgarnia_ice_cave
+100011	0	0	Asgarnia Ice Cave	2880	9536	2935	9599	-45	-6360	0	1	0	native_asgarnia_ice_dungeon__karamja_dungeon
+100012	0	0	Asgarnia Ice Cave	2912	9632	2943	9639	-45	-6360	0	1	0	native_asgarnia_ice_dungeon
+100012	0	0	Asgarnia Ice Cave	2912	9640	2919	9655	-45	-6360	0	1	0	native_asgarnia_ice_dungeon
+100012	0	0	Asgarnia Ice Cave	2912	9656	2943	9663	-45	-6360	0	1	0	native_asgarnia_ice_dungeon
+100013	0	0	Asgarnia Ice Cave	2920	9640	2943	9655	-45	-6360	0	1	0	native_asgarnia_ice_dungeon__melzars_maze_basement
+100014	0	0	Asgarnia Ice Cave	2944	9616	3007	9623	19	-6360	0	1	0	native_asgarnia_ice_dungeon
+100014	0	0	Asgarnia Ice Cave	2944	9624	2951	9655	19	-6360	0	1	0	native_asgarnia_ice_dungeon
+100014	0	0	Asgarnia Ice Cave	3000	9624	3007	9655	19	-6360	0	1	0	native_asgarnia_ice_dungeon
+100014	0	0	Asgarnia Ice Cave	2944	9656	3007	9663	19	-6360	0	1	0	native_asgarnia_ice_dungeon
+100015	0	1	Asgarnia Ice Cave	2984	9536	3015	9559	-45	-6360	0	1	0	native_asgarnia_ice_dungeon
+100016	0	0	Asgarnia Ice Cave	2952	9624	2999	9655	19	-6360	0	1	0	native_asgarnia_ice_dungeon__port_sarim_rat_pits
+100017	0	1	Asgarnia Ice Cave	3016	9536	3087	9599	19	-6360	0	1	0	native_asgarnia_ice_dungeon
+100018	0	0	Braindeath Island	2112	5056	2175	5183	1536	-1590	0	1	0	native_braindeath_island
+100019	0	1	Braindeath Island	2112	5056	2175	5183	1536	-1590	0	1	0	native_braindeath_island
+100020	0	2	Braindeath Island	2112	5056	2175	5183	1536	-1590	0	1	0	native_braindeath_island
+100021	0	3	Braindeath Island	2112	5056	2175	5183	1536	-1590	0	1	0	native_braindeath_island
+100022	0	0	Dorgesh-Kaan	2688	5248	2751	5375	446	-2161	0	1	0	native_dorgeshkaan__dorgesh_kaan
+100023	0	2	Dorgesh-Kaan	2688	5248	2751	5375	574	-2033	0	1	0	native_dorgeshkaan__dorgesh_kaan
+100024	0	1	Dorgesh-Kaan	2688	5248	2751	5375	510	-2097	0	1	0	native_dorgeshkaan__dorgesh_kaan
+100025	0	0	Dwarven Mines	3008	9664	3071	9695	-64	-6375	0	1	0	native_dwarven_mines
+100025	0	0	Dwarven Mines	3056	9696	3071	9759	-64	-6375	0	1	0	native_dwarven_mines
+100025	0	0	Dwarven Mines	3008	9760	3071	9791	-64	-6375	0	1	0	native_dwarven_mines
+100025	0	0	Dwarven Mines	2992	9792	3071	9799	-64	-6375	0	1	0	native_dwarven_mines
+100025	0	0	Dwarven Mines	2976	9800	3071	9855	-64	-6375	0	1	0	native_dwarven_mines
+100026	0	0	Dwarven Mines	3008	9696	3055	9703	-64	-6375	0	1	0	native_dwarven_mines__mining_guild
+100026	0	0	Dwarven Mines	3000	9704	3055	9727	-64	-6375	0	1	0	native_dwarven_mines__mining_guild
+100026	0	0	Dwarven Mines	3008	9728	3055	9759	-64	-6375	0	1	0	native_dwarven_mines__mining_guild
+100027	0	0	Dwarven Mines	2960	9800	2975	9855	-64	-6375	0	1	0	native_dwarven_mines__taverley_dungeon
+100028	0	0	Dwarven Mines	3712	5632	3775	5695	-704	-2343	0	1	0	native_dwarven_mines
+100029	0	1	Dwarven Mines	3712	5632	3775	5695	-608	-2343	0	1	0	native_dwarven_mines
+100030	0	2	God Wars Dungeon	2816	5248	2879	5279	21	-1517	0	1	0	native_godwars__god_wars_dungeon
+100030	0	2	God Wars Dungeon	2816	5280	2919	5311	21	-1517	0	1	0	native_godwars__god_wars_dungeon
+100030	0	2	God Wars Dungeon	2816	5312	2943	5375	21	-1517	0	1	0	native_godwars__god_wars_dungeon
+100031	0	0	God Wars Dungeon	2848	5184	2943	5231	21	-1549	0	1	0	native_godwars__god_wars_dungeon
+100032	0	1	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
+100033	0	2	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
+100034	0	3	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
+100035	0	0	God Wars Dungeon	2880	5248	2935	5287	29	-1549	0	1	0	native_godwars__god_wars_dungeon
+100036	0	1	God Wars Dungeon	2904	5272	2943	5311	53	-1525	0	1	0	native_godwars
+100037	0	0	God Wars Dungeon	2816	5184	2847	5231	21	-1549	0	1	0	native_godwars
+100038	0	0	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim__keldagrim
+100038	0	0	Keldagrim	2816	10120	2943	10239	-152	-6441	0	1	0	native_keldagrim__keldagrim
+100039	0	1	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim
+100039	0	1	Keldagrim	2816	10120	2943	10183	-152	-6441	0	1	0	native_keldagrim
+100039	0	1	Keldagrim	2816	10184	2855	10215	-152	-6441	0	1	0	native_keldagrim
+100039	0	1	Keldagrim	2896	10184	2943	10215	-152	-6441	0	1	0	native_keldagrim
+100039	0	1	Keldagrim	2816	10216	2943	10239	-152	-6441	0	1	0	native_keldagrim
+100040	0	1	Keldagrim	2856	10184	2895	10215	-152	-6441	0	1	0	native_keldagrim__keldagrim
+100041	0	2	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim
+100041	0	2	Keldagrim	2816	10120	2943	10239	-152	-6441	0	1	0	native_keldagrim
+100042	0	3	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim
+100042	0	3	Keldagrim	2816	10120	2943	10239	-152	-6441	0	1	0	native_keldagrim
+100043	0	0	Keldagrim	2784	10120	2807	10127	-96	-6489	0	1	0	native_keldagrim__keldagrim
+100043	0	0	Keldagrim	2760	10128	2807	10151	-96	-6489	0	1	0	native_keldagrim__keldagrim
+100043	0	0	Keldagrim	2760	10152	2783	10167	-96	-6489	0	1	0	native_keldagrim__keldagrim
+100044	0	1	Keldagrim	2784	10120	2807	10127	-96	-6489	0	1	0	native_keldagrim
+100044	0	1	Keldagrim	2760	10128	2807	10151	-96	-6489	0	1	0	native_keldagrim
+100044	0	1	Keldagrim	2760	10152	2783	10167	-96	-6489	0	1	0	native_keldagrim
+100045	0	2	Keldagrim	2784	10120	2807	10127	-96	-6489	0	1	0	native_keldagrim
+100045	0	2	Keldagrim	2760	10128	2807	10151	-96	-6489	0	1	0	native_keldagrim
+100045	0	2	Keldagrim	2760	10152	2783	10167	-96	-6489	0	1	0	native_keldagrim
+100046	0	3	Keldagrim	2784	10120	2807	10127	-96	-6489	0	1	0	native_keldagrim
+100046	0	3	Keldagrim	2760	10128	2807	10151	-96	-6489	0	1	0	native_keldagrim
+100046	0	3	Keldagrim	2760	10152	2783	10167	-96	-6489	0	1	0	native_keldagrim
+100047	0	0	Misthalin Underground	3088	9536	3135	9551	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3128	9552	3135	9583	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3088	9584	3135	9599	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9600	3135	9639	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3192	9600	3223	9615	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3192	9616	3207	9623	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3192	9624	3223	9655	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3128	9640	3135	9655	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3128	9656	3327	9663	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3128	9664	3199	9671	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3128	9672	3151	9695	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3184	9672	3199	9719	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9696	3151	9719	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9720	3199	9727	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9728	3263	9735	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9736	3143	9743	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3192	9736	3263	9759	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9744	3087	9759	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3120	9744	3143	9767	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3192	9760	3231	9775	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3256	9760	3263	9783	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3088	9768	3143	9775	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3088	9776	3231	9783	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3072	9784	3263	9791	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3104	9792	3263	9815	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3144	9816	3175	9839	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3312	9856	3327	9919	-29	-6445	0	1	0	native_misthalin_underground
+100047	0	0	Misthalin Underground	3104	10000	3135	10007	-29	-6445	0	1	0	native_misthalin_underground
+100048	0	0	Misthalin Underground	3088	9744	3119	9759	-29	-6445	0	1	0	native_misthalin_underground__draynor_manor_basement
+100048	0	0	Misthalin Underground	3072	9760	3119	9767	-29	-6445	0	1	0	native_misthalin_underground__draynor_manor_basement
+100048	0	0	Misthalin Underground	3072	9768	3087	9783	-29	-6445	0	1	0	native_misthalin_underground__draynor_manor_basement
+100049	0	0	Misthalin Underground	3072	9792	3103	9815	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3072	9816	3143	9839	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3176	9816	3263	9839	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3072	9840	3263	9855	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3072	9856	3311	9919	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3072	9920	3135	9983	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100049	0	0	Misthalin Underground	3104	9984	3135	9999	-29	-6445	0	1	0	native_misthalin_underground__varrock_sewers
+100050	0	0	Misthalin Underground	3072	9536	3087	9599	-29	-6445	0	1	0	native_misthalin_underground__asgarnia_ice_cave
+100051	0	0	Misthalin Underground	3088	9552	3127	9583	-29	-6445	0	1	0	native_misthalin_underground__wizards_tower_basement
+100052	0	0	Misthalin Underground	3072	9640	3127	9695	-29	-6445	0	1	0	native_misthalin_underground__draynor_sewers
+100053	0	0	Misthalin Underground	3144	9736	3191	9775	-29	-6445	0	1	0	native_misthalin_underground__champions_guild_basement
+100054	0	1	Misthalin Underground	3136	9728	3199	9791	-29	-6445	0	1	0	native_misthalin_underground
+100055	0	2	Misthalin Underground	3200	9472	3263	9487	-29	-6445	0	1	0	native_misthalin_underground
+100055	0	2	Misthalin Underground	3200	9488	3207	9535	-29	-6445	0	1	0	native_misthalin_underground
+100055	0	2	Misthalin Underground	3136	9728	3199	9791	-29	-6445	0	1	0	native_misthalin_underground
+100056	0	3	Misthalin Underground	3136	9728	3199	9791	-29	-6445	0	1	0	native_misthalin_underground
+100057	0	0	Misthalin Underground	3136	9536	3263	9599	-29	-6445	0	1	0	native_misthalin_underground__lumbridge_swamp_caves
+100058	0	0	Misthalin Underground	3136	9600	3191	9655	-29	-6445	0	1	0	native_misthalin_underground__ham_hideout
+100059	0	0	Misthalin Underground	3152	9672	3183	9719	-29	-6445	0	1	0	native_misthalin_underground__sourhog_cave
+100060	0	2	Misthalin Underground	3208	9488	3263	9535	-29	-6445	0	1	0	native_misthalin_underground__chasm_of_tears
+100061	0	0	Misthalin Underground	3232	9760	3255	9783	-29	-6445	0	1	0	native_misthalin_underground__vtam_corporation
+100062	0	0	Misthalin Underground	3224	9600	3327	9615	-29	-6445	0	1	0	native_misthalin_underground__lumbridge_cellar
+100062	0	0	Misthalin Underground	3208	9616	3327	9623	-29	-6445	0	1	0	native_misthalin_underground__lumbridge_cellar
+100062	0	0	Misthalin Underground	3224	9624	3327	9655	-29	-6445	0	1	0	native_misthalin_underground__lumbridge_cellar
+100063	0	0	Misthalin Underground	3200	9664	3263	9727	-29	-6445	0	1	0	native_misthalin_underground__water_mill_cellar
+100064	0	0	Mole Hole	1728	5120	1791	5127	1225	-1797	0	1	0	native_mole
+100064	0	0	Mole Hole	1784	5128	1791	5247	1225	-1797	0	1	0	native_mole
+100065	0	0	Mole Hole	1728	5128	1783	5247	1225	-1797	0	1	0	native_mole__mole_hole
+100066	0	1	Mole Hole	1728	5120	1791	5247	1225	-1797	0	1	0	native_mole
+100067	0	2	Mole Hole	1728	5120	1791	5247	1225	-1797	0	1	0	native_mole
+100068	0	3	Mole Hole	1728	5120	1791	5247	1225	-1797	0	1	0	native_mole
+100069	0	0	Morytania Underground	3584	9832	3647	9855	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3464	9848	3495	9855	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3648	9864	3711	9871	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3648	9872	3671	9903	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3696	9872	3711	9903	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3648	9904	3711	9919	-64	-6339	0	1	0	native_morytania_underground
+100069	0	0	Morytania Underground	3456	9920	3463	9983	-64	-6339	0	1	0	native_morytania_underground
+100070	0	0	Morytania Underground	3464	9920	3583	9983	-64	-6339	0	1	0	native_morytania_underground__fenkenstrain_dungeon
+100071	0	0	Morytania Underground	3520	9856	3583	9919	-64	-6339	0	1	0	native_morytania_underground__werewolf_agility_course
+100072	0	0	Morytania Underground	3584	9792	3607	9831	-64	-6339	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100073	0	0	Morytania Underground	3608	9792	3711	9831	-64	-6339	0	1	0	native_morytania_underground__morytania_spider_cave
+100073	0	0	Morytania Underground	3648	9832	3711	9863	-64	-6339	0	1	0	native_morytania_underground__morytania_spider_cave
+100074	0	0	Morytania Underground	3600	9672	3647	9727	0	-6403	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100074	0	0	Morytania Underground	3520	9728	3647	9791	0	-6403	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100074	0	0	Morytania Underground	3520	9792	3583	9807	0	-6403	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100074	0	0	Morytania Underground	3512	9808	3583	9823	0	-6403	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100074	0	0	Morytania Underground	3520	9824	3583	9831	0	-6403	0	1	0	native_morytania_underground__meiyerditch_laboratories
+100075	0	0	Morytania Underground	3584	9664	3647	9671	0	-6403	0	1	0	native_morytania_underground
+100075	0	0	Morytania Underground	3584	9672	3599	9727	0	-6403	0	1	0	native_morytania_underground
+100075	0	0	Morytania Underground	3520	9832	3583	9855	0	-6403	0	1	0	native_morytania_underground
+100076	0	0	Morytania Underground	3672	9872	3695	9903	-64	-6339	0	1	0	native_morytania_underground__ectofuntus_dungeon
+100077	0	1	Morytania Underground	3776	9664	3903	9687	-64	-6339	0	1	0	native_morytania_underground__sisterhood_sanctuary
+100077	0	1	Morytania Underground	3728	9688	3903	9711	-64	-6339	0	1	0	native_morytania_underground__sisterhood_sanctuary
+100077	0	1	Morytania Underground	3712	9712	3903	9839	-64	-6339	0	1	0	native_morytania_underground__sisterhood_sanctuary
+100078	0	2	Morytania Underground	3776	9664	3903	9687	-64	-6339	0	1	0	native_morytania_underground
+100078	0	2	Morytania Underground	3728	9688	3903	9711	-64	-6339	0	1	0	native_morytania_underground
+100078	0	2	Morytania Underground	3712	9712	3903	9855	-64	-6339	0	1	0	native_morytania_underground
+100079	0	3	Morytania Underground	3776	9664	3903	9687	-64	-6339	0	1	0	native_morytania_underground
+100079	0	3	Morytania Underground	3728	9688	3903	9711	-64	-6339	0	1	0	native_morytania_underground
+100079	0	3	Morytania Underground	3712	9712	3903	9855	-64	-6339	0	1	0	native_morytania_underground
+100079	0	3	Morytania Underground	3392	9920	3455	9983	-64	-6339	0	1	0	native_morytania_underground
+100080	0	1	Morytania Underground	3712	9840	3903	9855	-64	-6339	0	1	0	native_morytania_underground
+100081	0	0	Morytania Underground	3392	9856	3455	9879	-80	-6347	0	1	0	native_morytania_underground
+100081	0	0	Morytania Underground	3392	9880	3399	9903	-80	-6347	0	1	0	native_morytania_underground
+100081	0	0	Morytania Underground	3440	9880	3455	9903	-80	-6347	0	1	0	native_morytania_underground
+100081	0	0	Morytania Underground	3392	9904	3455	9919	-80	-6347	0	1	0	native_morytania_underground
+100082	0	0	Morytania Underground	3456	9600	3519	9615	-64	-6379	0	1	0	native_morytania_underground
+100082	0	0	Morytania Underground	3456	9616	3487	9631	-64	-6379	0	1	0	native_morytania_underground
+100082	0	0	Morytania Underground	3504	9616	3519	9631	-64	-6379	0	1	0	native_morytania_underground
+100082	0	0	Morytania Underground	3456	9632	3519	9639	-64	-6379	0	1	0	native_morytania_underground
+100083	0	0	Morytania Underground	3456	9664	3519	9727	-64	-6363	0	1	0	native_morytania_underground__shade_catacombs
+100084	0	0	Morytania Underground	3480	9800	3511	9823	-64	-6339	0	1	0	native_morytania_underground__myreque_hideout
+100084	0	0	Morytania Underground	3464	9824	3519	9847	-64	-6339	0	1	0	native_morytania_underground__myreque_hideout
+100085	0	0	Morytania Underground	3488	9616	3503	9631	-64	-6379	0	1	0	native_morytania_underground__haunted_mine
+100086	0	0	Morytania Underground	3480	9856	3487	9879	-24	-6467	0	1	0	native_morytania_underground
+100086	0	0	Morytania Underground	3512	9856	3519	9879	-24	-6467	0	1	0	native_morytania_underground
+100087	0	0	Morytania Underground	3400	9880	3439	9903	-80	-6347	0	1	0	native_morytania_underground__paterdomus_basement
+100088	0	0	Morytania Underground	3488	9856	3511	9879	-24	-6467	0	1	0	native_morytania_underground__myreque_hideout
+100089	0	0	Morytania Underground	3728	9672	3743	9687	-80	-6315	0	1	0	native_morytania_underground
+100090	0	1	Morytania Underground	3728	9672	3743	9687	-80	-6315	0	1	0	native_morytania_underground__sisterhood_sanctuary
+100091	0	2	Morytania Underground	3728	9672	3743	9687	-80	-6315	0	1	0	native_morytania_underground
+100092	0	3	Morytania Underground	3728	9672	3743	9687	-80	-6315	0	1	0	native_morytania_underground
+100093	0	0	Morytania Underground	3672	9952	3687	9967	-24	-6435	0	1	0	native_morytania_underground
+100094	0	0	Mos Le'Harmless Cave	3712	9344	3775	9407	-27	-6435	0	1	0	native_mosleharmless_cave__mos_le_harmless_cave
+100094	0	0	Mos Le'Harmless Cave	3712	9408	3839	9471	-27	-6435	0	1	0	native_mosleharmless_cave__mos_le_harmless_cave
+100095	0	0	Ourania Altar	3008	5568	3071	5631	-589	-2369	0	1	0	native_ourania__ourania_altar
+100096	0	0	Fremennik Slayer Cave	2688	9984	2815	10047	44	-6369	0	1	0	native_slayer_cave__fremennik_slayer_dungeon
+100097	0	1	Fremennik Slayer Cave	2688	9952	2727	9991	44	-6401	0	1	0	native_slayer_cave
+100098	0	0	Stronghold of Security	2112	5248	2175	5311	953	-1908	0	1	0	native_sos__stronghold_of_security
+100099	0	0	Stronghold of Security	1856	5184	1919	5247	1145	-1652	0	1	0	native_sos__stronghold_of_security
+100100	0	0	Stronghold of Security	1984	5184	2047	5247	1049	-1748	0	1	0	native_sos__stronghold_of_security
+100101	0	0	Stronghold of Security	2320	5200	2367	5247	793	-1940	0	1	0	native_sos__stronghold_of_security
+100102	0	0	Stronghold of Security	2304	5184	2367	5199	793	-1940	0	1	0	native_sos
+100102	0	0	Stronghold of Security	2304	5200	2319	5247	793	-1940	0	1	0	native_sos
+100103	0	0	Stronghold Underground	2240	9984	2303	10039	17	-6413	0	1	0	native_stronghold_underground__kraken_cove
+100104	0	0	Stronghold Underground	2368	9752	2495	9767	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2368	9768	2375	9831	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2496	9792	2511	9839	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2392	9800	2407	9807	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2416	9808	2423	9831	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2368	9832	2423	9839	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2368	9840	2511	9855	17	-6413	0	1	0	native_stronghold_underground
+100104	0	0	Stronghold Underground	2240	10040	2303	10047	17	-6413	0	1	0	native_stronghold_underground
+100105	0	0	Stronghold Underground	2376	9768	2495	9799	17	-6413	0	1	0	native_stronghold_underground__stronghold_slayer_dungeon
+100105	0	0	Stronghold Underground	2408	9800	2495	9807	17	-6413	0	1	0	native_stronghold_underground__stronghold_slayer_dungeon
+100105	0	0	Stronghold Underground	2424	9808	2495	9839	17	-6413	0	1	0	native_stronghold_underground__stronghold_slayer_dungeon
+100106	0	0	Stronghold Underground	2376	9800	2391	9807	17	-6413	0	1	0	native_stronghold_underground__brimstail_cave
+100106	0	0	Stronghold Underground	2376	9808	2415	9831	17	-6413	0	1	0	native_stronghold_underground__brimstail_cave
+100107	0	0	Stronghold Underground	2432	9856	2495	9919	17	-6413	0	1	0	native_stronghold_underground__grand_tree_tunnels
+100108	0	0	Taverley Underground	2816	9728	2871	9759	41	-6354	0	1	0	native_taverley_underground__entrana_dungeon
+100108	0	0	Taverley Underground	2816	9760	2847	9775	41	-6354	0	1	0	native_taverley_underground__entrana_dungeon
+100108	0	0	Taverley Underground	2824	9776	2839	9783	41	-6354	0	1	0	native_taverley_underground__entrana_dungeon
+100109	0	0	Taverley Underground	2880	9672	2943	9703	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2880	9704	2975	9727	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2872	9728	2959	9743	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2872	9744	2975	9759	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2848	9760	2975	9775	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2816	9776	2823	9783	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2840	9776	2975	9783	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2816	9784	2975	9791	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2808	9792	2975	9799	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2808	9800	2951	9807	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100109	0	0	Taverley Underground	2808	9808	2943	9855	41	-6354	0	1	0	native_taverley_underground__taverley_dungeon
+100110	0	1	Taverley Underground	2880	9664	2943	9727	41	-6354	0	1	0	native_taverley_underground
+100110	0	1	Taverley Underground	2816	9728	3007	9791	41	-6354	0	1	0	native_taverley_underground
+100110	0	1	Taverley Underground	2816	9856	2943	9919	41	-6354	0	1	0	native_taverley_underground
+100110	0	1	Taverley Underground	2816	9920	2879	9983	41	-6354	0	1	0	native_taverley_underground
+100111	0	2	Taverley Underground	2880	9664	2943	9727	41	-6354	0	1	0	native_taverley_underground
+100111	0	2	Taverley Underground	2816	9728	3007	9791	41	-6354	0	1	0	native_taverley_underground
+100111	0	2	Taverley Underground	2816	9856	2943	9919	41	-6354	0	1	0	native_taverley_underground
+100111	0	2	Taverley Underground	2816	9920	2879	9983	41	-6354	0	1	0	native_taverley_underground
+100112	0	3	Taverley Underground	2880	9664	2943	9727	41	-6354	0	1	0	native_taverley_underground
+100112	0	3	Taverley Underground	2816	9728	3007	9791	41	-6354	0	1	0	native_taverley_underground
+100112	0	3	Taverley Underground	2816	9856	2943	9919	41	-6354	0	1	0	native_taverley_underground
+100112	0	3	Taverley Underground	2816	9920	2879	9983	41	-6354	0	1	0	native_taverley_underground
+100113	0	0	Taverley Underground	2816	9896	2879	9919	41	-6354	0	1	0	native_taverley_underground__ice_queen_lair
+100113	0	0	Taverley Underground	2816	9920	2895	9975	41	-6354	0	1	0	native_taverley_underground__ice_queen_lair
+100114	0	0	Taverley Underground	2880	9664	2943	9671	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2976	9704	2999	9759	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2976	9760	3007	9791	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2880	9856	2943	9879	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2816	9888	2879	9895	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2896	9920	2903	9975	41	-6354	0	1	0	native_taverley_underground
+100114	0	0	Taverley Underground	2816	9976	2903	9983	41	-6354	0	1	0	native_taverley_underground
+100115	0	0	Taverley Underground	2816	9856	2879	9887	41	-6354	0	1	0	native_taverley_underground__white_wolf_tunnel
+100116	0	0	Taverley Underground	2880	9880	2943	9919	41	-6354	0	1	0	native_taverley_underground__heroes_guild_mine
+100117	0	0	Taverley Underground	2960	9728	2975	9743	41	-6354	0	1	0	native_taverley_underground__white_knights_castle_crypt
+100118	0	0	Taverley Underground	3000	9728	3007	9759	41	-6354	0	1	0	native_taverley_underground__mining_guild
+100119	0	1	Taverley Underground	2752	9792	2943	9799	41	-6546	0	1	0	native_taverley_underground
+100119	0	1	Taverley Underground	2752	9800	2975	9847	41	-6546	0	1	0	native_taverley_underground
+100119	0	1	Taverley Underground	2752	9848	2943	9855	41	-6546	0	1	0	native_taverley_underground
+100120	0	0	Taverley Underground	1280	1224	1343	1279	1417	2278	0	1	0	native_taverley_underground__taverley_dungeon
+100121	0	0	Taverley Underground	2904	9952	2943	9975	-23	-6322	0	1	0	native_taverley_underground__warriors_guild_basement
+100122	0	0	Tolna's Rift	3072	5248	3135	5311	205	-1830	0	1	0	native_tolna
+100123	0	0	Troll Stronghold	2816	10048	2879	10111	-73	-6422	0	1	0	native_troll_stronghold__keldagrim
+100124	0	1	Troll Stronghold	2816	10048	2879	10111	-9	-6390	0	1	0	native_troll_stronghold
+100125	0	2	Troll Stronghold	2816	10048	2879	10111	55	-6358	0	1	0	native_troll_stronghold
+100126	0	0	Mor Ul Rek	2368	5056	2559	5183	396	-1918	0	1	0	native_tzhaar_area__tzhaar_city
+100127	0	0	Mor Ul Rek	2240	5312	2303	5375	620	-2238	0	1	0	native_tzhaar_area
+100128	0	0	Lair of Tarn Razorlor	3136	4544	3199	4607	175	-1360	0	1	0	native_undead_dungeon
+100129	0	1	Lair of Tarn Razorlor	3136	4544	3199	4607	271	-1360	0	1	0	native_undead_dungeon
+100130	0	2	Lair of Tarn Razorlor	3136	4544	3199	4607	367	-1360	0	1	0	native_undead_dungeon
+100131	0	0	Lair of Tarn Razorlor	3136	4640	3175	4671	207	-1392	0	1	0	native_undead_dungeon
+100132	0	0	Waterbirth Dungeon	2432	10112	2439	10175	-39	-6153	0	1	0	native_waterbirth
+100133	0	0	Waterbirth Dungeon	2440	10112	2559	10175	-39	-6153	0	1	0	native_waterbirth__waterbirth_dungeon
+100134	0	3	Waterbirth Dungeon	1792	4352	1983	4415	713	-489	0	1	0	native_waterbirth
+100135	0	2	Waterbirth Dungeon	1792	4352	1983	4415	713	-585	0	1	0	native_waterbirth
+100136	0	1	Waterbirth Dungeon	1792	4352	1983	4415	713	-681	0	1	0	native_waterbirth
+100137	0	0	Waterbirth Dungeon	1792	4352	1983	4415	713	-777	0	1	0	native_waterbirth
+100138	0	0	Waterbirth Dungeon	2888	4424	2943	4479	-319	-937	0	1	0	native_waterbirth__waterbirth_dungeon
+100139	0	0	Waterbirth Dungeon	2888	4360	2943	4415	-263	-873	0	1	0	native_waterbirth
+100140	0	0	Wilderness Dungeons	3136	10048	3263	10055	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3136	10056	3143	10079	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3136	10184	3143	10239	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3328	10240	3391	10367	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3008	10288	3071	10303	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	2944	10304	3007	10367	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3200	10304	3263	10311	-94	-6393	0	1	0	native_wilderness_dungeons
+100140	0	0	Wilderness Dungeons	3200	10312	3207	10367	-94	-6393	0	1	0	native_wilderness_dungeons
+100141	0	0	Wilderness Dungeons	3008	10240	3071	10287	-94	-6393	0	1	0	native_wilderness_dungeons__lava_maze_dungeon
+100142	0	0	Wilderness Dungeons	3008	10304	3071	10367	-94	-6393	0	1	0	native_wilderness_dungeons__deep_wilderness_dungeon
+100143	0	0	Wilderness Dungeons	3136	10080	3223	10183	-94	-6393	0	1	0	native_wilderness_dungeons__web_chasm
+100144	0	0	Wilderness Dungeons	3144	10056	3263	10079	-94	-6393	0	1	0	native_wilderness_dungeons__revenant_caves
+100144	0	0	Wilderness Dungeons	3224	10080	3263	10183	-94	-6393	0	1	0	native_wilderness_dungeons__revenant_caves
+100144	0	0	Wilderness Dungeons	3144	10184	3263	10239	-94	-6393	0	1	0	native_wilderness_dungeons__revenant_caves
+100145	0	0	Wilderness Dungeons	3208	10312	3263	10367	-94	-6393	0	1	0	native_wilderness_dungeons__scorpia_cave
+100146	0	1	Wilderness Dungeons	3328	10048	3455	10175	-94	-6393	0	1	0	native_wilderness_dungeons
+100146	0	1	Wilderness Dungeons	3264	10176	3327	10239	-94	-6393	0	1	0	native_wilderness_dungeons
+100147	0	0	Wilderness Dungeons	3328	10048	3455	10175	-94	-6393	0	1	0	native_wilderness_dungeons__wilderness_slayer_cave
+100148	0	2	Wilderness Dungeons	3392	10176	3455	10239	-94	-6393	0	1	0	native_wilderness_dungeons__silk_chasm
+100149	0	3	Wilderness Dungeons	3056	10136	3071	10151	-142	-6417	0	1	0	native_wilderness_dungeons
+100149	0	3	Wilderness Dungeons	3040	10152	3071	10175	-142	-6417	0	1	0	native_wilderness_dungeons
+100150	0	0	Wilderness Dungeons	3008	10112	3063	10119	-174	-6433	0	1	0	native_wilderness_dungeons__troll_stronghold
+100150	0	0	Wilderness Dungeons	3008	10120	3047	10127	-174	-6433	0	1	0	native_wilderness_dungeons__troll_stronghold
+100150	0	0	Wilderness Dungeons	3008	10128	3015	10167	-174	-6433	0	1	0	native_wilderness_dungeons__troll_stronghold
+100151	0	0	Wilderness Dungeons	3048	10120	3063	10127	-174	-6433	0	1	0	native_wilderness_dungeons__wilderness_god_wars_dungeon
+100151	0	0	Wilderness Dungeons	3016	10128	3063	10167	-174	-6433	0	1	0	native_wilderness_dungeons__wilderness_god_wars_dungeon
+100152	0	0	Wilderness Dungeons	3064	10112	3071	10167	-174	-6433	0	1	0	native_wilderness_dungeons
+100153	0	0	Wilderness Dungeons	2496	4680	2551	4727	482	-753	0	1	0	native_wilderness_dungeons__mage_arena_bank
+100154	0	2	Wilderness Dungeons	2960	4368	2999	4399	226	-697	0	1	0	native_wilderness_dungeons__corporeal_beast
+100155	0	0	Wilderness Dungeons	2496	4728	2551	4735	482	-753	0	1	0	native_wilderness_dungeons
+100156	0	0	Wilderness Dungeons	2248	4672	2287	4711	746	-825	0	1	0	native_wilderness_dungeons__king_black_dragon_lair
+100157	0	0	Wilderness Dungeons	2288	4672	2295	4711	746	-825	0	1	0	native_wilderness_dungeons
+100157	0	0	Wilderness Dungeons	2248	4712	2295	4719	746	-825	0	1	0	native_wilderness_dungeons
+100158	0	0	Yanille Underground	2304	9408	2335	9471	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2568	9472	2599	9479	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2568	9480	2583	9495	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2592	9504	2607	9527	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2616	9504	2623	9527	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2560	9528	2567	9535	53	-6383	0	1	0	native_yanille_underground
+100158	0	0	Yanille Underground	2592	9528	2623	9535	53	-6383	0	1	0	native_yanille_underground
+100159	0	0	Yanille Underground	2336	9408	2431	9471	53	-6383	0	1	0	native_yanille_underground__smoke_devil_dungeon
+100160	0	0	Yanille Underground	2568	9544	2607	9591	13	-6503	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100161	0	0	Yanille Underground	2560	9544	2567	9591	13	-6503	0	1	0	native_yanille_underground
+100162	0	0	Yanille Underground	2600	9472	2623	9479	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100162	0	0	Yanille Underground	2592	9480	2623	9495	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100162	0	0	Yanille Underground	2560	9496	2623	9503	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100162	0	0	Yanille Underground	2560	9504	2591	9527	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100162	0	0	Yanille Underground	2608	9504	2615	9527	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100162	0	0	Yanille Underground	2568	9528	2591	9535	53	-6383	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100163	0	0	Yanille Underground	2608	9560	2623	9567	69	-6471	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100163	0	0	Yanille Underground	2608	9568	2615	9575	69	-6471	0	1	0	native_yanille_underground__yanille_agility_dungeon
+100164	0	0	Yanille Underground	2616	9568	2623	9575	69	-6471	0	1	0	native_yanille_underground
+100165	0	0	Yanille Underground	2584	9480	2591	9495	53	-6383	0	1	0	native_yanille_underground__wizards_guild_basement
+100166	0	0	Zanaris	2368	4352	2431	4415	769	-1247	0	1	0	native_zanaris__zanaris
+100166	0	0	Zanaris	2368	4416	2495	4479	769	-1247	0	1	0	native_zanaris__zanaris
+100167	0	0	Prifddinas	3136	5952	3391	6207	-1024	-2805	0	1	0	native_prifddinas
+100168	0	1	Prifddinas	3136	5952	3391	6207	-1024	-2805	0	1	0	native_prifddinas
+100169	0	2	Prifddinas	3136	5952	3391	6207	-1024	-2805	0	1	0	native_prifddinas
+100170	0	3	Prifddinas	3136	5952	3391	6207	-1024	-2805	0	1	0	native_prifddinas
+100171	0	0	Fossil Island Underground	3584	10176	3647	10303	-80	-6354	0	1	0	native_fossil_underground__fossil_island_underground
+100172	0	1	Fossil Island Underground	3776	10112	3839	10239	-80	-6354	0	1	0	native_fossil_underground
+100172	0	1	Fossil Island Underground	3584	10176	3647	10303	-80	-6354	0	1	0	native_fossil_underground
+100172	0	1	Fossil Island Underground	3712	10240	3839	10303	-80	-6354	0	1	0	native_fossil_underground
+100173	0	2	Fossil Island Underground	3584	10240	3647	10303	-80	-6354	0	1	0	native_fossil_underground
+100174	0	3	Fossil Island Underground	3584	10240	3647	10303	-80	-6354	0	1	0	native_fossil_underground
+100175	0	3	Fossil Island Underground	3776	10112	3839	10239	16	-6322	0	1	0	native_fossil_underground
+100176	0	0	Fossil Island Underground	3776	10112	3839	10239	-80	-6354	0	1	0	native_fossil_underground
+100177	0	1	Feldip Hills Underground	1872	8960	2071	9023	520	-6137	0	1	0	native_feldip_underground__corsair_cove_dungeon
+100177	0	1	Feldip Hills Underground	1872	9024	1983	9087	520	-6137	0	1	0	native_feldip_underground__corsair_cove_dungeon
+100178	0	1	Feldip Hills Underground	1856	8960	1871	9087	520	-6137	0	1	0	native_feldip_underground
+100178	0	1	Feldip Hills Underground	2072	8960	2111	9023	520	-6137	0	1	0	native_feldip_underground
+100179	0	0	Feldip Hills Underground	2504	9280	2535	9311	24	-6353	0	1	0	native_feldip_underground__red_chinchompa_hunting_ground
+100180	0	0	Kourend Underground	1536	9856	1599	9911	-1	-6389	0	1	0	native_kourend_underground__woodcutting_guild_dungeon
+100181	0	0	Kourend Underground	1664	9792	1727	9799	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1792	9856	1855	9879	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1536	9912	1599	9919	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1584	9952	1663	9959	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1584	9960	1727	9975	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1584	9976	1591	10047	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1736	9984	1783	9991	-1	-6389	0	1	0	native_kourend_underground
+100181	0	0	Kourend Underground	1736	9992	1791	10111	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1536	9856	1599	9919	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1792	9856	1855	9983	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1584	9952	1663	9959	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1584	9960	1727	9983	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1584	9984	1791	10047	-1	-6389	0	1	0	native_kourend_underground
+100182	0	1	Kourend Underground	1600	10048	1791	10111	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1536	9856	1599	9919	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1792	9856	1855	9983	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1584	9952	1663	9959	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1584	9960	1727	9983	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1584	9984	1791	10047	-1	-6389	0	1	0	native_kourend_underground
+100183	0	2	Kourend Underground	1600	10048	1791	10111	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1536	9856	1599	9919	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1792	9856	1855	9983	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1584	9952	1663	9959	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1584	9960	1727	9983	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1584	9984	1791	10047	-1	-6389	0	1	0	native_kourend_underground
+100184	0	3	Kourend Underground	1600	10048	1791	10111	-1	-6389	0	1	0	native_kourend_underground
+100185	0	0	Kourend Underground	1592	9976	1727	9983	-1	-6389	0	1	0	native_kourend_underground__catacombs_of_kourend
+100185	0	0	Kourend Underground	1592	9984	1735	10047	-1	-6389	0	1	0	native_kourend_underground__catacombs_of_kourend
+100185	0	0	Kourend Underground	1600	10048	1735	10111	-1	-6389	0	1	0	native_kourend_underground__catacombs_of_kourend
+100186	0	0	Kourend Underground	1664	9800	1727	9807	-1	-6389	0	1	0	native_kourend_underground__crabclaw_caves
+100186	0	0	Kourend Underground	1632	9808	1727	9855	-1	-6389	0	1	0	native_kourend_underground__crabclaw_caves
+100187	0	0	Kourend Underground	1792	9880	1855	9983	-1	-6389	0	1	0	native_kourend_underground__forthos_dungeon
+100187	0	0	Kourend Underground	1784	9984	1791	9991	-1	-6389	0	1	0	native_kourend_underground__forthos_dungeon
+100188	0	2	Kourend Underground	1408	10048	1471	10111	-129	-6389	0	1	0	native_kourend_underground
+100189	0	0	Kourend Underground	1408	10048	1471	10111	-129	-6581	0	1	0	native_kourend_underground__chasm_of_fire
+100190	0	3	Kourend Underground	1472	9920	1535	9983	-33	-6261	0	1	0	native_kourend_underground
+100191	0	0	Kourend Underground	1408	9856	1471	9911	-1	-6453	0	1	0	native_kourend_underground__giants_den
+100192	0	1	Kourend Underground	1408	10048	1471	10111	-129	-6485	0	1	0	native_kourend_underground
+100193	0	1	Kourend Underground	1472	9920	1535	9983	-33	-6453	0	1	0	native_kourend_underground
+100194	0	2	Kourend Underground	1472	9920	1535	9983	-33	-6357	0	1	0	native_kourend_underground
+100195	0	0	Kourend Underground	1472	10048	1535	10111	-129	-6581	0	1	0	native_kourend_underground
+100196	0	0	Kourend Underground	1728	10112	1815	10175	63	-6389	0	1	0	native_kourend_underground__the_warrens
+100197	0	0	Kourend Underground	1816	10112	1855	10175	63	-6389	0	1	0	native_kourend_underground
+100198	0	0	Kourend Underground	1408	9912	1471	9919	-1	-6453	0	1	0	native_kourend_underground
+100199	0	0	Kebos Underground	1216	10112	1343	10143	38	-6368	0	1	0	native_kebos_underground
+100199	0	0	Kebos Underground	1216	10144	1247	10175	38	-6368	0	1	0	native_kebos_underground
+100199	0	0	Kebos Underground	1280	10144	1343	10175	38	-6368	0	1	0	native_kebos_underground
+100199	0	0	Kebos Underground	1216	10176	1255	10239	38	-6368	0	1	0	native_kebos_underground
+100199	0	0	Kebos Underground	1384	10240	1407	10279	38	-6368	0	1	0	native_kebos_underground
+100199	0	0	Kebos Underground	1280	10280	1407	10303	38	-6368	0	1	0	native_kebos_underground
+100200	0	0	Kebos Underground	1248	10144	1279	10175	38	-6368	0	1	0	native_kebos_underground__farming_guild_seed_vault
+100201	0	0	Kebos Underground	1256	10176	1343	10207	38	-6368	0	1	0	native_kebos_underground__karuulm_slayer_dungeon
+100201	0	0	Kebos Underground	1256	10208	1367	10239	38	-6368	0	1	0	native_kebos_underground__karuulm_slayer_dungeon
+100201	0	0	Kebos Underground	1280	10240	1383	10279	38	-6368	0	1	0	native_kebos_underground__karuulm_slayer_dungeon
+100202	0	0	Kebos Underground	1280	9936	1343	9983	38	-6384	0	1	0	native_kebos_underground__lizardman_caves
+100203	0	0	Kebos Underground	1280	9920	1343	9935	38	-6384	0	1	0	native_kebos_underground
+100204	0	0	Kebos Underground	1232	10072	1255	10095	-26	-6384	0	1	0	native_kebos_underground__hespori_cave
+100205	0	2	Kebos Underground	1264	10176	1359	10231	-106	-6304	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1312	10160	1343	10167	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1312	10168	1351	10175	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1280	10176	1367	10183	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1264	10184	1367	10223	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1280	10224	1367	10239	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1288	10240	1367	10263	-114	-6408	0	1	0	native_kebos_underground
+100206	0	1	Kebos Underground	1288	10264	1343	10271	-114	-6408	0	1	0	native_kebos_underground
+100207	0	1	Kebos Underground	1280	10048	1343	10111	38	-6416	0	1	0	native_kebos_underground
+100208	0	0	Kebos Underground	1216	10048	1279	10071	-26	-6384	0	1	0	native_kebos_underground
+100208	0	0	Kebos Underground	1216	10072	1231	10095	-26	-6384	0	1	0	native_kebos_underground
+100208	0	0	Kebos Underground	1256	10072	1279	10095	-26	-6384	0	1	0	native_kebos_underground
+100208	0	0	Kebos Underground	1216	10096	1279	10111	-26	-6384	0	1	0	native_kebos_underground
+100209	0	0	Prifddinas Underground	3136	12352	3151	12479	-1021	-9129	0	1	0	native_prifddinas_underground
+100210	0	0	Prifddinas Underground	3152	12352	3263	12479	-1021	-9129	0	1	0	native_prifddinas_underground__prifddinas_underground
+100211	0	0	Prifddinas Underground	3280	12432	3319	12471	-1021	-9193	0	1	0	native_prifddinas_underground__prifddinas_underground
+100212	0	0	Prifddinas Underground	3264	12416	3327	12431	-1021	-9193	0	1	0	native_prifddinas_underground
+100212	0	0	Prifddinas Underground	3264	12432	3279	12471	-1021	-9193	0	1	0	native_prifddinas_underground
+100212	0	0	Prifddinas Underground	3320	12432	3327	12471	-1021	-9193	0	1	0	native_prifddinas_underground
+100212	0	0	Prifddinas Underground	3264	12472	3327	12479	-1021	-9193	0	1	0	native_prifddinas_underground
+100213	0	0	Prifddinas Underground	3008	6016	3071	6079	-765	-2729	0	1	0	native_prifddinas_underground
+100214	0	1	Prifddinas Underground	3024	6112	3047	6135	-829	-2753	0	1	0	native_prifddinas_underground
+100215	0	0	Prifddinas Grand Library	2560	6080	2687	6207	-544	-2803	0	1	0	native_grand_library
+100216	0	1	Prifddinas Grand Library	2560	6080	2687	6207	-352	-2803	0	1	0	native_grand_library
+100217	0	2	Prifddinas Grand Library	2560	6080	2687	6207	-160	-2803	0	1	0	native_grand_library
+100218	0	0	LMS Desert Island	3392	5760	3519	5887	-311	-2194	0	1	0	native_br_default
+100219	0	1	LMS Desert Island	3392	5760	3519	5887	-311	-2194	0	1	0	native_br_default
+100220	0	2	LMS Desert Island	3392	5760	3519	5887	-311	-2194	0	1	0	native_br_default
+100221	0	3	LMS Desert Island	3392	5760	3519	5887	-311	-2194	0	1	0	native_br_default
+100222	0	0	LMS Wild Varrock	3456	6016	3647	6207	-397	-2472	0	1	0	native_br_dark_varrock
+100223	0	1	LMS Wild Varrock	3456	6016	3647	6207	-397	-2472	0	1	0	native_br_dark_varrock
+100224	0	2	LMS Wild Varrock	3456	6016	3647	6207	-397	-2472	0	1	0	native_br_dark_varrock
+100225	0	3	LMS Wild Varrock	3456	6016	3647	6207	-397	-2472	0	1	0	native_br_dark_varrock
+100226	0	0	Ruins of Camdozaal	2880	5760	2903	5855	22	-2331	0	1	0	native_camdozaal
+100226	0	0	Ruins of Camdozaal	3032	5760	3071	5823	22	-2331	0	1	0	native_camdozaal
+100226	0	0	Ruins of Camdozaal	2880	5856	2943	5887	22	-2331	0	1	0	native_camdozaal
+100227	0	0	Ruins of Camdozaal	2904	5760	3031	5823	22	-2331	0	1	0	native_camdozaal__camdozaal
+100227	0	0	Ruins of Camdozaal	2904	5824	2943	5855	22	-2331	0	1	0	native_camdozaal__camdozaal
+100228	0	1	Ruins of Camdozaal	2880	5760	3071	5823	22	-2331	0	1	0	native_camdozaal
+100229	0	2	Ruins of Camdozaal	2880	5760	3071	5823	22	-2331	0	1	0	native_camdozaal
+100230	0	3	Ruins of Camdozaal	2880	5760	3071	5823	22	-2331	0	1	0	native_camdozaal
+100231	0	0	The Abyss	2952	4736	3135	4863	65	-1274	0	1	0	native_the_abyss__abyss
+100232	0	1	The Abyss	2944	4736	3135	4863	65	-1274	0	1	0	native_the_abyss
+100232	0	1	The Abyss	3008	4864	3071	4927	65	-1274	0	1	0	native_the_abyss
+100233	0	2	The Abyss	2944	4736	3135	4863	65	-1274	0	1	0	native_the_abyss
+100233	0	2	The Abyss	3008	4864	3071	4927	65	-1274	0	1	0	native_the_abyss
+100234	0	3	The Abyss	2944	4736	3135	4863	65	-1274	0	1	0	native_the_abyss
+100234	0	3	The Abyss	3008	4864	3071	4927	65	-1274	0	1	0	native_the_abyss
+100235	0	0	The Abyss	2944	4736	2951	4863	65	-1274	0	1	0	native_the_abyss
+100235	0	0	The Abyss	3008	4864	3071	4927	65	-1274	0	1	0	native_the_abyss
+100236	0	0	Kharidian Desert Underground	3328	9088	3391	9103	-9	-6265	0	1	0	native_desert_underground
+100236	0	0	Kharidian Desert Underground	3328	9104	3343	9127	-9	-6265	0	1	0	native_desert_underground
+100236	0	0	Kharidian Desert Underground	3376	9104	3391	9127	-9	-6265	0	1	0	native_desert_underground
+100236	0	0	Kharidian Desert Underground	3328	9128	3391	9151	-9	-6265	0	1	0	native_desert_underground
+100237	0	0	Kharidian Desert Underground	3344	9104	3375	9127	-9	-6265	0	1	0	native_desert_underground__tombs_of_amascut
+100238	0	1	Kharidian Desert Underground	3328	9088	3391	9151	-9	-6265	0	1	0	native_desert_underground
+100239	0	2	Kharidian Desert Underground	3328	9088	3391	9151	-9	-6265	0	1	0	native_desert_underground
+100240	0	3	Kharidian Desert Underground	3328	9088	3391	9151	-9	-6265	0	1	0	native_desert_underground
+100241	0	0	Kharidian Desert Underground	3464	9472	3511	9527	-297	-6465	0	1	0	native_desert_underground__kalphite_lair
+100242	0	0	Kharidian Desert Underground	3336	11472	3391	11519	79	-8297	0	1	0	native_desert_underground
+100243	0	1	Kharidian Desert Underground	3336	11472	3391	11519	79	-8297	0	1	0	native_desert_underground
+100244	0	2	Kharidian Desert Underground	3456	9472	3519	9535	-297	-6393	0	1	0	native_desert_underground__kalphite_lair
+100245	0	0	Kharidian Desert Underground	3264	9472	3343	9535	55	-6393	0	1	0	native_desert_underground__kalphite_cave
+100245	0	0	Kharidian Desert Underground	3264	9536	3327	9543	55	-6393	0	1	0	native_desert_underground__kalphite_cave
+100246	0	0	Kharidian Desert Underground	3344	9472	3359	9527	55	-6393	0	1	0	native_desert_underground
+100246	0	0	Kharidian Desert Underground	3264	9544	3327	9551	55	-6393	0	1	0	native_desert_underground
+100247	0	0	Kharidian Desert Underground	3456	9472	3463	9527	-297	-6465	0	1	0	native_desert_underground
+100247	0	0	Kharidian Desert Underground	3512	9472	3519	9527	-297	-6465	0	1	0	native_desert_underground
+100247	0	0	Kharidian Desert Underground	3456	9528	3519	9535	-297	-6465	0	1	0	native_desert_underground
+100248	0	0	Varlamore Underground	1216	9728	1239	9839	-17	-6461	0	1	0	native_varlamore_underground
+100248	0	0	Varlamore Underground	1336	9728	1343	9839	-17	-6461	0	1	0	native_varlamore_underground
+100248	0	0	Varlamore Underground	1216	9840	1343	9855	-17	-6461	0	1	0	native_varlamore_underground
+100249	0	0	Varlamore Underground	1240	9728	1335	9839	-17	-6461	0	1	0	native_varlamore_underground__stalker_den
+100250	0	1	Varlamore Underground	1216	9728	1343	9855	-17	-6461	0	1	0	native_varlamore_underground
+100251	0	2	Varlamore Underground	1216	9728	1343	9855	-17	-6461	0	1	0	native_varlamore_underground
+100252	0	3	Varlamore Underground	1216	9728	1343	9855	-17	-6461	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1280	9280	1535	9295	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1280	9296	1343	9335	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1400	9296	1535	9335	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1280	9336	1535	9343	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1408	9344	1535	9407	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1600	9472	1607	9591	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1792	9472	1855	9479	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1792	9536	1855	9599	-81	-6397	0	1	0	native_varlamore_underground
+100253	0	0	Varlamore Underground	1600	9592	1727	9599	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1280	9280	1535	9343	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1408	9344	1535	9407	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1536	9408	1599	9471	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1472	9472	1535	9503	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1600	9472	1727	9599	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1792	9472	1855	9599	-81	-6397	0	1	0	native_varlamore_underground
+100254	0	1	Varlamore Underground	1528	9504	1535	9511	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1280	9280	1535	9343	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1408	9344	1535	9407	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1536	9408	1599	9471	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1472	9472	1535	9511	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1600	9472	1727	9599	-81	-6397	0	1	0	native_varlamore_underground
+100255	0	2	Varlamore Underground	1792	9472	1855	9599	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1280	9280	1535	9343	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1408	9344	1535	9407	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1536	9408	1599	9471	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1472	9472	1535	9511	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1600	9472	1727	9599	-81	-6397	0	1	0	native_varlamore_underground
+100256	0	3	Varlamore Underground	1792	9472	1855	9599	-81	-6397	0	1	0	native_varlamore_underground
+100257	0	0	Varlamore Underground	1344	9296	1399	9335	-81	-6397	0	1	0	native_varlamore_underground__alchemical_society
+100258	0	0	Varlamore Underground	1608	9472	1727	9591	-81	-6397	0	1	0	native_varlamore_underground__fortis_barracks
+100259	0	0	Varlamore Underground	1792	9480	1855	9535	-81	-6397	0	1	0	native_varlamore_underground__fortis_colosseum
+100260	0	0	Varlamore Underground	1216	9472	1271	9535	-17	-6397	0	1	0	native_varlamore_underground__dragon_nest
+100261	0	1	Varlamore Underground	1216	9472	1271	9535	-17	-6397	0	1	0	native_varlamore_underground
+100262	0	2	Varlamore Underground	1216	9472	1271	9535	-17	-6397	0	1	0	native_varlamore_underground
+100263	0	3	Varlamore Underground	1216	9472	1271	9535	-17	-6397	0	1	0	native_varlamore_underground
+100264	0	0	Varlamore Underground	1368	9432	1399	9463	-81	-6421	0	1	0	native_varlamore_underground
+100265	0	1	Varlamore Underground	1368	9432	1399	9463	-81	-6421	0	1	0	native_varlamore_underground
+100266	0	2	Varlamore Underground	1368	9432	1399	9463	-81	-6421	0	1	0	native_varlamore_underground
+100267	0	3	Varlamore Underground	1368	9432	1399	9463	-81	-6421	0	1	0	native_varlamore_underground
+100268	0	1	Varlamore Underground	1472	9504	1527	9511	-81	-6397	0	1	0	native_varlamore_underground__cam_torum
+100269	0	1	Cam Torum	1408	9504	1471	9511	-25	-6412	0	1	0	native_cam_torum__cam_torum
+100269	0	1	Cam Torum	1408	9512	1527	9535	-25	-6412	0	1	0	native_cam_torum__cam_torum
+100269	0	1	Cam Torum	1384	9536	1527	9599	-25	-6412	0	1	0	native_cam_torum__cam_torum
+100269	0	1	Cam Torum	1424	9600	1455	9607	-25	-6412	0	1	0	native_cam_torum__cam_torum
+100270	0	2	Cam Torum	1408	9472	1471	9511	-25	-6412	0	1	0	native_cam_torum
+100270	0	2	Cam Torum	1408	9512	1535	9535	-25	-6412	0	1	0	native_cam_torum
+100270	0	2	Cam Torum	1384	9536	1527	9599	-25	-6412	0	1	0	native_cam_torum
+100270	0	2	Cam Torum	1424	9600	1455	9607	-25	-6412	0	1	0	native_cam_torum
+100271	0	3	Cam Torum	1408	9472	1471	9511	-25	-6412	0	1	0	native_cam_torum
+100271	0	3	Cam Torum	1408	9512	1535	9535	-25	-6412	0	1	0	native_cam_torum
+100271	0	3	Cam Torum	1384	9536	1527	9599	-25	-6412	0	1	0	native_cam_torum
+100271	0	3	Cam Torum	1424	9600	1455	9607	-25	-6412	0	1	0	native_cam_torum
+100272	0	1	Cam Torum	1408	9472	1471	9503	-25	-6412	0	1	0	native_cam_torum
+100272	0	1	Cam Torum	1528	9512	1535	9535	-25	-6412	0	1	0	native_cam_torum
+100273	0	0	Neypotzli	1504	9536	1535	9543	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1496	9544	1535	9559	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1344	9600	1391	9607	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1496	9600	1535	9607	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1344	9608	1367	9655	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1424	9608	1535	9615	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1424	9616	1455	9647	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1512	9616	1535	9647	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1456	9648	1535	9663	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1344	9656	1423	9663	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1408	9664	1423	9695	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1456	9664	1471	9695	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1408	9696	1471	9727	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1408	9728	1535	9743	-5	-6532	0	1	0	native_neypotzli
+100273	0	0	Neypotzli	1344	9744	1535	9791	-5	-6532	0	1	0	native_neypotzli
+100274	0	0	Neypotzli	1344	9528	1383	9543	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1344	9544	1391	9599	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1496	9560	1535	9599	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1368	9608	1423	9647	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1456	9616	1511	9647	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1368	9648	1455	9655	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1424	9656	1455	9695	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1344	9664	1407	9743	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100274	0	0	Neypotzli	1472	9664	1535	9727	-5	-6532	0	1	0	native_neypotzli__neypotzli
+100275	0	0	Neypotzli	1488	9560	1495	9567	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100275	0	0	Neypotzli	1480	9568	1495	9599	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100275	0	0	Neypotzli	1392	9600	1407	9607	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100275	0	0	Neypotzli	1472	9600	1495	9607	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100276	0	1	Neypotzli	1344	9600	1375	9615	-5	-6532	0	1	0	native_neypotzli
+100276	0	1	Neypotzli	1528	9600	1535	9615	-5	-6532	0	1	0	native_neypotzli
+100276	0	1	Neypotzli	1344	9616	1407	9663	-5	-6532	0	1	0	native_neypotzli
+100276	0	1	Neypotzli	1472	9616	1535	9663	-5	-6532	0	1	0	native_neypotzli
+100276	0	1	Neypotzli	1344	9664	1535	9791	-5	-6532	0	1	0	native_neypotzli
+100277	0	1	Neypotzli	1376	9600	1407	9615	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100277	0	1	Neypotzli	1472	9600	1527	9615	-5	-6532	0	1	0	native_neypotzli__cam_torum
+100278	0	2	Neypotzli	1344	9600	1407	9663	-5	-6532	0	1	0	native_neypotzli
+100278	0	2	Neypotzli	1472	9600	1535	9663	-5	-6532	0	1	0	native_neypotzli
+100278	0	2	Neypotzli	1344	9664	1535	9791	-5	-6532	0	1	0	native_neypotzli
+100279	0	3	Neypotzli	1344	9600	1407	9663	-5	-6532	0	1	0	native_neypotzli
+100279	0	3	Neypotzli	1472	9600	1535	9663	-5	-6532	0	1	0	native_neypotzli
+100279	0	3	Neypotzli	1344	9664	1535	9791	-5	-6532	0	1	0	native_neypotzli
+100280	0	1	Neypotzli	1408	9616	1423	9655	-5	-6596	0	1	0	native_neypotzli
+100280	0	1	Neypotzli	1456	9616	1471	9655	-5	-6596	0	1	0	native_neypotzli
+100280	0	1	Neypotzli	1408	9656	1471	9663	-5	-6596	0	1	0	native_neypotzli
+100281	0	1	Neypotzli	1408	9608	1423	9615	-5	-6596	0	1	0	native_neypotzli__cam_torum
+100281	0	1	Neypotzli	1456	9608	1471	9615	-5	-6596	0	1	0	native_neypotzli__cam_torum
+100282	0	1	Neypotzli	1424	9608	1455	9655	-5	-6596	0	1	0	native_neypotzli__neypotzli
+100283	0	0	Ardent Ocean Underground	2624	9408	2751	9519	22	-6391	0	1	0	native_ardent_ocean_underground__brimhaven_dungeon
+100283	0	0	Ardent Ocean Underground	2624	9520	2735	9535	22	-6391	0	1	0	native_ardent_ocean_underground__brimhaven_dungeon
+100283	0	0	Ardent Ocean Underground	2624	9536	2727	9599	22	-6391	0	1	0	native_ardent_ocean_underground__brimhaven_dungeon
+100284	0	0	Ardent Ocean Underground	2816	9344	2879	9375	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	3008	9344	3071	9359	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	3008	9360	3015	9407	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	3064	9360	3071	9407	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	2816	9376	2823	9399	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	2856	9376	2879	9399	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	2816	9400	2879	9407	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	2736	9520	2815	9615	22	-6391	0	1	0	native_ardent_ocean_underground
+100284	0	0	Ardent Ocean Underground	2872	9600	2879	9663	22	-6391	0	1	0	native_ardent_ocean_underground
+100285	0	0	Ardent Ocean Underground	2824	9376	2855	9399	22	-6391	0	1	0	native_ardent_ocean_underground__shilo_village_gem_mine
+100286	0	0	Ardent Ocean Underground	2816	9536	2823	9663	22	-6391	0	1	0	native_ardent_ocean_underground__asgarnia_ice_cave
+100287	0	0	Ardent Ocean Underground	2824	9536	2879	9599	22	-6391	0	1	0	native_ardent_ocean_underground__karamja_dungeon
+100287	0	0	Ardent Ocean Underground	2824	9600	2871	9663	22	-6391	0	1	0	native_ardent_ocean_underground__karamja_dungeon
+100288	0	0	Ardent Ocean Underground	3016	9360	3063	9407	22	-6391	0	1	0	native_ardent_ocean_underground__pandemonium_cave
+100289	0	2	Ardent Ocean Underground	2624	9472	2687	9599	-42	-6391	0	1	0	native_ardent_ocean_underground
+100290	0	1	Ardent Ocean Underground	2816	9472	2879	9535	86	-6455	0	1	0	native_ardent_ocean_underground
+100291	0	0	Ardent Ocean Underground	2816	9472	2879	9535	22	-6391	0	1	0	native_ardent_ocean_underground__jogre_dungeon
+100292	0	0	Ardent Ocean Underground	1496	4608	1527	4663	1606	-1647	0	1	0	native_ardent_ocean_underground
+100293	0	1	Ardent Ocean Underground	1496	4608	1527	4663	1606	-1647	0	1	0	native_ardent_ocean_underground
+100294	0	2	Ardent Ocean Underground	1496	4608	1527	4663	1606	-1647	0	1	0	native_ardent_ocean_underground
+100295	0	3	Ardent Ocean Underground	1496	4608	1527	4663	1606	-1647	0	1	0	native_ardent_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3072	8832	3199	8839	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3072	8840	3079	8887	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3128	8840	3199	8855	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3128	8856	3159	8887	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3192	8856	3199	8887	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100296	0	0	Unquiet Ocean Underground	3072	8888	3199	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100297	0	0	Unquiet Ocean Underground	3080	8840	3127	8887	-140	-6337	0	1	0	native_unquiet_ocean_underground__gryphon_cave
+100298	0	1	Unquiet Ocean Underground	3072	8832	3199	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100298	0	1	Unquiet Ocean Underground	3264	8832	3327	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100299	0	2	Unquiet Ocean Underground	3072	8832	3199	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100299	0	2	Unquiet Ocean Underground	3264	8832	3327	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100300	0	3	Unquiet Ocean Underground	3072	8832	3199	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100300	0	3	Unquiet Ocean Underground	3264	8832	3327	8895	-140	-6337	0	1	0	native_unquiet_ocean_underground
+100301	0	0	Unquiet Ocean Underground	3160	8856	3191	8887	-140	-6337	0	1	0	native_unquiet_ocean_underground__shellbane_gryphon_cave
+100302	0	0	Unquiet Ocean Underground	3200	8832	3247	8887	-140	-6401	0	1	0	native_unquiet_ocean_underground__gryphon_cave
+100303	0	0	Unquiet Ocean Underground	3248	8832	3263	8887	-140	-6401	0	1	0	native_unquiet_ocean_underground
+100303	0	0	Unquiet Ocean Underground	3200	8888	3263	8895	-140	-6401	0	1	0	native_unquiet_ocean_underground
+100304	0	1	Unquiet Ocean Underground	3200	8832	3263	8895	-140	-6401	0	1	0	native_unquiet_ocean_underground
+100305	0	2	Unquiet Ocean Underground	3200	8832	3263	8895	-140	-6401	0	1	0	native_unquiet_ocean_underground
+100306	0	3	Unquiet Ocean Underground	3200	8832	3263	8895	-140	-6401	0	1	0	native_unquiet_ocean_underground
+100307	0	0	Unquiet Ocean Underground	2624	8832	2743	8895	-76	-6401	0	1	0	native_unquiet_ocean_underground__charred_dungeon
+100308	0	1	Unquiet Ocean Underground	2624	8832	2751	8895	-76	-6401	0	1	0	native_unquiet_ocean_underground
+100309	0	2	Unquiet Ocean Underground	2624	8832	2751	8895	-76	-6401	0	1	0	native_unquiet_ocean_underground
+100310	0	3	Unquiet Ocean Underground	2624	8832	2751	8895	-76	-6401	0	1	0	native_unquiet_ocean_underground
+100311	0	0	Unquiet Ocean Underground	2560	8576	2623	8615	52	-6337	0	1	0	native_unquiet_ocean_underground
+100312	0	0	Unquiet Ocean Underground	2560	8616	2623	8703	52	-6337	0	1	0	native_unquiet_ocean_underground__wyrmscraig_cavern
+100313	0	1	Unquiet Ocean Underground	2560	8576	2623	8703	52	-6337	0	1	0	native_unquiet_ocean_underground
+100314	0	2	Unquiet Ocean Underground	2560	8576	2623	8703	52	-6337	0	1	0	native_unquiet_ocean_underground
+100315	0	3	Unquiet Ocean Underground	2560	8576	2623	8703	52	-6337	0	1	0	native_unquiet_ocean_underground
+100316	0	0	Unquiet Ocean Underground	2744	8832	2751	8895	-76	-6401	0	1	0	native_unquiet_ocean_underground
+100317	0	0	Shrouded Ocean Underground	1920	9152	2111	9159	29	-6484	0	1	0	native_shrouded_ocean_underground
+100317	0	0	Shrouded Ocean Underground	2104	9160	2111	9215	29	-6484	0	1	0	native_shrouded_ocean_underground
+100318	0	0	Shrouded Ocean Underground	1920	9160	2103	9215	29	-6484	0	1	0	native_shrouded_ocean_underground__deepfin_mine
+100319	0	1	Shrouded Ocean Underground	1920	9152	2111	9215	29	-6484	0	1	0	native_shrouded_ocean_underground
+100320	0	2	Shrouded Ocean Underground	1920	9152	2111	9215	29	-6484	0	1	0	native_shrouded_ocean_underground
+100321	0	3	Shrouded Ocean Underground	1920	9152	2111	9215	29	-6484	0	1	0	native_shrouded_ocean_underground
+100322	0	0	Shrouded Ocean Underground	1920	9408	1983	9471	221	-6612	0	1	0	native_shrouded_ocean_underground
+100323	0	1	Shrouded Ocean Underground	1920	9408	1983	9471	221	-6612	0	1	0	native_shrouded_ocean_underground
+100324	0	2	Shrouded Ocean Underground	1920	9408	1983	9471	221	-6612	0	1	0	native_shrouded_ocean_underground
+100325	0	3	Shrouded Ocean Underground	1920	9408	1983	9471	221	-6612	0	1	0	native_shrouded_ocean_underground
+100326	0	0	Shrouded Ocean Underground	2176	8704	2239	8711	29	-6228	0	1	0	native_shrouded_ocean_underground
+100326	0	0	Shrouded Ocean Underground	2176	8712	2207	8759	29	-6228	0	1	0	native_shrouded_ocean_underground
+100326	0	0	Shrouded Ocean Underground	2176	8760	2239	8767	29	-6228	0	1	0	native_shrouded_ocean_underground
+100327	0	0	Shrouded Ocean Underground	2208	8712	2239	8759	29	-6228	0	1	0	native_shrouded_ocean_underground__sunbleak_cave
+100328	0	1	Shrouded Ocean Underground	2176	8704	2239	8767	29	-6228	0	1	0	native_shrouded_ocean_underground
+100329	0	2	Shrouded Ocean Underground	2176	8704	2239	8767	29	-6228	0	1	0	native_shrouded_ocean_underground
+100330	0	3	Shrouded Ocean Underground	2176	8704	2239	8767	29	-6228	0	1	0	native_shrouded_ocean_underground
+100331	0	0	Shrouded Ocean Underground	2112	9280	2175	9287	157	-6548	0	1	0	native_shrouded_ocean_underground
+100332	0	0	Shrouded Ocean Underground	2112	9288	2175	9343	157	-6548	0	1	0	native_shrouded_ocean_underground__isle_of_souls_dungeon
+100333	0	1	Shrouded Ocean Underground	2112	9280	2175	9343	157	-6548	0	1	0	native_shrouded_ocean_underground
+100334	0	2	Shrouded Ocean Underground	2112	9280	2175	9343	157	-6548	0	1	0	native_shrouded_ocean_underground
+100335	0	3	Shrouded Ocean Underground	2112	9280	2175	9343	157	-6548	0	1	0	native_shrouded_ocean_underground
+100336	0	0	Sunset Ocean Underground	1152	9152	1215	9175	19	-6451	0	1	0	native_sunset_ocean_underground
+100336	0	0	Sunset Ocean Underground	1152	9176	1159	9207	19	-6451	0	1	0	native_sunset_ocean_underground
+100336	0	0	Sunset Ocean Underground	1200	9176	1215	9207	19	-6451	0	1	0	native_sunset_ocean_underground
+100336	0	0	Sunset Ocean Underground	1152	9208	1215	9215	19	-6451	0	1	0	native_sunset_ocean_underground
+100337	0	0	Sunset Ocean Underground	1160	9176	1199	9207	19	-6451	0	1	0	native_sunset_ocean_underground__kurask_lair
+100338	0	1	Sunset Ocean Underground	1152	9152	1215	9215	19	-6451	0	1	0	native_sunset_ocean_underground
+100339	0	2	Sunset Ocean Underground	1152	9152	1215	9215	19	-6451	0	1	0	native_sunset_ocean_underground
+100340	0	3	Sunset Ocean Underground	1152	9152	1215	9215	19	-6451	0	1	0	native_sunset_ocean_underground
+100341	0	0	Western Ocean Underground	2048	10048	2111	10111	-53	-6629	0	1	0	native_western_ocean_underground
+100342	0	1	Western Ocean Underground	2048	10048	2111	10111	-53	-6629	0	1	0	native_western_ocean_underground
+100343	0	2	Western Ocean Underground	2048	10048	2111	10111	-53	-6629	0	1	0	native_western_ocean_underground
+100344	0	3	Western Ocean Underground	2048	10048	2111	10111	-53	-6629	0	1	0	native_western_ocean_underground
+100345	0	0	Western Ocean Underground	2240	9792	2303	9831	-53	-6565	0	1	0	native_western_ocean_underground
+100346	0	0	Western Ocean Underground	2240	9832	2303	9919	-53	-6565	0	1	0	native_western_ocean_underground__ynysdail_cavern
+100347	0	1	Western Ocean Underground	2240	9792	2303	9919	-53	-6565	0	1	0	native_western_ocean_underground
+100348	0	2	Western Ocean Underground	2240	9792	2303	9919	-53	-6565	0	1	0	native_western_ocean_underground
+100349	0	3	Western Ocean Underground	2240	9792	2303	9919	-53	-6565	0	1	0	native_western_ocean_underground
+100350	0	0	Western Ocean Underground	1920	9472	1983	9487	11	-6373	0	1	0	native_western_ocean_underground
+100350	0	0	Western Ocean Underground	1968	9488	1983	9519	11	-6373	0	1	0	native_western_ocean_underground
+100350	0	0	Western Ocean Underground	1920	9520	1983	9535	11	-6373	0	1	0	native_western_ocean_underground
+100351	0	0	Western Ocean Underground	1920	9488	1967	9519	11	-6373	0	1	0	native_western_ocean_underground__here_be_minotaurs
+100352	0	1	Western Ocean Underground	1920	9472	1983	9535	11	-6373	0	1	0	native_western_ocean_underground
+100353	0	2	Western Ocean Underground	1920	9472	1983	9535	11	-6373	0	1	0	native_western_ocean_underground
+100354	0	3	Western Ocean Underground	1920	9472	1983	9535	11	-6373	0	1	0	native_western_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10304	2879	10319	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10320	2823	10351	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2856	10320	2879	10351	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10352	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2368	10368	2399	10471	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10432	2943	10439	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10440	2839	10487	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2936	10440	2943	10487	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2368	10472	2495	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100355	0	0	Northern Ocean Underground	2816	10488	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100356	0	0	Northern Ocean Underground	2400	10368	2495	10471	138	-6394	0	1	0	native_northern_ocean_underground__jormungands_prison
+100357	0	1	Northern Ocean Underground	2368	10240	2431	10303	138	-6394	0	1	0	native_northern_ocean_underground
+100357	0	1	Northern Ocean Underground	2816	10304	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground
+100357	0	1	Northern Ocean Underground	2368	10368	2495	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100357	0	1	Northern Ocean Underground	2816	10432	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100358	0	0	Northern Ocean Underground	2496	10240	2623	10303	138	-6394	0	1	0	native_northern_ocean_underground__miscellania_underground
+100359	0	0	Northern Ocean Underground	2624	10368	2687	10431	138	-6394	0	1	0	native_northern_ocean_underground__penguin_base
+100360	0	0	Northern Ocean Underground	2840	10440	2935	10487	138	-6394	0	1	0	native_northern_ocean_underground__ghorrock_dungeon
+100361	0	2	Northern Ocean Underground	2816	10304	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground
+100361	0	2	Northern Ocean Underground	2816	10432	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100362	0	3	Northern Ocean Underground	2816	10304	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground
+100362	0	3	Northern Ocean Underground	2816	10432	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
+100363	0	0	Northern Ocean Underground	2824	10320	2855	10351	138	-6394	0	1	0	native_northern_ocean_underground__weiss_salt_mine
+100364	0	2	Northern Ocean Underground	2304	10304	2367	10367	-54	-6394	0	1	0	native_northern_ocean_underground

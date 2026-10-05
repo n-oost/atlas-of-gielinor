@@ -14,6 +14,24 @@ collision, transport, destination, and league data from
 
 The copy is pinned; installed Shortest Path plugin updates do not replace it. In external-settings mode, Atlas of Gielinor sends
 destinations to an enabled Shortest Path plugin through its public plugin-message API and reads
-its saved routing settings. Atlas of Gielinor routing mode uses only its own settings and does not send
-destinations to the external plugin. The two route calculations remain independent. Atlas of Gielinor is not
+its saved routing settings. Atlas of Gielinor routing mode uses only its own settings. In either mode,
+Atlas sends selected destinations to Shortest Path when that plugin is enabled. The two route
+calculations remain independent. Atlas of Gielinor is not
 affiliated with or endorsed by the Shortest Path project.
+
+## RuneLite world-map metadata
+
+The bundled `src/main/resources/com/bettermap/poi/runelite-world-map-data.json` contains
+metadata imported from [RuneLite](https://github.com/runelite/runelite) at revision
+`d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22`. Its `copyrightAndLicences` section preserves
+the original copyright notices, redistribution conditions, and disclaimers for the source datasets.
+Atlas adapts those records into its own points of interest and tooltips at runtime.
+
+## Wiki datasets, imagery, and cache-derived content
+
+Credit to OSRS Wiki contributors and the source projects recorded in the datasets.
+Content origins and existing upstream notices are documented in the bundled
+[asset notices](src/main/resources/com/bettermap/ASSET-NOTICES.md).
+The [provenance inventory](docs/asset-provenance.md) identifies the remaining source/revision
+gaps. The BSD license for this plugin's software does not license all game artwork,
+Wiki-derived content, or mixed upstream datasets.

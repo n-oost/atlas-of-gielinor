@@ -11,7 +11,7 @@
 
 </div>
 
-A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin is designed to be a drop-in replacement for the RuneLite world map, with no other changes to the game. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
+A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin provides a world map replacement, a Quick Finder orb, and optional minimap route overlays. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
 
 Missing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
 
@@ -127,11 +127,13 @@ members,quest helper) are drawn on Atlas of Gielinor's camera, along with the pl
 
 - No reflection, no AWT-level input hooks, and no native code.
 - With **Download map assets** enabled, the plugin checks the remote channel at startup and downloads changed packs using asynchronous OkHttp. Installed files use RuneLite Filepath in the plugin directory.
-- The plugin replaces the world map only. It does not touch the HUD minimap, the status orbs, or
-  any other game component.
+- The plugin replaces the world map, adds a draggable Quick Finder orb near the minimap, and
+  draws calculated routes on the minimap. The map's Chat control can hide the chatbox while
+  the map is open; Finder text input keeps the chatbox visible.
 - The tile cache is budgeted in megabytes, not tiles: ~49 MB of LRU plus ~30 MB of permanently held
   coarse levels.
-- The Finder's search field takes keys through RuneLite's `KeyManager`.
+- The Finder takes typed search text through RuneLite's `ChatboxPanelManager`; the on-map
+  search field mirrors that text.
 
 ## Datasets
 -Data is bundled in `resources/com/bettermap/data`.
@@ -154,4 +156,6 @@ members,quest helper) are drawn on Atlas of Gielinor's camera, along with the pl
 ## License
 
 BSD 2-Clause, see [`LICENSE`](LICENSE). Third-party code bundled in `src/main/java/com/bettermap/pathfinding`
-is covered by [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
+is covered by [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). The software license does not
+license all map imagery or datasets; see the [bundled asset notices](src/main/resources/com/bettermap/ASSET-NOTICES.md)
+for recorded content sources and the [provenance inventory](docs/asset-provenance.md) for remaining gaps.

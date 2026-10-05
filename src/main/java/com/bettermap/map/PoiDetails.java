@@ -2693,6 +2693,10 @@ public final class PoiDetails
 					));
 				case "mooring_point":
 					return mooringDetail(poi, name);
+				case "salvaging":
+					return new Detail(name, "Skilling • Sailing", List.of(
+						"Salvage shipwrecks using a salvaging hook installed on your vessel"
+					));
 				case "shipwright":
 					return new Detail(name, "Shops and trade", List.of(
 						"Shipyard services: boat retrieval, ship customization, and vessel upgrades"

@@ -750,7 +750,7 @@ public class PoiIndex
 		BufferedImage image = null;
 		final String iconKey = "teleport".equals(key) ? "house_portal"
 			: "runecrafting_altar".equals(key) ? "altar"
-			: "salvaging".equals(key) ? "cargo_bay"
+			: "salvaging".equals(key) ? "cache_icon_4947"
 			: "basement".equals(key) ? "dungeon_link" : key;
 		try (InputStream in = open(tileDir, "icons/" + iconKey + ".png"))
 		{

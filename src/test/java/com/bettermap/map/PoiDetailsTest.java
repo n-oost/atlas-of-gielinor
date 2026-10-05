@@ -24,6 +24,11 @@
  */
 package com.bettermap.map;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,10 +37,36 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PoiDetailsTest
 {
+	@BeforeClass
+	public static void loadCuratedDetails()
+	{
+		PoiDetails.load();
+	}
+
+	/** Fingerprint of all map keys, titles, categories and lines from the original quest table. */
+	@Test
+	public void questResourcePreservesTheCompleteOriginalCatalog() throws Exception
+	{
+		final StringBuilder snapshot = new StringBuilder();
+		for (Map.Entry<String, PoiDetails.Detail> entry : new TreeMap<>(QuestDetailsData.load()).entrySet())
+		{
+			final PoiDetails.Detail detail = entry.getValue();
+			snapshot.append(entry.getKey()).append('\t').append(detail.getTitle()).append('\t').append(detail.getCategory());
+			for (String line : detail.getLines())
+			{
+				snapshot.append('\t').append(line);
+			}
+			snapshot.append('\n');
+		}
+		final byte[] digest = MessageDigest.getInstance("SHA-256").digest(snapshot.toString().getBytes(StandardCharsets.UTF_8));
+		assertEquals("01226a2e0d70c494311af026b4cabeda08422f0f80b43cfb2ce661a3ac1d99c6", String.format("%064x", new BigInteger(1, digest)));
+	}
+
 	@Test
 	public void mooringMarkerKeepsItsIdentityWhenAnActivitySharesItsExactTile()
 	{

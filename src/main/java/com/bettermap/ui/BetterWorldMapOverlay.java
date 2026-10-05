@@ -258,6 +258,7 @@ public class BetterWorldMapOverlay extends Overlay
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
+		if (!com.bettermap.map.MapData.isReady()) return null;
 		final Widget map = client.getWidget(InterfaceID.Worldmap.MAP_CONTAINER);
 		final WorldMap worldMap = client.getWorldMap();
 

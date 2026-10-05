@@ -42,7 +42,8 @@ import java.util.List;
 public final class OverlayFloor
 {
 	private static final String RESOURCE = "/com/bettermap/dungeons/floors.tsv";
-	private static List<OverlayFloor> ALL;
+	private static volatile List<OverlayFloor> ALL = Collections.emptyList();
+	private static volatile boolean loaded;
 
 	public final String name;
 	public final UndergroundZone zone;
@@ -67,12 +68,18 @@ public final class OverlayFloor
 		this.layerId = layerId;
 	}
 
-	public static synchronized List<OverlayFloor> all()
+	/** Initialize on the map data worker; frame-time reads never open resources. */
+	public static void load()
 	{
-		if (ALL == null)
-		{
-			ALL = loadResource();
-		}
+		if (loaded) return;
+		final List<OverlayFloor> prepared = loadResource();
+		if (Thread.currentThread().isInterrupted()) return;
+		ALL = prepared;
+		loaded = true;
+	}
+
+	public static List<OverlayFloor> all()
+	{
 		return ALL;
 	}
 

@@ -70,26 +70,35 @@ public final class InstanceMaps
 	static final int BRAINDEATH_OFFSET_X = 2112 - 3920;
 	static final int BRAINDEATH_OFFSET_Y = 5088 - 3180;
 
-	private static final Map<UndergroundZone, WikiMap> PRIMARY_MAP = new EnumMap<>(UndergroundZone.class);
-	private static final Map<UndergroundZone, List<WikiMap>> MAPS_BY_ZONE = new EnumMap<>(UndergroundZone.class);
-	private static final Map<String, List<UndergroundZone>> ZONES_BY_ID = new HashMap<>();
 	private static volatile Map<Long, List<DungeonPiece>> piecesByRegion = Collections.emptyMap();
 
 	/**
-	 * The wiki boxes a dungeon's view should paint and hit-test against, wider than {@link #PRIMARY_MAP}:
+	 * The wiki boxes a dungeon's view should paint and hit-test against, wider than the primary map index:
 	 * every wiki box that contains the zone's own underground anchor. Taverley Dungeon and the
 	 * Dwarven Mines are one connected complex whose boxes overlap, so entering from the Dwarven side
 	 * must still show the Taverley half instead of clipping it away. One hop only — no transitive
 	 * closure, which would chain most of the +6400 band into a single box.
 	 */
-	private static final Map<UndergroundZone, List<WikiMap>> CLIP_MAPS = new EnumMap<>(UndergroundZone.class);
 
-	static
+	private static final class Indexes
 	{
+		private final Map<UndergroundZone, WikiMap> primaryMap = new EnumMap<>(UndergroundZone.class);
+		private final Map<UndergroundZone, List<WikiMap>> mapsByZone = new EnumMap<>(UndergroundZone.class);
+		private final Map<String, List<UndergroundZone>> zonesById = new HashMap<>();
+		private final Map<UndergroundZone, List<WikiMap>> clipMaps = new EnumMap<>(UndergroundZone.class);
+		private boolean loaded;
+	}
+
+	private static volatile Indexes indexes = new Indexes();
+
+	public static void load()
+	{
+		if (indexes.loaded) return;
+		final Indexes prepared = new Indexes();
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
 			if (zone.getId().startsWith("native_")) continue;
-			ZONES_BY_ID.computeIfAbsent(zone.getCanonicalId(), id -> new ArrayList<>()).add(zone);
+			prepared.zonesById.computeIfAbsent(zone.getCanonicalId(), id -> new ArrayList<>()).add(zone);
 		}
 		for (WikiMap map : WikiMap.VALUES)
 		{
@@ -108,11 +117,11 @@ public final class InstanceMaps
 				}
 				// Regional wiki maps contain several independent dungeons. Every enclosed
 				// anchor needs access to the map; its centre cannot select a single owner.
-				MAPS_BY_ZONE.computeIfAbsent(zone, z -> new ArrayList<>()).add(map);
-				final WikiMap current = PRIMARY_MAP.get(zone);
+				prepared.mapsByZone.computeIfAbsent(zone, z -> new ArrayList<>()).add(map);
+				final WikiMap current = prepared.primaryMap.get(zone);
 				if (current == null || map.area() < current.area())
 				{
-					PRIMARY_MAP.put(zone, map);
+					prepared.primaryMap.put(zone, map);
 				}
 			}
 		}
@@ -129,13 +138,16 @@ public final class InstanceMaps
 					clip.add(map);
 				}
 			}
-			final WikiMap primary = PRIMARY_MAP.get(zone);
+			final WikiMap primary = prepared.primaryMap.get(zone);
 			if (primary != null && !clip.contains(primary))
 			{
 				clip.add(primary);
 			}
-			CLIP_MAPS.put(zone, Collections.unmodifiableList(clip));
+			prepared.clipMaps.put(zone, Collections.unmodifiableList(clip));
 		}
+		if (Thread.currentThread().isInterrupted()) return;
+		prepared.loaded = true;
+		indexes = prepared;
 	}
 
 	private InstanceMaps()
@@ -235,7 +247,7 @@ public final class InstanceMaps
 			{
 				continue;
 			}
-			for (UndergroundZone zone : ZONES_BY_ID.get(UndergroundZone.canonicalZoneId(piece.zoneId)))
+			for (UndergroundZone zone : indexes.zonesById.getOrDefault(UndergroundZone.canonicalZoneId(piece.zoneId), Collections.emptyList()))
 			{
 				final long dist = distSq(x, y, zone.getUndergroundPoint().getX(), zone.getUndergroundPoint().getY());
 				if (dist < authoredDist)
@@ -256,7 +268,7 @@ public final class InstanceMaps
 		}
 		UndergroundZone best = null;
 		long bestDist = Long.MAX_VALUE;
-		for (Map.Entry<UndergroundZone, List<WikiMap>> entry : MAPS_BY_ZONE.entrySet())
+		for (Map.Entry<UndergroundZone, List<WikiMap>> entry : indexes.mapsByZone.entrySet())
 		{
 			boolean covered = false;
 			for (WikiMap map : entry.getValue())
@@ -295,11 +307,11 @@ public final class InstanceMaps
 		{
 			return null;
 		}
-		return PRIMARY_MAP.get(zone);
+		return indexes.primaryMap.get(zone);
 	}
 
 	/**
-	 * Every wiki box the dungeon {@code zone}'s tile view should paint — see {@link #CLIP_MAPS}.
+	 * Every wiki box the dungeon {@code zone}'s tile view should paint — see the clip map index.
 	 * Marker filtering still goes through {@link #belongsToZone}, which stays per-zone: the boxes
 	 * here overlap unrelated dungeons, harmless for transparent terrain but wrong as a pin gate.
 	 */
@@ -309,7 +321,7 @@ public final class InstanceMaps
 		{
 			return Collections.emptyList();
 		}
-		return CLIP_MAPS.getOrDefault(zone, Collections.emptyList());
+		return indexes.clipMaps.getOrDefault(zone, Collections.emptyList());
 	}
 
 	/**

@@ -42,7 +42,8 @@ import java.util.List;
 public final class OverlayCluster
 {
 	private static final String RESOURCE = "/com/bettermap/dungeons/overlays.tsv";
-	private static List<OverlayCluster> ALL;
+	private static volatile List<OverlayCluster> ALL = Collections.emptyList();
+	private static volatile boolean loaded;
 
 	public final String id;
 	public final String name;
@@ -99,12 +100,18 @@ public final class OverlayCluster
 		return (maxX - minX + 1) * (maxY - minY + 1);
 	}
 
-	public static synchronized List<OverlayCluster> all()
+	/** Initialize on the map data worker; frame-time reads never open resources. */
+	public static void load()
 	{
-		if (ALL == null)
-		{
-			ALL = loadResource();
-		}
+		if (loaded) return;
+		final List<OverlayCluster> prepared = loadResource();
+		if (Thread.currentThread().isInterrupted()) return;
+		ALL = prepared;
+		loaded = true;
+	}
+
+	public static List<OverlayCluster> all()
+	{
 		return ALL;
 	}
 

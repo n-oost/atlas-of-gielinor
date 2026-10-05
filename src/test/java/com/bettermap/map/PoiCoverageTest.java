@@ -27,10 +27,17 @@ package com.bettermap.map;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PoiCoverageTest
 {
+	@BeforeClass
+	public static void loadCuratedDetails()
+	{
+		PoiDetails.load();
+	}
+
 	@Test
 	public void allCuratedPoisResolveToNonEmptyNonGenericDetailCards()
 	{

@@ -27,9 +27,13 @@ package com.bettermap.data;
 import com.bettermap.data.TravelData.TravelDestination;
 import com.bettermap.data.TravelData.TravelNode;
 import com.bettermap.data.TravelData.TravelType;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.EnumSet;
 import java.util.Set;
 import net.runelite.api.coords.WorldPoint;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -40,6 +44,43 @@ import static org.junit.Assert.assertTrue;
 
 public class TravelDataTest
 {
+	@BeforeClass
+	public static void loadTravelNetworks()
+	{
+		TravelData.load();
+	}
+
+	/** Fingerprint captured from the Java initializer before the resource migration. */
+	@Test
+	public void travelResourcePreservesTheCompleteOriginalCatalog() throws Exception
+	{
+		final StringBuilder snapshot = new StringBuilder();
+		for (TravelNode node : TravelData.ALL_NODES)
+		{
+			snapshot.append("N\t").append(node.getName()).append('\t').append(node.getType().name())
+				.append('\t').append(node.getLocation().getX()).append('\t').append(node.getLocation().getY())
+				.append('\t').append(node.getLocation().getPlane()).append('\t').append(node.getDisplayOffsetX())
+				.append('\t').append(node.getDisplayOffsetY()).append('\n');
+			for (TravelDestination destination : node.getDestinations())
+			{
+				snapshot.append("D\t").append(destination.getName()).append('\t').append(destination.getLocation().getX())
+					.append('\t').append(destination.getLocation().getY()).append('\t').append(destination.getLocation().getPlane())
+					.append('\t').append(destination.getCost()).append('\t');
+				if (destination.getRequirement() == null)
+				{
+					snapshot.append('0');
+				}
+				else
+				{
+					snapshot.append("1\t").append(destination.getRequirement());
+				}
+				snapshot.append('\n');
+			}
+		}
+		final byte[] digest = MessageDigest.getInstance("SHA-256").digest(snapshot.toString().getBytes(StandardCharsets.UTF_8));
+		assertEquals("edbb275f7c85e129508ebac0029b3591be5139980588d0d9207690fdd461ad04", String.format("%064x", new BigInteger(1, digest)));
+	}
+
 	@Test
 	public void testAllNodesAndTypesIntegrity()
 	{

@@ -376,7 +376,7 @@ public class BetterMapPlugin extends Plugin
 		// Hiding has to be reapplied every frame, but restoring does not: once the widgets are
 		// back the client leaves them alone. Skipping the no-op restore keeps widget lookups
 		// per frame off the path a player is on whenever the map is closed - which is most of it.
-		final boolean hideMap = config.hideGameMapRender();
+		final boolean hideMap = config.hideGameMapRender() && com.bettermap.map.MapData.isReady();
 		if (hideMap || mapWidgetsHidden)
 		{
 			setGameMapHidden(hideMap);

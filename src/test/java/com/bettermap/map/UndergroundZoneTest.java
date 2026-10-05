@@ -28,6 +28,7 @@ import com.bettermap.data.UndergroundZone;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +39,12 @@ import static org.junit.Assert.assertTrue;
 
 public class UndergroundZoneTest
 {
+	@BeforeClass
+	public static void loadCuratedDetails()
+	{
+		PoiDetails.load();
+	}
+
 	@Test
 	public void wyrmscraigEntrancesResolveToItsCavern()
 	{

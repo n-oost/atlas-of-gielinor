@@ -196,6 +196,8 @@ public class PoiIndex
 
 	private void loadData(File tileDir)
 	{
+		MapData.load();
+		if (!MapData.isReady()) return;
 		this.tileDir = tileDir;
 		pois.clear();
 		searchPois.clear();

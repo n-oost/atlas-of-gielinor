@@ -32,6 +32,7 @@ import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +42,12 @@ import static org.junit.Assert.assertTrue;
 
 public class PoiTooltipBuilderTest
 {
+	@BeforeClass
+	public static void loadCuratedDetails()
+	{
+		PoiDetails.load();
+	}
+
 	private PoiTooltipBuilder builder;
 	private BufferedImage dummyIcon;
 

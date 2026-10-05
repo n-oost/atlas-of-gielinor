@@ -42,6 +42,7 @@ import javax.inject.Provider;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import net.runelite.api.coords.WorldPoint;
 
@@ -63,6 +64,8 @@ public class MapLayerInputHandler
 	private String flyoutPendingKey;
 	private long flyoutPendingSinceMs;
 	private Timer pendingQuickFinderClick;
+	private long quickFinderClickGeneration;
+	private boolean stopped;
 	@Getter
 	@Setter
 	private long flyoutDwellMs = MapCamera.FINDER_FLYOUT_DWELL_MS;
@@ -436,35 +439,68 @@ public class MapLayerInputHandler
 		}
 	}
 
-	private void deferQuickFinderClick(WorldPoint point)
+	private synchronized void deferQuickFinderClick(WorldPoint point)
 	{
+		if (stopped)
+		{
+			return;
+		}
 		cancelPendingQuickFinderClick();
+		final long generation = quickFinderClickGeneration;
 		Object interval = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
 		final int delay = interval instanceof Number ? Math.max(250, ((Number) interval).intValue()) : 500;
 		final String clickedQuery = finder != null ? finder.getQuery() : null;
 		pendingQuickFinderClick = new Timer(delay, e ->
 		{
-			pendingQuickFinderClick = null;
-			if (!camera.isFinderStandalone() || !camera.isFinderPanelOpen()
-				|| (finder != null && !finder.getQuery().equals(clickedQuery)))
+			synchronized (MapLayerInputHandler.this)
 			{
-				return;
-			}
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().openMapAt(point);
+				if (stopped || generation != quickFinderClickGeneration)
+				{
+					return;
+				}
+				pendingQuickFinderClick = null;
+				if (!camera.isFinderStandalone() || !camera.isFinderPanelOpen()
+					|| (finder != null && !finder.getQuery().equals(clickedQuery)))
+				{
+					return;
+				}
+				if (pluginProvider != null && pluginProvider.get() != null)
+				{
+					pluginProvider.get().openMapAt(point);
+				}
 			}
 		});
 		pendingQuickFinderClick.setRepeats(false);
 		pendingQuickFinderClick.start();
 	}
 
-	private void cancelPendingQuickFinderClick()
+	public synchronized void startUp()
 	{
+		cancelPendingQuickFinderClick();
+		stopped = false;
+	}
+
+	public synchronized void shutDown()
+	{
+		stopped = true;
+		cancelPendingQuickFinderClick();
+	}
+
+	private synchronized void cancelPendingQuickFinderClick()
+	{
+		quickFinderClickGeneration++;
 		if (pendingQuickFinderClick != null)
 		{
-			pendingQuickFinderClick.stop();
+			final Timer timer = pendingQuickFinderClick;
 			pendingQuickFinderClick = null;
+			if (SwingUtilities.isEventDispatchThread())
+			{
+				timer.stop();
+			}
+			else
+			{
+				SwingUtilities.invokeLater(timer::stop);
+			}
 		}
 	}
 

@@ -44,7 +44,9 @@ import com.bettermap.map.PoiIndex;
 import com.bettermap.map.PoiDetails;
 import com.bettermap.map.PrifddinasShift;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.bettermap.map.QuestHelperTracker;
 import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.SlayerTaskTracker;
@@ -216,6 +218,8 @@ public class BetterMapPlugin extends Plugin
 	/** What {@link #onBeforeRender} last applied, so an already-restored widget is not re-read. */
 	private boolean mapWidgetsHidden;
 	private boolean chatWidgetHidden;
+	/** Client-thread only: widgets that Atlas changed from visible to self-hidden. */
+	private final Map<Integer, Widget> hiddenWidgets = new HashMap<>();
 	private int inputHeartbeatTick;
 
 	private Future<?> startupTask;
@@ -223,6 +227,7 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
+		input.getLayerInputHandler().startUp();
 		// Resolve conflicting saved settings deterministically on startup.
 		if (config.useExternalShortestPathSettings() && config.enableShortestPath())
 		{
@@ -288,6 +293,10 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
+		input.getLayerInputHandler().shutDown();
+		mapOverlay.setFinderFocusOnOpen(null);
+		camera.setFinderPanelOpen(false);
+		input.focusLost();
 		shortestPathTracker.shutDown();
 		if (startupTask != null)
 		{
@@ -322,8 +331,7 @@ public class BetterMapPlugin extends Plugin
 			setChatHidden(false);
 			mapWidgetsHidden = false;
 			chatWidgetHidden = false;
-			// Unconditional: leaving the chatbox or the map render hidden after the plugin stops
-			// is a HUD the user cannot get back without a relog.
+			// Restore only the current widgets that Atlas itself hid.
 		});
 		mapAssets.shutDown();
 
@@ -366,7 +374,7 @@ public class BetterMapPlugin extends Plugin
 	public void onBeforeRender(BeforeRender event)
 	{
 		// Hiding has to be reapplied every frame, but restoring does not: once the widgets are
-		// back the client leaves them alone. Skipping the no-op restore keeps six widget lookups
+		// back the client leaves them alone. Skipping the no-op restore keeps widget lookups
 		// per frame off the path a player is on whenever the map is closed - which is most of it.
 		final boolean hideMap = config.hideGameMapRender();
 		if (hideMap || mapWidgetsHidden)
@@ -420,21 +428,35 @@ public class BetterMapPlugin extends Plugin
 	{
 		hideWidget(InterfaceID.Worldmap.MAP_DISPLAY, hidden);
 		hideWidget(InterfaceID.Worldmap.MAP_OVERLAY, hidden);
-		// Restore overview widgets left hidden by the removed minimap setting.
-		hideWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER, false);
-		hideWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY, false);
 	}
 
 	private void hideWidget(int id, boolean hidden)
 	{
 		final Widget widget = client.getWidget(id);
-		if (widget != null && widget.isSelfHidden() != hidden)
+		// Interface recreation invalidates ownership of the old widget, even at the same ID.
+		if (hiddenWidgets.get(id) != widget)
 		{
-			widget.setHidden(hidden);
-			// Only on a transition: this runs every frame, and hiding is one of the few things
-			// here that depends on the client's widget ids still being what we think they are.
-			log.debug("[BetterMap] widget {} hidden={}", id, hidden);
+			hiddenWidgets.remove(id);
 		}
+		if (widget == null)
+		{
+			return;
+		}
+		if (hidden)
+		{
+			if (widget.isSelfHidden())
+			{
+				return;
+			}
+			hiddenWidgets.put(id, widget);
+		}
+		else if (hiddenWidgets.remove(id) != widget || !widget.isSelfHidden())
+		{
+			// A component already hidden by the game or another plugin is not ours to show.
+			return;
+		}
+		widget.setHidden(hidden);
+		log.debug("[BetterMap] widget {} hidden={}", id, hidden);
 	}
 
 	/**

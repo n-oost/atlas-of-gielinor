@@ -28,6 +28,7 @@ import com.bettermap.data.MonsterLocationData;
 import java.awt.image.BufferedImage;
 import net.runelite.api.ItemID;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -37,6 +38,13 @@ import static org.junit.Assert.assertTrue;
 public class MonsterIconManagerTest
 {
 	private MonsterIconManager iconManager;
+
+	@BeforeClass
+	public static void loadBossCatalog()
+	{
+		MonsterLocationData.load();
+		assertTrue("Boss catalog must load before testing", MonsterLocationData.isLoaded());
+	}
 
 	@Before
 	public void setUp()

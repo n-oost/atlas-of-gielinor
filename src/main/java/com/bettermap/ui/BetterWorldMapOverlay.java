@@ -189,13 +189,11 @@ public class BetterWorldMapOverlay extends Overlay
 	@Inject
 	private RaidBossDisplay raidBossDisplay;
 	private final WorldMapInput input;
-	private final MapDebugRenderer debugRenderer;
 	private final WorldMapPointReader worldMapPointReader;
 
 	private boolean renderFailureLogged;
 	private Point unmappedPosition;
 	private boolean wasOpen;
-	private volatile Runnable finderFocusOnOpen;
 	private boolean everOpened;
 	private Point lastClientPosition;
 	private float lastClientZoom;
@@ -244,9 +242,6 @@ public class BetterWorldMapOverlay extends Overlay
 		this.tooltipRenderer = new MapTooltipRenderer(
 			client, config, camera, input, poiIndex, monsterIndex, dungeonPieceIndex, monsterIconManager, slayerTaskTracker,
 			clueScrollTracker, shopIndex, finder, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader);
-		this.debugRenderer = new MapDebugRenderer(
-			client, config, camera, tileLoader, input, poiIndex, shopIndex, groundItemIndex, boatTracker,
-			worldMapPointManager, worldMapPointReader, finder, stats);
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.MANUAL);
 		setPriority(PRIORITY_HIGH);
@@ -306,13 +301,6 @@ public class BetterWorldMapOverlay extends Overlay
 		camera.setActive(true);
 
 		syncWithClient(worldMap, bounds);
-		final Runnable focus = finderFocusOnOpen;
-		if (wasOpen && focus != null)
-		{
-			finderFocusOnOpen = null;
-			focus.run();
-		}
-
 		// Freeze the camera pose for the rest of this frame. Without this, a drag or wheel event
 		// on the AWT thread can move the camera between the tile-grid pass and later passes,
 		// tearing the map along a seam.
@@ -427,13 +415,6 @@ public class BetterWorldMapOverlay extends Overlay
 				log.warn("[BetterMap] overlay stage failed; the map may be missing layers", e);
 			}
 		}
-
-		if (config.debugOverlay())
-		{
-			debugRenderer.drawDebugPanel(graphics, bounds, unmappedPosition);
-		}
-
-		debugRenderer.logPipeline(bounds);
 
 		graphics.setClip(previousClip);
 		return null;
@@ -562,12 +543,6 @@ public class BetterWorldMapOverlay extends Overlay
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	/** Apply a Finder destination after the initial player recenter on map opening. */
-	public void setFinderFocusOnOpen(Runnable focus)
-	{
-		finderFocusOnOpen = focus;
-	}
-
 	/**
 	 * Called when the native interface closes because this overlay
 	 * only renders while {@code InterfaceID.WORLDMAP} is open — {@code wasOpen} would otherwise
@@ -621,23 +596,6 @@ public class BetterWorldMapOverlay extends Overlay
 		finderRenderer.drawFinder(graphics, bounds, new Rectangle(
 			layout.leftToolbarButtonX(bounds, LEFT_TOOLBAR_FINDER), layout.leftToolbarTop(bounds), size, size),
 			!fullscreen, fullscreen);
-	}
-
-	/**
-	 * Draws the finder card on its own, with the world map closed, hanging off the minimap's search
-	 * button instead of the map toolbar.
-	 *
-	 * <p>Same card, same state, same hit rects - the panel only ever knew where to hang itself from
-	 * and where it was allowed to spill to, so handing it a different anchor is all standalone mode
-	 * needs. {@code drawButton} is false because the minimap draws its own magnifier; this call
-	 * must not publish a second one on top of the map that is not there.
-	 *
-	 * @param anchor the button the card hangs below, in canvas coordinates
-	 * @param bounds the area the card must stay inside, usually the whole canvas
-	 */
-	public void drawStandaloneFinder(Graphics2D graphics, Rectangle anchor, Rectangle bounds)
-	{
-		finderRenderer.drawFinder(graphics, bounds, anchor, false);
 	}
 
 	private void drawNotice(Graphics2D graphics, Rectangle bounds, String... lines)
@@ -739,7 +697,7 @@ public class BetterWorldMapOverlay extends Overlay
 			}
 		}
 
-		final Rectangle worldMapOrb = MinimapOrbs.worldMapOrbBounds(client);
+		final Rectangle worldMapOrb = MapLayout.worldMapOrbBounds(client);
 		if (worldMapOrb != null)
 		{
 			rects.add(worldMapOrb);

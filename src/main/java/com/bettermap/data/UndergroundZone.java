@@ -77,8 +77,10 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import net.runelite.api.coords.WorldPoint;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -480,6 +482,8 @@ public enum UndergroundZone
 		private final String name;
 		private final WorldPoint surfacePoint;
 		private final List<WorldPoint> surfacePoints;
+		private final List<WorldPoint> entranceMarkerPoints;
+		private final Set<Integer> hiddenEntranceMarkers;
 		private final WorldPoint undergroundPoint;
 		private final int yOffset;
 		private final int radius;
@@ -495,9 +499,10 @@ public enum UndergroundZone
 	{
 		private final Map<UndergroundZone, Metadata> metadata;
 		private final Map<String, UndergroundZone> byId;
+		private final Map<UndergroundZone, List<UndergroundZone>> connections;
 	}
 
-	private static volatile Catalog catalog = new Catalog(Collections.emptyMap(), Collections.emptyMap());
+	private static volatile Catalog catalog = new Catalog(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
 	public static volatile List<UndergroundZone> ALL_ZONES = Collections.emptyList();
 	private static final Map<String, String> SHARED_ZONE_IDS = Map.of(
 		"edgeville_dungeon", "varrock_sewers", "crandor_dungeon", "karamja_dungeon");
@@ -507,7 +512,7 @@ public enum UndergroundZone
 		return !catalog.metadata.isEmpty();
 	}
 
-	/** Called on the startup worker before floor, cluster and instance indexes are built. */
+	/** Called on the startup worker before floor and instance indexes are built. */
 	public static void load()
 	{
 		if (isLoaded())
@@ -527,6 +532,7 @@ public enum UndergroundZone
 				entrances.add(surface);
 				for (int i = 16; i < f.length; i += 3) entrances.add(point(f, i));
 				final Metadata metadata = new Metadata(f[1], f[2], surface, Collections.unmodifiableList(entrances),
+					new ArrayList<>(entrances), new HashSet<>(),
 					point(f, 6), Integer.parseInt(f[9]), Integer.parseInt(f[10]), f[11],
 					Integer.parseInt(f[12]), Integer.parseInt(f[13]), Integer.parseInt(f[14]), Integer.parseInt(f[15]));
 				if (prepared.put(zone, metadata) != null || ids.put(metadata.id, zone) != null)
@@ -535,8 +541,43 @@ public enum UndergroundZone
 				}
 			}
 			if (prepared.size() != values().length) throw new IOException("Incomplete dungeon catalog");
+
+			for (String[] fields : BundledTsv.read("/com/bettermap/dungeons/entrance-markers.tsv", 5))
+			{
+				final UndergroundZone zone = ids.get(fields[0]);
+				if (zone == null) throw new IOException("Unknown entrance marker zone: " + fields[0]);
+				final Metadata metadata = prepared.get(zone);
+				final int index = Integer.parseInt(fields[1]);
+				if (index < 0 || index >= metadata.surfacePoints.size()) throw new IOException("Invalid entrance marker index");
+				final WorldPoint original = metadata.surfacePoints.get(index);
+				metadata.entranceMarkerPoints.set(index, new WorldPoint(Integer.parseInt(fields[2]),
+					Integer.parseInt(fields[3]), original.getPlane()));
+				if ("true".equals(fields[4])) metadata.hiddenEntranceMarkers.add(index);
+				else if (!"false".equals(fields[4])) throw new IOException("Invalid entrance marker visibility");
+			}
+
+			final Map<UndergroundZone, List<UndergroundZone>> connections = new EnumMap<>(UndergroundZone.class);
+			for (String[] fields : BundledTsv.read("/com/bettermap/dungeons/dungeon-connections.tsv", 2))
+			{
+				final List<UndergroundZone> members = new ArrayList<>();
+				for (String id : fields[1].split(","))
+				{
+					final UndergroundZone member = ids.get(id.trim());
+					if (member == null) throw new IOException("Unknown connected dungeon: " + id);
+					if (!members.contains(member)) members.add(member);
+				}
+				final List<UndergroundZone> connected = Collections.unmodifiableList(members);
+				for (UndergroundZone member : members)
+				{
+					if (connections.put(member, connected) != null)
+					{
+						throw new IOException("Dungeon belongs to multiple toggle groups: " + prepared.get(member).id);
+					}
+				}
+			}
+
 			if (Thread.currentThread().isInterrupted()) return;
-			catalog = new Catalog(Collections.unmodifiableMap(prepared), Collections.unmodifiableMap(ids));
+			catalog = new Catalog(Collections.unmodifiableMap(prepared), Collections.unmodifiableMap(ids), Collections.unmodifiableMap(connections));
 			ALL_ZONES = List.of(values());
 		}
 		catch (IOException | RuntimeException e)
@@ -602,6 +643,18 @@ public enum UndergroundZone
 	public List<WorldPoint> getSurfacePoints()
 	{
 		return metadata().surfacePoints;
+	}
+
+	/** Authored marker placement; navigation and duplicate filtering retain the original surface tiles. */
+	public WorldPoint getEntranceMarkerPoint(int index)
+	{
+		final List<WorldPoint> points = metadata().entranceMarkerPoints;
+		return index >= 0 && index < points.size() ? points.get(index) : null;
+	}
+
+	public boolean isEntranceMarkerHidden(int index)
+	{
+		return metadata().hiddenEntranceMarkers.contains(index);
 	}
 
 	public WorldPoint nearestSurfacePoint(int worldX, int worldY)
@@ -695,6 +748,21 @@ public enum UndergroundZone
 		final String id = getId();
 		final int separator = id.indexOf("__");
 		return canonicalZoneId(separator < 0 ? id : id.substring(separator + 2));
+	}
+
+	/** Native roots without authored entrances retain a control when explicitly listed in the dataset. */
+	public boolean hasEntranceToggle()
+	{
+		return !getId().startsWith("native_") || catalog.connections.containsKey(this);
+	}
+
+	/** Dungeon entrances share one toggle path; their connected zones come from the bundled dataset. */
+	public List<UndergroundZone> getConnectedZones()
+	{
+		final Catalog current = catalog;
+		List<UndergroundZone> connected = current.connections.get(current.byId.get(getSelectionId()));
+		if (connected == null) connected = current.connections.get(this);
+		return connected == null ? Collections.singletonList(this) : connected;
 	}
 
 	public UndergroundZone getParentZone()

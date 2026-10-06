@@ -28,7 +28,6 @@ import com.google.gson.Gson;
 import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
 import com.bettermap.ui.input.PanButton;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.UndergroundZone;
 import java.awt.Canvas;
 import java.awt.Rectangle;
@@ -230,22 +229,7 @@ public class WorldMapInputDungeonExitTest
 		assertEquals(1.2, camera.getZoom(), DELTA);
 	}
 
-	@Test
-	public void clickingRegionalCompositeAgainKeepsItsDungeonsOpen()
-	{
-		final OverlayCluster cluster = new OverlayCluster(
-			"asgarnia", "Asgarnia underground", 2800, 3120, 3110, 3525,
-			Collections.singletonList(UndergroundZone.TAVERLEY_DUNGEON), 2992, 3408);
-		camera.setLayerSymbolTargets(Collections.singletonList(
-			new MapCamera.LayerSymbolTarget(new Rectangle(390, 290, 20, 20), cluster)));
 
-		input.mousePressed(leftPressAt(400, 300));
-		assertEquals(cluster, camera.getActiveOverlayCluster());
-
-		input.mousePressed(leftPressAt(400, 300));
-		assertEquals(cluster, camera.getActiveOverlayCluster());
-		assertTrue(camera.isUndergroundZoneOpen(UndergroundZone.TAVERLEY_DUNGEON));
-	}
 
 	@Test
 	public void clickingDungeonReturnSymbolExitsCommittedLayer()

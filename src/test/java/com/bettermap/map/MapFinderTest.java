@@ -117,10 +117,10 @@ public class MapFinderTest
 		assertTrue(finder.getResults().isEmpty());
 		assertEquals(0, finder.getMatchCount());
 
-		finder.appendChar('a', null);
+		finder.updateQuery("a", null);
 		assertEquals("a", finder.getQuery());
 
-		finder.backspace(null);
+		finder.updateQuery("", null);
 		assertEquals("", finder.getQuery());
 		assertTrue(finder.getResults().isEmpty());
 		assertEquals(0, finder.getMatchCount());

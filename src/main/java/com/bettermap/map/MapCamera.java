@@ -26,7 +26,6 @@ package com.bettermap.map;
 
 import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.TravelData;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.data.DungeonPiece;
@@ -72,8 +71,6 @@ public class MapCamera
 		@Getter
 		private final WorldPoint surfacePoint;
 		@Getter
-		private final OverlayCluster cluster;
-		@Getter
 		private final OverlayFloor floor;
 		@Getter
 		private final boolean surfaceToUnderground;
@@ -89,19 +86,8 @@ public class MapCamera
 			this.bounds = bounds;
 			this.zone = zone;
 			this.surfacePoint = surfacePoint;
-			this.cluster = null;
 			this.floor = null;
 			this.surfaceToUnderground = surfaceToUnderground;
-		}
-
-		public LayerSymbolTarget(Rectangle bounds, OverlayCluster cluster)
-		{
-			this.bounds = bounds;
-			this.zone = null;
-			this.surfacePoint = null;
-			this.cluster = cluster;
-			this.floor = null;
-			this.surfaceToUnderground = true;
 		}
 
 		public LayerSymbolTarget(Rectangle bounds, OverlayFloor floor)
@@ -109,7 +95,6 @@ public class MapCamera
 			this.bounds = bounds;
 			this.zone = floor.zone;
 			this.surfacePoint = floor.zone.getSurfacePoint();
-			this.cluster = null;
 			this.floor = floor;
 			this.surfaceToUnderground = true;
 		}
@@ -119,10 +104,6 @@ public class MapCamera
 
 
 
-		public boolean isRegion()
-		{
-			return cluster != null;
-		}
 
 		public boolean isFloor()
 		{
@@ -163,8 +144,6 @@ public class MapCamera
 		@Getter
 		private final Rectangle walkBounds;
 		@Getter
-		private final Rectangle mapBounds;
-		@Getter
 		private final WorldPoint point;
 		@Getter
 		private final String name;
@@ -183,16 +162,12 @@ public class MapCamera
 			this(rowBounds, walkBounds, point, name, result, null);
 		}
 
-		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result, MapRegion region)
-		{
-			this(rowBounds, walkBounds, null, point, name, result, region);
-		}
 
-		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, Rectangle mapBounds, WorldPoint point, String name, MapFinder.Result result, MapRegion region)
+
+		public FinderResultTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result, MapRegion region)
 		{
 			this.rowBounds = rowBounds;
 			this.walkBounds = walkBounds;
-			this.mapBounds = mapBounds;
 			this.point = point;
 			this.name = name;
 			this.result = result;
@@ -215,24 +190,18 @@ public class MapCamera
 		@Getter
 		private final Rectangle walkBounds;
 		@Getter
-		private final Rectangle mapBounds;
-		@Getter
 		private final WorldPoint point;
 		@Getter
 		private final String name;
 		@Getter
 		private final MapFinder.Result result;
 
-		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result)
-		{
-			this(rowBounds, walkBounds, null, point, name, result);
-		}
 
-		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, Rectangle mapBounds, WorldPoint point, String name, MapFinder.Result result)
+
+		public FlyoutTarget(Rectangle rowBounds, Rectangle walkBounds, WorldPoint point, String name, MapFinder.Result result)
 		{
 			this.rowBounds = rowBounds;
 			this.walkBounds = walkBounds;
-			this.mapBounds = mapBounds;
 			this.point = point;
 			this.name = name;
 			this.result = result;
@@ -364,27 +333,8 @@ public class MapCamera
 
 	@Getter
 	private volatile Rectangle finderButton;
-	/** The quick-find orb by the minimap, published by {@code QuickFinderOverlay} while the map is closed. */
-	@Getter
-	private volatile Rectangle quickFinderOrb;
-	/** User drag offset for the quick-find orb, in canvas pixels from its default spot below the world-map orb. */
-	@Getter
-	private volatile int finderOrbOffsetX;
-	@Getter
-	private volatile int finderOrbOffsetY;
 	@Getter
 	private volatile boolean finderPanelOpen;
-	/**
-	 * True while the finder card is up on its own, without the world map behind it - the minimap's
-	 * search button opens it this way.
-	 *
-	 * <p>Kept apart from {@link #finderPanelOpen} because every other consumer of the finder gates
-	 * on the map being active, and standalone mode is exactly the case where it is not. Anything
-	 * that asks "may the finder take this click / this keystroke" wants
-	 * {@link #isFinderInteractive()}, not {@code isActive()}.
-	 */
-	@Getter
-	private volatile boolean finderStandalone;
 	/**
 	 * True while the search field owns the keyboard. Distinct from {@link #finderPanelOpen}: the
 	 * panel can stay up while a click on the map drops focus, which is what releases the global
@@ -464,14 +414,9 @@ public class MapCamera
 	private volatile boolean travelView;
 	private volatile List<UndergroundZone> openUndergroundZones = Collections.emptyList();
 	private final java.util.Map<UndergroundZone, OverlayFloor> selectedDungeonFloors = new java.util.concurrent.ConcurrentHashMap<>();
-	private final java.util.Map<String, UndergroundZone> nativeDungeonVariants = new java.util.concurrent.ConcurrentHashMap<>();
 	private volatile WorldPoint activeUndergroundSurfacePoint;
 	@Getter
-	private volatile OverlayCluster activeOverlayCluster;
-	@Getter
 	private volatile UndergroundZone hoveredUndergroundZone;
-	@Getter
-	private volatile OverlayCluster hoveredOverlayCluster;
 	@Getter
 	private volatile Integer hoveredFloorPlane;
 	private volatile Integer hoveredFloorLayer;
@@ -536,9 +481,7 @@ public class MapCamera
 
 	public void setActive(boolean active)
 	{
-		// Overlay render calls setActive(true) every frame while the map is open. Only the
-		// inactive → active edge should dismiss the standalone quick-find card; repeating the
-		// wipe while already active closes the in-map Find panel on the next frame.
+		// Reset Finder on opening, preserving it during subsequent render frames.
 		final boolean becomingActive = active && !this.active;
 		if (this.active != active)
 		{
@@ -551,9 +494,6 @@ public class MapCamera
 		this.active = active;
 		if (becomingActive)
 		{
-			// Opening the world map dismisses the standalone quick-find card - the in-map Find
-			// button owns the finder from here.
-			finderStandalone = false;
 			finderPanelOpen = false;
 			finderFieldFocused = false;
 			clearFinderRegions();
@@ -570,7 +510,7 @@ public class MapCamera
 			cluePanelPanButton = null;
 			planeButtons = new Rectangle[0];
 			hoveredUndergroundZone = null;
-			hoveredOverlayCluster = null;
+
 			hoveredFloorPlane = null;
 			hoveredTravelNode = null;
 			selectedTravelNode = null;
@@ -583,16 +523,11 @@ public class MapCamera
 			chatHidden = false;   // never leave the chat hidden behind a closed map
 			finderButton = null;
 			planeChosenByUser = false;
-			// The quick-find orb keeps its card up while the map is closed: setActive(false) runs
-			// every frame in that state, so wiping the finder surface here would kill it instantly.
-			if (!finderStandalone)
-			{
-				finderPanelOpen = false;
-				finderFieldFocused = false;
-				clearFinderRegions();
-				hoveredRowKey = null;
-				resetFinderScroll();
-			}
+			finderPanelOpen = false;
+			finderFieldFocused = false;
+			clearFinderRegions();
+			hoveredRowKey = null;
+			resetFinderScroll();
 						destinationButton = null;
 			boatsButton = null;
 			boatsDropdownOpen = false;
@@ -969,30 +904,10 @@ public class MapCamera
 	}
 
 
-	public void setQuickFinderOrb(Rectangle quickFinderOrb)
-	{
-		this.quickFinderOrb = quickFinderOrb;
-	}
-
-
-
-	public void setFinderOrbOffset(int x, int y)
-	{
-		this.finderOrbOffsetX = x;
-		this.finderOrbOffsetY = y;
-	}
-
-
-
-	public void setFinderStandalone(boolean finderStandalone)
-	{
-		this.finderStandalone = finderStandalone;
-	}
-
-	/** Whether the finder card is up and should be taking clicks and keys, either way it was opened. */
+	/** Whether the in-map Finder can take clicks and keys. */
 	public boolean isFinderInteractive()
 	{
-		return finderPanelOpen && (isActive() || finderStandalone);
+		return finderPanelOpen && isActive();
 	}
 
 	/**
@@ -1005,7 +920,6 @@ public class MapCamera
 		this.finderFieldFocused = finderPanelOpen;
 		if (!finderPanelOpen)
 		{
-			this.finderStandalone = false;
 			this.hoveredRowKey = null;
 			clearFinderRegions();
 			resetFinderScroll();
@@ -1271,7 +1185,7 @@ public class MapCamera
 		hoveredTravelNode = null;
 		activeFloorLayer = null;
 		hoveredUndergroundZone = null;
-		hoveredOverlayCluster = null;
+
 	}
 
 	public boolean isTravelViewActive()
@@ -1310,15 +1224,19 @@ public class MapCamera
 			return;
 		}
 		final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
-		zones.removeIf(open -> open.getSelectionId().equals(zone.getSelectionId()));
+		zones.removeIf(open -> zone.getConnectedZones().stream()
+			.anyMatch(connected -> open.getSelectionId().equals(connected.getSelectionId())));
 		openUndergroundZones = Collections.unmodifiableList(zones);
-		if (activeUndergroundZone != null && activeUndergroundZone.getSelectionId().equals(zone.getSelectionId()))
+		if (activeUndergroundZone != null && zone.getConnectedZones().stream()
+			.anyMatch(connected -> activeUndergroundZone.getSelectionId().equals(connected.getSelectionId())))
 		{
 			activeUndergroundZone = zones.isEmpty() ? null : zones.get(zones.size() - 1);
+			activeUndergroundSurfacePoint = activeUndergroundZone == null ? null : activeUndergroundZone.getSurfacePoint();
+			plane = activeUndergroundZone == null ? 0 : activeUndergroundZone.getUndergroundPoint().getPlane();
 			activeFloorLayer = null;
 		}
 		hoveredUndergroundZone = null;
-		hoveredOverlayCluster = null;
+
 	}
 
 	public synchronized void setUndergroundMode(UndergroundZone zone)
@@ -1329,10 +1247,6 @@ public class MapCamera
 	/** Opens a dungeon from a particular surface entrance while keeping its projected map anchor. */
 	public synchronized void setUndergroundMode(UndergroundZone zone, WorldPoint entrance)
 	{
-		if (zone != null)
-		{
-			zone = nativeDungeonVariants.getOrDefault(zone.getSelectionId(), zone);
-		}
 		final boolean browsing = lowerView;
 		this.activeFloorLayer = null;
 		if (zone == null)
@@ -1350,19 +1264,22 @@ public class MapCamera
 		}
 		travelView = false;
 		lowerView = true;
-		if (!openUndergroundZones.contains(zone))
+		final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
+		for (UndergroundZone connected : zone.getConnectedZones())
 		{
-			final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
-			zones.add(zone);
-			openUndergroundZones = Collections.unmodifiableList(zones);
+			final UndergroundZone selected = connected.getSelectionId().equals(zone.getSelectionId()) ? zone : connected;
+			zones.removeIf(open -> open.getSelectionId().equals(selected.getSelectionId()));
+			zones.add(selected);
 		}
+		openUndergroundZones = Collections.unmodifiableList(zones);
+
 		if (this.activeUndergroundZone == null)
 		{
 			this.savedSurfaceZoom = this.zoom;
 		}
 		this.activeUndergroundZone = zone;
 		this.activeUndergroundSurfacePoint = entrance != null ? entrance : zone.getSurfacePoint();
-		this.activeOverlayCluster = null;
+
 		// Render the committed view exactly like the hover preview: the dungeon tiles are
 		// composited onto the surface entrance via the zone delta, so the camera stays on
 		// surface coordinates and frames the entrance rather than leaping ~6400 tiles north.
@@ -1380,18 +1297,17 @@ public class MapCamera
 	public synchronized void clearUndergroundMode()
 	{
 		travelView = false;
-		nativeDungeonVariants.clear();
 		selectedDungeonFloors.clear();
 		lowerView = false;
 		openUndergroundZones = Collections.emptyList();
 		hoveredUndergroundZone = null;
-		hoveredOverlayCluster = null;
+
 		this.activeFloorLayer = null;
 		final UndergroundZone previous = this.activeUndergroundZone;
 		final WorldPoint previousSurfacePoint = this.activeUndergroundSurfacePoint;
 		this.activeUndergroundZone = null;
 		this.activeUndergroundSurfacePoint = null;
-		this.activeOverlayCluster = null;
+
 		if (previous != null)
 		{
 			// The camera stayed on surface coordinates the whole time the layer was open (the
@@ -1539,7 +1455,7 @@ public class MapCamera
 		{
 			return true;
 		}
-		return (hoveredUndergroundZone != null || hoveredOverlayCluster != null) && hoveredSurfaceToUnderground;
+		return hoveredUndergroundZone != null && hoveredSurfaceToUnderground;
 	}
 
 
@@ -1562,10 +1478,6 @@ public class MapCamera
 		this.hoveredUndergroundZone = zone;
 		this.hoveredSurfaceToUnderground = surfaceToUnderground;
 		this.hoveredFloorPlane = null;
-		if (zone != null)
-		{
-			this.hoveredOverlayCluster = null;
-		}
 	}
 
 	public void setHoveredFloor(OverlayFloor floor)
@@ -1577,7 +1489,7 @@ public class MapCamera
 		}
 		this.hoveredUndergroundZone = floor.zone;
 		this.hoveredSurfaceToUnderground = true;
-		this.hoveredOverlayCluster = null;
+
 		this.hoveredFloorPlane = floor.plane;
 		this.hoveredFloorLayer = floor.layerId;
 	}
@@ -1640,20 +1552,8 @@ public class MapCamera
 	}
 
 
-	public void setHoveredOverlayCluster(OverlayCluster cluster)
-	{
-		this.hoveredOverlayCluster = cluster;
-		if (cluster != null)
-		{
-			this.hoveredUndergroundZone = null;
-			this.hoveredSurfaceToUnderground = true;
-			this.hoveredFloorPlane = null;
-		}
-	}
-
 	/**
-	 * Zones to composite this frame: a clicked or hovered dungeon chip wins; otherwise the
-	 * hovered connected-zone cluster's members.
+	 * Zones revealed by the shared dungeon toggle, or its hover preview.
 	 */
 	public List<UndergroundZone> previewUndergroundZones()
 	{
@@ -1663,57 +1563,15 @@ public class MapCamera
 		}
 		if (activeUndergroundZone != null)
 		{
-			return Collections.singletonList(activeUndergroundZone);
+			return activeUndergroundZone.getConnectedZones();
 		}
 		if (hoveredUndergroundZone != null && hoveredSurfaceToUnderground)
 		{
-			return Collections.singletonList(hoveredUndergroundZone);
-		}
-		if (activeOverlayCluster != null)
-		{
-			return activeOverlayCluster.members;
-		}
-		if (hoveredOverlayCluster != null)
-		{
-			return hoveredOverlayCluster.members;
+			return hoveredFloorPlane != null ? Collections.singletonList(hoveredUndergroundZone)
+				: hoveredUndergroundZone.getConnectedZones();
 		}
 		return Collections.emptyList();
 	}
-
-	public boolean isClusterPreview()
-	{
-		return activeUndergroundZone == null
-			&& (hoveredUndergroundZone == null || !hoveredSurfaceToUnderground)
-			&& (activeOverlayCluster != null || hoveredOverlayCluster != null);
-	}
-
-
-	public synchronized void setActiveOverlayCluster(OverlayCluster cluster)
-	{
-		this.activeOverlayCluster = cluster;
-		if (cluster != null)
-		{
-			enterLowerView();
-			final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
-			for (UndergroundZone zone : cluster.members)
-			{
-				if (zone.getId().contains("__"))
-				{
-					nativeDungeonVariants.put(zone.getSelectionId(), zone);
-				}
-				zones.removeIf(open -> open.getSelectionId().equals(zone.getSelectionId()));
-				if (!zones.contains(zone))
-				{
-					zones.add(zone);
-				}
-			}
-			openUndergroundZones = Collections.unmodifiableList(zones);
-			this.hoveredUndergroundZone = null;
-			this.hoveredFloorPlane = null;
-			this.hoveredSurfaceToUnderground = true;
-		}
-	}
-
 
 	public void setHoveredTravelNode(TravelData.TravelNode node)
 	{

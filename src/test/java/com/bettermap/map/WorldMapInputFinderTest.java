@@ -80,7 +80,7 @@ public class WorldMapInputFinderTest
 			}
 
 			@Override
-			public void routeTo(WorldPoint point, boolean openMap)
+			public void routeTo(WorldPoint point)
 			{
 				capturedCenterPoint = point;
 				capturedRoute = true;

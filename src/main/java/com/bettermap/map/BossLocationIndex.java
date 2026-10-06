@@ -35,18 +35,6 @@ public final class BossLocationIndex
 		return LOCATIONS;
 	}
 
-	public static Location forBoss(MonsterLocationData boss)
-	{
-		for (Location location : LOCATIONS)
-		{
-			if (location.boss == boss)
-			{
-				return location;
-			}
-		}
-		return null;
-	}
-
 	private static List<Location> load()
 	{
 		final Map<MonsterLocationData, Location> authored = new EnumMap<>(MonsterLocationData.class);

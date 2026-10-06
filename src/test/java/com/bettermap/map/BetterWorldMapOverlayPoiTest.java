@@ -25,12 +25,10 @@
 package com.bettermap.map;
 
 import com.bettermap.BetterMapConfig;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.ui.BetterWorldMapOverlay;
 import com.bettermap.ui.markers.ViewWindow;
 import java.io.File;
-import java.util.Collections;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -84,13 +82,11 @@ public class BetterWorldMapOverlayPoiTest
 	}
 
 	@Test
-	public void regionalPreviewDoesNotPullInUnrelatedDungeonPois()
+	public void connectedPreviewDoesNotPullInUnrelatedDungeonPois()
 	{
 		final MapCamera camera = new MapCamera();
 		camera.centerOn(3222, 3218);
-		camera.setHoveredOverlayCluster(new OverlayCluster(
-			"asgarnia", "Asgarnia underground", 2800, 3120, 3110, 3525,
-			Collections.singletonList(UndergroundZone.TAVERLEY_DUNGEON), 2992, 3408));
+		camera.setHoveredUnderground(UndergroundZone.TAVERLEY_DUNGEON, true);
 		final net.runelite.api.coords.WorldPoint interior = UndergroundZone.TAVERLEY_DUNGEON.getUndergroundPoint();
 		assertTrue(ViewWindow.isPoiDrawable(camera, interior.getX(), interior.getY()));
 		assertFalse(ViewWindow.isPoiDrawable(camera, 2907, 5265));
@@ -270,15 +266,13 @@ public class BetterWorldMapOverlayPoiTest
 	}
 
 	@Test
-	public void regionalDungeonPreviewHidesOnlyPoisCoveredByGeometry()
+	public void connectedDungeonPreviewHidesOnlyPoisCoveredByGeometry()
 	{
 		final BetterMapConfig config = createConfig(false, true, false);
 		final MapCamera camera = new MapCamera();
 		final DungeonPieceIndex pieces = new DungeonPieceIndex();
 		pieces.load(new File("nonexistent_dir"));
-		camera.setHoveredOverlayCluster(new OverlayCluster(
-			"asgarnia", "Asgarnia underground", 2800, 3120, 3110, 3525,
-			Collections.singletonList(UndergroundZone.STRONGHOLD_OF_SECURITY), 2992, 3408));
+		camera.setHoveredUnderground(UndergroundZone.STRONGHOLD_OF_SECURITY, true);
 		final BetterWorldMapOverlay overlay = createOverlay(config, camera, pieces);
 
 		assertFalse("POI underneath the projected Vault of War must be hidden",

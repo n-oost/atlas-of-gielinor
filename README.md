@@ -11,7 +11,7 @@
 
 </div>
 
-A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin provides a world map replacement, a Quick Finder orb, and optional minimap route overlays. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
+A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin provides a world map replacement, an in-map Finder, and optional Shortest Path integration. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
 
 Missing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
 
@@ -23,12 +23,12 @@ Plugin was created with the help of AI tools. The author has verified the code a
 ### Settings
 
 Common settings are grouped under **Map**, **Controls**, **Search & tooltips**, **Map layers**, and
-**Routing**. Each **Advanced** section starts collapsed and contains appearance, marker detail,
-transport, or calculation controls. Dungeon tuning and diagnostics share one collapsed
+**Shortest Path integration**. Each **Advanced** section starts collapsed and contains appearance
+or marker detail controls. Dungeon tuning and diagnostics share one collapsed
 **Developer** section. Turn the plugin off to restore RuneLite's normal world map.
 
 ### Surface and underground on one map
-Better Overworld / Underworld map and control.
+Hover a dungeon entrance to preview its connected zones. Click to open the group; click any open entrance in that group to close it. Floor controls still select individual dungeon floors. Connections are defined in the bundled dungeon dataset.
 
 <!-- ![](docs/gifs/surface-underground.gif) -->
 
@@ -70,27 +70,22 @@ from the map.
 
 ### Find
 
-Search locations, monsters, shops and ground-item spawns by name, from the in-map Find card or
-from the quick-find orb by the minimap (drag it to reposition, click to open). Type location, monster, shop, item. Click or hit enter to select a destination, then click the native world-map orb to display it. Route calculates a path to the destination and displays it when you open the map. Can work with shortest route plugin.
+Search locations, monsters, shops and ground-item spawns by name from the in-map Find card. Click a result or press Enter to center the map on it. Route sends the destination to the separately installed Shortest Path plugin; Atlas displays returned route coordinates on its map.
 
 ![Find](docs/gifs/ground-item-search.gif)
 
 ### Walking routes
 
-Atlas of Gielinor calculates and draws its own route line using a pinned copy of the
-[Shortest Path](https://github.com/Skretzo/shortest-path) engine and map data by Skretzo and
-contributors (BSD 2-Clause). Choose a mode in **Routing (Shortest Path by Skretzo)**:
+Install and enable **Shortest Path** separately from RuneLite's Plugin Hub. Enable **Show
+Shortest Path routes** in Atlas's **Shortest Path integration** section. Atlas contains no
+pathfinding engine or collision map: Shortest Path owns the calculations and transport settings.
 
-- **Use external plugin settings** requires Shortest Path to be enabled separately. Atlas of Gielinor reads
-  its saved routing settings and sends it the selected destination for its own in-game route.
-  If the external plugin is disabled, routing pauses instead of falling back to local settings.
-- **Use Atlas of Gielinor routing** uses the bundled fork and Atlas of Gielinor's own routing settings.
-  It does not read settings from the external plugin. If Shortest Path is enabled, Atlas of Gielinor
-  sends it the selected destination so its route also appears in game.
-
-Enabling either mode disables the other; both off disables routing.
-The two plugins calculate their routes independently, so differences are possible when their
-engine or collision-data revisions differ.
+Selecting **Route** sends the destination to Shortest Path. Atlas uses its public plugin-message
+API to follow the active destination and request route coordinates for Atlas's custom map.
+These coordinate queries are separate searches in Shortest Path, so Atlas refreshes can lag its
+in-game route. Atlas does not draw a minimap route; Shortest Path controls its own overlays.
+If Shortest Path is disabled, Atlas clears its displayed route. A plugin version without the
+`getTarget`/`query` API cannot supply coordinates to Atlas.
 
 ![Walking routes](docs/gifs/click-map-path-route.gif)
 
@@ -127,8 +122,8 @@ members,quest helper) are drawn on Atlas of Gielinor's camera, along with the pl
 
 - No reflection, no AWT-level input hooks, and no native code.
 - With **Download map assets** enabled, the plugin checks the remote channel at startup and downloads changed packs using asynchronous OkHttp. Installed files use RuneLite Filepath in the plugin directory.
-- The plugin replaces the world map, adds a draggable Quick Finder orb near the minimap, and
-  draws calculated routes on the minimap. The map's Chat control can hide the chatbox while
+- The plugin replaces the world map and
+  draws Shortest Path route coordinates on its custom world map. The map's Chat control can hide the chatbox while
   the map is open; Finder text input keeps the chatbox visible.
 - The tile cache is budgeted in megabytes, not tiles: ~49 MB of LRU plus ~30 MB of permanently held
   coarse levels.
@@ -151,11 +146,10 @@ members,quest helper) are drawn on Atlas of Gielinor's camera, along with the pl
 - n-oost, truenosus
 - **[RuneLite](https://runelite.net)** - plugin API and client.
 - **[Skretzo and Shortest Path contributors](https://github.com/Skretzo/shortest-path)** -
-  route engine and map data, BSD 2-Clause. See [third-party notices](THIRD-PARTY-NOTICES.md).
+  external integration and extracted teleport POI coordinates, BSD 2-Clause. See [third-party notices](THIRD-PARTY-NOTICES.md).
 
 ## License
 
-BSD 2-Clause, see [`LICENSE`](LICENSE). Third-party code bundled in `src/main/java/com/bettermap/pathfinding`
-is covered by [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). The software license does not
+BSD 2-Clause, see [`LICENSE`](LICENSE). Third-party teleport POI data is covered by [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). The software license does not
 license all map imagery or datasets; see the [bundled asset notices](src/main/resources/com/bettermap/ASSET-NOTICES.md)
 for recorded content sources and the [provenance inventory](docs/asset-provenance.md) for remaining gaps.

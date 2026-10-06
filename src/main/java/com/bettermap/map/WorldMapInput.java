@@ -179,33 +179,6 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 			return event;
 		}
 
-		// Quick-find orb
-		if (config.showFinderOrb() && !camera.isActive() && SwingUtilities.isLeftMouseButton(event))
-		{
-			final Rectangle orb = camera.getQuickFinderOrb();
-			if (orb != null && orb.contains(event.getPoint()))
-			{
-				dragController.startOrbDrag(event.getPoint(), camera.getFinderOrbOffsetX(), camera.getFinderOrbOffsetY());
-				event.consume();
-				return event;
-			}
-		}
-
-		// Standalone finder card
-		if (camera.isFinderStandalone() && camera.isFinderPanelOpen()
-			&& SwingUtilities.isLeftMouseButton(event))
-		{
-			layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
-			if (layerInputHandler.handleFinderClick(event))
-			{
-				event.consume();
-				return event;
-			}
-
-			camera.setFinderPanelOpen(false);
-			return event;
-		}
-
 		if (!overMap(event.getPoint()))
 		{
 			if (config.debugLogging() && camera.isActive())
@@ -308,15 +281,6 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 		{
 			travelClickOrigin = null;
 		}
-		if (dragController.isDraggingOrb())
-		{
-			final Point now = event.getPoint();
-			dragController.handleOrbDrag(now);
-			cursor = now;
-			event.consume();
-			return event;
-		}
-
 		if (!dragController.isDraggingMap())
 		{
 			return event;
@@ -357,37 +321,6 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 			}
 		}
 		travelClickOrigin = null;
-		if (dragController.isDraggingOrb())
-		{
-			final boolean moved = dragController.endOrbDrag();
-			if (moved)
-			{
-				if (pluginProvider != null && pluginProvider.get() != null)
-				{
-					pluginProvider.get().setFinderOrbOffset(
-						camera.getFinderOrbOffsetX(), camera.getFinderOrbOffsetY());
-				}
-			}
-			else
-			{
-				if (camera.isFinderStandalone() && camera.isFinderPanelOpen())
-				{
-					camera.setFinderPanelOpen(false);
-				}
-				else
-				{
-					camera.setFinderStandalone(true);
-					camera.setFinderPanelOpen(true);
-					if (finder != null && pluginProvider != null && pluginProvider.get() != null)
-					{
-						finder.updateQuery("", pluginProvider.get().getPlayerLocation());
-					}
-				}
-			}
-			event.consume();
-			return event;
-		}
-
 		if (dragController.isDraggingMap())
 		{
 			dbg("drag end, centre now {},{} active={}",
@@ -425,13 +358,6 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 			return event;
 		}
 		layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
-		if (camera.isFinderStandalone() && camera.isFinderPanelOpen())
-		{
-			cursor = event.getPoint();
-			layerInputHandler.updateHoveredFinderRow(cursor);
-			layerInputHandler.updateFinderEdgeScroll(cursor);
-			return event;
-		}
 		if (overMap(event.getPoint()))
 		{
 			cursor = event.getPoint();

@@ -13,7 +13,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
 
 public class FinderKeyCaptureTest
@@ -60,7 +59,6 @@ public class FinderKeyCaptureTest
 	private FinderKeyCapture capture;
 
 	private WorldPoint centeredOn;
-	private boolean openedMap;
 
 	@Before
 	public void setUp()
@@ -71,16 +69,10 @@ public class FinderKeyCaptureTest
 		finder = new MapFinder(new PoiIndex(), monsterIndex);
 		host = new FakeHost();
 		centeredOn = null;
-		openedMap = false;
 
 		final BetterMapPlugin plugin = new BetterMapPlugin()
 		{
-			@Override
-			public void openMapAt(WorldPoint point)
-			{
-				centeredOn = point;
-				openedMap = true;
-			}
+
 
 			@Override
 			public void centerMapOn(WorldPoint point)
@@ -89,9 +81,8 @@ public class FinderKeyCaptureTest
 			}
 		};
 
-		final BetterMapConfig config = new BetterMapConfig() {};
 
-		capture = new FinderKeyCapture(camera, finder, config, () -> plugin, host);
+		capture = new FinderKeyCapture(camera, finder, () -> plugin, host);
 	}
 
 	private void openAndFocus()
@@ -175,7 +166,6 @@ public class FinderKeyCaptureTest
 
 		host.onChanged.accept("lumbridge");
 		assertEquals("lumbridge", finder.getQuery());
-		assertEquals("caret pinned to the end for the on-map mirror", 9, finder.getCaret());
 	}
 
 	@Test
@@ -192,18 +182,4 @@ public class FinderKeyCaptureTest
 		assertSame(top, centeredOn);
 	}
 
-	@Test
-	public void standaloneEnterOpensMapAtSelectedResult()
-	{
-		camera.setFinderStandalone(true);
-		camera.setFinderPanelOpen(true);
-		capture.sync();
-
-		host.onChanged.accept("King Black Dragon");
-		final WorldPoint selected = MapFinder.activationTarget(finder.getResults().get(0)).getPoint();
-		host.onDone.accept(finder.getQuery());
-
-		assertEquals(selected, centeredOn);
-		assertTrue(openedMap);
-	}
 }

@@ -237,7 +237,7 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "showLargeUndergroundSymbols",
 		name = "Underground Layer Symbols",
-		description = "Draws dungeon entrance toggles and green regional underground-composite toggles",
+		description = "Draws dungeon entrance toggles that reveal their connected zones",
 		position = 4,
 		section = iconsSection
 	)
@@ -334,21 +334,9 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "showFinderOrb",
-		name = "Minimap search button",
-		description = "Shows a draggable search button beside the minimap. Opens search without opening the world map.",
-		position = 2,
-		section = mapSection
-	)
-	default boolean showFinderOrb()
-	{
-		return true;
-	}
-
-	@ConfigItem(
 		keyName = "showFinderButton",
 		name = "Map search button",
-		description = "Shows search inside the world map. Independent of the minimap search button.",
+		description = "Shows search inside the world map.",
 		position = 0,
 		section = finderSection
 	)
@@ -442,28 +430,6 @@ public interface BetterMapConfig extends Config
 	default boolean undergroundTuner()
 	{
 		return false;
-	}
-
-	@ConfigItem(
-		keyName = "finderOrbOffsetX",
-		name = "",
-		description = "",
-		hidden = true
-	)
-	default int finderOrbOffsetX()
-	{
-		return 0;
-	}
-
-	@ConfigItem(
-		keyName = "finderOrbOffsetY",
-		name = "",
-		description = "",
-		hidden = true
-	)
-	default int finderOrbOffsetY()
-	{
-		return 0;
 	}
 
 	@ConfigItem(
@@ -866,7 +832,7 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "dungeonNavigationMinZoom",
 		name = "Dungeon Navigation Buttons",
-		description = "Dungeon entrances, regional previews and floor navigation buttons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Dungeon entrance toggles, connected previews and floor navigation buttons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
 		position = 30,
 		section = iconsZoomSection
 	)

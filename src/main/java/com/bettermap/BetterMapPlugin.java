@@ -59,7 +59,6 @@ import com.bettermap.tiles.TileLoader;
 import com.bettermap.tiles.MapAssetManager;
 import com.bettermap.ui.BetterMapPanel;
 import com.bettermap.ui.BetterWorldMapOverlay;
-import com.bettermap.ui.QuickFinderOverlay;
 import com.google.inject.Provides;
 import java.awt.Rectangle;
 import java.util.concurrent.ScheduledExecutorService;
@@ -137,8 +136,6 @@ public class BetterMapPlugin extends Plugin
 	@Inject
 	private BetterWorldMapOverlay mapOverlay;
 
-	@Inject
-	private QuickFinderOverlay quickFinderOverlay;
 
 	@Inject
 	private WorldMapInput input;
@@ -226,7 +223,6 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		input.getLayerInputHandler().startUp();
 		// Preserve users who enabled the previous external-settings mode.
 		if (!Boolean.TRUE.equals(configManager.getConfiguration("bettermap", "shortestPathHubMigration", Boolean.class)))
 		{
@@ -239,10 +235,8 @@ public class BetterMapPlugin extends Plugin
 		shortestPathTracker.startUp();
 		mapAssets.startUp(() -> getPluginDirectory().join("map-assets"), config.downloadMapAssets());
 
-		camera.setFinderOrbOffset(config.finderOrbOffsetX(), config.finderOrbOffsetY());
 
 		overlayManager.add(mapOverlay);
-		overlayManager.add(quickFinderOverlay);
 		mouseManager.registerMouseListener(input);
 		mouseManager.registerMouseWheelListener(input);
 		keyManager.registerKeyListener(input);
@@ -295,8 +289,6 @@ public class BetterMapPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-		input.getLayerInputHandler().shutDown();
-		mapOverlay.setFinderFocusOnOpen(null);
 		camera.setFinderPanelOpen(false);
 		input.focusLost();
 		shortestPathTracker.shutDown();
@@ -307,7 +299,6 @@ public class BetterMapPlugin extends Plugin
 		}
 		panel = null;
 		overlayManager.remove(mapOverlay);
-		overlayManager.remove(quickFinderOverlay);
 		mouseManager.unregisterMouseListener(input);
 		mouseManager.unregisterMouseWheelListener(input);
 		keyManager.unregisterKeyListener(input);
@@ -729,7 +720,6 @@ public class BetterMapPlugin extends Plugin
 		}
 		camera.clearUndergroundMode();
 		camera.setHoveredUnderground(null, true);
-		camera.setHoveredOverlayCluster(null);
 		camera.setPlane(point.getPlane());
 		if (zone != null)
 		{
@@ -788,43 +778,10 @@ public class BetterMapPlugin extends Plugin
 		});
 	}
 
-	/** Show a Finder destination, retaining it until the user opens the native world map. */
-	public void openMapAt(WorldPoint point)
-	{
-		if (point == null)
-		{
-			return;
-		}
-		if (!camera.isActive())
-		{
-			// The orb's onOp listener only plays a sound; opening is a native widget action.
-			// Keep genuine input responsible for that action, as for native map closing.
-			mapOverlay.setFinderFocusOnOpen(() ->
-			{
-				camera.setFinderStandalone(false);
-				camera.setFinderPanelOpen(false);
-				centerMapOn(point);
-			});
-			clientThread.invoke(() -> client.addChatMessage(ChatMessageType.GAMEMESSAGE, "",
-				"Atlas of Gielinor: Click the world map orb to show your selected destination.", null));
-			return;
-		}
-		camera.setFinderStandalone(false);
-		camera.setFinderPanelOpen(false);
-		centerMapOn(point);
-	}
-
 	/** Center on a destination and request Shortest Path to calculate a route to it. */
-	public void routeTo(WorldPoint point, boolean openMap)
+	public void routeTo(WorldPoint point)
 	{
-		if (openMap)
-		{
-			openMapAt(point);
-		}
-		else
-		{
-			centerMapOn(point);
-		}
+		centerMapOn(point);
 		clientThread.invoke(() -> shortestPathTracker.routeTo(point));
 	}
 
@@ -1032,20 +989,6 @@ public class BetterMapPlugin extends Plugin
 			enabled);
 	}
 
-	/** Persist a dragged quick-find orb position (canvas-pixel offset from its default spot). */
-	public void setFinderOrbOffset(int x, int y)
-	{
-		if (camera != null)
-		{
-			camera.setFinderOrbOffset(x, y);
-		}
-		if (configManager != null)
-		{
-			configManager.setConfiguration("bettermap", "finderOrbOffsetX", x);
-			configManager.setConfiguration("bettermap", "finderOrbOffsetY", y);
-		}
-	}
-
 	/** Last finder result set echoed to chat, so a tick only re-prints when it changes. */
 	private String lastFinderEcho = "";
 
@@ -1108,7 +1051,6 @@ public class BetterMapPlugin extends Plugin
 	private void addMapContextMenuEntries(net.runelite.api.Point mouse)
 	{
 		// Hub review F1: append local entries; never clear or reorder the game's entries.
-		// The standalone Finder can overlap players, so pruning could remove Attack/Cast/Trade.
 		// Do not restore resetMapMenu() to tidy this menu (see PLUGIN_HUB_REVIEW.md, F1).
 		for (Rectangle passthrough : camera.getNativePassthrough())
 		{
@@ -1120,23 +1062,12 @@ public class BetterMapPlugin extends Plugin
 		final WorldPoint finderTarget = finderTargetAt(mouse);
 		if (finderTarget != null)
 		{
-			final boolean standalone = camera.isFinderStandalone();
-			addRouteMenuEntry(finderTarget, standalone);
+			addRouteMenuEntry(finderTarget);
 			client.getMenu().createMenuEntry(-1)
 				.setOption("Show on map")
 				.setTarget("<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>")
 				.setType(MenuAction.RUNELITE)
-				.onClick(e ->
-				{
-					if (standalone)
-					{
-						openMapAt(finderTarget);
-					}
-					else
-					{
-						centerMapOn(finderTarget);
-					}
-				});
+				.onClick(e -> centerMapOn(finderTarget));
 			return;
 		}
 		final Rectangle finderPanel = camera.getFinderPanelBounds();
@@ -1159,7 +1090,7 @@ public class BetterMapPlugin extends Plugin
 		final WorldPoint targetPoint = routePointAt(
 			camera.worldX(mouse.getX(), viewport), camera.worldY(mouse.getY(), viewport));
 
-		addRouteMenuEntry(targetPoint, false);
+		addRouteMenuEntry(targetPoint);
 
 		if (camera.isViewingDungeonLayer())
 		{
@@ -1208,7 +1139,7 @@ public class BetterMapPlugin extends Plugin
 		return null;
 	}
 
-	private void addRouteMenuEntry(WorldPoint point, boolean openMap)
+	private void addRouteMenuEntry(WorldPoint point)
 	{
 		if (shortestPathTracker != null && shortestPathTracker.hasTarget())
 		{
@@ -1225,7 +1156,7 @@ public class BetterMapPlugin extends Plugin
 			.setOption("Route here")
 			.setTarget("<col=ffff00>" + point.getX() + ", " + point.getY() + "</col>")
 			.setType(MenuAction.RUNELITE)
-			.onClick(e -> routeTo(point, openMap));
+			.onClick(e -> routeTo(point));
 	}
 
 	private void addEntityContextMenuEntries(net.runelite.api.Point mouse, int worldX, int worldY)
@@ -1283,16 +1214,6 @@ public class BetterMapPlugin extends Plugin
 
 	private void addLayerSymbolMenuEntries(MapCamera.LayerSymbolTarget target)
 	{
-		if (target.isRegion())
-		{
-			client.getMenu().createMenuEntry(-1)
-				.setOption("Preview layer")
-				.setTarget("<col=ffff00>" + target.getCluster().name + "</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> camera.setActiveOverlayCluster(target.getCluster()));
-			return;
-		}
-
 		final UndergroundZone zone = target.getZone();
 		if (zone == null)
 		{

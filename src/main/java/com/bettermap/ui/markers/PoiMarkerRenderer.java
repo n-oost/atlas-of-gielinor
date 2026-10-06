@@ -29,7 +29,6 @@ import static com.bettermap.ui.MapStyle.CARD_BG;
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.DungeonPiece;
 import com.bettermap.data.DungeonPieceTransform;
-import com.bettermap.data.DungeonPoiOverrides;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.DungeonPieceIndex;
@@ -692,14 +691,9 @@ public class PoiMarkerRenderer
 		{
 			final PoiCategory category = PoiCategory.of(poi.getKey());
 			return (category == PoiCategory.TRAVEL || category == PoiCategory.SHORTCUTS)
-				&& ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY())
-				&& !DungeonPoiOverrides.isRawPoiDeleted(poi.getName(), poi.getX(), poi.getY(), poi.getPlane());
+				&& ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY());
 		}
 		if (camera != null && camera.getZoom() < minZoomForPoi(poi.getKey()))
-		{
-			return false;
-		}
-		if (DungeonPoiOverrides.isRawPoiDeleted(poi.getName(), poi.getX(), poi.getY(), poi.getPlane()))
 		{
 			return false;
 		}
@@ -735,11 +729,11 @@ public class PoiMarkerRenderer
 			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 			{
-				if (DungeonPoiOverrides.isButtonDeleted(zone, i))
+				if (zone.isEntranceMarkerHidden(i))
 				{
 					continue;
 				}
-				final WorldPoint point = DungeonPoiOverrides.getButtonPoint(zone, i);
+				final WorldPoint point = zone.getEntranceMarkerPoint(i);
 				final long dx = poi.getX() - point.getX();
 				final long dy = poi.getY() - point.getY();
 				if (poi.getPlane() == point.getPlane() && dx * dx + dy * dy <= 64)
@@ -751,7 +745,7 @@ public class PoiMarkerRenderer
 		return false;
 	}
 
-	/** Surface POIs under projected dungeon geometry make regional previews unreadable. */
+	/** Surface POIs under projected dungeon geometry make dungeon previews unreadable. */
 	private boolean coveredByDungeonPreview(int worldX, int worldY)
 	{
 		if (camera == null || dungeonPieceIndex == null)

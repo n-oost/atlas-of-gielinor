@@ -1,23 +1,18 @@
 # Third-party notices
 
-## Shortest Path route engine and data
+## Shortest Path integration and teleport POI data
 
-Atlas of Gielinor includes a package-relocated copy of the Shortest Path pathfinding engine and its
-collision, transport, destination, and league data from
-[Skretzo/shortest-path](https://github.com/Skretzo/shortest-path).
+Atlas requires users to install [Shortest Path](https://github.com/Skretzo/shortest-path)
+separately from the RuneLite Plugin Hub for walking routes. No Shortest Path Java engine,
+collision map, transport requirements, or destination/league datasets are bundled.
+Atlas communicates through RuneLite's public PluginMessage API and renders returned coordinates.
+Atlas is not affiliated with or endorsed by the Shortest Path project.
 
-- Upstream revision: `6ca996a41a6a4b85d0fdb38dc6d56c66b747e29a` (2026-09-02)
-- License: BSD 2-Clause
-- Copyright: (c) 2021-2026 Skretzo and Shortest Path contributors
-- Java sources: `src/main/java/com/bettermap/pathfinding/`
-- Data and full license text: `src/main/resources/com/bettermap/pathfinding/`
-
-The copy is pinned; installed Shortest Path plugin updates do not replace it. In external-settings mode, Atlas of Gielinor sends
-destinations to an enabled Shortest Path plugin through its public plugin-message API and reads
-its saved routing settings. Atlas of Gielinor routing mode uses only its own settings. In either mode,
-Atlas sends selected destinations to Shortest Path when that plugin is enabled. The two route
-calculations remain independent. Atlas of Gielinor is not
-affiliated with or endorsed by the Shortest Path project.
+The map-only `src/main/resources/com/bettermap/poi/teleport-locations.tsv` preserves teleport
+labels and coordinates extracted from Shortest Path revision
+`6ca996a41a6a4b85d0fdb38dc6d56c66b747e29a` (2026-09-02).
+Its BSD 2-Clause license and copyright are preserved in
+`src/main/resources/com/bettermap/poi/shortest-path-data-LICENSE`.
 
 ## RuneLite world-map metadata
 

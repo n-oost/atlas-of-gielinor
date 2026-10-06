@@ -35,7 +35,6 @@ import static com.bettermap.ui.MapStyle.SMALL;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.MonsterLocationData;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.TravelData;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.data.sailing.BoatTracker;
@@ -594,16 +593,6 @@ public class MapTooltipRenderer
 		if (hoveredZone != null)
 		{
 			final TooltipCard card = poiTooltipBuilder.buildUndergroundZoneCard(hoveredZone, camera.isHoveredSurfaceToUnderground());
-			if (card != null)
-			{
-				drawCard(graphics, bounds, cursor, card);
-				return true;
-			}
-		}
-		final OverlayCluster cluster = camera.getHoveredOverlayCluster();
-		if (cluster != null)
-		{
-			final TooltipCard card = poiTooltipBuilder.buildOverlayClusterCard(cluster);
 			if (card != null)
 			{
 				drawCard(graphics, bounds, cursor, card);

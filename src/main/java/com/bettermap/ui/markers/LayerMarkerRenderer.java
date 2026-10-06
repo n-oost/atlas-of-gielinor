@@ -30,8 +30,6 @@ import static com.bettermap.ui.MapStyle.CARD_TITLE;
 import static com.bettermap.ui.MapStyle.SMALL;
 
 import com.bettermap.BetterMapConfig;
-import com.bettermap.data.DungeonPoiOverrides;
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.MapCamera;
@@ -52,7 +50,7 @@ import java.util.regex.Pattern;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.FontManager;
 
-/** Draws dungeon entrance symbols and floor and region controls. */
+/** Draws dungeon entrance toggles and floor controls. */
 public class LayerMarkerRenderer
 {
 	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
@@ -61,7 +59,6 @@ public class LayerMarkerRenderer
 	private static final Color LAYER_CHIP_BG = new Color(16, 20, 28, 195);
 	private static final Color LAYER_CHIP_EDGE = new Color(120, 180, 240, 220);
 	private static final Color LAYER_CHIP_TEXT = new Color(140, 200, 255);
-	private static final Color REGION_EDGE_HOVER = new Color(160, 230, 190, 230);
 	private static final Color FLOOR_CHIP_BG = new Color(36, 28, 16, 200);
 	private static final Color FLOOR_CHIP_BG_HOVER = new Color(56, 42, 18, 235);
 	private static final Color FLOOR_CHIP_EDGE = new Color(230, 180, 80, 220);
@@ -139,8 +136,8 @@ public class LayerMarkerRenderer
 	}
 
 	/**
-	 * Overworld: dungeon {@code !} at each zone entrance (hover peeks, click enters) and a green
-	 * {@code !} for connected-zone clusters. Underground: return-to-surface chips.
+	 * Overworld: each dungeon entrance previews and toggles its connected zones.
+	 * Open dungeon symbols turn green. Underground: return-to-surface chips.
 	 */
 	private boolean isSubterraneanVisible(UndergroundZone zone)
 	{
@@ -168,17 +165,8 @@ public class LayerMarkerRenderer
 			{
 				return true;
 			}
-		final OverlayCluster hoveredCluster = camera.getHoveredOverlayCluster();
-		if (hoveredCluster != null && (hoveredCluster.members.contains(zone) || (parent != null && hoveredCluster.members.contains(parent))))
-		{
-			return true;
-		}
-		final OverlayCluster activeCluster = camera.getActiveOverlayCluster();
-		if (activeCluster != null && (activeCluster.members.contains(zone) || (parent != null && activeCluster.members.contains(parent))))
-		{
-			return true;
-		}
-		return false;
+		final List<UndergroundZone> preview = camera.previewUndergroundZones();
+		return preview.contains(zone) || (parent != null && preview.contains(parent));
 	}
 
 	public void drawLargeLayerSymbols(Graphics2D graphics, Rectangle bounds)
@@ -187,7 +175,6 @@ public class LayerMarkerRenderer
 		{
 			camera.setLayerSymbolTargets(Collections.emptyList());
 			camera.setHoveredUnderground(null, true);
-			camera.setHoveredOverlayCluster(null);
 			return;
 		}
 
@@ -199,16 +186,10 @@ public class LayerMarkerRenderer
 
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		final Stroke oldStroke = graphics.getStroke();
-		final List<MapCamera.LayerSymbolTarget> regionTargets = new ArrayList<>();
-		if (onSurface)
-		{
-			drawRegionOverlays(graphics, bounds, regionTargets, size);
-		}
-
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
-			if (!onSurface && focused != null && zone != focused && zone.getParentZone() != focused)
+			if (zone.getId().contains("__") || !zone.hasEntranceToggle()) continue;
+			if (!onSurface && focused != null && !focused.getConnectedZones().contains(zone) && zone.getParentZone() != focused)
 			{
 				continue;
 			}
@@ -222,12 +203,12 @@ public class LayerMarkerRenderer
 				: (zone.isSubterranean() ? Collections.singletonList(zone.getUndergroundPoint()) : zone.getSurfacePoints());
 			for (int i = 0; i < anchors.size(); i++)
 			{
-				if (onSurface && DungeonPoiOverrides.isButtonDeleted(zone, i))
+				if (onSurface && zone.isEntranceMarkerHidden(i))
 				{
 					continue;
 				}
 				final WorldPoint anchor = onSurface
-					? DungeonPoiOverrides.getButtonPoint(zone, i)
+					? zone.getEntranceMarkerPoint(i)
 					: anchors.get(i);
 				if (anchor == null)
 				{
@@ -314,7 +295,6 @@ public class LayerMarkerRenderer
 			drawFloorOverlays(graphics, bounds, targets, size, onSurface, focused);
 		}
 
-		targets.addAll(regionTargets);
 
 		graphics.setStroke(oldStroke);
 		camera.setLayerSymbolTargets(targets);
@@ -325,23 +305,19 @@ public class LayerMarkerRenderer
 	{
 		final Integer hoveredFloor = camera.getHoveredFloorPlane();
 		final int chip = Math.max(8, size - 4);
-		final OverlayCluster focusedCluster = onSurface ? null : OverlayCluster.forZone(focused);
-		final OverlayCluster hoveredCluster = onSurface ? camera.getHoveredOverlayCluster() : null;
-		final OverlayCluster activeCluster = onSurface ? camera.getActiveOverlayCluster() : null;
 		for (OverlayFloor floor : OverlayFloor.all())
 		{
 			if (!onSurface && floor.zone != focused
-				&& (focusedCluster == null || !focusedCluster.members.contains(floor.zone)))
+				&& (focused == null || !focused.getConnectedZones().contains(floor.zone)))
 			{
 				continue;
 			}
 			if (onSurface)
 			{
-				final boolean matchesHoveredZone = camera.getHoveredUndergroundZone() == floor.zone
-					&& camera.isHoveredSurfaceToUnderground();
-				final boolean matchesHoveredCluster = hoveredCluster != null && hoveredCluster.members.contains(floor.zone);
-				final boolean matchesActiveCluster = camera.isUndergroundZoneOpen(floor.zone);
-				if (!matchesHoveredZone && !matchesHoveredCluster && !matchesActiveCluster)
+				final boolean matchesHoveredZone = camera.getHoveredUndergroundZone() != null && camera.isHoveredSurfaceToUnderground()
+					&& camera.previewUndergroundZones().contains(floor.zone);
+				final boolean matchesOpenZone = camera.isUndergroundZoneOpen(floor.zone);
+				if (!matchesHoveredZone && !matchesOpenZone)
 				{
 					continue;
 				}
@@ -412,67 +388,6 @@ public class LayerMarkerRenderer
 		}
 		return count > 1 ? String.valueOf(ordinal)
 			: selected.plane == 0 ? "G" : String.valueOf(selected.plane);
-	}
-
-	private void drawRegionOverlays(Graphics2D graphics, Rectangle bounds,
-		List<MapCamera.LayerSymbolTarget> targets, int size)
-	{
-		final OverlayCluster hovered = camera.getHoveredOverlayCluster();
-		final OverlayCluster active = camera.getActiveOverlayCluster();
-		final List<MapCamera.LayerSymbolTarget> drawn = new ArrayList<>();
-		for (OverlayCluster cluster : OverlayCluster.all())
-		{
-			if (cluster.members.isEmpty())
-			{
-				continue;
-			}
-			final BufferedImage icon = dungeonExclamation(true);
-			final int sx = (int) Math.round(camera.screenX(cluster.iconX + 0.5, cluster.iconY + 0.5, bounds));
-			final int sy = (int) Math.round(camera.screenY(cluster.iconX + 0.5, cluster.iconY + 0.5, bounds));
-			final Rectangle rect;
-			rect = new Rectangle(sx - size / 2, sy - size / 2, size, size);
-			if (!bounds.intersects(rect))
-			{
-				continue;
-			}
-			drawn.add(new MapCamera.LayerSymbolTarget(rect, cluster));
-
-			final boolean isHovered = hovered == cluster
-				|| cluster.members.stream().allMatch(camera::isUndergroundZoneOpen);
-			if (isHovered)
-			{
-				graphics.setColor(REGION_EDGE_HOVER);
-				graphics.setStroke(SYMBOL_BORDER_HOVER);
-				graphics.drawOval(rect.x - 2, rect.y - 2, rect.width + 4, rect.height + 4);
-			}
-			if (icon != null)
-			{
-				graphics.drawImage(icon, rect.x, rect.y, rect.width, rect.height, null);
-			}
-			else
-			{
-				graphics.setColor(REGION_EDGE_HOVER);
-				graphics.setStroke(SYMBOL_BORDER);
-				graphics.drawOval(rect.x, rect.y, rect.width - 1, rect.height - 1);
-				graphics.setFont(SMALL);
-				final int bangW = graphics.getFontMetrics().stringWidth("!");
-				graphics.drawString("!", sx - bangW / 2, sy + 4);
-			}
-
-			if (isHovered)
-			{
-				graphics.setFont(SMALL);
-				final String label = cluster.name;
-				final int textWidth = graphics.getFontMetrics().stringWidth(label);
-				final int textX = sx - textWidth / 2;
-				final int textY = rect.y + rect.height + 13;
-				graphics.setColor(LAYER_LABEL_BG);
-				graphics.fillRoundRect(textX - 4, textY - 11, textWidth + 8, 14, 5, 5);
-				graphics.setColor(CARD_TITLE);
-				graphics.drawString(label, textX, textY);
-			}
-		}
-		targets.addAll(drawn);
 	}
 
 }

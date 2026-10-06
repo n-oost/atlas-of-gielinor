@@ -33,28 +33,19 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Handles map drag panning, momentum/bounds, minimap quick-finder orb dragging,
- * and mouse-wheel zoom stepping.
+ * Handles map drag panning and mouse-wheel zoom stepping.
  */
 @Slf4j
 public class MapDragController
 {
 	/** One wheel notch at the middle zoom-speed setting. */
 	public static final double BASE_ZOOM_STEP = 0.12;
-	/** Ignore hand jitter until the pointer has moved at least this far from the orb press. */
-	private static final int ORB_DRAG_THRESHOLD = 5;
 
 	private final MapCamera camera;
 	private final BetterMapConfig config;
 
 	@Getter
 	private Point dragOrigin;
-	@Getter
-	private Point orbDragOrigin;
-	@Getter
-	private Point orbDragStartOffset;
-	@Getter
-	private boolean orbDragMoved;
 
 	public MapDragController(MapCamera camera, BetterMapConfig config)
 	{
@@ -95,51 +86,6 @@ public class MapDragController
 		dragOrigin = null;
 	}
 
-	public void startOrbDrag(Point point, int currentOffsetX, int currentOffsetY)
-	{
-		this.orbDragOrigin = point;
-		this.orbDragStartOffset = new Point(currentOffsetX, currentOffsetY);
-		this.orbDragMoved = false;
-	}
-
-	public boolean isDraggingOrb()
-	{
-		return orbDragOrigin != null;
-	}
-
-	public boolean handleOrbDrag(Point now)
-	{
-		if (orbDragOrigin == null)
-		{
-			return false;
-		}
-
-		final int dx = now.x - orbDragOrigin.x;
-		final int dy = now.y - orbDragOrigin.y;
-		if (!orbDragMoved && dx * dx + dy * dy <= ORB_DRAG_THRESHOLD * ORB_DRAG_THRESHOLD)
-		{
-			return true;
-		}
-		if (dx * dx + dy * dy > ORB_DRAG_THRESHOLD * ORB_DRAG_THRESHOLD)
-		{
-			orbDragMoved = true;
-		}
-		if (orbDragMoved)
-		{
-			camera.setFinderOrbOffset(orbDragStartOffset.x + dx, orbDragStartOffset.y + dy);
-		}
-		return true;
-	}
-
-	public boolean endOrbDrag()
-	{
-		final boolean moved = orbDragMoved;
-		orbDragOrigin = null;
-		orbDragStartOffset = null;
-		orbDragMoved = false;
-		return moved;
-	}
-
 	/**
 	 * Handles mouse-wheel zooming or panel list scrolling.
 	 *
@@ -147,24 +93,6 @@ public class MapDragController
 	 */
 	public boolean handleMouseWheel(MouseWheelEvent event, boolean overMap)
 	{
-		// Standalone finder: no map to zoom, so the wheel only ever scrolls its lists.
-		if (camera.isFinderStandalone() && camera.isFinderPanelOpen())
-		{
-			final Rectangle flyoutVp = camera.getFinderFlyoutViewport();
-			if (flyoutVp != null && flyoutVp.contains(event.getPoint()))
-			{
-				camera.scrollFinderFlyout(event.getWheelRotation());
-				return true;
-			}
-			final Rectangle bodyVp = camera.getFinderBodyViewport();
-			if (bodyVp != null && bodyVp.contains(event.getPoint()))
-			{
-				camera.scrollFinderBody(event.getWheelRotation());
-				return true;
-			}
-			return false;
-		}
-
 		if (!overMap)
 		{
 			return false;
@@ -213,8 +141,5 @@ public class MapDragController
 	public void reset()
 	{
 		dragOrigin = null;
-		orbDragOrigin = null;
-		orbDragStartOffset = null;
-		orbDragMoved = false;
 	}
 }

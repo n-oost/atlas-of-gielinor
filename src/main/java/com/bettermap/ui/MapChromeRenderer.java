@@ -192,7 +192,7 @@ class MapChromeRenderer
 
 		final String[] labels = {"Upper", "Main", "Lower", "Travel"};
 		final boolean isTravelActive = camera.isTravelViewActive();
-		final boolean isLowerActive = camera.isUndergroundModeActive() || camera.getActiveOverlayCluster() != null;
+		final boolean isLowerActive = camera.isUndergroundModeActive();
 		final boolean isUpperActive = !isTravelActive && !isLowerActive && camera.getPlane() == 1;
 		final boolean isMainActive = !isTravelActive && !isLowerActive && camera.getPlane() == 0;
 		final boolean[] active = {isUpperActive, isMainActive, isLowerActive, isTravelActive};

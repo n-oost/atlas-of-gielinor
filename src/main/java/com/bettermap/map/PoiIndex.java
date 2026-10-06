@@ -24,7 +24,6 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.DungeonPoiOverrides;
 import com.bettermap.data.BundledTsv;
 import net.runelite.api.coords.WorldPoint;
 import com.bettermap.data.UndergroundZone;
@@ -219,11 +218,11 @@ public class PoiIndex
 		// MapMarkerRenderer draws the matching interactive layer symbol, so no second icon is added.
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (zone.getId().contains("__") || zone.getId().startsWith("native_") || DungeonPoiOverrides.isButtonDeleted(zone, 0))
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_") || zone.isEntranceMarkerHidden(0))
 			{
 				continue;
 			}
-			final WorldPoint p = DungeonPoiOverrides.getButtonPoint(zone, 0);
+			final WorldPoint p = zone.getEntranceMarkerPoint(0);
 			addSearchPoi(new Poi(
 				p.getX(),
 				p.getY(),
@@ -236,8 +235,7 @@ public class PoiIndex
 		// Remove the nearby generic cache marker before adding the labeled point.
 		for (Poi p : PoiDetails.getAllPois())
 		{
-			if (!isFairyRing(p)
-				|| DungeonPoiOverrides.isRawPoiDeleted(p.getName(), p.getX(), p.getY(), p.getPlane()))
+			if (!isFairyRing(p))
 			{
 				continue;
 			}
@@ -264,8 +262,7 @@ public class PoiIndex
 
 		for (Poi p : PoiDetails.getAllPois())
 		{
-			if (isFairyRing(p)
-				|| DungeonPoiOverrides.isRawPoiDeleted(p.getName(), p.getX(), p.getY(), p.getPlane()))
+			if (isFairyRing(p))
 			{
 				continue;
 			}
@@ -366,7 +363,7 @@ public class PoiIndex
 				for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 				{
 					final WorldPoint original = zone.getSurfacePoints().get(i);
-					final WorldPoint moved = DungeonPoiOverrides.getButtonPoint(zone, i);
+					final WorldPoint moved = zone.getEntranceMarkerPoint(i);
 					if (original.getPlane() != poi.plane || moved.equals(original)
 						|| Math.abs(original.getX() - poi.x) > 3 || Math.abs(original.getY() - poi.y) > 3)
 					{
@@ -417,8 +414,7 @@ public class PoiIndex
 	/** Replace icon-type labels with a known dungeon name before indexing the marker. */
 	private static Poi resolveDungeonName(Poi poi)
 	{
-		if (DungeonPoiOverrides.isRawPoiDeleted(poi.name, poi.x, poi.y, poi.plane)
-			|| !isDungeonPoi(poi) || !("Dungeon with map link".equalsIgnoreCase(poi.name)
+		if (!isDungeonPoi(poi) || !("Dungeon with map link".equalsIgnoreCase(poi.name)
 			|| "Dungeon".equalsIgnoreCase(poi.name)))
 		{
 			return poi;
@@ -431,7 +427,7 @@ public class PoiIndex
 			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
 			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 			{
-				final WorldPoint entrance = DungeonPoiOverrides.getButtonPoint(zone, i);
+				final WorldPoint entrance = zone.getEntranceMarkerPoint(i);
 				final int dx = entrance.getX() - poi.x;
 				final int dy = entrance.getY() - poi.y;
 				final int distance = dx * dx + dy * dy;
@@ -648,10 +644,6 @@ public class PoiIndex
 		for (WorldMapSupplement.Entry entry : WorldMapSupplement.entries())
 		{
 			final Poi supplement = entry.poi();
-			if (DungeonPoiOverrides.isRawPoiDeleted(supplement.name, supplement.x, supplement.y, supplement.plane))
-			{
-				continue;
-			}
 			boolean covered = hasNearbyPoi(supplement);
 			if (!covered)
 			{

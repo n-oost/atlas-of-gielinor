@@ -17164,7 +17164,7 @@
       "x": 3110,
       "y": 2948,
       "plane": 0,
-      "tooltip": "Small salvage - Level 15",
+      "tooltip": "Small Salvage (lvl 15)",
       "level": 15,
       "skill": "Sailing"
     },
@@ -17175,7 +17175,7 @@
       "x": 1589,
       "y": 3323,
       "plane": 0,
-      "tooltip": "Small salvage - Level 15",
+      "tooltip": "Small Salvage (lvl 15)",
       "level": 15,
       "skill": "Sailing"
     },
@@ -17186,7 +17186,7 @@
       "x": 2782,
       "y": 3319,
       "plane": 0,
-      "tooltip": "Fishy salvage - Level 26",
+      "tooltip": "Fisherman's Salvage (lvl 26)",
       "level": 26,
       "skill": "Sailing"
     },
@@ -17197,7 +17197,7 @@
       "x": 2698,
       "y": 3047,
       "plane": 0,
-      "tooltip": "Fishy salvage - Level 26",
+      "tooltip": "Fisherman's Salvage (lvl 26)",
       "level": 26,
       "skill": "Sailing"
     },
@@ -17208,7 +17208,7 @@
       "x": 1903,
       "y": 3835,
       "plane": 0,
-      "tooltip": "Fishy salvage - Level 26",
+      "tooltip": "Fisherman's Salvage (lvl 26)",
       "level": 26,
       "skill": "Sailing"
     },
@@ -17219,7 +17219,7 @@
       "x": 2996,
       "y": 2917,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17230,7 +17230,7 @@
       "x": 3123,
       "y": 2808,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17241,7 +17241,7 @@
       "x": 2447,
       "y": 3021,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17252,7 +17252,7 @@
       "x": 2478,
       "y": 2823,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17263,7 +17263,7 @@
       "x": 2142,
       "y": 3350,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17274,7 +17274,7 @@
       "x": 2222,
       "y": 3444,
       "plane": 0,
-      "tooltip": "Barracuda salvage - Level 35",
+      "tooltip": "Barracuda Salvage (lvl 35)",
       "level": 35,
       "skill": "Sailing"
     },
@@ -17285,7 +17285,7 @@
       "x": 1563,
       "y": 2679,
       "plane": 0,
-      "tooltip": "Large salvage - Level 53",
+      "tooltip": "Large Salvage (lvl 53)",
       "level": 53,
       "skill": "Sailing"
     },
@@ -17296,7 +17296,7 @@
       "x": 1886,
       "y": 2508,
       "plane": 0,
-      "tooltip": "Large salvage - Level 53",
+      "tooltip": "Large Salvage (lvl 53)",
       "level": 53,
       "skill": "Sailing"
     },
@@ -17307,7 +17307,7 @@
       "x": 2459,
       "y": 2144,
       "plane": 0,
-      "tooltip": "Large salvage - Level 53",
+      "tooltip": "Large Salvage (lvl 53)",
       "level": 53,
       "skill": "Sailing"
     },
@@ -17318,7 +17318,7 @@
       "x": 2845,
       "y": 4030,
       "plane": 0,
-      "tooltip": "Large salvage - Level 53",
+      "tooltip": "Large Salvage (lvl 53)",
       "level": 53,
       "skill": "Sailing"
     },
@@ -17329,7 +17329,7 @@
       "x": 3394,
       "y": 2138,
       "plane": 0,
-      "tooltip": "Large salvage - Level 53",
+      "tooltip": "Large Salvage (lvl 53)",
       "level": 53,
       "skill": "Sailing"
     },
@@ -17340,7 +17340,7 @@
       "x": 2663,
       "y": 2544,
       "plane": 0,
-      "tooltip": "Plundered salvage - Level 64",
+      "tooltip": "Pirate Salvage (lvl 64)",
       "level": 64,
       "skill": "Sailing"
     },
@@ -17351,7 +17351,7 @@
       "x": 1826,
       "y": 2842,
       "plane": 0,
-      "tooltip": "Plundered salvage - Level 64",
+      "tooltip": "Pirate Salvage (lvl 64)",
       "level": 64,
       "skill": "Sailing"
     },
@@ -17362,7 +17362,7 @@
       "x": 2116,
       "y": 3655,
       "plane": 0,
-      "tooltip": "Plundered salvage - Level 64",
+      "tooltip": "Pirate Salvage (lvl 64)",
       "level": 64,
       "skill": "Sailing"
     },
@@ -17373,7 +17373,7 @@
       "x": 2193,
       "y": 3843,
       "plane": 0,
-      "tooltip": "Plundered salvage - Level 64",
+      "tooltip": "Pirate Salvage (lvl 64)",
       "level": 64,
       "skill": "Sailing"
     },
@@ -17384,7 +17384,7 @@
       "x": 1688,
       "y": 2399,
       "plane": 0,
-      "tooltip": "Martial salvage - Level 73",
+      "tooltip": "Mercenary Salvage (lvl 73)",
       "level": 73,
       "skill": "Sailing"
     },
@@ -17395,7 +17395,7 @@
       "x": 1747,
       "y": 2209,
       "plane": 0,
-      "tooltip": "Martial salvage - Level 73",
+      "tooltip": "Mercenary Salvage (lvl 73)",
       "level": 73,
       "skill": "Sailing"
     },
@@ -17406,7 +17406,7 @@
       "x": 2140,
       "y": 2212,
       "plane": 0,
-      "tooltip": "Martial salvage - Level 73",
+      "tooltip": "Mercenary Salvage (lvl 73)",
       "level": 73,
       "skill": "Sailing"
     },
@@ -17417,7 +17417,7 @@
       "x": 1769,
       "y": 4124,
       "plane": 0,
-      "tooltip": "Fremennik salvage - Level 80",
+      "tooltip": "Fremennik Salvage (lvl 80)",
       "level": 80,
       "skill": "Sailing"
     },
@@ -17428,7 +17428,7 @@
       "x": 2272,
       "y": 4129,
       "plane": 0,
-      "tooltip": "Fremennik salvage - Level 80",
+      "tooltip": "Fremennik Salvage (lvl 80)",
       "level": 80,
       "skill": "Sailing"
     },
@@ -17439,7 +17439,7 @@
       "x": 2591,
       "y": 4128,
       "plane": 0,
-      "tooltip": "Fremennik salvage - Level 80",
+      "tooltip": "Fremennik Salvage (lvl 80)",
       "level": 80,
       "skill": "Sailing"
     },
@@ -17450,7 +17450,7 @@
       "x": 1069,
       "y": 2962,
       "plane": 0,
-      "tooltip": "Opulent salvage - Level 87",
+      "tooltip": "Merchant Salvage (lvl 87)",
       "level": 87,
       "skill": "Sailing"
     },
@@ -17461,7 +17461,7 @@
       "x": 1820,
       "y": 3989,
       "plane": 0,
-      "tooltip": "Opulent salvage - Level 87",
+      "tooltip": "Merchant Salvage (lvl 87)",
       "level": 87,
       "skill": "Sailing"
     },
@@ -17472,7 +17472,7 @@
       "x": 1888,
       "y": 2150,
       "plane": 0,
-      "tooltip": "Opulent salvage - Level 87",
+      "tooltip": "Merchant Salvage (lvl 87)",
       "level": 87,
       "skill": "Sailing"
     }

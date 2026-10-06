@@ -106,4 +106,41 @@ class MapLayout
 
 		return 0;
 	}
+	private static final int[] WORLD_MAP_ORB_IDS = {
+		InterfaceID.Orbs.ORB_WORLDMAP,
+		InterfaceID.Orbs.WORLDMAP,
+		InterfaceID.OrbsNomap.ORB_WORLDMAP,
+		InterfaceID.OrbsNomap.WORLDMAP
+	};
+
+	/** Canvas-space bounds of the native world-map orb, or null when the minimap is not showing it. */
+	static Rectangle worldMapOrbBounds(Client client)
+	{
+		if (client == null)
+		{
+			return null;
+		}
+		Rectangle bounds = null;
+		for (int id : WORLD_MAP_ORB_IDS)
+		{
+			final Widget orb = client.getWidget(id);
+			if (orb == null || orb.isHidden())
+			{
+				continue;
+			}
+			final Rectangle orbBounds = orb.getBounds();
+			if (orbBounds != null && orbBounds.width > 0 && orbBounds.height > 0)
+			{
+				if (bounds == null)
+				{
+					bounds = new Rectangle(orbBounds);
+				}
+				else
+				{
+					bounds.add(orbBounds);
+				}
+			}
+		}
+		return bounds;
+	}
 }

@@ -274,6 +274,7 @@ public class BetterMapPanel extends PluginPanel
 
 	private void addMonsterSection(String filter, WorldPoint from)
 	{
+		if (!MonsterLocationData.isLoaded()) return;
 		if (monsterIndex == null || !monsterIndex.isLoaded())
 		{
 			final List<MonsterLocationData> matches = new ArrayList<>();

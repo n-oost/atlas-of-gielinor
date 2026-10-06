@@ -311,10 +311,10 @@ public class BetterMapContextMenuTest
 	}
 
 	@Test
-	public void contextMenuInRegionalOverlayHasSwitchToSurface()
+	public void contextMenuInConnectedDungeonsHasSwitchToSurface()
 	{
-		camera.setActiveOverlayCluster(com.bettermap.data.OverlayCluster.all().get(0));
-		final WorldPoint entrance = camera.getActiveOverlayCluster().members.get(0).getSurfacePoint();
+		camera.setUndergroundMode(UndergroundZone.LUMBRIDGE_SWAMP_CAVES);
+		final WorldPoint entrance = UndergroundZone.LUMBRIDGE_SWAMP_CAVES.getSurfacePoint();
 		camera.centerOn(entrance.getX(), entrance.getY());
 		camera.beginFrame();
 		assertTrue(camera.isViewingDungeonLayer());

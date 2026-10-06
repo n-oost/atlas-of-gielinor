@@ -36,13 +36,10 @@ import com.bettermap.ui.BetterWorldMapOverlay;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.awt.Toolkit;
 import javax.inject.Provider;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import net.runelite.api.coords.WorldPoint;
 
 /**
@@ -62,9 +59,6 @@ public class MapLayerInputHandler
 
 	private String flyoutPendingKey;
 	private long flyoutPendingSinceMs;
-	private Timer pendingQuickFinderClick;
-	private long quickFinderClickGeneration;
-	private boolean stopped;
 	@Getter
 	@Setter
 	private long flyoutDwellMs = MapCamera.FINDER_FLYOUT_DWELL_MS;
@@ -415,91 +409,17 @@ public class MapLayerInputHandler
 	{
 		// Hub review F2: Finder pans only; closing requires genuine input on the native control.
 		// Do not restore shift-click auto-close or a programmatic widget operation.
-		cancelPendingQuickFinderClick();
 		if (pluginProvider != null && pluginProvider.get() != null)
 		{
-			if (camera.isFinderStandalone())
-			{
-				pluginProvider.get().openMapAt(point);
-			}
-			else
-			{
-				pluginProvider.get().centerMapOn(point);
-			}
+			pluginProvider.get().centerMapOn(point);
 		}
 	}
 
 	private void routeToRow(WorldPoint point)
 	{
-		cancelPendingQuickFinderClick();
 		if (pluginProvider != null && pluginProvider.get() != null)
 		{
-			pluginProvider.get().routeTo(point, camera.isFinderStandalone());
-		}
-	}
-
-	private synchronized void deferQuickFinderClick(WorldPoint point)
-	{
-		if (stopped)
-		{
-			return;
-		}
-		cancelPendingQuickFinderClick();
-		final long generation = quickFinderClickGeneration;
-		Object interval = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
-		final int delay = interval instanceof Number ? Math.max(250, ((Number) interval).intValue()) : 500;
-		final String clickedQuery = finder != null ? finder.getQuery() : null;
-		pendingQuickFinderClick = new Timer(delay, e ->
-		{
-			synchronized (MapLayerInputHandler.this)
-			{
-				if (stopped || generation != quickFinderClickGeneration)
-				{
-					return;
-				}
-				pendingQuickFinderClick = null;
-				if (!camera.isFinderStandalone() || !camera.isFinderPanelOpen()
-					|| (finder != null && !finder.getQuery().equals(clickedQuery)))
-				{
-					return;
-				}
-				if (pluginProvider != null && pluginProvider.get() != null)
-				{
-					pluginProvider.get().openMapAt(point);
-				}
-			}
-		});
-		pendingQuickFinderClick.setRepeats(false);
-		pendingQuickFinderClick.start();
-	}
-
-	public synchronized void startUp()
-	{
-		cancelPendingQuickFinderClick();
-		stopped = false;
-	}
-
-	public synchronized void shutDown()
-	{
-		stopped = true;
-		cancelPendingQuickFinderClick();
-	}
-
-	private synchronized void cancelPendingQuickFinderClick()
-	{
-		quickFinderClickGeneration++;
-		if (pendingQuickFinderClick != null)
-		{
-			final Timer timer = pendingQuickFinderClick;
-			pendingQuickFinderClick = null;
-			if (SwingUtilities.isEventDispatchThread())
-			{
-				timer.stop();
-			}
-			else
-			{
-				SwingUtilities.invokeLater(timer::stop);
-			}
+			pluginProvider.get().routeTo(point);
 		}
 	}
 
@@ -507,12 +427,6 @@ public class MapLayerInputHandler
 	{
 		for (MapCamera.FlyoutTarget target : camera.getFlyoutTargets())
 		{
-			final Rectangle mapButton = target.getMapBounds();
-			if (mapButton != null && mapButton.contains(point))
-			{
-				activateRow(target.getPoint());
-				return true;
-			}
 			final Rectangle routeButton = target.getWalkBounds();
 			if (routeButton != null && routeButton.contains(point))
 			{
@@ -522,15 +436,7 @@ public class MapLayerInputHandler
 			final Rectangle row = target.getRowBounds();
 			if (row != null && row.contains(point))
 			{
-				if (camera.isFinderStandalone() && clickCount >= 2)
-				{
-					routeToRow(target.getPoint());
-				}
-				else if (camera.isFinderStandalone() && !shiftDown)
-				{
-					deferQuickFinderClick(target.getPoint());
-				}
-				else if (clickCount >= 2)
+				if (clickCount >= 2)
 				{
 					routeToRow(target.getPoint());
 				}
@@ -548,12 +454,6 @@ public class MapLayerInputHandler
 	{
 		for (MapCamera.FinderResultTarget target : camera.getFinderResultTargets())
 		{
-			final Rectangle mapButton = target.getMapBounds();
-			if (mapButton != null && mapButton.contains(point))
-			{
-				activateRow(finderTargetPoint(target));
-				return true;
-			}
 			final Rectangle routeButton = target.getWalkBounds();
 			if (routeButton != null && routeButton.contains(point))
 			{
@@ -567,15 +467,7 @@ public class MapLayerInputHandler
 				if (target.getRegion() != null)
 				{
 					final WorldPoint regCenter = new WorldPoint(target.getRegion().getCenterX(), target.getRegion().getCenterY(), 0);
-					if (camera.isFinderStandalone() && clickCount >= 2)
-					{
-						routeToRow(regCenter);
-					}
-					else if (camera.isFinderStandalone() && !shiftDown)
-					{
-						deferQuickFinderClick(regCenter);
-					}
-					else if (clickCount >= 2)
+					if (clickCount >= 2)
 					{
 						routeToRow(regCenter);
 					}
@@ -588,15 +480,7 @@ public class MapLayerInputHandler
 
 				final MapFinder.Result activated = MapFinder.activationTarget(target.getResult());
 				final WorldPoint activatedPoint = activated != null ? activated.getPoint() : target.getPoint();
-				if (camera.isFinderStandalone() && clickCount >= 2)
-				{
-					routeToRow(activatedPoint);
-				}
-				else if (camera.isFinderStandalone() && !shiftDown)
-				{
-					deferQuickFinderClick(activatedPoint);
-				}
-				else if (clickCount >= 2)
+				if (clickCount >= 2)
 				{
 					routeToRow(activatedPoint);
 				}
@@ -632,11 +516,6 @@ public class MapLayerInputHandler
 		{
 			if (target.getBounds() != null && target.getBounds().contains(point))
 			{
-				if (target.isRegion())
-				{
-					camera.setActiveOverlayCluster(target.getCluster());
-					return true;
-				}
 				if (target.isSurfaceToUnderground())
 				{
 					if (target.isFloor())
@@ -705,7 +584,7 @@ public class MapLayerInputHandler
 		if (buttons[0] != null && buttons[0].contains(point))
 		{
 			camera.clearUndergroundMode();
-			camera.setActiveOverlayCluster(null);
+
 			camera.setPlane(1);
 			log.debug("[BetterMap] floor button Upper (plane 1) clicked");
 			return true;
@@ -715,7 +594,7 @@ public class MapLayerInputHandler
 		if (buttons[1] != null && buttons[1].contains(point))
 		{
 			camera.clearUndergroundMode();
-			camera.setActiveOverlayCluster(null);
+
 			camera.setPlane(0);
 			log.debug("[BetterMap] floor button Main (plane 0) clicked");
 			return true;
@@ -922,11 +801,7 @@ public class MapLayerInputHandler
 		{
 			if (target.getBounds() != null && target.getBounds().contains(point))
 			{
-				if (target.isRegion())
-				{
-					camera.setHoveredOverlayCluster(target.getCluster());
-				}
-				else if (target.isFloor())
+				if (target.isFloor())
 				{
 					camera.setHoveredFloor(target.getFloor());
 				}
@@ -937,7 +812,7 @@ public class MapLayerInputHandler
 				return;
 			}
 		}
-		camera.setHoveredOverlayCluster(null);
+
 		camera.setHoveredUnderground(null, true);
 	}
 

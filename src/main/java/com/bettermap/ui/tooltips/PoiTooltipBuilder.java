@@ -24,7 +24,6 @@
  */
 package com.bettermap.ui.tooltips;
 
-import com.bettermap.data.OverlayCluster;
 import com.bettermap.data.TravelData;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.GroundItemIndex;
@@ -598,7 +597,7 @@ public class PoiTooltipBuilder
 			card.addLine("[Underground Layer \u2022 Lower Plane]");
 			card.addLine(hoveredZone.getDescription());
 			card.addLine("Hovering: Lower level revealed (surface transparent)");
-			card.addLine("Click to open full underground map");
+			card.addLine("Click to toggle this dungeon and its connected zones");
 		}
 		else
 		{
@@ -621,24 +620,4 @@ public class PoiTooltipBuilder
 		return card;
 	}
 
-	/**
-	 * Builds a tooltip card for a connected dungeon cluster overlay.
-	 */
-	public TooltipCard buildOverlayClusterCard(OverlayCluster cluster)
-	{
-		if (cluster == null)
-		{
-			return null;
-		}
-
-		final TooltipCard card = new TooltipCard(cluster.name);
-		card.addLine("[Connected overlay \u2022 member dungeons]");
-		card.addLine("Green dungeon icon peeks every connected dungeon in this area.");
-		card.addLine("Click to keep the overlay open. Click a dungeon icon to open that dungeon.");
-		for (UndergroundZone member : cluster.members)
-		{
-			card.addLine("\u2022 " + member.getName());
-		}
-		return card;
-	}
 }

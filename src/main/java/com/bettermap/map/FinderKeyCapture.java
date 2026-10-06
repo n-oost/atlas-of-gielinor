@@ -50,7 +50,6 @@ public class FinderKeyCapture
 
 	private final MapCamera camera;
 	private final MapFinder finder;
-	private final com.bettermap.BetterMapConfig config;
 	private final Provider<com.bettermap.BetterMapPlugin> pluginProvider;
 	private final ChatboxInputHost host;
 
@@ -67,13 +66,11 @@ public class FinderKeyCapture
 	public FinderKeyCapture(
 		MapCamera camera,
 		MapFinder finder,
-		com.bettermap.BetterMapConfig config,
 		Provider<com.bettermap.BetterMapPlugin> pluginProvider,
 		ChatboxInputHost host)
 	{
 		this.camera = camera;
 		this.finder = finder;
-		this.config = config;
 		this.pluginProvider = pluginProvider;
 		this.host = host;
 	}
@@ -140,11 +137,9 @@ public class FinderKeyCapture
 	private void onChanged(String text)
 	{
 		finder.updateQuery(text, playerLocation());
-		// The on-map field is a read-only mirror now; keep its scroll window on the tail.
-		finder.caretEnd();
 	}
 
-	/** Enter shows the selected destination, opening the world map for Quick Finder. */
+	/** Enter centers the map on the selected destination. */
 	private void onDone()
 	{
 		final MapFinder.Result target = finder.selectedResult();
@@ -157,14 +152,7 @@ public class FinderKeyCapture
 		{
 			return;
 		}
-		if (camera.isFinderStandalone())
-		{
-			plugin.openMapAt(target.getPoint());
-		}
-		else
-		{
-			plugin.centerMapOn(target.getPoint());
-		}
+		plugin.centerMapOn(target.getPoint());
 	}
 
 	private void onInputClosed()

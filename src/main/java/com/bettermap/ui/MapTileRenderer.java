@@ -125,7 +125,6 @@ class MapTileRenderer
 		final UndergroundZone activeUnderground = camera.getActiveUndergroundZone();
 		final UndergroundZone hoveredZone = camera.getHoveredUndergroundZone();
 		final boolean hoverPreview = config.undergroundHoverPreview() && hoveredZone != null;
-		final boolean clusterPreview = config.undergroundHoverPreview() && camera.isClusterPreview();
 
 		if (camera.isTravelViewActive())
 		{
@@ -157,7 +156,7 @@ class MapTileRenderer
 			// Hover: the layer being peeked at is drawn solid, the layer above it faint.
 			if (camera.isHoveredSurfaceToUnderground())
 			{
-				drawUndergroundLayer(graphics, bounds, Collections.singletonList(hoveredZone),
+				drawUndergroundLayer(graphics, bounds, camera.previewUndergroundZones(),
 					tileZoom, config.undergroundTransparentVoid(),
 					config.undergroundOverlayOpacity() / 100f, config.undergroundHoverBlur());
 			}
@@ -178,12 +177,6 @@ class MapTileRenderer
 
 				graphics.setComposite(origComp);
 			}
-		}
-		else if (clusterPreview)
-		{
-			drawUndergroundLayer(graphics, bounds, camera.previewUndergroundZones(),
-				tileZoom, config.undergroundTransparentVoid(),
-				config.undergroundOverlayOpacity() / 100f, config.undergroundHoverBlur());
 		}
 		else if (camera.isInteriorMapUnavailable())
 		{

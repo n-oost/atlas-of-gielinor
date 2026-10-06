@@ -81,14 +81,15 @@ public class PoiIndexTest
 			assertEquals("One salvage marker at " + source.getName(), 1, markers.size());
 			final PoiIndex.Poi marker = markers.get(0);
 			assertEquals("salvaging", marker.getKey());
-			assertTrue(marker.getName().contains("shipwreck"));
+			assertEquals(source.getName(), marker.getName());
+			assertTrue(marker.getName().contains("Salvage (lvl "));
 			assertEquals(PoiCategory.SKILLING, PoiCategory.of(marker.getKey()));
 			final PoiDetails.Detail detail = PoiDetails.getDetail(marker, marker.getX(), marker.getY(), marker.getPlane());
 			assertEquals(source.getName(), detail.getTitle());
 			assertTrue(detail.getLines().stream().anyMatch(line -> line.startsWith("Requires Level ") && line.endsWith(" Sailing")));
 		}
 		assertEquals(29, spots);
-		assertEquals("Fisherman's shipwreck", poiIndex.nearest(2783, 3319, 0, 0).getName());
+		assertEquals("Fisherman's Salvage (lvl 26)", poiIndex.nearest(2783, 3319, 0, 0).getName());
 		assertTrue(poiIndex.searchByName("Mooring buoy", 100).isEmpty());
 		assertNotNull(poiIndex.icon("salvaging"));
 		assertEquals(poiIndex.icon("cache_icon_4947").getWidth(), poiIndex.icon("salvaging").getWidth());

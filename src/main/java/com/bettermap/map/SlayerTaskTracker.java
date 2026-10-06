@@ -26,7 +26,6 @@ package com.bettermap.map;
 
 import com.bettermap.data.MonsterLocationData;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -136,47 +135,6 @@ public class SlayerTaskTracker
 		}
 
 		return 0;
-	}
-
-	/**
-	 * Returns the list of valid target names for the current assignment, including sub-types and boss variants.
-	 */
-	public List<String> getTaskTargets()
-	{
-		if (slayerPluginService != null)
-		{
-			try
-			{
-				final List<net.runelite.api.NPC> npcs = slayerPluginService.getTargets();
-				if (npcs != null && !npcs.isEmpty())
-				{
-					final List<String> names = new ArrayList<>(npcs.size());
-					for (net.runelite.api.NPC npc : npcs)
-					{
-						if (npc != null && npc.getName() != null && !names.contains(npc.getName()))
-						{
-							names.add(npc.getName());
-						}
-					}
-					if (!names.isEmpty())
-					{
-						return names;
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				log.debug("Error querying SlayerPluginService.getTargets()", e);
-			}
-		}
-
-		final String task = getCurrentTask();
-		if (task != null && !task.isEmpty())
-		{
-			return Collections.singletonList(task);
-		}
-
-		return Collections.emptyList();
 	}
 
 	/**

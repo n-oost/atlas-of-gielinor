@@ -340,32 +340,7 @@ public class OverlayFloorTest
 		assertEquals(1, dragon);
 	}
 
-	@Test
-	public void floorChipWinsHitTestOverRegion()
-	{
-		final OverlayFloor floor = new OverlayFloor(
-			"Dorgesh-Kaan (ground)", UndergroundZone.DORGESH_KAAN, 0, 3198, 3139);
-		final OverlayCluster cluster = new OverlayCluster(
-			"lumbridge", "Lumbridge", 3060, 3120, 3280, 3320,
-			java.util.Collections.singletonList(UndergroundZone.DORGESH_KAAN));
-		final List<MapCamera.LayerSymbolTarget> targets = new ArrayList<>();
-		targets.add(new MapCamera.LayerSymbolTarget(new Rectangle(10, 10, 12, 12), floor));
-		targets.add(new MapCamera.LayerSymbolTarget(new Rectangle(0, 0, 200, 200), cluster));
 
-		MapCamera.LayerSymbolTarget hit = null;
-		final java.awt.Point point = new java.awt.Point(12, 12);
-		for (MapCamera.LayerSymbolTarget target : targets)
-		{
-			if (target.getBounds().contains(point))
-			{
-				hit = target;
-				break;
-			}
-		}
-		assertTrue(hit.isFloor());
-		assertFalse(hit.isRegion());
-		assertEquals(0, hit.getFloor().plane);
-	}
 
 	@Test
 	public void dungeonChipWinsHitTestOverFloor()
@@ -398,7 +373,6 @@ public class OverlayFloorTest
 		final OverlayFloor floor = new OverlayFloor(
 			"Dorgesh-Kaan (1st floor)", UndergroundZone.DORGESH_KAAN, 1, 3198, 3203);
 		camera.setHoveredFloor(floor);
-		assertFalse(camera.isClusterPreview());
 		assertEquals(1, camera.previewUndergroundZones().size());
 		assertSame(UndergroundZone.DORGESH_KAAN, camera.previewUndergroundZones().get(0));
 		assertEquals(Integer.valueOf(1), camera.getHoveredFloorPlane());

@@ -1,8 +1,8 @@
 # x	y	plane	key	name - OSRS live cache 2026-09-30, OpenRS2 cache 2727
 # Mapped native world-map sprites to Better Map icon keys; native icon placements extracted from live cache.
-3395	2138	0	salvaging	Large shipwreck
-2460	2144	0	salvaging	Large shipwreck
-1889	2150	0	salvaging	Merchant shipwreck
+3395	2138	0	salvaging	Large Salvage (lvl 53)
+2460	2144	0	salvaging	Large Salvage (lvl 53)
+1889	2150	0	salvaging	Merchant Salvage (lvl 87)
 2543	2184	0	rare_trees	Yew trees
 2562	2191	0	rare_trees	Teak trees
 2572	2195	0	hunter_training	Goats
@@ -10,8 +10,8 @@
 2563	2203	0	dungeon_link	Dungeon with map link
 2530	2206	0	dungeon_link	Dungeon with map link
 2552	2208	0	agility_short-cut	Agility short-cut
-1748	2209	0	salvaging	Mercenary shipwreck
-2141	2212	0	salvaging	Mercenary shipwreck
+1748	2209	0	salvaging	Mercenary Salvage (lvl 73)
+2141	2212	0	salvaging	Mercenary Salvage (lvl 73)
 2541	2213	0	dungeon_link	Dungeon with map link
 3355	2216	0	mooring_point	Mooring point - The Little Pearl
 2575	2219	0	fishing_spot	Lobster & Swordfish
@@ -72,7 +72,7 @@
 3147	2397	0	cooking_range	Cooking range
 3246	2397	0	rare_trees	Rare trees
 3257	2397	0	agility_short-cut	Agility short-cut
-1689	2399	0	salvaging	Mercenary shipwreck
+1689	2399	0	salvaging	Mercenary Salvage (lvl 73)
 2645	2401	0	hunter_training	Hunter training
 3200	2402	0	sandpit	Sandpit
 3126	2403	0	farming_patch	Farming patch
@@ -115,7 +115,7 @@
 3209	2493	0	altar	Altar
 3258	2494	0	fishing_spot	Fishing spot
 3184	2502	0	mining_site	Mining site
-1887	2508	0	salvaging	Large shipwreck
+1887	2508	0	salvaging	Large Salvage (lvl 53)
 3213	2509	0	hunter_training	Hunter training
 2809	2510	0	mooring_point	Mooring point - Red Rock
 3019	2510	0	fishing_spot	Fishing spot
@@ -125,7 +125,7 @@
 3197	2532	0	transportation	Transportation
 3156	2537	0	fishing_spot	Fishing spot
 3169	2541	0	fishing_spot	Fishing spot
-2664	2544	0	salvaging	Pirate shipwreck
+2664	2544	0	salvaging	Pirate Salvage (lvl 64)
 2281	2547	0	bank	Bank
 2972	2603	0	mooring_point	Mooring point - Remote Island
 2074	2604	0	fishing_spot	Fishing spot
@@ -153,7 +153,7 @@
 2272	2677	0	fishing_spot	Fishing spot
 2660	2677	0	transportation	Transportation
 2652	2678	0	mooring_point	Mooring point - Void Knights' Outpost
-1564	2679	0	salvaging	Large shipwreck
+1564	2679	0	salvaging	Large Salvage (lvl 53)
 2476	2696	0	fishing_spot	Fishing spot
 2775	2697	0	rare_trees	Rare trees
 2480	2699	0	hunter_training	Hunter training
@@ -254,7 +254,7 @@
 3297	2806	0	sword_shop	Sword shop
 1552	2807	0	fishing_spot	Fishing spot
 2255	2808	0	rare_trees	Rare trees
-3124	2808	0	salvaging	Barracuda shipwreck
+3124	2808	0	salvaging	Barracuda Salvage (lvl 35)
 2162	2812	0	water_source	Water source
 1547	2813	0	fishing_spot	Fishing spot
 3245	2814	0	transportation	Transportation
@@ -263,7 +263,7 @@
 2445	2819	0	dungeon_link	Dungeon with map link
 2159	2822	0	hunter_training	Hunter training
 2283	2823	0	mooring_point	Mooring point - Isle of Souls
-2479	2823	0	salvaging	Barracuda shipwreck
+2479	2823	0	salvaging	Barracuda Salvage (lvl 35)
 3144	2824	0	mooring_point	Mooring point - Ruins of Unkah
 3788	2824	0	windmill	Windmill
 3046	2826	0	fishing_spot	Fishing spot
@@ -281,7 +281,7 @@
 3790	2840	0	farming_patch	Farming patch
 1375	2841	0	fishing_spot	Fishing spot
 2282	2841	0	fishing_spot	Fishing spot
-1827	2842	0	salvaging	Pirate shipwreck
+1827	2842	0	salvaging	Pirate Salvage (lvl 64)
 2543	2843	0	transportation	Transportation
 2580	2843	0	mooring_point	Mooring point - Corsair Cove
 3146	2843	0	transportation	Transportation
@@ -349,7 +349,7 @@
 3400	2916	0	transportation	Transportation
 3426	2916	0	water_source	Water source
 1470	2917	0	agility_short-cut	Agility short-cut
-2997	2917	0	salvaging	Barracuda shipwreck
+2997	2917	0	salvaging	Barracuda Salvage (lvl 35)
 2524	2918	0	hunting_tutor	Hunting Tutor
 2309	2919	0	dungeon_link	Dungeon with map link
 1357	2920	0	dungeon_link	Dungeon with map link
@@ -388,7 +388,7 @@
 1409	2946	0	water_source	Water source
 2925	2946	0	agility_short-cut	Agility short-cut
 1353	2948	0	cooking_range	Cooking range
-3111	2948	0	salvaging	Small shipwreck
+3111	2948	0	salvaging	Small Salvage (lvl 15)
 2756	2949	0	noticeboard	Port task board
 1346	2950	0	loom	Loom
 2128	2950	0	hunter_training	Hunter training
@@ -412,7 +412,7 @@
 1375	2960	0	cooking_range	Cooking range
 1560	2960	0	fishing_shop	Fishing shop
 2568	2961	0	mining_site	Mining site
-1070	2962	0	salvaging	Merchant shipwreck
+1070	2962	0	salvaging	Merchant Salvage (lvl 87)
 1433	2962	0	cooking_range	Cooking range
 1773	2962	0	transportation	Transportation
 3310	2962	0	dungeon	Dungeon
@@ -525,7 +525,7 @@
 1344	3020	0	transportation	Transportation
 1576	3020	0	hunter_training	Hunter training
 1283	3021	0	hunter_training	Hunter training
-2448	3021	0	salvaging	Barracuda shipwreck
+2448	3021	0	salvaging	Barracuda Salvage (lvl 35)
 3806	3021	0	bank	Bank
 3812	3021	0	minigame	Minigame
 3486	3023	0	dungeon	Dungeon
@@ -568,7 +568,7 @@
 1373	3045	0	general_store	General store
 1655	3046	0	windmill	Windmill
 1516	3047	0	hunter_training	Hunter training
-2699	3047	0	salvaging	Fisherman's shipwreck
+2699	3047	0	salvaging	Fisherman's Salvage (lvl 26)
 2527	3048	0	herbalist	Herbalist
 1558	3049	0	dungeon_link	Dungeon with map link
 2334	3049	0	rare_trees	Rare trees
@@ -1304,7 +1304,7 @@
 2562	3318	0	minigame	Minigame
 2917	3318	0	cooking_range	Cooking range
 3363	3318	0	minigame	Minigame
-2783	3319	0	salvaging	Fisherman's shipwreck
+2783	3319	0	salvaging	Fisherman's Salvage (lvl 26)
 3172	3319	0	dairy_cow	Dairy cow
 3729	3319	0	quest_start	Sins of the Father
 3755	3319	0	anvil	Anvil
@@ -1321,7 +1321,7 @@
 1170	3323	0	mining_site	Mining site
 1381	3323	0	rare_trees	Rare trees
 1431	3323	0	transportation	Transportation
-1590	3323	0	salvaging	Small shipwreck
+1590	3323	0	salvaging	Small Salvage (lvl 15)
 2547	3323	0	cooking_range	Cooking range
 3612	3323	0	cooking_range	Cooking range
 2159	3324	0	mooring_point	Mooring point - Prifddinas
@@ -1406,7 +1406,7 @@
 3051	3348	0	water_source	Water source
 3644	3348	0	water_source	Water source
 3662	3348	0	water_source	Water source
-2143	3350	0	salvaging	Barracuda shipwreck
+2143	3350	0	salvaging	Barracuda Salvage (lvl 35)
 2163	3350	0	fishing_spot	Fishing spot
 1379	3351	0	general_store	General store
 1442	3351	0	cooking_range	Cooking range
@@ -1704,7 +1704,7 @@
 1517	3443	0	water_source	Water source
 1611	3443	0	rare_trees	Rare trees
 2833	3443	0	fishing_shop	Fishing shop
-2223	3444	0	salvaging	Barracuda shipwreck
+2223	3444	0	salvaging	Barracuda Salvage (lvl 35)
 2610	3444	0	fishing_spot	Fishing spot
 2618	3444	0	fishing_spot	Fishing spot
 2637	3444	0	fishing_spot	Fishing spot
@@ -2181,7 +2181,7 @@
 2346	3652	0	quest_start	Swan Song
 1470	3653	0	dungeon_link	Dungeon with map link
 2908	3653	0	dungeon	Dungeon
-2117	3655	0	salvaging	Pirate shipwreck
+2117	3655	0	salvaging	Pirate Salvage (lvl 64)
 3075	3655	0	dungeon_link	Dungeon with map link
 1777	3656	0	water_source	Water source
 1212	3657	0	mining_site	Mining site
@@ -2523,12 +2523,12 @@
 3125	3832	0	dungeon_link	Dungeon with map link
 3261	3833	0	dungeon_link	Dungeon with map link
 1518	3834	0	mining_shop	Mining shop
-1904	3835	0	salvaging	Fisherman's shipwreck
+1904	3835	0	salvaging	Fisherman's Salvage (lvl 26)
 3708	3838	0	farming_patch	Farming patch
 1448	3840	0	mining_site	Mining site
 2612	3840	0	mooring_point	Mooring point - Etceteria
 3072	3840	0	fishing_spot	Fishing spot
-2194	3843	0	salvaging	Pirate shipwreck
+2194	3843	0	salvaging	Pirate Salvage (lvl 64)
 1764	3844	0	mining_site	Mining site
 2509	3846	0	dungeon_link	Dungeon with map link
 1491	3847	0	mining_site	Mining site
@@ -2635,11 +2635,11 @@
 2848	3967	0	transportation	Transportation
 2861	3972	0	mooring_point	Mooring point - Weiss
 3583	3973	0	transportation	Transportation
-1821	3989	0	salvaging	Merchant shipwreck
+1821	3989	0	salvaging	Merchant Salvage (lvl 87)
 2471	3994	0	transportation	Transportation
 2465	4012	0	dungeon_link	Dungeon with map link
 2815	4014	0	fishing_spot	Fishing spot
-2846	4030	0	salvaging	Large shipwreck
+2846	4030	0	salvaging	Large Salvage (lvl 53)
 2277	4034	0	transportation	Transportation
 1935	4040	0	fishing_spot	Fishing spot
 2263	4044	0	agility_short-cut	Agility short-cut
@@ -2653,9 +2653,9 @@
 3426	4070	0	bank	Bank
 2902	4084	0	mining_site	Mining site
 2912	4084	0	mining_site	Mining site
-1770	4124	0	salvaging	Fremennik shipwreck
-2592	4128	0	salvaging	Fremennik shipwreck
-2273	4129	0	salvaging	Fremennik shipwreck
+1770	4124	0	salvaging	Fremennik Salvage (lvl 80)
+2592	4128	0	salvaging	Fremennik Salvage (lvl 80)
+2273	4129	0	salvaging	Fremennik Salvage (lvl 80)
 2793	4256	0	singing_bowl	Singing bowl
 3246	4315	0	transportation	Transportation
 3744	4320	0	altar	Altar

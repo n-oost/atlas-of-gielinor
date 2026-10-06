@@ -62,7 +62,6 @@ public class MapFinder
 	private volatile int locationMatchCount;
 	private WorldPoint resultOrigin;
 	private long searchDataVersion = Long.MIN_VALUE;
-	private volatile int caret;
 	/** The last non-empty query, so the "Last" quick-find chip can put it back. */
 	private volatile String lastQuery = "";
 
@@ -232,7 +231,6 @@ public class MapFinder
 			next = next.substring(0, MAX_QUERY_LENGTH);
 		}
 		this.query = next;
-		this.caret = Math.max(0, Math.min(this.caret, next.length()));
 		if (!next.isEmpty())
 		{
 			this.lastQuery = next;
@@ -392,103 +390,15 @@ public class MapFinder
 			allGroups.subList(0, Math.min(MAX_RESULTS, allGroups.size()))));
 	}
 
-	public synchronized void appendChar(char c, WorldPoint from)
-	{
-		caretEnd();
-		insert(String.valueOf(c), from);
-	}
-
-	public synchronized void appendText(String text, WorldPoint from)
-	{
-		if (text == null)
-		{
-			return;
-		}
-		caretEnd();
-		insert(text, from);
-	}
-
-	public synchronized void backspace(WorldPoint from)
-	{
-		caretEnd();
-		deleteBackward(from);
-	}
-
-	/** Inserts {@code text} at the caret and leaves the caret after it. */
-	public synchronized void insert(String text, WorldPoint from)
-	{
-		if (text == null || text.isEmpty())
-		{
-			return;
-		}
-		final int at = clampCaret(caret);
-		final String next = query.substring(0, at) + text + query.substring(at);
-		final int wanted = at + text.length();
-		updateQuery(next, from);
-		this.caret = clampCaret(wanted);
-	}
-
-	/** Backspace: removes the character before the caret. */
-	public synchronized void deleteBackward(WorldPoint from)
-	{
-		final int at = clampCaret(caret);
-		if (at == 0)
-		{
-			return;
-		}
-		final String next = query.substring(0, at - 1) + query.substring(at);
-		updateQuery(next, from);
-		this.caret = clampCaret(at - 1);
-	}
-
-	/** Delete: removes the character after the caret. */
-	public synchronized void deleteForward(WorldPoint from)
-	{
-		final int at = clampCaret(caret);
-		if (at >= query.length())
-		{
-			return;
-		}
-		final String next = query.substring(0, at) + query.substring(at + 1);
-		updateQuery(next, from);
-		this.caret = clampCaret(at);
-	}
-
-	public synchronized void moveCaret(int delta)
-	{
-		this.caret = clampCaret(caret + delta);
-	}
-
-	public synchronized void caretHome()
-	{
-		this.caret = 0;
-	}
-
-	public synchronized void caretEnd()
-	{
-		this.caret = query.length();
-	}
-
-	public int getCaret()
-	{
-		return clampCaret(caret);
-	}
-
 	/** The last non-empty query, for the "Last" quick-find chip. Survives {@link #clearQuery()}. */
 	public String getLastQuery()
 	{
 		return lastQuery;
 	}
 
-	private int clampCaret(int value)
-	{
-		return Math.max(0, Math.min(value, query.length()));
-	}
-
 	public synchronized void clearQuery()
 	{
 		this.query = "";
-		this.caret = 0;
 		this.results = Collections.emptyList();
 		this.queryMatches = Collections.emptyList();
 		this.matchCount = 0;

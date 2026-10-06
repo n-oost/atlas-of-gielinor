@@ -22,22 +22,60 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.ui.tooltips;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
+ * Encapsulates the structured data needed to render a hover tooltip card:
+ * header title, category tag, descriptive text lines and optional sprite icon.
  */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+@Getter
+@Setter
+public class TooltipCard
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private String title;
+	private final List<String> lines = new ArrayList<>();
+	private BufferedImage icon;
+	private boolean preserveCompactLines;
+
+	public TooltipCard()
 	{
-		super(worldPoint, null);
+	}
+
+	public TooltipCard(String title)
+	{
+		this.title = title;
+	}
+
+	public TooltipCard(String title, BufferedImage icon)
+	{
+		this.title = title;
+		this.icon = icon;
+	}
+
+	public void addLine(String line)
+	{
+		if (line != null)
+		{
+			lines.add(line);
+		}
+	}
+
+	public void addLines(List<String> newLines)
+	{
+		if (newLines != null)
+		{
+			lines.addAll(newLines);
+		}
+	}
+
+	public boolean isEmpty()
+	{
+		return title == null || title.trim().isEmpty();
 	}
 }

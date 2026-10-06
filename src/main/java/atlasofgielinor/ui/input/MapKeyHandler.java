@@ -22,22 +22,58 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.ui.input;
 
+import java.awt.event.KeyEvent;
+import javax.inject.Provider;
+
+import atlasofgielinor.AtlasOfGielinorPlugin;
+import atlasofgielinor.map.MapCamera;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 
 /**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
+ * Handles keyboard navigation, hotkeys (Escape, Space, C).
  */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+public class MapKeyHandler
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private final MapCamera camera;
+	private final Provider<AtlasOfGielinorPlugin> pluginProvider;
+
+	public MapKeyHandler(MapCamera camera, Provider<AtlasOfGielinorPlugin> pluginProvider)
 	{
-		super(worldPoint, null);
+		this.camera = camera;
+		this.pluginProvider = pluginProvider;
 	}
+
+	public boolean keyPressed(KeyEvent event)
+	{
+		if (camera.isFinderFieldFocused())
+		{
+			return false;
+		}
+
+		if (event.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			// Hub review F2: leave genuine Escape input to the native client.
+			// Do not consume it and dispatch a replacement close action.
+			return false;
+		}
+
+		if ((event.getKeyCode() == KeyEvent.VK_SPACE || event.getKeyCode() == KeyEvent.VK_C)
+			&& camera.isActive() && !camera.isFinderFieldFocused())
+		{
+			final WorldPoint raw = pluginProvider != null && pluginProvider.get() != null
+				? pluginProvider.get().getPlayerLocation() : null;
+			if (raw != null)
+			{
+				pluginProvider.get().goToPlayer();
+				event.consume();
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
 }

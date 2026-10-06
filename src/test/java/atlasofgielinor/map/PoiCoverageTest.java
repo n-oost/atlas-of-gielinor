@@ -1,0 +1,171 @@
+/*
+ * Copyright (c) 2026, n-oost
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package atlasofgielinor.map;
+
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import atlasofgielinor.map.catalog.PoiDetails;
+import atlasofgielinor.map.catalog.PoiIndex;
+
+public class PoiCoverageTest
+{
+	@BeforeClass
+	public static void loadCuratedDetails()
+	{
+		PoiDetails.load();
+	}
+
+	@Test
+	public void allCuratedPoisResolveToNonEmptyNonGenericDetailCards()
+	{
+		final List<PoiIndex.Poi> pois = PoiDetails.getAllPois();
+		final List<String> failures = new ArrayList<>();
+
+		for (PoiIndex.Poi p : pois)
+		{
+			final PoiDetails.Detail detail = PoiDetails.getDetail(p, p.getX(), p.getY(), p.getPlane());
+			if (detail == null)
+			{
+				failures.add(p.getName() + " @ (" + p.getX() + "," + p.getY() + "," + p.getPlane() + ") key=" + p.getKey() + " [detail was null]");
+				continue;
+			}
+
+			if (detail.getLines().isEmpty())
+			{
+				failures.add(p.getName() + " @ (" + p.getX() + "," + p.getY() + "," + p.getPlane() + ") key=" + p.getKey() + " [lines were empty]");
+			}
+			else if ("Point of Interest".equals(detail.getCategory()))
+			{
+				failures.add(p.getName() + " @ (" + p.getX() + "," + p.getY() + "," + p.getPlane() + ") key=" + p.getKey() + " [category was 'Point of Interest']");
+			}
+
+			for (String line : detail.getLines())
+			{
+				if (line.length() >= 80)
+				{
+					failures.add(p.getName() + " @ (" + p.getX() + "," + p.getY() + "," + p.getPlane() + ") key=" + p.getKey() + " [line too long (" + line.length() + " chars): " + line + "]");
+				}
+			}
+		}
+
+		assertTrue("Curated POIs with missing or invalid details (" + failures.size() + " gaps):\n" + String.join("\n", failures), failures.isEmpty());
+	}
+
+	@Test
+	public void sailingRegionHunterCoverageMeetsMinimumThreshold()
+	{
+		final List<PoiIndex.Poi> pois = PoiDetails.getAllPois();
+		final long sailingHunterCount = pois.stream()
+			.filter(p -> "hunter_training".equals(p.getKey()) && p.getX() < 3320 && p.getY() < 2650 && p.getPlane() == 0)
+			.count();
+
+		assertTrue("Sailing-region hunter POIs count was " + sailingHunterCount + " (expected >= 6)", sailingHunterCount >= 6);
+	}
+
+	@Test
+	public void noPoisNamedMapFeatureOrUnidentifiedCacheIcon()
+	{
+		final List<PoiIndex.Poi> pois = PoiDetails.getAllPois();
+		final List<String> violations = new ArrayList<>();
+
+		for (PoiIndex.Poi p : pois)
+		{
+			if (p.getName() != null && p.getName().equalsIgnoreCase("Map feature"))
+			{
+				violations.add("POI at (" + p.getX() + "," + p.getY() + ") still named 'Map feature'");
+			}
+			if (p.getKey() != null && p.getKey().startsWith("cache_icon_"))
+			{
+				violations.add("POI at (" + p.getX() + "," + p.getY() + ") has unresolved cache key: " + p.getKey());
+			}
+			final PoiDetails.Detail detail = PoiDetails.getDetail(p, p.getX(), p.getY(), p.getPlane());
+			if (detail != null)
+			{
+				if ("Other map icons".equals(detail.getCategory()))
+				{
+					violations.add("POI " + p.getName() + " resolved to 'Other map icons'");
+				}
+				for (String line : detail.getLines())
+				{
+					if (line.toLowerCase().contains("unidentified"))
+					{
+						violations.add("POI " + p.getName() + " has unidentified tooltip line: " + line);
+					}
+				}
+			}
+		}
+
+		assertTrue("Found POIs with 'Map feature' or unidentified descriptions: " + violations, violations.isEmpty());
+	}
+
+	@Test
+	public void noPoisNamedGenericQuestStartAndAllQuestPoisHaveCuratedCards() throws Exception
+	{
+		final PoiIndex poiIndex = new PoiIndex();
+		poiIndex.load(null);
+		final List<PoiIndex.Poi> pois = poiIndex.all();
+		final List<String> violations = new ArrayList<>();
+		int questCount = 0;
+
+		for (PoiIndex.Poi p : pois)
+		{
+			if ("quest_start".equals(p.getKey()))
+			{
+				questCount++;
+				if (p.getName() == null || p.getName().equalsIgnoreCase("Quest start") || p.getName().equalsIgnoreCase("quest_start"))
+				{
+					violations.add("Quest POI at (" + p.getX() + "," + p.getY() + ") still named 'Quest start'");
+				}
+				final PoiDetails.Detail detail = PoiDetails.getDetail(p, p.getX(), p.getY(), p.getPlane());
+				if (detail == null)
+				{
+					violations.add("Quest POI " + p.getName() + " returned null detail");
+				}
+				else
+				{
+					if (detail.getLines().isEmpty())
+					{
+						violations.add("Quest POI " + p.getName() + " has empty detail lines");
+					}
+					if (!detail.getCategory().contains("Quest Start") && !detail.getCategory().contains("Activity"))
+					{
+						violations.add("Quest POI " + p.getName() + " unexpected category: " + detail.getCategory());
+					}
+					if (detail.getLines().stream().anyMatch(l -> l.contains("Check Quest List in-game for full requirement breakdown")))
+					{
+						violations.add("Quest POI " + p.getName() + " has generic fallback line");
+					}
+				}
+			}
+		}
+
+		assertTrue("Expected quest starts, found " + questCount, questCount >= 200);
+		assertTrue("Found quest POI violations: " + violations, violations.isEmpty());
+	}
+}

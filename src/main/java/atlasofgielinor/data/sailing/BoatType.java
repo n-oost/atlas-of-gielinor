@@ -22,22 +22,58 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.data.sailing;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import lombok.Getter;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+@Getter
+public enum BoatType
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	RAFT(8110, 0, "Raft", 7111),
+	SKIFF(8111, 1, "Skiff", 7112),
+	SLOOP(8112, 2, "Sloop", 7113),
+	TUTORIAL(8113, 3, "Will and Anne's boat", 7112);
+
+	private final int dbRow;
+	private final int id;
+	private final String name;
+	private final int spriteId;
+
+	BoatType(int dbRow, int id, String name, int spriteId)
 	{
-		super(worldPoint, null);
+		this.dbRow = dbRow;
+		this.id = id;
+		this.name = name;
+		this.spriteId = spriteId;
+	}
+
+	public static BoatType fromDBRow(int dbRow)
+	{
+		for (BoatType p : values())
+		{
+			if (p.dbRow == dbRow)
+			{
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public static BoatType fromId(int id)
+	{
+		for (BoatType p : values())
+		{
+			if (p.id == id)
+			{
+				return p;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String toString()
+	{
+		return name;
 	}
 }

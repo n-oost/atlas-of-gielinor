@@ -22,22 +22,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
-
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+package atlasofgielinor.tiles;
 
 /**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
+ * Pixels the cache map bakes in as dungeon canvas, keyed out so the surface shows through.
  */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+public final class DungeonVoid
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	/**
+	 * Solid canvas fill between rooms (Varrock Sewers, Edgeville Dungeon, and others). Exact
+	 * {@code #362509} as the cache render writes it.
+	 */
+	private static final int VOID_BROWN = 0x362509;
+
+	/**
+	 * Mask matching near-black void canvas tones (R &lt;= 3, G &lt;= 3, B &lt;= 3). This encompasses
+	 * solid {@code #000000}, {@code #000001}, {@code #010101}, {@code #020202}, {@code #030303},
+	 * and {@code #030202} baked into Crash Site Cavern and other underground renders.
+	 */
+	private static final int VOID_BLACK_MASK = ~0x030303 & 0xFFFFFF;
+
+	private DungeonVoid()
 	{
-		super(worldPoint, null);
+	}
+
+	/** True when {@code argb} is dungeon void and should be made fully transparent. */
+	public static boolean isVoid(int argb)
+	{
+		final int rgb = argb & 0xFFFFFF;
+		return (rgb & VOID_BLACK_MASK) == 0
+			|| rgb == VOID_BROWN;
 	}
 }

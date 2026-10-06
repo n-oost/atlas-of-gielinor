@@ -22,22 +22,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.map;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import java.awt.Rectangle;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+import atlasofgielinor.map.MapCamera;
+
+/** In-map Finder stays open across render frames. */
+public class MapCameraFinderTest
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	@org.junit.BeforeClass
+	public static void loadMapData()
 	{
-		super(worldPoint, null);
+		atlasofgielinor.map.MapCatalogLoader.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", atlasofgielinor.map.MapCatalogLoader.isReady());
 	}
+
+	@Test
+	public void setActiveTrueWhileAlreadyActiveKeepsInMapFinderOpen()
+	{
+		final MapCamera camera = new MapCamera();
+		camera.setViewport(new Rectangle(0, 0, 800, 600));
+		camera.setActive(true);
+		camera.setFinderPanelOpen(true);
+
+		// AtlasOfGielinorOverlay.render() reasserts active every frame the world map is open.
+		camera.setActive(true);
+		camera.setActive(true);
+
+		assertTrue("in-map Find panel must survive per-frame setActive(true)", camera.isFinderPanelOpen());
+		assertTrue(camera.isFinderFieldFocused());
+	}
+
 }

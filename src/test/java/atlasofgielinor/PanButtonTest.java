@@ -22,22 +22,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+import atlasofgielinor.ui.input.PanButton;
+
+public class PanButtonTest
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	@Test
+	public void matchesOnlyTheConfiguredButton()
 	{
-		super(worldPoint, null);
+		assertTrue(PanButton.LEFT.matches(press(MouseEvent.BUTTON1, InputEvent.BUTTON1_DOWN_MASK)));
+		assertFalse(PanButton.LEFT.matches(press(MouseEvent.BUTTON2, InputEvent.BUTTON2_DOWN_MASK)));
+		assertFalse(PanButton.LEFT.matches(press(MouseEvent.BUTTON3, InputEvent.BUTTON3_DOWN_MASK)));
+
+		assertTrue(PanButton.MIDDLE.matches(press(MouseEvent.BUTTON2, InputEvent.BUTTON2_DOWN_MASK)));
+		assertFalse(PanButton.MIDDLE.matches(press(MouseEvent.BUTTON1, InputEvent.BUTTON1_DOWN_MASK)));
+
+		assertTrue(PanButton.RIGHT.matches(press(MouseEvent.BUTTON3, InputEvent.BUTTON3_DOWN_MASK)));
+		assertFalse(PanButton.RIGHT.matches(press(MouseEvent.BUTTON1, InputEvent.BUTTON1_DOWN_MASK)));
+	}
+
+	private static MouseEvent press(int button, int modifiersEx)
+	{
+		return new MouseEvent(
+			new JPanel(),
+			MouseEvent.MOUSE_PRESSED,
+			0L,
+			modifiersEx,
+			10,
+			10,
+			1,
+			false,
+			button);
 	}
 }

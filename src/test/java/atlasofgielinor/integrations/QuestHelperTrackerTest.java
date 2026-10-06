@@ -22,22 +22,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.integrations;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import org.junit.Test;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+import atlasofgielinor.integrations.QuestHelperTracker;
+import questhelper.tools.FakeQuestHelperWorldMapPoint;
+
+public class QuestHelperTrackerTest
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private static WorldMapPoint pointNamed(String name)
 	{
-		super(worldPoint, null);
+		final WorldMapPoint point = new WorldMapPoint(new WorldPoint(3200, 3200, 0), null);
+		point.setName(name);
+		return point;
+	}
+
+	@Test
+	public void matchesTheNameQuestHelperSetsOnItsPoint()
+	{
+		assertTrue(QuestHelperTracker.isQuestHelperPoint(pointNamed("Quest Helper")));
+	}
+
+	@Test
+	public void matchesOnThePackageWhenTheNameIsNotSet()
+	{
+		// The name is Quest Helper's to change; the class it registers is the durable signal.
+		assertTrue(QuestHelperTracker.isQuestHelperPoint(
+			new FakeQuestHelperWorldMapPoint(new WorldPoint(3200, 3200, 0))));
+	}
+
+	@Test
+	public void ignoresEveryOtherPluginsPoint()
+	{
+		assertFalse(QuestHelperTracker.isQuestHelperPoint(pointNamed("Clue Scroll")));
+		assertFalse(QuestHelperTracker.isQuestHelperPoint(pointNamed(null)));
+		assertFalse(QuestHelperTracker.isQuestHelperPoint(null));
 	}
 }

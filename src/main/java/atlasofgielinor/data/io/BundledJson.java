@@ -22,22 +22,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.data.io;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.GZIPInputStream;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+/** Reads bundled gzip JSON with the caller's injected Gson. Call off the client thread. */
+public final class BundledJson
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private BundledJson()
 	{
-		super(worldPoint, null);
+	}
+
+	public static <T> T readGzip(Gson gson, String resource, Class<T> type) throws IOException
+	{
+		try (InputStream raw = BundledJson.class.getResourceAsStream(resource))
+		{
+			if (raw == null) throw new IOException("Missing bundled dataset: " + resource);
+			try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(raw), StandardCharsets.UTF_8))
+			{
+				return gson.fromJson(reader, type);
+			}
+		}
 	}
 }

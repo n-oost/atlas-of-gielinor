@@ -22,22 +22,41 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.ui.markers;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import static atlasofgielinor.ui.MapStyle.CARD_BG;
+import static atlasofgielinor.ui.MapStyle.SMALL;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Stroke;
+
+/** Draws centered marker labels with the caller's geometry and border style. */
+final class MarkerLabelRenderer
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private MarkerLabelRenderer()
 	{
-		super(worldPoint, null);
+	}
+
+	/** Leaves font, color, and stroke as the original label passes did; preserves the current clip. */
+	static void draw(Graphics2D graphics, Rectangle bounds, String label, int centerX, int baselineY,
+		int padding, int topOffset, int height, Color border, Color text, Stroke outline)
+	{
+		graphics.setFont(SMALL);
+		final int textWidth = graphics.getFontMetrics().stringWidth(label);
+		final int textX = centerX - textWidth / 2;
+		final Rectangle rect = new Rectangle(textX - padding, baselineY - topOffset,
+			textWidth + padding * 2, height);
+		if (bounds.intersects(rect))
+		{
+			graphics.setColor(CARD_BG);
+			graphics.fillRoundRect(rect.x, rect.y, rect.width, rect.height, padding, padding);
+			graphics.setColor(border);
+			graphics.setStroke(outline);
+			graphics.drawRoundRect(rect.x, rect.y, rect.width, rect.height, padding, padding);
+			graphics.setColor(text);
+			graphics.drawString(label, textX, baselineY);
+		}
 	}
 }

@@ -22,22 +22,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.map.finder;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import com.google.inject.ImplementedBy;
+import java.util.function.Consumer;
 
 /**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
+ * The one seam between {@link FinderKeyCapture} and RuneLite's {@code ChatboxPanelManager}.
  *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
+ * <p>{@code ChatboxPanelManager} cannot be constructed in a unit test - it needs the injected
+ * client, event bus and input managers - so the finder depends on this two-method view instead.
+ * {@link RuneliteChatboxInputHost} is the production wiring; tests pass a fake that records the
+ * callbacks and fires them by hand.
  */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+@ImplementedBy(RuneliteChatboxInputHost.class)
+public interface ChatboxInputHost
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
-	{
-		super(worldPoint, null);
-	}
+	/**
+	 * Open a single-line chatbox text input.
+	 *
+	 * @param prompt    label shown above the field
+	 * @param value     initial text
+	 * @param onChanged  fired on every edit with the full current text
+	 * @param onDone     fired when the user presses Enter; the input then closes
+	 * @param onClose    fired once when the input closes, for any reason (Enter, Esc, or a
+	 *                   {@link #close()} call)
+	 */
+	void open(String prompt, String value, Consumer<String> onChanged, Consumer<String> onDone, Runnable onClose);
+
+	/** Close the current input if one is open. Safe to call when nothing is open. */
+	void close();
 }

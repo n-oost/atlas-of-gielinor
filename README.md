@@ -116,14 +116,14 @@ hover card.
 Markers registered by other RuneLite plugins ( clue scrolls, party
 members,quest helper) are drawn on Atlas of Gielinor's camera, along with the player orientation arrow.
 
-Go to Clue centres the map on RuneLite's active clue location (the nearest candidate when there are several). The fullscreen clue card displays RuneLite's own hint content. Better Map does not add clue markers, labels or requirement summaries; RuneLite's registered clue markers use the shared plugin marker display.
+Go to Clue centres the map on RuneLite's active clue location (the nearest candidate when there are several). The fullscreen clue card displays RuneLite's own hint content. Atlas of Gielinor does not add clue markers, labels or requirement summaries; RuneLite's registered clue markers use the shared plugin marker display.
 
 <!-- ![](docs/gifs/plugin-markers.gif) -->
 
 ### Plugin Hub notes
 
 - No reflection, no AWT-level input hooks, and no native code.
-- With **Download map assets** enabled, the plugin downloads the pack pinned in `src/main/resources/com/bettermap/data/map-pack.json` using asynchronous OkHttp when that pack is not already installed. Asset updates require a plugin release; no remote channel is checked. Installed files use RuneLite Filepath in the plugin directory.
+- With **Download map assets** enabled, the plugin downloads the pack pinned in `src/main/resources/atlasofgielinor/data/map-pack.json` using asynchronous OkHttp when that pack is not already installed. Asset updates require a plugin release; no remote channel is checked. Installed files use RuneLite Filepath in the plugin directory.
 - The plugin replaces the world map and
   draws Shortest Path route coordinates on its custom world map. The map's Chat control can hide the chatbox while
   the map is open; Finder text input keeps the chatbox visible.
@@ -133,7 +133,7 @@ Go to Clue centres the map on RuneLite's active clue location (the nearest candi
   search field mirrors that text.
 
 ## Datasets
--Data is bundled in `resources/com/bettermap/data`.
+-Data is bundled in `resources/atlasofgielinor/data`.
 - **Monster locations**: 805 monsters across 2,310 location zones in `monsters.json.gz`.
 - **Shops**: ~450 shops from OSRS Wiki `Category:Shops` in `shops.json.gz` (owner, special stock,
   notable items, services).
@@ -153,9 +153,9 @@ Go to Clue centres the map on RuneLite's active clue location (the nearest candi
 ## License
 
 BSD 2-Clause, see [`LICENSE`](LICENSE). Third-party teleport POI data is covered by [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). The software license does not
-license all map imagery or datasets; see the [bundled asset notices](src/main/resources/com/bettermap/ASSET-NOTICES.md)
+license all map imagery or datasets; see the [bundled asset notices](src/main/resources/atlasofgielinor/ASSET-NOTICES.md)
 for recorded content sources and the [provenance inventory](docs/asset-provenance.md) for remaining gaps.
 
-Finder place names, kingdom names, centres and bounds are bundled in `src/main/resources/com/bettermap/data/regions.json.gz`. They load on the startup worker before map input and rendering activate. `MapRegion` retains stable IDs and the existing smallest-area lookup rules.
+Finder place names, kingdom names, centres and bounds are bundled in `src/main/resources/atlasofgielinor/data/regions.json.gz`. They load on the startup worker before map input and rendering activate. `MapRegion` retains stable IDs and the existing smallest-area lookup rules.
 
 POI hover cards use curated and RuneLite-supplied detail data. When no description is available, they show the marker type and coordinates with “No additional details available.” Mooring Sailing levels and optional named requirements come from `poi/mooring-levels.tsv`.

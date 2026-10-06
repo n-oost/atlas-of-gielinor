@@ -22,22 +22,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.ui.input;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+/** Mouse button used to drag-pan the world map. */
+public enum PanButton
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	LEFT("Left click"),
+	RIGHT("Right click"),
+	MIDDLE("Middle click");
+
+	private final String label;
+
+	PanButton(String label)
 	{
-		super(worldPoint, null);
+		this.label = label;
+	}
+
+	public boolean matches(MouseEvent event)
+	{
+		switch (this)
+		{
+			case RIGHT:
+				return SwingUtilities.isRightMouseButton(event);
+			case MIDDLE:
+				return SwingUtilities.isMiddleMouseButton(event);
+			case LEFT:
+			default:
+				return SwingUtilities.isLeftMouseButton(event);
+		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return label;
 	}
 }

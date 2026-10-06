@@ -22,22 +22,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.tiles;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.util.Filepath;
 
 /**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
+ * Reads imagery exclusively from the verified installed pack. No classpath or legacy cache lookup.
  */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+@Slf4j
+public final class TileStore
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	private TileStore()
 	{
-		super(worldPoint, null);
+	}
+
+	/** Called on tile workers only, after the pack has passed validation. */
+	public static BufferedImage read(Filepath tileDir, String cachePath)
+	{
+		if (tileDir == null)
+		{
+			return null;
+		}
+		try (InputStream in = tileDir.join(cachePath).openInputStream())
+		{
+			synchronized (ImageIO.class)
+			{
+				return ImageIO.read(in);
+			}
+		}
+		catch (IOException e)
+		{
+			log.debug("[AtlasOfGielinor] installed tile {} unreadable", cachePath, e);
+			return null;
+		}
 	}
 }

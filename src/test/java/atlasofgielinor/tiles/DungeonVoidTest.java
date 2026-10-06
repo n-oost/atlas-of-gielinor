@@ -22,22 +22,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package questhelper.tools;
+package atlasofgielinor.tiles;
 
-import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-/**
- * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
- *
- * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link atlasofgielinor.integrations.QuestHelperTracker} walks the class hierarchy looking for that string,
- * and a fake in {@code atlasofgielinor.*} would pass the test while proving nothing.
- */
-public class FakeQuestHelperWorldMapPoint extends WorldMapPoint
+import atlasofgielinor.tiles.DungeonVoid;
+
+public class DungeonVoidTest
 {
-	public FakeQuestHelperWorldMapPoint(WorldPoint worldPoint)
+	@Test
+	public void exactBlackAndNearBlackAreVoid()
 	{
-		super(worldPoint, null);
+		assertTrue(DungeonVoid.isVoid(0xFF000000));
+		assertTrue(DungeonVoid.isVoid(0xFF000001));
+		assertTrue(DungeonVoid.isVoid(0xFF010101));
+		assertTrue(DungeonVoid.isVoid(0xFF020202));
+		assertTrue(DungeonVoid.isVoid(0x020202));
+		assertTrue(DungeonVoid.isVoid(0xFF030303));
+		assertTrue(DungeonVoid.isVoid(0xFF030202));
+		assertTrue(DungeonVoid.isVoid(0xFF362509));
+		assertFalse(DungeonVoid.isVoid(0xFF040303));
+		assertFalse(DungeonVoid.isVoid(0xFF060404));
+		assertFalse(DungeonVoid.isVoid(0xFF0C0C0C));
+	}
+
+	@Test
+	public void nonBlackDarkPixelsAreKept()
+	{
+		assertFalse(DungeonVoid.isVoid(0xFF0D0000));
+		assertFalse(DungeonVoid.isVoid(0xFF000D00));
+		assertFalse(DungeonVoid.isVoid(0xFF00000D));
+		assertFalse(DungeonVoid.isVoid(0xFF040201));
+		assertFalse(DungeonVoid.isVoid(0xFF020403));
+	}
+
+	@Test
+	public void sewerCanvasBrownIsVoid()
+	{
+		assertTrue(DungeonVoid.isVoid(0x362509));
+	}
+
+	@Test
+	public void neighbouringBrownsAndFloorTonesAreKept()
+	{
+		assertFalse(DungeonVoid.isVoid(0xFF36250A));
+		assertFalse(DungeonVoid.isVoid(0xFF38240D));
+		assertFalse(DungeonVoid.isVoid(0xFF8A7A5A));
 	}
 }

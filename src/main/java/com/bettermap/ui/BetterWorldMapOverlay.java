@@ -129,7 +129,7 @@ public class BetterWorldMapOverlay extends Overlay
 		new LayerToggle("Dungeons", "iconDungeons", BetterMapConfig::iconDungeons),
 		new LayerToggle("Tutors and services", "iconServices", BetterMapConfig::iconServices),
 		new LayerToggle("Other map icons", "iconOther", BetterMapConfig::iconOther),
-		new LayerToggle("Clue target", "showClueScroll", BetterMapConfig::showClueScroll),
+		new LayerToggle("Clue helper", "showClueScroll", BetterMapConfig::showClueScroll),
 		new LayerToggle("Place names", "showPlaceNames", BetterMapConfig::showPlaceNames),
 		new LayerToggle("Underground symbols", "showLargeUndergroundSymbols", BetterMapConfig::showLargeUndergroundSymbols),
 		new LayerToggle("Boss markers", "showBossLocations", BetterMapConfig::showBossLocations),
@@ -233,7 +233,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.tileRenderer = new MapTileRenderer(config, camera, tileLoader, stats, dungeonPieceIndex);
 		this.markerRenderer = new MapMarkerRenderer(
 			client, config, camera, poiIndex, shopIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
-			clueScrollTracker, shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
+			shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
 			stats, dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
 			questHelperTracker, slayerTaskTracker, poiIndex, shortestPathTracker, boatTracker, client);
@@ -241,7 +241,7 @@ public class BetterWorldMapOverlay extends Overlay
 			client, config, camera, input, poiIndex, slayerTaskTracker, finder);
 		this.tooltipRenderer = new MapTooltipRenderer(
 			client, config, camera, input, poiIndex, monsterIndex, dungeonPieceIndex, monsterIconManager, slayerTaskTracker,
-			clueScrollTracker, shopIndex, finder, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader);
+			shopIndex, finder, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader);
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.MANUAL);
 		setPriority(PRIORITY_HIGH);
@@ -375,7 +375,6 @@ public class BetterWorldMapOverlay extends Overlay
 				markerRenderer.drawSailingPorts(graphics, bounds, placedMarkers);
 				markerRenderer.drawPortNoticeBoards(graphics, bounds, placedMarkers);
 				markerRenderer.drawPlayerBoats(graphics, bounds, placedMarkers);
-				markerRenderer.drawClueMarkers(graphics, bounds, placedMarkers);
 				markerRenderer.drawFlash(graphics, bounds);
 				markerRenderer.drawPlayer(graphics, bounds);
 			}
@@ -390,7 +389,6 @@ public class BetterWorldMapOverlay extends Overlay
 			chromeRenderer.drawChatButton(graphics, bounds);
 			chromeRenderer.drawCluePanel(graphics, bounds);
 			chromeRenderer.drawBoatsDropdown(graphics, bounds);
-			chromeRenderer.drawTunerReadout(graphics, bounds);
 			drawFinder(graphics, bounds);
 			if (camera.isTravelViewActive() || raidBossDisplay == null || !raidBossDisplay.ownsHover(input.getCursor()))
 			{

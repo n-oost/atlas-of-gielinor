@@ -94,17 +94,16 @@ public class PlayerMarkerRenderer
 			return null;
 		}
 
-		final int nudgeX = camera.getDungeonTuner().offsetX(zone);
-		final int nudgeY = camera.getDungeonTuner().offsetY(zone);
+
 		final int[] sourceBounds = piece.srcBounds();
-		final double centerWorldX = (sourceBounds[0] + sourceBounds[2] + 1) / 2.0 + piece.dx - nudgeX;
-		final double centerWorldY = (sourceBounds[1] + sourceBounds[3] + 1) / 2.0 + piece.dy - nudgeY;
+		final double centerWorldX = (sourceBounds[0] + sourceBounds[2] + 1) / 2.0 + piece.dx;
+		final double centerWorldY = (sourceBounds[1] + sourceBounds[3] + 1) / 2.0 + piece.dy;
 		final AffineTransform transform = DungeonPieceTransform.affine(
 			piece.rot, piece.flipX, piece.flipY,
 			camera.screenX(centerWorldX, bounds), camera.screenY(centerWorldY, bounds));
 		final Point2D point = new Point2D.Double(
-			camera.screenX(rawLocation.getX() + 0.5 + piece.dx - nudgeX, bounds),
-			camera.screenY(rawLocation.getY() + 0.5 + piece.dy - nudgeY, bounds));
+			camera.screenX(rawLocation.getX() + 0.5 + piece.dx, bounds),
+			camera.screenY(rawLocation.getY() + 0.5 + piece.dy, bounds));
 		return transform.transform(point, null);
 	}
 

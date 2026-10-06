@@ -31,7 +31,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
@@ -47,9 +46,6 @@ public class WorldMapPointMarkerRenderer
 	private final WorldMapPointManager worldMapPointManager;
 	private final WorldMapPointReader worldMapPointReader;
 
-	/** True for the clue scroll plugin's own world map point ({@code ClueScrollWorldMapPoint}). */
-	private static final java.util.Map<Class<?>, Boolean> CLUE_POINT_CLASS = new java.util.IdentityHashMap<>();
-
 	public WorldMapPointMarkerRenderer(
 		BetterMapConfig config,
 		MapCamera camera,
@@ -62,27 +58,6 @@ public class WorldMapPointMarkerRenderer
 		this.worldMapPointManager = worldMapPointManager;
 		this.worldMapPointReader = worldMapPointReader;
 		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
-
-	private static boolean isClueWorldMapPoint(WorldMapPoint point)
-	{
-		final Class<?> type = point.getClass();
-		final Boolean cached = CLUE_POINT_CLASS.get(type);
-		if (cached != null)
-		{
-			return cached;
-		}
-		boolean match = false;
-		for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass())
-		{
-			if (c.getName().contains("cluescrolls"))
-			{
-				match = true;
-				break;
-			}
-		}
-		CLUE_POINT_CLASS.put(type, match);
-		return match;
 	}
 
 	/** Markers other plugins (and ours) registered, drawn through our transform. */
@@ -98,14 +73,6 @@ public class WorldMapPointMarkerRenderer
 
 		for (WorldMapPoint point : worldMapPointReader.points(worldMapPointManager))
 		{
-			// Our own clue diamond already marks this tile; skip the clue plugin's world map point
-			// so map and coordinate clues do not show two markers on top of each other.
-			if (config.showClueScroll() && camera.getZoom() >= config.clueMinZoom()
-				&& isClueWorldMapPoint(point))
-			{
-				continue;
-			}
-
 			final BufferedImage image = point.getImage();
 			final WorldPoint location = point.getWorldPoint();
 			if (image == null || location == null || location.getPlane() != plane)

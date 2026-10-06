@@ -306,8 +306,6 @@ public class MapCamera
 	@Getter
 	private volatile Rectangle cluePanelHeaderBounds;
 	@Getter
-	private volatile Rectangle cluePanelPanButton;
-	@Getter
 	private volatile List<LayerSymbolTarget> layerSymbolTargets = Collections.emptyList();
 
 	/** On-map "Layers" panel: the gear toggle, whether the panel is expanded, and its rows. */
@@ -507,7 +505,6 @@ public class MapCamera
 			questButton = null;
 			cluePanelBounds = null;
 			cluePanelHeaderBounds = null;
-			cluePanelPanButton = null;
 			planeButtons = new Rectangle[0];
 			hoveredUndergroundZone = null;
 
@@ -689,8 +686,7 @@ public class MapCamera
 				if (piece != null)
 				{
 					final Point2D point = DungeonPieceTransform.toDisplay(piece,
-						player.getX() + 0.5, player.getY() + 0.5,
-						dungeonTuner.offsetX(playerZone), dungeonTuner.offsetY(playerZone));
+						player.getX() + 0.5, player.getY() + 0.5);
 					centerX = point.getX();
 					centerY = point.getY();
 					clampCenter();
@@ -837,18 +833,7 @@ public class MapCamera
 	}
 
 
-	public void setCluePanelPanButton(Rectangle cluePanelPanButton)
-	{
-		this.cluePanelPanButton = cluePanelPanButton;
-	}
 
-	private final DungeonTuner dungeonTuner = new DungeonTuner();
-
-	/** Live keyboard-driven dungeon-layer nudges (see {@link com.bettermap.BetterMapConfig#undergroundTuner()}). */
-	public DungeonTuner getDungeonTuner()
-	{
-		return dungeonTuner;
-	}
 
 
 	public void setLayerSymbolTargets(List<LayerSymbolTarget> targets)
@@ -1456,20 +1441,6 @@ public class MapCamera
 			return true;
 		}
 		return hoveredUndergroundZone != null && hoveredSurfaceToUnderground;
-	}
-
-
-	/**
-	 * The zone the dev tuner acts on: the committed layer, or the dungeon symbol under the cursor
-	 * during a surface-to-underground hover preview.
-	 */
-	public UndergroundZone getTunableZone()
-	{
-		if (activeUndergroundZone != null)
-		{
-			return activeUndergroundZone;
-		}
-		return hoveredSurfaceToUnderground ? hoveredUndergroundZone : null;
 	}
 
 

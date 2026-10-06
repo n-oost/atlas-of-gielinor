@@ -29,7 +29,7 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 /**
- * Flip-then-rotate used by the dungeon-layer tuner. Positive {@code rot} is clockwise on screen
+ * Flip-then-rotate used by authored dungeon pieces. Positive {@code rot} is clockwise on screen
  * because Y grows down.
  */
 public final class DungeonPieceTransform
@@ -55,28 +55,28 @@ public final class DungeonPieceTransform
 	}
 
 	/** The tile renderer's transform expressed in map coordinates, where Y grows up. */
-	private static AffineTransform displayTransform(DungeonPiece piece, int nudgeX, int nudgeY)
+	private static AffineTransform displayTransform(DungeonPiece piece)
 	{
 		final int[] b = piece.srcBounds();
 		return affine(-piece.rot, piece.flipX, piece.flipY,
-			(b[0] + b[2] + 1) / 2.0 + piece.dx - nudgeX,
-			(b[1] + b[3] + 1) / 2.0 + piece.dy - nudgeY);
+			(b[0] + b[2] + 1) / 2.0 + piece.dx,
+			(b[1] + b[3] + 1) / 2.0 + piece.dy);
 	}
 
-	public static Point2D toDisplay(DungeonPiece piece, double x, double y, int nudgeX, int nudgeY)
+	public static Point2D toDisplay(DungeonPiece piece, double x, double y)
 	{
-		return displayTransform(piece, nudgeX, nudgeY).transform(
-			new Point2D.Double(x + piece.dx - nudgeX, y + piece.dy - nudgeY), null);
+		return displayTransform(piece).transform(
+			new Point2D.Double(x + piece.dx, y + piece.dy), null);
 	}
 
-	public static Point2D toNative(DungeonPiece piece, double x, double y, int nudgeX, int nudgeY)
+	public static Point2D toNative(DungeonPiece piece, double x, double y)
 	{
 		try
 		{
-			final Point2D point = displayTransform(piece, nudgeX, nudgeY).inverseTransform(
+			final Point2D point = displayTransform(piece).inverseTransform(
 				new Point2D.Double(x, y), null);
-			return new Point2D.Double(point.getX() - piece.dx + nudgeX,
-				point.getY() - piece.dy + nudgeY);
+			return new Point2D.Double(point.getX() - piece.dx,
+				point.getY() - piece.dy);
 		}
 		catch (NoninvertibleTransformException e)
 		{

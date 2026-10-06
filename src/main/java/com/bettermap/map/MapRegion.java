@@ -24,186 +24,247 @@
  */
 package com.bettermap.map;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import lombok.Getter;
+import java.util.Map;
+import java.util.Set;
+import java.util.zip.GZIPInputStream;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * The named places the Finder browses by — "Varrock", "Falador", "Hosidius".
- *
- * <p>The game cache dump in {@code poi/pois-cache.tsv} carries 854 distinct {@code region_label}
- * rows, but they are unusable as a menu: they mix kingdoms ("Kingdom of Misthalin"), cities
- * ("Varrock"), single rooms ("Jail", "Throne room", "Market") and outright noise ("A", "B",
- * "Anger", "Nothing interesting happens here"), and none of them carry bounds — only a point. So
- * this table is curated. The <b>centres are the cache's own label coordinates</b>, which is why
- * they line up with what the map draws; only the extents are authored here.
- *
- * <p>Boxes are allowed to overlap and to nest. {@link #of(int, int, int)} resolves a point to the
- * <b>smallest</b> box containing it, ties broken by distance to centre, so Grand Exchange wins over
- * Varrock and Varrock wins over Misthalin without any of them needing to be carved around each
- * other. Requiring a non-overlapping partition was tried and is not maintainable by hand — a single
- * tweak to one city silently pushes POIs out of its neighbour.
+ * Stable identifiers for Finder places, with metadata loaded from {@code data/regions.json.gz}.
+ * Centres match cache map labels; curated boxes can overlap. The smallest containing box wins,
+ * with distance to centre breaking ties. Only surface coordinates are classified.
  */
+@Slf4j
 public enum MapRegion
 {
-	// ---- Misthalin ----
-	VARROCK("Varrock", Kingdom.MISTHALIN, 3211, 3450, 75, 75),
-	GRAND_EXCHANGE("Grand Exchange", Kingdom.MISTHALIN, 3168, 3477, 30, 30),
-	LUMBRIDGE("Lumbridge", Kingdom.MISTHALIN, 3239, 3234, 30, 70),
-	DRAYNOR_VILLAGE("Draynor Village", Kingdom.MISTHALIN, 3120, 3267, 45, 45),
-	EDGEVILLE("Edgeville", Kingdom.MISTHALIN, 3098, 3488, 40, 40),
-	BARBARIAN_VILLAGE("Barbarian Village", Kingdom.MISTHALIN, 3063, 3416, 32, 32),
-	AL_KHARID("Al Kharid", Kingdom.MISTHALIN, 3313, 3171, 60, 80),
+	VARROCK,
+	GRAND_EXCHANGE,
+	LUMBRIDGE,
+	DRAYNOR_VILLAGE,
+	EDGEVILLE,
+	BARBARIAN_VILLAGE,
+	AL_KHARID,
+	FALADOR,
+	PORT_SARIM,
+	RIMMINGTON,
+	TAVERLEY,
+	BURTHORPE,
+	ICE_MOUNTAIN,
+	ENTRANA,
+	CATHERBY,
+	SEERS_VILLAGE,
+	CAMELOT,
+	EAST_ARDOUGNE,
+	WEST_ARDOUGNE,
+	YANILLE,
+	HEMENSTER,
+	WITCHAVEN,
+	TREE_GNOME_STRONGHOLD,
+	PISCATORIS,
+	RELLEKKA,
+	KELDAGRIM,
+	NEITIZNOT,
+	JATIZSO,
+	MISCELLANIA,
+	LUNAR_ISLE,
+	WEISS,
+	TROLLHEIM,
+	TROLL_COUNTRY,
+	BRIMHAVEN,
+	MUSA_POINT,
+	TAI_BWO_WANNAI,
+	SHILO_VILLAGE,
+	POLLNIVNEACH,
+	NARDAH,
+	SOPHANEM,
+	MENAPHOS,
+	CANIFIS,
+	PORT_PHASMATYS,
+	DARKMEYER,
+	MEIYERDITCH,
+	BURGH_DE_ROTT,
+	MORTTON,
+	SLEPE,
+	VER_SINHAZA,
+	FOSSIL_ISLAND,
+	PRIFDDINAS,
+	LLETYA,
+	HOSIDIUS,
+	SHAYZIEN,
+	LOVAKENGJ,
+	ARCEUUS,
+	PORT_PISCARILIUS,
+	KOUREND_CASTLE,
+	CIVITAS_ILLA_FORTIS,
+	ALDARIN,
+	AUBURNVALE,
+	FELDIP_HILLS,
+	GU_TANOTH,
+	JIGGIG,
+	CORSAIR_COVE,
+	ISLE_OF_SOULS,
+	APE_ATOLL,
+	MOS_LE_HARMLESS,
+	WILDERNESS,
+	MISTHALIN,
+	ASGARNIA,
+	KANDARIN,
+	KARAMJA,
+	KHARIDIAN_DESERT,
+	FREMENNIK_PROVINCE,
+	TIRANNWN_REGION,
+	GREAT_KOUREND,
+	VARLAMORE_REGION;
 
-	// ---- Asgarnia ----
-	FALADOR("Falador", Kingdom.ASGARNIA, 2989, 3355, 70, 60),
-	PORT_SARIM("Port Sarim", Kingdom.ASGARNIA, 3047, 3221, 40, 60),
-	RIMMINGTON("Rimmington", Kingdom.ASGARNIA, 2960, 3222, 45, 45),
-	TAVERLEY("Taverley", Kingdom.ASGARNIA, 2900, 3458, 55, 60),
-	BURTHORPE("Burthorpe", Kingdom.ASGARNIA, 2895, 3549, 50, 50),
-	ICE_MOUNTAIN("Ice Mountain", Kingdom.ASGARNIA, 3009, 3487, 40, 40),
-	ENTRANA("Entrana", Kingdom.ASGARNIA, 2850, 3379, 50, 50),
-
-	// ---- Kandarin ----
-	CATHERBY("Catherby", Kingdom.KANDARIN, 2836, 3457, 45, 40),
-	SEERS_VILLAGE("Seers' Village", Kingdom.KANDARIN, 2692, 3489, 55, 55),
-	CAMELOT("Camelot", Kingdom.KANDARIN, 2763, 3505, 30, 45),
-	EAST_ARDOUGNE("East Ardougne", Kingdom.KANDARIN, 2597, 3298, 65, 70),
-	WEST_ARDOUGNE("West Ardougne", Kingdom.KANDARIN, 2524, 3308, 45, 60),
-	YANILLE("Yanille", Kingdom.KANDARIN, 2549, 3091, 75, 40),
-	HEMENSTER("Hemenster", Kingdom.KANDARIN, 2634, 3426, 35, 35),
-	WITCHAVEN("Witchaven", Kingdom.KANDARIN, 2710, 3291, 30, 30),
-	TREE_GNOME_STRONGHOLD("Tree Gnome Stronghold", Kingdom.KANDARIN, 2433, 3454, 70, 70),
-	PISCATORIS("Piscatoris Fishing Colony", Kingdom.KANDARIN, 2345, 3693, 55, 55),
-
-	// ---- Fremennik ----
-	RELLEKKA("Rellekka", Kingdom.FREMENNIK, 2672, 3681, 60, 60),
-	KELDAGRIM("Keldagrim Entrance", Kingdom.FREMENNIK, 2728, 3715, 40, 40),
-	NEITIZNOT("Neitiznot", Kingdom.FREMENNIK, 2320, 3821, 50, 50),
-	JATIZSO("Jatizso", Kingdom.FREMENNIK, 2392, 3822, 50, 50),
-	MISCELLANIA("Miscellania", Kingdom.FREMENNIK, 2545, 3879, 70, 70),
-	LUNAR_ISLE("Lunar Isle", Kingdom.FREMENNIK, 2141, 3877, 70, 70),
-	WEISS("Weiss", Kingdom.FREMENNIK, 2878, 3940, 50, 50),
-	TROLLHEIM("Trollheim", Kingdom.FREMENNIK, 2892, 3678, 35, 35),
-	TROLL_COUNTRY("Troll Country", Kingdom.FREMENNIK, 2846, 3736, 90, 90),
-
-	// ---- Karamja ----
-	BRIMHAVEN("Brimhaven", Kingdom.KARAMJA, 2779, 3174, 55, 55),
-	MUSA_POINT("Musa Point", Kingdom.KARAMJA, 2914, 3161, 40, 40),
-	TAI_BWO_WANNAI("Tai Bwo Wannai", Kingdom.KARAMJA, 2794, 3066, 45, 45),
-	SHILO_VILLAGE("Shilo Village", Kingdom.KARAMJA, 2849, 2986, 50, 40),
-
-	// ---- Kharidian Desert ----
-	POLLNIVNEACH("Pollnivneach", Kingdom.DESERT, 3356, 2980, 45, 55),
-	NARDAH("Nardah", Kingdom.DESERT, 3429, 2902, 45, 45),
-	SOPHANEM("Sophanem", Kingdom.DESERT, 3298, 2783, 50, 50),
-	MENAPHOS("Menaphos", Kingdom.DESERT, 3211, 2762, 60, 60),
-
-	// ---- Morytania ----
-	CANIFIS("Canifis", Kingdom.MORYTANIA, 3491, 3487, 45, 40),
-	PORT_PHASMATYS("Port Phasmatys", Kingdom.MORYTANIA, 3673, 3487, 50, 50),
-	DARKMEYER("Darkmeyer", Kingdom.MORYTANIA, 3626, 3363, 50, 55),
-	MEIYERDITCH("Meiyerditch", Kingdom.MORYTANIA, 3619, 3263, 50, 70),
-	BURGH_DE_ROTT("Burgh de Rott", Kingdom.MORYTANIA, 3497, 3219, 45, 45),
-	MORTTON("Mort'ton", Kingdom.MORYTANIA, 3491, 3281, 40, 40),
-	SLEPE("Slepe", Kingdom.MORYTANIA, 3718, 3330, 50, 50),
-	VER_SINHAZA("Ver Sinhaza", Kingdom.MORYTANIA, 3662, 3220, 40, 40),
-	FOSSIL_ISLAND("Fossil Island", Kingdom.MORYTANIA, 3721, 3781, 130, 130),
-
-	// ---- Tirannwn ----
-	PRIFDDINAS("Prifddinas", Kingdom.TIRANNWN, 2240, 3328, 70, 70),
-	LLETYA("Lletya", Kingdom.TIRANNWN, 2346, 3180, 45, 45),
-
-	// ---- Great Kourend ----
-	HOSIDIUS("Hosidius", Kingdom.KOUREND, 1750, 3607, 130, 110),
-	SHAYZIEN("Shayzien", Kingdom.KOUREND, 1536, 3552, 110, 110),
-	LOVAKENGJ("Lovakengj", Kingdom.KOUREND, 1503, 3798, 110, 110),
-	ARCEUUS("Arceuus", Kingdom.KOUREND, 1678, 3752, 110, 110),
-	PORT_PISCARILIUS("Port Piscarilius", Kingdom.KOUREND, 1824, 3704, 90, 90),
-	KOUREND_CASTLE("Kourend Castle", Kingdom.KOUREND, 1626, 3676, 60, 60),
-
-	// ---- Varlamore ----
-	CIVITAS_ILLA_FORTIS("Civitas illa Fortis", Kingdom.VARLAMORE, 1713, 3127, 110, 110),
-	ALDARIN("Aldarin", Kingdom.VARLAMORE, 1391, 2942, 70, 70),
-	AUBURNVALE("Auburnvale", Kingdom.VARLAMORE, 1405, 3363, 90, 90),
-
-	// ---- Southern isles and Feldip ----
-	FELDIP_HILLS("Feldip Hills", Kingdom.ISLANDS, 2546, 2950, 110, 110),
-	GU_TANOTH("Gu'Tanoth", Kingdom.ISLANDS, 2528, 3046, 35, 32),
-	JIGGIG("Jiggig", Kingdom.ISLANDS, 2464, 3047, 40, 40),
-	CORSAIR_COVE("Corsair Cove", Kingdom.ISLANDS, 2570, 2858, 50, 50),
-	ISLE_OF_SOULS("Isle of Souls", Kingdom.ISLANDS, 2209, 2878, 130, 130),
-	APE_ATOLL("Ape Atoll", Kingdom.ISLANDS, 2755, 2755, 80, 80),
-	MOS_LE_HARMLESS("Mos Le'Harmless", Kingdom.ISLANDS, 3725, 3028, 80, 80),
-
-	// ---- Kingdom-scale fallbacks. Sized large on purpose: a point only lands on one of these
-	// when no city box claimed it, because of() prefers the smallest containing box. ----
-	WILDERNESS("Wilderness", Kingdom.WILDERNESS, 3168, 3812, 224, 288, true),
-	MISTHALIN("Misthalin", Kingdom.MISTHALIN, 3217, 3321, 200, 230, true),
-	ASGARNIA("Asgarnia", Kingdom.ASGARNIA, 2988, 3412, 160, 200, true),
-	KANDARIN("Kandarin", Kingdom.KANDARIN, 2578, 3370, 230, 280, true),
-	KARAMJA("Karamja", Kingdom.KARAMJA, 2860, 3059, 190, 230, true),
-	KHARIDIAN_DESERT("Kharidian Desert", Kingdom.DESERT, 3311, 2930, 250, 250, true),
-	FREMENNIK_PROVINCE("Fremennik Province", Kingdom.FREMENNIK, 2679, 3646, 180, 180, true),
-	TIRANNWN_REGION("Tirannwn", Kingdom.TIRANNWN, 2240, 3264, 180, 220, true),
-	GREAT_KOUREND("Great Kourend", Kingdom.KOUREND, 1600, 3700, 300, 250, true),
-	VARLAMORE_REGION("Varlamore", Kingdom.VARLAMORE, 1510, 3195, 300, 300, true);
-
-	/** Top-level grouping, so the browse list reads as a map rather than an alphabet. */
+	/** Top-level grouping used in Finder descriptions. */
 	public enum Kingdom
 	{
-		MISTHALIN("Misthalin"),
-		ASGARNIA("Asgarnia"),
-		KANDARIN("Kandarin"),
-		FREMENNIK("Fremennik"),
-		KARAMJA("Karamja"),
-		DESERT("Kharidian Desert"),
-		MORYTANIA("Morytania"),
-		TIRANNWN("Tirannwn"),
-		KOUREND("Great Kourend"),
-		VARLAMORE("Varlamore"),
-		ISLANDS("Islands"),
-		WILDERNESS("Wilderness");
+		MISTHALIN,
+		ASGARNIA,
+		KANDARIN,
+		FREMENNIK,
+		KARAMJA,
+		DESERT,
+		MORYTANIA,
+		TIRANNWN,
+		KOUREND,
+		VARLAMORE,
+		ISLANDS,
+		WILDERNESS;
 
-		@Getter
-		private final String displayName;
-
-		Kingdom(String displayName)
+		public String getDisplayName()
 		{
-			this.displayName = displayName;
+			final String name = kingdomNames.get(this);
+			if (name == null) throw new IllegalStateException("Region catalog is not loaded");
+			return name;
 		}
-
 	}
 
-	@Getter
-	private final String displayName;
-	@Getter
-	private final Kingdom kingdom;
-	@Getter
-	private final int centerX;
-	@Getter
-	private final int centerY;
-	private final int halfWidth;
-	private final int halfHeight;
-	private final boolean fallback;
+	private static final String RESOURCE = "/com/bettermap/data/regions.json.gz";
+	private static volatile Map<MapRegion, Detail> details = Collections.emptyMap();
+	private static volatile Map<Kingdom, String> kingdomNames = Collections.emptyMap();
+	private static volatile Set<String> placeNames = Collections.emptySet();
 
-	MapRegion(String displayName, Kingdom kingdom, int centerX, int centerY, int halfWidth, int halfHeight)
+	public static boolean isLoaded()
 	{
-		this(displayName, kingdom, centerX, centerY, halfWidth, halfHeight, false);
+		return !details.isEmpty();
 	}
 
-	MapRegion(String displayName, Kingdom kingdom, int centerX, int centerY, int halfWidth, int halfHeight,
-		boolean fallback)
+	/** Call on the startup worker before Finder input or map rendering is enabled. */
+	public static synchronized void load()
 	{
-		this.displayName = displayName;
-		this.kingdom = kingdom;
-		this.centerX = centerX;
-		this.centerY = centerY;
-		this.halfWidth = halfWidth;
-		this.halfHeight = halfHeight;
-		this.fallback = fallback;
+		if (isLoaded()) return;
+		final Map<MapRegion, Detail> parsed = new EnumMap<>(MapRegion.class);
+		final Map<Kingdom, String> names = new EnumMap<>(Kingdom.class);
+		final Set<String> places = new HashSet<>();
+		try (InputStream raw = MapRegion.class.getResourceAsStream(RESOURCE))
+		{
+			if (raw == null) throw new IOException("Missing bundled region catalog: " + RESOURCE);
+			try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(raw), StandardCharsets.UTF_8))
+			{
+				final JsonObject dataset = new JsonParser().parse(reader).getAsJsonObject();
+				for (JsonElement element : dataset.getAsJsonArray("kingdoms"))
+				{
+					if (Thread.currentThread().isInterrupted()) return;
+					final JsonObject row = element.getAsJsonObject();
+					final Kingdom kingdom = Kingdom.valueOf(row.get("id").getAsString());
+					final String name = row.get("displayName").getAsString();
+					if (name.isEmpty() || names.put(kingdom, name) != null)
+						throw new IOException("Invalid kingdom: " + kingdom.name());
+					places.add(name.toLowerCase(Locale.ROOT));
+				}
+				for (JsonElement element : dataset.getAsJsonArray("regions"))
+				{
+					if (Thread.currentThread().isInterrupted()) return;
+					final JsonObject row = element.getAsJsonObject();
+					final MapRegion region = valueOf(row.get("id").getAsString());
+					final Detail detail = new Detail(row);
+					if (parsed.put(region, detail) != null)
+						throw new IOException("Duplicate region: " + region.name());
+					places.add(detail.displayName.toLowerCase(Locale.ROOT));
+				}
+			}
+			if (parsed.size() != values().length || names.size() != Kingdom.values().length)
+				throw new IOException("Incomplete bundled region catalog");
+			if (Thread.currentThread().isInterrupted()) return;
+			kingdomNames = Collections.unmodifiableMap(names);
+			placeNames = Collections.unmodifiableSet(places);
+			details = Collections.unmodifiableMap(parsed);
+		}
+		catch (IOException | RuntimeException e)
+		{
+			log.warn("Could not load bundled region catalog", e);
+		}
+	}
+
+	/** Cached region and kingdom names used by the map label filter. Expects lowercase text. */
+	public static boolean isPlaceName(String name)
+	{
+		return placeNames.contains(name);
+	}
+
+	public String getDisplayName()
+	{
+		return detail().displayName;
+	}
+
+	public Kingdom getKingdom()
+	{
+		return detail().kingdom;
+	}
+
+	public int getCenterX()
+	{
+		return detail().centerX;
+	}
+
+	public int getCenterY()
+	{
+		return detail().centerY;
+	}
+
+	private Detail detail()
+	{
+		final Detail detail = details.get(this);
+		if (detail == null) throw new IllegalStateException("Region catalog is not loaded");
+		return detail;
+	}
+
+	private static final class Detail
+	{
+		private final String displayName;
+		private final Kingdom kingdom;
+		private final int centerX;
+		private final int centerY;
+		private final int halfWidth;
+		private final int halfHeight;
+		private final boolean fallback;
+
+		private Detail(JsonObject row)
+		{
+			displayName = row.get("displayName").getAsString();
+			kingdom = Kingdom.valueOf(row.get("kingdom").getAsString());
+			centerX = row.get("centerX").getAsInt();
+			centerY = row.get("centerY").getAsInt();
+			halfWidth = row.get("halfWidth").getAsInt();
+			halfHeight = row.get("halfHeight").getAsInt();
+			fallback = row.get("fallback").getAsBoolean();
+			if (displayName.isEmpty() || halfWidth <= 0 || halfHeight <= 0)
+				throw new IllegalArgumentException("Invalid region bounds or name: " + displayName);
+		}
 	}
 
 	/**
@@ -213,37 +274,34 @@ public enum MapRegion
 	 */
 	public boolean isFallback()
 	{
-		return fallback;
+		return detail().fallback;
 	}
-
-
-
 
 
 	public int getMinX()
 	{
-		return centerX - halfWidth;
+		return getCenterX() - detail().halfWidth;
 	}
 
 	public int getMaxX()
 	{
-		return centerX + halfWidth;
+		return getCenterX() + detail().halfWidth;
 	}
 
 	public int getMinY()
 	{
-		return centerY - halfHeight;
+		return getCenterY() - detail().halfHeight;
 	}
 
 	public int getMaxY()
 	{
-		return centerY + halfHeight;
+		return getCenterY() + detail().halfHeight;
 	}
 
 	/** Box area in tiles, the primary tiebreak in {@link #of(int, int, int)}. */
 	public long area()
 	{
-		return (long) (2 * halfWidth) * (2 * halfHeight);
+		return (long) (2 * detail().halfWidth) * (2 * detail().halfHeight);
 	}
 
 	public boolean contains(int x, int y)
@@ -253,8 +311,8 @@ public enum MapRegion
 
 	private long centreDistanceSq(int x, int y)
 	{
-		final long dx = x - centerX;
-		final long dy = y - centerY;
+		final long dx = x - getCenterX();
+		final long dy = y - getCenterY();
 		return dx * dx + dy * dy;
 	}
 
@@ -306,7 +364,7 @@ public enum MapRegion
 		final String target = name.toLowerCase(Locale.ROOT);
 		for (MapRegion region : values())
 		{
-			if (region.displayName.toLowerCase(Locale.ROOT).equals(target))
+			if (region.getDisplayName().toLowerCase(Locale.ROOT).equals(target))
 			{
 				return region;
 			}
@@ -325,7 +383,7 @@ public enum MapRegion
 		{
 			for (MapRegion region : values())
 			{
-				if (region.kingdom == kingdom)
+				if (region.getKingdom() == kingdom)
 				{
 					ordered.add(region);
 				}

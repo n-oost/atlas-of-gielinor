@@ -86,7 +86,6 @@ public class PoiMarkerRenderer
 		"a", "b", "c", "d", "e", "f", "n", "s", "w",
 		"anger", "nothing interesting happens here", "upper level", "lower level",
 		"middle level", "exit"));
-	private static final Set<String> MAJOR_PLACE_NAMES = majorPlaceNames();
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final PoiIndex poiIndex;
@@ -152,8 +151,7 @@ public class PoiMarkerRenderer
 						poiIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], poi ->
 						{
 							final java.awt.geom.Point2D point = DungeonPieceTransform.toDisplay(piece,
-								poi.getX() + 0.5, poi.getY() + 0.5,
-								camera.getDungeonTuner().offsetX(zone), camera.getDungeonTuner().offsetY(zone));
+								poi.getX() + 0.5, poi.getY() + 0.5);
 							final String key = poi.getKey() + ":" + poi.getName() + ":" + point;
 							if (point.getX() >= minX && point.getX() <= maxX
 								&& point.getY() >= minY && point.getY() <= maxY && seen.add(key))
@@ -611,20 +609,9 @@ public class PoiMarkerRenderer
 	private static boolean isMajorPlaceName(String name)
 	{
 		final String key = name.trim().toLowerCase(Locale.ROOT);
-		return MAJOR_PLACE_NAMES.contains(key) || key.startsWith("kingdom of ")
+		return MapRegion.isPlaceName(key) || key.startsWith("kingdom of ")
 			|| key.contains("island") || key.contains("isle")
 			|| key.contains("atoll") || key.contains("archipelago");
-	}
-
-	private static Set<String> majorPlaceNames()
-	{
-		final Set<String> names = new HashSet<>();
-		for (MapRegion region : MapRegion.values())
-		{
-			names.add(region.getDisplayName().toLowerCase(Locale.ROOT));
-			names.add(region.getKingdom().getDisplayName().toLowerCase(Locale.ROOT));
-		}
-		return names;
 	}
 
 	/** Lower values reserve space first as the map gets crowded. */

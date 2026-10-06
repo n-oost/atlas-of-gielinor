@@ -157,30 +157,10 @@ public class MonsterIconManager
 	 */
 	public BufferedImage getIcon(String monsterName, int combatLevel, int slayerLevel, int targetSize)
 	{
-		final int itemId = resolveItemId(monsterName, combatLevel, slayerLevel);
-		if (itemId > 0 && itemManager != null)
+		final BufferedImage icon = getItemIcon(resolveItemId(monsterName, combatLevel, slayerLevel), targetSize);
+		if (icon != null)
 		{
-			final long cacheKey = (((long) itemId) << 32) | ((long) targetSize & 0xFFFFFFFFL);
-			final BufferedImage cached = scaledIconCache.get(cacheKey);
-			if (cached != null)
-			{
-				return cached;
-			}
-
-			try
-			{
-				final BufferedImage rawImage = itemManager.getImage(itemId);
-				if (rawImage != null)
-				{
-					final BufferedImage scaled = scaleImage(rawImage, targetSize);
-					scaledIconCache.put(cacheKey, scaled);
-					return scaled;
-				}
-			}
-			catch (Exception e)
-			{
-				log.debug("Could not load item image for item ID {}: {}", itemId, e.getMessage());
-			}
+			return icon;
 		}
 
 		// Fallback generated icon when itemManager is unavailable or offline

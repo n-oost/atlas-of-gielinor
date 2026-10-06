@@ -138,18 +138,6 @@ public final class BossLocationIndex
 			return layer == null || layer == this.layer;
 		}
 
-		/** Apply the same authored position and tuning to drawing and tooltip hit testing. */
-		public Point2D displayPoint(DungeonPieceIndex pieces, DungeonTuner tuner)
-		{
-			final Point2D point = displayPoint(pieces);
-			final UndergroundZone zone = UndergroundZone.byId(zoneId);
-			if (zone != null)
-			{
-				point.setLocation(point.getX() - tuner.offsetX(zone), point.getY() - tuner.offsetY(zone));
-			}
-			return point;
-		}
-
 		public Point2D displayPoint(DungeonPieceIndex pieces)
 		{
 			if (zoneId.isEmpty() || pieces == null)

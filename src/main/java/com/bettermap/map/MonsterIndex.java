@@ -32,7 +32,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -70,7 +69,8 @@ public class MonsterIndex
 
 	private final List<Zone> zones = new ArrayList<>();
 	private final Map<String, List<Zone>> byMonster = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-	private final Map<Long, List<Zone>> chunkMap = new HashMap<>();
+	private SpatialIndex<Zone> spatialIndex = new SpatialIndex<>(
+		Collections.emptyList(), Zone::getPlane, Zone::getX, Zone::getY);
 
 	private volatile boolean loaded;
 	private volatile long dataVersion;
@@ -187,11 +187,11 @@ public class MonsterIndex
 		}
 
 		final Map<String, List<Zone>> grouped = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-		final Map<Long, List<Zone>> spatial = new HashMap<>();
+		final SpatialIndex<Zone> spatial = new SpatialIndex<>(
+			parsed, Zone::getPlane, Zone::getX, Zone::getY);
 		for (Zone zone : parsed)
 		{
 			grouped.computeIfAbsent(zone.monster, k -> new ArrayList<>()).add(zone);
-			spatial.computeIfAbsent(MapChunkKey.ofWorldPoint(zone.plane, zone.x, zone.y), k -> new ArrayList<>()).add(zone);
 		}
 
 		synchronized (this)
@@ -200,8 +200,7 @@ public class MonsterIndex
 			zones.addAll(parsed);
 			byMonster.clear();
 			byMonster.putAll(grouped);
-			chunkMap.clear();
-			chunkMap.putAll(spatial);
+			spatialIndex = spatial;
 			droppedZones = dropped;
 		}
 
@@ -253,7 +252,7 @@ public class MonsterIndex
 	/** The zone whose marker is nearest this point on the given plane, or null. */
 	public synchronized Zone nearest(int plane, int worldX, int worldY, int radius)
 	{
-		return MapChunkKey.findNearest(chunkMap, plane, worldX, worldY, radius, Zone::getX, Zone::getY, null);
+		return spatialIndex.nearest(plane, worldX, worldY, radius, null);
 	}
 
 	/**
@@ -264,7 +263,7 @@ public class MonsterIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Zone> consumer)
 	{
-		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, Zone::getX, Zone::getY, consumer);
+		spatialIndex.forEachInArea(plane, minWorldX, maxWorldX, minWorldY, maxWorldY, consumer);
 	}
 
 	/** One monster in one place. */

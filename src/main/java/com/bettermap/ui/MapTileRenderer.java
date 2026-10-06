@@ -30,7 +30,6 @@ import com.bettermap.data.DungeonPieceTransform;
 import com.bettermap.data.OverlayFloor;
 import com.bettermap.data.UndergroundZone;
 import com.bettermap.map.DungeonPieceIndex;
-import com.bettermap.map.DungeonTuner;
 import com.bettermap.map.InstanceMaps;
 import com.bettermap.map.MapCamera;
 import com.bettermap.map.PrifddinasShift;
@@ -136,11 +135,10 @@ class MapTileRenderer
 		{
 			// Clicked: dungeon tiles composited onto the surface entrance, solid, with the
 			// overworld pushed back by the dim/blur settings.
-			final DungeonTuner tuner = camera.getDungeonTuner();
-			final boolean tuning = config.undergroundTuner();
-			final boolean keyVoid = config.undergroundTransparentVoid() || tuning;
-			final float opacity = tuning ? 0.6f : config.undergroundLayerSurfaceOpacity() / 100f;
-			final int blur = tuning ? 2 : config.undergroundLayerSurfaceBlur();
+
+			final boolean keyVoid = config.undergroundTransparentVoid();
+			final float opacity = config.undergroundLayerSurfaceOpacity() / 100f;
+			final int blur = config.undergroundLayerSurfaceBlur();
 			drawUndergroundLayer(graphics, bounds, camera.previewUndergroundZones(),
 				tileZoom, keyVoid, opacity, blur);
 		}
@@ -206,20 +204,20 @@ class MapTileRenderer
 	private void drawUndergroundZones(Graphics2D graphics, Rectangle bounds, List<UndergroundZone> zones,
 		int tileZoom, boolean keyVoid)
 	{
-		final DungeonTuner tuner = camera.getDungeonTuner();
+
 		for (UndergroundZone zone : zones)
 		{
-			final int nudgeX = tuner.offsetX(zone);
-			final int nudgeY = tuner.offsetY(zone);
-			if (drawZonePieces(graphics, bounds, zone, tileZoom, nudgeX, nudgeY, keyVoid,
+
+
+			if (drawZonePieces(graphics, bounds, zone, tileZoom, keyVoid,
 				planeForZone(zone)))
 			{
 				continue;
 			}
 			if (zone.getId().startsWith("native_")) continue;
 
-			final int ox = zone.getDeltaX() + nudgeX;
-			final int oy = zone.getDeltaY() + nudgeY;
+			final int ox = zone.getDeltaX();
+			final int oy = zone.getDeltaY();
 			final int underPlane = zone.getUndergroundPoint().getPlane();
 			final Shape oldClip = graphics.getClip();
 			clipToZone(graphics, bounds, zone, ox, oy);
@@ -266,7 +264,7 @@ class MapTileRenderer
 	}
 
 	/**
-	 * Draw tuner pieces for this zone. Each piece clips to its source rects and uses its own
+	 * Draw authored dungeon pieces for this zone. Each piece clips to its source rects and uses its own
 	 * dx/dy/rot/flip. Returns false when the TSV has nothing for this zone so the caller can fall
 	 * back to the zone-delta + wiki clip path.
 	 */
@@ -311,7 +309,7 @@ class MapTileRenderer
 	}
 
 	private boolean drawZonePieces(Graphics2D graphics, Rectangle bounds, UndergroundZone zone,
-		int tileZoom, int nudgeX, int nudgeY, boolean keyVoid, int planeFilter)
+		int tileZoom, boolean keyVoid, int planeFilter)
 	{
 		// This cavern ships at native zoom 3, independent of the installed map pack's zoom.
 		final int sourceZoom = zone == UndergroundZone.WYRMSCRAIG_CAVERN ? WikiMapTiles.MAX_ZOOM : tileZoom;
@@ -338,21 +336,21 @@ class MapTileRenderer
 			{
 				continue;
 			}
-			if (!pieceOnScreen(piece, nudgeX, nudgeY, viewMinX, viewMinY, viewMaxX, viewMaxY))
+			if (!pieceOnScreen(piece, viewMinX, viewMinY, viewMaxX, viewMaxY))
 			{
 				continue;
 			}
 			final Graphics2D pg = (Graphics2D) graphics.create();
 			try
 			{
-				final AffineTransform xform = pieceAffine(piece, bounds, nudgeX, nudgeY);
+				final AffineTransform xform = pieceAffine(piece, bounds);
 				if (!xform.isIdentity())
 				{
 					pg.transform(xform);
 				}
-				pg.clip(pieceClipScreen(piece, bounds, nudgeX, nudgeY));
-				final double shiftX = -piece.dx + nudgeX;
-				final double shiftY = -piece.dy + nudgeY;
+				pg.clip(pieceClipScreen(piece, bounds));
+				final double shiftX = -piece.dx;
+				final double shiftY = -piece.dy;
 				final int[] sourceBounds = piece.srcBounds();
 				drawTileLayer(pg, bounds, piece.plane, sourceZoom, shiftX, shiftY, keyVoid, sourceBounds);
 			}
@@ -364,36 +362,36 @@ class MapTileRenderer
 		return true;
 	}
 
-	private AffineTransform pieceAffine(DungeonPiece piece, Rectangle bounds, int nudgeX, int nudgeY)
+	private AffineTransform pieceAffine(DungeonPiece piece, Rectangle bounds)
 	{
 		final int[] b = piece.srcBounds();
-		final double wx = (b[0] + b[2] + 1) / 2.0 + piece.dx - nudgeX;
-		final double wy = (b[1] + b[3] + 1) / 2.0 + piece.dy - nudgeY;
+		final double wx = (b[0] + b[2] + 1) / 2.0 + piece.dx;
+		final double wy = (b[1] + b[3] + 1) / 2.0 + piece.dy;
 		return DungeonPieceTransform.affine(piece.rot, piece.flipX, piece.flipY,
 			camera.screenX(wx, bounds), camera.screenY(wy, bounds));
 	}
 
-	private Area pieceClipScreen(DungeonPiece piece, Rectangle bounds, int nudgeX, int nudgeY)
+	private Area pieceClipScreen(DungeonPiece piece, Rectangle bounds)
 	{
 		final Area clip = new Area();
 		for (int[] r : piece.rects)
 		{
 			final Rectangle hole = worldRectToScreen(
-				r[0] + piece.dx - nudgeX, r[1] + piece.dy - nudgeY,
-				r[2] + 1 + piece.dx - nudgeX, r[3] + 1 + piece.dy - nudgeY, bounds);
+				r[0] + piece.dx, r[1] + piece.dy,
+				r[2] + 1 + piece.dx, r[3] + 1 + piece.dy, bounds);
 			clip.add(new Area(hole));
 		}
 		return clip;
 	}
 
-	private static boolean pieceOnScreen(DungeonPiece piece, int nudgeX, int nudgeY,
+	private static boolean pieceOnScreen(DungeonPiece piece,
 		int viewMinX, int viewMinY, int viewMaxX, int viewMaxY)
 	{
 		final int[] b = piece.worldBounds();
-		final int minX = b[0] - nudgeX;
-		final int minY = b[1] - nudgeY;
-		final int maxX = b[2] - nudgeX;
-		final int maxY = b[3] - nudgeY;
+		final int minX = b[0];
+		final int minY = b[1];
+		final int maxX = b[2];
+		final int maxY = b[3];
 		final int pad = piece.rot == 0 ? 0 : Math.max(maxX - minX, maxY - minY);
 		return maxX + pad >= viewMinX && minX - pad <= viewMaxX
 			&& maxY + pad >= viewMinY && minY - pad <= viewMaxY;
@@ -489,15 +487,13 @@ class MapTileRenderer
 	 */
 	private void clipToZone(Graphics2D graphics, Rectangle bounds, UndergroundZone zone, int worldXOffset, int worldYOffset)
 	{
-		// Dev tuner: shrink (or, when negative, widen) every clip edge by this many tiles.
-		final int trim = zone == camera.getTunableZone() ? camera.getDungeonTuner().clipTrim(zone) : 0;
 		final Area clipped = new Area();
 
 		if (zone.hasClipOverride())
 		{
 			final Rectangle hole = worldRectToScreen(
-				zone.getClipMinX() - worldXOffset + trim, zone.getClipMinY() - worldYOffset + trim,
-				zone.getClipMaxX() - worldXOffset - trim, zone.getClipMaxY() - worldYOffset - trim, bounds);
+				zone.getClipMinX() - worldXOffset, zone.getClipMinY() - worldYOffset,
+				zone.getClipMaxX() - worldXOffset, zone.getClipMaxY() - worldYOffset, bounds);
 			clipped.add(new Area(hole.intersection(bounds)));
 		}
 		else
@@ -510,8 +506,8 @@ class MapTileRenderer
 			for (WikiMap map : maps)
 			{
 				final Rectangle hole = worldRectToScreen(
-					map.getMinX() - worldXOffset + trim, map.getMinY() - worldYOffset + trim,
-					map.getMaxX() - worldXOffset - trim, map.getMaxY() - worldYOffset - trim, bounds);
+					map.getMinX() - worldXOffset, map.getMinY() - worldYOffset,
+					map.getMaxX() - worldXOffset, map.getMaxY() - worldYOffset, bounds);
 				clipped.add(new Area(hole.intersection(bounds)));
 			}
 		}

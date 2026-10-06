@@ -53,7 +53,7 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@link MapDragController} - map panning, orb dragging, wheel zoom</li>
  *   <li>{@link MapContextMenuHandler} - client menu detection, right-click actions</li>
  *   <li>{@link MapLayerInputHandler} - UI button hit tests, chips, layer toggles, finder interaction</li>
- *   <li>{@link MapKeyHandler} - hotkeys, Shift state, tuner keyboard shortcuts</li>
+ *   <li>{@link MapKeyHandler} - hotkeys and Shift state</li>
  * </ul>
  */
 @Slf4j
@@ -108,7 +108,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 		this.contextMenuHandler = new MapContextMenuHandler(camera, config, pluginProvider);
 		this.layerInputHandler = new MapLayerInputHandler(
 			camera, pluginProvider, finder, poiIndex, monsterIndex, slayerTaskTracker);
-		this.keyHandler = new MapKeyHandler(camera, config, pluginProvider);
+		this.keyHandler = new MapKeyHandler(camera, pluginProvider);
 	}
 
 	public WorldMapInput(

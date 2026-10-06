@@ -24,31 +24,23 @@
  */
 package com.bettermap.ui.input;
 
-import com.bettermap.BetterMapConfig;
 import com.bettermap.BetterMapPlugin;
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.map.DungeonTuner;
 import com.bettermap.map.MapCamera;
 import java.awt.event.KeyEvent;
 import javax.inject.Provider;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 
 /**
- * Handles keyboard navigation, hotkeys (Escape, Space, C), Shift modifier tracking,
- * and dev-tuner keyboard controls.
+ * Handles keyboard navigation, hotkeys (Escape, Space, C) and Shift modifier tracking.
  */
-@Slf4j
 public class MapKeyHandler
 {
 	private final MapCamera camera;
-	private final BetterMapConfig config;
 	private final Provider<BetterMapPlugin> pluginProvider;
 
-	public MapKeyHandler(MapCamera camera, BetterMapConfig config, Provider<BetterMapPlugin> pluginProvider)
+	public MapKeyHandler(MapCamera camera, Provider<BetterMapPlugin> pluginProvider)
 	{
 		this.camera = camera;
-		this.config = config;
 		this.pluginProvider = pluginProvider;
 	}
 
@@ -70,13 +62,6 @@ public class MapKeyHandler
 			// Hub review F2: leave genuine Escape input to the native client.
 			// Do not consume it and dispatch a replacement close action.
 			return false;
-		}
-
-		if (config.undergroundTuner() && camera.isActive() && camera.getTunableZone() != null
-			&& handleTunerKey(event))
-		{
-			event.consume();
-			return true;
 		}
 
 		if ((event.getKeyCode() == KeyEvent.VK_SPACE || event.getKeyCode() == KeyEvent.VK_C)
@@ -103,48 +88,4 @@ public class MapKeyHandler
 		}
 	}
 
-	private boolean handleTunerKey(KeyEvent event)
-	{
-		final UndergroundZone zone = camera.getTunableZone();
-		if (zone == null)
-		{
-			return false;
-		}
-		final DungeonTuner tuner = camera.getDungeonTuner();
-		final int step = event.isShiftDown() ? 10 : 1;
-		switch (event.getKeyCode())
-		{
-			case KeyEvent.VK_LEFT:
-				tuner.nudge(zone, -step, 0);
-				break;
-			case KeyEvent.VK_RIGHT:
-				tuner.nudge(zone, step, 0);
-				break;
-			case KeyEvent.VK_UP:
-				tuner.nudge(zone, 0, step);
-				break;
-			case KeyEvent.VK_DOWN:
-				tuner.nudge(zone, 0, -step);
-				break;
-			case KeyEvent.VK_OPEN_BRACKET:
-				tuner.trim(zone, step);
-				break;
-			case KeyEvent.VK_CLOSE_BRACKET:
-				tuner.trim(zone, -step);
-				break;
-			case KeyEvent.VK_R:
-				tuner.reset(zone);
-				break;
-			case KeyEvent.VK_P:
-				if (pluginProvider != null && pluginProvider.get() != null)
-				{
-					pluginProvider.get().printToChat("[Atlas of Gielinor tuner] " + tuner.describe(zone));
-				}
-				log.debug("[BetterMap tuner] {}", tuner.describe(zone));
-				break;
-			default:
-				return false;
-		}
-		return true;
-	}
 }

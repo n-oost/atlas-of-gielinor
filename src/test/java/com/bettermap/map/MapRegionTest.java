@@ -39,6 +39,13 @@ import org.junit.Test;
  */
 public class MapRegionTest
 {
+	@org.junit.BeforeClass
+	public static void loadRegions()
+	{
+		MapRegion.load();
+		assertTrue("Region catalog must load before existing checks", MapRegion.isLoaded());
+	}
+
 	/**
 	 * The core guarantee: a city box must not be swallowed by a neighbour. If a city's own centre
 	 * resolves to something else, its extents are wrong or a smaller box overlaps it.

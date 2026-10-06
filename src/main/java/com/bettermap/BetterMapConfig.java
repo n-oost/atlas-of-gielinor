@@ -420,19 +420,6 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "undergroundTuner",
-		name = "Dungeon Layer Tuner",
-		description = "While a dungeon layer is open: arrow keys slide its tiles over the surface, "
-			+ "[ and ] tighten/loosen its clip, R resets, P prints the corrected coordinates to chat.",
-		position = 0,
-		section = developerSection
-	)
-	default boolean undergroundTuner()
-	{
-		return false;
-	}
-
-	@ConfigItem(
 		keyName = "zoomSpeed",
 		name = "Zoom Speed",
 		description = "How far one notch of the mouse wheel zooms",
@@ -804,19 +791,6 @@ public interface BetterMapConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "clueMinZoom",
-		name = "Clue Scroll Targets",
-		description = "Active clue target markers. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
-		position = 28,
-		section = iconsZoomSection
-	)
-	@Units("px/tile")
-	default double clueMinZoom()
-	{
-		return 0.0;
-	}
-
-	@ConfigItem(
 		keyName = "pluginMarkerMinZoom",
 		name = "Other Plugin Markers",
 		description = "Markers supplied by other RuneLite plugins. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
@@ -944,19 +918,6 @@ public interface BetterMapConfig extends Config
 	default double boatLabelMinZoom()
 	{
 		return 0.65;
-	}
-
-	@ConfigItem(
-		keyName = "clueLabelMinZoom",
-		name = "Clue Target Names",
-		description = "Clue target labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
-		position = 17,
-		section = iconsLabelZoomSection
-	)
-	@Units("px/tile")
-	default double clueLabelMinZoom()
-	{
-		return 0.45;
 	}
 
 	@ConfigItem(
@@ -1291,8 +1252,8 @@ public interface BetterMapConfig extends Config
 
 	@ConfigItem(
 		keyName = "showClueScroll",
-		name = "Show Clue Scroll Target",
-		description = "Marks the solved location of your active clue scroll step on the map, using RuneLite's clue scroll plugin",
+		name = "Show Clue Helper",
+		description = "Shows Go to Clue and the native clue hint card. Clue markers use Other Plugin Markers.",
 		position = 2,
 		section = iconsSection
 	)

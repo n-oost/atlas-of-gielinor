@@ -131,46 +131,6 @@ class MapChromeRenderer
 		return topBarLeftChipsRight > 0 ? topBarLeftChipsRight + 8 : (int) bounds.getMinX() + 8;
 	}
 
-	/** Dev dungeon-layer tuner readout: current nudge and the paste-ready corrected coordinates. */
-	void drawTunerReadout(Graphics2D graphics, Rectangle bounds)
-	{
-		if (!config.undergroundTuner())
-		{
-			return;
-		}
-		final com.bettermap.data.UndergroundZone zone = camera.getTunableZone();
-		graphics.setFont(SMALL);
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		final FontMetrics fm = graphics.getFontMetrics();
-		final String l1 = zone == null
-			? "Dungeon tuner on — hover or open a dungeon layer"
-			: zone.name();
-		final net.runelite.api.coords.WorldPoint tuned =
-			zone == null ? null : camera.getDungeonTuner().tunedInterior(zone);
-		final String l2 = zone == null
-			? "arrows nudge · [ ] clip · R reset · P print"
-			: "new WorldPoint(" + tuned.getX() + ", " + tuned.getY() + ", " + tuned.getPlane() + ")";
-		final String l3 = zone == null
-			? ""
-			: "nudge " + camera.getDungeonTuner().offsetX(zone) + "," + camera.getDungeonTuner().offsetY(zone)
-				+ "   clipTrim " + camera.getDungeonTuner().clipTrim(zone) + "   ([ ] R P, Shift=x10)";
-		final int w = Math.max(Math.max(fm.stringWidth(l1), fm.stringWidth(l2)), fm.stringWidth(l3)) + 16;
-		final int h = l3.isEmpty() ? 30 : 44;
-		final int x = (int) bounds.getMinX() + 8;
-		final int y = (int) bounds.getMaxY() - h - 8;
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(x, y, w, h, 8, 8);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(x, y, w, h, 8, 8);
-		graphics.setColor(CARD_TEXT);
-		graphics.drawString(l1, x + 8, y + 13);
-		graphics.drawString(l2, x + 8, y + 26);
-		if (!l3.isEmpty())
-		{
-			graphics.drawString(l3, x + 8, y + 39);
-		}
-	}
-
 	void drawPlaneSwitcher(Graphics2D graphics, Rectangle bounds)
 	{
 		if (!config.showPlaneSwitcher())
@@ -332,7 +292,7 @@ class MapChromeRenderer
 		graphics.setColor(CARD_TITLE);
 		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 7, 7);
 
-		// Purple diamond, matching the clue markers on the map.
+		// Purple diamond for the clue navigation button.
 		final int cx = button.x + 7 + glyph / 2;
 		final int cy = button.y + button.height / 2;
 		final int r = glyph / 2;
@@ -671,8 +631,7 @@ class MapChromeRenderer
 	/**
 	 * Collapsible clue scroll helper card for the fullscreen world map.
 	 *
-	 * <p>Emulates RuneLite's default in-game {@code ClueScrollOverlay} which is hidden while BetterMap
-	 * takes over the screen in fullscreen mode, styled with BetterMap's gold/dark card theme.
+	 * <p>Displays the native clue plugin's hint panel inside Better Map's card.
 	 */
 	void drawCluePanel(Graphics2D graphics, Rectangle bounds)
 	{
@@ -680,18 +639,15 @@ class MapChromeRenderer
 		{
 			camera.setCluePanelBounds(null);
 			camera.setCluePanelHeaderBounds(null);
-			camera.setCluePanelPanButton(null);
 			return;
 		}
 
-		final List<WorldPoint> locations = clueScrollTracker.locations();
 		final PanelComponent cluePanel = clueScrollTracker.cluePanel();
 		final boolean hasPanel = cluePanel != null && !cluePanel.getChildren().isEmpty();
-		if (locations.isEmpty() && !hasPanel)
+		if (!hasPanel)
 		{
 			camera.setCluePanelBounds(null);
 			camera.setCluePanelHeaderBounds(null);
-			camera.setCluePanelPanButton(null);
 			return;
 		}
 
@@ -700,7 +656,6 @@ class MapChromeRenderer
 		{
 			camera.setCluePanelBounds(null);
 			camera.setCluePanelHeaderBounds(null);
-			camera.setCluePanelPanButton(null);
 			return;
 		}
 
@@ -709,7 +664,7 @@ class MapChromeRenderer
 		final FontMetrics metrics = graphics.getFontMetrics();
 
 		final boolean collapsed = camera.isCluePanelCollapsed();
-		final String title = clueScrollTracker.label() != null ? clueScrollTracker.label() : "Clue Scroll";
+		final String title = "Clue Scroll";
 
 		// The clue plugin's hint is drawn by its own PanelComponent renderer. Its width is an
 		// input, not an output (LineComponent.render echoes the width it is given), so we fix the
@@ -727,8 +682,8 @@ class MapChromeRenderer
 
 		final int contentH = measured != null ? Math.max(metrics.getHeight(), measured.height) : 0;
 		final int panelW = collapsed
-			? Math.min(260, Math.max(185, metrics.stringWidth(title) + 56))
-			: Math.min(280, Math.max(185, (measured != null ? measured.width : metrics.stringWidth(title) + 56) + 16));
+			? Math.min(260, Math.max(185, metrics.stringWidth(title) + 38))
+			: Math.min(280, Math.max(185, (measured != null ? measured.width : metrics.stringWidth(title) + 38) + 16));
 		final int panelH = collapsed ? headerH : headerH + 4 + Math.max(metrics.getHeight(), contentH) + 6;
 
 		final int panelX = (int) bounds.getMinX() + 8;
@@ -758,29 +713,13 @@ class MapChromeRenderer
 		graphics.setColor(CARD_TITLE);
 		graphics.drawString(title, panel.x + 8 + glyph + 6, panel.y + 16);
 
-		// Pan button [⤹]
-		final Rectangle panBtn = new Rectangle(panel.x + panel.width - 40, panel.y + 3, 18, 18);
-		final java.awt.Point cursor = input.getCursor();
-		final boolean hoverPan = cursor != null && panBtn.contains(cursor);
-		if (hoverPan)
-		{
-			graphics.setColor(CARD_EDGE);
-			graphics.fillRoundRect(panBtn.x, panBtn.y, panBtn.width, panBtn.height, 4, 4);
-			graphics.setColor(Color.BLACK);
-		}
-		else
-		{
-			graphics.setColor(CARD_TITLE);
-		}
-		graphics.drawString("\u2939", panBtn.x + 4, panBtn.y + 13);
-
 		// Chevron [▼] / [▲]
 		final Rectangle chevronBtn = new Rectangle(panel.x + panel.width - 20, panel.y + 3, 16, 18);
+		final java.awt.Point cursor = input.getCursor();
 		final boolean hoverChevron = cursor != null && chevronBtn.contains(cursor);
 		graphics.setColor(hoverChevron ? CARD_TITLE : TEXT_DIM);
 		graphics.drawString(collapsed ? "\u25BC" : "\u25B2", chevronBtn.x + 2, chevronBtn.y + 13);
 
-		camera.setCluePanelPanButton(panBtn);
 		camera.setCluePanelHeaderBounds(new Rectangle(panel.x, panel.y, panel.width, headerH));
 		camera.setCluePanelBounds(panel);
 
@@ -794,17 +733,6 @@ class MapChromeRenderer
 		graphics.drawLine(panel.x + 6, panel.y + headerH, panel.x + panel.width - 6, panel.y + headerH);
 
 		final int contentY = panel.y + headerH + 4;
-		if (!hasPanel)
-		{
-			if (!locations.isEmpty())
-			{
-				final WorldPoint wp = locations.get(0);
-				graphics.setColor(CARD_TEXT);
-				graphics.drawString("Target: " + wp.getX() + ", " + wp.getY(), panel.x + 10, contentY + 13);
-			}
-			return;
-		}
-
 		// RuneLite's own PanelComponent renderer draws the clue plugin's hint verbatim (white
 		// body text, centred TitleComponents) inside Better Map's gold card. Its background is
 		// suppressed so only the card box shows.

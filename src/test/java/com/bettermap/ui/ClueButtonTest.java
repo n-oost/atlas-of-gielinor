@@ -43,7 +43,6 @@ import com.bettermap.map.WorldMapInput;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import com.bettermap.BetterMapPlugin;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -92,8 +91,6 @@ public class ClueButtonTest
 	{
 		List<WorldPoint> targets = Collections.singletonList(new WorldPoint(3200, 3200, 0));
 		PanelComponent panel;
-		String enemyText;
-		String labelText = "Emote clue";
 
 		TestClueTracker()
 		{
@@ -107,22 +104,11 @@ public class ClueButtonTest
 		}
 
 		@Override
-		public String label()
-		{
-			return labelText;
-		}
-
-		@Override
 		public PanelComponent cluePanel()
 		{
 			return panel;
 		}
 
-		@Override
-		public String enemy()
-		{
-			return enemyText;
-		}
 	}
 
 	private static PanelComponent panelOf(LayoutableRenderableEntity... children)
@@ -267,7 +253,6 @@ public class ClueButtonTest
 		final Rectangle expandedBounds = camera.getCluePanelBounds();
 		assertNotNull("Expanded clue panel bounds must not be null", expandedBounds);
 		assertTrue("Expanded panel height must be greater than header height (24)", expandedBounds.height > 24);
-		assertNotNull("Pan button bounds must not be null", camera.getCluePanelPanButton());
 		assertNotNull("Header bounds must not be null", camera.getCluePanelHeaderBounds());
 
 		// Collapsed state
@@ -277,11 +262,12 @@ public class ClueButtonTest
 		assertNotNull("Collapsed clue panel bounds must not be null", collapsedBounds);
 		assertEquals("Collapsed panel height must equal header height (24)", 24, collapsedBounds.height);
 
-		// Empty hint panel (no children): card still drawn from the target fallback, no crash.
+		// Empty native hint panel: no custom fallback card.
 		camera.setCluePanelCollapsed(false);
 		tracker.panel = new PanelComponent();
 		renderer.drawCluePanel(g, bounds);
-		assertNotNull("Clue panel must still render from the location fallback", camera.getCluePanelBounds());
+		assertNull("Clue panel needs native hint content", camera.getCluePanelBounds());
+		tracker.panel = panelOf(line("Think"));
 
 		// Yield when layers panel is open
 		camera.setLayersPanelOpen(true);
@@ -337,15 +323,7 @@ public class ClueButtonTest
 		final TestConfig config = new TestConfig();
 		config.fullscreenMap = true;
 		final MapCamera camera = new MapCamera();
-		final boolean[] goToClueCalled = new boolean[1];
-		final WorldMapInput input = new WorldMapInput(camera, config, () -> new BetterMapPlugin()
-		{
-			@Override
-			public void goToClue()
-			{
-				goToClueCalled[0] = true;
-			}
-		}, null);
+		final WorldMapInput input = new WorldMapInput(camera, config, null, null);
 		final MapLayout layout = new MapLayout(null, config);
 		final TestClueTracker tracker = new TestClueTracker();
 		tracker.panel = panelOf(line("Think"));
@@ -360,17 +338,6 @@ public class ClueButtonTest
 		renderer.drawCluePanel(g, bounds);
 
 		final java.awt.Component source = new java.awt.Component() {};
-		final Rectangle panBtn = camera.getCluePanelPanButton();
-		assertNotNull(panBtn);
-		final java.awt.event.MouseEvent panClick = new java.awt.event.MouseEvent(
-			source, java.awt.event.MouseEvent.MOUSE_PRESSED,
-			System.currentTimeMillis(), java.awt.event.MouseEvent.BUTTON1_DOWN_MASK,
-			panBtn.x + 2, panBtn.y + 2, 1, false, java.awt.event.MouseEvent.BUTTON1
-		);
-		input.mousePressed(panClick);
-		assertTrue("Clicking pan button must trigger goToClue", goToClueCalled[0]);
-		assertTrue("Clicking pan button must consume event", panClick.isConsumed());
-
 		// Header click toggles collapse
 		camera.setCluePanelCollapsed(false);
 		final Rectangle header = camera.getCluePanelHeaderBounds();

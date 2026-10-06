@@ -34,7 +34,6 @@ All 12 POI categories are covered: Banks, Shops and Trade, Skilling, Agility Sho
 | Sailing Ports | 0.0 | `sailingPortMinZoom` |
 | Port Notice Boards | 0.8 | `portNoticeBoardMinZoom` |
 | Player Boats | 0.0 | `playerBoatMinZoom` |
-| Clue Scroll Targets | 0.0 | `clueMinZoom` |
 | Other Plugin Markers | 0.0 | `pluginMarkerMinZoom` |
 | Dungeon Navigation Buttons | 0.0 | `dungeonNavigationMinZoom` |
 | Travel Network Stations | 0.0 | `travelStationMinZoom` |
@@ -52,7 +51,6 @@ All 12 POI categories are covered: Banks, Shops and Trade, Skilling, Agility Sho
 | Slayer Task Names | 0.65 | `slayerTaskLabelMinZoom` |
 | Ground Item Names | 14.0 | `groundItemLabelMinZoom` |
 | Player Boat Names | 0.65 | `boatLabelMinZoom` |
-| Clue Target Names | 0.45 | `clueLabelMinZoom` |
 | Dungeon Navigation Names | 1.5 | `dungeonNavigationLabelMinZoom` |
 
 ## Visibility rules
@@ -62,10 +60,12 @@ All 12 POI categories are covered: Banks, Shops and Trade, Skilling, Agility Sho
 - Hover still reveals dungeon button names at any zoom where the button is visible. Surface dungeon button names remain hover-only.
 - Player position, active route lines, search flashes and open clue/raid panels remain navigation or active-task UI, rather than POI categories.
 
+Clue markers come from RuneLite and use Other Plugin Markers. The Clue helper toggle controls only Go to Clue and the native hint card.
+
 ## In-game checks
 
 1. Toggle Agility Shortcuts independently of Skilling and Travel; its default threshold is 0.20.
 2. Toggle Skilling to show/hide Slayer masters, and change their threshold independently of other skilling icons.
 3. Enable Sailing Lookouts, select the appropriate floor, and zoom across its threshold.
 4. Change a category threshold above/below the current zoom. Hidden icons must lose hover cards; overlap filtering can still thin visible icons.
-5. Use Hide all to verify the new categories, Other icons and Clue Targets are included.
+5. Use Hide all to verify the new categories, Other icons and plugin markers are included.

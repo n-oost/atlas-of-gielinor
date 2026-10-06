@@ -32,10 +32,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -67,7 +65,8 @@ public class GroundItemIndex
 	private static final String RESOURCE = "/com/bettermap/data/ground_items.json.gz";
 
 	private final List<Spawn> spawns = new ArrayList<>();
-	private final Map<Long, List<Spawn>> chunkMap = new HashMap<>();
+	private SpatialIndex<Spawn> spatialIndex = new SpatialIndex<>(
+		Collections.emptyList(), Spawn::getPlane, Spawn::getX, Spawn::getY);
 
 	@Getter
 	private volatile boolean loaded;
@@ -127,19 +126,14 @@ public class GroundItemIndex
 			return;
 		}
 
-		final Map<Long, List<Spawn>> spatial = new HashMap<>();
-		for (Spawn spawn : parsed)
-		{
-			spatial.computeIfAbsent(MapChunkKey.ofWorldPoint(spawn.plane, spawn.x, spawn.y), k -> new ArrayList<>())
-				.add(spawn);
-		}
+		final SpatialIndex<Spawn> spatial = new SpatialIndex<>(
+			parsed, Spawn::getPlane, Spawn::getX, Spawn::getY);
 
 		synchronized (this)
 		{
 			spawns.clear();
 			spawns.addAll(parsed);
-			chunkMap.clear();
-			chunkMap.putAll(spatial);
+			spatialIndex = spatial;
 		}
 
 		loaded = true;
@@ -178,11 +172,7 @@ public class GroundItemIndex
 	/** The spawn tile nearest this point on the given plane worth at least {@code minValue}, or null. */
 	public synchronized Spawn nearest(int worldX, int worldY, int plane, int radius, int minValue)
 	{
-		return MapChunkKey.findNearest(
-			chunkMap, plane, worldX, worldY, radius,
-			s -> s.x, s -> s.y,
-			s -> s.getValue() >= minValue
-		);
+		return spatialIndex.nearest(plane, worldX, worldY, radius, s -> s.getValue() >= minValue);
 	}
 
 	/**
@@ -192,7 +182,7 @@ public class GroundItemIndex
 	public synchronized void forEachInArea(int plane, int minWorldX, int maxWorldX, int minWorldY, int maxWorldY,
 		Consumer<Spawn> consumer)
 	{
-		MapChunkKey.forEachInArea(chunkMap, plane, minWorldX, maxWorldX, minWorldY, maxWorldY, s -> s.x, s -> s.y, consumer);
+		spatialIndex.forEachInArea(plane, minWorldX, maxWorldX, minWorldY, maxWorldY, consumer);
 	}
 
 	/** One world tile and everything that respawns on it. */

@@ -26,7 +26,6 @@ package com.bettermap.ui;
 
 import com.bettermap.BetterMapConfig;
 import com.bettermap.data.sailing.BoatTracker;
-import com.bettermap.map.ClueScrollTracker;
 import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.GroundItemIndex;
 import com.bettermap.map.MapCamera;
@@ -38,7 +37,6 @@ import com.bettermap.map.ShortestPathTracker;
 import com.bettermap.map.SlayerTaskTracker;
 import com.bettermap.map.WorldMapPointReader;
 import com.bettermap.ui.markers.BoatMarkerRenderer;
-import com.bettermap.ui.markers.ClueMarkerRenderer;
 import com.bettermap.ui.markers.FlashMarkerRenderer;
 import com.bettermap.ui.markers.GroundItemMarkerRenderer;
 import com.bettermap.ui.markers.LayerMarkerRenderer;
@@ -62,7 +60,6 @@ class MapMarkerRenderer
 	private final MonsterMarkerRenderer monsterMarkerRenderer;
 	private final BoatMarkerRenderer boatMarkerRenderer;
 	private final PlayerMarkerRenderer playerMarkerRenderer;
-	private final ClueMarkerRenderer clueMarkerRenderer;
 	private final RouteMarkerRenderer routeMarkerRenderer;
 	private final LayerMarkerRenderer layerMarkerRenderer;
 	private final WorldMapPointMarkerRenderer worldMapPointMarkerRenderer;
@@ -79,7 +76,6 @@ class MapMarkerRenderer
 		MonsterIndex monsterIndex,
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
-		ClueScrollTracker clueScrollTracker,
 		ShortestPathTracker shortestPathTracker,
 		GroundItemIndex groundItemIndex,
 		BoatTracker boatTracker,
@@ -92,7 +88,6 @@ class MapMarkerRenderer
 		monsterMarkerRenderer = new MonsterMarkerRenderer(config, camera, monsterIndex, monsterIconManager, slayerTaskTracker, stats, dungeonPieceIndex, visibleTooltipTargets);
 		boatMarkerRenderer = new BoatMarkerRenderer(config, camera, poiIndex, boatTracker, stats, visibleTooltipTargets);
 		playerMarkerRenderer = new PlayerMarkerRenderer(client, config, camera, dungeonPieceIndex);
-		clueMarkerRenderer = new ClueMarkerRenderer(config, camera, clueScrollTracker, stats, visibleTooltipTargets);
 		routeMarkerRenderer = new RouteMarkerRenderer(config, camera, shortestPathTracker);
 		layerMarkerRenderer = new LayerMarkerRenderer(config, camera, poiIndex);
 		worldMapPointMarkerRenderer = new WorldMapPointMarkerRenderer(config, camera, worldMapPointManager, worldMapPointReader, visibleTooltipTargets);
@@ -164,11 +159,6 @@ class MapMarkerRenderer
 	void drawPlayer(Graphics2D graphics, Rectangle bounds)
 	{
 		playerMarkerRenderer.drawPlayer(graphics, bounds);
-	}
-
-	void drawClueMarkers(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
-	{
-		clueMarkerRenderer.drawClueMarkers(graphics, bounds, placed);
 	}
 
 	boolean drawShortestPathRoute(Graphics2D graphics, Rectangle bounds)

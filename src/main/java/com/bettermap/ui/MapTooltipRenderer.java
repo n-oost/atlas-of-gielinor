@@ -41,7 +41,6 @@ import com.bettermap.data.sailing.BoatTracker;
 import com.bettermap.data.sailing.PlayerBoat;
 import com.bettermap.data.sailing.PortNoticeBoard;
 import com.bettermap.data.sailing.SailingPort;
-import com.bettermap.map.ClueScrollTracker;
 import com.bettermap.map.BossLocationIndex;
 import com.bettermap.map.DungeonPieceIndex;
 import com.bettermap.map.GroundItemIndex;
@@ -62,7 +61,6 @@ import com.bettermap.ui.tooltips.BoatTooltipBuilder;
 import com.bettermap.ui.tooltips.MonsterTooltipBuilder;
 import com.bettermap.ui.tooltips.PoiTooltipBuilder;
 import com.bettermap.ui.tooltips.TooltipCard;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -78,7 +76,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.FontManager;
-import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 
@@ -99,7 +96,6 @@ public class MapTooltipRenderer
 	private final DungeonPieceIndex dungeonPieceIndex;
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
-	private final ClueScrollTracker clueScrollTracker;
 	private final ShopIndex shopIndex;
 	private final MapFinder mapFinder;
 	private final GroundItemIndex groundItemIndex;
@@ -124,7 +120,6 @@ public class MapTooltipRenderer
 		DungeonPieceIndex dungeonPieceIndex,
 		MonsterIconManager monsterIconManager,
 		SlayerTaskTracker slayerTaskTracker,
-		ClueScrollTracker clueScrollTracker,
 		ShopIndex shopIndex,
 		MapFinder mapFinder,
 		GroundItemIndex groundItemIndex,
@@ -141,7 +136,6 @@ public class MapTooltipRenderer
 		this.dungeonPieceIndex = dungeonPieceIndex;
 		this.monsterIconManager = monsterIconManager;
 		this.slayerTaskTracker = slayerTaskTracker;
-		this.clueScrollTracker = clueScrollTracker;
 		this.shopIndex = shopIndex;
 		this.mapFinder = mapFinder;
 		this.groundItemIndex = groundItemIndex;
@@ -355,11 +349,6 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		if (drawClueCard(graphics, bounds, probe))
-		{
-			return;
-		}
-
 		if (drawTravelNodeCard(graphics, bounds, probe))
 		{
 			return;
@@ -519,24 +508,6 @@ public class MapTooltipRenderer
 		return false;
 	}
 
-	/** The active clue-scroll target, when one is marked on the map. */
-	private boolean drawClueCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
-	{
-		final WorldPoint clueLoc = clueNear(probe.worldX, probe.worldY, probe.plane, probe.pointRadius);
-		if (clueLoc != null && probe.allows(clueLoc))
-		{
-			final String label = clueScrollTracker != null ? clueScrollTracker.label() : null;
-			final PanelComponent cluePanelHint = clueScrollTracker != null ? clueScrollTracker.cluePanel() : null;
-			final TooltipCard card = poiTooltipBuilder.buildClueCard(clueLoc, label, cluePanelHint);
-			if (card != null)
-			{
-				drawCard(graphics, bounds, probe.cursor, card);
-				return true;
-			}
-		}
-		return false;
-	}
-
 	/** A sailing port under the cursor. */
 	private boolean drawPortCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
@@ -609,11 +580,6 @@ public class MapTooltipRenderer
 		final int worldY = probe.worldY;
 		final int plane = probe.plane;
 		final int pointRadius = probe.pointRadius;
-		final WorldPoint clue = clueNear(worldX, worldY, plane, pointRadius);
-		if (clue != null && probe.allows(clue))
-		{
-			return true;
-		}
 		final MonsterLocationData boss = monsterNear(worldX, worldY);
 		if (boss != null && probe.allows(boss))
 		{
@@ -722,62 +688,6 @@ public class MapTooltipRenderer
 		return new PoiDetails.Detail(specificTitle, cat, lines);
 	}
 
-	private WorldPoint clueNear(int worldX, int worldY, int plane, int radius)
-	{
-		if (clueScrollTracker == null || !config.showClueScroll())
-		{
-			return null;
-		}
-
-		final List<WorldPoint> targets = clueScrollTracker.locations();
-		if (targets.isEmpty())
-		{
-			return null;
-		}
-
-		WorldPoint best = null;
-		int bestDist = radius + 1;
-		for (WorldPoint target : targets)
-		{
-			if (target == null)
-			{
-				continue;
-			}
-			if (target.getPlane() == plane)
-			{
-				final int dx = Math.abs(target.getX() - worldX);
-				final int dy = Math.abs(target.getY() - worldY);
-				final int dist = Math.max(dx, dy);
-				if (dist <= radius && dist < bestDist)
-				{
-					best = target;
-					bestDist = dist;
-				}
-			}
-		}
-
-		if (best == null)
-		{
-			for (WorldPoint target : targets)
-			{
-				if (target == null)
-				{
-					continue;
-				}
-				final int dx = Math.abs(target.getX() - worldX);
-				final int dy = Math.abs(target.getY() - worldY);
-				final int dist = Math.max(dx, dy);
-				if (dist <= Math.min(radius, 3) && dist < bestDist)
-				{
-					best = target;
-					bestDist = dist;
-				}
-			}
-		}
-
-		return best;
-	}
-
 	/** Keeps the hit area a roughly constant size on screen as the zoom changes. */
 	private int hitRadius()
 	{
@@ -883,7 +793,7 @@ public class MapTooltipRenderer
 			{
 				continue;
 			}
-			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex, camera.getDungeonTuner());
+			final java.awt.geom.Point2D point = location.displayPoint(dungeonPieceIndex);
 			final UndergroundZone bossZone = UndergroundZone.byId(location.zoneId);
 			if (bossZone == null && location.plane != camera.getPlane()
 				|| !location.visibleInFocusedLayer(camera)
@@ -917,25 +827,15 @@ public class MapTooltipRenderer
 			}
 			card = compactCard;
 		}
-		drawCard(graphics, bounds, cursor, card.getTitle(), card.getIcon(), card.getLines(), card.getTrailingPanel());
+		drawCard(graphics, bounds, cursor, card.getTitle(), card.getIcon(), card.getLines());
 	}
 
 	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines)
 	{
-		drawCard(graphics, bounds, cursor, title, null, lines, null);
+		drawCard(graphics, bounds, cursor, title, null, lines);
 	}
 
 	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines)
-	{
-		drawCard(graphics, bounds, cursor, title, icon, lines, null);
-	}
-
-	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, List<String> lines, PanelComponent trailingPanel)
-	{
-		drawCard(graphics, bounds, cursor, title, null, lines, trailingPanel);
-	}
-
-	public void drawCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, String title, BufferedImage icon, List<String> lines, PanelComponent trailingPanel)
 	{
 		final Font titleFont = FontManager.getRunescapeBoldFont();
 		final Font bodyFont = SMALL;
@@ -954,19 +854,6 @@ public class MapTooltipRenderer
 
 		final int padding = 7;
 
-		// The clue hint panel, when supplied, is drawn under the text rows by RuneLite's own
-		// PanelComponent renderer. Its width is an input to that renderer, not an output, so we
-		// fix the content width and measure only the height with a throwaway two-pass render.
-		final int panelContentW = CardText.MAX_WIDTH_PX - padding * 2;
-		Dimension panelSize = null;
-		if (trailingPanel != null && !trailingPanel.getChildren().isEmpty())
-		{
-			trailingPanel.setBackgroundColor(null);
-			trailingPanel.setPreferredSize(new Dimension(panelContentW, 0));
-			trailingPanel.setPreferredLocation(new java.awt.Point(0, 0));
-			panelSize = measurePanel(trailingPanel, graphics);
-		}
-
 		int width = 0;
 		for (String titleRow : titleRows)
 		{
@@ -976,18 +863,12 @@ public class MapTooltipRenderer
 		{
 			width = Math.max(width, bodyMetrics.stringWidth(row.getText()));
 		}
-		if (panelSize != null)
-		{
-			width = Math.max(width, panelSize.width);
-		}
 		width = Math.min(width, CardText.MAX_WIDTH_PX);
 
-		final int panelGap = panelSize != null ? 4 : 0;
-		final int panelH = panelSize != null ? panelSize.height : 0;
 		final int boxWidth = width + padding * 2;
 		final int textBlockHeight = titleRows.size() * titleLineHeight + rows.size() * bodyLineHeight;
 		final int minContentHeight = icon != null ? iconSize : 0;
-		final int boxHeight = Math.max(textBlockHeight, minContentHeight) + padding * 2 + panelGap + panelH;
+		final int boxHeight = Math.max(textBlockHeight, minContentHeight) + padding * 2;
 
 		int x = cursor.x + 14;
 		int y = cursor.y + 14;
@@ -1062,33 +943,6 @@ public class MapTooltipRenderer
 			bodyY += bodyLineHeight;
 		}
 
-		if (panelSize != null)
-		{
-			trailingPanel.setBackgroundColor(null);
-			trailingPanel.setPreferredSize(new Dimension(panelContentW, 0));
-			trailingPanel.setPreferredLocation(new java.awt.Point(x + padding, (y + padding + titleRows.size() * titleLineHeight + rows.size() * bodyLineHeight) + panelGap));
-			trailingPanel.render(graphics);
-		}
 	}
 
-	/**
-	 * The surface {@link #measurePanel} measures against.
-	 */
-	private static final BufferedImage MEASURE_SCRATCH = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-
-	private static Dimension measurePanel(PanelComponent panel, Graphics2D reference)
-	{
-		final Graphics2D sg = MEASURE_SCRATCH.createGraphics();
-		try
-		{
-			sg.setFont(reference.getFont());
-			panel.render(sg);
-			final Dimension d = panel.render(sg);
-			return d != null ? d : new Dimension(0, 0);
-		}
-		finally
-		{
-			sg.dispose();
-		}
-	}
 }

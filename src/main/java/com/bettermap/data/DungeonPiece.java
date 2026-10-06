@@ -25,7 +25,7 @@
 package com.bettermap.data;
 
 /**
- * One cave island from the dungeon-layer tuner. Source rects are native-band tiles (inclusive);
+ * One authored cave island. Source rects are native-band tiles (inclusive);
  * {@code overworld = nativeSrc + (dx, dy)}, then optional flip/rotation about the source-bounds
  * centre. Tile drawing uses shift {@code (-dx, -dy)}.
  */

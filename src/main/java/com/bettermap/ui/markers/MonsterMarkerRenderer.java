@@ -175,7 +175,7 @@ public class MonsterMarkerRenderer
 			}
 			final UndergroundZone bossZone = location.zoneId == null || location.zoneId.isEmpty()
 				? null : UndergroundZone.byId(location.zoneId);
-			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex, camera.getDungeonTuner());
+			final java.awt.geom.Point2D display = location.displayPoint(dungeonPieceIndex);
 			final boolean wrongPlane = bossZone == null && location.plane != plane;
 			if (wrongPlane)
 			{

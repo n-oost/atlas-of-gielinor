@@ -158,7 +158,7 @@ public class DualTooltipBugFixTest
 
 		final MapTooltipRenderer renderer = new MapTooltipRenderer(
 			null, config, camera, input, null, null, null, null, null,
-			null, null, null, null, null, null, reader
+			null, null, null, null, null, reader
 		);
 
 		final Rectangle bounds = new Rectangle(0, 0, 1000, 800);
@@ -216,7 +216,7 @@ public class DualTooltipBugFixTest
 
 		final MapTooltipRenderer renderer = new MapTooltipRenderer(
 			null, config, camera, input, null, null, null, null, null,
-			null, null, null, null, null, null, reader
+			null, null, null, null, null, reader
 		);
 
 		final Rectangle bounds = new Rectangle(0, 0, 1000, 800);

@@ -29,12 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import net.runelite.client.ui.overlay.components.PanelComponent;
 
 /**
  * Encapsulates the structured data needed to render a hover tooltip card:
- * header title, category tag, descriptive text lines, optional sprite icon,
- * and an optional custom trailing UI component.
+ * header title, category tag, descriptive text lines and optional sprite icon.
  */
 @Getter
 @Setter
@@ -44,7 +42,6 @@ public class TooltipCard
 	private String category;
 	private final List<String> lines = new ArrayList<>();
 	private BufferedImage icon;
-	private PanelComponent trailingPanel;
 	private boolean preserveCompactLines;
 
 	public TooltipCard()
@@ -79,17 +76,6 @@ public class TooltipCard
 		{
 			this.lines.addAll(lines);
 		}
-	}
-
-	public TooltipCard(String title, BufferedImage icon, List<String> lines, PanelComponent trailingPanel)
-	{
-		this.title = title;
-		this.icon = icon;
-		if (lines != null)
-		{
-			this.lines.addAll(lines);
-		}
-		this.trailingPanel = trailingPanel;
 	}
 
 	public void addLine(String line)

@@ -41,7 +41,6 @@ import java.util.HashSet;
 import java.util.Collections;
 import java.util.ArrayList;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 
 /**
@@ -552,29 +551,6 @@ public class PoiTooltipBuilder
 		if (omitted > 0)
 		{
 			card.addLine("... +" + omitted + " more");
-		}
-
-		return card;
-	}
-
-	/**
-	 * Builds a tooltip card for a clue scroll target.
-	 */
-	public TooltipCard buildClueCard(WorldPoint clueLoc, String label, PanelComponent cluePanel)
-	{
-		if (clueLoc == null)
-		{
-			return null;
-		}
-
-		final String cardTitle = label != null ? label : "Clue Scroll";
-		final TooltipCard card = new TooltipCard(cardTitle);
-		card.addLine("[Clue Scroll Target]");
-		card.addLine(clueLoc.getX() + ", " + clueLoc.getY() + " (Floor " + clueLoc.getPlane() + ")");
-
-		if (cluePanel != null && !cluePanel.getChildren().isEmpty())
-		{
-			card.setTrailingPanel(cluePanel);
 		}
 
 		return card;

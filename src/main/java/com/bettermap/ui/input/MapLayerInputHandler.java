@@ -218,16 +218,6 @@ public class MapLayerInputHandler
 			return "boats-button-toggle";
 		}
 
-		final Rectangle cluePanBtn = camera.getCluePanelPanButton();
-		if (cluePanBtn != null && cluePanBtn.contains(point))
-		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().goToClue();
-			}
-			return "clue-panel-pan";
-		}
-
 		final Rectangle clueHeader = camera.getCluePanelHeaderBounds();
 		if (clueHeader != null && clueHeader.contains(point))
 		{

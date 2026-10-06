@@ -132,6 +132,7 @@ public final class PoiDetails
 		private final Map<Long, Entry> exactMap = new HashMap<>(1200);
 		private final Map<Long, List<Entry>> chunkMap = new HashMap<>(1200);
 		private final Map<String, List<String>> dungeonRequirements = new HashMap<>();
+		private final Map<String, List<String>> mooringRequirements = new HashMap<>();
 		private int[][] moorings = new int[0][];
 		private Map<String, Detail> questDetails = Collections.emptyMap();
 		private boolean loaded;
@@ -244,6 +245,10 @@ public final class PoiDetails
 			for (String[] fields : BundledTsv.read("/com/bettermap/poi/mooring-levels.tsv", 3))
 			{
 				moorings.add(new int[]{Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), Integer.parseInt(fields[2])});
+				if (fields.length > 4)
+				{
+					prepared.mooringRequirements.put(fields[3], List.of(Arrays.copyOfRange(fields, 4, fields.length)));
+				}
 			}
 			prepared.moorings = moorings.toArray(new int[0][]);
 			prepared.questDetails = QuestDetailsData.load();
@@ -305,7 +310,7 @@ public final class PoiDetails
 		// must not replace the mooring tooltip.
 		if ("mooring_point".equals(poi.getKey()))
 		{
-			return detailFromCategory(poi);
+			return availableDetail(poi);
 		}
 
 		// 1. Direct exact lookup by coordinate key (matching marker type)
@@ -348,307 +353,31 @@ public final class PoiDetails
 			}
 		}
 
-		return detailFromCategory(poi);
+		return availableDetail(poi);
 	}
 
-	/**
-	 * Last resort when no curated entry matches: guess the detail from the POI's own key and
-	 * name. Ordered most specific first - an explicit key wins, then a name keyword, then the
-	 * generic "Point of Interest".
-	 */
-	private static Detail detailFromCategory(PoiIndex.Poi poi)
+	/** Use existing detail data, then show the marker's raw fields when no description exists. */
+	private static Detail availableDetail(PoiIndex.Poi poi)
 	{
-		final Detail imported = "mooring_point".equals(poi.getKey()) ? null : WorldMapSupplement.detail(poi);
+		if ("mooring_point".equals(poi.getKey()))
+		{
+			return mooringDetail(poi);
+		}
+		final Detail imported = WorldMapSupplement.detail(poi);
 		if (imported != null)
 		{
 			return imported;
 		}
-		final String key = poi.getKey();
-		final String name = poi.getName();
-		final String lowerName = name.toLowerCase(Locale.ROOT);
-
-		final List<String> dungeonReq = data.dungeonRequirements.get(name);
-		if (dungeonReq != null)
+		final List<String> requirements = data.dungeonRequirements.get(poi.getName());
+		if (requirements != null)
 		{
-			return new Detail(name, "Dungeons", dungeonReq);
+			return new Detail(poi.getName(), "Dungeons", requirements);
 		}
-
-		if ("rare_trees".equals(key) || (lowerName.contains("tree") && !lowerName.contains("mushtree")))
-		{
-			return new Detail(name, "Skilling • Woodcutting", List.of(
-				"Skill: Woodcutting",
-				"Tool needed: Axe (Bronze to Crystal)",
-				"Check Woodcutting skill guide for exact level requirement"
-			));
-		}
-
-		if ("dungeon".equals(key) || "dungeon_link".equals(key)
-			|| lowerName.contains("dungeon") || lowerName.contains("cave"))
-		{
-			final List<String> specific = data.dungeonRequirements.get(name);
-			if (specific != null)
-			{
-				return new Detail(name, "Dungeons", specific);
-			}
-			return new Detail(name, "Dungeons", List.of(
-				"Type: Dungeon entrance / underground link",
-				"May require light source, rope, or combat gear"
-			));
-		}
-
-		if ("fishing_spot".equals(key) || lowerName.contains("fishing"))
-		{
-			return new Detail(name, "Skilling • Fishing", List.of(
-				"Skill: Fishing",
-				"Tools: Net, Rod + Bait, Pot, or Harpoon",
-				"Check Fishing skill guide for exact bait and level requirements"
-			));
-		}
-
-		if ("mining_site".equals(key) || (lowerName.contains("mine") && !lowerName.contains("minecart")))
-		{
-			return new Detail(name, "Skilling • Mining", List.of(
-				"Skill: Mining",
-				"Tool needed: Pickaxe (Bronze to Crystal)",
-				"Check Mining skill guide for ore levels"
-			));
-		}
-
-		if ("agility_short-cut".equals(key) || lowerName.contains("short-cut") || lowerName.contains("shortcut"))
-		{
-			return new Detail(name, "Agility shortcuts", List.of(
-				"Agility shortcut: bypass obstacles and travel routes faster",
-				"Check Agility skill guide for required level"
-			));
-		}
-
-		if ("agility_training".equals(key) || lowerName.contains("agility") || lowerName.contains("course"))
-		{
-			return new Detail(name, "Skilling • Agility", List.of(
-				"Skill: Agility",
-				"Activity: Obstacle or Rooftop Course",
-				"Check Agility skill guide for course level and lap XP"
-			));
-		}
-
-		if ("hunter_training".equals(key) || lowerName.contains("hunter") || lowerName.contains("hunting"))
-		{
-			return new Detail(name, "Skilling • Hunter", List.of(
-				"Skill: Hunter",
-				"Tools: Traps (box/snare/net/pitfall/deadfall), Noose wand, or Butterfly net",
-				"Check Hunter skill guide for creature level requirements"
-			));
-		}
-
-		if ("farming_patch".equals(key) || lowerName.contains("farming"))
-		{
-			return new Detail(name, "Skilling • Farming", List.of(
-				"Skill: Farming",
-				"Tools needed: Rake, Spade, Seed dibber, Watering can",
-				"Check Farming skill guide for seed levels"
-			));
-		}
-
-		if ("quest_start".equals(key) || lowerName.contains("quest"))
-		{
-			final Detail questDetail = data.questDetails.get(name);
-			if (questDetail != null)
-			{
-				return questDetail;
-			}
-			return new Detail(name, "Quest Start", List.of(
-				"Talk to the quest giver NPC nearby to begin",
-				"Check Quest List in-game for full requirement breakdown"
-			));
-		}
-
-		if (key != null)
-		{
-			if (key.endsWith("_tutor"))
-			{
-				return new Detail(name, "Tutors and services", List.of(
-					"Free starter items and skill advice"
-				));
-			}
-
-			switch (key)
-			{
-				case "thieving":
-					return new Detail(name, "Skilling • Thieving", List.of(
-						"Pick locked chests or steal from stalls for loot",
-						"Check Thieving skill guide for the required level"
-					));
-				case "bank":
-					return new Detail(name, "Banks", List.of(
-						"Bank booth or chest: deposit, withdraw and note items"
-					));
-				case "water_source":
-					return new Detail(name, "Skilling", List.of(
-						"Fill buckets, watering cans, vials and jugs here"
-					));
-				case "cooking_range":
-					return new Detail(name, "Skilling • Cooking", List.of(
-						"Range or fire: cook raw food here",
-						"Some ranges reduce the chance to burn food"
-					));
-				case "anvil":
-					return new Detail(name, "Skilling • Smithing", List.of(
-						"Smithing: needs a hammer and metal bars"
-					));
-				case "furnace":
-					return new Detail(name, "Skilling • Smithing", List.of(
-						"Smelting: turns ore into bars",
-						"Also used for gold jewellery with a mould"
-					));
-				case "altar":
-					if ("Imbued altar".equalsIgnoreCase(name))
-					{
-						return new Detail(name, "Altars", List.of(
-							"Converts refined tephra into imbued tephra during the Zalcano fight"
-						));
-					}
-					return new Detail(name, "Altars", List.of(
-						"Recharges Prayer points"
-					));
-				case "house_portal":
-					return new Detail(name, "Travel", List.of(
-						"Player-owned house portal"
-					));
-				case "mooring_point":
-					return mooringDetail(poi, name);
-				case "salvaging":
-					return new Detail(name, "Skilling • Sailing", List.of(
-						"Salvage shipwrecks using a salvaging hook installed on your vessel"
-					));
-				case "shipwright":
-					return new Detail(name, "Shops and trade", List.of(
-						"Shipyard services: boat retrieval, ship customization, and vessel upgrades"
-					));
-				case "cargo_bay":
-					return new Detail(name, "Tutors and services", List.of(
-						"Port cargo loading bay and shipwreck salvage sorting"
-					));
-				case "noticeboard":
-					if (name.toLowerCase().contains("port task"))
-					{
-						return new Detail(name, "Noticeboard", List.of(
-							"Courier deliveries and maritime bounty contracts"
-						));
-					}
-					return new Detail(name, "Noticeboard", List.of(
-						"View local announcements, activities, and task notices"
-					));
-				case "lookout_point":
-					return new Detail(name, "Sailing", List.of(
-						"High vantage point for coastal, sea, and territory observation"
-					));
-				case "singing_bowl":
-					return new Detail(name, "Skilling • Crafting", List.of(
-						"Sing crystal equipment, tools, and armor using crystal shards",
-						"Requires Song of the Elves to access Prifddinas singing bowls"
-					));
-				case "canoe_station":
-					return new Detail(name, "Travel", List.of(
-						"River transportation via dugout, canoe, or waka",
-						"Craft a canoe using an axe on the fallen tree station"
-					));
-				case "hot_air_balloon":
-					return new Detail(name, "Travel", List.of(
-						"Hot air balloon transport network",
-						"Requires logs to travel (Willow, Yew, Magic)",
-						"Requires Enlightened Journey quest"
-					));
-				case "magic_mushtree":
-					return new Detail(name, "Travel", List.of(
-						"Fossil Island rapid travel network between key locations",
-						"Requires Bone Voyage quest"
-					));
-				case "magic_carpet":
-					return new Detail(name, "Travel", List.of(
-						"Desert and regional carpet transportation",
-						"Talk to the Rug merchant to travel (200 coins)"
-					));
-				case "minecart_network":
-					return new Detail(name, "Travel", List.of(
-						"Great Kourend minecart transit system",
-						"Requires minecart control scroll or 50% Lovakengj favour"
-					));
-				case "sea_current":
-					return new Detail(name, "Travel", List.of(
-						"Ocean speed current",
-						"Increases vessel speed when traveling in the current's direction"
-					));
-				case "poll_booth":
-					return new Detail(name, "Tutors and services", List.of(
-						"Vote in the current poll or read past results"
-					));
-				case "kourend_task":
-					return new Detail(name, "Quests and activities", List.of(
-						"Kourend & Kebos Diary task location",
-						"Claim diary rewards from Elise at Kourend Castle"
-					));
-				case "minigame":
-					return new Detail(name, "Quests and activities", List.of(
-						"Minigame or activity location"
-					));
-				case "task_master":
-					return new Detail(name, "Quests and activities", List.of(
-						"Achievement Diary task master: claim tier rewards",
-						"Tiers: easy, medium, hard, elite"
-					));
-				case "dairy_churn":
-					return new Detail(name, "Skilling • Cooking", List.of(
-						"Churn milk into cream, butter, or cheese"
-					));
-				case "slayer_master":
-					return new Detail(name, "Skilling • Slayer", List.of(
-						"Assigns Slayer tasks; each master has a combat level requirement",
-						"All Slayer Masters also sell Slayer equipment"
-					));
-				case "potters_wheel":
-					return new Detail(name, "Skilling • Crafting", List.of(
-						"Shape soft clay into unbaked pottery"
-					));
-				case "spinning_wheel":
-					return new Detail(name, "Skilling • Crafting", List.of(
-						"Spin wool into balls of wool or flax into bowstrings"
-					));
-				case "tannery":
-					return new Detail(name, "Skilling • Crafting", List.of(
-						"Tan cowhides and dragonhides into leather for a small fee"
-					));
-				case "sawmill":
-					return new Detail(name, "Skilling • Construction", List.of(
-						"Converts logs into planks for Construction"
-					));
-				case "windmill":
-					return new Detail(name, "Skilling • Cooking", List.of(
-						"Grind grain into flour using the hopper and millstones"
-					));
-				case "loom":
-					return new Detail(name, "Skilling • Crafting", List.of(
-						"Weave jute, flax, or willow branches into cloth and sacks"
-					));
-				case "sandpit":
-					return new Detail(name, "Skilling", List.of(
-						"Fill empty buckets with sand for Crafting molten glass"
-					));
-				case "brewery":
-					return new Detail(name, "Skilling • Cooking", List.of(
-						"Brew ales and ciders using a brewing vat"
-					));
-				case "raids_lobby":
-					return new Detail(name, "Quests and activities", List.of(
-						"Raids lobby: form a party and prepare for raid encounters"
-					));
-				case "region_label":
-					return new Detail(name, "Places", List.of(
-						"Named place from the game map"
-					));
-			}
-		}
-
-		return new Detail(name, "Point of Interest", Collections.emptyList());
+		return new Detail(poi.getName(), PoiCategory.of(poi.getKey()).getDisplayName(), List.of(
+			"Type: " + poi.getKey(),
+			"Location: " + poi.getX() + ", " + poi.getY() + " (Plane " + poi.getPlane() + ")",
+			"No additional details available."
+		));
 	}
 
 	public static Detail getDetailByPosition(int worldX, int worldY, int plane, int radius)
@@ -765,42 +494,27 @@ public final class PoiDetails
 		return bestLvl;
 	}
 
-	private static Detail mooringDetail(PoiIndex.Poi poi, String name)
+	private static Detail mooringDetail(PoiIndex.Poi poi)
 	{
-		if ("Mooring buoy".equalsIgnoreCase(name))
-		{
-			return new Detail(name, "Travel", List.of(
-				"Off-shore mooring buoy for docking player vessels",
-				"Requires Sailing to dock"
-			));
-		}
-		if ("Ship boarding plank".equalsIgnoreCase(name))
-		{
-			return new Detail(name, "Travel", List.of(
-				"Port dock for boarding and disembarking player ships"
-			));
-		}
-		final int level = poi != null ? getMooringLevel(poi.getX(), poi.getY()) : 0;
-		if ("Mooring point - The Summer Shore".equalsIgnoreCase(name))
-		{
-			final List<String> lines = new ArrayList<>();
-			lines.add("Mooring point for docking and disembarking player vessels");
-			if (level > 0)
-			{
-				lines.add("Requires Level " + level + " Sailing");
-			}
-			lines.add("Requires completion of Troubled Tortugans");
-			return new Detail(name, "Travel", lines);
-		}
+		final List<String> lines = new ArrayList<>();
+		lines.add("Type: " + poi.getKey());
+		lines.add("Location: " + poi.getX() + ", " + poi.getY() + " (Plane " + poi.getPlane() + ")");
+		final int level = "Mooring buoy".equalsIgnoreCase(poi.getName())
+			|| "Ship boarding plank".equalsIgnoreCase(poi.getName())
+			? 0 : getMooringLevel(poi.getX(), poi.getY());
 		if (level > 0)
 		{
-			return new Detail(name, "Travel", List.of(
-				"Mooring point for docking and disembarking player vessels",
-				"Requires Level " + level + " Sailing"
-			));
+			lines.add("Requires Level " + level + " Sailing");
 		}
-		return new Detail(name, "Travel", List.of(
-			"Mooring point for docking and disembarking player vessels"
-		));
+		final List<String> requirements = data.mooringRequirements.get(poi.getName());
+		if (requirements != null)
+		{
+			lines.addAll(requirements);
+		}
+		if (level <= 0 && (requirements == null || requirements.isEmpty()))
+		{
+			lines.add("No additional details available.");
+		}
+		return new Detail(poi.getName(), "Travel", lines);
 	}
 }

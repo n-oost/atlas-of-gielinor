@@ -463,16 +463,6 @@ public class BetterMapPlugin extends Plugin
 		return lastPlayerLocation;
 	}
 
-	/** Game-chat line, used by the dev dungeon-layer tuner to echo corrected coordinates. */
-	public void printToChat(String message)
-	{
-		if (client != null)
-		{
-			clientThread.invokeLater(() ->
-				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", message, null));
-		}
-	}
-
 	/**
 	 * The player's position in map coordinates.
 	 *
@@ -748,12 +738,12 @@ public class BetterMapPlugin extends Plugin
 			{
 				camera.setActiveFloor(selectedFloor);
 			}
-			final int nudgeX = camera.getDungeonTuner().offsetX(zone);
-			final int nudgeY = camera.getDungeonTuner().offsetY(zone);
+
+
 			final Point2D display = piece == null
-				? new Point2D.Double(point.getX() + 0.5 - zone.getDeltaX() - nudgeX,
-					point.getY() + 0.5 - zone.getDeltaY() - nudgeY)
-				: DungeonPieceTransform.toDisplay(piece, point.getX() + 0.5, point.getY() + 0.5, nudgeX, nudgeY);
+				? new Point2D.Double(point.getX() + 0.5 - zone.getDeltaX(),
+					point.getY() + 0.5 - zone.getDeltaY())
+				: DungeonPieceTransform.toDisplay(piece, point.getX() + 0.5, point.getY() + 0.5);
 			camera.centerOn(display.getX(), display.getY());
 		}
 		else
@@ -809,8 +799,8 @@ public class BetterMapPlugin extends Plugin
 		for (int z = zones.size() - 1; z >= 0; z--)
 		{
 			final UndergroundZone zone = zones.get(z);
-			final int nudgeX = camera.getDungeonTuner().offsetX(zone);
-			final int nudgeY = camera.getDungeonTuner().offsetY(zone);
+
+
 			final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
 			final Integer layer = camera.floorLayerFor(zone);
 			final int plane = camera.getHoveredFloorPlane() != null && camera.getHoveredUndergroundZone() == zone
@@ -842,7 +832,7 @@ public class BetterMapPlugin extends Plugin
 				{
 					continue;
 				}
-				final Point2D nativePoint = DungeonPieceTransform.toNative(piece, displayX, displayY, nudgeX, nudgeY);
+				final Point2D nativePoint = DungeonPieceTransform.toNative(piece, displayX, displayY);
 				final int x = (int) Math.floor(nativePoint.getX());
 				final int y = (int) Math.floor(nativePoint.getY());
 				if (piece.containsNative(x, y))
@@ -852,8 +842,8 @@ public class BetterMapPlugin extends Plugin
 			}
 			if (pieces.isEmpty())
 			{
-				final int x = (int) Math.floor(displayX + zone.getDeltaX() + nudgeX);
-				final int y = (int) Math.floor(displayY + zone.getDeltaY() + nudgeY);
+				final int x = (int) Math.floor(displayX + zone.getDeltaX());
+				final int y = (int) Math.floor(displayY + zone.getDeltaY());
 				final boolean inside = zone.hasClipOverride()
 					? x >= zone.getClipMinX() && x <= zone.getClipMaxX()
 						&& y >= zone.getClipMinY() && y <= zone.getClipMaxY()

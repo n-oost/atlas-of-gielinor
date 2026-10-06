@@ -1,5 +1,7 @@
 package com.bettermap.tiles;
 
+import com.google.common.hash.Hasher;
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,16 +10,14 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardCopyOption;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.inject.Inject;
@@ -36,12 +36,14 @@ import okhttp3.Response;
 public class MapAssetManager
 {
 	static final String REPOSITORY = "https://raw.githubusercontent.com/n-oost/better-map-assets/";
-	static final String CHANNEL_URL = REPOSITORY + "main/channels/tiles-v1.json";
+	private static final String PACK_RESOURCE = "/com/bettermap/data/map-pack.json";
 	static final String COMPATIBILITY = "better-map-tiles-v1";
 	private static final long MAX_ARCHIVE = 128L * 1024 * 1024;
 	private static final long MAX_EXPANDED = 256L * 1024 * 1024;
 	private static final int MAX_JSON = 8 * 1024 * 1024;
-	private static final String TILE_PATH = "tiles/\\d+/(-[1-3]|[0-3])/[0-3]_\\d{1,5}_\\d{1,5}\\.png";
+	private static final int MAX_METADATA = 16 * 1024;
+	private static final int MAX_TILE = 1024 * 1024;
+	private static final Pattern TILE_PATH = Pattern.compile("tiles/\\d+/(-[1-3]|[0-3])/[0-3]_\\d{1,5}_\\d{1,5}\\.png");
 
 	private final OkHttpClient http;
 	private final Gson gson;
@@ -112,7 +114,7 @@ public class MapAssetManager
 		}
 	}
 
-	private void load(Filepath root, boolean downloadsEnabled, int session)
+	private void load(Filepath root, boolean downloadsEnabled, int session) throws IOException
 	{
 		Installation installed = null;
 		try
@@ -120,7 +122,7 @@ public class MapAssetManager
 			Filepath marker = root.join("active.json");
 			if (marker.isFile())
 			{
-				Installation candidate = json(marker, Installation.class, 16384);
+				Installation candidate = json(bytes(marker, MAX_METADATA), Installation.class);
 				validateChannel(candidate.channel);
 				require(candidate.directory != null && candidate.directory.matches("pack-[A-Za-z0-9-]+"), "Invalid installation path");
 				Filepath directory = root.joinSegment(candidate.directory).rooted();
@@ -148,20 +150,25 @@ public class MapAssetManager
 			}
 			return;
 		}
-		final Installation existing = installed;
-		status(session, "Checking for map downloads...");
-		request(CHANNEL_URL, session, response ->
+		Channel channel = pinnedPack();
+		if (installed != null && installed.channel.pack.sha256.equals(channel.pack.sha256))
 		{
-			Channel channel = gson.fromJson(new String(read(response.body().byteStream(), 16384), StandardCharsets.UTF_8), Channel.class);
+			return;
+		}
+		status(session, "Downloading map assets...");
+		request(root, channel, session);
+	}
+
+	/** Metadata is bundled with each plugin release; no remote update channel is consulted. */
+	Channel pinnedPack() throws IOException
+	{
+		try (InputStream in = MapAssetManager.class.getResourceAsStream(PACK_RESOURCE))
+		{
+			require(in != null, "Bundled map pack metadata is missing");
+			Channel channel = json(read(in, MAX_METADATA), Channel.class);
 			validateChannel(channel);
-			if (existing != null && existing.channel.pack.sha256.equals(channel.pack.sha256))
-			{
-				return;
-			}
-			status(session, "Downloading map assets...");
-			request(REPOSITORY + channel.commit + "/" + channel.pack.path, session,
-				packResponse -> download(root, channel, packResponse, session));
-		});
+			return channel;
+		}
 	}
 
 	private synchronized void activate(int session, Filepath directory, List<String> paths)
@@ -172,19 +179,13 @@ public class MapAssetManager
 		}
 	}
 
-	@FunctionalInterface
-	private interface ResponseHandler
-	{
-		void accept(Response response) throws IOException;
-	}
-
-	private synchronized void request(String url, int session, ResponseHandler handler)
+	private synchronized void request(Filepath root, Channel channel, int session)
 	{
 		if (!current(session))
 		{
 			return;
 		}
-		call = http.newCall(new Request.Builder().url(url).build());
+		call = http.newCall(new Request.Builder().url(REPOSITORY + channel.commit + "/" + channel.pack.path).build());
 		call.enqueue(new Callback()
 		{
 			@Override
@@ -203,7 +204,7 @@ public class MapAssetManager
 						return;
 					}
 					require(response.isSuccessful() && response.body() != null, "Asset server returned HTTP " + response.code());
-					handler.accept(response);
+					download(root, channel, response, session);
 				}
 				catch (IOException | RuntimeException e)
 				{
@@ -227,7 +228,7 @@ public class MapAssetManager
 		boolean committed = false;
 		try
 		{
-			MessageDigest digest = digest();
+			Hasher digest = Hashing.sha256().newHasher();
 			long count = 0;
 			try (InputStream in = response.body().byteStream(); OutputStream out = archive.openOutputStream())
 			{
@@ -238,11 +239,11 @@ public class MapAssetManager
 					require(current(session), "Download cancelled");
 					count += n;
 					require(count <= channel.pack.compressedBytes, "Archive exceeds declared size");
-					digest.update(buffer, 0, n);
+					digest.putBytes(buffer, 0, n);
 					out.write(buffer, 0, n);
 				}
 			}
-			require(count == channel.pack.compressedBytes && hex(digest.digest()).equals(channel.pack.sha256), "Archive hash or size mismatch");
+			require(count == channel.pack.compressedBytes && digest.hash().toString().equals(channel.pack.sha256), "Archive hash or size mismatch");
 			status(session, "Installing map assets...");
 			directory = root.createTempDir("pack-").rooted();
 			extract(archive, directory, channel);
@@ -303,7 +304,7 @@ public class MapAssetManager
 				String name = entry.getName();
 				require(!entry.isDirectory() && validPath(name) && names.add(name), "Invalid or duplicate pack entry");
 				require(names.size() <= channel.pack.fileCount, "Too many pack entries");
-				byte[] data = read(zip, name.endsWith(".png") ? 1048576 : MAX_JSON);
+				byte[] data = read(zip, fileLimit(name));
 				expanded += data.length;
 				require(expanded <= channel.pack.uncompressedBytes, "Expanded pack exceeds declared size");
 				Filepath target = directory.join(name);
@@ -316,7 +317,7 @@ public class MapAssetManager
 
 	List<String> validateInstalled(Filepath directory, Channel channel, byte[] rawInventory) throws IOException
 	{
-		Inventory inventory = gson.fromJson(new String(rawInventory, StandardCharsets.UTF_8), Inventory.class);
+		Inventory inventory = json(rawInventory, Inventory.class);
 		require(inventory != null && inventory.schemaVersion == 1 && COMPATIBILITY.equals(inventory.compatibilityId)
 			&& inventory.files != null && inventory.files.size() + 1 == channel.pack.fileCount, "Invalid pack inventory");
 		Set<String> expectedTiles = new HashSet<>();
@@ -326,7 +327,7 @@ public class MapAssetManager
 			String path = item.getKey();
 			Entry entry = item.getValue();
 			require(validPath(path) && !path.equals("inventory.json") && entry != null, "Invalid inventory path");
-			int limit = path.endsWith(".png") ? 1048576 : MAX_JSON;
+			int limit = fileLimit(path);
 			require(entry.size > 0 && entry.size <= limit, "Invalid inventory size");
 			byte[] data = bytes(directory.join(path), limit);
 			require(data.length == entry.size && hash(data).equals(entry.sha256), "Missing or damaged pack file: " + path);
@@ -334,35 +335,37 @@ public class MapAssetManager
 			require(expanded <= channel.pack.uncompressedBytes, "Installed pack exceeds declared size");
 			if (path.endsWith(".png"))
 			{
-				require(data.length >= 24 && Arrays.equals(Arrays.copyOf(data, 8), new byte[]{(byte) 137, 80, 78, 71, 13, 10, 26, 10})
-					&& ByteBuffer.wrap(data, 12, 12).getInt() == 0x49484452
-					&& ByteBuffer.wrap(data, 16, 8).getInt() == 256 && ByteBuffer.wrap(data, 20, 4).getInt() == 256, "Invalid tile dimensions");
+				ByteBuffer header = ByteBuffer.wrap(data);
+				require(data.length >= 24 && header.getLong(0) == 0x89504E470D0A1A0AL // PNG signature
+					&& header.getInt(12) == 0x49484452 // IHDR
+					&& header.getInt(16) == 256 && header.getInt(20) == 256, "Invalid tile dimensions");
 				expectedTiles.add(path.substring(6));
 			}
 		}
 		require(expanded == channel.pack.uncompressedBytes && inventory.files.containsKey("tiles/index.txt"), "Incomplete inventory");
-		List<String> paths = new ArrayList<>();
+		List<String> paths;
 		try (java.io.BufferedReader reader = directory.join("tiles/index.txt").openBufferedReader())
 		{
-			String line;
-			while ((line = reader.readLine()) != null)
-			{
-				paths.add(line);
-			}
+			paths = reader.lines().collect(Collectors.toList());
 		}
 		require(paths.size() == expectedTiles.size() && new HashSet<>(paths).equals(expectedTiles)
 			&& paths.stream().anyMatch(p -> p.startsWith("0/")), "Tile index does not match inventory");
 		return paths;
 	}
 
-	private <T> T json(Filepath file, Class<T> type, int limit) throws IOException
+	private <T> T json(byte[] data, Class<T> type)
 	{
-		return gson.fromJson(new String(bytes(file, limit), StandardCharsets.UTF_8), type);
+		return gson.fromJson(new String(data, StandardCharsets.UTF_8), type);
+	}
+
+	private static int fileLimit(String path)
+	{
+		return path.endsWith(".png") ? MAX_TILE : MAX_JSON;
 	}
 
 	private static boolean validPath(String name)
 	{
-		return name.equals("inventory.json") || name.equals("tiles/index.txt") || name.matches(TILE_PATH);
+		return name.equals("inventory.json") || name.equals("tiles/index.txt") || TILE_PATH.matcher(name).matches();
 	}
 
 	static byte[] bytes(Filepath file, int limit) throws IOException
@@ -389,29 +392,7 @@ public class MapAssetManager
 
 	static String hash(byte[] bytes)
 	{
-		return hex(digest().digest(bytes));
-	}
-
-	private static MessageDigest digest()
-	{
-		try
-		{
-			return MessageDigest.getInstance("SHA-256");
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			throw new IllegalStateException(e);
-		}
-	}
-
-	private static String hex(byte[] digest)
-	{
-		StringBuilder text = new StringBuilder();
-		for (byte b : digest)
-		{
-			text.append(String.format("%02x", b & 255));
-		}
-		return text.toString();
+		return Hashing.sha256().hashBytes(bytes).toString();
 	}
 
 	private static void require(boolean condition, String message) throws IOException

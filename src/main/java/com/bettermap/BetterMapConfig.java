@@ -135,7 +135,7 @@ public interface BetterMapConfig extends Config
 	@ConfigItem(
 		keyName = "downloadMapAssets",
 		name = "Download map assets",
-		description = "Downloads and installs the complete map from GitHub and checks for updates at startup. Toggle off and on to retry a failed download.",
+		description = "Downloads and installs the map pack included with this plugin release from GitHub. Toggle off and on to retry a failed download.",
 		warning = "This feature submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers",
 		position = 0,
 		section = mapSection

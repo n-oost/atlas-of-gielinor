@@ -32,13 +32,11 @@ public class MapAssetManagerTest
 		String source = System.getenv("BETTER_MAP_TEST_ASSETS");
 		org.junit.Assume.assumeNotNull(source);
 		Filepath assets = Filepath.Unchecked.getRooted(java.nio.file.Paths.get(source));
-		MapAssetManager.Channel channel = gson.fromJson(new String(
-			MapAssetManager.bytes(assets.join("channels/tiles-v1.json"), 16384), StandardCharsets.UTF_8), MapAssetManager.Channel.class);
-		MapAssetManager.validateChannel(channel);
+		MapAssetManager manager = new MapAssetManager(new OkHttpClient(), gson, new TileLoader());
+		MapAssetManager.Channel channel = manager.pinnedPack();
 		Filepath archive = assets.join(channel.pack.path);
 		assertEquals(channel.pack.sha256, MapAssetManager.hash(MapAssetManager.bytes(archive, 128 * 1024 * 1024)));
 		MapAssetManager.extract(archive, root(), channel);
-		MapAssetManager manager = new MapAssetManager(new OkHttpClient(), gson, new TileLoader());
 		java.util.List<String> paths = manager.validateInstalled(root(), channel,
 			MapAssetManager.bytes(root().join("inventory.json"), 8 * 1024 * 1024));
 		assertEquals(channel.pack.fileCount - 2, paths.size());
@@ -65,19 +63,23 @@ public class MapAssetManagerTest
 		AtomicInteger requests = new AtomicInteger();
 		OkHttpClient http = fixture.http(requests, false);
 		TileLoader tiles = new TileLoader();
-		MapAssetManager manager = new MapAssetManager(http, gson, tiles);
+		MapAssetManager manager = fixture.manager(http, tiles);
 		Filepath root = root();
 		try
 		{
 			manager.startUp(() -> root, true);
 			await(tiles::hasTiles);
-			assertEquals(2, requests.get());
+			assertEquals(1, requests.get());
 			assertEquals(3, tiles.maxAvailableZoom());
 			assertNotNull(TileStore.read(tiles.getTileDir(), "0/3/0_1_1.png"));
 			assertTrue(root.join("active.json").isFile());
+			// An already installed pinned pack must not contact GitHub, even with downloads enabled.
+			manager.startUp(() -> root, true);
+			await(tiles::hasTiles);
+			assertEquals(1, requests.get());
 			manager.startUp(() -> root, false);
 			await(tiles::hasTiles);
-			assertEquals(2, requests.get());
+			assertEquals(1, requests.get());
 			Filepath tile = tiles.getTileDir().join("0/3/0_1_1.png");
 			manager.shutDown();
 			tile.write("corrupt");
@@ -97,9 +99,10 @@ public class MapAssetManagerTest
 	public void disabledDownloadsNeverReadLegacyTilesOrContactServer() throws Exception
 	{
 		AtomicInteger requests = new AtomicInteger();
-		OkHttpClient http = new Fixture().http(requests, false);
+		Fixture fixture = new Fixture();
+		OkHttpClient http = fixture.http(requests, false);
 		TileLoader tiles = new TileLoader();
-		MapAssetManager manager = new MapAssetManager(http, gson, tiles);
+		MapAssetManager manager = fixture.manager(http, tiles);
 		try
 		{
 			manager.startUp(this::root, false);
@@ -117,9 +120,10 @@ public class MapAssetManagerTest
 	public void badArchiveHashDoesNotActivateOrCommitInstallation() throws Exception
 	{
 		AtomicInteger requests = new AtomicInteger();
-		OkHttpClient http = new Fixture().http(requests, true);
+		Fixture fixture = new Fixture();
+		OkHttpClient http = fixture.http(requests, true);
 		TileLoader tiles = new TileLoader();
-		MapAssetManager manager = new MapAssetManager(http, gson, tiles);
+		MapAssetManager manager = fixture.manager(http, tiles);
 		try
 		{
 			manager.startUp(this::root, true);
@@ -222,15 +226,28 @@ public class MapAssetManagerTest
 			return new OkHttpClient.Builder().addInterceptor(chain ->
 			{
 				requests.incrementAndGet();
-				boolean isChannel = chain.request().url().toString().equals(MapAssetManager.CHANNEL_URL);
-				byte[] body = isChannel ? gson.toJson(channel).getBytes(StandardCharsets.UTF_8) : archive.clone();
-				if (!isChannel && corrupt)
+				assertEquals(MapAssetManager.REPOSITORY + channel.commit + "/" + channel.pack.path,
+					chain.request().url().toString());
+				byte[] body = archive.clone();
+				if (corrupt)
 				{
 					body[0] ^= 1;
 				}
 				return new Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1)
 					.code(200).message("OK").body(ResponseBody.create(null, body)).build();
 			}).build();
+		}
+
+		MapAssetManager manager(OkHttpClient http, TileLoader tiles)
+		{
+			return new MapAssetManager(http, gson, tiles)
+			{
+				@Override
+				Channel pinnedPack()
+				{
+					return channel;
+				}
+			};
 		}
 	}
 }

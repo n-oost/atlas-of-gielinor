@@ -24,13 +24,14 @@
  */
 package com.bettermap;
 
-import com.bettermap.ui.input.PanButton;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+
+import bettermap.ui.input.PanButton;
 
 public class PanButtonTest
 {

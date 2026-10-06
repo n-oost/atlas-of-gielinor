@@ -30,15 +30,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+import bettermap.map.PrifddinasShift;
+
 public class PrifddinasShiftTest
 {
+	@org.junit.BeforeClass
+	public static void loadPlacement()
+	{
+		PrifddinasShift.load();
+		assertTrue(PrifddinasShift.isLoaded());
+	}
+
 	@Test
 	public void gwenithCowsGiveTheMeasuredOffset()
 	{
 		assertEquals(1024, 3213 - 2189);
 		assertEquals(2752, 6170 - 3418);
-		assertEquals(PrifddinasShift.OFFSET_X, 3213 - 2189);
-		assertEquals(PrifddinasShift.OFFSET_Y, 6170 - 3418);
+		assertEquals(PrifddinasShift.get().getOffsetX(), 3213 - 2189);
+		assertEquals(PrifddinasShift.get().getOffsetY(), 6170 - 3418);
 	}
 
 	@Test
@@ -54,7 +63,7 @@ public class PrifddinasShiftTest
 	public void lletyaIsOutsideTheOverlaySlot()
 	{
 		assertFalse(PrifddinasShift.containsOverworld(2346, 3180));
-		assertFalse(PrifddinasShift.containsInstance(2346 + PrifddinasShift.OFFSET_X, 3180 + PrifddinasShift.OFFSET_Y));
+		assertFalse(PrifddinasShift.containsInstance(2346 + PrifddinasShift.get().getOffsetX(), 3180 + PrifddinasShift.get().getOffsetY()));
 		assertEquals(2346, PrifddinasShift.toDisplayX(2346, 3180));
 		assertEquals(3180, PrifddinasShift.toDisplayY(2346, 3180));
 	}

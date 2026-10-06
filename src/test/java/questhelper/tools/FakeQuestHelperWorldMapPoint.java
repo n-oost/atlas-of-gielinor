@@ -31,7 +31,7 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
  * Stands in for Quest Helper's {@code QuestHelperWorldMapPoint} in tests.
  *
  * <p>It lives in a {@code questhelper.*} package on purpose: the production check in
- * {@link com.bettermap.map.QuestHelperTracker} walks the class hierarchy looking for that string,
+ * {@link bettermap.map.QuestHelperTracker} walks the class hierarchy looking for that string,
  * and a fake in {@code com.bettermap.*} would pass the test while proving nothing.
  */
 public class FakeQuestHelperWorldMapPoint extends WorldMapPoint

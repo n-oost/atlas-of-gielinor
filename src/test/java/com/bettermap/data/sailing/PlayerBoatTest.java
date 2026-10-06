@@ -26,6 +26,10 @@ package com.bettermap.data.sailing;
 
 import org.junit.Test;
 
+import bettermap.data.sailing.BoatType;
+import bettermap.data.sailing.PlayerBoat;
+import bettermap.data.sailing.SailingPort;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

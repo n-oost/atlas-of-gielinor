@@ -24,11 +24,6 @@
  */
 package com.bettermap.ui;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.PoiCategory;
-import com.bettermap.map.PoiIndex;
-import com.bettermap.ui.markers.PoiMarkerRenderer;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -37,6 +32,14 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.function.Consumer;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
+import bettermap.map.MapCamera;
+import bettermap.map.PoiCategory;
+import bettermap.map.PoiIndex;
+import bettermap.ui.MapRenderStats;
+import bettermap.ui.markers.LocationMarkerRenderer;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -46,8 +49,8 @@ public class PoiZoomTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private static final String[] KEYS = {
@@ -62,7 +65,7 @@ public class PoiZoomTest
 		final ThresholdConfig config = new ThresholdConfig();
 		final MapCamera camera = new MapCamera();
 		camera.centerOn(3222, 3218);
-		final PoiMarkerRenderer renderer = renderer(config, camera, null, new MapRenderStats());
+		final LocationMarkerRenderer renderer = renderer(config, camera, null, new MapRenderStats());
 		final EnumSet<PoiCategory> covered = EnumSet.of(PoiCategory.PLACES);
 		for (String key : KEYS)
 		{
@@ -126,15 +129,15 @@ public class PoiZoomTest
 			@Override
 			public boolean iconDungeons() { return true; }
 		};
-		final PoiMarkerRenderer renderer = renderer(config, null, null, new MapRenderStats());
+		final LocationMarkerRenderer renderer = renderer(config, null, null, new MapRenderStats());
 		assertTrue(renderer.shouldDrawPoiIcon(new PoiIndex.Poi(3222, 3218, 0, "agility_short-cut", "Shortcut")));
 		assertFalse(renderer.shouldDrawPoiIcon(new PoiIndex.Poi(3222, 3218, 0, "slayer_master", "Slayer Master")));
 		assertFalse(renderer.shouldDrawPoiIcon(new PoiIndex.Poi(3222, 3218, 0, "lookout_point", "Lookout")));
 	}
 
-	private static PoiMarkerRenderer renderer(BetterMapConfig config, MapCamera camera, PoiIndex index, MapRenderStats stats)
+	private static LocationMarkerRenderer renderer(BetterMapConfig config, MapCamera camera, PoiIndex index, MapRenderStats stats)
 	{
-		return new PoiMarkerRenderer(config, camera, index, null, stats, null, new HashSet<>());
+		return new LocationMarkerRenderer(config, camera, index, null, stats, null, new HashSet<>());
 	}
 
 	private static class ThresholdConfig implements BetterMapConfig

@@ -24,10 +24,6 @@
  */
 package com.bettermap;
 
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.ShortestPathTracker;
-import com.bettermap.map.SlayerTaskTracker;
 import java.awt.Rectangle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
@@ -49,13 +45,20 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import bettermap.BetterMapConfig;
+import bettermap.BetterMapPlugin;
+import bettermap.data.UndergroundZone;
+import bettermap.map.MapCamera;
+import bettermap.map.ShortestPathTracker;
+import bettermap.map.SlayerTaskTracker;
+
 public class BetterMapContextMenuTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private BetterMapPlugin plugin;
@@ -259,7 +262,7 @@ public class BetterMapContextMenuTest
 
 		setField(plugin, "client", client);
 		setField(plugin, "camera", camera);
-		setField(plugin, "dungeonPieceIndex", new com.bettermap.map.DungeonPieceIndex());
+		setField(plugin, "dungeonPieceIndex", new bettermap.map.DungeonPieceIndex());
 		setField(plugin, "config", config);
 		setField(plugin, "shortestPathTracker", new ShortestPathTracker(null, null, config));
 		setField(plugin, "slayerTaskTracker", new SlayerTaskTracker(null, slayerService));

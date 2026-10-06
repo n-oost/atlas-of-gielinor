@@ -24,12 +24,13 @@
  */
 package com.bettermap.ui;
 
-import com.bettermap.BetterMapConfig;
 import java.lang.reflect.Method;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
 
 public class FinderConfigTest
 {

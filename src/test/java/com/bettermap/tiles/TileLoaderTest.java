@@ -33,6 +33,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import bettermap.tiles.TileLoader;
+
 public class TileLoaderTest
 {
 	private TileLoader tileLoader;

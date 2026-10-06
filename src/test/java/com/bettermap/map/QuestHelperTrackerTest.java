@@ -30,6 +30,8 @@ import static org.junit.Assert.assertTrue;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import org.junit.Test;
+
+import bettermap.map.QuestHelperTracker;
 import questhelper.tools.FakeQuestHelperWorldMapPoint;
 
 public class QuestHelperTrackerTest

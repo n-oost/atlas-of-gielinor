@@ -1,18 +1,22 @@
 package com.bettermap.ui;
 
 import com.google.gson.Gson;
-import com.bettermap.BetterMapConfig;
-import com.bettermap.BetterMapPlugin;
-import com.bettermap.ui.input.MapLayerInputHandler;
+
+import bettermap.BetterMapConfig;
+import bettermap.BetterMapPlugin;
+import bettermap.map.MapCamera;
+import bettermap.map.MapFinder;
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+import bettermap.map.WorldMapInput;
+import bettermap.ui.BetterWorldMapOverlay;
+import bettermap.ui.input.MapLayerInputHandler;
+
 import java.awt.Point;
 import net.runelite.api.coords.WorldPoint;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.MapFinder;
-import com.bettermap.map.MonsterIndex;
-import com.bettermap.map.PoiIndex;
-import com.bettermap.map.WorldMapInput;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -30,8 +34,8 @@ public class FinderPanelReworkTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private MapCamera camera;

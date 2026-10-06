@@ -1,10 +1,5 @@
 package com.bettermap;
 
-import com.bettermap.data.DungeonPiece;
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.map.DungeonPieceIndex;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.ShortestPathTracker;
 import java.awt.Rectangle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
@@ -15,6 +10,15 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.callback.ClientThread;
 import org.junit.Before;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
+import bettermap.BetterMapPlugin;
+import bettermap.data.DungeonPiece;
+import bettermap.data.UndergroundZone;
+import bettermap.map.DungeonPieceIndex;
+import bettermap.map.MapCamera;
+import bettermap.map.ShortestPathTracker;
+
 import static org.junit.Assert.*;
 
 public class DungeonNavigationTest
@@ -22,8 +26,8 @@ public class DungeonNavigationTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private BetterMapPlugin plugin;

@@ -24,12 +24,12 @@
  */
 package com.bettermap.ui;
 
-import com.bettermap.ui.markers.RaidBossDisplay;
-
-import com.bettermap.data.MonsterLocationData;
-import com.bettermap.data.UndergroundZone;
 import net.runelite.api.coords.WorldPoint;
 import org.junit.Test;
+
+import bettermap.data.MonsterLocationData;
+import bettermap.data.UndergroundZone;
+import bettermap.ui.markers.RaidBossDisplay;
 
 import static org.junit.Assert.*;
 
@@ -38,8 +38,8 @@ public class RaidBossDisplayTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@Test

@@ -1,0 +1,26 @@
+# Display conversion rules only; marker names and coordinates stay in the existing POI tables.
+# kind	key or exact alias or prefix	title contains	title qualifier	result
+# name/fish aliases ignore case. Prefixes ignore case and retain the remaining title.
+# compact/mooring match key OR title contains, then require the title qualifier if present.
+# Title hints use the same lowercase comparison as the tooltip formatter. First matching row wins.
+# Mooring rules run inside the existing mooring branch; compact rules run before skilling fallbacks.
+name	Wyrmscraig chest			Bank chest
+prefix	Wyrmscraig			
+fish	Salmon			Salmon & Trout
+fish	Lobster			Lobster & Swordfish
+fish	Shrimp			Shrimp & Anchovies
+mooring	mooring_point	mooring	mooring buoy	Mooring buoy
+mooring	mooring_point	mooring	boarding plank	Ship boarding plank
+compact	canoe_station	canoe		Canoe station
+compact	hot_air_balloon	balloon		Hot air balloon
+compact	magic_mushtree	mushtree		Magic mushtree
+compact	magic_carpet	carpet		Magic carpet
+compact	minecart_network	minecart		Minecart network
+compact	sea_current			Sea current
+compact	shipwright			Shipwright
+compact	cargo_bay			Cargo bay
+compact	lookout_point			Lookout point
+compact	singing_bowl			Singing bowl
+compact	noticeboard	noticeboard	port task	Port task board
+compact	noticeboard	noticeboard		Noticeboard
+compact	agility_short-cut			Agility shortcut

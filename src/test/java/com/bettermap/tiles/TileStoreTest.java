@@ -32,6 +32,10 @@ import net.runelite.client.util.Filepath;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import bettermap.tiles.TileLoader;
+import bettermap.tiles.TileStore;
+
 import static org.junit.Assert.*;
 
 public class TileStoreTest
@@ -175,6 +179,38 @@ public class TileStoreTest
 			assertEquals(0xff000000, fallback.getRGB(0, 0));
 			await(() -> loader.get(0, 2, 5, 6).getRGB(0, 0) == 0xff336699);
 			assertNotSame(fallback, loader.get(0, 2, 5, 6));
+		}
+		finally
+		{
+			loader.shutDown();
+		}
+	}
+
+	@Test
+	public void cacheEvictsInInsertionOrderAndKeepsPinnedBackdrop() throws Exception
+	{
+		Filepath root = Filepath.Unchecked.getRooted(temporary.getRoot().toPath());
+		writeTile(root, "0/-3/0_1_1.png", new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB));
+		TileLoader loader = new TileLoader();
+		loader.install(root, Arrays.asList("0/-3/0_1_1.png"));
+		try
+		{
+			await(loader::hasTiles);
+			await(() -> loader.get(0, -3, 1, 1) != null);
+			int backdropColor = loader.get(0, -3, 1, 1).getRGB(0, 0);
+			BufferedImage first = loader.get(0, 3, 64, 64);
+			assertNotNull(first);
+			for (int i = 1; i < 512; i++)
+			{
+				assertNotNull(loader.get(0, 3, 64 + i % 64, 64 + i / 64));
+			}
+			// Reading the oldest tile must not refresh its eviction position.
+			assertSame(first, loader.get(0, 3, 64, 64));
+			BufferedImage newest = loader.get(0, 3, 64, 72);
+			assertNotNull(newest);
+			assertEquals(backdropColor, loader.get(0, -3, 1, 1).getRGB(0, 0));
+			assertNotSame(first, loader.get(0, 3, 64, 64));
+			assertSame(newest, loader.get(0, 3, 64, 72));
 		}
 		finally
 		{

@@ -24,9 +24,6 @@
  */
 package com.bettermap.ui;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.ui.BetterWorldMapOverlay;
-import com.bettermap.ui.BetterWorldMapOverlay.LayerToggle;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +33,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
+import bettermap.ui.BetterWorldMapOverlay;
+import bettermap.ui.BetterWorldMapOverlay.LayerToggle;
 
 /**
  * The on-map Layers panel writes {@code bettermap.<key>} strings straight to ConfigManager, so a

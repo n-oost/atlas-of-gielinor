@@ -34,6 +34,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+import bettermap.map.MapRegion;
+
 /**
  * The region table is hand-authored, so these are the guard rails that catch a mistyped extent.
  */

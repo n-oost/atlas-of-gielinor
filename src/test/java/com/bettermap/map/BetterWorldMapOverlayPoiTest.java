@@ -24,22 +24,26 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.ui.BetterWorldMapOverlay;
-import com.bettermap.ui.markers.ViewWindow;
 import java.io.File;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
+import bettermap.data.UndergroundZone;
+import bettermap.map.DungeonPieceIndex;
+import bettermap.map.MapCamera;
+import bettermap.map.PoiIndex;
+import bettermap.ui.BetterWorldMapOverlay;
+import bettermap.ui.markers.ViewWindow;
 
 public class BetterWorldMapOverlayPoiTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@Test

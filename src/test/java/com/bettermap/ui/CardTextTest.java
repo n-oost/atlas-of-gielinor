@@ -38,6 +38,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bettermap.ui.CardText;
+
 /**
  * Layout is measured against real {@link FontMetrics} from a throwaway image, which works headless
  * and needs no client - the reason the layout was pulled out of the overlay in the first place.

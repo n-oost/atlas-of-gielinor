@@ -25,6 +25,12 @@
 package com.bettermap.data.sailing;
 
 import com.google.gson.Gson;
+
+import bettermap.data.sailing.BoatTracker;
+import bettermap.data.sailing.BoatType;
+import bettermap.data.sailing.PlayerBoat;
+import bettermap.data.sailing.SailingPort;
+
 import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 import org.junit.Test;

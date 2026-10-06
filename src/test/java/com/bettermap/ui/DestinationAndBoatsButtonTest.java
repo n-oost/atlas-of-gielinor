@@ -30,18 +30,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.BetterMapPlugin;
-import com.bettermap.data.sailing.BoatTracker;
-import com.bettermap.data.sailing.BoatType;
-import com.bettermap.data.sailing.PlayerBoat;
-import com.bettermap.data.sailing.SailingPort;
-import com.bettermap.map.ClueScrollTracker;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.QuestHelperTracker;
-import com.bettermap.map.ShortestPathTracker;
-import com.bettermap.map.WorldMapInput;
-import com.bettermap.map.WorldMapPointReader;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -53,13 +41,28 @@ import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 import org.junit.Test;
 
+import bettermap.BetterMapConfig;
+import bettermap.BetterMapPlugin;
+import bettermap.data.sailing.BoatTracker;
+import bettermap.data.sailing.BoatType;
+import bettermap.data.sailing.PlayerBoat;
+import bettermap.data.sailing.SailingPort;
+import bettermap.map.ClueScrollTracker;
+import bettermap.map.MapCamera;
+import bettermap.map.QuestHelperTracker;
+import bettermap.map.ShortestPathTracker;
+import bettermap.map.WorldMapInput;
+import bettermap.map.WorldMapPointReader;
+import bettermap.ui.MapChromeRenderer;
+import bettermap.ui.MapLayout;
+
 public class DestinationAndBoatsButtonTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private static class TestConfig implements BetterMapConfig
@@ -160,7 +163,7 @@ public class DestinationAndBoatsButtonTest
 			config, camera, input, layout,
 			new ClueScrollTracker(null),
 			new QuestHelperTracker(null, new WorldMapPointReader()),
-			null, null, pathTracker, null, null
+			pathTracker, null, null
 		);
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
@@ -195,7 +198,7 @@ public class DestinationAndBoatsButtonTest
 			config, camera, input, layout,
 			new ClueScrollTracker(null),
 			new QuestHelperTracker(null, new WorldMapPointReader()),
-			null, null, pathTracker, null, null
+			pathTracker, null, null
 		);
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
@@ -241,7 +244,7 @@ public class DestinationAndBoatsButtonTest
 			config, camera, input, layout,
 			new ClueScrollTracker(null),
 			new QuestHelperTracker(null, new WorldMapPointReader()),
-			null, null, pathTracker, null, null
+			pathTracker, null, null
 		);
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
@@ -304,7 +307,7 @@ public class DestinationAndBoatsButtonTest
 			config, camera, input, layout,
 			new ClueScrollTracker(null),
 			new QuestHelperTracker(null, new WorldMapPointReader()),
-			null, null, null, boatTracker, null
+			null, boatTracker, null
 		);
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
@@ -383,7 +386,7 @@ public class DestinationAndBoatsButtonTest
 			config, camera, input, layout,
 			new ClueScrollTracker(null),
 			new QuestHelperTracker(null, new WorldMapPointReader()),
-			null, null, null, boatTracker, null
+			null, boatTracker, null
 		);
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);

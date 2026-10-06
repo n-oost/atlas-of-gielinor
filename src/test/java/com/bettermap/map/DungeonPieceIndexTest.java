@@ -24,9 +24,6 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.DungeonPiece;
-import com.bettermap.data.DungeonPieceTransform;
-import com.bettermap.data.UndergroundZone;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.InputStream;
@@ -38,6 +35,12 @@ import java.util.Collections;
 import org.junit.After;
 import org.junit.Test;
 
+import bettermap.data.DungeonPiece;
+import bettermap.data.DungeonPieceTransform;
+import bettermap.data.UndergroundZone;
+import bettermap.map.DungeonPieceIndex;
+import bettermap.map.InstanceMaps;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -47,8 +50,8 @@ public class DungeonPieceIndexTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@After

@@ -25,6 +25,9 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
+
+import bettermap.map.MonsterIndex;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

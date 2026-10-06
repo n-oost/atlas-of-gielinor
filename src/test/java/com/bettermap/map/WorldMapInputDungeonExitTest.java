@@ -25,10 +25,17 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
-import com.bettermap.BetterMapConfig;
-import com.bettermap.BetterMapPlugin;
-import com.bettermap.ui.input.PanButton;
-import com.bettermap.data.UndergroundZone;
+
+import bettermap.BetterMapConfig;
+import bettermap.BetterMapPlugin;
+import bettermap.data.UndergroundZone;
+import bettermap.map.MapCamera;
+import bettermap.map.MapFinder;
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+import bettermap.map.WorldMapInput;
+import bettermap.ui.input.PanButton;
+
 import java.awt.Canvas;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -46,8 +53,8 @@ public class WorldMapInputDungeonExitTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private static final double DELTA = 1e-6;

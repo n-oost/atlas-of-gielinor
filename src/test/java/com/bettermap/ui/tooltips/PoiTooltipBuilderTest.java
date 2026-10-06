@@ -24,8 +24,6 @@
  */
 package com.bettermap.ui.tooltips;
 
-import com.bettermap.map.PoiDetails;
-import com.bettermap.map.PoiIndex;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +32,11 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bettermap.map.PoiDetails;
+import bettermap.map.PoiIndex;
+import bettermap.ui.tooltips.PoiTooltipBuilder;
+import bettermap.ui.tooltips.TooltipCard;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

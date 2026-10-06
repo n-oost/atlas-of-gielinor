@@ -29,6 +29,8 @@ import java.util.Set;
 import net.runelite.api.coords.WorldPoint;
 import org.junit.Test;
 
+import bettermap.data.sailing.SailingPort;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

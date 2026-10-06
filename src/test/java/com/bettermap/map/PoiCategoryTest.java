@@ -28,6 +28,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
+import bettermap.map.PoiCategory;
+
 /**
  * The wiki tags every location icon {@code category: "others"}, so Better Map defines the
  * grouping the settings panel switches on and off. These are the icon keys the shipped

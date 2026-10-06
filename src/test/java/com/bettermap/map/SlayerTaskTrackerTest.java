@@ -25,6 +25,11 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
+
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+import bettermap.map.SlayerTaskTracker;
+
 import java.util.Collections;
 import java.util.List;
 import net.runelite.api.NPC;

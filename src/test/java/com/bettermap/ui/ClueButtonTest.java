@@ -24,22 +24,15 @@
  */
 package com.bettermap.ui;
 
-import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_BUTTON_SIZE;
-import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_FINDER;
-import static com.bettermap.ui.MapStyle.LEFT_TOOLBAR_LAYERS;
+import static bettermap.ui.MapStyle.LEFT_TOOLBAR_BUTTON_SIZE;
+import static bettermap.ui.MapStyle.LEFT_TOOLBAR_FINDER;
+import static bettermap.ui.MapStyle.LEFT_TOOLBAR_LAYERS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.map.ClueScrollTracker;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.QuestHelperTracker;
-import com.bettermap.map.WorldMapPointReader;
-import com.bettermap.map.WorldMapInput;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -53,13 +46,23 @@ import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.components.TitleComponent;
 import org.junit.Test;
 
+import bettermap.BetterMapConfig;
+import bettermap.data.UndergroundZone;
+import bettermap.map.ClueScrollTracker;
+import bettermap.map.MapCamera;
+import bettermap.map.QuestHelperTracker;
+import bettermap.map.WorldMapInput;
+import bettermap.map.WorldMapPointReader;
+import bettermap.ui.MapChromeRenderer;
+import bettermap.ui.MapLayout;
+
 public class ClueButtonTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private static class TestConfig implements BetterMapConfig
@@ -132,7 +135,7 @@ public class ClueButtonTest
 		final MapLayout layout = new MapLayout(null, config);
 		final TestClueTracker tracker = new TestClueTracker();
 
-		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep(), null, null);
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep());
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = img.createGraphics();
@@ -177,7 +180,7 @@ public class ClueButtonTest
 		// Activate underground mode
 		camera.setUndergroundMode(UndergroundZone.ALL_ZONES.get(0));
 
-		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep(), null, null);
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep());
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = img.createGraphics();
@@ -206,7 +209,7 @@ public class ClueButtonTest
 		final MapLayout layout = new MapLayout(null, config);
 		final TestClueTracker tracker = new TestClueTracker();
 
-		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep(), null, null);
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep());
 
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = img.createGraphics();
@@ -242,7 +245,7 @@ public class ClueButtonTest
 			line("\u2694 Kill the Double Agent (lvl 65)")
 		);
 
-		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep(), null, null);
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep());
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = img.createGraphics();
 		final Rectangle bounds = new Rectangle(0, 0, 1000, 800);
@@ -302,7 +305,7 @@ public class ClueButtonTest
 		small.panel = panelOf(line("Think"), line("Dance"));
 		smallCam.setCluePanelCollapsed(false);
 		new MapChromeRenderer(config, smallCam,
-			new WorldMapInput(smallCam, config, null, null), layout, small, noQuestStep(), null, null).drawCluePanel(g, bounds);
+			new WorldMapInput(smallCam, config, null, null), layout, small, noQuestStep()).drawCluePanel(g, bounds);
 		final int smallH = smallCam.getCluePanelBounds().height;
 
 		final MapCamera bigCam = new MapCamera();
@@ -310,7 +313,7 @@ public class ClueButtonTest
 		big.panel = panelOf(line("Think"), line("Dance"), line("Spin"), line("Cry"), line("Bow"), line("Wave"));
 		bigCam.setCluePanelCollapsed(false);
 		new MapChromeRenderer(config, bigCam,
-			new WorldMapInput(bigCam, config, null, null), layout, big, noQuestStep(), null, null).drawCluePanel(g, bounds);
+			new WorldMapInput(bigCam, config, null, null), layout, big, noQuestStep()).drawCluePanel(g, bounds);
 		final int bigH = bigCam.getCluePanelBounds().height;
 
 		assertTrue("A 6-line hint panel must produce a taller card than a 2-line one (measure pass works): "
@@ -328,7 +331,7 @@ public class ClueButtonTest
 		final TestClueTracker tracker = new TestClueTracker();
 		tracker.panel = panelOf(line("Think"));
 
-		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep(), null, null);
+		final MapChromeRenderer renderer = new MapChromeRenderer(config, camera, input, layout, tracker, noQuestStep());
 		final BufferedImage img = new BufferedImage(1000, 800, BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = img.createGraphics();
 		final Rectangle bounds = new Rectangle(0, 0, 1000, 800);

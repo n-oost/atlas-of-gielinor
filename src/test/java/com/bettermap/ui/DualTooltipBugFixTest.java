@@ -24,14 +24,6 @@
  */
 package com.bettermap.ui;
 
-import com.bettermap.BetterMapConfig;
-import com.bettermap.map.MapCamera;
-import com.bettermap.map.PoiDetails;
-import com.bettermap.map.PoiIndex;
-import com.bettermap.map.WorldMapInput;
-import com.bettermap.map.WorldMapPointReader;
-import com.bettermap.ui.tooltips.PoiTooltipBuilder;
-import com.bettermap.ui.tooltips.TooltipCard;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -46,6 +38,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bettermap.BetterMapConfig;
+import bettermap.map.MapCamera;
+import bettermap.map.PoiDetails;
+import bettermap.map.PoiIndex;
+import bettermap.map.WorldMapInput;
+import bettermap.map.WorldMapPointReader;
+import bettermap.ui.MapTooltipRenderer;
+import bettermap.ui.tooltips.PoiTooltipBuilder;
+import bettermap.ui.tooltips.TooltipCard;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -56,8 +58,8 @@ public class DualTooltipBugFixTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@BeforeClass
@@ -157,7 +159,7 @@ public class DualTooltipBugFixTest
 		};
 
 		final MapTooltipRenderer renderer = new MapTooltipRenderer(
-			null, config, camera, input, null, null, null, null, null,
+			config, camera, input, null, null, null, null, null,
 			null, null, null, null, null, reader
 		);
 
@@ -215,7 +217,7 @@ public class DualTooltipBugFixTest
 		};
 
 		final MapTooltipRenderer renderer = new MapTooltipRenderer(
-			null, config, camera, input, null, null, null, null, null,
+			config, camera, input, null, null, null, null, null,
 			null, null, null, null, null, reader
 		);
 

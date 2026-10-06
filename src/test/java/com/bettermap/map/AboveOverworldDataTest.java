@@ -24,7 +24,6 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.UndergroundZone;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +40,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+import bettermap.data.UndergroundZone;
+import bettermap.map.InstanceMaps;
+
 /**
  * The bundled data sets carry thousands of points in the band above the overworld — dungeon
  * interiors at +6400, instanced minigames, quest copies. Every one of them must either project
@@ -52,8 +54,8 @@ public class AboveOverworldDataTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	/** Lumbridge: the overworld, as far from the band as a camera gets. */

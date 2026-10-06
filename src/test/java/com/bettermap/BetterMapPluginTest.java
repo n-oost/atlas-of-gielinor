@@ -24,6 +24,7 @@
  */
 package com.bettermap;
 
+import bettermap.BetterMapPlugin;
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 

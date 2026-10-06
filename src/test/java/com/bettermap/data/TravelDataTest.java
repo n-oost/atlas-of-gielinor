@@ -24,9 +24,6 @@
  */
 package com.bettermap.data;
 
-import com.bettermap.data.TravelData.TravelDestination;
-import com.bettermap.data.TravelData.TravelNode;
-import com.bettermap.data.TravelData.TravelType;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -35,6 +32,11 @@ import java.util.Set;
 import net.runelite.api.coords.WorldPoint;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bettermap.data.TravelData;
+import bettermap.data.TravelData.TravelDestination;
+import bettermap.data.TravelData.TravelNode;
+import bettermap.data.TravelData.TravelType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

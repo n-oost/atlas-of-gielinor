@@ -25,6 +25,11 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
+
+import bettermap.map.MapFinder;
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

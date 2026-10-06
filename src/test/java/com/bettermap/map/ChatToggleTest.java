@@ -30,6 +30,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import bettermap.map.MapCamera;
+
 /**
  * The chat hide is transient by design: leaving a user's chatbox hidden after the map closed would
  * look like the plugin broke their client.
@@ -39,8 +41,8 @@ public class ChatToggleTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private MapCamera camera;

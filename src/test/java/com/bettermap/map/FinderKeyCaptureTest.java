@@ -1,6 +1,15 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
+
+import bettermap.BetterMapPlugin;
+import bettermap.map.ChatboxInputHost;
+import bettermap.map.FinderKeyCapture;
+import bettermap.map.MapCamera;
+import bettermap.map.MapFinder;
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+
 import java.awt.Rectangle;
 import java.util.function.Consumer;
 import net.runelite.api.coords.WorldPoint;
@@ -13,15 +22,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.BetterMapPlugin;
-
 public class FinderKeyCaptureTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	private static class FakeHost implements ChatboxInputHost

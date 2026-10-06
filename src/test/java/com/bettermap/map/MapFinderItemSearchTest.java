@@ -24,8 +24,15 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.BetterMapConfig;
 import com.google.gson.Gson;
+
+import bettermap.BetterMapConfig;
+import bettermap.map.GroundItemIndex;
+import bettermap.map.MapFinder;
+import bettermap.map.MonsterIndex;
+import bettermap.map.PoiIndex;
+import bettermap.map.ShopIndex;
+
 import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 import static org.junit.Assert.assertFalse;

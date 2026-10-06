@@ -1,6 +1,5 @@
 package com.bettermap.map;
 
-import com.bettermap.BetterMapConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,10 @@ import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.PluginMessage;
 import org.junit.Test;
+
+import bettermap.BetterMapConfig;
+import bettermap.map.ShortestPathTracker;
+
 import static org.junit.Assert.*;
 
 public class ShortestPathTrackerTest

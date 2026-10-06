@@ -27,98 +27,99 @@ package com.bettermap.ui;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.map.InstanceMaps;
-import com.bettermap.ui.markers.PoiMarkerRenderer;
 import org.junit.Test;
+
+import bettermap.map.InstanceMaps;
+import bettermap.ui.markers.LocationMarkerRenderer;
 
 public class PlaceNamesTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@Test
 	public void zanarisRoomsStayOffTheOverworld()
 	{
-		assertTrue(PoiMarkerRenderer.isInteriorPlaceLabel(4429));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.isInteriorPlaceLabel(4429));
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Otherworldly beings", 4427, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Queen's Chamber", 9504, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Puro-puro", 4446, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Tanglefeet", 4380, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Beware of the mushrooms", 4375, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Wire machine", 5270, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Agility course", 5248, 8.0, false, true));
 	}
 
 	@Test
 	public void dungeonRoomsAppearWhenTheInteriorIsFocused()
 	{
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 8.0, true, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Queen's Chamber", 9504, 8.0, true, false));
 	}
 
 	@Test
 	public void dungeonRoomsNeedCloserZoomEvenInside()
 	{
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Throne room", 4429, 3.0, true, true));
 	}
 
 	@Test
 	public void citiesStayZoomedOutWhileDistrictsWait()
 	{
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge", 3234, 0.5, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge Swamp", 3168, 0.5, false, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Lumbridge Swamp", 3168, 3.5, false, true));
 	}
 
 	@Test
 	public void islandsStayVisibleAtTheMajorPlaceZoom()
 	{
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Waterbirth Island", 3756, 0.5, false, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Dognose Island", 2648, 0.5, false, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Isle of Bones", 2533, 0.5, false, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Shimmering Atoll", 2786, 0.5, false, true));
-		assertTrue(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertTrue(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Cursed Archipelago", 2581, 0.5, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"Waterbirth Island", 3756, 0.4, false, true));
 	}
 
 	@Test
 	public void surfaceEntranceNamesAreNotInterior()
 	{
-		assertFalse(PoiMarkerRenderer.isInteriorPlaceLabel(3099));
+		assertFalse(LocationMarkerRenderer.isInteriorPlaceLabel(3099));
 		assertTrue(3099 < InstanceMaps.GAP_MIN_Y);
 	}
 
 	@Test
 	public void skipListStillHidesNoise()
 	{
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"exit", 3234, 8.0, false, true));
-		assertFalse(PoiMarkerRenderer.shouldDrawPlaceName(
+		assertFalse(LocationMarkerRenderer.shouldDrawPlaceName(
 			"A", 3234, 8.0, false, true));
 	}
 }

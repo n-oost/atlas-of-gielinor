@@ -40,6 +40,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bettermap.map.PoiDetails;
+import bettermap.map.PoiIndex;
+import bettermap.map.QuestDetailsData;
+
 public class PoiDetailsTest
 {
 	@BeforeClass

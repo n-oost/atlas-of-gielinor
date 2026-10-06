@@ -1,6 +1,11 @@
 package com.bettermap.tiles;
 
 import com.google.gson.Gson;
+
+import bettermap.tiles.MapAssetManager;
+import bettermap.tiles.TileLoader;
+import bettermap.tiles.TileStore;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;

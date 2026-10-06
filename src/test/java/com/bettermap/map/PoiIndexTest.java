@@ -33,6 +33,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import bettermap.map.PoiCategory;
+import bettermap.map.PoiDetails;
+import bettermap.map.PoiIndex;
+import bettermap.map.WorldMapSupplement;
+
 public class PoiIndexTest
 {
 	private PoiIndex poiIndex;

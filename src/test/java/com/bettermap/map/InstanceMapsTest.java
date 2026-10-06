@@ -24,21 +24,23 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.UndergroundZone;
-import com.bettermap.tiles.WikiMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+import bettermap.data.UndergroundZone;
+import bettermap.map.InstanceMaps;
+import bettermap.tiles.WikiMap;
+
 public class InstanceMapsTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@Test

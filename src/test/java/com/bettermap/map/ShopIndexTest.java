@@ -25,6 +25,11 @@
 package com.bettermap.map;
 
 import com.google.gson.Gson;
+
+import bettermap.map.PoiCategory;
+import bettermap.map.PoiDetails;
+import bettermap.map.ShopIndex;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

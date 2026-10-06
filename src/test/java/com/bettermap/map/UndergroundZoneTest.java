@@ -24,7 +24,6 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.UndergroundZone;
 import java.awt.Rectangle;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +33,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bettermap.data.UndergroundZone;
+import bettermap.map.InstanceMaps;
+import bettermap.map.MapCamera;
+import bettermap.map.PoiDetails;
+import bettermap.map.PoiIndex;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -46,8 +51,8 @@ public class UndergroundZoneTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@BeforeClass
@@ -1245,9 +1250,9 @@ public class UndergroundZoneTest
 			// Every interior must sit above the overworld cutoff, or InstanceMaps.hiddenOnSurface
 			// cannot keep its pin off the open sea in the overworld view.
 			assertTrue(zone.getId() + " interior must sit above the overworld cutoff",
-				zone.getUndergroundPoint().getY() > com.bettermap.map.InstanceMaps.GAP_MIN_Y);
+				zone.getUndergroundPoint().getY() > bettermap.map.InstanceMaps.GAP_MIN_Y);
 			assertTrue(zone.getId() + " surface entrance must be on the overworld",
-				zone.getSurfacePoint().getY() <= com.bettermap.map.InstanceMaps.GAP_MIN_Y);
+				zone.getSurfacePoint().getY() <= bettermap.map.InstanceMaps.GAP_MIN_Y);
 			assertTrue(zone.getId() + " radius must be usable for framing", zone.getRadius() > 0);
 
 			// A +6400-band zone's vertical drop must land within a tile band of one map layer, or a

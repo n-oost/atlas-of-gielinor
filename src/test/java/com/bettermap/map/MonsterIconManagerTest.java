@@ -24,12 +24,15 @@
  */
 package com.bettermap.map;
 
-import com.bettermap.data.MonsterLocationData;
 import java.awt.image.BufferedImage;
 import net.runelite.api.ItemID;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bettermap.data.MonsterLocationData;
+import bettermap.map.MonsterIconManager;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;

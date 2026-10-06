@@ -29,19 +29,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.bettermap.map.MapCamera;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
+
+import bettermap.data.OverlayFloor;
+import bettermap.data.UndergroundZone;
+import bettermap.map.MapCamera;
 
 public class OverlayFloorTest
 {
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
-		org.junit.Assert.assertTrue("Map catalogs must load before testing", com.bettermap.map.MapData.isReady());
+		bettermap.map.MapData.load();
+		org.junit.Assert.assertTrue("Map catalogs must load before testing", bettermap.map.MapData.isReady());
 	}
 
 	@Test

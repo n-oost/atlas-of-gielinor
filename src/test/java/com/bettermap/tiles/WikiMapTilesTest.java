@@ -27,6 +27,10 @@ package com.bettermap.tiles;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+
+import bettermap.tiles.WikiMap;
+import bettermap.tiles.WikiMapTiles;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -36,7 +40,7 @@ public class WikiMapTilesTest
 	@org.junit.BeforeClass
 	public static void loadMapData()
 	{
-		com.bettermap.map.MapData.load();
+		bettermap.map.MapData.load();
 	}
 
 	private static final double DELTA = 1e-9;

@@ -71,21 +71,6 @@ public class TileLoaderTest
 	}
 
 	@Test
-	public void scaledImageReusesCache()
-	{
-		final BufferedImage src = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-		final long key = TileLoader.key(0, 2, 50, 50);
-
-		final BufferedImage scaled1 = tileLoader.scaled(key, src, 128, 128);
-		assertNotNull(scaled1);
-		assertEquals(128, scaled1.getWidth());
-		assertEquals(128, scaled1.getHeight());
-
-		final BufferedImage scaled2 = tileLoader.scaled(key, src, 128, 128);
-		assertEquals(scaled1, scaled2);
-	}
-
-	@Test
 	public void wyrmscraigCavernTilesAreBundledAndReadable()
 	{
 		for (String tile : new String[] {
@@ -99,18 +84,4 @@ public class TileLoaderTest
 		}
 		assertNull(TileLoader.readBundledCavernTile("0/3/0_82_269.png"));
 	}
-
-	@Test
-	public void detailedTileReplacesScaledFallback()
-	{
-		final BufferedImage fallback = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		fallback.setRGB(0, 0, 0xffff0000);
-		final BufferedImage detail = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		detail.setRGB(0, 0, 0xff0000ff);
-		final long key = TileLoader.key(0, 2, 50, 50);
-
-		assertEquals(0xffff0000, tileLoader.scaled(key, fallback, 2, 2).getRGB(0, 0));
-		assertEquals(0xff0000ff, tileLoader.scaled(key, detail, 2, 2).getRGB(0, 0));
-	}
-
 }

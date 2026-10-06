@@ -115,11 +115,7 @@ class MapTileRenderer
 				? RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
 				: RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		if (tileZoom != lastTileZoom)
-		{
-			tileLoader.clearScaled();
-			lastTileZoom = tileZoom;
-		}
+		lastTileZoom = tileZoom;
 
 		final UndergroundZone activeUnderground = camera.getActiveUndergroundZone();
 		final UndergroundZone hoveredZone = camera.getHoveredUndergroundZone();

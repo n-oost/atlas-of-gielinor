@@ -113,11 +113,6 @@ public final class WikiMapTiles
 			? currentZoom : candidate;
 	}
 
-	public static int clampZoomLevel(int zoom)
-	{
-		return Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom));
-	}
-
 	/** Cache path, relative to the tile directory. */
 	public static String cachePath(int plane, int zoom, int tileX, int tileY)
 	{

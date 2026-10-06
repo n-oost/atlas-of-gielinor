@@ -266,7 +266,6 @@ public enum WikiMap
 	FULL_MAP;
 
 	public static volatile WikiMap[] VALUES = {SURFACE};
-	public static final String CACHE_VERSION = "2026-08-12_a";
 
 	@AllArgsConstructor
 	private static final class Metadata
@@ -363,57 +362,9 @@ public enum WikiMap
 		return worldX >= bounds.minX && worldX <= bounds.maxX && worldY >= bounds.minY && worldY <= bounds.maxY;
 	}
 
-	/** The layer with this id, or null. Ids come from the wiki's own catalogue. */
-	public static WikiMap byId(int mapId)
-	{
-		for (WikiMap map : VALUES)
-		{
-			if (map.getMapId() == mapId)
-			{
-				return map;
-			}
-		}
-		return null;
-	}
-
 	public long area()
 	{
 		final Metadata bounds = metadata();
 		return (long) (bounds.maxX - bounds.minX) * (bounds.maxY - bounds.minY);
-	}
-
-	/**
-	 * The layer that covers this point, or {@link #SURFACE} when nothing else does.
-	 *
-	 * <p>Dungeon bounds are bounding boxes around areas that do not actually overlap, so several
-	 * boxes can contain the same point - Dorgesh-Kaan's box reaches over God Wars Dungeon, for
-	 * one. The smallest box is the most specific and is the one the game means. Surface bounds
-	 * never overlap a dungeon, so the overworld needs no tiebreak.
-	 */
-	public static WikiMap forPoint(int worldX, int worldY)
-	{
-		final WikiMap found = forPointOrNull(worldX, worldY);
-		return found == null ? SURFACE : found;
-	}
-
-	/**
-	 * As {@link #forPoint}, but null when no layer covers the point at all rather than falling
-	 * back to the surface. Plenty of the game has no published map - the Abyss, Ape Atoll
-	 * Dungeon, most quest instances - and quietly answering "surface" for those would put you on
-	 * the wrong map with no indication anything was wrong.
-	 */
-	public static WikiMap forPointOrNull(int worldX, int worldY)
-	{
-		WikiMap best = null;
-
-		for (WikiMap map : VALUES)
-		{
-			if (map.contains(worldX, worldY) && (best == null || map.area() < best.area()))
-			{
-				best = map;
-			}
-		}
-
-		return best;
 	}
 }

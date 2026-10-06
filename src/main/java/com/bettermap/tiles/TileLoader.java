@@ -29,12 +29,10 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.NavigableSet;
@@ -58,7 +56,6 @@ public class TileLoader
 	// Each decoded 256x256 tile uses roughly 192-256 KiB depending on image type. Allow room
 	// for large viewports and overlapping map layers without constantly evicting visible tiles.
 	private static final int MEMORY_CACHE_SIZE = 512;
-	private static final int SCALED_CACHE_SIZE = 256;
 	private static final Set<String> BUNDLED_CAVERN_TILES = Set.of(
 		"0/3/0_80_268.png", "0/3/0_80_269.png", "0/3/0_80_270.png",
 		"0/3/0_81_268.png", "0/3/0_81_269.png");
@@ -78,26 +75,8 @@ public class TileLoader
 	private final ConcurrentHashMap<Long, BufferedImage> memory = new ConcurrentHashMap<>(MEMORY_CACHE_SIZE);
 	private final java.util.concurrent.ConcurrentLinkedDeque<Long> memoryKeys = new java.util.concurrent.ConcurrentLinkedDeque<>();
 	private final Map<Long, BufferedImage> baseTiles = new ConcurrentHashMap<>(256);
-	private final Map<String, ScaledTile> scaled = lru(SCALED_CACHE_SIZE);
-
-	private static final class ScaledTile
-	{
-		private final WeakReference<BufferedImage> source;
-		private final BufferedImage image;
-
-		private ScaledTile(BufferedImage source, BufferedImage image)
-		{
-			this.source = new WeakReference<>(source);
-			this.image = image;
-		}
-	}
 	private final Set<Long> inFlight = ConcurrentHashMap.newKeySet();
 	private final Set<Long> missing = ConcurrentHashMap.newKeySet();
-
-	// Diagnostics only, so the debug panel can show whether tiles are actually flowing.
-	private final java.util.concurrent.atomic.AtomicLong hits = new java.util.concurrent.atomic.AtomicLong();
-	private final java.util.concurrent.atomic.AtomicLong reads = new java.util.concurrent.atomic.AtomicLong();
-	private final java.util.concurrent.atomic.AtomicLong failures = new java.util.concurrent.atomic.AtomicLong();
 
 	private volatile NavigableSet<Integer> availableZooms = Collections.emptyNavigableSet();
 	@Getter
@@ -260,36 +239,6 @@ public class TileLoader
 		baseTiles.clear();
 		memory.clear();
 		memoryKeys.clear();
-		clear(scaled);
-	}
-
-
-	/** Cache hits since start-up, for the debug panel. */
-	public long getCacheHits()
-	{
-		return hits.get();
-	}
-
-	/** Tiles decoded from disk since start-up. */
-	public long getDiskReads()
-	{
-		return reads.get();
-	}
-
-	/** Tiles asked for that are not on disk. Expected to be non-zero: ocean is not published. */
-	public long getMissCount()
-	{
-		return failures.get();
-	}
-
-	public int getMemoryCacheSize()
-	{
-		return memory.size();
-	}
-
-	public int getPendingCount()
-	{
-		return inFlight.size();
 	}
 
 	/** Which zoom levels this layer has on disk, as a readable list for the debug panel. */
@@ -350,14 +299,12 @@ public class TileLoader
 		final BufferedImage cached = memory.get(key);
 		if (cached != null)
 		{
-			hits.incrementAndGet();
 			return cached;
 		}
 
 		final BufferedImage base = baseTiles.get(key);
 		if (base != null)
 		{
-			hits.incrementAndGet();
 			return base;
 		}
 
@@ -392,90 +339,21 @@ public class TileLoader
 				parentImg = baseTiles.get(parentKey);
 			}
 
-			if (parentImg != null && parentImg.getWidth() >= 256 && parentImg.getHeight() >= 256)
+			final BufferedImage upscaled = cropAncestor(parentImg, shift, tileX, tileY);
+			if (upscaled != null)
 			{
-				if (shift >= 8)
+				// Cache fallback immediately so render loop does not repeat allocations & scaling.
+				final BufferedImage existing = memory.putIfAbsent(key, upscaled);
+				if (existing != null)
 				{
-					continue;
+					return existing;
 				}
-				final int factor = 1 << shift;
-				final int subSize = 256 / factor;
-				if (subSize > 0)
-				{
-					final int subX = (tileX & (factor - 1)) * subSize;
-					final int subY = ((factor - 1) - (tileY & (factor - 1))) * subSize;
-
-					if (subX >= 0 && subY >= 0 && subX + subSize <= parentImg.getWidth() && subY + subSize <= parentImg.getHeight())
-					{
-						final BufferedImage sub = parentImg.getSubimage(subX, subY, subSize, subSize);
-						final BufferedImage upscaled = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-						final Graphics2D g = upscaled.createGraphics();
-						g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-						g.drawImage(sub, 0, 0, 256, 256, null);
-						g.dispose();
-
-						// Cache fallback immediately so render loop does not repeat allocations & scaling
-						final BufferedImage existing = memory.putIfAbsent(key, upscaled);
-						if (existing != null)
-						{
-							return existing;
-						}
-						trackMemoryKey(key);
-						return upscaled;
-					}
-				}
+				trackMemoryKey(key);
+				return upscaled;
 			}
 		}
 
 		return null;
-	}
-
-	/**
-	 * Returns {@code source} rendered at exactly {@code width} x {@code height}, reusing the
-	 * previous result. The map redraws every frame at a fixed scale, so without this the client
-	 * would re-filter every tile 50 times a second.
-	 */
-	public BufferedImage scaled(long tileKey, BufferedImage source, int width, int height)
-	{
-		if (width <= 0 || height <= 0)
-		{
-			return null;
-		}
-
-		if (width == source.getWidth() && height == source.getHeight())
-		{
-			return source;
-		}
-
-		final String key = tileKey + "@" + width + "x" + height;
-
-		synchronized (scaled)
-		{
-			ScaledTile cached = scaled.get(key);
-			if (cached != null && cached.source.get() == source)
-			{
-				return cached.image;
-			}
-		}
-
-		final BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		final Graphics2D g = resized.createGraphics();
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		g.drawImage(source, 0, 0, width, height, null);
-		g.dispose();
-
-		synchronized (scaled)
-		{
-			scaled.put(key, new ScaledTile(source, resized));
-		}
-		return resized;
-	}
-
-	/** Drops the scaled cache; call when the zoom changes so stale sizes do not linger. */
-	public void clearScaled()
-	{
-		clear(scaled);
 	}
 
 	public static long key(int plane, int zoom, int tileX, int tileY)
@@ -495,7 +373,6 @@ public class TileLoader
 			final BufferedImage image = paths.contains(path) ? TileStore.read(directory, path) : readBundledCavernTile(path);
 			if (image != null)
 			{
-				reads.incrementAndGet();
 				publishTile(worker, key, image);
 				return;
 			}
@@ -506,7 +383,6 @@ public class TileLoader
 			{
 				for (int parentZoom = zoom - 1; parentZoom >= 0; parentZoom--)
 				{
-					final int divisions = 1 << (zoom - parentZoom);
 					final int parentX = tileX >> (zoom - parentZoom);
 					final int parentY = tileY >> (zoom - parentZoom);
 					final long parentKey = key(plane, parentZoom, parentX, parentY);
@@ -520,30 +396,18 @@ public class TileLoader
 						final String parentPath = WikiMapTiles.cachePath(plane, parentZoom, parentX, parentY);
 						parentImg = paths.contains(parentPath) ? TileStore.read(directory, parentPath) : null;
 					}
-					if (parentImg == null || parentImg.getWidth() < 256 || parentImg.getHeight() < 256)
+					final BufferedImage upscaled = cropAncestor(parentImg, zoom - parentZoom, tileX, tileY);
+					if (upscaled == null)
 					{
 						continue;
 					}
-					final int size = 256 / divisions;
-					final int cropX = (tileX & (divisions - 1)) * size;
-					final int cropY = (divisions - 1 - (tileY & (divisions - 1))) * size;
-					final BufferedImage sub = parentImg.getSubimage(cropX, cropY, size, size);
 
-					final BufferedImage upscaled = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
-					final Graphics2D g = upscaled.createGraphics();
-					g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-					g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-					g.drawImage(sub, 0, 0, 256, 256, null);
-					g.dispose();
-
-					reads.incrementAndGet();
 					publishTile(worker, key, upscaled);
 					return;
 				}
 			}
 
 			publishTile(worker, key, null);
-			failures.incrementAndGet();
 		}
 		catch (RuntimeException e)
 		{
@@ -562,6 +426,33 @@ public class TileLoader
 				}
 			}
 		}
+	}
+
+	/** Crop the child's quadrant, reversing game Y into image Y, and enlarge without filtering. */
+	private static BufferedImage cropAncestor(BufferedImage parent, int shift, int tileX, int tileY)
+	{
+		final int tileSize = WikiMapTiles.TILE_SIZE;
+		if (parent == null || parent.getWidth() < tileSize || parent.getHeight() < tileSize || shift >= 8)
+		{
+			return null;
+		}
+		final int factor = 1 << shift;
+		final int size = tileSize / factor;
+		final int x = (tileX & (factor - 1)) * size;
+		final int y = (factor - 1 - (tileY & (factor - 1))) * size;
+		final BufferedImage sub = parent.getSubimage(x, y, size, size);
+		final BufferedImage upscaled = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D graphics = upscaled.createGraphics();
+		try
+		{
+			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+			graphics.drawImage(sub, 0, 0, tileSize, tileSize, null);
+		}
+		finally
+		{
+			graphics.dispose();
+		}
+		return upscaled;
 	}
 
 	static BufferedImage readBundledCavernTile(String path)
@@ -595,25 +486,5 @@ public class TileLoader
 				putMemory(key, image);
 			}
 		}
-	}
-
-	private static void clear(Map<?, ?> map)
-	{
-		synchronized (map)
-		{
-			map.clear();
-		}
-	}
-
-	private static <K, V> Map<K, V> lru(int maxSize)
-	{
-		return Collections.synchronizedMap(new LinkedHashMap<K, V>(maxSize, 0.75f, true)
-		{
-			@Override
-			protected boolean removeEldestEntry(Map.Entry<K, V> eldest)
-			{
-				return size() > maxSize;
-			}
-		});
 	}
 }

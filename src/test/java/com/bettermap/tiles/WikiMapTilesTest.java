@@ -25,7 +25,6 @@
 package com.bettermap.tiles;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import java.math.BigInteger;
@@ -142,41 +141,12 @@ public class WikiMapTilesTest
 	}
 
 	@Test
-	public void layerLookupPrefersTheDungeonOverTheSurface()
-	{
-		assertEquals(WikiMap.SURFACE, WikiMap.forPoint(3222, 3218));
-
-		// General Graardor, which the plugin ships as a boss marker.
-		assertEquals(WikiMap.GOD_WARS_DUNGEON, WikiMap.forPoint(2867, 5357));
-	}
-
-	@Test
 	public void surfaceCoversTheKnownExtentOfTheOverworld()
 	{
 		assertTrue(WikiMap.SURFACE.contains(3222, 3218));
 		assertTrue(WikiMap.SURFACE.contains(1250, 3750));
 		assertTrue(WikiMap.SURFACE.contains(3800, 3900));
 		assertTrue(!WikiMap.SURFACE.contains(3222, 9000));
-	}
-
-	@Test
-	public void newLayersCanBeLookedUpById()
-	{
-		assertEquals(WikiMap.SURFACE, WikiMap.byId(0));
-		assertEquals(WikiMap.PRIFDDINAS, WikiMap.byId(29));
-		assertEquals(WikiMap.RUINS_OF_CAMDOZAAL, WikiMap.byId(39));
-		assertEquals(WikiMap.THE_ABYSS, WikiMap.byId(40));
-		assertEquals(WikiMap.PURO_PURO, WikiMap.byId(10128));
-		assertEquals(WikiMap.WATERFALL_DUNGEON, WikiMap.byId(10176));
-		assertNull(WikiMap.byId(-999));
-	}
-
-	@Test
-	public void layerLookupFindsExpandedDungeons()
-	{
-		assertEquals(WikiMap.PRIFDDINAS, WikiMap.forPoint(3264, 6080));
-		assertEquals(WikiMap.RUINS_OF_CAMDOZAAL, WikiMap.forPoint(2976, 5824));
-		assertEquals(WikiMap.PURO_PURO, WikiMap.forPoint(2592, 4320));
 	}
 
 	@Test

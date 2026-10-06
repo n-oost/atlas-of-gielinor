@@ -26,6 +26,7 @@ package com.bettermap.tiles;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+import java.util.function.BooleanSupplier;
 import javax.imageio.ImageIO;
 import net.runelite.client.util.Filepath;
 import org.junit.Rule;
@@ -100,5 +101,104 @@ public class TileStoreTest
 		assertNull(TileLoader.parseCachePath("0/-2/0_10_11.txt"));
 		assertNull(TileLoader.parseCachePath("nonsense"));
 		assertNull(TileLoader.parseCachePath("0/zoom/0_10_11.png"));
+	}
+
+	@Test
+	public void diskFallbackSkipsMissingZoomAndPreservesImageOrientation() throws Exception
+	{
+		Filepath root = Filepath.Unchecked.getRooted(temporary.getRoot().toPath());
+		BufferedImage parent = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
+		// Child (5, 6) at zoom 2 occupies x=64..127, y=64..127 in parent (1, 1).
+		parent.setRGB(64, 64, 0xffff0000);
+		parent.setRGB(127, 127, 0xff0000ff);
+		writeTile(root, "0/0/0_1_1.png", parent);
+		TileLoader loader = new TileLoader();
+		loader.install(root, Arrays.asList("0/0/0_1_1.png"));
+		try
+		{
+			await(loader::hasTiles);
+			await(() -> loader.get(0, 2, 5, 6) != null);
+			BufferedImage child = loader.get(0, 2, 5, 6);
+			assertEquals(0xffff0000, child.getRGB(0, 0));
+			assertEquals(0xffff0000, child.getRGB(3, 3));
+			assertEquals(0xff0000ff, child.getRGB(255, 255));
+			assertEquals(0, child.getRGB(4, 4));
+		}
+		finally
+		{
+			loader.shutDown();
+		}
+	}
+
+	@Test
+	public void cachedCoarseFallbackPreservesGameYAxis() throws Exception
+	{
+		Filepath root = Filepath.Unchecked.getRooted(temporary.getRoot().toPath());
+		BufferedImage parent = new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB);
+		parent.setRGB(128, 0, 0xff336699);
+		writeTile(root, "0/-2/0_1_1.png", parent);
+		TileLoader loader = new TileLoader();
+		loader.install(root, Arrays.asList("0/-2/0_1_1.png"));
+		try
+		{
+			await(loader::hasTiles);
+			await(() -> loader.get(0, -2, 1, 1) != null);
+			BufferedImage child = loader.get(0, -1, 3, 3);
+			assertNotNull(child);
+			assertEquals(0xff336699, child.getRGB(0, 0));
+			assertEquals(0xff336699, child.getRGB(1, 1));
+			assertSame(child, loader.get(0, -1, 3, 3));
+		}
+		finally
+		{
+			loader.shutDown();
+		}
+	}
+
+	@Test
+	public void decodedDetailReplacesCachedAncestorFallback() throws Exception
+	{
+		Filepath root = Filepath.Unchecked.getRooted(temporary.getRoot().toPath());
+		BufferedImage parent = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		BufferedImage detail = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		detail.setRGB(0, 0, 0xff336699);
+		writeTile(root, "0/0/0_1_1.png", parent);
+		writeTile(root, "0/2/0_5_6.png", detail);
+		TileLoader loader = new TileLoader();
+		loader.install(root, Arrays.asList("0/0/0_1_1.png", "0/2/0_5_6.png"));
+		try
+		{
+			await(loader::hasTiles);
+			await(() -> loader.get(0, 0, 1, 1) != null);
+			BufferedImage fallback = loader.get(0, 2, 5, 6);
+			assertNotNull(fallback);
+			assertEquals(0xff000000, fallback.getRGB(0, 0));
+			await(() -> loader.get(0, 2, 5, 6).getRGB(0, 0) == 0xff336699);
+			assertNotSame(fallback, loader.get(0, 2, 5, 6));
+		}
+		finally
+		{
+			loader.shutDown();
+		}
+	}
+
+	private static void writeTile(Filepath root, String path, BufferedImage image) throws Exception
+	{
+		Filepath tile = root.join(path);
+		tile.getParent().createDirectories();
+		try (java.io.OutputStream out = tile.openOutputStream())
+		{
+			ImageIO.write(image, "png", out);
+		}
+	}
+
+	private static void await(BooleanSupplier condition)
+	{
+		long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(5);
+		while (!condition.getAsBoolean() && System.nanoTime() < deadline)
+		{
+			java.util.concurrent.locks.LockSupport.parkNanos(java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(10));
+		}
+		assertTrue("Timed out waiting for tile", condition.getAsBoolean());
 	}
 }

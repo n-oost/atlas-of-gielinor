@@ -24,14 +24,14 @@
  */
 package com.bettermap.tiles;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +41,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.ThreadFactory;
 import javax.imageio.ImageIO;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -66,14 +65,21 @@ public class TileLoader
 	 *
 	 * <p>Stops at -2 deliberately. Zoom -3 through -2 is 155 tiles (~30MB) and covers the entire
 	 * world; including -1 and 0 as well would be 1,214 tiles and ~233MB pinned for the session,
-	 * which is most of a default heap. Those two levels load through the LRU like everything else,
+	 * which is most of a default heap. Those two levels load through the FIFO cache like everything else,
 	 * and until they arrive a coarser parent is upscaled in their place.
 	 */
 	private static final int BASE_PREWARM_MAX_ZOOM = -2;
 	private static final int WORKER_THREADS = Math.min(4, Math.max(2, Runtime.getRuntime().availableProcessors()));
 
-	private final ConcurrentHashMap<Long, BufferedImage> memory = new ConcurrentHashMap<>(MEMORY_CACHE_SIZE);
-	private final java.util.concurrent.ConcurrentLinkedDeque<Long> memoryKeys = new java.util.concurrent.ConcurrentLinkedDeque<>();
+	private final Map<Long, BufferedImage> memory = Collections.synchronizedMap(
+		new LinkedHashMap<Long, BufferedImage>(MEMORY_CACHE_SIZE, 0.75f, false)
+		{
+			@Override
+			protected boolean removeEldestEntry(Map.Entry<Long, BufferedImage> eldest)
+			{
+				return size() > MEMORY_CACHE_SIZE;
+			}
+		});
 	private final Map<Long, BufferedImage> baseTiles = new ConcurrentHashMap<>(256);
 	private final Set<Long> inFlight = ConcurrentHashMap.newKeySet();
 	private final Set<Long> missing = ConcurrentHashMap.newKeySet();
@@ -91,13 +97,8 @@ public class TileLoader
 	{
 		if (executor == null || executor.isShutdown())
 		{
-			final ThreadFactory factory = r ->
-			{
-				Thread t = new Thread(r, "better-map-tiles");
-				t.setDaemon(true);
-				return t;
-			};
-			executor = Executors.newFixedThreadPool(WORKER_THREADS, factory);
+			executor = Executors.newFixedThreadPool(WORKER_THREADS,
+				new ThreadFactoryBuilder().setDaemon(true).setNameFormat("better-map-tiles").build());
 			preWarm();
 		}
 	}
@@ -153,7 +154,7 @@ public class TileLoader
 							return;
 						}
 						baseTiles.put(k, img);
-						putMemory(k, img);
+						memory.put(k, img);
 					}
 					loadedBase++;
 				}
@@ -197,32 +198,6 @@ public class TileLoader
 		}
 	}
 
-	private void putMemory(long key, BufferedImage image)
-	{
-		if (image == null)
-		{
-			return;
-		}
-		if (memory.put(key, image) == null)
-		{
-			trackMemoryKey(key);
-		}
-	}
-
-	private void trackMemoryKey(long key)
-	{
-		memoryKeys.addLast(key);
-		while (memory.size() > MEMORY_CACHE_SIZE)
-		{
-			final Long oldest = memoryKeys.pollFirst();
-			if (oldest == null)
-			{
-				break;
-			}
-			memory.remove(oldest);
-		}
-	}
-
 	public synchronized void shutDown()
 	{
 		if (executor != null)
@@ -238,7 +213,6 @@ public class TileLoader
 		tileDir = null;
 		baseTiles.clear();
 		memory.clear();
-		memoryKeys.clear();
 	}
 
 	/** Which zoom levels this layer has on disk, as a readable list for the debug panel. */
@@ -261,8 +235,8 @@ public class TileLoader
 	{
 		shutDown();
 		tileDir = directory;
-		installedPaths = Collections.unmodifiableList(new ArrayList<>(paths));
-		installedTilePaths = Collections.unmodifiableSet(new HashSet<>(paths));
+		installedPaths = List.copyOf(paths);
+		installedTilePaths = Set.copyOf(installedPaths);
 		status = "Loading map assets...";
 		startUp();
 	}
@@ -348,7 +322,6 @@ public class TileLoader
 				{
 					return existing;
 				}
-				trackMemoryKey(key);
 				return upscaled;
 			}
 		}
@@ -483,7 +456,7 @@ public class TileLoader
 			}
 			else
 			{
-				putMemory(key, image);
+				memory.put(key, image);
 			}
 		}
 	}

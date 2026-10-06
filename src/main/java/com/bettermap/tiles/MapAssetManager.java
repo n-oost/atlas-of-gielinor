@@ -2,6 +2,7 @@ package com.bettermap.tiles;
 
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -65,12 +66,8 @@ public class MapAssetManager
 		shutDown();
 		final int session = generation;
 		tiles.setStatus("Checking installed map assets...");
-		worker = Executors.newSingleThreadExecutor(r ->
-		{
-			Thread thread = new Thread(r, "better-map-assets");
-			thread.setDaemon(true);
-			return thread;
-		});
+		worker = Executors.newSingleThreadExecutor(
+			new ThreadFactoryBuilder().setDaemon(true).setNameFormat("better-map-assets").build());
 		worker.execute(() ->
 		{
 			try

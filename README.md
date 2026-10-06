@@ -11,7 +11,7 @@
 
 </div>
 
-A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin provides a world map replacement, an in-map Finder, and optional Shortest Path integration. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/main/channels/tiles-v1.json).
+A RuneLite plugin that replaces the in-game world map. Dungeon locations, clippings, and other elements are hand placed and edited. Otherwise data is pulled from the OSRS Wiki, with some manual curation. The plugin provides a world map replacement, an in-map Finder, and optional Shortest Path integration. Enable **Download map assets** in Atlas of Gielinor settings to trigger download [Atlas of Gielinor asset pack](https://raw.githubusercontent.com/n-oost/better-map-assets/49644b64a4769c826665a22a11a8edcbcc5d03d9/packs/a7d1a28d2de93e914508b0e5cbb56776938342f77a7bb34a3c610881aea2a528.zip).
 
 Missing or invalid assets display `NO MAP DATA` with a loading or error message. Updates are checked at startup while downloads are enabled. Toggle **Download map assets** off and on to retry map download on fail.
 
@@ -123,7 +123,7 @@ Go to Clue centres the map on RuneLite's active clue location (the nearest candi
 ### Plugin Hub notes
 
 - No reflection, no AWT-level input hooks, and no native code.
-- With **Download map assets** enabled, the plugin checks the remote channel at startup and downloads changed packs using asynchronous OkHttp. Installed files use RuneLite Filepath in the plugin directory.
+- With **Download map assets** enabled, the plugin downloads the pack pinned in `src/main/resources/com/bettermap/data/map-pack.json` using asynchronous OkHttp when that pack is not already installed. Asset updates require a plugin release; no remote channel is checked. Installed files use RuneLite Filepath in the plugin directory.
 - The plugin replaces the world map and
   draws Shortest Path route coordinates on its custom world map. The map's Chat control can hide the chatbox while
   the map is open; Finder text input keeps the chatbox visible.

@@ -511,7 +511,6 @@ class MapFinderRenderer
 		graphics.setColor(TEXT_DIM);
 		graphics.drawString(descLine2, panel.x + padX, descY + 22);
 
-
 		camera.setFinderResultTargets(targets);
 		camera.setFinderPanelBounds(panel);
 	}

@@ -79,10 +79,9 @@ class MapMarkerRenderers
 		BoatTracker boatTracker,
 		WorldMapPointManager worldMapPointManager,
 		WorldMapPointReader worldMapPointReader,
-		MapRenderStats stats,
 		DungeonPieceIndex dungeonPieceIndex)
 	{
-		locations = new LocationMarkerRenderer(config, camera, poiIndex, shopIndex, stats, dungeonPieceIndex, visibleTooltipTargets);
+		locations = new LocationMarkerRenderer(config, camera, poiIndex, shopIndex, dungeonPieceIndex, visibleTooltipTargets);
 		monsters = new MonsterMarkerRenderer(config, camera, monsterIndex, monsterIconManager, slayerTaskTracker, dungeonPieceIndex, visibleTooltipTargets);
 		boats = new BoatMarkerRenderer(config, camera, poiIndex, boatTracker, visibleTooltipTargets);
 		player = new PlayerMarkerRenderer(client, config, camera, dungeonPieceIndex);

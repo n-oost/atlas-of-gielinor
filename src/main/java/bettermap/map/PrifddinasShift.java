@@ -115,23 +115,26 @@ public final class PrifddinasShift
 
 	public static boolean containsInstance(double worldX, double worldY)
 	{
-		if (!isLoaded()) return false;
-		return worldX >= get().instanceMinX && worldX < get().instanceMaxX
-			&& worldY >= get().instanceMinY && worldY < get().instanceMaxY;
+		final PrifddinasShift placement = mapping;
+		if (placement == null) return false;
+		return worldX >= placement.instanceMinX && worldX < placement.instanceMaxX
+			&& worldY >= placement.instanceMinY && worldY < placement.instanceMaxY;
 	}
 
 	public static boolean containsOverworld(double worldX, double worldY)
 	{
-		if (!isLoaded()) return false;
-		return worldX >= get().overworldMinX && worldX < get().overworldMaxX
-			&& worldY >= get().overworldMinY && worldY < get().overworldMaxY;
+		final PrifddinasShift placement = mapping;
+		if (placement == null) return false;
+		return worldX >= placement.overworldMinX && worldX < placement.overworldMaxX
+			&& worldY >= placement.overworldMinY && worldY < placement.overworldMaxY;
 	}
 
 	public static boolean overlapsOverworld(double minX, double maxX, double minY, double maxY)
 	{
-		if (!isLoaded()) return false;
-		return minX < get().overworldMaxX && maxX >= get().overworldMinX
-			&& minY < get().overworldMaxY && maxY >= get().overworldMinY;
+		final PrifddinasShift placement = mapping;
+		if (placement == null) return false;
+		return minX < placement.overworldMaxX && maxX >= placement.overworldMinX
+			&& minY < placement.overworldMaxY && maxY >= placement.overworldMinY;
 	}
 
 	public static double toDisplayX(double worldX, double worldY)

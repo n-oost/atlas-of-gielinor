@@ -58,7 +58,6 @@ import bettermap.map.PoiCategory;
 import bettermap.map.PoiDetails;
 import bettermap.map.PoiIndex;
 import bettermap.map.ShopIndex;
-import bettermap.ui.MapRenderStats;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.game.AgilityShortcut;
 import net.runelite.client.ui.FontManager;
@@ -90,7 +89,6 @@ public class LocationMarkerRenderer
 	private final MapCamera camera;
 	private final PoiIndex poiIndex;
 	private final ShopIndex shopIndex;
-	private final MapRenderStats stats;
 	private final DungeonPieceIndex dungeonPieceIndex;
 	private final List<PoiIconHit> visiblePoiIcons = new ArrayList<>();
 	private final List<ShopIconHit> visibleShopIcons = new ArrayList<>();
@@ -100,7 +98,6 @@ public class LocationMarkerRenderer
 		MapCamera camera,
 		PoiIndex poiIndex,
 		ShopIndex shopIndex,
-		MapRenderStats stats,
 		DungeonPieceIndex dungeonPieceIndex,
 		Set<Object> visibleTooltipTargets)
 	{
@@ -108,7 +105,6 @@ public class LocationMarkerRenderer
 		this.camera = camera;
 		this.poiIndex = poiIndex;
 		this.shopIndex = shopIndex;
-		this.stats = stats;
 		this.dungeonPieceIndex = dungeonPieceIndex;
 		this.visibleTooltipTargets = visibleTooltipTargets;
 	}
@@ -272,7 +268,6 @@ public class LocationMarkerRenderer
 			}
 			placed.add(markerBounds);
 			visiblePoiIcons.add(new PoiIconHit(markerBounds, poi));
-			stats.iconsDrawn++;
 		});
 
 		if (!camera.isTravelViewActive() && config.iconShops() && camera.getZoom() >= minZoomForPoi("general_store")
@@ -305,8 +300,7 @@ public class LocationMarkerRenderer
 				placed.add(rect);
 				visibleTooltipTargets.add(shop);
 				visibleShopIcons.add(new ShopIconHit(rect, shop));
-				stats.iconsDrawn++;
-			});
+				});
 		}
 	}
 

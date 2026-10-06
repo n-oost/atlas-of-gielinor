@@ -52,9 +52,6 @@ public final class MapStyle
 	public static final Color CHIP_BG = new Color(16, 19, 26, 200);
 	public static final Color DEBUG_KEY = new Color(140, 200, 255);
 
-	public static final Font RUNESCAPE_BOLD = FontManager.getRunescapeBoldFont();
-	public static final Font RUNESCAPE_SMALL = FontManager.getRunescapeSmallFont();
-	public static final Font RUNESCAPE_PLAIN = FontManager.getRunescapeFont();
 	public static final Font RUNELITE_PLAIN = FontManager.getDefaultFont().deriveFont(11f);
 	public static final Font RUNELITE_BOLD = FontManager.getDefaultBoldFont().deriveFont(11f);
 

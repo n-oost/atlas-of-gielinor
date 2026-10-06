@@ -179,7 +179,6 @@ public class BetterWorldMapOverlay extends Overlay
 	private final MapCamera camera;
 
 	private final MapLayout layout;
-	private final MapRenderStats stats;
 	private final MapTileRenderer tileRenderer;
 	private final MapMarkerRenderers markers;
 	private final MapChromeRenderer chromeRenderer;
@@ -227,12 +226,11 @@ public class BetterWorldMapOverlay extends Overlay
 		this.camera = camera;
 		this.worldMapPointReader = worldMapPointReader;
 		this.layout = new MapLayout(client, config);
-		this.stats = new MapRenderStats();
 		this.tileRenderer = new MapTileRenderer(config, camera, tileLoader, dungeonPieceIndex);
 		this.markers = new MapMarkerRenderers(
 			client, config, camera, poiIndex, shopIndex, monsterIndex, monsterIconManager, slayerTaskTracker,
 			shortestPathTracker, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader,
-			stats, dungeonPieceIndex);
+			dungeonPieceIndex);
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
 			questHelperTracker, shortestPathTracker, boatTracker, client);
 		this.finderRenderer = new MapFinderRenderer(
@@ -322,8 +320,6 @@ public class BetterWorldMapOverlay extends Overlay
 		}
 
 		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-		stats.reset();
 
 		try
 		{

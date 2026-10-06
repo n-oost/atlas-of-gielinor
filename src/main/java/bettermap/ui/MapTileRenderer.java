@@ -67,6 +67,7 @@ class MapTileRenderer
 	private final DungeonPieceIndex dungeonPieceIndex;
 
 	private int lastTileZoom = Integer.MIN_VALUE;
+	private int[] prifddinasSourceBounds;
 	/** Reused while blurring the overworld overlay so hover does not allocate a full-map image every frame. */
 	private BufferedImage overlayBuffer;
 	private BufferedImage blurBuffer;
@@ -542,28 +543,31 @@ class MapTileRenderer
 		}
 		graphics.setClip(oldClip);
 
+		final PrifddinasShift placement = PrifddinasShift.get();
 		final Rectangle dest = worldRectToScreen(
-			PrifddinasShift.get().getOverworldMinX(), PrifddinasShift.get().getOverworldMinY(),
-			PrifddinasShift.get().getOverworldMaxX(), PrifddinasShift.get().getOverworldMaxY(), bounds);
+			placement.getOverworldMinX(), placement.getOverworldMinY(),
+			placement.getOverworldMaxX(), placement.getOverworldMaxY(), bounds);
 		if (!dest.intersects(bounds))
 		{
 			return;
 		}
 
-		final PrifddinasShift placement = PrifddinasShift.get();
-		final int[] sourceBounds = {placement.getInstanceMinX(), placement.getInstanceMinY(),
-			placement.getInstanceMaxX() - 1, placement.getInstanceMaxY() - 1};
+		if (prifddinasSourceBounds == null)
+		{
+			prifddinasSourceBounds = new int[]{placement.getInstanceMinX(), placement.getInstanceMinY(),
+				placement.getInstanceMaxX() - 1, placement.getInstanceMaxY() - 1};
+		}
 
 		graphics.clip(dest.intersection(bounds));
 		if (plane > 0)
 		{
 			drawTileLayer(graphics, bounds, plane, tileZoom, placement.getOffsetX(), placement.getOffsetY(),
-				true, sourceBounds);
+				true, prifddinasSourceBounds);
 		}
 		else
 		{
 			drawTileLayer(graphics, bounds, 0, tileZoom, placement.getOffsetX(), placement.getOffsetY(),
-				false, sourceBounds);
+				false, prifddinasSourceBounds);
 		}
 		graphics.setClip(oldClip);
 	}

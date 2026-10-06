@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "compatibilityId": "better-map-tiles-v1",
+  "assetVersion": "2026-09-25.1-dev",
+  "commit": "49644b64a4769c826665a22a11a8edcbcc5d03d9",
+  "pack": {
+    "path": "packs/a7d1a28d2de93e914508b0e5cbb56776938342f77a7bb34a3c610881aea2a528.zip",
+    "sha256": "a7d1a28d2de93e914508b0e5cbb56776938342f77a7bb34a3c610881aea2a528",
+    "compressedBytes": 49611981,
+    "uncompressedBytes": 50542942,
+    "fileCount": 9337
+  }
+}

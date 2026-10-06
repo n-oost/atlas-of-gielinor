@@ -1,0 +1,87 @@
+# /*
+#  * Copyright (c) 2026, n-oost
+#  * All rights reserved.
+#  *
+#  * Redistribution and use in source and binary forms, with or without
+#  * modification, are permitted provided that the following conditions are met:
+#  *
+#  * 1. Redistributions of source code must retain the above copyright notice, this
+#  *    list of conditions and the following disclaimer.
+#  * 2. Redistributions in binary form must reproduce the above copyright notice,
+#  *    this list of conditions and the following disclaimer in the documentation
+#  *    and/or other materials provided with the distribution.
+#  *
+#  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+#  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  */
+# Columns: x, y, Sailing level, optional exact marker name, optional requirement lines.
+# Row order preserves ties in nearest-level lookup.
+3050	3192	1
+3069	2986	1
+1506	3402	5
+1726	3452	5
+2960	3147	10
+1845	3687	15
+2905	3226	18
+2796	3412	20
+2757	3229	25
+2671	3265	28
+2685	3161	30
+2746	3304	34
+2878	3335	36
+1774	3141	38
+2579	2843	40
+3061	2639	40
+2749	2951	42
+1892	3429	42
+1511	2975	44
+2971	2603	45
+3174	2367	45	Mooring point - The Summer Shore	Requires completion of Troubled Tortugans
+3354	2216	45
+1452	2970	46
+1872	2985	46
+2997	2288	47
+3143	2824	48
+1557	2771	49
+2651	2678	50
+1860	3306	50
+2467	2721	51
+2848	2327	52
+2808	2510	52
+1958	3117	54
+2282	2823	55
+2532	2531	56
+1202	2733	58
+2660	2395	60
+2318	2774	61
+2630	3705	62
+2567	2297	62
+2773	8607	62
+2058	2606	63
+1765	2659	64
+2611	3840	65
+2144	3120	66
+2097	3188	66
+1923	2758	67
+2412	3780	68
+2308	3783	68
+2344	2270	69
+2158	3324	70
+2189	2327	72
+2222	3466	73
+2543	3765	74
+2303	3690	75
+2151	3880	76
+2080	3690	76
+2150	3530	79
+2860	3972	80
+1954	4056	81
+2927	4056	87

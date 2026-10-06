@@ -1,0 +1,138 @@
+# /*
+#  * Copyright (c) 2026, n-oost
+#  * All rights reserved.
+#  *
+#  * Redistribution and use in source and binary forms, with or without
+#  * modification, are permitted provided that the following conditions are met:
+#  *
+#  * 1. Redistributions of source code must retain the above copyright notice, this
+#  *    list of conditions and the following disclaimer.
+#  * 2. Redistributions in binary form must reproduce the above copyright notice,
+#  *    this list of conditions and the following disclaimer in the documentation
+#  *    and/or other materials provided with the distribution.
+#  *
+#  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+#  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  */
+# Columns: title, requirement lines...
+Kalphite Lair	Requires: Rope on the entrance hole (Kalphite Queen lair)	Light source recommended underground
+Kalphite Cave	Requires: Shantay pass or desert access	Light source recommended
+Brimhaven Dungeon	Requires: 875 coins to Dunstan (or Cabin Fever completed)	Antipoison and food recommended
+God Wars Dungeon	Requires: 40 Agility, 60 Strength, or 60 Ranged to cross the bridge	Protection from Zamorak for the main chamber
+Gryphon Dungeon	Requires: Children of the Sun (Varlamore access)	Shellbane gryphons inside — bring antidote or antipoison
+Shellbane Gryphon Cave	Requires: Children of the Sun (Varlamore access)	Antipoison strongly recommended
+Giants' Den	Requires: Combat gear	Hill giants, Moss giants, Fire giants under Shayzien
+Fortis Barracks	Requires: Children of the Sun (Varlamore access)	Subterranean barracks & training tunnels under Civitas illa Fortis
+Lizardman Temple	Requires: Combat gear (Lizardman Shamans)	Stone chests: lockpicks and Shayzien armour recommended
+Lizardman Caves	Requires: Combat gear / Molch fishing gear	Lizardmen & cavern tunnels under Lizardman Settlement
+Shayzien Crypts	Requires: Combat gear	Shayzien zombies and skeletal warriors under the cemetery
+Shayzien Crypt	Requires: Combat gear	Shayzien zombies and skeletal warriors under the cemetery
+Myths' Guild Dungeon	Requires: Dragon Slayer II completed	Wrath altar, green & blue dragons, adamant & rune dragons
+Myths' Guild dungeon	Requires: Dragon Slayer II completed	Wrath altar, green & blue dragons, adamant & rune dragons
+Hunter Guild Caverns	Requires: 46 Hunter (Hunters' Rumours)	Hunter Guild master, whistle recharging & guild cavers
+Lithkren Vault	Requires: Dragon Slayer II	Adamant & Rune dragons, Dragon forge & ancient vault
+Weiss Salt Mine	Requires: Making Friends with My Arm	Troll salt mine • Efreeti fire & basalt mining
+Salt Mine	Requires: Making Friends with My Arm	Troll salt mine • Efreeti fire & basalt mining
+Jaldraocht Pyramid	Requires: Desert Treasure I	Ancient Magicks pyramid • Azzanadra's altar
+River Elid Dungeon	Requires: Spirits of the Elid	Water spirits dungeon • Ancestral shrine & statuette
+Shadow Dungeon	Requires: Ring of visibility, Desert Treasure I	Shadow diamond cavern • Damis & shadow hounds
+Draynor Manor Basement	Requires: Ernest the Chicken	Professor Oddenstein's basement • Lever puzzle & oil can
+Draynor Manor basement	Requires: Ernest the Chicken	Professor Oddenstein's basement • Lever puzzle & oil can
+Enakhra's Temple	Requires: Enakhra's Lament	Ancient Mahjarrat temple • Bone room & fountain puzzles
+Port Sarim Rat Pits	Requires: Ratcatchers	Felkrash's rat pit • Pet cat gambling minigame
+King Black Dragon Lair	Requires: Wilderness entrance / lever	King Black Dragon boss lair • Dragonfire shield & visage
+Hespori Cave	Requires: 65 Farming, Hespori seed	Hespori boss arena • Bottomless compost bucket & anima seeds
+Stalker Den	Requires: The Twilight's Blade	Stalker boss dungeon • Twilight Emissaries quest cavern
+Ancient Cavern	Requires: Barbarian Training (Fishing)	Bring heavy boots and a hatchet
+Asgarnian Ice Dungeon	Requires: 51 Thieving (optional shortcut) or long walk	Bring food and armour
+Taverley Dungeon	Requires: Dusty key (from Velrak in Taverley jail) or 70 Agility shortcut	Light source recommended
+Edgeville Dungeon	Requires: Brass key for the surface shortcut door south of Edgeville	Light source recommended
+Waterbirth Dungeon	Requires: Rellekka / Fremennik boat access and combat gear	Bring food, prayer potions, and armour for Dagannoths
+Waterbirth Island Dungeon	Requires: Rellekka / Fremennik boat access and combat gear	Bring food, prayer potions, and armour for Dagannoths
+Waterbirth Dungeon (sub-levels)	Requires: Rellekka / Fremennik boat access and combat gear	Bring food, prayer potions, and armour for Dagannoths
+Fremennik Slayer Dungeon	Requires: Fremennik Trials	Bring a light source
+Smoke Dungeon	Requires: Facemask or Slayer helmet (smoke damage)	Bring a rope and light source
+Iorwerth Dungeon	Requires: Song of the Elves	Bring food and armour
+Mole Hole	Requires: Spade to dig into mole hills in Falador Park	Light source required (Bullseye lantern recommended)
+Giant Mole	Requires: Spade to dig into mole hills in Falador Park	Light source required (Bullseye lantern recommended)
+Mole Hole (Giant Mole)	Requires: Spade to dig into mole hills in Falador Park	Light source required (Bullseye lantern recommended)
+Karuulm Slayer Dungeon	Requires: Boots of stone/brimstone/granite (or Kourend Elite Diary)	Protects against burning heat damage on dungeon floors
+Kraken Cove	Requires: Level 87 Slayer	Fishing explosive to disturb Cave kraken (boss requires Slayer task)
+Kraken (boss)	Requires: Level 87 Slayer	Fishing explosive to disturb Cave kraken (boss requires Slayer task)
+Smoke Devil Dungeon	Requires: Level 93 Slayer, Facemask or Slayer helmet	Protects against toxic smoke; boss requires Slayer task
+Thermonuclear Smoke Devil (boss)	Requires: Level 93 Slayer, Facemask or Slayer helmet	Protects against toxic smoke; boss requires Slayer task
+King Black Dragon Lair	Requires: Slash weapon for webs (Wilderness lvl 44)	Anti-dragon shield and Antifire potions strongly recommended
+KBD Lair	Requires: Slash weapon for webs (Wilderness lvl 44)	Anti-dragon shield and Antifire potions strongly recommended
+Revenant Caves	Requires: 100,000 coins entry fee (Wilderness level 17–40)	Bracelet of ethereum protects against revenant aggression
+Wilderness God Wars Dungeon	Requires: 60 Strength or 60 Agility, plus a Rope (Wilderness lvl 28)	Ecumenical key or 40 killcount required for boss rooms
+Wilderness GWD	Requires: 60 Strength or 60 Agility, plus a Rope (Wilderness lvl 28)	Ecumenical key or 40 killcount required for boss rooms
+Ruins of Camdozaal	Requires: Below Ice Mountain quest completed	Barronite mace, mining, fishing, and Golem activities below
+Camdozaal	Requires: Below Ice Mountain quest completed	Barronite mace, mining, fishing, and Golem activities below
+Cam Torum	Requires: Children of the Sun & Twilight's Promise quests	Underground Varlamore settlement leading to Neypotzli
+Neypotzli	Requires: Perilous Moons quest started or completed	Moons of Peril boss encounters and Lunar Chest inside
+Cam Torum / Neypotzli	Requires: Children of the Sun & Perilous Moons quests	Underground Varlamore city and Moons of Peril dungeon
+Tombs of Amascut	Requires: Beneath Cursed Sands quest completed	Raid party lobby for Tombs of Amascut
+Tombs of Amascut (ToA)	Requires: Beneath Cursed Sands quest completed	Raid party lobby for Tombs of Amascut
+ToA	Requires: Beneath Cursed Sands quest completed	Raid party lobby for Tombs of Amascut
+Theatre of Blood	Requires: Priest in Peril and A Taste of Hope (Morytania access)	Raid party lobby for Theatre of Blood
+Theatre of Blood (ToB)	Requires: Priest in Peril and A Taste of Hope (Morytania access)	Raid party lobby for Theatre of Blood
+ToB	Requires: Priest in Peril and A Taste of Hope (Morytania access)	Raid party lobby for Theatre of Blood
+Volcanic Mine	Requires: Bone Voyage quest, 150 Museum Kudos, 50 Mining	Unfiltered Fossil Island minigame access
+Sisterhood Sanctuary	Requires: Priest in Peril (Morytania & Slepe access)	The Nightmare of Ashihama boss encounter below
+The Nightmare	Requires: Priest in Peril (Morytania & Slepe access)	The Nightmare of Ashihama boss encounter below
+Sisterhood Sanctuary (Nightmare)	Requires: Priest in Peril (Morytania & Slepe access)	The Nightmare of Ashihama boss encounter below
+Underground Pass	Requires: Biohazard / Underground Pass quest started	Rope, Bow & Arrows, and Agility boosts recommended
+Temple of Ikov	Requires: Pendant of Lucien, Light source, Bow and Ice arrows	Temple of Ikov quest
+Lumbridge Swamp Caves	Requires: Light source (protected), Rope or Spade	Spiny helmet recommended against Wall beasts
+Ice Queen's Lair	Requires: 50 Mining (Heroes' Quest)	Ice gloves strongly recommended
+Troll Stronghold	Requires: Death Plateau quest, Climbing boots	Troll Stronghold quest and God Wars route
+Salt Mine	Requires: Making Friends with My Arm, 60 Mining, 72 Firemaking	Basalt and salt mining for icy portal nexus
+Mage Arena Bank	Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)	Kolodion's Mage Arena and god cape arena	Teleport lever connects surface and underground bank
+Mage Arena	Requires: Knife or slash weapon to cut webs (Wilderness lvl 51)	Kolodion's Mage Arena and god cape arena
+Scabaras Dungeon	Requires: Contact! quest started, Light source, Tinderbox	Waterskins and antipoison recommended for desert dungeon
+Scabaras	Requires: Contact! quest started, Light source, Tinderbox	Waterskins and antipoison recommended for desert dungeon
+Slayer Tower basement	Requires: Slayer Tower basement key	High-level Slayer monsters inside
+Slayer Tower Basement	Requires: Slayer Tower basement key	High-level Slayer monsters inside
+Mining Guild basement	Requires: Level 60 Mining	Amethyst crystals and superior mineral veins
+Mining Guild Basement	Requires: Level 60 Mining	Amethyst crystals and superior mineral veins
+Heroes' Guild mine	Requires: Heroes' Quest, 50 Mining	Runite and Mithril rocks below
+Heroes' Guild Mine	Requires: Heroes' Quest, 50 Mining	Runite and Mithril rocks below
+Legends' Guild dungeon	Requires: Legends' Quest started or completed	Shadow warriors and dungeon access
+Legends' Guild Dungeon	Requires: Legends' Quest started or completed	Shadow warriors and dungeon access
+Legends' Guild	Requires: Legends' Quest started or completed	Shadow warriors and dungeon access
+Woodcutting Guild dungeon	Requires: 60 Woodcutting	Ents and Woodcutting dungeon below
+Woodcutting Guild Dungeon	Requires: 60 Woodcutting	Ents and Woodcutting dungeon below
+WC Guild dungeon	Requires: 60 Woodcutting	Ents and Woodcutting dungeon below
+Wizards' Guild basement	Requires: Level 66 Magic (Magic guild entrance)	Zombies and rune portals in Yanille
+Wizards' Guild Basement	Requires: Level 66 Magic (Magic guild entrance)	Zombies and rune portals in Yanille
+Ourania Cave	Requires: Food, combat/prayer defence recommended	Ourania / ZMI runecrafting altar and banking Zamorakian monks
+Ourania Cave (ZMI)	Requires: Food, combat/prayer defence recommended	Ourania / ZMI runecrafting altar and banking Zamorakian monks
+ZMI	Requires: Food, combat/prayer defence recommended	Ourania / ZMI runecrafting altar and banking Zamorakian monks
+Sourhog Cave	Requires: A Porcine of Interest quest	Spiny helmet or Slayer helmet required against sourhogs
+Lighthouse basement	Requires: Horror from the Deep quest, Light source	Dagannoth training cave
+Lighthouse Basement	Requires: Horror from the Deep quest, Light source	Dagannoth training cave
+Hallowed Sepulchre	Requires: Sins of the Father quest completed	Agility levels 52–92 (Floors 1–5)	Hallowed marks, Hallowed tools, Ring of endurance
+Lunar Isle Mine	Requires: Lunar Diplomacy quest started / Fremennik access, Pickaxe	Lunar ore, gem rocks, and rune essence mine under Lunar Isle
+Scorpia Cave	Requires: Slash weapon for webs, Antipoison, combat gear (Wilderness lvl 54)	Scorpia boss lair and Scorpia's offspring
+Scorpia cave	Requires: Slash weapon for webs, Antipoison, combat gear (Wilderness lvl 54)	Scorpia boss lair and Scorpia's offspring
+Silk Chasm	Requires: Wilderness access (lvl 35), Crush weapon / Magic, Antipoison	Spindel (solitary Venenatis) boss lair
+Escape Caves	Requires: Wilderness access (lvl 21-40), Wilderness Slayer / bossing gear	Wilderness escape network connecting boss lairs and deep escape exits
+Callisto's Den	Requires: Wilderness access (lvl 40), Magic / Ranged combat gear	Callisto boss lair in the Wilderness
+Callisto Den	Requires: Wilderness access (lvl 40), Magic / Ranged combat gear	Callisto boss lair in the Wilderness
+Vet'ion's Rest	Requires: Wilderness access (lvl 35), Crush weapon, Salve amulet	Vet'ion boss lair in the Wilderness
+Vetions Rest	Requires: Wilderness access (lvl 35), Crush weapon, Salve amulet	Vet'ion boss lair in the Wilderness
+Zemouregal's Base	Requires: Defender of Varrock quest, Hartwin / Arrav	Armoured zombies training and Zemouregal's fortress underneath Silvarea
+Shade Catacombs	Requires: Shades of Mort'ton quest, Shade keys, Coffin / Oil	Chests, shade remains, and pyre burning rewards under Mort'ton
+Giants' Foundry	Requires: Sleeping Giants quest, Kovac, Moulds and metal bars	Giants' Foundry minigame: smith colossal weapons for rewards
+Giants Foundry	Requires: Sleeping Giants quest, Kovac, Moulds and metal bars	Giants' Foundry minigame: smith colossal weapons for rewards
+Ice Troll Caves	Requires: The Fremennik Isles quest, Combat gear	Neitiznot Ice Troll cave network and Ice Troll King link
+Ice Troll Dungeon	Requires: The Fremennik Isles quest, Combat gear	Neitiznot Ice Troll cave network and Ice Troll King link
+Werewolf Agility Course	Requires: Creature of Fenkenstrain, Ring of Charos	Level 60 Agility (730 XP per lap with stick)

@@ -1,0 +1,406 @@
+# /*
+#  * Copyright (c) 2026, n-oost
+#  * All rights reserved.
+#  *
+#  * Redistribution and use in source and binary forms, with or without
+#  * modification, are permitted provided that the following conditions are met:
+#  *
+#  * 1. Redistributions of source code must retain the above copyright notice, this
+#  *    list of conditions and the following disclaimer.
+#  * 2. Redistributions in binary form must reproduce the above copyright notice,
+#  *    this list of conditions and the following disclaimer in the documentation
+#  *    and/or other materials provided with the distribution.
+#  *
+#  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+#  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  */
+# Columns: enum, id, name, surface x/y/plane, underground x/y/plane, y offset, radius, description, clip min x/y/max x/y, alternate entrance x/y/plane...
+LUMBRIDGE_CELLAR	lumbridge_cellar	Lumbridge Castle Cellar	3218	3218	0	3210	9616	0	6400	50	Under Lumbridge Castle • Culinaromancer's Chest, Recipe for Disaster	0	0	0	0
+VARROCK_SEWERS	varrock_sewers	Varrock Sewers	3237	3459	0	3237	9859	0	6400	80	Under Varrock • Moss Giants, Skeletons, Vannaka shortcut, Bryophyta	0	0	0	0	3229	3504	0
+TAVERLEY_DUNGEON	taverley_dungeon	Taverley Dungeon	2884	3398	0	2884	9798	0	6400	90	Under Taverley • Blue Dragons, Black Knights, Chaos Druids, Cerberus	2769	9670	2978	9854	2841	3424	0
+DWARVEN_MINES	dwarven_mines	Dwarven Mine	3018	3450	0	3018	9850	0	6400	70	Under Ice Mountain & Falador • Mining Guild door, Motherlode mouth	2979	9757	3062	9853	3058	3377	0
+EDGEVILLE_DUNGEON	edgeville_dungeon	Edgeville Dungeon	3096	3469	0	3096	9869	0	6400	75	Under Edgeville • Vannaka, Hill Giants, Obor, Wilderness Gate	0	0	0	0	3087	3571	0	3115	3452	0
+CATACOMBS_OF_KOUREND	catacombs_of_kourend	Catacombs of Kourend	1636	3673	0	1664	10048	0	6375	120	Under Great Kourend • Skotizo, Dark Beasts, Brutal Black Dragons, Abyssal Demons	1590	9979	1736	10111
+BRIMHAVEN_DUNGEON	brimhaven_dungeon	Brimhaven Dungeon	2744	3154	0	2713	9564	0	6410	90	Under Karamja • Saniboch, metal dragons, fire giants, wild dogs, vines	2630	9425	2760	9600	2759	3062	0
+FREMENNIK_SLAYER_DUNGEON	fremennik_slayer_dungeon	Fremennik Slayer Dungeon	2796	3615	0	2808	10002	0	6387	85	Under Rellekka • Cave Crawlers, Turoths, Kurasks, Cave Horrors link	2688	9960	2812	10045
+ASGARNIA_ICE_CAVE	asgarnia_ice_cave	Asgarnian Ice Dungeon	3007	3150	0	3007	9550	0	6400	65	Under Mudskipper Point • Ice Giants, Ice Warriors, Skeletal Wyverns	2944	9536	3081	9598
+STRONGHOLD_OF_SECURITY	stronghold_of_security	Stronghold of Security	3081	3420	0	1860	5230	0	0	60	Under Barbarian Village • 4 Floors of Combat, Security Questions, Fancy Boots	0	0	0	0
+KELDAGRIM	keldagrim	Keldagrim (Dwarven Capital)	2728	3715	0	2867	10190	0	6400	110	Under Troll Mountain Range • Consortium, Blast Furnace, Cart Station	2760	10100	2943	10239	2795	3718	0
+ARDOUGNE_UNDERGROUND	ardougne_underground	Ardougne Sewers	2632	3294	0	2632	9694	0	6400	45	Under East & West Ardougne • three disconnected sewer sections	2513	9664	2685	9727	2528	3303	0	2586	3235	0
+WITCHAVEN_DUNGEON	witchaven_dungeon	Witchaven Dungeon	2696	3283	0	2696	9683	0	6400	40	East of Ardougne • sea slugs, Kennith's Concerns	2692	9665	2748	9719
+CHAOS_DRUID_TOWER	chaos_druid_tower	Chaos Druid Tower Dungeon	2562	3356	0	2562	9756	0	6400	35	North of East Ardougne • chaos druids, Watchtower teleport	2559	9729	2593	9757
+CLOCK_TOWER_DUNGEON	clock_tower_dungeon	Clock Tower Dungeon	2568	3229	0	2568	9627	0	6400	40	South of East Ardougne • Clock Tower quest, coloured tiles	2560	9600	2623	9663
+ELEMENTAL_WORKSHOP	elemental_workshop	Elemental Workshop	2709	3498	0	2716	9888	0	6400	35	Under Seers' Village • odd-looking wall, elemental workshop quests	2689	9863	2740	9917
+GLARIALS_TOMB	glarials_tomb	Glarial's Tomb	2557	3444	0	2557	9844	0	6400	35	West of Baxtorian Falls • Waterfall Quest cairn tomb	2525	9808	2557	9848
+GOBLIN_CAVE	goblin_cave	Goblin Cave	2622	3393	0	2622	9793	0	6400	40	East of the Fishing Guild • goblins, Plain of Mud, Goblin Temple	2561	9793	2622	9854
+TEMPLE_OF_IKOV	temple_of_ikov	Temple of Ikov	2676	3404	0	2676	9804	0	6400	50	Lucien's temple; Shiny key required at McGrubor's Wood shortcut	2626	9784	2748	9862	2659	3492	0
+LEGENDS_GUILD_DUNGEON	legends_guild_dungeon	Legends' Guild Dungeon	2724	3375	0	2724	9775	0	6400	35	Below Legends' Guild • Legends' Quest, shadow warriors, mithril and coal rocks	2688	9728	2751	9786
+KRAKEN_COVE	kraken_cove	Kraken Cove	2278	3611	0	2278	10011	0	6400	45	cave kraken, Kraken boss	2241	9985	2301	10043
+MISCELLANIA_UNDERGROUND	miscellania_underground	Miscellania Underground	2512	3865	0	2512	10265	0	6400	60	Mining Caverns, Fishing Caverns, Royal Trouble	2500	10240	2623	10303	2508	3846	0	2619	3865	0
+FORTHOS_DUNGEON	forthos_dungeon	Forthos Dungeon	1701	3574	0	1800	9950	0	6376	80	Sarachnis, Red Dragons, Temple of the Moon	1781	9881	1866	9994	1669	3567	0
+CAM_TORUM	cam_torum	Cam Torum	1435	3128	0	1439	9509	1	6381	85	Under Avium Savannah • Cam Torum subterranean dwarven city	1240	9440	1580	9614
+TZHAAR_CITY	tzhaar_city	TzHaar City / Mor Ul Rek	2860	3170	0	2496	5140	0	0	170	Under Karamja Volcano • Fight Cave, Inferno, TzHaar-Ket-Rak	2250	5030	2590	5370
+GOD_WARS_DUNGEON	god_wars_dungeon	God Wars Dungeon	2917	3747	0	2881	5310	2	0	90	Under Trollheim Peak • General Graardor, Kree'arra, Zilyana, K'ril	0	0	0	0
+WATERBIRTH_DUNGEON	waterbirth_dungeon	Waterbirth Island Dungeon	2545	3755	0	2520	9920	0	0	170	Under Waterbirth Island • Dagannoth Kings, Wallasalkis, Rock Lobsters	2440	9600	2650	10200	2520	3740	0	2542	3741	0
+FOSSIL_ISLAND_UNDERGROUND	fossil_island_underground	Fossil Island Caverns / Wyvern Cave	3680	3854	0	3660	10250	0	6400	150	Under Fossil Island • Wyvern Cave, Underwater area, Volcanic Mine	3600	10122	3839	10303
+ZANARIS	zanaris	Zanaris	3201	3169	0	2412	4434	0	0	80	Lost City • Fairy rings, cosmic altar, market, Puro-Puro crop circle	0	0	0	0
+ANCIENT_CAVERN	ancient_cavern	Ancient Cavern	2511	3511	0	1768	5366	0	0	55	Under Baxtorian Falls • Mithril dragons, brutal green dragons, Whirlpool	1733	5318	1790	5373
+MOLE_HOLE	mole_hole	Mole Hole	2985	3387	0	1760	5180	0	0	55	Under Falador Park • Giant Mole	1731	5131	1787	5244	2997	3376	0
+OURANIA_ALTAR	ourania_altar	Ourania Altar (ZMI)	2451	3231	0	3022	5582	0	0	55	Ourania Cave • Ourania / ZMI runecrafting altar	3008	5568	3070	5630
+SMOKE_DEVIL_DUNGEON	smoke_devil_dungeon	Smoke Devil Dungeon	2412	3061	0	2412	9461	0	6400	45	West of Castle Wars • smoke devils; Thermonuclear boss instance is entrance-only	2376	9414	2427	9468
+OBSERVATORY_DUNGEON	observatory_dungeon	Observatory Dungeon	2458	3185	0	2355	9394	0	0	45	Ruined-building entrance • maze to the Observatory; tower exit is offset on this map	2305	9344	2365	9405	2436	3163	0
+TOWER_OF_LIFE_BASEMENT	tower_of_life_basement	Tower of Life Basement	2649	3213	0	3059	4397	0	0	45	Under the Tower of Life • Creature Creation	3009	4353	3068	4413
+TREE_GNOME_VILLAGE_DUNGEON	tree_gnome_village_dungeon	Tree Gnome Village Dungeon	2533	3155	0	2533	9556	0	6400	40	Under Tree Gnome Village • Waterfall Quest dungeon; post-quest instance is entrance-only	2507	9551	2553	9584
+UNDERGROUND_PASS	underground_pass	Underground Pass	2433	3315	0	2433	9715	0	6400	55	West of Ardougne to Isafdar • Full cavern pass, Well of Voyage, Iban's Lair	2312	9601	2497	9728	2312	3215	0
+CAMDOZAAL	camdozaal	Ruins of Camdozaal	2998	3493	0	2976	5824	0	0	80	Under Ice Mountain • Barronite, Camdozaal mines, Lassar Undercity	2905	5761	3031	5856
+CORPOREAL_BEAST	corporeal_beast	Corporeal Beast Lair	3202	3681	0	2967	4382	2	0	55	Wilderness • Corporeal Beast, spirit shields	2963	4370	2998	4396
+HALLOWED_SEPULCHRE	hallowed_sepulchre	Hallowed Sepulchre	3655	3386	0	2400	5984	0	0	70	Under Darkmeyer • Hallowed Sepulchre agility crypt	0	0	0	0
+DORGESH_KAAN	dorgesh_kaan	Dorgesh-Kaan	3230	3215	0	2752	5344	0	0	85	Under Lumbridge Swamp • Dorgeshuun city, agility course, caves	0	0	0	0
+DORGESH_KAAN_SOUTH	dorgesh_kaan_south	Dorgesh-Kaan South Dungeon	3290	3077	0	2715	5241	0	0	70	South of Dorgesh-Kaan • molanisks, Kalphite Hive tunnel	0	0	0	0	3193	3112	0
+ROGUES_DEN	rogues_den	Rogues' Den	2906	3537	0	3061	4985	1	0	55	Under Burthorpe inn • Rogues' Den maze, bank	0	0	0	0
+ABYSS	abyss	The Abyss	3105	3558	0	3040	4832	0	0	70	Wilderness Mage of Zamorak • Abyssal runecrafting, inner/outer ring	0	0	0	0
+PYRAMID_PLUNDER	pyramid_plunder	Pyramid Plunder	3280	2795	0	1928	4455	0	1653	50	Sophanem • Jalsavrah Pyramid Plunder thieving minigame	1796	4416	1980	4543
+BARBARIAN_ASSAULT	barbarian_assault	Barbarian Assault	2533	3573	0	2584	5273	0	0	55	Barbarian Outpost • Barbarian Assault minigame	0	0	0	0
+TARN_LAIR	tarn_lair	Lair of Tarn Razorlor	3430	3240	0	3300	4640	0	0	60	Abandoned Mine • Tarn Razorlor, Salve amulet (e)	3264	4608	3391	4671
+PRIFDDINAS_GRAND_LIBRARY	prifddinas_grand_library	Prifddinas Grand Library	2272	3341	0	3232	12512	0	9184	45	Under the Tower of Voices • Grand Library, memory crystals	3208	12510	3305	12590
+PRIFDDINAS_UNDERGROUND	prifddinas_underground	Prifddinas Underground	2211	3303	0	3232	12450	0	9184	50	Under Prifddinas • The Gauntlet staging, crystal singing, Iorwerth dungeon link	3160	12400	3315	12480
+SMOKE_DUNGEON	smoke_dungeon	Smoke Dungeon	3310	2962	0	3246	9378	0	6418	60	Under Pollnivneach • Desert Treasure smoky well, fire giants, smoke devils	3200	9344	3326	9406
+KLENTERS_PYRAMID	klenters_pyramid	Klenter's Pyramid	3280	2780	0	3280	9180	0	6400	30	Under Sophanem • Icthlarin's Little Helper, Klenter tomb	3272	9169	3312	9205	3294	2780	0
+DESERT_EAGLE_LAIR	desert_eagle_lair	Desert Eagle Lair	3400	3160	0	3418	9571	0	6411	25	Under Uzer Plateau • Eagle transport system desert roost	3412	9560	3435	9580
+SOPHANEM_DUNGEON	sophanem_dungeon	Sophanem Dungeon	3315	2795	0	2272	4319	0	1524	65	Under Sophanem • Contact! dungeon, scarab swarms, High Priest	2176	4240	2368	4347
+REVENANT_CAVES	revenant_caves	Revenant Caves	3126	3832	0	3250	10235	0	6403	100	Under the Wilderness • Revenants, ancient artefacts, high-risk PvP dungeon	3144	10053	3262	10236	3067	3741	0	3074	3655	0
+WILDERNESS_SLAYER_CAVE	wilderness_slayer_cave	Wilderness Slayer Cave	3260	3710	0	3373	10106	0	6396	90	Under the Wilderness • Krystilia Slayer tasks, abyssal demons, nechryaels, Larran's chest	3329	10049	3453	10173	3259	3666	0	3292	3746	0
+WILDERNESS_GOD_WARS_DUNGEON	wilderness_god_wars_dungeon	Wilderness God Wars Dungeon	3017	3738	0	3017	10138	0	6400	50	Under the Wilderness • God Wars dungeon entrance hole, ecumenical keys	3015	10115	3067	10166
+DEEP_WILDERNESS_DUNGEON	deep_wilderness_dungeon	Deep Wilderness Dungeon	3045	3927	0	3045	10327	0	6400	50	Deep Wilderness • Fire giants, shadow spiders, Rogue's Castle passage	3008	10304	3071	10367
+MAGE_ARENA_BANK	mage_arena_bank	Mage Arena Bank	3099	3934	0	2525	4705	0	771	35	Under Mage Arena • Kolodion cavern bank, god staves & capes	2500	4680	2556	4730	3089	3956	0
+CHASM_OF_FIRE	chasm_of_fire	Chasm of Fire	1435	3671	0	1435	10071	0	6400	45	Under Shayzien • Lesser/Greater/Black demons, Konar Slayer tasks	1409	10048	1468	10110
+THE_WARRENS	the_warrens	The Warrens	1775	3730	0	1775	10130	0	6400	65	Under Hosidius • The Ascent of Arceuus, King's sewer hideout	1727	10109	1816	10176	1812	3745	0
+KARUULM_SLAYER_DUNGEON	karuulm_slayer_dungeon	Karuulm Slayer Dungeon	1311	3807	0	1311	10207	0	6400	75	Under Mount Karuulm • Wyrms, Drakes, Hydras, Alchemical Hydra boss	1254	10174	1380	10281
+WOODCUTTING_GUILD_DUNGEON	woodcutting_guild_dungeon	Woodcutting Guild Dungeon	1580	3480	0	1580	9880	0	6400	40	Under Hosidius Woodcutting Guild • Ent dungeon	1540	9860	1599	9915	1603	3508	0
+NEYPOTZLI	neypotzli	Neypotzli (Moons of Peril)	1439	3279	0	1439	9660	0	6381	85	Under Cam Torum • Moons of Peril, Twilight Temple ritual chambers	1344	9614	1535	9742
+TONALI_CAVERN	tonali_cavern	Tonali Cavern	1309	3104	0	1309	9414	0	6310	45	Under Tlati Rainforest • Crypt of Tonali, Earthen Nagua, Doom of Mokhaiotl	1280	9344	1343	9423	1305	3033	0
+DRAGON_NEST	dragon_nest	Dragon Nest	1289	3134	0	1247	9503	0	6369	40	Under Tlati Rainforest • Red and blue dragons, baby dragons	1216	9472	1271	9535
+LIGHTHOUSE_DUNGEON	lighthouse_dungeon	Lighthouse Dungeon (Dagannoths)	2509	3644	0	2518	10024	0	6380	50	Under the Lighthouse • Dagannoths, Horror from the Deep lair, prayer book altar	2498	9986	2542	10041
+TOMBS_OF_AMASCUT	tombs_of_amascut	Tombs of Amascut Lobby	3356	2712	0	3344	9130	0	6400	40	Under Necropolis • Tombs of Amascut raid lobby	3344	9102	3375	9130
+LIZARDMAN_CAVES	lizardman_caves	Lizardman Caves	1306	3574	0	1308	9963	0	6400	45	Under Lizardman Settlement • Molch lizardman caves	1280	9935	1343	9984
+LIZARDMAN_TEMPLE	lizardman_temple	Lizardman Temple	1214	3559	0	1281	10048	0	6489	45	Under Mount Quidamortem • Lizardman Shamans & stone chests	1281	10048	1342	10111	1329	3669	0	1311	3686	0	1313	3663	0	1291	3657	0
+GIANTS_DEN	giants_den	Giants' Den	1420	3588	0	1432	9913	0	6325	60	Under Shayzien • Hill Giants, Moss Giants, Fire Giants	1412	9856	1471	9915	1419	3588	0
+FORTIS_BARRACKS	fortis_barracks	Fortis Barracks	1640	3166	0	1641	9576	0	6410	60	Under Civitas illa Fortis • Fortis Barracks & subterranean tunnels	1612	9484	1691	9579
+FENKENSTRAIN_DUNGEON	fenkenstrain_dungeon	Fenkenstrain's Castle Dungeon	3509	3448	0	3509	9848	0	6400	45	Under Castle Fenkenstrain • Experiments cave, memorial gravestone link	3520	9856	3583	9919	3575	3526	0
+WILDERNESS_AGILITY_DUNGEON	wilderness_agility_dungeon	Wilderness Agility Dungeon	2854	3944	0	3008	10367	0	6423	45	Under Deep Wilderness • Wilderness Agility Course escape tunnel & Pirate's Hideout	2991	10339	3071	10367	3004	3963	0
+DAEYALT_ESSENCE_MINE	daeyalt_essence_mine	Daeyalt Essence Mine	3725	3356	0	3649	9820	0	6464	45	Under Darkmeyer • Daeyalt essence extraction caverns	3609	9795	3710	9850
+MOLCH_PEARL_CAVES	molch_pearl_caves	Molch Pearl Caves	1382	3825	0	1280	9983	0	6158	45	Under Lake Molch • Cormorant fishing cavern & lizardman nests	1280	9935	1343	9983
+KALPHITE_LAIR	kalphite_lair	Kalphite Lair	3226	3108	0	3483	9510	0	6402	60	Under the Kharidian Desert • Kalphite Queen, kalphite soldiers	3464	9480	3511	9519
+KALPHITE_CAVE	kalphite_cave	Kalphite Cave	3319	3122	0	3282	9493	0	6383	70	Under the Shantay Pass • kalphite workers/soldiers, DT2 access	3264	9408	3387	9565
+GIANTS_FOUNDRY	giants_foundry	Giants' Foundry	3360	3150	0	3374	11493	0	8343	55	Under Giants' Plateau • Smithing minigame	3328	11456	3423	11519
+APE_ATOLL_DUNGEON	ape_atoll_dungeon	Ape Atoll Dungeon	2763	2703	0	2763	9103	0	6400	80	Under Ape Atoll • skeletons, zombies, dagannoth, Kruk's Dungeon link	2309	9088	2815	9277
+WIZARDS_GUILD_BASEMENT	wizards_guild_basement	Wizards' Guild Basement	2594	3085	0	2594	9485	0	6400	15	Under the Wizards' Guild • Wizard Frumscone's zombie cage; separate from Yanille Dungeon	2582	9484	2594	9493
+YANILLE_AGILITY_DUNGEON	yanille_agility_dungeon	Yanille Agility Dungeon	2569	3121	0	2569	9525	0	6400	80	Under Yanille • agility shortcut course, Salarin the Twisted	2560	9475	2622	9586	2603	3078	0
+MOS_LE_HARMLESS_CAVE	mos_le_harmless_cave	Mos Le'Harmless Cave	3749	2973	0	3748	9373	0	6400	80	Under Mos Le'Harmless • cave horrors, black candles	3715	9348	3838	9470	3814	3062	0	3829	3062	0
+KARAMJA_DUNGEON	karamja_dungeon	Karamja and Crandor Dungeon	2855	3168	0	2855	9568	0	6400	80	Under Karamja & Crandor • lesser demons, moss giants, Elvarg lair	2810	9500	2885	9695
+CRANDOR_DUNGEON	crandor_dungeon	Crandor and Karamja Dungeon	2832	3255	0	2833	9658	0	6400	80	Under Crandor • Elvarg, Dragon Slayer, deep Karamja Dungeon	2810	9500	2885	9695
+LUMBRIDGE_SWAMP_CAVES	lumbridge_swamp_caves	Lumbridge Swamp Caves	3168	3172	0	3168	9572	0	6400	80	Under Lumbridge Swamp • cave slimes, cave bugs, Dorgesh-Kaan link	0	0	0	0
+CRABCLAW_CAVES	crabclaw_caves	Crabclaw Caves	1646	3449	0	1646	9848	0	6399	80	Under Hosidius coast • sandy/king sand crabs	1635	9800	1724	9855
+LAVA_MAZE_DUNGEON	lava_maze_dungeon	Lava Maze Dungeon	3069	3856	0	3068	10256	0	6400	60	Under the Lava Maze • lava dragons link, poison spiders, KBD lever	3009	10240	3071	10291
+FEROX_ENCLAVE_DUNGEON	ferox_enclave_dungeon	Ferox Enclave Dungeon	3152	3644	0	3164	10043	0	6400	80	Under Ferox Enclave • spiders, PvP staging caves	0	0	0	0
+WEB_CHASM	web_chasm	Web Chasm	3184	3745	0	3187	10127	0	6382	80	Under the Wilderness • Wilderness God Wars Dungeon approach	0	0	0	0
+SCORPIA_CAVE	scorpia_cave	Scorpia cave	3244	3949	0	3243	10349	0	6400	35	Under the Wilderness • Scorpia boss cave	3216	10328	3247	10355	3231	3952	0	3232	3936	0
+SILK_CHASM	silk_chasm	Silk Chasm	3320	3798	0	3423	10203	2	6405	35	Under the Wilderness • Venenatis boss lair	3400	10180	3447	10231
+ESCAPE_CAVES	escape_caves	Escape Caves	3260	3833	0	3284	10208	0	6375	55	Under the Wilderness • escape network linking the Wilderness boss caves	3264	10176	3327	10239	3320	3831	0	3284	3808	0	3282	3775	0
+CALLISTOS_DEN	callistos_den	Callisto's Den	3292	3850	0	3292	10250	0	6400	40	Under the Wilderness • Callisto boss lair	3264	10240	3327	10303
+STRONGHOLD_SLAYER_DUNGEON	stronghold_slayer_dungeon	Stronghold Slayer Dungeon	2430	3424	0	2429	9824	0	6400	50	Under the Tree Gnome Stronghold • common slayer tasks, Turael-adjacent	2387	9767	2495	9838
+BRIMSTAIL_CAVE	brimstail_cave	Brimstail's Cave	2402	3419	0	2409	9812	0	6400	35	West Tree Gnome Stronghold • Brimstail, crystal chest, spirit tree	2378	9807	2414	9832
+GRAND_TREE_TUNNELS	grand_tree_tunnels	Grand Tree Tunnels	2464	3497	0	2464	9897	0	6400	80	Under the Grand Tree • black demons, Glough's tunnels	2432	9856	2495	9919
+HEROES_GUILD_MINE	heroes_guild_mine	Heroes' Guild Mine	2893	3507	0	2893	9907	0	6400	40	Under the Heroes' Guild • mithril, adamantite, runite	2884	9881	2943	9918
+HAM_HIDEOUT	ham_hideout	H.A.M. Hideout	3165	3252	0	3149	9652	0	6400	70	Under the H.A.M. trapdoor • H.A.M. members, thieving, Death to the Dorgeshuun	0	0	0	0
+DRAYNOR_SEWERS	draynor_sewers	Draynor Sewers	3118	3244	0	3118	9644	0	6400	70	Under Draynor • skeletons, zombies, Draynor Manor link	0	0	0	0	3083	3272	0
+ICE_QUEEN_LAIR	ice_queen_lair	Ice Queen's Lair	2847	3516	0	2847	9916	0	6400	65	Under White Wolf Mountain • Ice Queen (Heroes' Quest), ice warriors/giants	2816	9897	2896	9976	2822	3510	0	2856	3519	0
+CORSAIR_COVE_DUNGEON	corsair_cove_dungeon	Corsair Cove Dungeon	2483	2889	0	1971	9035	1	0	75	Under Corsair Cove • scarabs, ogress warriors, Ogress Shaman	1950	8970	2071	9070	2522	2861	0
+ISLE_OF_SOULS_DUNGEON	isle_of_souls_dungeon	Isle of Souls Dungeon	2309	2919	0	2135	9320	0	6400	110	Under the east Isle of Souls • demons, fire giants, blue dragons, iron dragons	2113	9285	2173	9341
+WIZARDS_TOWER_BASEMENT	wizards_tower_basement	Wizards' Tower Basement	3104	3162	0	3104	9576	0	6400	40	Under Wizards' Tower • Fairytale II, rune essence mine	0	0	0	0
+TOLNAS_RIFT	tolnas_rift	Tolna's Rift	3309	3450	0	3297	9824	0	6400	35	East of Varrock • A Soul's Bane instance; entrance overlay only	3288	9816	3308	9836
+SOURHOG_CAVE	sourhog_cave	Sourhog Cave	3149	3347	0	3168	9696	0	6400	40	East of Draynor Manor • sourhogs, A Porcine of Interest	0	0	0	0
+PATERDOMUS_BASEMENT	paterdomus_basement	Paterdomus Basement	3405	3506	0	3405	9906	0	6400	50	Under Paterdomus • Priest in Peril, Drezel, holy barrier to Morytania	0	0	0	0	3421	3484	0
+WATER_MILL_CELLAR	water_mill_cellar	Water mill cellar	3166	3307	0	3166	9695	0	6400	35	Under the mill north of Lumbridge • mill cellar, goblins, quest	0	0	0	0	3230	3286	0
+CHAMPIONS_GUILD_BASEMENT	champions_guild_basement	Champions' Guild Basement	3188	3355	0	3144	9736	0	6400	40	Under the Champions' Guild • Champions' Challenge	0	0	0	0
+VARROCK_MUSEUM_BASEMENT	varrock_museum_basement	Varrock Museum Basement	3256	3451	0	1544	4872	0	0	60	Under Varrock Museum • specimen cleaning and natural history exhibits	0	0	0	0
+VARROCK_RAT_PITS	varrock_rat_pits	Varrock Rat Pits	3262	3401	0	2912	5088	0	0	96	Under Varrock • Ratcatchers rat pits	0	0	0	0
+VTAM_CORPORATION	vtam_corporation	VTAM Corporation	3243	3383	0	3243	9783	0	6400	20	Under Varrock • Shield of Arrav hideout	0	0	0	0
+SORCERESS_GARDEN	sorceress_garden	Sorceress's Garden	3320	3141	0	2912	5472	0	0	96	Apprentice teleport in Al Kharid • four seasonal gardens	0	0	0	0
+DIGSITE_DUNGEON	digsite_dungeon	Digsite Dungeon	3354	3425	0	3356	9822	0	6400	45	Under the Digsite • winch, Doug Deeping, Varrock Museum	0	0	0	0	3370	3428	0
+CHASM_OF_TEARS	chasm_of_tears	Chasm of Tears	3187	3124	0	3219	9532	2	6400	35	Plane 2 off Lumbridge Swamp Caves • Juna, Tears of Guthix	3210	9487	3262	9533	3219	3132	0
+MINING_GUILD	mining_guild	Mining Guild	3019	3339	0	3019	9739	0	6400	40	Under Falador • 60 Mining, amethyst, Dwarven Mine door	3001	9698	3057	9756
+MELZARS_MAZE_BASEMENT	melzars_maze_basement	Melzar's Maze Basement	2924	3250	0	2924	9650	0	6400	35	Under Melzar's Maze • lesser demons, Dragon Slayer	2920	9638	2941	9659
+MOTHERLODE_MINE	motherlode_mine	Motherlode Mine	3060	3366	0	3728	5692	0	0	35	Hop from Dwarven Mine • pay-dirt; entrance overlay only	3718	5682	3738	5702	3020	3360	0
+SCRUBFOOT_CAVE	scrubfoot_cave	Scrubfoot's Cave	2946	3507	0	2946	9907	0	6400	35	West of Goblin Village • sled course; entrance overlay only	2944	9897	2966	9917
+WARRIORS_GUILD_BASEMENT	warriors_guild_basement	Warriors' Guild Basement	2834	3542	0	2907	9968	0	0	35	West of the Warriors' Guild • dragon defender cyclopes	2904	9954	2943	9976
+WATERFALL_DUNGEON	waterfall_dungeon	Waterfall Dungeon	2511	3463	0	2575	9861	0	0	45	Baxtorian Falls • Fire giants, shadow/mithril seeds, Glarial's urn	2560	9860	2611	9919
+EAGLES_PEAK_DUNGEON	eagles_peak_dungeon	Eagles' Peak Dungeon	2328	3496	0	2080	5024	0	0	45	Under Eagles' Peak • Giant eagles, kebbit puzzle, silver/golden feather	2048	4996	2107	5047
+OGRE_ENCLAVE	ogre_enclave	Ogre Enclave	2506	3039	0	2506	9439	0	6400	60	Under Gu'Tanoth • Watchtower quest, Blue dragons, Greater demons, Skavid	2496	9408	2559	9471
+JIGGIG_DUNGEON	jiggig_dungeon	Jiggig Dungeon	2443	3051	0	2443	9451	0	6400	45	Under Jiggig • Zogre Flesh Eaters, Slash Bash tomb, coffins	2436	9412	2491	9460
+RED_CHINCHOMPA_HUNTING_GROUND	red_chinchompa_hunting_ground	Red Chinchompa Hunting Ground	2525	2894	0	2525	9294	0	6400	30	Under Feldip Hills • Private red chinchompa hunting cave (Western Provinces Diary)	2508	9284	2535	9308
+JUNGLE_EAGLE_LAIR	jungle_eagle_lair	Jungle Eagle Lair	2518	2921	0	2518	9321	0	6400	30	Under Feldip Hills • Eagle transport system, jungle eagle nest	2508	9312	2527	9331
+SKAVID_CAVES	skavid_caves	Skavid Caves	2562	3024	0	2562	9424	0	6400	35	Under Gu'Tanoth cliffs • Watchtower quest, mad skavids, cave nightshade	2560	9420	2585	9470	2500	2991	0	2521	3070	0	2528	3014	0	2540	3054	0	2551	3035	0	2552	3054	0	2574	3028	0
+SHILO_VILLAGE_GEM_MINE	shilo_village_gem_mine	Shilo Village Gem Mine	2824	2998	0	2838	9387	0	6389	35	Under Shilo Village • Gem rocks, Shilo Village quest / diary underground mine	2824	9376	2859	9400
+RASHILIYIAS_TOMB	rashiliyias_tomb	Rashiliyia's Tomb	2758	2983	0	2758	9183	0	6200	50	Under Cairn Isle • Shilo Village quest, Ah Za Rhoon, Tomb of Rashiliyia, bone key	2752	9152	2815	9343
+CRASH_ISLAND_DUNGEON	crash_island_dungeon	Crash Island Dungeon	2920	2721	0	2920	9121	0	6400	35	Under Crash Island • Monkey Madness II, demonic gorillas cavern link	2892	9092	2927	9147
+KHARAZI_CAVES	kharazi_caves	Kharazi Caves	2838	2845	0	2838	9245	0	6400	45	Under Kharazi Jungle • Legends' Quest, Viyeldi caves, Echned Zolin, Nezikchened	2817	9217	2865	9296
+JATIZSO_MINE	jatizso_mine	Jatizso Mine	2398	3813	0	2404	10189	0	6376	40	Under Jatizso • The Fremennik Isles, mithril and adamantite mining	2370	10180	2430	10235
+ICE_TROLL_CAVES	ice_troll_caves	Ice Troll Caves	2398	3898	0	2394	10300	0	6411	35	Under Northern Neitiznot • The Fremennik Isles, Ice Troll King cavern link	2368	10260	2432	10320	2315	3894	0	2400	3889	0
+LUNAR_ISLE_MINE	lunar_isle_mine	Lunar Isle Mine	2142	3944	0	2141	10344	0	6400	45	Under north-east Lunar Isle • lunar ore, gem rocks, rune essence	2108	10304	2180	10367
+TROLL_STRONGHOLD	troll_stronghold	Troll Stronghold	2839	3690	0	3012	10112	0	6422	55	Inside Troll Stronghold • upper level, kitchen, prison, storeroom	3012	10112	3067	10167	2831	3677	0	2827	3647	0
+HAUNTED_MINE	haunted_mine	Haunted Mine	3441	3232	0	3436	9637	0	6400	45	Under Mort Myre Swamp • Haunted Mine, Treus Dayth, glowing fungus	3400	9609	3447	9662
+BARROWS_CRYPTS	barrows_crypts	Barrows Crypts & Tunnels	3565	3306	0	3565	9706	0	6400	80	Under Barrows • 6 Barrows brothers crypts, puzzle doors, rewards chest	3512	9672	3640	9827
+MEIYERDITCH_LABORATORIES	meiyerditch_laboratories	Meiyerditch Laboratories	3628	3350	0	3628	9750	0	6400	100	Under Meiyerditch & Darkmeyer • Daeyalt Essence Mine, vampyre laboratories, Sins of the Father	3450	9665	3645	9950
+NATURE_GROTTO	nature_grotto	Nature Grotto	3438	3337	0	3440	9740	0	6397	25	Under Mort Myre Swamp • Nature Spirit altar, Filliman Tarlock	3434	9732	3449	9747
+ECTOFUNTUS_DUNGEON	ectofuntus_dungeon	Ectofuntus Dungeon	3659	3524	0	3674	9893	0	6369	30	Under Port Phasmatys Ectofuntus • Pool of Slime, slime buckets	3670	9875	3692	9901	3651	3519	0
+MORYTANIA_SPIDER_CAVE	morytania_spider_cave	Morytania Spider Cave	3657	3407	0	3670	9830	0	6400	40	South of Port Phasmatys • Spiders, red spiders' eggs, cave crawling	3652	9792	3711	9867
+SHADE_CATACOMBS	shade_catacombs	Shade Catacombs	3485	3321	0	3484	9721	0	6400	45	Under Mort'ton • shade remains, sacred oil, shade chests	3456	9664	3519	9727
+VETIONS_REST	vetions_rest	Vet'ion's Rest	3221	3788	0	3295	10202	0	6414	35	Under the Wilderness • Vet'ion boss lair	3284	10192	3307	10211
+ZEMOUREGALS_BASE	zemouregals_base	Zemouregal's Base	3343	3515	0	3578	4582	0	1067	65	Under Silvarea • Defender of Varrock, armoured zombies	3520	4520	3640	4640
+WHITE_KNIGHTS_CASTLE_CRYPT	white_knights_castle_crypt	White Knight's Castle Crypt	2964	3331	0	2964	9731	0	6400	35	Under White Knights' Castle • Sir Owen, Wanted!	2957	9729	2977	9745
+WHITE_WOLF_TUNNEL	white_wolf_tunnel	White Wolf Tunnel	2876	3482	0	2876	9878	0	6400	40	Under White Wolf Mountain • Taverley–Catherby stairs	2816	9860	2878	9886	2819	3484	0
+POISON_WASTE_DUNGEON	poison_waste_dungeon	Poison Waste Sewer	2330	3106	0	1504	4235	1	0	80	Under Poison Waste • Warped terrorbirds & tortoises (The Path of Glouphrie)	1349	4224	1535	4351
+SISTERHOOD_SANCTUARY	sisterhood_sanctuary	Sisterhood Sanctuary	3727	3300	0	3727	9700	1	6400	80	Under Slepe Church • The Nightmare of Ashihama & Sisterhood crypts	3715	9664	3903	10302	3724	3356	0
+JORMUNGANDS_PRISON	jormungands_prison	Jormungand's Prison	2465	4010	0	2445	10419	0	6400	55	Under Island of Stone • The Fremennik Exiles, Jormungand & Basilisks	2398	10370	2493	10468
+GHORROCK_DUNGEON	ghorrock_dungeon	Ghorrock Dungeon	2847	4043	0	2888	10465	0	6400	45	Under Ghorrock fortress • Ice demons, Frozen Waste, Desert Treasure II	2844	10441	2932	10489
+HUNTER_GUILD	hunter_guild	Hunter Guild Caverns	1558	3047	0	1558	9451	0	6404	40	Under Hunter Guild • Hunters' Rumours, Guild master, whistling birds	1524	9408	1579	9471	1533	3050	0
+LITHKREN_VAULT	lithkren_vault	Lithkren Vault	3555	4002	0	3549	10448	0	6446	45	Under Lithkren • Dragon Slayer II, Adamant & Rune dragons, dragon forge	3540	10440	3560	10488
+WEISS_SALT_MINE	weiss_salt_mine	Weiss Salt Mine	2869	3941	0	2845	10351	0	6410	35	Under Weiss • Making Friends with My Arm, basalt & icy basalt mining	2824	10324	2860	10356
+JALDRAOCHT_PYRAMID	jaldraocht_pyramid	Jaldraocht Pyramid	3233	2898	0	2913	4954	3	2056	50	Under Kharidian Desert • Desert Treasure, ancient magick pyramid & Azzanadra	2865	4906	2962	5003	3233	2887	0
+RIVER_ELID_DUNGEON	river_elid_dungeon	River Elid Dungeon	3371	3129	0	3349	9536	0	6407	35	Under River Elid • Spirits of the Elid, water spirits & ancestral shrine	3338	9528	3365	9561	3370	3132	0
+SHADOW_DUNGEON	shadow_dungeon	Shadow Dungeon	2547	3421	0	2630	5071	0	1650	55	South of Baxtorian Falls • Desert Treasure I shadow diamond & shadow hounds	2624	5056	2752	5120
+DRAYNOR_MANOR_BASEMENT	draynor_manor_basement	Draynor Manor Basement	3092	3361	0	3117	9753	0	6392	30	Under Draynor Manor • Ernest the Chicken, Professor Oddenstein machine levers	3088	9744	3120	9768	3091	3362	0	3114	3357	0
+ENAKHRAS_TEMPLE	enakhras_temple	Enakhra's Temple	3194	2925	0	3124	9328	1	6403	50	Under Kharidian Desert • Enakhra's Lament, bone sacrifice & Mahjarrat temple	3072	9280	3201	9400	3148	2938	0	3146	2909	0
+PORT_SARIM_RAT_PITS	port_sarim_rat_pits	Port Sarim Rat Pits	3018	3231	0	2962	9650	0	6419	30	Under Port Sarim • Ratcatchers, Felkrash & Port Sarim sewer rat pits	2952	9624	2981	9660	3017	3232	0
+KING_BLACK_DRAGON_LAIR	king_black_dragon_lair	King Black Dragon Lair	3017	3849	0	2272	4705	0	856	45	Under Wilderness • King Black Dragon boss lair, pulled lever entrance	2252	4676	2292	4716	3016	3849	0
+HESPORI_CAVE	hespori_cave	Hespori Cave	1248	3737	0	1248	10089	0	6352	30	Under Farming Guild • Hespori boss arena & Bottomless compost bucket	1236	10076	1260	10100
+STALKER_DEN	stalker_den	Stalker Den	1296	3374	0	1286	9775	0	6401	45	Under Darkfrost • Twilight Emissaries, Stalker boss dungeon	1240	9728	1340	9908	1324	3364	0
+WYRMSCRAIG_CAVERN	wyrmscraig_cavern	Wyrmscraig Cavern	2540	2213	0	2580	8613	0	6400	55	Under Wyrmscraig • Mortimer, wyrms, mining and the Ardeaglais basement	2560	8576	2624	8672	2530	2205	0	2562	2203	0
+DEEPFIN_MINE	deepfin_mine	Deepfin Mine	1924	2758	0	2015	9187	0	6400	55	Under Deepfin Point • Deepfin Mine	0	0	0	0
+PANDEMONIUM_CAVE	pandemonium_cave	Pandemonium Cave	3070	2986	0	3043	9384	0	6400	55	Under The Pandemonium • low-level cavern	0	0	0	0
+HERE_BE_MINOTAURS	here_be_minotaurs	Here be minotaurs	1959	3117	0	1947	9505	0	6400	55	Under Minotaurs' Rest • minotaur cavern	0	0	0	0
+YNYSDAIL_CAVERN	ynysdail_cavern	Ynysdail Cavern	2223	3466	0	2271	9875	0	6400	55	Under Ynysdail • Aquanite cavern	0	0	0	0
+GRYPHON_CAVE	gryphon_cave	Gryphon Cave	3120	2490	0	3227	8861	0	6400	55	Under The Great Conch • gryphon caves	0	0	0	0	3234	2418	0
+KURASK_LAIR	kurask_lair	Kurask Lair	1203	2733	0	1181	9195	0	6400	55	Under Laguna Aurorae • Kurask lair	0	0	0	0
+SHELLBANE_GRYPHON_CAVE	shellbane_gryphon_cave	Shellbane Gryphon Cave	3175	2478	0	3177	8873	0	6400	55	Under The Great Conch • Shellbane gryphon cave	0	0	0	0
+SUNBLEAK_CAVE	sunbleak_cave	Sunbleak Cave	2190	2327	0	2225	8737	0	6400	55	Under Sunbleak Island • mining cavern	0	0	0	0
+JOGRE_DUNGEON	jogre_dungeon	Jogre Dungeon	2824	3118	0	2848	9504	0	6400	55	Under Karamja • Jogre Dungeon	0	0	0	0
+SCABARAS_DUNGEON	scabaras_dungeon	Scabaras Dungeon	3407	2848	0	3403	9247	0	6400	55	Under the Desert • Scabaras Dungeon	0	0	0	0
+WEREWOLF_AGILITY_COURSE	werewolf_agility_course	Werewolf Agility Course	3542	3461	0	3551	9887	0	6400	55	Under Morytania • Werewolf Agility Course	0	0	0	0
+MYREQUE_HIDEOUT	myreque_hideout	Myreque Hideout	3508	3448	0	3495	9835	0	6400	55	Under Morytania • Myreque Hideout	0	0	0	0	3494	3464	0	3488	3231	0
+SHAYZIEN_PRISON	shayzien_prison	Shayzien Prison	1464	3569	0	1437	9951	0	6400	55	Under Shayzien • prison dungeon	0	0	0	0
+XERICS_LOOKOUT_BASEMENT	xerics_lookout_basement	Xeric's Lookout basement	1589	3526	0	1563	9953	0	6400	55	Under Xeric's Lookout	0	0	0	0
+FORTIS_COLOSSEUM	fortis_colosseum	Fortis Colosseum	1824	3107	0	1825	9507	0	6400	55	Under Civitas illa Fortis • Fortis Colosseum	0	0	0	0
+ENTRANA_DUNGEON	entrana_dungeon	Entrana Dungeon	2819	3374	0	2847	9755	0	6400	55	Under Entrana • Entrana Dungeon	0	0	0	0
+ALCHEMICAL_SOCIETY	alchemical_society	Alchemical Society	1389	2918	0	1373	9315	0	6400	55	Under Varlamore • Alchemical Society	0	0	0	0
+QUIDAMORTEM_CAVE	quidamortem_cave	Quidamortem Cave	1213	3559	0	1180	9956	0	6400	55	Under Mount Quidamortem • cave entrance	0	0	0	0
+RUINS_OF_UZER_BASEMENT	ruins_of_uzer_basement	Ruins of Uzer basement	3492	3090	0	2721	4900	0	1810	55	Under the Ruins of Uzer	0	0	0	0
+TUTORIAL_ISLAND_DUNGEON	tutorial_island_dungeon	Tutorial Island dungeon	3087	3119	0	3093	9513	0	6400	40	Under Tutorial Island • mine and combat training area	0	0	0	0	3110	3126	0
+POLAR_EAGLE_LAIR	polar_eagle_lair	Polar Eagle Lair	2743	3831	0	2727	10217	0	6386	40	Rellekka Hunter area • Eagle transport system, polar eagle nest	0	0	0	0
+RANTZS_CAVE	rantzs_cave	Rantz's Cave	2630	2980	0	2640	9391	0	6411	35	Feldip Hills • Rantz and Big Chompy Bird Hunting	0	0	0	0
+HARMONY_ISLAND_BASEMENT	harmony_island_basement	Harmony Island Basement	3805	2844	0	3785	9225	0	6381	40	Harmony Island • The Great Brain Robbery underground rooms	0	0	0	0
+PENGUIN_BASE	penguin_base	KGP Headquarters	2638	4011	0	2655	10390	0	6379	55	Iceberg • Enter the avalanche in a clockwork penguin suit, Cold War	0	0	0	0
+TUNNEL_OF_CHAOS	tunnel_of_chaos	Tunnel of Chaos	3284	3469	0	3165	5210	0	1741	45	East of Varrock • Saradomin statue, What Lies Below, Chaos Altar shortcut	0	0	0	0
+UNGAEL_LABORATORY	ungael_laboratory	Ungael Laboratory	2272	4064	0	2270	10465	0	6401	45	Under Ungael • Dragon Slayer II, Dragonkin laboratory	0	0	0	0
+GENIE_CAVE	genie_cave	Genie Cave	3374	2905	0	3370	9310	0	6405	30	West of Nardah • Rope into the crevice, Spirits of the Elid	0	0	0	0
+BLACK_KNIGHT_CATACOMBS	black_knight_catacombs	Black Knight Catacombs	3020	3514	0	4143	4853	1	1339	45	Under Black Knights' Fortress • While Guthix Sleeps, Dark Squall	0	0	0	0
+ARTIOS_LAIR	artios_lair	Hunter's End (Artio)	3115	3675	0	1758	11552	0	7877	45	Wilderness • Artio's singles-plus bear lair	0	0	0	0
+SPINDELS_LAIR	spindels_lair	Web Chasm (Spindel)	3182	3745	0	1632	11555	2	7810	45	Wilderness • Spindel's singles-plus spider lair	0	0	0	0
+CHARRED_DUNGEON	charred_dungeon	Charred Dungeon	2637	2416	0	2691	8884	0	6468	80	Under Charred Island • Charred Dungeon	0	0	0	0
+FARMING_GUILD_SEED_VAULT	farming_guild_seed_vault	Farming Guild Seed Vault	1247	3740	0	1265	10160	0	6420	30	Farming Guild • Seed vault beneath the central tier	0	0	0	0
+DESERT_MINING_CAMP_DUNGEON	desert_mining_camp_dungeon	Desert Mining Camp Dungeon	3288	3021	0	3280	9415	0	6394	65	Inside the Desert Mining Camp • The Tourist Trap, slave mines	0	0	0	0
+CRASH_SITE_CAVERN	crash_site_cavern	Crash Site Cavern	2436	3520	0	2113	5663	0	2143	120	Through the northern Gnome Stronghold fence • Follow the path north-east, Demonic Gorillas	0	0	0	0
+LIBRARY_HISTORICAL_ARCHIVE	library_historical_archive	Library Historical Archive	1624	3808	0	1575	10200	0	6392	55	Arceuus Library • Speak to Archeio to enter the historical archive	0	0	0	0
+BRINE_RAT_CAVERN	brine_rat_cavern	Brine Rat Cavern	2748	3736	0	2718	10145	0	6409	65	North-east of Rellekka • Dig by the windswept tree, Olaf's Quest	0	0	0	0
+MONKEY_MADNESS_HANGAR	monkey_madness_hangar	Underground Military Glider Hangar	2484	3487	1	2588	4513	0	1026	55	Grand Tree • Speak to Daero at Blurberry Bar, Monkey Madness	0	0	0	0
+CORAL_NURSERIES	coral_nurseries	Coral Nurseries	3272	2463	0	3297	8859	0	6400	55	Under The Great Conch • Coral Nurseries	0	0	0	0
+AIR_ALTAR	air_altar	Air Altar	2985	3292	0	2844	4833	0	1541	50	South-west of Falador - Mysterious ruins air altar	0	0	0	0
+WATER_ALTAR	water_altar	Water Altar	3182	3165	0	2718	4834	0	1669	50	Lumbridge Swamp - Mysterious ruins water altar	0	0	0	0
+EARTH_ALTAR	earth_altar	Earth Altar	3306	3474	0	2656	4838	0	1364	50	North-east of Varrock - Mysterious ruins earth altar	0	0	0	0
+FIRE_ALTAR	fire_altar	Fire Altar	3313	3255	0	2584	4838	0	1583	50	Al Kharid - Mysterious ruins fire altar	0	0	0	0
+BODY_ALTAR	body_altar	Body Altar	3053	3445	0	2522	4837	0	1392	50	West of Edgeville Monastery - Mysterious ruins body altar	0	0	0	0
+LAW_ALTAR	law_altar	Law Altar	2858	3379	0	2464	4832	0	1453	50	Entrana - Mysterious ruins law altar	0	0	0	0
+NATURE_ALTAR	nature_altar	Nature Altar	2869	3018	0	2400	4841	0	1823	50	Karamja - Mysterious ruins nature altar	0	0	0	0
+CHAOS_ALTAR	chaos_altar	Chaos Altar	3060	3591	0	2270	4840	0	1249	50	Wilderness - Mysterious ruins chaos altar	0	0	0	0
+ENCHANTED_VALLEY	enchanted_valley	Enchanted Valley	3035	4520	0	3035	4520	0	0	50	Fairy ring BKQ - Enchanted Valley	0	0	0	0
+MOGRE_CAMP	mogre_camp	Mogre Camp	2990	3110	0	2975	9495	0	6385	50	Mudskipper Point - Mogre Camp diving cavern	0	0	0	0
+KENDALS_LAIR	kendals_lair	Kendal's Lair	2780	3680	0	2855	10080	0	6400	50	North of Mountain Camp - The Kendal's cave	0	0	0	0
+NATIVE_ANCIENT_CAVERN	native_ancient_cavern	Ancient Cavern	2511	3511	0	1752	5336	0	1825	64	Native OSRS map selector: Ancient Cavern	0	0	0	0
+NATIVE_ANCIENT_CAVERN_ANCIENT_CAVERN	native_ancient_cavern__ancient_cavern	Ancient Cavern	2511	3511	0	1768	5366	0	1855	64	Native section of Ancient Cavern	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND	native_ardougne_underground	Ardougne Underground	2634	3321	0	2560	9600	0	6279	128	Native OSRS map selector: Ardougne Underground	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND_ARDOUGNE_UNDERGROUND	native_ardougne_underground__ardougne_underground	Ardougne Sewers	2632	3294	0	2632	9694	0	6400	64	Native section of Ardougne Underground	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND_CHAOS_DRUID_TOWER	native_ardougne_underground__chaos_druid_tower	Chaos Druid Tower Dungeon	2562	3356	0	2562	9756	0	6400	64	Native section of Ardougne Underground	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND_CLOCK_TOWER_DUNGEON	native_ardougne_underground__clock_tower_dungeon	Clock Tower Dungeon	2568	3229	0	2568	9627	0	6398	64	Native section of Ardougne Underground	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND_GOBLIN_CAVE	native_ardougne_underground__goblin_cave	Goblin Cave	2622	3393	0	2622	9793	0	6400	64	Native section of Ardougne Underground	0	0	0	0
+NATIVE_ARDOUGNE_UNDERGROUND_LEGENDS_GUILD_DUNGEON	native_ardougne_underground__legends_guild_dungeon	Legends' Guild Dungeon	2724	3375	0	2724	9775	0	6400	64	Native section of Ardougne Underground	0	0	0	0
+NATIVE_ASGARNIA_ICE_DUNGEON	native_asgarnia_ice_dungeon	Asgarnia Ice Cave	2971	3240	0	3064	9576	0	6336	136	Native OSRS map selector: Asgarnia Ice Cave	0	0	0	0
+NATIVE_ASGARNIA_ICE_DUNGEON_ASGARNIA_ICE_CAVE	native_asgarnia_ice_dungeon__asgarnia_ice_cave	Asgarnian Ice Dungeon	3007	3150	0	3007	9550	0	6400	64	Native section of Asgarnia Ice Cave	0	0	0	0
+NATIVE_ASGARNIA_ICE_DUNGEON_KARAMJA_DUNGEON	native_asgarnia_ice_dungeon__karamja_dungeon	Karamja and Crandor Dungeon	2855	3168	0	2855	9568	0	6400	64	Native section of Asgarnia Ice Cave	0	0	0	0
+NATIVE_ASGARNIA_ICE_DUNGEON_MELZARS_MAZE_BASEMENT	native_asgarnia_ice_dungeon__melzars_maze_basement	Melzar's Maze Basement	2924	3250	0	2924	9650	0	6400	64	Native section of Asgarnia Ice Cave	0	0	0	0
+NATIVE_ASGARNIA_ICE_DUNGEON_PORT_SARIM_RAT_PITS	native_asgarnia_ice_dungeon__port_sarim_rat_pits	Port Sarim Rat Pits	3018	3231	0	2962	9650	0	6419	64	Native section of Asgarnia Ice Cave	0	0	0	0
+NATIVE_BRAINDEATH_ISLAND	native_braindeath_island	Braindeath Island	3680	3530	0	2112	5056	0	1526	64	Native OSRS map selector: Braindeath Island	0	0	0	0
+NATIVE_DORGESHKAAN	native_dorgeshkaan	Dorgesh-Kaan	3230	3215	0	2704	5336	0	2121	128	Native OSRS map selector: Dorgesh-Kaan	0	0	0	0
+NATIVE_DORGESHKAAN_DORGESH_KAAN	native_dorgeshkaan__dorgesh_kaan	Dorgesh-Kaan	3230	3215	0	2752	5344	0	2129	64	Native section of Dorgesh-Kaan	0	0	0	0
+NATIVE_DWARVEN_MINES	native_dwarven_mines	Dwarven Mines	3032	3385	0	3008	9664	0	6279	136	Native OSRS map selector: Dwarven Mines	0	0	0	0
+NATIVE_DWARVEN_MINES_MINING_GUILD	native_dwarven_mines__mining_guild	Mining Guild	3019	3339	0	3019	9739	0	6400	64	Native section of Dwarven Mines	0	0	0	0
+NATIVE_DWARVEN_MINES_TAVERLEY_DUNGEON	native_dwarven_mines__taverley_dungeon	Taverley Dungeon	2884	3398	0	2884	9798	0	6400	64	Native section of Dwarven Mines	0	0	0	0
+NATIVE_GODWARS	native_godwars	God Wars Dungeon	2917	3747	0	2848	5336	2	1589	112	Native OSRS map selector: God Wars Dungeon	0	0	0	0
+NATIVE_GODWARS_GOD_WARS_DUNGEON	native_godwars__god_wars_dungeon	God Wars Dungeon	2917	3747	0	2881	5310	2	1563	64	Native section of God Wars Dungeon	0	0	0	0
+NATIVE_KELDAGRIM	native_keldagrim	Keldagrim	2728	3715	0	2816	10176	0	6461	84	Native OSRS map selector: Keldagrim	0	0	0	0
+NATIVE_KELDAGRIM_KELDAGRIM	native_keldagrim__keldagrim	Keldagrim (Dwarven Capital)	2728	3715	0	2867	10190	0	6475	64	Native section of Keldagrim	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND	native_misthalin_underground	Misthalin Underground	3171	3295	0	3072	9728	0	6433	268	Native OSRS map selector: Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_ASGARNIA_ICE_CAVE	native_misthalin_underground__asgarnia_ice_cave	Asgarnian Ice Dungeon	3007	3150	0	3007	9550	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_CHAMPIONS_GUILD_BASEMENT	native_misthalin_underground__champions_guild_basement	Champions' Guild Basement	3188	3355	0	3144	9736	0	6381	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_CHASM_OF_TEARS	native_misthalin_underground__chasm_of_tears	Chasm of Tears	3219	3132	0	3219	9532	2	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_DRAYNOR_MANOR_BASEMENT	native_misthalin_underground__draynor_manor_basement	Draynor Manor Basement	3092	3361	0	3117	9753	0	6392	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_DRAYNOR_SEWERS	native_misthalin_underground__draynor_sewers	Draynor Sewers	3118	3244	0	3118	9644	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_HAM_HIDEOUT	native_misthalin_underground__ham_hideout	H.A.M. Hideout	3165	3252	0	3149	9652	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_LUMBRIDGE_CELLAR	native_misthalin_underground__lumbridge_cellar	Lumbridge Castle Cellar	3218	3218	0	3210	9616	0	6398	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_LUMBRIDGE_SWAMP_CAVES	native_misthalin_underground__lumbridge_swamp_caves	Lumbridge Swamp Caves	3168	3172	0	3168	9572	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_SOURHOG_CAVE	native_misthalin_underground__sourhog_cave	Sourhog Cave	3149	3347	0	3168	9696	0	6349	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_VARROCK_SEWERS	native_misthalin_underground__varrock_sewers	Varrock Sewers	3237	3459	0	3237	9859	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_VTAM_CORPORATION	native_misthalin_underground__vtam_corporation	VTAM Corporation	3243	3383	0	3243	9783	0	6400	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_WATER_MILL_CELLAR	native_misthalin_underground__water_mill_cellar	Water mill cellar	3230	3286	0	3231	9688	0	6402	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MISTHALIN_UNDERGROUND_WIZARDS_TOWER_BASEMENT	native_misthalin_underground__wizards_tower_basement	Wizards' Tower Basement	3104	3162	0	3104	9576	0	6414	64	Native section of Misthalin Underground	0	0	0	0
+NATIVE_MOLE	native_mole	Mole Hole	2985	3387	0	1728	5120	0	1733	64	Native OSRS map selector: Mole Hole	0	0	0	0
+NATIVE_MOLE_MOLE_HOLE	native_mole__mole_hole	Mole Hole	2985	3387	0	1760	5180	0	1793	64	Native section of Mole Hole	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND	native_morytania_underground	Morytania Underground	3576	3433	0	3456	9920	0	6487	264	Native OSRS map selector: Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_ECTOFUNTUS_DUNGEON	native_morytania_underground__ectofuntus_dungeon	Ectofuntus Dungeon	3659	3524	0	3674	9893	0	6369	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_FENKENSTRAIN_DUNGEON	native_morytania_underground__fenkenstrain_dungeon	Experiment Cave	3575	3526	0	3530	9950	0	6424	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_HAUNTED_MINE	native_morytania_underground__haunted_mine	Haunted Mine	3441	3232	0	3436	9637	0	6405	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_MEIYERDITCH_LABORATORIES	native_morytania_underground__meiyerditch_laboratories	Meiyerditch Laboratories	3628	3350	0	3628	9750	0	6400	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_MORYTANIA_SPIDER_CAVE	native_morytania_underground__morytania_spider_cave	Morytania Spider Cave	3657	3407	0	3670	9830	0	6423	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_MYREQUE_HIDEOUT	native_morytania_underground__myreque_hideout	Myreque Hideout	3508	3448	0	3495	9835	0	6387	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_PATERDOMUS_BASEMENT	native_morytania_underground__paterdomus_basement	Paterdomus Basement	3405	3506	0	3405	9906	0	6400	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_SHADE_CATACOMBS	native_morytania_underground__shade_catacombs	Shade Catacombs	3485	3321	0	3484	9721	0	6400	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_SISTERHOOD_SANCTUARY	native_morytania_underground__sisterhood_sanctuary	Sisterhood Sanctuary	3727	3300	0	3727	9700	1	6400	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MORYTANIA_UNDERGROUND_WEREWOLF_AGILITY_COURSE	native_morytania_underground__werewolf_agility_course	Werewolf Agility Course	3542	3461	0	3551	9887	0	6426	64	Native section of Morytania Underground	0	0	0	0
+NATIVE_MOSLEHARMLESS_CAVE	native_mosleharmless_cave	Mos Le'Harmless Cave	3749	2973	0	3712	9344	0	6371	64	Native OSRS map selector: Mos Le'Harmless Cave	0	0	0	0
+NATIVE_MOSLEHARMLESS_CAVE_MOS_LE_HARMLESS_CAVE	native_mosleharmless_cave__mos_le_harmless_cave	Mos Le'Harmless Cave	3749	2973	0	3748	9373	0	6400	64	Native section of Mos Le'Harmless Cave	0	0	0	0
+NATIVE_OURANIA	native_ourania	Ourania Altar	2451	3231	0	3008	5568	0	2337	32	Native OSRS map selector: Ourania Altar	0	0	0	0
+NATIVE_OURANIA_OURANIA_ALTAR	native_ourania__ourania_altar	Ourania Altar (ZMI)	2451	3231	0	3022	5582	0	2351	64	Native section of Ourania Altar	0	0	0	0
+NATIVE_SLAYER_CAVE	native_slayer_cave	Fremennik Slayer Cave	2796	3615	0	2704	10008	0	6393	64	Native OSRS map selector: Fremennik Slayer Cave	0	0	0	0
+NATIVE_SLAYER_CAVE_FREMENNIK_SLAYER_DUNGEON	native_slayer_cave__fremennik_slayer_dungeon	Fremennik Slayer Dungeon	2796	3615	0	2808	10002	0	6387	64	Native section of Fremennik Slayer Cave	0	0	0	0
+NATIVE_SOS	native_sos	Stronghold of Security	3081	3420	0	2160	5264	0	1844	176	Native OSRS map selector: Stronghold of Security	0	0	0	0
+NATIVE_SOS_STRONGHOLD_OF_SECURITY	native_sos__stronghold_of_security	Stronghold of Security	3081	3420	0	1860	5230	0	1810	64	Native section of Stronghold of Security	0	0	0	0
+NATIVE_STRONGHOLD_UNDERGROUND	native_stronghold_underground	Stronghold Underground	2393	3487	0	2240	9984	0	6497	148	Native OSRS map selector: Stronghold Underground	0	0	0	0
+NATIVE_STRONGHOLD_UNDERGROUND_BRIMSTAIL_CAVE	native_stronghold_underground__brimstail_cave	Brimstail's Cave	2402	3419	0	2409	9812	0	6393	64	Native section of Stronghold Underground	0	0	0	0
+NATIVE_STRONGHOLD_UNDERGROUND_GRAND_TREE_TUNNELS	native_stronghold_underground__grand_tree_tunnels	Grand Tree Tunnels	2464	3497	0	2464	9897	0	6400	64	Native section of Stronghold Underground	0	0	0	0
+NATIVE_STRONGHOLD_UNDERGROUND_KRAKEN_COVE	native_stronghold_underground__kraken_cove	Kraken Cove	2278	3611	0	2278	10011	0	6400	64	Native section of Stronghold Underground	0	0	0	0
+NATIVE_STRONGHOLD_UNDERGROUND_STRONGHOLD_SLAYER_DUNGEON	native_stronghold_underground__stronghold_slayer_dungeon	Stronghold Slayer Dungeon	2430	3424	0	2429	9824	0	6400	64	Native section of Stronghold Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND	native_taverley_underground	Taverley Underground	2873	3450	0	2816	9728	0	6278	204	Native OSRS map selector: Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_ENTRANA_DUNGEON	native_taverley_underground__entrana_dungeon	Entrana Dungeon	2819	3374	0	2847	9755	0	6381	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_HEROES_GUILD_MINE	native_taverley_underground__heroes_guild_mine	Heroes' Guild Mine	2893	3507	0	2893	9907	0	6400	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_ICE_QUEEN_LAIR	native_taverley_underground__ice_queen_lair	Ice Queen's Lair	2847	3516	0	2847	9916	0	6400	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_MINING_GUILD	native_taverley_underground__mining_guild	Mining Guild	3019	3339	0	3019	9739	0	6400	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_TAVERLEY_DUNGEON	native_taverley_underground__taverley_dungeon	Taverley Dungeon	2884	3398	0	2884	9798	0	6400	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_WARRIORS_GUILD_BASEMENT	native_taverley_underground__warriors_guild_basement	Warriors' Guild Basement	2834	3542	0	2907	9968	0	6426	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_WHITE_KNIGHTS_CASTLE_CRYPT	native_taverley_underground__white_knights_castle_crypt	White Knight's Castle Crypt	2964	3331	0	2964	9731	0	6400	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TAVERLEY_UNDERGROUND_WHITE_WOLF_TUNNEL	native_taverley_underground__white_wolf_tunnel	White Wolf Tunnel	2876	3482	0	2876	9878	0	6396	64	Native section of Taverley Underground	0	0	0	0
+NATIVE_TOLNA	native_tolna	Tolna's Rift	3309	3450	0	3072	5248	0	1798	32	Native OSRS map selector: Tolna's Rift	0	0	0	0
+NATIVE_TROLL_STRONGHOLD	native_troll_stronghold	Troll Stronghold	2839	3690	0	2848	10072	0	6382	96	Native OSRS map selector: Troll Stronghold	0	0	0	0
+NATIVE_TROLL_STRONGHOLD_KELDAGRIM	native_troll_stronghold__keldagrim	Keldagrim (Dwarven Capital)	2728	3715	0	2867	10190	0	6475	64	Native section of Troll Stronghold	0	0	0	0
+NATIVE_TZHAAR_AREA	native_tzhaar_area	Mor Ul Rek	2860	3170	0	2368	5120	0	1950	96	Native OSRS map selector: Mor Ul Rek	0	0	0	0
+NATIVE_TZHAAR_AREA_TZHAAR_CITY	native_tzhaar_area__tzhaar_city	TzHaar City / Mor Ul Rek	2860	3170	0	2496	5140	0	1970	64	Native section of Mor Ul Rek	0	0	0	0
+NATIVE_UNDEAD_DUNGEON	native_undead_dungeon	Lair of Tarn Razorlor	3439	3232	0	3144	4568	0	1336	128	Native OSRS map selector: Lair of Tarn Razorlor	0	0	0	0
+NATIVE_WATERBIRTH	native_waterbirth	Waterbirth Dungeon	2545	3755	0	2432	10112	0	6357	268	Native OSRS map selector: Waterbirth Dungeon	0	0	0	0
+NATIVE_WATERBIRTH_WATERBIRTH_DUNGEON	native_waterbirth__waterbirth_dungeon	Waterbirth Island Dungeon	2545	3755	0	2520	9920	0	6165	64	Native section of Waterbirth Dungeon	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS	native_wilderness_dungeons	Wilderness Dungeons	3098	3819	0	2944	10304	0	6485	264	Native OSRS map selector: Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_CORPOREAL_BEAST	native_wilderness_dungeons__corporeal_beast	Corporeal Beast Lair	3202	3681	0	2967	4382	2	701	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_DEEP_WILDERNESS_DUNGEON	native_wilderness_dungeons__deep_wilderness_dungeon	Deep Wilderness Dungeon	3045	3927	0	3045	10327	0	6400	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_KING_BLACK_DRAGON_LAIR	native_wilderness_dungeons__king_black_dragon_lair	King Black Dragon Lair	3017	3849	0	2272	4705	0	856	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_LAVA_MAZE_DUNGEON	native_wilderness_dungeons__lava_maze_dungeon	Lava Maze Dungeon	3069	3856	0	3068	10256	0	6400	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_MAGE_ARENA_BANK	native_wilderness_dungeons__mage_arena_bank	Mage Arena Bank	3099	3934	0	2525	4705	0	771	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_REVENANT_CAVES	native_wilderness_dungeons__revenant_caves	Revenant Caves	3126	3832	0	3250	10235	0	6403	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_SCORPIA_CAVE	native_wilderness_dungeons__scorpia_cave	Scorpia cave	3244	3949	0	3243	10349	0	6400	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_SILK_CHASM	native_wilderness_dungeons__silk_chasm	Silk Chasm	3320	3798	0	3423	10203	2	6405	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_TROLL_STRONGHOLD	native_wilderness_dungeons__troll_stronghold	Troll Stronghold	2839	3690	0	3012	10112	0	6422	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_WEB_CHASM	native_wilderness_dungeons__web_chasm	Web Chasm	3184	3745	0	3187	10127	0	6382	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_WILDERNESS_GOD_WARS_DUNGEON	native_wilderness_dungeons__wilderness_god_wars_dungeon	Wilderness God Wars Dungeon	3017	3738	0	3017	10138	0	6400	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_WILDERNESS_DUNGEONS_WILDERNESS_SLAYER_CAVE	native_wilderness_dungeons__wilderness_slayer_cave	Wilderness Slayer Cave	3260	3710	0	3373	10106	0	6396	64	Native section of Wilderness Dungeons	0	0	0	0
+NATIVE_YANILLE_UNDERGROUND	native_yanille_underground	Yanille Underground	2525	3089	0	2304	9408	0	6319	168	Native OSRS map selector: Yanille Underground	0	0	0	0
+NATIVE_YANILLE_UNDERGROUND_SMOKE_DEVIL_DUNGEON	native_yanille_underground__smoke_devil_dungeon	Smoke Devil Dungeon	2412	3061	0	2412	9461	0	6400	64	Native section of Yanille Underground	0	0	0	0
+NATIVE_YANILLE_UNDERGROUND_WIZARDS_GUILD_BASEMENT	native_yanille_underground__wizards_guild_basement	Wizards' Guild Basement	2594	3085	0	2594	9485	0	6400	64	Native section of Yanille Underground	0	0	0	0
+NATIVE_YANILLE_UNDERGROUND_YANILLE_AGILITY_DUNGEON	native_yanille_underground__yanille_agility_dungeon	Yanille Agility Dungeon	2569	3121	0	2569	9525	0	6404	64	Native section of Yanille Underground	0	0	0	0
+NATIVE_ZANARIS	native_zanaris	Zanaris	3201	3169	0	2368	4352	0	1183	64	Native OSRS map selector: Zanaris	0	0	0	0
+NATIVE_ZANARIS_ZANARIS	native_zanaris__zanaris	Zanaris	3201	3169	0	2412	4434	0	1265	64	Native section of Zanaris	0	0	0	0
+NATIVE_PRIFDDINAS	native_prifddinas	Prifddinas	2240	3275	0	3136	5952	0	2677	128	Native OSRS map selector: Prifddinas	0	0	0	0
+NATIVE_FOSSIL_UNDERGROUND	native_fossil_underground	Fossil Island Underground	3680	3854	0	3584	10240	0	6386	176	Native OSRS map selector: Fossil Island Underground	0	0	0	0
+NATIVE_FOSSIL_UNDERGROUND_FOSSIL_ISLAND_UNDERGROUND	native_fossil_underground__fossil_island_underground	Fossil Island Caverns / Wyvern Cave	3680	3854	0	3660	10250	0	6396	64	Native section of Fossil Island Underground	0	0	0	0
+NATIVE_FELDIP_UNDERGROUND	native_feldip_underground	Feldip Hills Underground	2504	2891	0	2048	8960	1	6069	128	Native OSRS map selector: Feldip Hills Underground	0	0	0	0
+NATIVE_FELDIP_UNDERGROUND_CORSAIR_COVE_DUNGEON	native_feldip_underground__corsair_cove_dungeon	Corsair Cove Dungeon	2483	2889	0	1971	9035	1	6146	64	Native section of Feldip Hills Underground	0	0	0	0
+NATIVE_FELDIP_UNDERGROUND_RED_CHINCHOMPA_HUNTING_GROUND	native_feldip_underground__red_chinchompa_hunting_ground	Red Chinchompa Hunting Ground	2525	2894	0	2525	9294	0	6400	64	Native section of Feldip Hills Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND	native_kourend_underground	Kourend Underground	1599	3595	0	1536	9856	0	6261	320	Native OSRS map selector: Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_CATACOMBS_OF_KOUREND	native_kourend_underground__catacombs_of_kourend	Catacombs of Kourend	1636	3673	0	1664	10048	0	6375	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_CHASM_OF_FIRE	native_kourend_underground__chasm_of_fire	Chasm of Fire	1435	3671	0	1435	10071	0	6400	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_CRABCLAW_CAVES	native_kourend_underground__crabclaw_caves	Crabclaw Caves	1646	3449	0	1646	9848	0	6399	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_FORTHOS_DUNGEON	native_kourend_underground__forthos_dungeon	Forthos Dungeon	1701	3574	0	1800	9950	0	6376	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_GIANTS_DEN	native_kourend_underground__giants_den	Giants' Den	1420	3588	0	1432	9913	0	6325	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_THE_WARRENS	native_kourend_underground__the_warrens	The Warrens	1775	3730	0	1775	10130	0	6400	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KOUREND_UNDERGROUND_WOODCUTTING_GUILD_DUNGEON	native_kourend_underground__woodcutting_guild_dungeon	Woodcutting Guild Dungeon	1580	3480	0	1580	9880	0	6400	64	Native section of Kourend Underground	0	0	0	0
+NATIVE_KEBOS_UNDERGROUND	native_kebos_underground	Kebos Underground	1298	3736	0	1216	10112	0	6376	200	Native OSRS map selector: Kebos Underground	0	0	0	0
+NATIVE_KEBOS_UNDERGROUND_FARMING_GUILD_SEED_VAULT	native_kebos_underground__farming_guild_seed_vault	Farming Guild Seed Vault	1247	3740	0	1265	10160	0	6420	64	Native section of Kebos Underground	0	0	0	0
+NATIVE_KEBOS_UNDERGROUND_HESPORI_CAVE	native_kebos_underground__hespori_cave	Hespori Cave	1248	3737	0	1248	10089	0	6352	64	Native section of Kebos Underground	0	0	0	0
+NATIVE_KEBOS_UNDERGROUND_KARUULM_SLAYER_DUNGEON	native_kebos_underground__karuulm_slayer_dungeon	Karuulm Slayer Dungeon	1311	3807	0	1311	10207	0	6400	64	Native section of Kebos Underground	0	0	0	0
+NATIVE_KEBOS_UNDERGROUND_LIZARDMAN_CAVES	native_kebos_underground__lizardman_caves	Lizardman Caves	1306	3574	0	1308	9963	0	6389	64	Native section of Kebos Underground	0	0	0	0
+NATIVE_PRIFDDINAS_UNDERGROUND	native_prifddinas_underground	Prifddinas Underground	2211	3303	0	3136	12352	0	9049	96	Native OSRS map selector: Prifddinas Underground	0	0	0	0
+NATIVE_PRIFDDINAS_UNDERGROUND_PRIFDDINAS_UNDERGROUND	native_prifddinas_underground__prifddinas_underground	Prifddinas Underground	2211	3303	0	3232	12450	0	9147	64	Native section of Prifddinas Underground	0	0	0	0
+NATIVE_GRAND_LIBRARY	native_grand_library	Prifddinas Grand Library	2272	3341	0	2560	6080	0	2739	256	Native OSRS map selector: Prifddinas Grand Library	0	0	0	0
+NATIVE_BR_DEFAULT	native_br_default	LMS Desert Island	3145	3630	0	3392	5760	0	2130	64	Native OSRS map selector: LMS Desert Island	0	0	0	0
+NATIVE_BR_DARK_VARROCK	native_br_dark_varrock	LMS Wild Varrock	3155	3640	0	3456	6016	0	2376	96	Native OSRS map selector: LMS Wild Varrock	0	0	0	0
+NATIVE_CAMDOZAAL	native_camdozaal	Ruins of Camdozaal	2998	3493	0	2880	5824	0	2331	96	Native OSRS map selector: Ruins of Camdozaal	0	0	0	0
+NATIVE_CAMDOZAAL_CAMDOZAAL	native_camdozaal__camdozaal	Ruins of Camdozaal	2998	3493	0	2976	5824	0	2331	64	Native section of Ruins of Camdozaal	0	0	0	0
+NATIVE_THE_ABYSS	native_the_abyss	The Abyss	3105	3558	0	3072	4736	0	1178	96	Native OSRS map selector: The Abyss	0	0	0	0
+NATIVE_THE_ABYSS_ABYSS	native_the_abyss__abyss	The Abyss	3105	3558	0	3040	4832	0	1274	64	Native section of The Abyss	0	0	0	0
+NATIVE_DESERT_UNDERGROUND	native_desert_underground	Kharidian Desert Underground	3315	3023	0	3328	9088	0	6065	200	Native OSRS map selector: Kharidian Desert Underground	0	0	0	0
+NATIVE_DESERT_UNDERGROUND_KALPHITE_CAVE	native_desert_underground__kalphite_cave	Kalphite Cave	3319	3122	0	3282	9493	0	6371	64	Native section of Kharidian Desert Underground	0	0	0	0
+NATIVE_DESERT_UNDERGROUND_KALPHITE_LAIR	native_desert_underground__kalphite_lair	Kalphite Lair	3226	3108	0	3483	9510	0	6402	64	Native section of Kharidian Desert Underground	0	0	0	0
+NATIVE_DESERT_UNDERGROUND_TOMBS_OF_AMASCUT	native_desert_underground__tombs_of_amascut	Tombs of Amascut Lobby	3356	2712	0	3344	9130	0	6418	64	Native section of Kharidian Desert Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND	native_varlamore_underground	Varlamore Underground	1487	3139	0	1216	9728	0	6589	288	Native OSRS map selector: Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_ALCHEMICAL_SOCIETY	native_varlamore_underground__alchemical_society	Alchemical Society	1389	2918	0	1373	9315	0	6397	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_CAM_TORUM	native_varlamore_underground__cam_torum	Cam Torum	1435	3128	0	1439	9509	1	6381	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_DRAGON_NEST	native_varlamore_underground__dragon_nest	Dragon Nest	1289	3134	0	1247	9503	0	6369	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_FORTIS_BARRACKS	native_varlamore_underground__fortis_barracks	Fortis Barracks	1640	3166	0	1641	9576	0	6410	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_FORTIS_COLOSSEUM	native_varlamore_underground__fortis_colosseum	Fortis Colosseum	1824	3107	0	1825	9507	0	6400	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_VARLAMORE_UNDERGROUND_STALKER_DEN	native_varlamore_underground__stalker_den	Stalker Den	1296	3374	0	1286	9775	0	6401	64	Native section of Varlamore Underground	0	0	0	0
+NATIVE_CAM_TORUM	native_cam_torum	Cam Torum	1435	3128	0	1408	9536	1	6408	76	Native OSRS map selector: Cam Torum	0	0	0	0
+NATIVE_CAM_TORUM_CAM_TORUM	native_cam_torum__cam_torum	Cam Torum	1435	3128	0	1439	9509	1	6381	64	Native section of Cam Torum	0	0	0	0
+NATIVE_NEYPOTZLI	native_neypotzli	Neypotzli	1435	3128	0	1344	9600	0	6472	132	Native OSRS map selector: Neypotzli	0	0	0	0
+NATIVE_NEYPOTZLI_CAM_TORUM	native_neypotzli__cam_torum	Cam Torum	1435	3128	0	1439	9509	1	6381	64	Native section of Neypotzli	0	0	0	0
+NATIVE_NEYPOTZLI_NEYPOTZLI	native_neypotzli__neypotzli	Neypotzli (Moons of Peril)	1435	3128	0	1439	9660	0	6532	64	Native section of Neypotzli	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND	native_ardent_ocean_underground	Ardent Ocean Underground	2858	3113	0	2688	9408	0	6295	276	Native OSRS map selector: Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_ASGARNIA_ICE_CAVE	native_ardent_ocean_underground__asgarnia_ice_cave	Asgarnian Ice Dungeon	3007	3150	0	3007	9550	0	6400	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_BRIMHAVEN_DUNGEON	native_ardent_ocean_underground__brimhaven_dungeon	Brimhaven Dungeon	2744	3154	0	2713	9564	0	6410	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_JOGRE_DUNGEON	native_ardent_ocean_underground__jogre_dungeon	Jogre Dungeon	2824	3118	0	2848	9504	0	6386	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_KARAMJA_DUNGEON	native_ardent_ocean_underground__karamja_dungeon	Karamja and Crandor Dungeon	2855	3168	0	2855	9568	0	6400	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_PANDEMONIUM_CAVE	native_ardent_ocean_underground__pandemonium_cave	Pandemonium Cave	3070	2986	0	3043	9384	0	6398	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_ARDENT_OCEAN_UNDERGROUND_SHILO_VILLAGE_GEM_MINE	native_ardent_ocean_underground__shilo_village_gem_mine	Shilo Village Gem Mine	2824	2998	0	2838	9387	0	6389	64	Native section of Ardent Ocean Underground	0	0	0	0
+NATIVE_UNQUIET_OCEAN_UNDERGROUND	native_unquiet_ocean_underground	Unquiet Ocean Underground	2868	2399	0	3072	8832	0	6433	320	Native OSRS map selector: Unquiet Ocean Underground	0	0	0	0
+NATIVE_UNQUIET_OCEAN_UNDERGROUND_CHARRED_DUNGEON	native_unquiet_ocean_underground__charred_dungeon	Charred Dungeon	2637	2416	0	2691	8884	0	6468	64	Native section of Unquiet Ocean Underground	0	0	0	0
+NATIVE_UNQUIET_OCEAN_UNDERGROUND_GRYPHON_CAVE	native_unquiet_ocean_underground__gryphon_cave	Gryphon Cave	3120	2490	0	3227	8861	0	6371	64	Native section of Unquiet Ocean Underground	0	0	0	0
+NATIVE_UNQUIET_OCEAN_UNDERGROUND_SHELLBANE_GRYPHON_CAVE	native_unquiet_ocean_underground__shellbane_gryphon_cave	Shellbane Gryphon Cave	3175	2478	0	3177	8873	0	6395	64	Native section of Unquiet Ocean Underground	0	0	0	0
+NATIVE_UNQUIET_OCEAN_UNDERGROUND_WYRMSCRAIG_CAVERN	native_unquiet_ocean_underground__wyrmscraig_cavern	Wyrmscraig Cavern	2540	2213	0	2580	8613	0	6400	64	Native section of Unquiet Ocean Underground	0	0	0	0
+NATIVE_SHROUDED_OCEAN_UNDERGROUND	native_shrouded_ocean_underground	Shrouded Ocean Underground	2141	2668	0	2048	9152	0	6484	192	Native OSRS map selector: Shrouded Ocean Underground	0	0	0	0
+NATIVE_SHROUDED_OCEAN_UNDERGROUND_DEEPFIN_MINE	native_shrouded_ocean_underground__deepfin_mine	Deepfin Mine	1924	2758	0	2015	9187	0	6429	64	Native section of Shrouded Ocean Underground	0	0	0	0
+NATIVE_SHROUDED_OCEAN_UNDERGROUND_ISLE_OF_SOULS_DUNGEON	native_shrouded_ocean_underground__isle_of_souls_dungeon	Isle of Souls Dungeon	2309	2919	0	2135	9320	0	6401	64	Native section of Shrouded Ocean Underground	0	0	0	0
+NATIVE_SHROUDED_OCEAN_UNDERGROUND_SUNBLEAK_CAVE	native_shrouded_ocean_underground__sunbleak_cave	Sunbleak Cave	2190	2327	0	2225	8737	0	6410	64	Native section of Shrouded Ocean Underground	0	0	0	0
+NATIVE_SUNSET_OCEAN_UNDERGROUND	native_sunset_ocean_underground	Sunset Ocean Underground	1203	2733	0	1152	9152	0	6419	32	Native OSRS map selector: Sunset Ocean Underground	0	0	0	0
+NATIVE_SUNSET_OCEAN_UNDERGROUND_KURASK_LAIR	native_sunset_ocean_underground__kurask_lair	Kurask Lair	1203	2733	0	1181	9195	0	6462	64	Native section of Sunset Ocean Underground	0	0	0	0
+NATIVE_WESTERN_OCEAN_UNDERGROUND	native_western_ocean_underground	Western Ocean Underground	2091	3291	0	2048	10048	0	6757	192	Native OSRS map selector: Western Ocean Underground	0	0	0	0
+NATIVE_WESTERN_OCEAN_UNDERGROUND_HERE_BE_MINOTAURS	native_western_ocean_underground__here_be_minotaurs	Here be minotaurs	1959	3117	0	1947	9505	0	6388	64	Native section of Western Ocean Underground	0	0	0	0
+NATIVE_WESTERN_OCEAN_UNDERGROUND_YNYSDAIL_CAVERN	native_western_ocean_underground__ynysdail_cavern	Ynysdail Cavern	2223	3466	0	2271	9875	0	6409	64	Native section of Western Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND	native_northern_ocean_underground	Northern Ocean Underground	2666	3974	0	2368	10368	0	6394	416	Native OSRS map selector: Northern Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND_GHORROCK_DUNGEON	native_northern_ocean_underground__ghorrock_dungeon	Ghorrock Dungeon	2847	4043	0	2888	10465	0	6422	64	Native section of Northern Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND_JORMUNGANDS_PRISON	native_northern_ocean_underground__jormungands_prison	Jormungand's Prison	2465	4010	0	2445	10419	0	6409	64	Native section of Northern Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND_MISCELLANIA_UNDERGROUND	native_northern_ocean_underground__miscellania_underground	Miscellania Underground	2512	3865	0	2512	10265	0	6400	64	Native section of Northern Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE	native_northern_ocean_underground__penguin_base	KGP Headquarters	2638	4011	0	2655	10390	0	6379	64	Native section of Northern Ocean Underground	0	0	0	0
+NATIVE_NORTHERN_OCEAN_UNDERGROUND_WEISS_SALT_MINE	native_northern_ocean_underground__weiss_salt_mine	Weiss Salt Mine	2869	3941	0	2845	10351	0	6410	64	Native section of Northern Ocean Underground	0	0	0	0

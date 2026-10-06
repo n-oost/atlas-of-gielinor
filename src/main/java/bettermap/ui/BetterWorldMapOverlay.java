@@ -234,7 +234,7 @@ public class BetterWorldMapOverlay extends Overlay
 		this.chromeRenderer = new MapChromeRenderer(config, camera, input, layout, clueScrollTracker,
 			questHelperTracker, shortestPathTracker, boatTracker, client);
 		this.finderRenderer = new MapFinderRenderer(
-			config, camera, input, poiIndex, slayerTaskTracker, finder);
+			config, camera, input, slayerTaskTracker, finder);
 		this.tooltipRenderer = new MapTooltipRenderer(
 			config, camera, input, poiIndex, monsterIndex, dungeonPieceIndex, monsterIconManager, slayerTaskTracker,
 			shopIndex, finder, groundItemIndex, boatTracker, worldMapPointManager, worldMapPointReader);

@@ -300,7 +300,7 @@ public class LocationMarkerRenderer
 				placed.add(rect);
 				visibleTooltipTargets.add(shop);
 				visibleShopIcons.add(new ShopIconHit(rect, shop));
-				});
+			});
 		}
 	}
 

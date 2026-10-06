@@ -26,6 +26,8 @@ package bettermap.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import bettermap.data.MonsterLocationData;
 import net.runelite.client.ui.FontManager;
@@ -74,6 +76,14 @@ public final class MapStyle
 	public static final int LEFT_TOOLBAR_BUTTON_SIZE = 22;
 	public static final int LEFT_TOOLBAR_LAYERS = 0;
 	public static final int LEFT_TOOLBAR_FINDER = 1;
+
+	static void drawCard(Graphics2D graphics, Rectangle bounds)
+	{
+		graphics.setColor(CARD_BG);
+		graphics.fillRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 8, 8);
+		graphics.setColor(CARD_EDGE);
+		graphics.drawRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 8, 8);
+	}
 
 	private MapStyle()
 	{

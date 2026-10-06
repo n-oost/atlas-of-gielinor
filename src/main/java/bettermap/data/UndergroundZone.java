@@ -73,7 +73,6 @@
 package bettermap.data;
 
 import java.io.IOException;
-import bettermap.tiles.WikiMapTiles;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Collections;
@@ -82,6 +81,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import bettermap.tiles.WikiMapTiles;
 import net.runelite.api.coords.WorldPoint;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

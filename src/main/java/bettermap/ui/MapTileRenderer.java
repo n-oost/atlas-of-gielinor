@@ -499,12 +499,7 @@ class MapTileRenderer
 			}
 		}
 
-		final Shape current = graphics.getClip();
-		if (current != null)
-		{
-			clipped.intersect(new Area(current));
-		}
-		graphics.setClip(clipped);
+		graphics.clip(clipped);
 	}
 
 	/**

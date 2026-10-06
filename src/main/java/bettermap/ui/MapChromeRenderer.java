@@ -71,6 +71,8 @@ import net.runelite.client.ui.overlay.components.PanelComponent;
  */
 class MapChromeRenderer
 {
+	private static final String[] CREDITS = {WikiMapTiles.ATTRIBUTION, WikiMapTiles.DATA_ATTRIBUTION};
+
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final WorldMapInput input;
@@ -237,14 +239,11 @@ class MapChromeRenderer
 		this.topBarLeftChipsRight = chipsRight;
 
 		// The tiles come from the game cache and the datasets from the wiki.
-		final List<String> credits = new ArrayList<>(3);
-		credits.add(WikiMapTiles.ATTRIBUTION);
-		credits.add(WikiMapTiles.DATA_ATTRIBUTION);
 		graphics.setColor(TEXT_DIM);
 		int creditY = (int) bounds.getMaxY() - 8;
-		for (int i = credits.size() - 1; i >= 0; i--)
+		for (int i = CREDITS.length - 1; i >= 0; i--)
 		{
-			final String credit = credits.get(i);
+			final String credit = CREDITS[i];
 			graphics.drawString(credit,
 				(int) bounds.getMaxX() - graphics.getFontMetrics().stringWidth(credit) - 8,
 				creditY);
@@ -484,10 +483,7 @@ class MapChromeRenderer
 		final int panelY = btn.y + btn.height + 4;
 		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
 
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+		MapStyle.drawCard(graphics, panel);
 
 		final Point cursor = input.getCursor();
 		final List<MapCamera.BoatDropdownTarget> targets = new ArrayList<>(boats.size());
@@ -573,7 +569,7 @@ class MapChromeRenderer
 		final int contentW = 220;
 		final int headerH = 24;
 		Dimension measured = null;
-		if (!collapsed && hasPanel)
+		if (!collapsed)
 		{
 			cluePanel.setBackgroundColor(null);
 			cluePanel.setPreferredSize(new Dimension(contentW, 0));
@@ -595,10 +591,7 @@ class MapChromeRenderer
 		}
 
 		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+		MapStyle.drawCard(graphics, panel);
 
 		// Header purple diamond glyph
 		final int glyph = 10;
@@ -637,8 +630,6 @@ class MapChromeRenderer
 		// RuneLite's own PanelComponent renderer draws the clue plugin's hint verbatim (white
 		// body text, centred TitleComponents) inside Better Map's gold card. Its background is
 		// suppressed so only the card box shows.
-		cluePanel.setBackgroundColor(null);
-		cluePanel.setPreferredSize(new Dimension(contentW, 0));
 		cluePanel.setPreferredLocation(new Point(panel.x + 8, contentY));
 		cluePanel.render(graphics);
 	}
@@ -724,10 +715,7 @@ class MapChromeRenderer
 		}
 
 		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+		MapStyle.drawCard(graphics, panel);
 
 		graphics.setColor(CARD_TITLE);
 		graphics.drawString("Layers", panel.x + padX, panel.y + padTop + 12);

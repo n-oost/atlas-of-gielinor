@@ -45,8 +45,6 @@ import bettermap.BetterMapConfig;
 import bettermap.map.MapCamera;
 import bettermap.map.MapFinder;
 import bettermap.map.MapRegion;
-import bettermap.map.PoiDetails;
-import bettermap.map.PoiIndex;
 import bettermap.map.SlayerTaskTracker;
 import bettermap.map.WorldMapInput;
 import net.runelite.api.coords.WorldPoint;
@@ -63,7 +61,6 @@ class MapFinderRenderer
 	private final BetterMapConfig config;
 	private final MapCamera camera;
 	private final WorldMapInput input;
-	private final PoiIndex poiIndex;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final MapFinder finder;
 
@@ -71,14 +68,12 @@ class MapFinderRenderer
 		BetterMapConfig config,
 		MapCamera camera,
 		WorldMapInput input,
-		PoiIndex poiIndex,
 		SlayerTaskTracker slayerTaskTracker,
 		MapFinder finder)
 	{
 		this.config = config;
 		this.camera = camera;
 		this.input = input;
-		this.poiIndex = poiIndex;
 		this.slayerTaskTracker = slayerTaskTracker;
 		this.finder = finder;
 	}
@@ -233,10 +228,7 @@ class MapFinderRenderer
 
 		panelX = Math.max((int) bounds.getMinX() + 4, panelX);
 		final Rectangle panel = new Rectangle(panelX, panelY, panelW, panelH);
-		graphics.setColor(CARD_BG);
-		graphics.fillRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
-		graphics.setColor(CARD_EDGE);
-		graphics.drawRoundRect(panel.x, panel.y, panel.width, panel.height, 8, 8);
+		MapStyle.drawCard(graphics, panel);
 
 		graphics.setColor(CARD_TITLE);
 		graphics.drawString("Find location  (Esc)", panel.x + padX, panel.y + padTop + 12);
@@ -472,7 +464,7 @@ class MapFinderRenderer
 
 		if (flyoutHoveredItem != null)
 		{
-			final String[] description = resultDescription(flyoutHoveredItem, false);
+			final String[] description = resultDescription(flyoutHoveredItem);
 			descLine1 = description[0];
 			descLine2 = description[1];
 		}
@@ -486,7 +478,7 @@ class MapFinderRenderer
 			}
 			else if (hoveredTarget.getResult() != null)
 			{
-				final String[] description = resultDescription(hoveredTarget.getResult(), true);
+				final String[] description = resultDescription(hoveredTarget.getResult());
 				descLine1 = description[0];
 				descLine2 = description[1];
 			}
@@ -600,10 +592,7 @@ class MapFinderRenderer
 			}
 
 			final Rectangle flyoutPanel = new Rectangle(flyoutX, flyoutY, flyoutW, flyoutH);
-			graphics.setColor(CARD_BG);
-			graphics.fillRoundRect(flyoutPanel.x, flyoutPanel.y, flyoutPanel.width, flyoutPanel.height, 8, 8);
-			graphics.setColor(CARD_EDGE);
-			graphics.drawRoundRect(flyoutPanel.x, flyoutPanel.y, flyoutPanel.width, flyoutPanel.height, 8, 8);
+			MapStyle.drawCard(graphics, flyoutPanel);
 
 			graphics.setColor(CARD_TITLE);
 			graphics.drawString(flyoutTitle != null ? flyoutTitle : "Locations", flyoutPanel.x + padX, flyoutPanel.y + padTop + 12);
@@ -813,30 +802,15 @@ class MapFinderRenderer
 		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
 	}
 
-	private String[] resultDescription(MapFinder.Result result, boolean describeGroup)
+	private static String[] resultDescription(MapFinder.Result result)
 	{
 		final WorldPoint point = result.getPoint();
 		final MapRegion region = point != null ? MapRegion.of(point.getX(), point.getY(), point.getPlane()) : null;
 		final String regionName = region != null ? region.getDisplayName() : "Surface";
 		final String kind = itemKindLabel(result);
-		if (kind != null)
-		{
-			final String detail = result.getDetail();
-			return new String[]{kind + " · " + regionName,
-				detail != null && !detail.isEmpty() ? detail : result.getName()};
-		}
-		final PoiIndex.Poi poi = poiIndex != null && point != null
-			? poiIndex.nearest(point.getX(), point.getY(), point.getPlane(), 2) : null;
-		final PoiDetails.Detail detail = poi != null
-			? PoiDetails.getDetail(poi, point.getX(), point.getY(), point.getPlane())
-			: point != null ? PoiDetails.getDetailByPosition(point.getX(), point.getY(), point.getPlane(), 6) : null;
-		if (detail != null)
-		{
-			return new String[]{(detail.getCategory() != null ? detail.getCategory() : "Point of Interest") + " · " + regionName,
-				!detail.getLines().isEmpty() ? detail.getLines().get(0) : result.getName()};
-		}
-		return new String[]{(describeGroup && result.hasChildren() ? "Group" : "Place") + " · " + regionName,
-			result.getName()};
+		final String detail = result.getDetail();
+		return new String[]{kind + " · " + regionName,
+			detail != null && !detail.isEmpty() ? detail : result.getName()};
 	}
 
 	private static void drawQuickChip(Graphics2D graphics, FontMetrics metrics, java.awt.Point cursor,

@@ -311,4 +311,44 @@ public class DungeonPieceIndexTest
 		assertEquals(19, index.pieceAt("asgarnia_ice_cave", 3007, 9550, 0, null).id);
 		assertEquals(20, index.pieceAt("asgarnia_ice_cave", 2900, 9500, 0, null).id);
 	}
+
+	@Test
+	public void cerberusLairLinesUpWithTaverleyUndergroundEntrance()
+	{
+		final DungeonPieceIndex index = new DungeonPieceIndex();
+		index.load(null);
+		final DungeonPiece cerberusPiece = index.pieceAt("taverley_dungeon", 1310, 1251, 0, 1399);
+		assertTrue(cerberusPiece != null);
+		assertEquals(1564, cerberusPiece.dx);
+		assertEquals(2196, cerberusPiece.dy);
+		assertEquals(2874, 1310 + cerberusPiece.dx);
+		assertEquals(3447, 1251 + cerberusPiece.dy);
+	}
+
+	@Test
+	public void faladorAndAsgarniaDungeonsAreIndependent()
+	{
+		final UndergroundZone[] asgarniaZones = {
+			UndergroundZone.TAVERLEY_DUNGEON,
+			UndergroundZone.DWARVEN_MINES,
+			UndergroundZone.MINING_GUILD,
+			UndergroundZone.MOTHERLODE_MINE,
+			UndergroundZone.MOLE_HOLE,
+			UndergroundZone.STRONGHOLD_OF_SECURITY,
+			UndergroundZone.WHITE_KNIGHTS_CASTLE_CRYPT,
+			UndergroundZone.ASGARNIA_ICE_CAVE,
+			UndergroundZone.ICE_QUEEN_LAIR,
+			UndergroundZone.HEROES_GUILD_MINE,
+			UndergroundZone.ROGUES_DEN,
+			UndergroundZone.WARRIORS_GUILD_BASEMENT,
+			UndergroundZone.PORT_SARIM_RAT_PITS,
+			UndergroundZone.DRAYNOR_MANOR_BASEMENT
+		};
+		for (UndergroundZone zone : asgarniaZones)
+		{
+			final List<UndergroundZone> connected = zone.getConnectedZones();
+			assertEquals("Zone " + zone + " should be independent", 1, connected.size());
+			assertEquals("Zone " + zone + " should only connect to itself", zone, connected.get(0));
+		}
+	}
 }

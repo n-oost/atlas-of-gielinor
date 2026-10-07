@@ -43,6 +43,7 @@ import javax.inject.Singleton;
 
 import atlasofgielinor.data.dungeons.DungeonPiece;
 import atlasofgielinor.data.dungeons.UndergroundZone;
+import atlasofgielinor.map.catalog.MapCatalog;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -67,7 +68,7 @@ public class DungeonPieceIndex
 	{
 		final DungeonPieceIndex prepared = new DungeonPieceIndex();
 		prepared.loadData(tileDir);
-		if (Thread.currentThread().isInterrupted())
+		if (!prepared.loaded || Thread.currentThread().isInterrupted())
 		{
 			return;
 		}
@@ -94,11 +95,13 @@ public class DungeonPieceIndex
 	{
 		byZone.clear();
 		loaded = false;
+		MapCatalogLoader.load();
+		if (!MapCatalogLoader.isReady()) return;
 		try (InputStream nativeIn = DungeonPieceIndex.class.getResourceAsStream("/atlasofgielinor/dungeons/native-pieces.tsv"))
 		{
 			if (nativeIn != null)
 			{
-				index(parse(new InputStreamReader(nativeIn, StandardCharsets.UTF_8)).pieces);
+				indexLegacy(parse(new InputStreamReader(nativeIn, StandardCharsets.UTF_8)).pieces);
 			}
 		}
 		catch (IOException e)
@@ -110,18 +113,20 @@ public class DungeonPieceIndex
 		if (in == null)
 		{
 			log.debug("No dungeon-piece TSV on disk or in the jar");
+			indexCanonical();
 			loaded = true;
 			return;
 		}
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)))
 		{
-			index(parse(reader).pieces);
+			indexLegacy(parse(reader).pieces);
 		}
 		catch (IOException e)
 		{
 			log.debug("Could not read dungeon pieces", e);
 		}
+		indexCanonical();
 		loaded = true;
 		int n = 0;
 		for (List<DungeonPiece> list : byZone.values())
@@ -188,6 +193,33 @@ public class DungeonPieceIndex
 		}
 	}
 
+	/** Canonical ownership supersedes matching legacy pieces, including stale disk overrides. */
+	private void indexLegacy(List<DungeonPiece> pieces)
+	{
+		final java.util.Set<Integer> managed = new java.util.HashSet<>();
+		for (MapCatalog.Layout layout : MapCatalog.current().layouts.values())
+			if (layout.legacyPieceId != null) managed.add(layout.legacyPieceId);
+		final List<DungeonPiece> remaining = new ArrayList<>();
+		for (DungeonPiece piece : pieces)
+			if (!managed.contains(piece.id)) remaining.add(piece);
+		index(remaining);
+	}
+
+	private void indexCanonical()
+	{
+		final MapCatalog catalog = MapCatalog.current();
+		final List<DungeonPiece> pieces = new ArrayList<>();
+		for (MapCatalog.Layout layout : catalog.layouts.values())
+		{
+			if (!layout.verified || !"piece".equals(layout.kind)) continue;
+			pieces.add(new DungeonPiece(layout.legacyPieceId, layout.layerId, layout.plane,
+				catalog.places.get(layout.placeId).name,
+				new int[][]{{layout.minX, layout.minY, layout.maxX, layout.maxY}}, layout.dx, layout.dy,
+				layout.rotation, (layout.flip & 1) != 0, (layout.flip & 2) != 0, true, layout.placeId));
+		}
+		index(pieces);
+	}
+
 	private static InputStream open(File tileDir)
 	{
 		if (tileDir != null)
@@ -197,6 +229,7 @@ public class DungeonPieceIndex
 			{
 				try
 				{
+					log.debug("Legacy dungeon geometry from disk {}; canonical migrated pieces take precedence", file);
 					return Files.newInputStream(file.toPath());
 				}
 				catch (IOException e)
@@ -205,6 +238,7 @@ public class DungeonPieceIndex
 				}
 			}
 		}
+		log.debug("Legacy dungeon geometry from bundled {}", RESOURCE);
 		return DungeonPieceIndex.class.getResourceAsStream(RESOURCE);
 	}
 

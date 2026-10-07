@@ -1,0 +1,26 @@
+{
+  "original_rows": {
+    "pois": [],
+    "places": [],
+    "locations": [],
+    "layouts": [],
+    "links": [],
+    "zones": [],
+    "pieces": [
+      "590\t1249\t0\tLassar Undercity\t2432\t6208\t2815\t6527\t416\t-2965\t0\t0\t0\tcamdozaal",
+      "915\t1407\t0\tThe Whisperer (Shadow Realm)\t2368\t6336\t2431\t6399\t672\t-2965\t0\t0\t0\tcamdozaal"
+    ],
+    "floors": [
+      "camdozaal\tLassar Undercity / The Whisperer\t0\t3072\t3425\t1249",
+      "camdozaal\tThe Whisperer (Shadow Realm)\t0\t3072\t3419\t1407"
+    ],
+    "dungeon-connections": [
+      "asgarnia\ttaverley_dungeon,dwarven_mines,mining_guild,motherlode_mine,mole_hole,camdozaal,stronghold_of_security,white_knights_castle_crypt,asgarnia_ice_cave,ice_queen_lair,heroes_guild_mine,rogues_den,warriors_guild_basement,port_sarim_rat_pits,draynor_manor_basement"
+    ]
+  },
+  "evidence": "Decoded server cache placements: entry 49477 (2922,5827,0), exit 48198 (2587,6436,0); dungeons/pieces.tsv:231 parent transform",
+  "displayed_entry": "Camdozaal reflected piece 231 maps native entry (2922.5,5827.5) to (3036.5,3496.5); Lassar translation maps native exit (2587.5,6436.5) to same display point",
+  "native_entry": "2922,5827,0",
+  "native_exit": "2587,6436,0",
+  "note": "Legacy zone surface fields remain projected compatibility anchors; canonical locations store native points. Arrival landing tiles are not inferred."
+}

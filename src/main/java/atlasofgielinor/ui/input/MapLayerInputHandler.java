@@ -88,6 +88,11 @@ public class MapLayerInputHandler
 	 */
 	public String handleUiButtonClick(Point point)
 	{
+		return handleUiButtonClick(point, false);
+	}
+
+	public String handleUiButtonClick(Point point, boolean deferLayerSymbol)
+	{
 		final Rectangle gear = camera.getLayersButton();
 		if (gear != null && gear.contains(point))
 		{
@@ -232,9 +237,14 @@ public class MapLayerInputHandler
 			return "clue-panel";
 		}
 
-		if (clickedLayerSymbol(point))
+		final MapCamera.LayerSymbolTarget symbol = findLayerSymbol(point);
+		if (symbol != null)
 		{
-			return "layer-symbol";
+			if (!deferLayerSymbol || symbol.isFloor())
+			{
+				activateLayerSymbol(symbol);
+			}
+			return symbol.isFloor() ? "floor-symbol" : "layer-symbol";
 		}
 
 		if (clickedPlaneButton(point))
@@ -471,41 +481,56 @@ public class MapLayerInputHandler
 
 	public boolean clickedLayerSymbol(Point point)
 	{
-		if (camera.isTravelViewActive()) return false;
+		final MapCamera.LayerSymbolTarget target = findLayerSymbol(point);
+		if (target == null)
+		{
+			return false;
+		}
+		activateLayerSymbol(target);
+		return true;
+	}
+
+	public MapCamera.LayerSymbolTarget findLayerSymbol(Point point)
+	{
+		if (camera.isTravelViewActive()) return null;
 		if (camera.getSelectedTravelNode() != null && pluginProvider != null && pluginProvider.get() != null
 			&& pluginProvider.get().getConfig().showTravelRoutes())
 		{
-			return false;
+			return null;
 		}
 		for (MapCamera.LayerSymbolTarget target : camera.getLayerSymbolTargets())
 		{
 			if (target.getBounds() != null && target.getBounds().contains(point))
 			{
-				if (target.isSurfaceToUnderground())
-				{
-					if (target.isFloor())
-					{
-						camera.setUndergroundMode(target.getZone(), target.getSurfacePoint());
-					}
-					else
-					{
-						camera.toggleUndergroundZone(target.getZone(), target.getSurfacePoint());
-					}
-					if (target.isFloor())
-					{
-						camera.setActiveFloor(target.getFloor());
-					}
-					log.debug("[AtlasOfGielinor] entered underground mode for {}", target.getZone().getName());
-				}
-				else
-				{
-					camera.exitDungeonToSurface(target.getSurfacePoint());
-					log.debug("[AtlasOfGielinor] returned to surface from {}", target.getZone().getName());
-				}
-				return true;
+				return target;
 			}
 		}
-		return false;
+		return null;
+	}
+
+	public void activateLayerSymbol(MapCamera.LayerSymbolTarget target)
+	{
+		if (target.isSurfaceToUnderground())
+		{
+			if (target.isFloor())
+			{
+				camera.setUndergroundMode(target.getZone(), target.getSurfacePoint());
+			}
+			else
+			{
+				camera.toggleUndergroundZone(target.getZone(), target.getSurfacePoint());
+			}
+			if (target.isFloor())
+			{
+				camera.setActiveFloor(target.getFloor());
+			}
+			log.debug("[AtlasOfGielinor] entered underground mode for {}", target.getZone().getName());
+		}
+		else
+		{
+			camera.exitDungeonToSurface(target.getSurfacePoint());
+			log.debug("[AtlasOfGielinor] returned to surface from {}", target.getZone().getName());
+		}
 	}
 
 	public boolean clickedLayerToggle(Point point)
@@ -732,7 +757,8 @@ public class MapLayerInputHandler
 	public void updateHoveredTravelNode(Point point)
 	{
 		final AtlasOfGielinorPlugin plugin = pluginProvider != null ? pluginProvider.get() : null;
-		if (!camera.isTravelViewActive() && plugin != null && plugin.getConfig() != null && camera.getZoom() < plugin.getConfig().travelStationMinZoom())
+		if (!camera.isTravelViewActive() && plugin != null && plugin.getConfig() != null
+			&& (!plugin.getConfig().showTravelRoutes() || camera.getZoom() < plugin.getConfig().travelStationMinZoom()))
 		{
 			camera.setHoveredTravelNode(null);
 			return;

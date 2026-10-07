@@ -1,0 +1,129 @@
+{
+  "evidence": "dev-server/feature-test-runs/20261007-010157-single-pair-live; native objects 40736/40737; cache area isle_of_souls_dungeon",
+  "original_rows": {
+    "pois": [
+      {
+        "id": "poi_000347",
+        "name": "Isle of Souls Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "Isle of Souls Dungeon",
+        "category": "Travel",
+        "details": "Isle of Souls Dungeon",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_005619",
+        "name": "Isle of Souls Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "Isle of Souls Dungeon",
+        "category": "Dungeons",
+        "details": "Type: Dungeon interior (underground layer)\\nVisible on the dungeon / underground map",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:297"
+      },
+      {
+        "id": "poi_003193",
+        "name": "Dungeon with map link",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "Dungeon with map link",
+        "category": "Travel",
+        "details": "Type: dungeon_link\\nLocation: 2169, 9308 (Plane 0)\\nNo additional details available.",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      }
+    ],
+    "locations": [
+      {
+        "id": "poi_000347",
+        "poi_id": "poi_000347",
+        "x": "2309",
+        "y": "2919",
+        "plane": "0",
+        "role": "poi",
+        "icon_key": "dungeon_link",
+        "rendered": "true",
+        "searchable": "true",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_005619",
+        "poi_id": "poi_005619",
+        "x": "2135",
+        "y": "9320",
+        "plane": "0",
+        "role": "poi",
+        "icon_key": "dungeon",
+        "rendered": "true",
+        "searchable": "false",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:297"
+      },
+      {
+        "id": "poi_003193",
+        "poi_id": "poi_003193",
+        "x": "2169",
+        "y": "9308",
+        "plane": "0",
+        "role": "poi",
+        "icon_key": "dungeon_link",
+        "rendered": "true",
+        "searchable": "true",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      }
+    ],
+    "places": [],
+    "layouts": [],
+    "links": [],
+    "zones": [
+      "ISLE_OF_SOULS_DUNGEON\tisle_of_souls_dungeon\tIsle of Souls Dungeon\t2309\t2919\t0\t2135\t9320\t0\t6400\t110\tUnder the east Isle of Souls \u2022 demons, fire giants, blue dragons, iron dragons\t2113\t9285\t2173\t9341"
+    ]
+  },
+  "anchors": "RuneLite reported WorldLocation tile centres; not assumed footprint origins or traversal landing tiles",
+  "projected_exit": "Both translation-only piece transforms map (2168.5,9308.5) to (2308.5,2919.5)",
+  "mirrored_layouts_before_orientation_correction": [
+    {
+      "id": "isle_of_souls_piece",
+      "place_id": "isle_of_souls_dungeon",
+      "location_id": "",
+      "kind": "piece",
+      "plane": "0",
+      "min_x": "2113",
+      "min_y": "9285",
+      "max_x": "2173",
+      "max_y": "9341",
+      "dx": "190",
+      "dy": "-6389",
+      "rotation": "0",
+      "flip": "1",
+      "layer_id": "1025",
+      "legacy_piece_id": "656",
+      "status": "verified",
+      "source_ref": "dev-server/feature-test-runs/20261007-010157-single-pair-live; native objects 40736/40737; cache area isle_of_souls_dungeon; exit aligned to entrance; original bounds and flip retained"
+    },
+    {
+      "id": "isle_of_souls_native_piece",
+      "place_id": "isle_of_souls_dungeon",
+      "location_id": "",
+      "kind": "piece",
+      "plane": "0",
+      "min_x": "2112",
+      "min_y": "9288",
+      "max_x": "2175",
+      "max_y": "9343",
+      "dx": "189",
+      "dy": "-6389",
+      "rotation": "0",
+      "flip": "1",
+      "layer_id": "0",
+      "legacy_piece_id": "100332",
+      "status": "verified",
+      "source_ref": "dev-server/feature-test-runs/20261007-010157-single-pair-live; native objects 40736/40737; cache area isle_of_souls_dungeon; exit aligned to entrance; original bounds and flip retained"
+    }
+  ]
+}

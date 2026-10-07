@@ -48,7 +48,6 @@ MISCELLANIA_UNDERGROUND	miscellania_underground	Miscellania Underground	2512	386
 FORTHOS_DUNGEON	forthos_dungeon	Forthos Dungeon	1701	3574	0	1800	9950	0	6376	80	Sarachnis, Red Dragons, Temple of the Moon	1781	9881	1866	9994	1669	3567	0
 CAM_TORUM	cam_torum	Cam Torum	1435	3128	0	1439	9509	1	6381	85	Under Avium Savannah • Cam Torum subterranean dwarven city	1240	9440	1580	9614
 TZHAAR_CITY	tzhaar_city	TzHaar City / Mor Ul Rek	2860	3170	0	2496	5140	0	0	170	Under Karamja Volcano • Fight Cave, Inferno, TzHaar-Ket-Rak	2250	5030	2590	5370
-GOD_WARS_DUNGEON	god_wars_dungeon	God Wars Dungeon	2917	3747	0	2881	5310	2	0	90	Under Trollheim Peak • General Graardor, Kree'arra, Zilyana, K'ril	0	0	0	0
 WATERBIRTH_DUNGEON	waterbirth_dungeon	Waterbirth Island Dungeon	2545	3755	0	2520	9920	0	0	170	Under Waterbirth Island • Dagannoth Kings, Wallasalkis, Rock Lobsters	2440	9600	2650	10200	2520	3740	0	2542	3741	0
 FOSSIL_ISLAND_UNDERGROUND	fossil_island_underground	Fossil Island Caverns / Wyvern Cave	3680	3854	0	3660	10250	0	6400	150	Under Fossil Island • Wyvern Cave, Underwater area, Volcanic Mine	3600	10122	3839	10303
 ZANARIS	zanaris	Zanaris	3201	3169	0	2412	4434	0	0	80	Lost City • Fairy rings, cosmic altar, market, Puro-Puro crop circle	0	0	0	0
@@ -124,7 +123,6 @@ HAM_HIDEOUT	ham_hideout	H.A.M. Hideout	3165	3252	0	3149	9652	0	6400	70	Under the
 DRAYNOR_SEWERS	draynor_sewers	Draynor Sewers	3118	3244	0	3118	9644	0	6400	70	Under Draynor • skeletons, zombies, Draynor Manor link	0	0	0	0	3083	3272	0
 ICE_QUEEN_LAIR	ice_queen_lair	Ice Queen's Lair	2847	3516	0	2847	9916	0	6400	65	Under White Wolf Mountain • Ice Queen (Heroes' Quest), ice warriors/giants	2816	9897	2896	9976	2822	3510	0	2856	3519	0
 CORSAIR_COVE_DUNGEON	corsair_cove_dungeon	Corsair Cove Dungeon	2483	2889	0	1971	9035	1	0	75	Under Corsair Cove • scarabs, ogress warriors, Ogress Shaman	1950	8970	2071	9070	2522	2861	0
-ISLE_OF_SOULS_DUNGEON	isle_of_souls_dungeon	Isle of Souls Dungeon	2309	2919	0	2135	9320	0	6400	110	Under the east Isle of Souls • demons, fire giants, blue dragons, iron dragons	2113	9285	2173	9341
 WIZARDS_TOWER_BASEMENT	wizards_tower_basement	Wizards' Tower Basement	3104	3162	0	3104	9576	0	6400	40	Under Wizards' Tower • Fairytale II, rune essence mine	0	0	0	0
 TOLNAS_RIFT	tolnas_rift	Tolna's Rift	3309	3450	0	3297	9824	0	6400	35	East of Varrock • A Soul's Bane instance; entrance overlay only	3288	9816	3308	9836
 SOURHOG_CAVE	sourhog_cave	Sourhog Cave	3149	3347	0	3168	9696	0	6400	40	East of Draynor Manor • sourhogs, A Porcine of Interest	0	0	0	0
@@ -185,7 +183,6 @@ KING_BLACK_DRAGON_LAIR	king_black_dragon_lair	King Black Dragon Lair	3017	3849	0
 HESPORI_CAVE	hespori_cave	Hespori Cave	1248	3737	0	1248	10089	0	6352	30	Under Farming Guild • Hespori boss arena & Bottomless compost bucket	1236	10076	1260	10100
 STALKER_DEN	stalker_den	Stalker Den	1296	3374	0	1286	9775	0	6401	45	Under Darkfrost • Twilight Emissaries, Stalker boss dungeon	1240	9728	1340	9908	1324	3364	0
 WYRMSCRAIG_CAVERN	wyrmscraig_cavern	Wyrmscraig Cavern	2540	2213	0	2580	8613	0	6400	55	Under Wyrmscraig • Mortimer, wyrms, mining and the Ardeaglais basement	2560	8576	2624	8672	2530	2205	0	2562	2203	0
-DEEPFIN_MINE	deepfin_mine	Deepfin Mine	1924	2758	0	2015	9187	0	6400	55	Under Deepfin Point • Deepfin Mine	0	0	0	0
 PANDEMONIUM_CAVE	pandemonium_cave	Pandemonium Cave	3070	2986	0	3043	9384	0	6400	55	Under The Pandemonium • low-level cavern	0	0	0	0
 HERE_BE_MINOTAURS	here_be_minotaurs	Here be minotaurs	1959	3117	0	1947	9505	0	6400	55	Under Minotaurs' Rest • minotaur cavern	0	0	0	0
 YNYSDAIL_CAVERN	ynysdail_cavern	Ynysdail Cavern	2223	3466	0	2271	9875	0	6400	55	Under Ynysdail • Aquanite cavern	0	0	0	0
@@ -399,8 +396,8 @@ NATIVE_WESTERN_OCEAN_UNDERGROUND	native_western_ocean_underground	Western Ocean 
 NATIVE_WESTERN_OCEAN_UNDERGROUND_HERE_BE_MINOTAURS	native_western_ocean_underground__here_be_minotaurs	Here be minotaurs	1959	3117	0	1947	9505	0	6388	64	Native section of Western Ocean Underground	0	0	0	0
 NATIVE_WESTERN_OCEAN_UNDERGROUND_YNYSDAIL_CAVERN	native_western_ocean_underground__ynysdail_cavern	Ynysdail Cavern	2223	3466	0	2271	9875	0	6409	64	Native section of Western Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND	native_northern_ocean_underground	Northern Ocean Underground	2666	3974	0	2368	10368	0	6394	416	Native OSRS map selector: Northern Ocean Underground	0	0	0	0
-NATIVE_NORTHERN_OCEAN_UNDERGROUND_GHORROCK_DUNGEON	native_northern_ocean_underground__ghorrock_dungeon	Ghorrock Dungeon	2847	4043	0	2888	10465	0	6422	64	Native section of Northern Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_JORMUNGANDS_PRISON	native_northern_ocean_underground__jormungands_prison	Jormungand's Prison	2465	4010	0	2445	10419	0	6409	64	Native section of Northern Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_MISCELLANIA_UNDERGROUND	native_northern_ocean_underground__miscellania_underground	Miscellania Underground	2512	3865	0	2512	10265	0	6400	64	Native section of Northern Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE	native_northern_ocean_underground__penguin_base	KGP Headquarters	2638	4011	0	2655	10390	0	6379	64	Native section of Northern Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_WEISS_SALT_MINE	native_northern_ocean_underground__weiss_salt_mine	Weiss Salt Mine	2869	3941	0	2845	10351	0	6410	64	Native section of Northern Ocean Underground	0	0	0	0
+LASSAR_UNDERCITY	lassar_undercity	Lassar Undercity	3036	3496	0	2587	6436	0	2940	192	Under Camdozaal; rock passage inside the ruins	2432	6208	2815	6527

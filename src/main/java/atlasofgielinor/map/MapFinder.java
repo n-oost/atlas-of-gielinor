@@ -422,7 +422,7 @@ public class MapFinder
 				continue;
 			}
 			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-			final PoiDetails.Detail detail = PoiDetails.getDetailByPosition(poi.getX(), poi.getY(), poi.getPlane(), 3);
+			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
 			final String name = detail != null && detail.getTitle() != null && !detail.getTitle().isBlank()
 				? detail.getTitle() : poi.getName();
 			regionLeaves.computeIfAbsent(region, k -> new ArrayList<>())

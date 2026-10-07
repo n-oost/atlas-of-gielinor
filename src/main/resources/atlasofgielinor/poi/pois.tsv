@@ -52,7 +52,7 @@
 2190	2327	0	mooring_point	Mooring point - Sunbleak Island
 2849	2327	0	mooring_point	Mooring point - Last Light
 3273	2330	0	agility_short-cut	Agility short-cut
-2220	2331	0	dungeon_link	Dungeon with map link
+2220	2331	0	dungeon_link	Sunbleak Cave entrance
 2860	2332	0	water_source	Water source
 3277	2339	0	rare_trees	Rare trees
 2224	2341	0	rare_trees	Rare trees
@@ -250,7 +250,7 @@
 2713	2804	0	transportation	Transportation
 1946	2805	0	mining_site	Mining site
 2163	2805	0	potters_wheel	Potters wheel
-1940	2806	0	dungeon_link	Dungeon with map link
+1940	2806	0	dungeon_link	Deepfin Mine entrance
 3297	2806	0	sword_shop	Sword shop
 1552	2807	0	fishing_spot	Fishing spot
 2255	2808	0	rare_trees	Rare trees
@@ -1150,7 +1150,7 @@
 2606	3264	0	quest_start	Eagles' Peak
 2594	3265	0	quest_start	Cold War
 2672	3265	0	mooring_point	Mooring point - Ardougne
-3097	3266	0	quest_start	Vampyre Slayer
+3097	3266	0	quest_start	Vamse Slayer
 3091	3267	0	slayer_master	Slayer Master
 2636	3268	0	transportation	Transportation
 2323	3269	0	mining_site	Mining site
@@ -1677,7 +1677,7 @@
 3238	3434	0	water_source	Water source
 1271	3435	0	dungeon	Dungeon
 2630	3435	0	fishing_spot	Fishing spot
-2841	3435	0	agility_short-cut	Agility shortcut
+2841	3435	0	agility_short-cut	Agility short-cut
 3228	3435	0	anvil	Anvil
 3255	3435	0	dummy	Dummy
 1557	3436	0	hunter_training	Hunter training
@@ -2415,7 +2415,7 @@
 1887	3764	0	fishing_spot	Fishing spot
 2544	3765	0	mooring_point	Mooring point - Waterbirth Island
 1238	3770	0	rare_trees	Rare trees
-2944	3770	0	agility_short-cut	Agility shortcut
+2944	3770	0	agility_short-cut	Agility short-cut
 3143	3771	0	hunter_training	Hunter training
 1832	3773	0	fishing_spot	Fishing spot
 2312	3773	0	shipwright	Shipwright
@@ -2540,7 +2540,7 @@
 3293	3850	0	dungeon_link	Dungeon with map link
 3750	3850	0	hunter_training	Hunter training
 1771	3851	0	agility_short-cut	Agility short-cut
-1743	3853	0	agility_short-cut	Agility shortcut
+1743	3853	0	agility_short-cut	Agility short-cut
 2311	3853	0	mining_site	Mining site
 2529	3853	0	herbalist	Herbalist
 2578	3854	0	fishing_spot	Fishing spot
@@ -2581,7 +2581,7 @@
 3677	3882	0	magic_mushtree	Magic mushtree
 3060	3884	0	mining_site	Mining site
 2513	3886	0	transportation	Transportation
-1775	3888	0	agility_short-cut	Agility shortcut
+1775	3888	0	agility_short-cut	Agility short-cut
 2401	3889	0	dungeon_link	Dungeon with map link
 2527	3891	0	mining_site	Mining site
 2618	3892	0	poll_booth	Poll booth
@@ -2649,7 +2649,7 @@
 3417	4060	0	poll_booth	Poll booth
 2910	4062	0	mining_site	Mining site
 1956	4064	0	hunter_training	Hunter training
-2913	4067	0	dungeon_link	Dungeon with map link
+2913	4067	0	dungeon_link	Grimstone Dungeon entrance
 3426	4070	0	bank	Bank
 2902	4084	0	mining_site	Mining site
 2912	4084	0	mining_site	Mining site
@@ -3214,15 +3214,15 @@
 2564	8606	0	dungeon_link	Dungeon with map link
 2582	8607	0	mooring_point	Mooring point
 2590	8614	0	slayer_master	Mortimer
-2563	8630	0	dungeon_link	Dungeon with map link
+2563	8630	0	dungeon_link	Wyrmscraig Cavern exit
 2577	8657	0	dungeon_link	Dungeon with map link
 2225	8721	0	mining_site	Mining site
-2219	8730	0	dungeon_link	Dungeon with map link
+2219	8730	0	dungeon_link	Sunbleak Cave exit
 2222	8747	0	mining_site	Mining site
 2725	8845	0	fishing_spot	Fishing spot
 2635	8849	0	mining_site	Mining site
-3168	8874	0	dungeon_link	Dungeon with map link
-2684	8876	0	dungeon_link	Dungeon with map link
+3168	8874	0	dungeon_link	Shellbane Gryphon Cave exit
+2684	8876	0	dungeon_link	Charred Dungeon exit
 3126	8880	0	dungeon_link	Dungeon with map link
 3237	8882	0	dungeon_link	Dungeon with map link
 2905	9110	0	hunter_training	Hunter training
@@ -3234,10 +3234,10 @@
 3359	9129	0	dungeon_link	Dungeon with map link
 2915	9135	0	hunter_training	Hunter training
 1955	9172	0	general_store	General store
-1191	9185	0	dungeon_link	Dungeon with map link
+1191	9185	0	dungeon_link	Kurask Lair exit
 1933	9186	0	mining_site	Mining site
 2012	9186	0	bank	Bank
-1959	9190	0	dungeon_link	Dungeon with map link
+1959	9190	0	dungeon_link	Deepfin Mine exit
 2093	9197	0	bank	Bank
 2091	9201	0	mining_site	Mining site
 2076	9203	0	agility_short-cut	Agility short-cut
@@ -3293,9 +3293,9 @@
 1360	9504	0	water_source	Water source
 1366	9504	0	water_source	Water source
 3075	9505	0	mining_site	Mining site
-1797	9506	0	dungeon_link	Dungeon with map link
+1797	9506	0	dungeon_link	Fortis Colosseum exit
 1808	9507	0	minigame	Minigame
-1933	9520	0	dungeon_link	Dungeon with map link
+1933	9520	0	dungeon_link	Here be minotaurs exit
 2569	9522	0	dungeon_link	Dungeon with map link
 2829	9522	0	dungeon_link	Dungeon with map link
 1245	9528	0	dungeon_link	Dungeon with map link
@@ -3409,7 +3409,7 @@
 3056	9744	0	dungeon	Dungeon
 3031	9747	0	mining_shop	Mining shop
 3384	9749	0	mining_site	Mining site
-2873	9750	0	dungeon_link	Dungeon with map link
+2873	9750	0	dungeon_link	Entrana Dungeon magic door
 3117	9754	0	dungeon_link	Dungeon with map link
 1686	9755	0	agility_short-cut	Agility short-cut
 2562	9756	0	dungeon_link	Dungeon with map link
@@ -3498,7 +3498,7 @@
 2914	9895	0	agility_short-cut	Agility short-cut
 2463	9897	0	dungeon_link	Dungeon with map link
 2940	9898	0	mining_site	Mining site
-1597	9900	0	dungeon_link	Dungeon with map link
+1597	9900	0	dungeon_link	Woodcutting Guild dungeon exit
 2899	9901	0	agility_short-cut	Agility short-cut
 2922	9904	0	mining_site	Mining site
 3230	9904	0	dungeon_link	Dungeon with map link
@@ -3507,7 +3507,7 @@
 3405	9907	0	dungeon_link	Dungeon with map link
 2823	9910	0	dungeon_link	Dungeon with map link
 1432	9913	0	dungeon_link	Dungeon with map link
-2293	9914	0	dungeon_link	Dungeon with map link
+2293	9914	0	dungeon_link	Ynysdail Cavern exit
 3146	9914	0	slayer_master	Slayer Master
 2305	9915	0	dungeon	Dungeon
 2490	9916	0	mining_site	Mining site
@@ -3517,7 +3517,7 @@
 1820	9946	0	agility_short-cut	Agility short-cut
 3680	9959	0	brewery	Brewery
 1435	9962	0	water_source	Water source
-3682	9962	0	dungeon_link	Dungeon with map link
+3682	9962	0	dungeon_link	Port Phasmatys brewery ladder
 1438	9964	0	cooking_range	Cooking range
 1800	9968	0	dungeon_link	Dungeon with map link
 2906	9968	0	dungeon_link	Dungeon with map link
@@ -3536,7 +3536,7 @@
 2824	10050	0	dungeon_link	Dungeon with map link
 3384	10050	0	dungeon_link	Dungeon with map link
 1716	10057	0	agility_short-cut	Agility short-cut
-3218	10058	0	dungeon_link	Dungeon with map link
+3218	10058	0	dungeon_link	Revenant Caves southern exit
 1610	10060	0	agility_short-cut	Agility short-cut
 1614	10071	0	agility_short-cut	Agility short-cut
 1706	10077	0	agility_short-cut	Agility short-cut
@@ -3565,7 +3565,7 @@
 1761	10145	0	fishing_shop	Fishing shop
 1813	10145	0	dungeon_link	Dungeon with map link
 1776	10146	0	general_store	General store
-2439	10146	0	dungeon_link	Dungeon with map link
+2439	10146	0	dungeon_link	Waterbirth Island Dungeon steps
 3405	10146	0	dungeon_link	Dungeon with map link
 1775	10149	0	poll_booth	Poll booth
 3342	10149	0	agility_short-cut	Agility short-cut
@@ -3604,7 +3604,7 @@
 2924	10211	0	mining_shop	Mining shop
 1317	10214	0	agility_short-cut	Agility short-cut
 2827	10215	0	quest_start	Forgettable Tale...
-3245	10215	0	dungeon_link	Dungeon with map link
+3245	10215	0	dungeon_link	Revenant Caves northern exit
 2906	10217	0	kebab_seller	Kebab seller
 2730	10218	0	transportation	Transportation
 2922	10219	0	water_source	Water source
@@ -3612,7 +3612,7 @@
 1552	10224	0	transportation	Transportation
 1346	10230	0	agility_short-cut	Agility short-cut
 2827	10230	0	sword_shop	Sword shop
-3604	10231	0	dungeon_link	Dungeon with map link
+3604	10231	0	dungeon_link	Wyvern Cave exit
 2938	10232	0	mining_site	Mining site
 3359	10244	0	dungeon_link	Dungeon with map link
 2509	10246	0	dungeon_link	Dungeon with map link
@@ -3649,7 +3649,7 @@
 2902	10454	0	agility_short-cut	Agility short-cut
 2924	10455	0	transportation	Transportation
 2929	10461	0	furnace	Furnace
-2887	10481	0	dungeon_link	Dungeon with map link
+2887	10481	0	dungeon_link	Grimstone Dungeon exit
 2588	2257	1	cooking_range	Cooking range
 3187	2367	1	transportation	Transportation
 3184	2368	1	mooring_point	Ship boarding plank
@@ -3905,7 +3905,7 @@
 1846	3753	1	magic_carpet	Magic carpet
 1753	3759	1	water_source	Water source
 1750	3764	1	cooking_range	Cooking range
-1633	3807	1	agility_short-cut	Agility shortcut
+1633	3807	1	agility_short-cut	Agility short-cut
 2710	3829	1	hunting_tutor	Hunting Tutor
 1674	3832	1	transportation	Transportation
 2618	3845	1	shipwright	Shipwright
@@ -4020,7 +4020,7 @@
 3161	7827	1	cooking_range	Cooking range
 3179	7842	1	anvil	Anvil
 3297	8861	1	farming_patch	Farming patch
-3286	8868	1	dungeon_link	Dungeon with map link
+3286	8868	1	dungeon_link	Coral Nurseries exit
 1939	8966	1	dungeon_link	Dungeon with map link
 1981	8996	1	agility_short-cut	Agility short-cut
 2012	9005	1	dungeon_link	Dungeon with map link
@@ -4097,7 +4097,7 @@
 1330	10069	1	dungeon_link	Dungeon with map link
 1293	10077	1	dungeon_link	Dungeon with map link
 1312	10086	1	dungeon_link	Dungeon with map link
-1443	10098	1	agility_short-cut	Agility shortcut
+1443	10098	1	agility_short-cut	Agility short-cut
 3295	10189	1	dungeon_link	Dungeon with map link
 2916	10193	1	brewery	Brewery
 3731	10271	1	farming_patch	Farming patch
@@ -4133,7 +4133,7 @@
 1782	3758	2	water_source	Water source
 1688	3794	2	altar	Altar
 2224	3796	2	transportation	Transportation
-1633	3807	2	agility_short-cut	Agility shortcut
+1633	3807	2	agility_short-cut	Agility short-cut
 2138	3899	2	transportation	Transportation
 2966	4380	2	dungeon_link	Dungeon with map link
 2386	4628	2	mining_site	Mining site
@@ -4167,19 +4167,19 @@
 3672	9751	2	mining_site	Mining site
 3688	9756	2	mining_site	Mining site
 3675	9766	2	mining_site	Mining site
-1436	10076	2	agility_short-cut	Agility shortcut
+1436	10076	2	agility_short-cut	Agility short-cut
 2831	10077	2	dungeon_link	Dungeon with map link
-1435	10078	2	dungeon_link	Dungeon with map link
+1435	10078	2	dungeon_link	Chasm of Fire exit
 2837	10089	2	dungeon_link	Dungeon with map link
 1438	10099	2	agility_short-cut	Agility short-cut
-3423	10182	2	dungeon_link	Dungeon with map link
+3423	10182	2	dungeon_link	Silk Chasm exit
 2333	10318	2	mining_site	Mining site
 2358	10325	2	mining_site	Mining site
 2318	10327	2	mining_site	Mining site
 2317	10342	2	mining_site	Mining site
 2337	10346	2	quest_start	Dream Mentor
 2356	10347	2	mining_site	Mining site
-2330	10352	2	dungeon_link	Dungeon with map link
+2330	10352	2	dungeon_link	Lunar Isle mine ladder
 2701	3404	3	quest_start	Scorpion Catcher
 2461	3502	3	transportation	Transportation
 1853	4406	3	agility_short-cut	Agility short-cut

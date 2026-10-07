@@ -338,7 +338,7 @@ public class DungeonFloorTest
 		assertEquals(2, pw);
 		assertEquals(3, sish);
 		assertEquals(1, jorm);
-		assertEquals(4, ghor);
+		assertEquals(3, ghor); // The stale main floor belonged to Grimstone; boss floors remain.
 		assertEquals(1, tonali);
 		assertEquals(1, dragon);
 	}

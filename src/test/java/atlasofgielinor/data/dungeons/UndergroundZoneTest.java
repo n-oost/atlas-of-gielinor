@@ -38,6 +38,7 @@ import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.map.InstanceMaps;
 import atlasofgielinor.map.MapCamera;
 import atlasofgielinor.map.catalog.PoiDetails;
+import atlasofgielinor.map.catalog.MapCatalog;
 import atlasofgielinor.map.catalog.PoiIndex;
 
 import static org.junit.Assert.assertEquals;
@@ -61,9 +62,9 @@ public class UndergroundZoneTest
 		PoiDetails.load();
 	}
 
-	/** Fingerprint captured from all original enum constructor values before extraction. */
+	/** Fingerprint after canonical Deepfin/Grimstone migration and stale native alias removal. */
 	@Test
-	public void resourcePreservesAllOriginalDungeonMetadata() throws Exception
+	public void resourcePreservesMigratedDungeonMetadata() throws Exception
 	{
 		final StringBuilder snapshot = new StringBuilder();
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
@@ -84,7 +85,7 @@ public class UndergroundZoneTest
 			snapshot.append('\n');
 		}
 		final byte[] digest = MessageDigest.getInstance("SHA-256").digest(snapshot.toString().getBytes(StandardCharsets.UTF_8));
-		assertEquals("69d8524b4e8464d50d604c79a52c25fd97bb15444822d8c9dc527300f0c1d4a0", String.format("%064x", new BigInteger(1, digest)));
+		assertEquals("f9387d2edfd869eea1c3d7af7ca12287f4df550a6177b3aa44800c8eb0faf03d", String.format("%064x", new BigInteger(1, digest)));
 	}
 
 	@Test
@@ -1346,10 +1347,12 @@ public class UndergroundZoneTest
 	}
 
 	@Test
-	public void exactNameCuratedSurfaceEntrancesHaveHoverTargets()
+	public void verifiedSurfaceEntrancesHaveHoverTargets()
 	{
 		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
 		{
+			final MapCatalog.Location location = MapCatalog.current().locations.get(poi.getLocationId());
+			if (location == null || !location.verified || !"entrance".equals(location.role)) continue;
 			if (!"dungeon".equals(poi.getKey()) || poi.getY() > InstanceMaps.GAP_MIN_Y)
 			{
 				continue;
@@ -1449,6 +1452,7 @@ public class UndergroundZoneTest
 		final int maxDist = 50;
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
+			if (zone.hasUnresolvedGeometry()) continue;
 			if (zone.getId().startsWith("native_") || zone.isSubterranean() || zone.getYOffset() != 6400 || zone == UndergroundZone.VTAM_CORPORATION || zone.ordinal() > UndergroundZone.WYRMSCRAIG_CAVERN.ordinal()) continue;
 			final int ux = zone.getUndergroundPoint().getX();
 			final int uy = zone.getUndergroundPoint().getY();

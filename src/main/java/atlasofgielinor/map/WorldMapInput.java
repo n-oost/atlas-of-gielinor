@@ -85,6 +85,9 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	private boolean routePressConsumed;
 	private volatile Point cursor;
 	private Point travelClickOrigin;
+	private Point layerClickOrigin;
+	private MapCamera.LayerSymbolTarget pendingLayerSymbol;
+	private static final int CLICK_TOLERANCE_SQUARED = 25;
 	private volatile boolean shiftDown;
 	private volatile boolean altDown;
 	private volatile boolean ctrlDown;
@@ -177,6 +180,8 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	public MouseEvent mousePressed(MouseEvent event)
 	{
 		travelClickOrigin = null;
+		layerClickOrigin = null;
+		pendingLayerSymbol = null;
 		raidPressConsumed = false;
 		routePressConsumed = false;
 		if (contextMenuHandler.isClientMenuOpen())
@@ -208,9 +213,17 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 
 		if (SwingUtilities.isLeftMouseButton(event))
 		{
-			final String uiHit = layerInputHandler.handleUiButtonClick(event.getPoint());
+			final boolean deferLayerSymbol = config.dragToPan() && config.panButton().matches(event);
+			final String uiHit = layerInputHandler.handleUiButtonClick(event.getPoint(), deferLayerSymbol);
 			if (uiHit != null)
 			{
+				if (deferLayerSymbol && "layer-symbol".equals(uiHit))
+				{
+					// Capture press priority: overlapping symbols must not change the click target.
+					pendingLayerSymbol = layerInputHandler.findLayerSymbol(event.getPoint());
+					layerClickOrigin = event.getPoint();
+					dragController.startMapDrag(layerClickOrigin);
+				}
 				event.consume();
 				dbgConsume(uiHit, event.getPoint(), true);
 				return event;
@@ -282,7 +295,7 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseDragged(MouseEvent event)
 	{
-		if (travelClickOrigin != null && travelClickOrigin.distanceSq(event.getPoint()) > 25)
+		if (travelClickOrigin != null && travelClickOrigin.distanceSq(event.getPoint()) > CLICK_TOLERANCE_SQUARED)
 		{
 			travelClickOrigin = null;
 		}
@@ -293,11 +306,23 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 
 		if (!camera.isActive())
 		{
+			pendingLayerSymbol = null;
+			layerClickOrigin = null;
 			dbg("drag aborted — camera inactive, releasing mouse grab");
 			dragController.endMapDrag();
 			return event;
 		}
 
+		if (pendingLayerSymbol != null)
+		{
+			if (layerClickOrigin.distanceSq(event.getPoint()) <= CLICK_TOLERANCE_SQUARED)
+			{
+				event.consume();
+				return event;
+			}
+			pendingLayerSymbol = null;
+			layerClickOrigin = null;
+		}
 		final Point now = event.getPoint();
 		dragController.handleMapDrag(now);
 		cursor = now;
@@ -309,13 +334,29 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public MouseEvent mouseReleased(MouseEvent event)
 	{
+		if (pendingLayerSymbol != null)
+		{
+			final MapCamera.LayerSymbolTarget target = pendingLayerSymbol;
+			final Point origin = layerClickOrigin;
+			pendingLayerSymbol = null;
+			layerClickOrigin = null;
+			dragController.endMapDrag();
+			if (SwingUtilities.isLeftMouseButton(event) && overMap(event.getPoint())
+				&& origin.distanceSq(event.getPoint()) <= CLICK_TOLERANCE_SQUARED
+				&& target.getBounds().contains(event.getPoint()))
+			{
+				layerInputHandler.activateLayerSymbol(target);
+			}
+			event.consume();
+			return event;
+		}
 		if (raidPressConsumed || routePressConsumed)
 		{
 			event.consume();
 			return event;
 		}
 		if (travelClickOrigin != null && SwingUtilities.isLeftMouseButton(event)
-			&& travelClickOrigin.distanceSq(event.getPoint()) <= 25 && overMap(event.getPoint()))
+			&& travelClickOrigin.distanceSq(event.getPoint()) <= CLICK_TOLERANCE_SQUARED && overMap(event.getPoint()))
 		{
 			layerInputHandler.updateHoveredTravelNode(event.getPoint());
 			camera.setSelectedTravelNode(camera.getSelectedTravelNode() == camera.getHoveredTravelNode()
@@ -506,6 +547,8 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	@Override
 	public void focusLost()
 	{
+		pendingLayerSymbol = null;
+		layerClickOrigin = null;
 		travelClickOrigin = null;
 		routePressConsumed = false;
 		dragController.reset();

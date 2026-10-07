@@ -1,0 +1,23 @@
+{
+  "note": "One-time migration input hashes. Global POI table is authoritative; inputs are retained snapshots, not runtime POI sources.",
+  "poi_count": 8030,
+  "inputs": {
+    "src\\main\\resources\\atlasofgielinor\\poi\\curated-details.tsv": "4e70bfd25c2ce173da009e5cb90fda5a6ff08652a760bd7be6a8f73055f26619",
+    "src\\main\\resources\\atlasofgielinor\\poi\\display-offsets.tsv": "de9e649629b7294bbad0c316ceb3ea73ba46d4fdf8866728fb08d935885ac66e",
+    "src\\main\\resources\\atlasofgielinor\\poi\\dungeon-requirements.tsv": "e0c726eaef19d8f16cc8fb6ef7e2b33b7cd0ef106ced828b27271b6b0b9e25fe",
+    "src\\main\\resources\\atlasofgielinor\\poi\\mooring-levels.tsv": "d9e23741b4aecbe151902d84a5a2baeb2ad78f8d01cba6e61f152aa1b34f13ff",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois-additions.tsv": "eebe4bdbf20b57788f4a46dfd45d4372f7b4e158ad547b40fa186d8deb7aa6c4",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois-banks.tsv": "8e9543fce3fab2a33ba094d52f315046477167c9990c03afdd18e5b7e5d41f10",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois-cache.tsv": "2c6bb5dc20efb0981ee010f6cf999d32296bf43619b405fa033c42e622e99202",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois-legacy.tsv": "9eb57e91011be7a35c5e03291c617c565df79b9eb5af7434951ba7ca708ae79f",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois-native-labels.tsv": "8325c5c615c49db208726f3f40ed36502c22c16ec14c4540be97872d3d5416ad",
+    "src\\main\\resources\\atlasofgielinor\\poi\\pois.tsv": "fd7711a727372478899d504a60b8be0eec2c7a5505b0f0b329c9995575a29fc4",
+    "src\\main\\resources\\atlasofgielinor\\poi\\quest-details.tsv": "7129395ffc8e19f6037726cd69197fb34df12ac10bd112150798f09b73404b9c",
+    "src\\main\\resources\\atlasofgielinor\\poi\\runelite-world-map-data.json": "44685f7c93a897f561412dd5c6eeca380438dbb954d554307b4a81f4cf964004",
+    "src\\main\\resources\\atlasofgielinor\\poi\\shortest-path-data-LICENSE": "8c16477d1e8f3f26df12718e5ca6b6d53b3ff078a2dd60fe926014742f8ce6d6",
+    "src\\main\\resources\\atlasofgielinor\\poi\\teleport-alias-tiles.tsv": "596eb69f37ee040eaa84235b15b7f03cf8fbc4bb3096b8e14784e0b84ef98c4c",
+    "src\\main\\resources\\atlasofgielinor\\poi\\teleport-locations.tsv": "d6b6e57f42a95266ebed456381895bcff21e3f00a47adf64dba4134a6b20a6e1",
+    "src\\main\\resources\\atlasofgielinor\\poi\\tooltip-name-rules.tsv": "f3271983d5f55d0e75221a52358dc6430961dd59395f605a42b74fa397c5caf3",
+    "src\\main\\resources\\atlasofgielinor\\poi\\travel-networks.json": "708032482d2a805c6bbc85e60de5009cf79075071a3d83aba74e6389a9f814d6"
+  }
+}

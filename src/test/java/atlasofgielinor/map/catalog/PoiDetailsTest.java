@@ -43,6 +43,7 @@ import org.junit.Test;
 import atlasofgielinor.map.catalog.PoiDetails;
 import atlasofgielinor.map.catalog.PoiIndex;
 import atlasofgielinor.map.catalog.QuestDetailsData;
+import atlasofgielinor.map.catalog.MapCatalog;
 
 public class PoiDetailsTest
 {
@@ -116,7 +117,8 @@ public class PoiDetailsTest
 		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
 		{
 			final String name = poi.getName().toLowerCase(java.util.Locale.ROOT);
-			if (name.contains("basement") || name.contains("cellar"))
+			if (("dungeon".equals(poi.getKey()) || "dungeon_link".equals(poi.getKey()) || "basement".equals(poi.getKey()))
+				&& (name.contains("basement") || name.contains("cellar")))
 			{
 				assertEquals("Basement must not use the dungeon icon: " + poi.getName(), "basement", poi.getKey());
 			}
@@ -188,14 +190,14 @@ public class PoiDetailsTest
 	}
 
 	@Test
-	public void isleOfSoulsDetailsOnlyOwnTheInteriorPoi()
+	public void isleOfSoulsKeepsItsEntranceAndInteriorSeparate()
 	{
 		final List<PoiIndex.Poi> entries = PoiDetails.getAllPois().stream()
 			.filter(poi -> "Isle of Souls Dungeon".equals(poi.getName()))
 			.collect(java.util.stream.Collectors.toList());
-		assertEquals(1, entries.size());
-		assertEquals(2135, entries.get(0).getX());
-		assertEquals(9320, entries.get(0).getY());
+		assertEquals(2, entries.size());
+		assertTrue(entries.stream().anyMatch(poi -> poi.getX() == 2135 && poi.getY() == 9320));
+		assertTrue(entries.stream().anyMatch(poi -> poi.getX() == 2309 && poi.getY() == 2919));
 	}
 
 	@Test
@@ -446,11 +448,11 @@ public class PoiDetailsTest
 		assertTrue(String.join(" ", detail.getLines()).toLowerCase().contains("rellekka")
 			|| String.join(" ", detail.getLines()).toLowerCase().contains("combat gear"));
 
-		// Direct name lookup in fallback path
+		// An unbound name cannot assign a real dungeon identity to an arbitrary point.
 		final PoiIndex.Poi uncuratedPoi = new PoiIndex.Poi(0, 0, 0, "dungeon", "Waterbirth Dungeon");
 		final PoiDetails.Detail uncuratedDetail = PoiDetails.getDetail(uncuratedPoi, 0, 0, 0);
 		assertNotNull(uncuratedDetail);
-		assertTrue(String.join(" ", uncuratedDetail.getLines()).toLowerCase().contains("dagannoth"));
+		assertFalse(String.join(" ", uncuratedDetail.getLines()).toLowerCase().contains("dagannoth"));
 	}
 
 	@Test
@@ -753,9 +755,9 @@ public class PoiDetailsTest
 	{
 		PoiDetails.Entry best = null;
 		int bestDist = maxDistSq;
-		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
+		for (MapCatalog.Location poi : MapCatalog.current().locations.values())
 		{
-			final PoiDetails.Entry e = new PoiDetails.Entry(poi.getKey(), poi.getName(), "", java.util.Collections.emptyList(), poi.getX(), poi.getY(), poi.getPlane());
+			final PoiDetails.Entry e = new PoiDetails.Entry(poi.iconKey, poi.detailTitle, "", java.util.Collections.emptyList(), poi.x, poi.y, poi.plane);
 			if (e.plane != plane)
 			{
 				continue;

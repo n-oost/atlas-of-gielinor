@@ -24,7 +24,6 @@
  */
 package atlasofgielinor.map.catalog;
 
-import atlasofgielinor.map.WorldMapSupplement;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,10 +94,6 @@ public final class PoiDetails
 		private final Set<String> entryKeys = new HashSet<>(1200);
 		private final Map<Long, Entry> exactMap = new HashMap<>(1200);
 		private final Map<Long, List<Entry>> chunkMap = new HashMap<>(1200);
-		private final Map<String, List<String>> dungeonRequirements = new HashMap<>();
-		private final Map<String, List<String>> mooringRequirements = new HashMap<>();
-		private int[][] moorings = new int[0][];
-		private Map<String, Detail> questDetails = Collections.emptyMap();
 		private final Map<String, String> tooltipAliases = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		private final List<String> tooltipPrefixes = new ArrayList<>();
 		private final List<String[]> compactTooltipNames = new ArrayList<>();
@@ -192,26 +187,11 @@ public final class PoiDetails
 
 	private static Detail entryToDetail(Entry entry)
 	{
-		List<String> lines = entry.lines;
-		if (isDungeonKey(entry.type))
-		{
-			final List<String> specific = data.dungeonRequirements.get(entry.title);
-			if (specific != null)
-			{
-				lines = specific;
-			}
-		}
-		return new Detail(entry.title, entry.category, lines);
+		return new Detail(entry.title, entry.category, entry.lines);
 	}
 
 	private static void addEntry(Indexes prepared, String type, String title, String category, int x, int y, int plane, String... lines)
 	{
-		// Basements and cellars use the link marker, not the red dungeon marker.
-		if ("dungeon".equals(type) && (title.toLowerCase(Locale.ROOT).contains("basement")
-			|| title.toLowerCase(Locale.ROOT).contains("cellar")))
-		{
-			type = "basement";
-		}
 		final String key = type + '\u0000' + title + '\u0000' + pointKey(x, y, plane);
 		if (!prepared.entryKeys.add(key))
 		{
@@ -241,6 +221,7 @@ public final class PoiDetails
 		final Indexes prepared = new Indexes();
 		try
 		{
+			MapCatalog.load();
 			final Set<String> tooltipRules = new HashSet<>();
 			for (String[] fields : BundledTsv.read("/atlasofgielinor/poi/tooltip-name-rules.tsv", 5))
 			{
@@ -276,27 +257,11 @@ public final class PoiDetails
 					else throw new IOException("Unknown tooltip name rule: " + fields[0]);
 				}
 			}
-			for (String[] fields : BundledTsv.read("/atlasofgielinor/poi/curated-details.tsv", 6))
+			for (MapCatalog.Location location : MapCatalog.current().locations.values())
 			{
-				addEntry(prepared, fields[0], fields[1], fields[2],
-					Integer.parseInt(fields[3]), Integer.parseInt(fields[4]), Integer.parseInt(fields[5]),
-					Arrays.copyOfRange(fields, 6, fields.length));
+				addEntry(prepared, location.iconKey, location.detailTitle, location.category,
+					location.x, location.y, location.plane, MapCatalog.current().detailLines(location).toArray(new String[0]));
 			}
-			for (String[] fields : BundledTsv.read("/atlasofgielinor/poi/dungeon-requirements.tsv", 1))
-			{
-				prepared.dungeonRequirements.put(fields[0], List.of(Arrays.copyOfRange(fields, 1, fields.length)));
-			}
-			final List<int[]> moorings = new ArrayList<>();
-			for (String[] fields : BundledTsv.read("/atlasofgielinor/poi/mooring-levels.tsv", 3))
-			{
-				moorings.add(new int[]{Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), Integer.parseInt(fields[2])});
-				if (fields.length > 4)
-				{
-					prepared.mooringRequirements.put(fields[3], List.of(Arrays.copyOfRange(fields, 4, fields.length)));
-				}
-			}
-			prepared.moorings = moorings.toArray(new int[0][]);
-			prepared.questDetails = QuestDetailsData.load();
 			if (Thread.currentThread().isInterrupted()) return;
 			prepared.loaded = true;
 			data = prepared;
@@ -309,10 +274,12 @@ public final class PoiDetails
 
 	public static List<PoiIndex.Poi> getAllPois()
 	{
-		final List<PoiIndex.Poi> pois = new ArrayList<>(data.entries.size());
-		for (Entry e : data.entries)
+		final List<PoiIndex.Poi> pois = new ArrayList<>();
+		for (MapCatalog.Location location : MapCatalog.current().locations.values())
 		{
-			pois.add(new PoiIndex.Poi(e.x, e.y, e.plane, e.type, e.title));
+			if (!location.rendered && location.searchable) continue;
+			pois.add(new PoiIndex.Poi(location.x, location.y, location.plane,
+				location.iconKey, location.detailTitle, location.id));
 		}
 		return Collections.unmodifiableList(pois);
 	}
@@ -322,102 +289,26 @@ public final class PoiDetails
 	 */
 	public static Detail getDetail(PoiIndex.Poi poi, int worldX, int worldY, int plane)
 	{
+		if (poi != null && poi.getLocationId() != null)
+		{
+			final MapCatalog.Location location = MapCatalog.current().locations.get(poi.getLocationId());
+			if (location != null)
+				return new Detail(location.detailTitle, location.category, MapCatalog.current().detailLines(location));
+		}
 		final Detail nativeDetail = getNativeDetail(poi, worldX, worldY, plane);
 		if (poi == null || "mooring_point".equals(poi.getKey()))
 		{
 			return nativeDetail;
 		}
-		final Detail imported = WorldMapSupplement.detail(poi);
-		if (imported == null || nativeDetail == null)
-		{
-			return nativeDetail == null ? imported : nativeDetail;
-		}
-		final List<String> lines = new ArrayList<>(nativeDetail.getLines());
-		for (String line : imported.getLines())
-		{
-			if (!lines.contains(line) && !line.equals(nativeDetail.getTitle()))
-			{
-				lines.add(line);
-			}
-		}
-		return new Detail(nativeDetail.getTitle(), nativeDetail.getCategory(), lines);
+		return nativeDetail;
 	}
 
 	private static Detail getNativeDetail(PoiIndex.Poi poi, int worldX, int worldY, int plane)
 	{
-		if (poi == null)
-		{
-			return getDetailByPosition(worldX, worldY, plane, 6);
-		}
-
-		// Mooring markers can share a tile with curated island activities. Their cache marker
-		// identity is the dock; an exact-coordinate detail for a mine, cave, or skilling spot
-		// must not replace the mooring tooltip.
-		if ("mooring_point".equals(poi.getKey()))
-		{
-			return availableDetail(poi);
-		}
-
-		// 1. Direct exact lookup by coordinate key (matching marker type)
-		final Entry exact = data.exactMap.get(pointKey(worldX, worldY, plane));
-		if (exact != null && typeMatches(exact.type, poi.getKey()))
-		{
-			return entryToDetail(exact);
-		}
-
-		// 2. Exact match on POI's own world coordinate (matching marker type)
-		final Entry poiExact = data.exactMap.get(pointKey(poi.getX(), poi.getY(), poi.getPlane()));
-		if (poiExact != null && typeMatches(poiExact.type, poi.getKey()))
-		{
-			return entryToDetail(poiExact);
-		}
-
-		if ("quest_start".equals(poi.getKey()))
-		{
-			final Detail questDetail = data.questDetails.get(poi.getName());
-			if (questDetail != null)
-			{
-				return questDetail;
-			}
-		}
-
-		// 3. Proximity lookup within 12 tiles (chunked; dungeon_link matches dungeon entries)
-		final Entry near = nearestEntry(worldX, worldY, plane, 144, poi.getKey());
-		if (near != null)
-		{
-			return entryToDetail(near);
-		}
-
-		// 3b. Dungeon icons from the wiki often use dungeon_link while curated entries use dungeon
-		if (isDungeonKey(poi.getKey()))
-		{
-			final Entry dungeonNear = nearestEntry(worldX, worldY, plane, 256, "dungeon");
-			if (dungeonNear != null)
-			{
-				return entryToDetail(dungeonNear);
-			}
-		}
-
-		return availableDetail(poi);
-	}
-
-	/** Use existing detail data, then show the marker's raw fields when no description exists. */
-	private static Detail availableDetail(PoiIndex.Poi poi)
-	{
-		if ("mooring_point".equals(poi.getKey()))
-		{
-			return mooringDetail(poi);
-		}
-		final Detail imported = WorldMapSupplement.detail(poi);
-		if (imported != null)
-		{
-			return imported;
-		}
-		final List<String> requirements = data.dungeonRequirements.get(poi.getName());
-		if (requirements != null)
-		{
-			return new Detail(poi.getName(), "Dungeons", requirements);
-		}
+		if (poi == null) return getDetailByPosition(worldX, worldY, plane, 6);
+		// Compatibility for positional callers. Indexed POIs always resolve by ID before this path.
+		final Entry nearby = nearestEntry(worldX, worldY, plane, 144, poi.getKey());
+		if (nearby != null) return entryToDetail(nearby);
 		return new Detail(poi.getName(), PoiCategory.of(poi.getKey()).getDisplayName(), List.of(
 			"Type: " + poi.getKey(),
 			"Location: " + poi.getX() + ", " + poi.getY() + " (Plane " + poi.getPlane() + ")",
@@ -493,45 +384,4 @@ public final class PoiDetails
 		return best;
 	}
 
-	private static int getMooringLevel(int x, int y)
-	{
-		int bestDist = 30 * 30;
-		int bestLvl = 0;
-		for (int[] m : data.moorings)
-		{
-			int dx = m[0] - x;
-			int dy = m[1] - y;
-			int dist = dx * dx + dy * dy;
-			if (dist <= bestDist)
-			{
-				bestDist = dist;
-				bestLvl = m[2];
-			}
-		}
-		return bestLvl;
-	}
-
-	private static Detail mooringDetail(PoiIndex.Poi poi)
-	{
-		final List<String> lines = new ArrayList<>();
-		lines.add("Type: " + poi.getKey());
-		lines.add("Location: " + poi.getX() + ", " + poi.getY() + " (Plane " + poi.getPlane() + ")");
-		final int level = "Mooring buoy".equalsIgnoreCase(poi.getName())
-			|| "Ship boarding plank".equalsIgnoreCase(poi.getName())
-			? 0 : getMooringLevel(poi.getX(), poi.getY());
-		if (level > 0)
-		{
-			lines.add("Requires Level " + level + " Sailing");
-		}
-		final List<String> requirements = data.mooringRequirements.get(poi.getName());
-		if (requirements != null)
-		{
-			lines.addAll(requirements);
-		}
-		if (level <= 0 && (requirements == null || requirements.isEmpty()))
-		{
-			lines.add("No additional details available.");
-		}
-		return new Detail(poi.getName(), "Travel", lines);
-	}
 }

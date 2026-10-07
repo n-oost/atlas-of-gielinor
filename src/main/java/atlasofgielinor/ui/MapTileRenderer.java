@@ -298,8 +298,8 @@ class MapTileRenderer
 
 		for (DungeonPiece piece : pieces)
 		{
-			if (camera.isUndergroundModeActive() ? !camera.isDungeonPieceVisible(zone, piece)
-				: (multiPlane && piece.plane != planeFilter) || (floorLayer != null && piece.layer != floorLayer))
+			if (!camera.isDungeonPieceVisible(zone, piece)
+				|| (multiPlane && piece.plane != planeFilter) || (floorLayer != null && piece.layer != floorLayer))
 			{
 				continue;
 			}

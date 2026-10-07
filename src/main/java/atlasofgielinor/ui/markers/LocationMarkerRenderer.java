@@ -705,7 +705,7 @@ public class LocationMarkerRenderer
 		}
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (zone.getId().contains("__") || zone.getId().startsWith("native_")) continue;
+			if (zone.getId().contains("__") || zone.getId().startsWith("native_") || !zone.hasEntranceToggle()) continue;
 			for (int i = 0; i < zone.getSurfacePoints().size(); i++)
 			{
 				if (zone.isEntranceMarkerHidden(i))

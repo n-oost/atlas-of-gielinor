@@ -491,7 +491,7 @@ public class MapTooltipRenderer
 	private boolean drawTravelNodeCard(Graphics2D graphics, Rectangle bounds, HoverProbe probe)
 	{
 		final TravelData.TravelNode travelNode = camera.getHoveredTravelNode();
-		if (travelNode != null && camera.getZoom() >= config.travelStationMinZoom()
+		if (config.showTravelRoutes() && travelNode != null && camera.getZoom() >= config.travelStationMinZoom()
 			&& !hasTighterPointMarker(probe))
 		{
 			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(travelNode);

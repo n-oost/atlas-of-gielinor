@@ -144,10 +144,6 @@ public class LayerMarkerRenderer
 		{
 			return true;
 		}
-		if (camera.isUndergroundModeActive())
-		{
-			return true;
-		}
 		final UndergroundZone parent = zone.getParentZone();
 		if (parent != null)
 		{
@@ -226,7 +222,8 @@ public class LayerMarkerRenderer
 				}
 
 				final boolean isSurfaceToUnderground = showDungeonIcon;
-			targets.add(new MapCamera.LayerSymbolTarget(rect, zone, anchor, isSurfaceToUnderground));
+			targets.add(new MapCamera.LayerSymbolTarget(rect, zone,
+				onSurface ? anchors.get(i) : anchor, isSurfaceToUnderground));
 
 			final boolean isHovered = camera.getHoveredUndergroundZone() == zone
 				&& camera.isHoveredSurfaceToUnderground() == isSurfaceToUnderground

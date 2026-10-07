@@ -59,16 +59,16 @@
 100027	0	0	Dwarven Mines	2960	9800	2975	9855	-64	-6375	0	1	0	native_dwarven_mines__taverley_dungeon
 100028	0	0	Dwarven Mines	3712	5632	3775	5695	-704	-2343	0	1	0	native_dwarven_mines
 100029	0	1	Dwarven Mines	3712	5632	3775	5695	-608	-2343	0	1	0	native_dwarven_mines
-100030	0	2	God Wars Dungeon	2816	5248	2879	5279	21	-1517	0	1	0	native_godwars__god_wars_dungeon
-100030	0	2	God Wars Dungeon	2816	5280	2919	5311	21	-1517	0	1	0	native_godwars__god_wars_dungeon
-100030	0	2	God Wars Dungeon	2816	5312	2943	5375	21	-1517	0	1	0	native_godwars__god_wars_dungeon
-100031	0	0	God Wars Dungeon	2848	5184	2943	5231	21	-1549	0	1	0	native_godwars__god_wars_dungeon
-100032	0	1	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
-100033	0	2	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
-100034	0	3	God Wars Dungeon	2816	5184	2943	5231	21	-1549	0	1	0	native_godwars
-100035	0	0	God Wars Dungeon	2880	5248	2935	5287	29	-1549	0	1	0	native_godwars__god_wars_dungeon
-100036	0	1	God Wars Dungeon	2904	5272	2943	5311	53	-1525	0	1	0	native_godwars
-100037	0	0	God Wars Dungeon	2816	5184	2847	5231	21	-1549	0	1	0	native_godwars
+100030	0	2	God Wars Dungeon	2816	5248	2879	5279	37	-1565	0	0	0	native_godwars__god_wars_dungeon
+100030	0	2	God Wars Dungeon	2816	5280	2919	5311	37	-1565	0	0	0	native_godwars__god_wars_dungeon
+100030	0	2	God Wars Dungeon	2816	5312	2943	5375	37	-1565	0	0	0	native_godwars__god_wars_dungeon
+100031	0	0	God Wars Dungeon	2848	5184	2943	5231	37	-1565	0	0	0	native_godwars__god_wars_dungeon
+100032	0	1	God Wars Dungeon	2816	5184	2943	5231	37	-1565	0	0	0	native_godwars
+100033	0	2	God Wars Dungeon	2816	5184	2943	5231	37	-1565	0	0	0	native_godwars
+100034	0	3	God Wars Dungeon	2816	5184	2943	5231	37	-1565	0	0	0	native_godwars
+100035	0	0	God Wars Dungeon	2880	5248	2935	5287	37	-1565	0	0	0	native_godwars__god_wars_dungeon
+100036	0	1	God Wars Dungeon	2904	5272	2943	5311	37	-1565	0	0	0	native_godwars
+100037	0	0	God Wars Dungeon	2816	5184	2847	5231	37	-1565	0	0	0	native_godwars
 100038	0	0	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim__keldagrim
 100038	0	0	Keldagrim	2816	10120	2943	10239	-152	-6441	0	1	0	native_keldagrim__keldagrim
 100039	0	1	Keldagrim	2856	10112	2943	10119	-152	-6441	0	1	0	native_keldagrim
@@ -720,7 +720,6 @@
 100357	0	1	Northern Ocean Underground	2816	10432	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
 100358	0	0	Northern Ocean Underground	2496	10240	2623	10303	138	-6394	0	1	0	native_northern_ocean_underground__miscellania_underground
 100359	0	0	Northern Ocean Underground	2624	10368	2687	10431	138	-6394	0	1	0	native_northern_ocean_underground__penguin_base
-100360	0	0	Northern Ocean Underground	2840	10440	2935	10487	138	-6394	0	1	0	native_northern_ocean_underground__ghorrock_dungeon
 100361	0	2	Northern Ocean Underground	2816	10304	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground
 100361	0	2	Northern Ocean Underground	2816	10432	2943	10495	138	-6394	0	1	0	native_northern_ocean_underground
 100362	0	3	Northern Ocean Underground	2816	10304	2879	10367	138	-6394	0	1	0	native_northern_ocean_underground

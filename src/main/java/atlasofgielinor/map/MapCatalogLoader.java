@@ -27,6 +27,9 @@ package atlasofgielinor.map;
 import atlasofgielinor.map.catalog.BossLocationIndex;
 import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.map.catalog.PoiDetails;
+import atlasofgielinor.map.catalog.MapCatalog;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import atlasofgielinor.data.BossLocationData;
 import atlasofgielinor.data.dungeons.DungeonFloor;
 import atlasofgielinor.data.TravelData;
@@ -34,6 +37,7 @@ import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.tiles.WikiMap;
 
 /** Loads dependent map catalogs on the startup worker before map input and rendering activate. */
+@Slf4j
 public final class MapCatalogLoader
 {
 	private static volatile boolean ready;
@@ -50,6 +54,16 @@ public final class MapCatalogLoader
 	public static void load()
 	{
 		if (ready) return;
+		try
+		{
+			MapCatalog.load();
+		}
+		catch (IOException e)
+		{
+			log.debug("Could not load canonical map catalog", e);
+			return;
+		}
+		if (!MapCatalog.isLoaded() || Thread.currentThread().isInterrupted()) return;
 		PrifddinasShift.load();
 		if (!PrifddinasShift.isLoaded() || Thread.currentThread().isInterrupted()) return;
 		MapRegion.load();

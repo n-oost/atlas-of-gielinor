@@ -45,7 +45,6 @@ keldagrim	Keldagrim (Palace)	1	2821	3722	1092
 sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3727	3300
 sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3727	3870
 jormungands_prison	Jormungand's Prison	0	2465	4010
-ghorrock_dungeon	Ghorrock Dungeon	0	2847	4043	1400
 ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2661	2769
 ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2661	2780
 mos_le_harmless_cave	Mos Le'Harmless (cave horrors)	0	3752	2949
@@ -59,11 +58,11 @@ dragon_nest	Dragon Nest	0	1264	3103	1303
 troll_stronghold	Troll Stronghold (Entrance & Kitchen)	0	2839	3690	1172
 troll_stronghold	Troll Stronghold (Prison & Roof)	1	2831	3677	1172
 troll_stronghold	Troll Stronghold (God Wars Pass)	0	2827	3647	1172
-god_wars_dungeon	God Wars Dungeon (main floor)	2	2917	3747	1069
-god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2943	3702	1388
+god_wars_dungeon	God Wars Dungeon (main floor)	2	2918	3746	1069
+god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2948	3714	1388
 abyss	The Abyss	0	3105	3558	1275
 abyss	Abyssal Nexus	0	3172	3501	1390
-god_wars_dungeon	God Wars Dungeon (Nex)	0	2960	3640	1391
+god_wars_dungeon	God Wars Dungeon (Nex)	0	2932	3647	1391
 ghorrock_dungeon	Phantom Muspah	0	2865	4073	1392
 ghorrock_dungeon	Duke Sucellus	0	2847	4048	1393
 abyss	The Scar (Leviathan)	0	3105	3567	1394
@@ -88,8 +87,8 @@ keldagrim	Blast Furnace	0	2839	3790	1401
 sisterhood_sanctuary	The Nightmare of Ashihama (arena)	0	3791	3356	1259
 fenkenstrain_dungeon	Experiment Cave	0	3575	3526	1327
 camdozaal	Ruins of Camdozaal	0	2998	3493	1147
-camdozaal	Lassar Undercity / The Whisperer	0	3072	3425	1249
-camdozaal	The Whisperer (Shadow Realm)	0	3072	3419	1407
+lassar_undercity	Lassar Undercity / The Whisperer	0	3036	3496	1249
+lassar_undercity	The Whisperer (Shadow Realm)	0	3036	3488	1407
 barbarian_assault	Barbarian Assault waiting rooms	0	2533	3573	1408
 barbarian_assault	Barbarian Assault arena	0	2535	3582	1009
 barbarian_assault	Barbarian Assault Queen	0	2533	3580	1409
@@ -126,3 +125,4 @@ corporeal_beast	Corporeal Beast Lair	2	3202	3681	1022
 corporeal_beast	Corporeal Beast entry cavern	2	3228	3681	1421
 jaldraocht_pyramid	Jaldraocht Pyramid upper chamber	3	3233	2898	1422
 smoke_devil_dungeon	Smoke Devil Dungeon	0	2412	3061	1269
+grimstone_dungeon	Grimstone Dungeon	0	2942	4083	1342

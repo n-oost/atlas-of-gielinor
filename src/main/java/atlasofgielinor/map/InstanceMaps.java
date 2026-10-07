@@ -268,7 +268,7 @@ public final class InstanceMaps
 			final long dist = distSq(x, y, zone.getUndergroundPoint().getX(), zone.getUndergroundPoint().getY());
 			// Composite wiki rectangles include unrelated islands. Only explicit footprints
 			// may claim remote child rooms; a fallback must stay near this zone's anchor.
-			if (!supportsPlane(zone, plane)
+			if (zone.hasUnresolvedGeometry() || !supportsPlane(zone, plane)
 				|| zone.hasClipOverride() || dist > (long) zone.getRadius() * zone.getRadius())
 			{
 				continue;
@@ -337,6 +337,7 @@ public final class InstanceMaps
 				return true;
 			}
 		}
+		if (zone.hasUnresolvedGeometry()) return false;
 		// A hand-authored clip box defines the remaining zone extent directly.
 		if (zone.hasClipOverride())
 		{
@@ -392,7 +393,7 @@ public final class InstanceMaps
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
 			if (zone.getId().startsWith("native_")) continue;
-			if (!zone.hasClipOverride() || !supportsPlane(zone, plane))
+			if (zone.hasUnresolvedGeometry() || !zone.hasClipOverride() || !supportsPlane(zone, plane))
 			{
 				continue;
 			}

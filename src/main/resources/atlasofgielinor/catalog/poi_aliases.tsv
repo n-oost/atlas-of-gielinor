@@ -1,0 +1,965 @@
+poi_id	alias
+poi_000004	Yew trees (Level 60)
+poi_000005	Wyrmscraig - Teak trees (Level 35)
+poi_000006	Wyrmscraig - Goats (Level 60)
+poi_000007	Wyrmscraig - Teak trees (Level 35)
+poi_000015	Fishing Spot (Lobster & Swordfish)
+poi_000019	Sunstone & Iron Mining Site
+poi_000020	Sunstone & Iron Mining Site
+poi_000035	The Onyx Crest chest
+poi_000037	Fishing Spot (Shark & Lobster)
+poi_000045	Sunbleak Island chest
+poi_000062	Fishing Spot (Desert Sole & Catfish)
+poi_000063	Fishing Spot (Desert Sole & Catfish)
+poi_000064	Charred Island chest
+poi_000082	Fishing Spot (Desert Sole & Catfish)
+poi_000092	Fishing Spot (Desert Sole & Catfish)
+poi_000093	Fishing Spot (Desert Sole & Catfish)
+poi_000098	Fishing Spot (Desert Sole & Catfish)
+poi_000107	Fishing Spot (Desert Sole & Catfish)
+poi_000113	Fishing Spot (Desert Sole & Catfish)
+poi_000123	Fishing Spot (Desert Sole & Catfish)
+poi_000124	Fishing Spot (Desert Sole & Catfish)
+poi_000128	Fishing Spot (Sea Turtle & Manta Ray)
+poi_000132	Fishing Spot (Shrimp & Anchovies)
+poi_000154	Fishing Spot (Lobster & Swordfish)
+poi_000158	Fishing Spot (Lobster & Swordfish)
+poi_000160	Kruk's Dungeon
+poi_000168	Fishing Spot (Lobster & Swordfish)
+poi_000171	Fishing Spot (Salmon & Trout)
+poi_000175	Fishing Spot (Salmon & Trout)
+poi_000187	Ape Atoll Agility Course (Level 48)
+poi_000204	Fishing Spot (Anglerfish & Monkfish)
+poi_000216	Fishing Spot (Anglerfish & Monkfish)
+poi_000232	Fishing Spot (Salmon & Trout)
+deepfin_mine_entrance	Deepfin Mine
+poi_000248	Fishing Spot (Anglerfish & Monkfish)
+poi_000252	Fishing Spot (Anglerfish & Monkfish)
+poi_000262	Fishing Spot (Lobster & Swordfish)
+poi_000266	Fishing Spot (Lobster & Swordfish)
+poi_000268	Fishing Spot (Lobster & Swordfish)
+poi_000307	Fishing Spot (Lobster & Swordfish)
+poi_000310	Fishing Spot (Lobster & Swordfish)
+poi_000313	Corsair Cove Rocks (Level 10)
+poi_000316	Fishing Spot (Lobster & Swordfish)
+poi_000329	Corsair Cove Resource Area Rocks (Level 30)
+poi_000330	Quetzal Transport (Aldarin)
+poi_000338	Feldip Hills - Red Chinchompas (Level 63)
+poi_000368	Quetzal Transport (Colossal Wyrm Remains)
+poi_000378	Kharazi Jungle Vine (Level 79)
+poi_000381	Karamja Stepping Stones (Level 30)
+poi_000387	Fishing Spot (Salmon & Trout)
+poi_000413	Pollnivneach Rooftop Course (Level 70)
+poi_000425	Mos Le'Harmless Estuary Stepping Stone (Level 60)
+poi_000428	Fishing Spot (Lobster & Swordfish)
+poi_000437	Mos Le'Harmless Caves Entrance
+poi_000441	Shilo Village Stepping Stone (Level 32)
+poi_000486	Quetzal Transport (Sunset Coast)
+poi_000492	The Pandemonium bank crab
+poi_000496	Karamja / Cairn Isle - Horned Graahks (Level 41)
+poi_000497	Shilo Village mine
+poi_000508	Iron & Coal Mining Site
+poi_000512	Quetzal Transport (Kastori)
+poi_000541	Quetzal Transport (Outer Fortis)
+poi_000544	Clay & Iron Mining Site
+poi_000563	Tai Bwo Wannai Stepping Stones (Level 30)
+poi_000571	Quetzal Transport (Hunter Guild)
+poi_000592	Fishing Spot (Lobster & Swordfish)
+poi_000595	Fishing Spot (Lobster & Swordfish)
+poi_000599	Yanille South Wall Climb (Level 69)
+poi_000601	Zul-Andra Stepping Stone (Level 76)
+poi_000626	Quetzal Transport (Tal Teklan)
+poi_000678	Uzer - Orange Salamanders (Level 47)
+poi_000685	Quetzal Transport (Cam Torum)
+poi_000689	Yanille Underwall Tunnel (Level 16)
+poi_000696	Quetzal Transport (Fortis Colosseum)
+poi_000749	Karamja River Grapple / Tree (Level 34)
+poi_000760	Fishing Spot (Karambwan)
+poi_000762	Lumbridge Swamp Stepping Stone (Level 66)
+poi_000778	Quetzal Transport (Civitas illa Fortis)
+poi_000785	Karamja Volcano Strong Tree (Level 78)
+poi_000815	Observatory Rocks & Grapple (Level 23)
+poi_000825	Al Kharid Palace Window (Level 70)
+poi_000865	Quetzal Transport (The Teomat)
+poi_000901	Fishing Spot (Karambwan)
+poi_000902	River Lum Broken Raft (West) (Level 48)
+poi_000903	River Lum Broken Raft (East) (Level 48)
+poi_000929	Fishing Spot (Shark & Monkfish)
+poi_000944	Fishing Spot (Shrimp & Anchovies)
+poi_000949	Al Kharid Rooftop Course (Level 20)
+poi_000950	Fishing Spot (Shark & Monkfish)
+poi_000951	Fishing Spot (Karambwan)
+poi_001005	Ourania / Ardougne - Red Salamanders (Level 59)
+poi_001006	Burgh de Rott Low Fence (Level 25)
+poi_001012	Quetzal Transport (Quetzacalli Gorge)
+poi_001063	Ourania - Hunter Training Area (Level 1–59)
+poi_001089	Melzar's Maze basement
+poi_001100	Arandar Mountain Pass Rocks (Advanced) (Level 85)
+poi_001122	Draynor Village Underwall Tunnel (Level 42)
+poi_001125	Biohazard
+poi_001182	Arandar Mountain Pass Rocks (Medium) (Level 68)
+poi_001213	Ardougne Rooftop Course (Level 90)
+poi_001216	Plague City
+poi_001217	Arandar Mountain Pass Rocks (Easy) (Level 59)
+poi_001222	Quetzal Transport (Salvager Overlook)
+poi_001261	Falador Underwall Tunnel (Level 26)
+poi_001271	Al Kharid Mine Cliff Scramble (Level 38)
+poi_001309	Mort Myre Swamp Stepping Stone (Level 50)
+poi_001336	Varrock South Fence Jump (Level 13)
+poi_001343	Tower of Life
+poi_001347	East Ardougne Log Balance (Level 33)
+poi_001382	Fishing Spot (Salmon & Trout)
+poi_001411	Falador Crumbling Wall (Level 5)
+poi_001423	Iron & Coal Mining Site
+poi_001425	Champions' Guild Stepping Stone (Level 31)
+poi_001429	Quetzal Transport (Auburnvale)
+poi_001459	Fishing Spot (Salmon & Trout)
+poi_001504	Falador North Wall Climb (Level 52)
+poi_001539	Darkmeyer / Sanguinesti - Hunter Area
+poi_001563	Fishing Spot (Shark & Lobster)
+poi_001568	Fishing Spot (Lobster & Swordfish)
+poi_001569	Varrock Rooftop Course (Level 30)
+poi_001579	Fishing Spot (Shark & Lobster)
+poi_001595	Fishing Spot (Shark & Lobster)
+poi_001597	Fishing Spot (Lobster & Swordfish)
+poi_001613	Fishing Spot (Lobster & Swordfish)
+poi_001622	Fishing Spot (Lobster & Swordfish)
+poi_001627	Fishing Spot (Lobster & Swordfish)
+poi_001628	Catherby Cliffside Rocks (Level 68)
+poi_001630	Fishing Spot (Lobster & Swordfish)
+poi_001635	Fishing Spot (Lobster & Swordfish)
+poi_001636	Fishing Spot (Salmon & Trout)
+poi_001653	Hosidius - Kourend Woodland Hunter Area (Level 1–43)
+poi_001654	Fishing Spot (Anglerfish)
+poi_001661	Mort Myre Swamp - Swamp Lizards (Level 29)
+poi_001682	Fishing Spot (Lobster & Swordfish)
+poi_001684	Canifis - Swamp Lizards (Level 29)
+poi_001692	Fenkenstrain's Dungeon Entrance
+poi_001732	Werewolf Agility Course (Level 60)
+poi_001753	Varrock Palace Garden Trellis (Level 35)
+poi_001767	Coal Trucks Log Balance (Level 20)
+poi_001772	Paterdomus Ornate Railing (Level 65)
+poi_001777	Kourend Woodland - Hunter Area Central (Level 11–41)
+poi_001811	Seers' Village Rooftop Course (Level 60)
+poi_001848	Monkey Madness I
+poi_001853	Eagles' Peak Rocks (Level 25)
+poi_001869	Kourend Woodland - Hunter Area West (Level 15–43)
+poi_001874	Iron & Coal Mining Site
+poi_001900	Tree Gnome Stronghold Loose Railing (Level 37)
+poi_001902	Grand Exchange Underwall Tunnel (Level 21)
+poi_001916	Goblin Village Tight-Gap (Level 14)
+poi_001939	Fishing Spot (Cod & Bass)
+poi_001950	Fishing Spot (Cod & Bass)
+poi_001959	Fishing Spot (Cod & Bass)
+poi_001968	Shayzien Crypt
+poi_001972	Fishing Spot (Cod & Bass)
+poi_001974	Slayer Tower Ivy Climb (Ground Floor) (Level 81)
+poi_001992	Lizardman Temple Entrance
+poi_002025	River Hos Stepping Stones (Level 40)
+poi_002032	River Hos Stepping Stones (Level 40)
+poi_002050	Piscatoris - Grey Chinchompas (Level 53)
+poi_002058	Fremennik Province Log Balance (Level 48)
+poi_002063	Kebos Lowlands - Chinchompas & Kebbits (Level 53)
+poi_002065	Fishing Spot (Anglerfish & Sandworms)
+poi_002067	Piscatoris - Falconry (Level 43–69)
+poi_002072	Fishing Spot (Anglerfish & Sandworms)
+poi_002073	Fishing Spot (Anglerfish & Sandworms)
+poi_002084	Fishing Spot (Anglerfish & Sandworms)
+poi_002091	Fishing Spot (Anglerfish & Sandworms)
+poi_002111	Mount Karuulm - Hunter Training Area (Level 1–41)
+poi_002133	Lighthouse Dungeon Iron Ladder
+poi_002170	Trollheim Medium Cliff Scramble (Level 43)
+poi_002185	Trollheim Easy Cliff Scramble (Level 41)
+poi_002191	Trollheim Mountain Path (Level 47)
+poi_002194	Wilderness - Black Salamanders (Level 67)
+poi_002195	Fishing Spot (Shark & Sea Turtle)
+poi_002204	Rellekka Rooftop Course (Level 80)
+poi_002210	Trollheim to Wilderness Rocks (Level 64)
+poi_002215	Trollheim Hard Cliff Scramble (Level 47)
+poi_002224	Trollheim Hard Cliff Scramble (Level 47)
+poi_002236	Trollheim Advanced Cliff Scramble (Level 44)
+poi_002239	Buccaneers' Haven chest
+poi_002259	Troll Stronghold Rocks (Level 73)
+poi_002263	Rellekka Broken Fence (Level 57)
+poi_002265	Fishing Spot (Monkfish)
+poi_002265	Monkfish
+poi_002266	Fishing Spot (Monkfish)
+poi_002268	Fishing Spot (Monkfish)
+poi_002291	Fishing Spot (Monkfish)
+poi_002343	The Queen of Thieves
+poi_002367	Wilderness God Wars Dungeon Rocky Handholds (Level 60)
+poi_002372	Fishing Spot (Shrimp & Anchovies)
+poi_002375	Wilderness God Wars Dungeon Rocky Handholds (Level 60)
+poi_002376	Wilderness - Black Chinchompas (Level 73)
+poi_002389	Fishing Spot (Shark & Lobster)
+poi_002392	Rellekka - Polar Kebbits & Kyatts (Level 1–55)
+poi_002394	Mount Karuulm Lower Rocks (Level 29)
+poi_002395	A Kingdom Divided
+poi_002398	Fishing Spot (Shark & Lobster)
+poi_002405	Fishing Spot (Shark & Lobster)
+poi_002408	Mount Karuulm Upper Rocks (Level 62)
+poi_002415	Fishing Spot (Anglerfish)
+poi_002420	Fossil Island - Herbiboar (Mushroom Meadow) (Level 80)
+poi_002421	Fishing Spot (Anglerfish)
+poi_002435	Lava Dragon Isle Stepping Stones (Level 74)
+poi_002444	Fossil Island - Herbiboar (Volcanic Meadow) (Level 80)
+poi_002446	Fossil Island Mushroom Meadow Stepping Stones (Level 50)
+poi_002459	Fossil Island Museum Camp Crevice (Level 70)
+poi_002466	Fossil Island Volcanic Mine Rope (Level 64)
+poi_002470	Molch Pearl Caves Entrance
+poi_002472	Neitiznot Rope Bridge (Level 40)
+poi_002473	Fossil Island Museum Camp Crevice (Level 70)
+poi_002475	Fossil Island - Birdhouse Trail (House on the Hill)
+poi_002478	Fossil Island Volcanic Meadow Crevice (Level 70)
+poi_002479	Fossil Island Volcanic Meadow Crevice (Level 70)
+poi_002491	Iron & Coal Mining Site
+poi_002498	Fossil Island - Birdhouses (Verdant Valley)
+poi_002499	Dense Essence Mine East Rocks (Level 52)
+poi_002500	Dense Essence Mine West Rocks (Level 73)
+poi_002516	Miscellania Stepping Stone (Level 55)
+poi_002528	Fossil Island - Birdhouses (Mushroom Forest)
+poi_002531	Dense Essence Mine North Rocks (Level 69)
+poi_002536	Lava Maze Stepping Stone (Level 82)
+poi_002539	Dense Essence Mine Boulder (Level 49)
+poi_002557	Wilderness Agility Course (Level 52)
+poi_002599	Weiss Cliffside (Level 68)
+grimstone_dungeon_entrance	Grimstone Dungeon
+poi_002614	Volcanic Ash & Iron Mining Site
+poi_002618	Volcanic Ash & Iron Mining Site
+poi_002623	Volcanic Ash & Iron Mining Site
+poi_002624	Volcanic Ash & Iron Mining Site
+poi_002625	Volcanic Ash & Iron Mining Site
+poi_002626	Volcanic Ash & Iron Mining Site
+poi_002631	Volcanic Ash & Iron Mining Site
+poi_002647	Volcanic Ash & Iron Mining Site
+poi_002648	Volcanic Ash & Iron Mining Site
+poi_002649	Fishing Spot (Volcanic Ash & Seaweed)
+poi_002651	Coal, Mithril & Adamantite Mining Site
+poi_002652	Coal, Mithril & Adamantite Mining Site
+poi_002661	Fishing Spot (Sacred Eel)
+poi_002664	Fishing Spot (Sacred Eel)
+poi_002665	Fishing Spot (Sacred Eel)
+poi_002735	Fishing Spot (Infernal Eel)
+poi_002738	Fishing Spot (Infernal Eel)
+poi_002782	Fishing Spot (Cave Eel)
+poi_002785	Fishing Spot (Cave Eel)
+poi_002786	Fishing Spot (Cave Eel)
+poi_002811	Ourania bank
+poi_002829	Fishing Spot (Crystal Eel)
+poi_002831	Silver & Gold Mining Site
+poi_002841	Fishing Spot (Camdozaal Tetra)
+poi_002878	Tephra & Soft Clay Mining Site
+poi_002879	Tephra & Soft Clay Mining Site
+poi_002885	Fishing Spot (Camdozaal Tetra)
+poi_002898	Tephra & Soft Clay Mining Site
+poi_002899	Tephra & Soft Clay Mining Site
+poi_002934	Fishing Spot (Cave Eel)
+poi_002939	Fishing Spot (Dark Crab & Lava Eel)
+poi_002940	Iron, Coal & Mithril Mining Site
+poi_002964	Fishing Spot (Dark Crab & Lava Eel)
+poi_003018	Fishing Spot (Dark Crab & Lava Eel)
+poi_003021	Fishing Spot (Dark Crab & Lava Eel)
+poi_003026	Fishing Spot (Shrimp & Anchovies)
+poi_003028	Fishing Spot (Dark Crab & Lava Eel)
+poi_003047	Barronite Mining Site
+poi_003048	Barronite Mining Site
+poi_003055	Barronite Mining Site
+poi_003124	Iron, Coal & Mithril Mining Site
+poi_003125	Iron, Coal & Mithril Mining Site
+poi_003144	Fishing Spot (Cam Torum Tetra)
+poi_003147	Fishing Spot (Cam Torum Tetra)
+poi_003155	Coal, Mithril & Adamantite Mining Site
+poi_003156	Fishing Spot (Lava Eel)
+poi_003162	Silver & Iron Mining Site
+poi_003164	Silver & Iron Mining Site
+poi_003165	Fishing Spot (Lava Eel)
+poi_003166	Coal & Mithril Mining Site
+poi_003183	Deepfin Mine eastern chest
+poi_003191	Gold & Silver Mining Site
+poi_003192	Gold & Silver Mining Site
+poi_003233	Coal & Mithril Mining Site
+poi_003234	Fortis Colosseum chest
+poi_003237	Coal & Mithril Mining Site
+poi_003255	Fishing Spot (Cave Eel)
+poi_003269	Fishing Spot (Cave Eel)
+poi_003274	Fishing Spot (Cave Eel)
+poi_003296	Coal & Mithril Mining Site
+poi_003302	Iron & Coal Mining Site
+poi_003303	Coal & Mithril Mining Site
+poi_003312	Sulfur & Coal Mining Site
+poi_003330	Fishing Spot (Lava Eel)
+poi_003353	Coal & Mithril Mining Site
+poi_003375	Fishing Spot (Anglerfish)
+poi_003397	Coal & Mithril Mining Site
+poi_003491	Iron & Coal Mining Site
+poi_003577	Iron & Coal Mining Site
+poi_003658	Duradel
+poi_003814	Slayer Tower Broken Window (1st Floor) (Level 18)
+poi_003816	Slayer Tower North Wall (1st Floor) (Level 61)
+poi_003863	Wintertodt Upper Gap (Level 60)
+poi_003864	Penguin Agility Course (Level 60)
+poi_003884	Pay-dirt & Gold Mining Site
+poi_003885	Pay-dirt & Gold Mining Site
+poi_003886	Pay-dirt & Gold Mining Site
+poi_003887	Pay-dirt & Gold Mining Site
+poi_003888	Pay-dirt & Gold Mining Site
+poi_003889	Pay-dirt & Gold Mining Site
+poi_003967	Iron & Coal Mining Site
+poi_003969	Iron & Coal Mining Site
+poi_003981	Coal & Iron Mining Site
+poi_004016	Fishing Spot (Lava Eel)
+poi_004025	Volcanic Ash Mining Site
+poi_004046	Fishing Spot (Cave Eel)
+poi_004067	Slayer Tower Ivy Climb (2nd Floor) (Level 81)
+poi_004078	Basalt & Salt Mining Site
+poi_004106	Basalt & Salt Mining Site
+poi_004107	Basalt & Salt Mining Site
+poi_004108	Basalt & Salt Mining Site
+poi_004115	Daeyalt Essence Mining Site
+poi_004116	Daeyalt Essence Mining Site
+poi_004117	Daeyalt Essence Mining Site
+poi_004118	Daeyalt Essence Mining Site
+poi_004120	Daeyalt Essence Mining Site
+poi_004143	Tale of the Righteous
+poi_004168	Wintertodt Gap (Level 60)
+poi_004169	Hosidius Stepping Stone (Level 45)
+poi_004253	Penguin Agility Course (Level 60)
+poi_004301	Slayer Tower North Wall (Ground Floor) (Level 61)
+poi_004313	Daeyalt Mine Entrance
+poi_005612	Maple tree - Level 45
+poi_005620	Neypotzli Moons of Peril
+poi_005633	Barrows Crypts & Tunnels
+poi_005640	Mage Arena Bank
+poi_005641	The Warrens
+poi_005642	Woodcutting Guild Dungeon
+poi_005735	Barbarian Assault
+poi_005758	TzHaar City / Mor Ul Rek
+poi_005816	Farming patch - Coral
+poi_005817	Farming patch - Hespori
+poi_005818	Farming patch - Seaweed
+poi_005819	Farming patch - Spirit Tree
+poi_005820	Lava eel
+poi_005825	4 Mithril
+poi_005826	2 Mithril
+poi_005827	8 Mithril
+poi_005828	5 Iron
+poi_005829	10 Coal
+poi_005830	3 Daeyalt essence
+poi_005831	4 Copper
+poi_005832	1 Runite
+poi_005833	2 Adamantite
+poi_005834	1 Runite
+poi_005835	2 Silver
+poi_005836	3 Gem rock
+poi_005837	3 Silver
+poi_005838	4 Gold
+poi_005839	2 Gold
+poi_005840	5 Coal
+poi_005841	6 Iron
+poi_005842	4 Coal
+poi_005843	3 Coal
+poi_005845	3 Iron
+poi_005897	Varrock - lvl 25
+poi_005908	Construction Cape - Prifddinas
+poi_005916	Watchtower Yanille - lvl 58
+poi_005921	Ancient -  Kharyrll - lvl 66
+poi_005925	Ancient -  Annakarl - lvl 90
+poi_005927	Lunar -  Moonclan - lvl 69
+poi_005928	Lunar -  Ourania - lvl 71
+poi_005929	Lunar -  Waterbirth - lvl 72
+poi_005931	Lunar -  Khazard - lvl 78
+poi_005942	Arceuus -  Harmony Island - lvl 65
+poi_005953	Desert Amulet - Kalphite Cave
+poi_005962	Games Necklace - Barbarian Assault
+poi_005967	Ring of Dueling - Emir's Arena
+poi_005970	Ring of Dueling - Fortis Colosseum
+poi_005979	Skills Necklace - Woodcutting Guild
+poi_005981	Farming Cape
+poi_005982	Amulet of Glory - Edgeville
+poi_005983	Amulet of Glory - Karamja
+poi_005984	Amulet of Glory - Draynor Village
+poi_005985	Amulet of Glory - Al-Kharid
+poi_005988	Ring of Wealth - Falador Park
+poi_006001	Burning Amulet - Bandit Camp (lvl 17)
+poi_006003	Construction Cape - Pollnivneach
+poi_006005	Arceuus -  Salve Graveyard - lvl 40
+poi_006018	Mos Le'Harmless Teleport
+poi_006024	Crafting Cape
+poi_006030	Fishing Cape - Fishing Guild
+poi_006031	Fishing Cape - Otto's Grotto
+poi_006033	Hunter Cape - Black Chinchompa Area
+poi_006034	Hunter Cape - Hunter Guild
+poi_006035	Strength Cape
+poi_006036	Sailing Cape - The Pandemonium
+poi_006037	Quest Cape
+poi_006038	Music Cape - Falo the Bard
+poi_006044	Achievement Cape - Jungle forester
+poi_006045	Achievement Cape - TzHaar-Mej
+poi_006047	Achievement Cape - Elder Gnome child
+poi_006048	Ectophial - Ectofuntus
+poi_006051	Royal Seed Pod - Grand Tree
+poi_006054	Enchanted Lyre - Jatizso
+poi_006060	Kharedst's Memoirs - History and Hearsay (Shayzien)
+poi_006063	Drakan's medallion - Ver Sinhaza
+poi_006064	Drakan's medallion - Darkmeyer
+poi_006065	Drakan's medallion - Slepe
+poi_006071	Pharaoh's Sceptre - Jaleustrophos (Agility Pyramid)
+poi_006072	Pharaoh's Sceptre - Jaldraocht (Desert Treasure Pyramid)
+poi_006074	Skull Sceptre - Stronghold of Security
+poi_006082	Ring of the elements - Air Altar
+poi_006084	Ring of the elements - Earth Altar
+poi_006089	Ring of shadows - Lassar Undercity
+poi_006097	Giantsoul Amulet - Bryophyta's Lair
+poi_006098	Giantsoul Amulet - Obor's Lair
+poi_006099	Giantsoul Amulet - Branda and Eldric's Lair
+poi_006101	Sailors' Amulet - Port Roberts
+poi_006235	Civitas illa Fortis - lvl 54
+poi_006239	Ring of Dueling - Ferox Enclave
+poi_006256	Games Necklace - Tears of Guthix
+poi_006262	Obelisk - 13
+poi_006271	Obelisk - 19
+poi_006280	Obelisk - 27
+poi_006289	Obelisk - 35
+poi_006298	Obelisk - 44
+poi_006307	Obelisk - 50
+poi_006428	Slayer Tower Spire Climb (Ground Floor) (Level 71)
+poi_006431	Poison Waste Sewer
+poi_006462	Cam Torum Main Entrance
+poi_006469	Ourania Cave
+poi_006471	Tower of Life dungeon
+poi_006474	Corporeal Beast cave
+poi_006484	Sophanem Dungeon Entrance
+poi_006485	Revenant Caves Entrance
+poi_006488	Chasm of Fire Elevator
+poi_006489	Karuulm Slayer Dungeon Elevator
+poi_006493	Tombs of Amascut Entrance
+poi_006495	Barracks
+poi_006501	Karamja Dungeon
+poi_006513	Heroes' Guild mine
+poi_006517	Champions' Challenge
+poi_006534	White Knights' Castle Crypt
+poi_006537	Jormungand's Prison Entrance
+poi_006545	Here Be Minotaurs
+poi_006547	Gryphon Dungeon
+poi_006560	Tutorial Island mine
+poi_006588	Willow tree - Level 30
+poi_006589	Teak tree - Level 35
+poi_006590	Teak tree - Level 35
+poi_006591	Teak tree - Level 35
+poi_006592	Teak tree - Level 35
+poi_006593	Teak tree - Level 35
+poi_006594	Teak tree - Level 35
+poi_006595	Teak tree - Level 35
+poi_006596	Teak tree - Level 35
+poi_006597	Teak tree - Level 35
+poi_006598	Teak tree - Level 35
+poi_006599	Teak tree - Level 35
+poi_006600	Teak tree - Level 35
+poi_006601	Teak tree - Level 35
+poi_006602	Teak tree - Level 35
+poi_006603	Swaying tree - Level 40
+poi_006604	Mature juniper tree - Level 42
+poi_006605	Maple tree - Level 45
+poi_006606	Maple tree - Level 45
+poi_006607	Maple tree - Level 45
+poi_006608	Maple tree - Level 45
+poi_006609	Maple tree - Level 45
+poi_006610	Maple tree - Level 45
+poi_006611	Maple tree - Level 45
+poi_006612	Maple tree - Level 45
+poi_006613	Maple tree - Level 45
+poi_006614	Maple tree - Level 45
+poi_006615	Maple tree - Level 45
+poi_006616	Maple tree - Level 45
+poi_006617	Maple tree - Level 45
+poi_006618	Maple tree - Level 45
+poi_006619	Maple tree - Level 45
+poi_006620	Maple tree - Level 45
+poi_006621	Maple tree - Level 45
+poi_006622	Maple tree - Level 45
+poi_006623	Maple tree - Level 45
+poi_006624	Maple tree - Level 45
+poi_006625	Maple tree - Level 45
+poi_006626	Mahogany tree - Level 50
+poi_006627	Mahogany tree - Level 50
+poi_006628	Mahogany tree - Level 50
+poi_006629	Mahogany tree - Level 50
+poi_006630	Mahogany tree - Level 50
+poi_006631	Mahogany tree - Level 50
+poi_006632	Mahogany tree - Level 50
+poi_006633	Mahogany tree - Level 50
+poi_006634	Mahogany tree - Level 50
+poi_006635	Teak/Mahogany trees - Level 50
+poi_006636	Teak/Mahogany trees - Level 50
+poi_006637	Teak/Mahogany trees - Level 50
+poi_006638	Teak/Mahogany trees - Level 50
+poi_006639	Yew tree - Level 60
+poi_006640	Yew tree - Level 60
+poi_006641	Yew tree - Level 60
+poi_006642	Yew tree - Level 60
+poi_006643	Yew tree - Level 60
+poi_006644	Yew tree - Level 60
+poi_006645	Yew tree - Level 60
+poi_006646	Yew tree - Level 60
+poi_006647	Yew tree - Level 60
+poi_006648	Yew tree - Level 60
+poi_006649	Yew tree - Level 60
+poi_006650	Yew tree - Level 60
+poi_006651	Yew tree - Level 60
+poi_006652	Yew tree - Level 60
+poi_006653	Yew tree - Level 60
+poi_006654	Yew tree - Level 60
+poi_006655	Yew tree - Level 60
+poi_006656	Yew tree - Level 60
+poi_006657	Yew tree - Level 60
+poi_006658	Yew tree - Level 60
+poi_006659	Yew tree - Level 60
+poi_006660	Yew tree - Level 60
+poi_006661	Yew tree - Level 60
+poi_006662	Yew tree - Level 60
+poi_006663	Yew tree - Level 60
+poi_006664	Yew tree - Level 60
+poi_006665	Yew tree - Level 60
+poi_006666	Yew tree - Level 60
+poi_006667	Yew tree - Level 60
+poi_006668	Yew tree - Level 60
+poi_006669	Yew tree - Level 60
+poi_006670	Yew tree - Level 60
+poi_006671	Yew tree - Level 60
+poi_006672	Yew tree - Level 60
+poi_006673	Yew tree - Level 60
+poi_006674	Yew tree - Level 60
+poi_006675	Yew tree - Level 60
+poi_006676	Yew tree - Level 60
+poi_006677	Yew tree - Level 60
+poi_006678	Yew tree - Level 60
+poi_006679	Yew tree - Level 60
+poi_006680	Yew tree - Level 60
+poi_006681	Yew tree - Level 60
+poi_006682	Yew tree - Level 60
+poi_006683	Yew tree - Level 60
+poi_006684	Yew tree - Level 60
+poi_006685	Yew tree - Level 60
+poi_006686	Yew tree - Level 60
+poi_006687	Yew tree - Level 60
+poi_006688	Yew tree - Level 60
+poi_006689	Yew tree - Level 60
+poi_006690	Yew tree - Level 60
+poi_006691	Yew tree - Level 60
+poi_006692	Yew tree - Level 60
+poi_006693	Yew tree - Level 60
+poi_006694	Yew tree - Level 60
+poi_006695	Yew tree - Level 60
+poi_006696	Yew tree - Level 60
+poi_006697	Yew tree - Level 60
+poi_006698	Yew tree - Level 60
+poi_006699	Yew tree - Level 60
+poi_006700	Yew tree - Level 60
+poi_006701	Yew tree - Level 60
+poi_006702	Yew tree - Level 60
+poi_006703	Yew tree - Level 60
+poi_006704	Yew tree - Level 60
+poi_006705	Yew tree - Level 60
+poi_006706	Yew tree - Level 60
+poi_006707	Yew tree - Level 60
+poi_006708	Yew tree - Level 60
+poi_006709	Yew tree - Level 60
+poi_006710	Yew tree - Level 60
+poi_006711	Yew/Jatoba trees - Level 60
+poi_006712	Willow/Yew trees - Level 60
+poi_006713	Maple/Yew trees - Level 60
+poi_006714	Maple/Yew trees - Level 60
+poi_006715	Maple/Yew trees - Level 60
+poi_006716	Maple/Yew trees - Level 60
+poi_006717	Maple/Yew trees - Level 60
+poi_006718	Maple/Yew trees - Level 60
+poi_006719	Blisterwood tree - Level 62
+poi_006720	Sulliuscep - Level 65
+poi_006721	Sulliuscep - Level 65
+poi_006722	Sulliuscep - Level 65
+poi_006723	Sulliuscep - Level 65
+poi_006724	Sulliuscep - Level 65
+poi_006725	Sulliuscep - Level 65
+poi_006726	Camphor tree - Level 66
+poi_006727	Camphor tree - Level 66
+poi_006728	Camphor/Mahogany trees - Level 66
+poi_006729	Camphor/Jatoba trees - Level 66
+poi_006730	Magic tree - Level 75
+poi_006731	Magic tree - Level 75
+poi_006732	Magic tree - Level 75
+poi_006733	Magic tree - Level 75
+poi_006734	Magic tree - Level 75
+poi_006735	Magic tree - Level 75
+poi_006736	Magic tree - Level 75
+poi_006737	Magic tree - Level 75
+poi_006738	Magic tree - Level 75
+poi_006739	Magic tree - Level 75
+poi_006740	Magic tree - Level 75
+poi_006741	Magic tree - Level 75
+poi_006742	Magic tree - Level 75
+poi_006743	Magic tree - Level 75
+poi_006744	Magic tree - Level 75
+poi_006745	Magic tree - Level 75
+poi_006746	Magic tree - Level 75
+poi_006747	Magic tree - Level 75
+poi_006748	Magic tree - Level 75
+poi_006749	Magic tree - Level 75
+poi_006750	Magic tree - Level 75
+poi_006751	Magic tree - Level 75
+poi_006752	Magic tree - Level 75
+poi_006753	Magic tree - Level 75
+poi_006754	Magic tree - Level 75
+poi_006755	Magic tree - Level 75
+poi_006756	Magic tree - Level 75
+poi_006757	Bloodwood tree - Level 77
+poi_006758	Bloodwood tree - Level 77
+poi_006759	Ironwood tree - Level 80
+poi_006760	Ironwood tree - Level 80
+poi_006761	Ironwood tree - Level 80
+poi_006762	Redwood tree - Level 90
+poi_006763	Redwood tree - Level 90
+poi_006937	Agility Pyramid
+poi_006938	Barbarian Outpost Agility Course
+poi_006939	Brimhaven Agility Arena
+poi_006940	Canifis Rooftop Course
+poi_006941	Colossal Wyrm Course
+poi_006942	Draynor Village Rooftop Course
+poi_006944	Gnome Stronghold Agility Course
+poi_006945	Prifddinas Agility Course
+poi_006946	Shayzien Agility Course
+poi_006971	Farming patch - Allotment
+poi_006972	Farming patch - Allotment
+poi_006973	Farming patch - Allotment/Flower
+poi_006974	Farming patch - Allotment/Herb/Flower
+poi_006975	Farming patch - Allotment/Herb/Flower
+poi_006976	Farming patch - Allotment/Herb/Flower
+poi_006977	Farming patch - Allotment/Herb/Flower
+poi_006978	Farming patch - Allotment/Herb/Flower
+poi_006979	Farming patch - Allotment/Herb/Flower
+poi_006980	Farming patch - Anima/Herb
+poi_006981	Farming patch - Belladonna
+poi_006982	Farming patch - Belladonna
+poi_006983	Farming patch - Bush
+poi_006984	Farming patch - Bush
+poi_006985	Farming patch - Bush
+poi_006986	Farming patch - Bush
+poi_006987	Farming patch - Bush/Flower
+poi_006988	Farming patch - Cactus
+poi_006989	Farming patch - Cactus
+poi_006990	Farming patch - Calquat
+poi_006991	Farming patch - Calquat
+poi_006992	Farming patch - Calquat
+poi_006993	Farming patch - Celastrus/Fruit Tree
+poi_006994	Farming patch - Crystal Tree
+poi_006995	Farming patch - Flower
+poi_006996	Farming patch - Fruit Tree
+poi_006997	Farming patch - Fruit Tree
+poi_006998	Farming patch - Fruit Tree
+poi_006999	Farming patch - Fruit Tree
+poi_007000	Farming patch - Fruit Tree
+poi_007001	Farming patch - Fruit Tree
+poi_007002	Farming patch - Grapes
+poi_007003	Farming patch - Hardwood
+poi_007004	Farming patch - Hardwood
+poi_007005	Farming patch - Hardwood
+poi_007006	Farming patch - Herb
+poi_007007	Farming patch - Herb
+poi_007008	Farming patch - Herb
+poi_007009	Farming patch - Hops
+poi_007010	Farming patch - Hops
+poi_007011	Farming patch - Hops
+poi_007012	Farming patch - Hops
+poi_007013	Farming patch - Hops
+poi_007014	Farming patch - Mushroom
+poi_007015	Farming patch - Redwood
+poi_007016	Farming patch - Spirit Tree
+poi_007017	Farming patch - Spirit Tree
+poi_007018	Farming patch - Spirit Tree
+poi_007019	Farming patch - Spirit Tree
+poi_007020	Farming patch - Tree
+poi_007021	Farming patch - Tree
+poi_007022	Farming patch - Tree
+poi_007023	Farming patch - Tree
+poi_007024	Farming patch - Tree
+poi_007025	Farming patch - Tree
+poi_007026	Farming patch - Tree
+poi_007027	Anchovies
+poi_007028	Anchovies
+poi_007029	Anchovies
+poi_007030	Anchovies
+poi_007031	Shark
+poi_007032	Anchovies
+poi_007033	Shark
+poi_007034	Shark
+poi_007035	Salmon
+poi_007036	Salmon
+poi_007037	Salmon
+poi_007038	Anchovies
+poi_007039	Anchovies
+poi_007040	Anchovies
+poi_007041	Salmon
+poi_007042	Salmon
+poi_007043	Rum deal (Quest)
+poi_007044	Rum deal (Quest)
+poi_007045	Rum deal (Quest)
+poi_007046	Tai Bwo Wannai Trio (Quest)
+poi_007047	Shark
+poi_007048	Shark
+poi_007049	Shark
+poi_007050	Shark
+poi_007051	Shark
+poi_007052	Shark
+poi_007053	Shark
+poi_007054	Shark
+poi_007055	Shark
+poi_007056	Shark
+poi_007057	Cave eel
+poi_007058	Tetra
+poi_007059	Tetra
+poi_007060	House Keys
+poi_007061	Salmon
+poi_007062	Salmon
+poi_007063	Salmon
+poi_007064	Anchovies
+poi_007065	Salmon
+poi_007066	Salmon
+poi_007067	Salmon
+poi_007068	Anchovies
+poi_007069	Anchovies
+poi_007070	Anchovies
+poi_007071	Anchovies
+poi_007072	Lobster (Approval only)
+poi_007073	Karambwanji
+poi_007074	Karambwan
+poi_007075	Karambwan
+poi_007076	Salmon
+poi_007077	Shark
+poi_007078	Shark
+poi_007079	Shark
+poi_007080	Shark
+poi_007081	Anchovies
+poi_007082	Fishing Contest (Quest)
+poi_007083	Fishing Contest (Quest)
+poi_007084	Fishing Contest (Quest)
+poi_007085	Fishing Contest (Quest)
+poi_007086	Minnow
+poi_007087	Minnow
+poi_007088	Anchovies
+poi_007089	Anchovies
+poi_007090	Anchovies
+poi_007091	Salmon
+poi_007092	Salmon
+poi_007093	Salmon
+poi_007094	Shark
+poi_007095	Shark
+poi_007096	Salmon
+poi_007097	Salmon
+poi_007098	Salmon
+poi_007099	Shark
+poi_007100	Lobster
+poi_007101	Anchovies
+poi_007102	Anchovies
+poi_007103	Lobster
+poi_007104	Salmon
+poi_007105	Anchovies
+poi_007106	Salmon
+poi_007107	Salmon
+poi_007108	Frog spawn, Cave eel
+poi_007109	Frog spawn, Cave eel
+poi_007110	Anchovies
+poi_007111	Shark
+poi_007112	Lobster
+poi_007113	Greater siren
+poi_007114	Slimy eel
+poi_007115	Slimy eel
+poi_007116	Slimy eel
+poi_007117	Slimy eel
+poi_007118	Slimy eel
+poi_007119	Infernal Eel
+poi_007120	Infernal Eel
+poi_007121	Infernal Eel
+poi_007122	Sturgeon, Salmon, Trout
+poi_007123	Sturgeon, Salmon, Trout
+poi_007124	Sturgeon, Salmon, Trout
+poi_007125	Anchovies
+poi_007126	Anchovies
+poi_007127	Lobster
+poi_007128	Salmon
+poi_007129	Sturgeon, Salmon, Trout
+poi_007130	Sturgeon, Salmon, Trout
+poi_007131	Sturgeon, Salmon, Trout
+poi_007132	Sturgeon, Salmon, Trout
+poi_007133	Anglerfish
+poi_007134	Lobster
+poi_007135	Shark
+poi_007136	Anchovies
+poi_007137	Salmon
+poi_007138	Salmon
+poi_007139	Salmon
+poi_007140	Salmon
+poi_007141	Salmon
+poi_007142	Salmon
+poi_007143	Shark
+poi_007144	Anchovies
+poi_007145	Lobster
+poi_007146	Salmon
+poi_007147	Salmon
+poi_007148	Anchovies
+poi_007149	Shark
+poi_007150	Salmon
+poi_007151	Salmon
+poi_007152	Shark
+poi_007153	Salmon
+poi_007154	Lava eel
+poi_007155	Lava eel
+poi_007156	Lava eel
+poi_007159	Salmon
+poi_007160	Salmon
+poi_007161	Salmon
+poi_007162	Shrimp
+poi_007163	Salmon
+poi_007164	Anchovies
+poi_007165	Dark Crab
+poi_007166	Dark Crab
+poi_007167	Lava eel
+poi_007168	Dark Crab
+poi_007169	5 Gold
+poi_007170	8 Iron
+poi_007171	3 Copper
+poi_007172	2 Iron
+poi_007173	8 Limestone
+poi_007174	8 Limestone
+poi_007175	1 Dense essence
+poi_007176	1 Dense essence
+poi_007177	5 Iron
+poi_007178	6 Iron
+poi_007179	2 Blurite
+poi_007180	2 Blurite
+poi_007181	6 Iron
+poi_007182	16 Iron
+poi_007183	2 Clay
+poi_007184	5 Tin
+poi_007185	3 Copper
+poi_007186	20 Hard rock
+poi_007187	17 Hard rock
+poi_007188	22 Hard rock
+poi_007189	10 Gold
+poi_007190	6 Gold
+poi_007191	8 Barronite
+poi_007192	10 Barronite
+poi_007193	7 Coal
+poi_007194	11 Coal
+poi_007195	3 Iron
+poi_007196	18 Coal
+poi_007197	6 Clay
+poi_007198	3 Gold
+poi_007199	7 Coal
+poi_007200	3 Coal
+poi_007201	7 Mithril
+poi_007202	8 Iron
+poi_007203	3 Tin
+poi_007204	5 Silver
+poi_007205	7 Iron
+poi_007206	23 Coal
+poi_007207	6 Iron
+poi_007208	12 Nickel
+poi_007209	21 Coal
+poi_007210	3 Iron
+poi_007211	3 Iron
+poi_007212	3 Iron
+poi_007213	5 Tin
+poi_007214	4 Copper
+poi_007215	2 Clay
+poi_007216	3 Clay
+poi_007217	3 Copper
+poi_007218	3 Copper
+poi_007219	7 Clay
+poi_007220	2 Copper
+poi_007221	3 Rock
+poi_007222	4 Rock
+poi_007223	3 Rock
+poi_007224	4 Clay
+poi_007225	7 Iron
+poi_007226	3 Copper
+poi_007227	1 Runite
+poi_007228	1 Runite
+poi_007229	1 Runite
+poi_007230	9 Clay
+poi_007231	2 Tin
+poi_007232	3 Iron
+poi_007233	3 Coal
+poi_007234	2 Coal
+poi_007235	2 Coal
+poi_007236	10 Gold
+poi_007237	10 Gold
+poi_007238	3 Coal
+poi_007239	5 Coal
+poi_007240	3 Coal
+poi_007241	2 Mithril
+poi_007242	10 Clay
+poi_007243	4 Adamantite
+poi_007244	3 Clay
+poi_007245	11 Tin
+poi_007246	1 Iron
+poi_007247	4 Gold
+poi_007248	4 Adamantite
+poi_007249	9 Iron
+poi_007250	9 Coal
+poi_007251	2 Copper
+poi_007252	4 Iron
+poi_007253	5 Tin
+poi_007254	2 Runite
+poi_007255	6 Iron
+poi_007256	5 Iron
+poi_007257	4 Iron
+poi_007258	3 Volcanic sulphur
+poi_007259	2 Volcanic sulphur
+poi_007260	33 Coal
+poi_007261	12 Coal
+poi_007262	5 Copper
+poi_007263	7 Coal
+poi_007264	26 Amethyst
+poi_007265	4 Iron
+poi_007266	8 Iron
+poi_007267	36 Amethyst
+poi_007268	9 Coal
+poi_007269	4 Coal
+poi_007270	3 Silver
+poi_007271	6 Silver
+poi_007272	3 Iron
+poi_007273	6 Iron
+poi_007274	5 Sandstone
+poi_007275	8 Iron
+poi_007276	3 Copper
+poi_007277	1 Iron
+poi_007278	5 Copper
+poi_007279	2 Clay
+poi_007280	2 Copper
+poi_007281	4 Copper
+poi_007282	4 Clay
+poi_007283	2 Clay
+poi_007284	3 Clay
+poi_007285	1 Copper
+poi_007286	7 Basalt
+poi_007287	5 Iron
+poi_007288	7 Coal
+poi_007289	3 Clay
+poi_007290	7 Gem rock
+poi_007291	7 Limestone
+poi_007292	5 Clay
+poi_007293	3 Iron
+poi_007294	7 Iron
+poi_007295	9 Silver
+poi_007296	13 Copper
+poi_007297	14 Iron
+poi_007298	9 Copper
+poi_007299	3 Clay
+poi_007300	2 Clay
+poi_007301	2 Iron
+poi_007302	6 Iron
+poi_007303	2 Iron
+poi_007304	34 Coal
+poi_007305	4 Iron
+poi_007306	5 Mithril
+poi_007307	2 Mithril
+poi_007437	Achievement Cape - Thorodin

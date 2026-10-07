@@ -118,6 +118,8 @@ public class WorldMapInputDungeonExitTest
 
 		final MouseEvent enterEvent = leftPressAt(405, 305);
 		input.mousePressed(enterEvent);
+		input.mouseReleased(new MouseEvent(source, MouseEvent.MOUSE_RELEASED, System.currentTimeMillis(),
+			0, 405, 305, 1, false, MouseEvent.BUTTON1));
 
 		assertTrue("enter click must be consumed", enterEvent.isConsumed());
 		assertTrue("underground mode must be active", camera.isUndergroundModeActive());
@@ -247,6 +249,8 @@ public class WorldMapInputDungeonExitTest
 				new Rectangle(390, 290, 20, 20), UndergroundZone.TAVERLEY_DUNGEON, false)));
 
 		input.mousePressed(leftPressAt(400, 300));
+		input.mouseReleased(new MouseEvent(source, MouseEvent.MOUSE_RELEASED, System.currentTimeMillis(),
+			0, 400, 300, 1, false, MouseEvent.BUTTON1));
 
 		assertFalse(camera.isUndergroundModeActive());
 		assertEquals(UndergroundZone.TAVERLEY_DUNGEON.getSurfacePoint().getX(), camera.getCenterX(), DELTA);

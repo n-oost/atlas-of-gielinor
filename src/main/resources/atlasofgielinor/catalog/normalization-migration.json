@@ -1,0 +1,31 @@
+{
+  "identity_count": 8035,
+  "location_count": 8030,
+  "alias_count": 964,
+  "tag_count": 1690,
+  "merged_identities": 0,
+  "previous_table_sha256": {
+    "pois": "3d34f9768a3ee3d4ad4a79ffb8024e9a383b840fa05a855adf014b029c0c1a1d",
+    "places": "d0a081b59fe94c73a3759001c2979b7051154b7fcd8580ae07d961c1f707aa94"
+  },
+  "note": "Every previous POI and area ID retained. Unknown semantic kinds are not inferred from icons. Identical descriptions do not prove shared identity.",
+  "preserved_location_records": 8030,
+  "preserved_fields_per_record": 17,
+  "deduplicated_relations": [
+    {
+      "location_id": "poi_001089",
+      "field": "aliases",
+      "before": "Melzar's Maze basement|Melzar's Maze basement",
+      "after": "Melzar's Maze basement"
+    }
+  ],
+  "normalized_table_sha256": {
+    "pois": "c2db8ade8dceca29f8def52f2fcf891c36d36634950dbbe6a09c4b655f0e49ed",
+    "locations": "8a415fda002fbc48dcf220e7fe256e18bcb6c062fa8cee7d64f70e99c8b0e75f",
+    "poi_aliases": "99c107b8a62519a3910addf5643bda1456ef82ba41ee2fde09594fc057342008",
+    "poi_tags": "6b63377dce7c6326ccb4d13871e27b92fe7841551da36d9c5ca69c0b211d5b51",
+    "places": "82a9c03a7c72b006b7d4940ed7dad187fa91c29d87af7cbc5c401888fcd25bc3",
+    "links": "2225713154e396a41ff4e000d445c049d261744c76a26cba359cc81c12757839",
+    "layouts": "2b98c4efe8114fddc6f15a41ad44f3030e6cf1dfebd1da22176078436a7788cf"
+  }
+}

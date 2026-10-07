@@ -250,7 +250,7 @@
 #L	1339	1	Mind altar	200
 #L	1340	1	Water altar	204
 #L	1341	1	Weiss	219
-#L	1342	1	Grimstone Dungeon	1400
+#L	1342	1	Grimstone Dungeon	219
 #L	1343	1	Chaos Druid Tower dungeon	210
 #L	1344	1	Crash Island Dungeon	237
 #L	1345	1	Wilderness Slayer Cave	241
@@ -428,13 +428,12 @@
 132	1317	0	Giants' Den	1412	9856	1471	9915	-12	-6325	0	1	0	giants_den
 133	1067	0	Glarial's Tomb	2525	9808	2557	9850	1	-6400	0	1	0	glarials_tomb
 134	1301	0	Tiles (dump leftover)	2848	5188	2943	5231	5745	-1584	0	0	0	-
-135	1069	2	God Wars Dungeon	2820	5252	2943	5375	88	-1543	0	1	0	god_wars_dungeon
+135	1069	2	God Wars Dungeon	2820	5252	2943	5375	37	-1565	0	0	0	god_wars_dungeon
 136	1071	0	Grand Tree Tunnels	2432	9856	2495	9919	1	-6399	0	1	0	grand_tree_tunnels
 137	1072	0	H.A.M. Hideout	3136	9604	3191	9659	16	-6400	0	1	0	ham_hideout
 138	1075	0	Harmony Island lower level	3780	9220	3791	9231	0	-6400	0	0	0	harmony_island_basement
 139	1076	0	Heroes' Guild Mine	2884	9881	2943	9918	0	-6400	0	1	0	heroes_guild_mine
 140	1077	0	Hespori Cave	1236	10076	1259	10099	-14	-6357	0	1	0	hespori_cave
-141	1228	0	Deepfin Mine	1924	9160	2107	9215	-18	-6387	0	1	0	deepfin_mine
 142	1290	0	Tiles (dump leftover) (extra bits 3 - Jaldraocht Pyramid - Level 1)	2865	4671	4275	5148	1202	-2056	0	0	0	-
 143	1290	0	Tiles (dump leftover) (extra bits 4)	1380	4131	4012	6542	3051	-597	0	0	0	-
 144	1290	0	Tiles (dump leftover) (extra bits 5 - Jaldraocht Pyramid - Level 4)	-53	7309	4259	10665	-479	-8697	0	0	0	-
@@ -695,7 +694,6 @@
 479	1301	0	Tiles (dump leftover) (island 1)	2184	4812	2231	4859	6043	-1527	0	0	0	-
 480	1301	0	Tiles (dump leftover) (island 1)	2180	4852	2191	4859	6043	-1527	0	0	0	-
 481	1331	0	Saba's cave	2264	4748	2275	4763	640	-1155	0	1	0	-
-482	1342	0	Grimstone Dungeon	2876	10440	2931	10487	52	-6380	0	1	0	ghorrock_dungeon
 483	1301	0	Tiles (dump leftover) (island 2)	2896	10304	2939	10355	5709	-6421	0	0	0	-
 484	1301	0	Tiles (dump leftover) (island 1)	801	2283	7673	7167	10306	-5829	0	0	0	-
 485	1036	0	Digsite Dungeon	3360	9801	3389	9853	-2	-6397	0	1	0	digsite_dungeon
@@ -779,7 +777,7 @@
 582	1338	0	Law altar	2443	4810	2486	4854	394	-1440	0	1	0	-
 586	1351	0	Tombs of Amascut	3344	9102	3375	9130	208	-6055	0	0	0	tombs_of_amascut
 589	1301	0	Tiles (dump leftover) (island 4)	2392	9556	2399	9563	5709	-6421	0	0	0	-
-590	1249	0	Lassar Undercity	2432	6208	2815	6527	416	-2965	0	0	0	camdozaal
+590	1249	0	Lassar Undercity	2432	6208	2815	6527	449	-2940	0	0	0	lassar_undercity
 591	1301	0	Tiles (dump leftover)	2768	6424	2799	6447	6083	-2896	0	0	0	-
 592	1301	0	Tiles (dump leftover) (island 1)	3216	10328	3247	10355	5709	-6421	0	0	0	-
 593	1102	0	Library Historical Archive	1536	10208	1567	10239	102	-6398	0	0	0	library_historical_archive
@@ -820,7 +818,7 @@
 645	1301	0	Tiles (dump leftover) (island 7)	2372	5000	2427	5055	5705	-1481	0	0	0	-
 646	1301	0	Tiles (dump leftover) (island 8)	2496	4928	2560	4987	5705	-1481	0	0	0	-
 647	1301	0	Tiles (dump leftover) (island 9)	2368	4928	2427	4991	5705	-1481	0	0	0	-
-648	1391	0	Nex Bank	2848	5187	2942	5237	88	-1543	0	1	0	god_wars_dungeon
+648	1391	0	Nex Bank	2848	5187	2942	5237	37	-1565	0	0	0	god_wars_dungeon
 650	1358	0	Stronghold of Security (Catacomb of Famine)	1984	5184	2046	5246	1094	-1822	0	1	0	stronghold_of_security
 651	1301	0	Tiles (dump leftover) (island 1)	2432	9728	2443	9735	5710	-6421	0	0	0	-
 653	1301	0	Tiles (dump leftover) (island 1)	2764	9696	2971	9855	5709	-6421	0	0	0	-
@@ -972,7 +970,6 @@
 885	1021	1	Sisterhood Sanctuary (Slepe Crypt)	3716	9664	3903	9837	0	-6400	0	1	0	sisterhood_sanctuary
 886	1021	0	The Nightmare of Ashihama Lair	3715	10240	3837	10302	0	-6400	0	1	0	sisterhood_sanctuary
 887	1022	0	Jormungand's Prison	2398	10370	2493	10468	0	-6400	0	1	0	jormungands_prison
-888	1400	0	Ghorrock Dungeon	2844	10441	2932	10489	0	-6400	0	1	0	ghorrock_dungeon
 889	1379	0	Underground Pass (4 -Soulless Pit)	2304	9792	2367	9922	10	-6615	0	0	0	underground_pass
 899	1378	0	Underground Pass (3)	2359	9701	2428	9733	-53	-6422	0	0	0	underground_pass
 890	1020	0	Ruins of Tapoyauki	1568	9599	1724	9665	-26	-6407	0	0	0	underground_pass
@@ -1074,7 +1071,7 @@
 623	1250	0	Entrana Dungeon (island 2)	2819	9771	2845	9777	-2	-6399	0	1	0	entrana_dungeon
 624	1250	0	Entrana Dungeon (island 3)	2822	9778	2843	9782	-2	-6399	0	1	0	entrana_dungeon
 294	1305	0	Under Civitas illa Fortis (island 1)	1611	9472	1730	9533	0	-6400	0	1	0	fortis_barracks
-901	1388	0	God Wars Dungeon (Saradomin)	2880	5248	2943	5311	88	-1543	0	1	0	god_wars_dungeon
+901	1388	0	God Wars Dungeon (Saradomin)	2880	5248	2943	5311	37	-1565	0	0	0	god_wars_dungeon
 902	1389	0	Dagannoth Kings Lair	2880	4416	2943	4479	-315	-658	0	1	0	waterbirth_dungeon
 903	1390	0	Abyssal Nexus	2950	4740	3132	4866	65	-1274	0	1	0	abyss
 904	1392	0	Phantom Muspah	2880	10288	2943	10367	-10	-6254	0	1	0	ghorrock_dungeon
@@ -1094,7 +1091,7 @@
 912	1404	0	Water mill cellar	3200	9664	3263	9727	-1	-6402	0	0	0	water_mill_cellar
 913	1405	0	Varrock Rat Pits	2816	4992	3007	5183	350	-1687	0	0	0	varrock_rat_pits
 914	1406	0	Sorceress's Garden	2816	5376	3007	5567	408	-2331	0	0	0	sorceress_garden
-915	1407	0	The Whisperer (Shadow Realm)	2368	6336	2431	6399	672	-2965	0	0	0	camdozaal
+915	1407	0	The Whisperer (Shadow Realm)	2368	6336	2431	6399	705	-2940	0	0	0	lassar_undercity
 916	1410	0	Phantom Muspah instance	2816	4224	2879	4287	19	-185	0	0	0	ghorrock_dungeon
 917	1413	0	Hunter's End (Artio)	1728	11520	1791	11583	1357	-7877	0	0	0	artios_lair
 918	1414	2	Web Chasm (Spindel)	1600	11520	1663	11583	1550	-7810	0	0	0	spindels_lair

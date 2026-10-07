@@ -5,6 +5,7 @@
 # Title hints use the same lowercase comparison as the tooltip formatter. First matching row wins.
 # Mooring rules run inside the existing mooring branch; compact rules run before skilling fallbacks.
 name	Wyrmscraig chest			Bank chest
+name	Wyrmscraig Cavern exit			Wyrmscraig Cavern exit
 prefix	Wyrmscraig			
 fish	Salmon			Salmon & Trout
 fish	Lobster			Lobster & Swordfish

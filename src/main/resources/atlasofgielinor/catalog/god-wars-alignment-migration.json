@@ -1,0 +1,137 @@
+{
+  "original_rows": {
+    "pois": [
+      {
+        "id": "poi_002340",
+        "name": "God Wars Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "God Wars Dungeon",
+        "category": "Dungeons",
+        "details": "Requires: 40 Agility, 60 Strength, or 60 Ranged to cross the bridge\\nProtection from Zamorak for the main chamber",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_004083",
+        "name": "God Wars Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "God Wars Dungeon",
+        "category": "Dungeons",
+        "details": "Requires: 40 Agility, 60 Strength, or 60 Ranged to cross the bridge\\nProtection from Zamorak for the main chamber",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_006463",
+        "name": "God Wars Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "God Wars Dungeon",
+        "category": "Dungeons",
+        "details": "Requires: 40 Agility, 60 Strength, or 60 Ranged to cross the bridge\\nProtection from Zamorak for the main chamber",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:277"
+      },
+      {
+        "id": "poi_metadata_000583",
+        "name": "God Wars Dungeon",
+        "kind": "unknown",
+        "parent_id": "",
+        "detail_title": "God Wars Dungeon",
+        "category": "Dungeons",
+        "details": "Type: Dungeon interior (underground layer)\\nVisible on the dungeon / underground map",
+        "status": "unresolved",
+        "source_ref": "poi/curated-details.tsv:583; retained metadata, not a newly inferred marker"
+      }
+    ],
+    "places": [],
+    "locations": [
+      {
+        "id": "poi_002340",
+        "poi_id": "poi_002340",
+        "x": "2918",
+        "y": "3746",
+        "plane": "0",
+        "role": "poi",
+        "icon_key": "dungeon_link",
+        "rendered": "true",
+        "searchable": "false",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_004083",
+        "poi_id": "poi_004083",
+        "x": "2881",
+        "y": "5311",
+        "plane": "2",
+        "role": "poi",
+        "icon_key": "dungeon_link",
+        "rendered": "true",
+        "searchable": "false",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      {
+        "id": "poi_006463",
+        "poi_id": "poi_006463",
+        "x": "2917",
+        "y": "3747",
+        "plane": "0",
+        "role": "poi",
+        "icon_key": "dungeon",
+        "rendered": "false",
+        "searchable": "true",
+        "status": "unresolved",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:277"
+      },
+      {
+        "id": "poi_metadata_000583",
+        "poi_id": "poi_metadata_000583",
+        "x": "2881",
+        "y": "5310",
+        "plane": "2",
+        "role": "poi",
+        "icon_key": "dungeon",
+        "rendered": "false",
+        "searchable": "false",
+        "status": "unresolved",
+        "source_ref": "poi/curated-details.tsv:583; retained metadata, not a newly inferred marker"
+      }
+    ],
+    "layouts": [],
+    "zones": [
+      "GOD_WARS_DUNGEON\tgod_wars_dungeon\tGod Wars Dungeon\t2917\t3747\t0\t2881\t5310\t2\t0\t90\tUnder Trollheim Peak \u2022 General Graardor, Kree'arra, Zilyana, K'ril\t0\t0\t0\t0"
+    ],
+    "pieces": [
+      "135\t1069\t2\tGod Wars Dungeon\t2820\t5252\t2943\t5375\t88\t-1543\t0\t1\t0\tgod_wars_dungeon",
+      "648\t1391\t0\tNex Bank\t2848\t5187\t2942\t5237\t88\t-1543\t0\t1\t0\tgod_wars_dungeon",
+      "901\t1388\t0\tGod Wars Dungeon (Saradomin)\t2880\t5248\t2943\t5311\t88\t-1543\t0\t1\t0\tgod_wars_dungeon"
+    ],
+    "native-pieces": [
+      "100030\t0\t2\tGod Wars Dungeon\t2816\t5248\t2879\t5279\t21\t-1517\t0\t1\t0\tnative_godwars__god_wars_dungeon",
+      "100030\t0\t2\tGod Wars Dungeon\t2816\t5280\t2919\t5311\t21\t-1517\t0\t1\t0\tnative_godwars__god_wars_dungeon",
+      "100030\t0\t2\tGod Wars Dungeon\t2816\t5312\t2943\t5375\t21\t-1517\t0\t1\t0\tnative_godwars__god_wars_dungeon",
+      "100031\t0\t0\tGod Wars Dungeon\t2848\t5184\t2943\t5231\t21\t-1549\t0\t1\t0\tnative_godwars__god_wars_dungeon",
+      "100032\t0\t1\tGod Wars Dungeon\t2816\t5184\t2943\t5231\t21\t-1549\t0\t1\t0\tnative_godwars",
+      "100033\t0\t2\tGod Wars Dungeon\t2816\t5184\t2943\t5231\t21\t-1549\t0\t1\t0\tnative_godwars",
+      "100034\t0\t3\tGod Wars Dungeon\t2816\t5184\t2943\t5231\t21\t-1549\t0\t1\t0\tnative_godwars",
+      "100035\t0\t0\tGod Wars Dungeon\t2880\t5248\t2935\t5287\t29\t-1549\t0\t1\t0\tnative_godwars__god_wars_dungeon",
+      "100036\t0\t1\tGod Wars Dungeon\t2904\t5272\t2943\t5311\t53\t-1525\t0\t1\t0\tnative_godwars",
+      "100037\t0\t0\tGod Wars Dungeon\t2816\t5184\t2847\t5231\t21\t-1549\t0\t1\t0\tnative_godwars"
+    ],
+    "floors": [
+      "god_wars_dungeon\tGod Wars Dungeon (main floor)\t2\t2917\t3747\t1069",
+      "god_wars_dungeon\tGod Wars Dungeon (Saradomin)\t0\t2943\t3702\t1388",
+      "god_wars_dungeon\tGod Wars Dungeon (Nex)\t0\t2960\t3640\t1391"
+    ],
+    "dungeon-connections": [
+      "wilderness\twilderness_agility_dungeon,mage_arena_bank,deep_wilderness_dungeon,lava_maze_dungeon,revenant_caves,god_wars_dungeon,wilderness_god_wars_dungeon,wilderness_slayer_cave,corporeal_beast,ferox_enclave_dungeon,callistos_den,escape_caves,scorpia_cave,silk_chasm,vetions_rest,abyss,king_black_dragon_lair"
+    ]
+  },
+  "evidence": "dev-server/feature-test-runs/20261007-012433-lassar-readonly/report.md; cache hole 26419 origin2917,3745 footprint4x4; entrance marker2918,3746 inside footprint; exit26370 at2881,5311 plane2",
+  "anchor_semantics": "Retain existing rendered entrance tile2918,3746 within independently decoded4x4 hole footprint; not claimed as cache origin or traversal landing. Main exit tile2881,5311 plane2 is1x1 rope.",
+  "displayed_exit": "Translation37,-1565 maps2881.5,5311.5 to2918.5,3746.5 without reflection."
+}

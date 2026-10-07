@@ -347,7 +347,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 		}
 		else if (!poiIndex.isLoaded())
 		{
-			log.warn("[AtlasOfGielinor] tiles are present but the POI index is not: check poi/pois.tsv");
+			log.warn("[AtlasOfGielinor] tiles are present but the POI index is not: check catalog/pois.tsv");
 		}
 	}
 

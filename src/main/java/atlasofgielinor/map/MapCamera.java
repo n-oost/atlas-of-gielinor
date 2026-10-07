@@ -414,6 +414,9 @@ public class MapCamera
 	private volatile List<UndergroundZone> openUndergroundZones = Collections.emptyList();
 	private final java.util.Map<UndergroundZone, DungeonFloor> selectedDungeonFloors = new java.util.concurrent.ConcurrentHashMap<>();
 	private volatile WorldPoint activeUndergroundSurfacePoint;
+	/** First dungeon opened during this Lower view session; closing it returns to Surface. */
+	private volatile UndergroundZone originalUndergroundZone;
+	private volatile WorldPoint originalUndergroundSurfacePoint;
 	@Getter
 	private volatile UndergroundZone hoveredUndergroundZone;
 	@Getter
@@ -1016,6 +1019,12 @@ public class MapCamera
 			setUndergroundMode(zone, entrance);
 			return;
 		}
+		if (originalUndergroundZone != null && zone.getConnectedZones().stream()
+			.anyMatch(connected -> connected.getSelectionId().equals(originalUndergroundZone.getSelectionId())))
+		{
+			exitDungeonToSurface(originalUndergroundSurfacePoint);
+			return;
+		}
 		final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
 		zones.removeIf(open -> zone.getConnectedZones().stream()
 			.anyMatch(connected -> open.getSelectionId().equals(connected.getSelectionId())));
@@ -1072,6 +1081,11 @@ public class MapCamera
 		}
 		this.activeUndergroundZone = zone;
 		this.activeUndergroundSurfacePoint = entrance != null ? entrance : zone.getSurfacePoint();
+		if (originalUndergroundZone == null)
+		{
+			originalUndergroundZone = zone;
+			originalUndergroundSurfacePoint = activeUndergroundSurfacePoint;
+		}
 
 		// Render the committed view exactly like the hover preview: the dungeon tiles are
 		// composited onto the surface entrance via the zone delta, so the camera stays on
@@ -1093,6 +1107,8 @@ public class MapCamera
 		selectedDungeonFloors.clear();
 		lowerView = false;
 		openUndergroundZones = Collections.emptyList();
+		originalUndergroundZone = null;
+		originalUndergroundSurfacePoint = null;
 		hoveredUndergroundZone = null;
 
 		this.activeFloorLayer = null;
@@ -1300,6 +1316,11 @@ public class MapCamera
 		{
 			return piece.plane == selected.plane && (selected.layerId == null || piece.layer == selected.layerId);
 		}
+		// Different authored floors may share game plane 0. Show the default layer,
+		// rather than painting every floor on top of the parent dungeon.
+		Integer layer = floorLayerFor(zone);
+		if (layer == null) layer = DungeonFloor.defaultLayerFor(zone);
+		if (layer != null && piece.layer != layer) return false;
 		boolean multiPlane = false;
 		for (DungeonFloor floor : DungeonFloor.all())
 		{
@@ -1309,7 +1330,9 @@ public class MapCamera
 				break;
 			}
 		}
-		return !multiPlane || piece.plane == zone.getUndergroundPoint().getPlane();
+		final int previewPlane = hoveredUndergroundZone == zone && hoveredFloorPlane != null
+			? hoveredFloorPlane : zone.getUndergroundPoint().getPlane();
+		return !multiPlane || piece.plane == previewPlane;
 	}
 
 

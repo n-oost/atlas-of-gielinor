@@ -73,6 +73,7 @@
 package atlasofgielinor.data.dungeons;
 
 import atlasofgielinor.data.io.BundledTsv;
+import atlasofgielinor.map.catalog.MapCatalog;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -133,6 +134,7 @@ public enum UndergroundZone
 	TREE_GNOME_VILLAGE_DUNGEON,
 	UNDERGROUND_PASS,
 	CAMDOZAAL,
+	LASSAR_UNDERCITY,
 	CORPOREAL_BEAST,
 	HALLOWED_SEPULCHRE,
 	DORGESH_KAAN,
@@ -244,6 +246,7 @@ public enum UndergroundZone
 	SISTERHOOD_SANCTUARY,
 	JORMUNGANDS_PRISON,
 	GHORROCK_DUNGEON,
+	GRIMSTONE_DUNGEON,
 	HUNTER_GUILD,
 	LITHKREN_VAULT,
 	WEISS_SALT_MINE,
@@ -471,7 +474,6 @@ public enum UndergroundZone
 	NATIVE_WESTERN_OCEAN_UNDERGROUND_HERE_BE_MINOTAURS,
 	NATIVE_WESTERN_OCEAN_UNDERGROUND_YNYSDAIL_CAVERN,
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND,
-	NATIVE_NORTHERN_OCEAN_UNDERGROUND_GHORROCK_DUNGEON,
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND_JORMUNGANDS_PRISON,
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND_MISCELLANIA_UNDERGROUND,
 	NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE,
@@ -494,6 +496,8 @@ public enum UndergroundZone
 		private final int clipMinY;
 		private final int clipMaxX;
 		private final int clipMaxY;
+		private final int projectionDx;
+		private final int projectionDy;
 		private Integer sourceZoom;
 	}
 
@@ -526,23 +530,33 @@ public enum UndergroundZone
 		final Map<String, UndergroundZone> ids = new HashMap<>();
 		try
 		{
+			MapCatalog.load();
 			for (String[] f : BundledTsv.read("/atlasofgielinor/dungeons/zones.tsv", 16))
 			{
 				if ((f.length - 16) % 3 != 0) throw new IOException("Invalid dungeon entrances");
 				final UndergroundZone zone = valueOf(f[0]);
-				final WorldPoint surface = point(f, 3);
+				final WorldPoint originalSurface = point(f, 3);
+				final int separator = f[1].indexOf("__");
+				final MapCatalog.Location canonicalEntrance =
+					MapCatalog.current().entrance(separator < 0 ? f[1] : f[1].substring(separator + 2));
+				final WorldPoint surface = canonicalEntrance == null ? originalSurface : canonicalEntrance.point();
 				final List<WorldPoint> entrances = new ArrayList<>();
 				entrances.add(surface);
 				for (int i = 16; i < f.length; i += 3) entrances.add(point(f, i));
 				final Metadata metadata = new Metadata(f[1], f[2], surface, Collections.unmodifiableList(entrances),
 					new ArrayList<>(entrances), new HashSet<>(),
 					point(f, 6), Integer.parseInt(f[9]), Integer.parseInt(f[10]), f[11],
-					Integer.parseInt(f[12]), Integer.parseInt(f[13]), Integer.parseInt(f[14]), Integer.parseInt(f[15]), null);
+					Integer.parseInt(f[12]), Integer.parseInt(f[13]), Integer.parseInt(f[14]), Integer.parseInt(f[15]),
+					Integer.parseInt(f[6]) - originalSurface.getX(), Integer.parseInt(f[7]) - originalSurface.getY(), null);
 				if (prepared.put(zone, metadata) != null || ids.put(metadata.id, zone) != null)
 				{
 					throw new IOException("Duplicate dungeon catalog entry");
 				}
 			}
+			addCanonicalZone(prepared, ids, DEEPFIN_MINE);
+			addCanonicalZone(prepared, ids, GRIMSTONE_DUNGEON);
+			addCanonicalZone(prepared, ids, ISLE_OF_SOULS_DUNGEON);
+			addCanonicalZone(prepared, ids, GOD_WARS_DUNGEON);
 			if (prepared.size() != values().length) throw new IOException("Incomplete dungeon catalog");
 
 			for (String[] fields : BundledTsv.read("/atlasofgielinor/dungeons/tile-zooms.tsv", 2))
@@ -606,6 +620,34 @@ public enum UndergroundZone
 	private static WorldPoint point(String[] fields, int offset)
 	{
 		return new WorldPoint(Integer.parseInt(fields[offset]), Integer.parseInt(fields[offset + 1]), Integer.parseInt(fields[offset + 2]));
+	}
+
+	/** Compatibility adapter: canonical endpoints never determine artwork translation. */
+	private static void addCanonicalZone(Map<UndergroundZone, Metadata> prepared,
+		Map<String, UndergroundZone> ids, UndergroundZone zone) throws IOException
+	{
+		final MapCatalog map = MapCatalog.current();
+		final String id = zone.name().toLowerCase(java.util.Locale.ROOT);
+		final MapCatalog.Place place = map.places.get(id);
+		final MapCatalog.Location entrance = map.entrance(id);
+		final MapCatalog.Layout layout = map.primaryPiece(id);
+		if (place == null || entrance == null || layout == null) throw new IOException("Incomplete canonical dungeon: " + id);
+		final List<WorldPoint> entrances = new ArrayList<>();
+		for (MapCatalog.Location location : map.locations.values())
+		{
+			if (location.verified && location.placeId.equals(id) && "entrance".equals(location.role)) entrances.add(location.point());
+		}
+		WorldPoint interior = new WorldPoint((layout.minX + layout.maxX) / 2, (layout.minY + layout.maxY) / 2, layout.plane);
+		// A single verified exit is a navigation endpoint; a rectangle centre is only an artwork reference.
+		final List<MapCatalog.Location> exits = new ArrayList<>();
+		for (MapCatalog.Location location : map.locations.values())
+			if (location.verified && location.placeId.equals(id) && "exit".equals(location.role)) exits.add(location);
+		if (exits.size() == 1) interior = exits.get(0).point();
+		final int radius = Math.max(layout.maxX - layout.minX, layout.maxY - layout.minY) / 2 + 1;
+		final Metadata metadata = new Metadata(id, place.name, entrance.point(), Collections.unmodifiableList(entrances),
+			new ArrayList<>(entrances), new HashSet<>(), interior, -layout.dy, radius, place.details,
+			layout.minX, layout.minY, layout.maxX, layout.maxY, -layout.dx, -layout.dy, null);
+		if (prepared.put(zone, metadata) != null || ids.put(id, zone) != null) throw new IOException("Duplicate canonical dungeon: " + id);
 	}
 
 	private Metadata metadata()
@@ -672,6 +714,14 @@ public enum UndergroundZone
 	/** Authored marker placement; navigation and duplicate filtering retain the original surface tiles. */
 	public WorldPoint getEntranceMarkerPoint(int index)
 	{
+		if (index >= 0 && index < metadata().surfacePoints.size())
+		{
+			final WorldPoint nativePoint = metadata().surfacePoints.get(index);
+			final MapCatalog.Location location = MapCatalog.current().locationAt(
+				nativePoint.getX(), nativePoint.getY(), nativePoint.getPlane(), "dungeon_link");
+			final MapCatalog.Layout marker = location == null ? null : MapCatalog.current().markerLayout(location.id);
+			if (marker != null) return new WorldPoint(nativePoint.getX() + marker.dx, nativePoint.getY() + marker.dy, nativePoint.getPlane());
+		}
 		final List<WorldPoint> points = metadata().entranceMarkerPoints;
 		return index >= 0 && index < points.size() ? points.get(index) : null;
 	}
@@ -711,12 +761,12 @@ public enum UndergroundZone
 
 	public int getDeltaX()
 	{
-		return metadata().undergroundPoint.getX() - metadata().surfacePoint.getX();
+		return metadata().projectionDx;
 	}
 
 	public int getDeltaY()
 	{
-		return metadata().undergroundPoint.getY() - metadata().surfacePoint.getY();
+		return metadata().projectionDy;
 	}
 
 	public int getOffsetX()
@@ -777,7 +827,14 @@ public enum UndergroundZone
 	/** Native roots without authored entrances retain a control when explicitly listed in the dataset. */
 	public boolean hasEntranceToggle()
 	{
+		if (hasUnresolvedGeometry()) return false;
 		return !getId().startsWith("native_") || catalog.connections.containsKey(this);
+	}
+
+	/** Retain explicit boss pieces, but do not infer ownership from a quarantined main layout. */
+	public boolean hasUnresolvedGeometry()
+	{
+		return MapCatalog.current().hasUnresolvedGeometry(getSelectionId());
 	}
 
 	/** Dungeon entrances share one toggle path; their connected zones come from the bundled dataset. */
@@ -803,6 +860,8 @@ public enum UndergroundZone
 				return HAUNTED_MINE;
 			case MOTHERLODE_MINE:
 				return DWARVEN_MINES;
+			case LASSAR_UNDERCITY:
+				return CAMDOZAAL;
 			default:
 				return null;
 		}
@@ -828,7 +887,7 @@ public enum UndergroundZone
 
 		for (UndergroundZone zone : ALL_ZONES)
 		{
-			if (zone.getId().startsWith("native_")) continue;
+			if (zone.getId().startsWith("native_") || !zone.hasEntranceToggle()) continue;
 			for (WorldPoint surface : zone.getSurfacePoints())
 			{
 				final int dx = surface.getX() - worldX;
@@ -855,7 +914,7 @@ public enum UndergroundZone
 
 		for (UndergroundZone zone : ALL_ZONES)
 		{
-			if (zone.getId().startsWith("native_")) continue;
+			if (zone.getId().startsWith("native_") || zone.hasUnresolvedGeometry()) continue;
 			final int dx = zone.getUndergroundPoint().getX() - worldX;
 			final int dy = zone.getUndergroundPoint().getY() - worldY;
 			final int distSq = dx * dx + dy * dy;

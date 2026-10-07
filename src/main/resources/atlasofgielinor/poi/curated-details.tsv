@@ -467,7 +467,6 @@ transportation	Spirit Tree (Poison Waste)	Transportation	2339	3108	0	Type: Spiri
 dungeon	Poison Waste Dungeon Entrance	Dungeons	2330	3106	0	Type: Dungeon entrance / underground link	Sewer entrance to Poison Waste Dungeon
 dungeon	Mos Le'Harmless Caves Entrance	Dungeons	3748	2973	0	Type: Dungeon entrance / underground link	Cave horror & witchwood icon cavern entrance
 dungeon	Jormungand's Prison Entrance	Dungeons	2465	4010	0	Type: Dungeon entrance / underground link	Island of Stone entrance • The Fremennik Exiles
-dungeon	Ghorrock Dungeon Entrance	Dungeons	2847	4043	0	Type: Dungeon entrance / underground link	Ghorrock fortress dungeon entrance • Desert Treasure II
 dungeon	Waterbirth Dungeon	Dungeons	2520	3740	0	Type: Dungeon entrance / underground link	May require light source, rope, or combat gear
 dungeon	Waterbirth Dungeon	Dungeons	2542	3741	0	Type: Dungeon entrance / underground link	May require light source, rope, or combat gear
 dungeon	Web Chasm	Dungeons	3184	3745	0	Type: Dungeon entrance / underground link	Wilderness chasm entrance
@@ -569,7 +568,6 @@ dungeon	Molch Pearl Caves	Dungeons	1280	9983	0	Type: Dungeon interior (undergrou
 dungeon	Poison Waste Sewer	Dungeons	1504	4235	1	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
 dungeon	Sisterhood Sanctuary	Dungeons	3727	9700	1	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
 dungeon	Jormungand's Prison	Dungeons	2445	10419	0	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
-dungeon	Ghorrock Dungeon	Dungeons	2888	10465	0	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
 dungeon	Fremennik Slayer Dungeon	Dungeons	2808	10002	0	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
 dungeon	Waterbirth Island Dungeon	Dungeons	2544	10153	0	Type: Dungeon interior (underground layer)	Visible on the dungeon / underground map
 dungeon	Dagannoth Kings Lair	Dungeons	2900	4449	0	Type: Dungeon interior (underground layer)	Dagannoth Supreme, Prime, Rex boss lair
@@ -851,11 +849,9 @@ hunter_training	The Pandemonium - Red Crabs (Level 21)	Skilling • Hunter	3069	
 hunter_training	The Crown Jewel - Rainbow Crabs (Level 77)	Skilling • Hunter	1765	2659	0	Target: Rainbow crab (cook, or break down for Herblore)	Level requirement: Level 77 Hunter (10 Construction to build traps)	Catch method: Hinged-lid crab trap baited with fine fish offcuts	Region: The Crown Jewel (Sailing)
 dungeon	Pandemonium Cave	Dungeons	3070	2986	0	Type: Low-level cavern & mining tunnel	May require a light source or combat gear	Region: The Pandemonium (Sailing)
 dungeon	Charred Island Dungeon	Dungeons	2661	2395	0	Type: Slayer dungeon (Lava strykewyrms)	Requirements: Level 62 Slayer for lava strykewyrms	Region: Charred Island (Sailing)
-dungeon	Deepfin Mine	Dungeons	1924	2758	0	Type: Mining cavern (lead & nickel deposits)	Tool needed: Pickaxe; bring a light source	Region: Deepfin Point (Sailing)
 dungeon	Here Be Minotaurs	Dungeons	1959	3117	0	Type: Underground minotaur cavern	Inhabitants: Minotaurs • Big bone spawns	Region: Minotaurs' Rest (Sailing)
 dungeon	Ynysdail Cavern	Dungeons	2223	3466	0	Type: High-level Slayer cavern (Aquanites)	Requirements: Level 78 Slayer • Slayer task / unlock	Region: Ynysdail (Sailing)
 dungeon	Buccaneers' Laboratory	Dungeons	2081	3690	0	Type: Underground pirate laboratory	May require a light source or combat gear	Region: Buccaneers' Haven (Sailing)
-dungeon	Grimstone Dungeon	Dungeons	2928	4056	0	Type: High-level dragon dungeon (Frost Dragons)	Requirements: Anti-dragon shield & Antifire protection	Region: Grimstone (Sailing)
 dungeon	Kurask Lair	Dungeons	1203	2733	0	Type: Slayer cave (Kurasks)	Requirements: Level 70 Slayer, Leaf-bladed weapon or Broad bolts	Region: Laguna Aurorae (Sailing)
 dungeon	Sunbleak Cave	Dungeons	2190	2327	0	Type: Underground mining cavern	Features: Coal, Mithril, and Adamantite rocks	Region: Sunbleak Island (Sailing)
 dungeon	Brittle Isle Cave	Dungeons	1955	4056	0	Type: Unmarked sea cave	Requirements: Level 81 Sailing to access island	Region: Brittle Isle (Sailing)
@@ -1705,3 +1701,27 @@ house_portal	House/POH portal	Travel • House Portal	3239	6077	0	Player-owned h
 task_master	Task Master	Quests & Diaries • Task Master	3465	3478	0	Achievement Diary task master: Carl Le-sabrè (Desert Diary)	Claim tier rewards: easy, medium, hard, elite	Teleport destination: Achievement diary cape (Carl Le-sabrè)
 dungeon_link	Pool of Slime	Dungeons • Ectofuntus	3683	9888	0	Ectofuntus underground slime pool	Used for collecting buckets of slime for Ectofuntus worship	Teleport destination: Morytania legs 4 (Slime)
 slayer_master	Duradel	Slayer • Slayer Master	2869	2982	1	Slayer Master: Duradel (Shilo Village, level 2)	Requires Level 100 Combat and 50 Slayer	Teleport destination: Karamja gloves 4 (Duradel)
+# Supported exact-marker identities and basic facts: 20261006-220621-missing-link-handoff.
+dungeon_link	Sunbleak Cave entrance	Dungeons	2220	2331	0	Enter Sunbleak Cave.
+dungeon_link	Charred Dungeon	Dungeons	2637	2416	0	Enter through the dark hole on Charred Island; attach a rope for the first descent.	60 Sailing is the island docking requirement.
+dungeon_link	Coral Nurseries	Dungeons	3272	2463	0	Underwater steps off The Great Conch.	Start Troubled Tortugans; wear diving apparatus and fishbowl helmet, or Medallion of the deep.
+dungeon_link	Zanaris	Dungeons	3203	3169	0	Entrance through the Lumbridge Swamp shed.	Requires Lost City and an equipped dramen staff; elite Lumbridge and Draynor diary removes the staff requirement.
+dungeon_link	Wyrmscraig Cavern exit	Dungeons	2563	8630	0	Exit from Wyrmscraig Cavern.
+dungeon_link	Sunbleak Cave exit	Dungeons	2219	8730	0	Exit from Sunbleak Cave.
+dungeon_link	Shellbane Gryphon Cave exit	Dungeons	3168	8874	0	Exit to The Great Conch.
+dungeon_link	Charred Dungeon exit	Dungeons	2684	8876	0	Climb the rope to return to Charred Island.
+dungeon_link	Kurask Lair exit	Dungeons	1191	9185	0	Exit from Kurask Lair.
+dungeon_link	Fortis Colosseum exit	Dungeons	1797	9506	0	Exit from Fortis Colosseum.
+dungeon_link	Here be minotaurs exit	Dungeons	1933	9520	0	Exit from Here be minotaurs.
+dungeon_link	Entrana Dungeon magic door	Dungeons	2873	9750	0	Leads to level 32 Wilderness; opening has no confirmation prompt.
+dungeon_link	Woodcutting Guild dungeon exit	Dungeons	1597	9900	0	Climb the vine into the Woodcutting Guild.
+dungeon_link	Ynysdail Cavern exit	Dungeons	2293	9914	0	Exit from Ynysdail Cavern.
+dungeon_link	Port Phasmatys brewery ladder	Dungeons	3682	9962	0	Ladder in the Port Phasmatys brewery.
+dungeon_link	Revenant Caves southern exit	Dungeons	3218	10058	0	One-way exit to level 17 Wilderness.
+dungeon_link	Waterbirth Island Dungeon steps	Dungeons	2439	10146	0	Steps in Waterbirth Island Dungeon; destination unresolved.
+dungeon_link	Revenant Caves northern exit	Dungeons	3245	10215	0	One-way exit to level 36 Wilderness.
+dungeon_link	Wyvern Cave exit	Dungeons	3604	10231	0	Exit to the Mushroom Forest on Fossil Island.
+dungeon_link	Coral Nurseries exit	Dungeons	3286	8868	1	Climb the steps back to the surface.
+dungeon_link	Chasm of Fire exit	Dungeons	1435	10078	2	Climb the rope from the first level to the surface.
+dungeon_link	Silk Chasm exit	Dungeons	3423	10182	2	Exit from Silk Chasm.
+dungeon_link	Lunar Isle mine ladder	Dungeons	2330	10352	2	Ladder in Lunar Isle mine.

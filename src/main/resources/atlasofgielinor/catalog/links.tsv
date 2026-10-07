@@ -1,0 +1,4 @@
+id	from_location_id	to_location_id	to_place_id	type	details	status	source_ref
+deepfin_mine_entry	deepfin_mine_entrance		deepfin_mine	cave		verified	dev-server/feature-test-runs/20261006-220621-missing-link-handoff/supported-name-detail-handoff.json
+grimstone_dungeon_entry	grimstone_dungeon_entrance		grimstone_dungeon	cave		verified	dev-server/feature-test-runs/20261006-220621-missing-link-handoff/supported-name-detail-handoff.json
+lassar_entry	lassar_entrance		lassar_undercity	dungeon_entry	Enter Lassar Undercity from Camdozaal.	verified	Decoded server cache placements: entry 49477 (2922,5827,0), exit 48198 (2587,6436,0); dungeons/pieces.tsv:231 parent transform

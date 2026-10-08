@@ -286,7 +286,7 @@ public class PoiIndex
 		}
 
 		BufferedImage image = null;
-		if ("stash_unit".equals(key))
+		if ("stash_unit".equals(key) || "thieving".equals(key))
 		{
 			image = new BufferedImage(18, 18, BufferedImage.TYPE_INT_ARGB);
 			final java.awt.Graphics2D graphics = image.createGraphics();
@@ -305,6 +305,7 @@ public class PoiIndex
 		final String iconKey = "teleport".equals(key) ? "house_portal"
 			: "runecrafting_altar".equals(key) ? "altar"
 			: "salvaging".equals(key) ? "cache_icon_4947"
+			: "services".equals(key) ? "task_master"
 			: "basement".equals(key) ? "dungeon_link" : key;
 		try (InputStream in = open(tileDir, "icons/" + iconKey + ".png"))
 		{

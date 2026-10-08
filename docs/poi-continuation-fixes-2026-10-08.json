@@ -1,0 +1,345 @@
+{
+  "date": "2026-10-08",
+  "description": "Continuation audit fixes for five confirmed erroneous catalog records",
+  "total_fixes": 22,
+  "fixes": [
+    {
+      "location_id": "poi_005888",
+      "poi_id": "poi_005888",
+      "name": "Tai Bwo Wannai Trio",
+      "detail_title": "Tai Bwo Wannai Trio",
+      "check": "quest_fishing_requirement_and_start_placement",
+      "disposition": "confirmed_error_corrected",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Tai_Bwo_Wannai_Trio?oldid=14918129",
+        "https://danielpgleason.com/osrs/reference/timfraku-4a828428/"
+      ],
+      "before": {
+        "details": "Start: Timfraku in Tai Bwo Wannai\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Jungle Potion, 15 Agility, 30 Cooking, 15 Fishing",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1670"
+      },
+      "after": {
+        "details": "Start: Timfraku in Tai Bwo Wannai\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Jungle Potion, 15 Agility, 30 Cooking, 5 Fishing",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1670; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Tai_Bwo_Wannai_Trio?oldid=14918129"
+      },
+      "coordinates": {
+        "x": 2900,
+        "y": 3500,
+        "plane": 0
+      },
+      "rationale": "Corrected factual error in Fishing requirement from 15 to 5. Stated Timfraku start in Tai Bwo Wannai is correct for the quest NPC, but authored coordinates (2900, 3500, 0) near Heroes' Guild/Taverley conflict with Timfraku's observed spawn at (2780, 3087, 1) NW Tai Bwo Wannai (poi_003672). Coordinates preserved at authored tile as unresolved placement conflict pending authoritative deduplication/relocation.",
+      "remaining_gaps": "Marker placement unresolved; duplicate quest marker of canonical poi_003672."
+    },
+    {
+      "location_id": "poi_005858",
+      "poi_id": "poi_005858",
+      "name": "Dragon Slayer I",
+      "detail_title": "Dragon Slayer I",
+      "check": "quest_reward_and_initial_start",
+      "disposition": "confirmed_error_corrected",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Dragon_Slayer_I?oldid=14917676"
+      ],
+      "before": {
+        "details": "Start: Oziach in Edgeville / Guildmaster in Champions' Guild\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 3 Quest Points\\nRequirements: 32 Quest Points, Anti-dragon shield",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624"
+      },
+      "after": {
+        "details": "Start: Guildmaster in Champions' Guild\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: 32 Quest Points, Anti-dragon shield",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Dragon_Slayer_I?oldid=14917676"
+      },
+      "coordinates": {
+        "x": 3074,
+        "y": 3515,
+        "plane": 0
+      },
+      "rationale": "Corrected reward from 3 Quest Points to 2 Quest Points. Corrected initial quest start to Guildmaster at Champions' Guild (Oziach is spoken to subsequent to the Guildmaster, not an initial start alternative). Authored coordinates (3074, 3515, 0) in Edgeville reflect Oziach's vicinity rather than the initial start at Champions' Guild (poi_001426 at 3191, 3362, 0); coordinates preserved at authored tile as unresolved placement conflict.",
+      "remaining_gaps": "Marker placement unresolved; duplicate quest marker of canonical poi_001426."
+    },
+    {
+      "location_id": "poi_005862",
+      "poi_id": "poi_005862",
+      "name": "Elemental Workshop I",
+      "detail_title": "Elemental Workshop I",
+      "check": "quest_start_item_and_prerequisite",
+      "disposition": "confirmed_error_corrected",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Bookcase_(Elemental_Workshop_I)",
+        "https://oldschool.runescape.wiki/w/Elemental_Workshop_I?oldid=15292271"
+      ],
+      "before": {
+        "details": "Start: Slashed book in Seers' Village library\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 20 Mining, 20 Smithing, 20 Crafting, Elemental shield",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641"
+      },
+      "after": {
+        "details": "Start: Battered book from bookcase in Seers' Village\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 20 Mining, 20 Smithing, 20 Crafting",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Bookcase_(Elemental_Workshop_I) and https://oldschool.runescape.wiki/w/Elemental_Workshop_I?oldid=15292271"
+      },
+      "coordinates": {
+        "x": 2740,
+        "y": 3445,
+        "plane": 0
+      },
+      "rationale": "Corrected start item and location text: quest starts by reading a battered book searched from a bookcase in Seers' Village (the slashed book is obtained during the quest). Removed Elemental shield as a prerequisite (the shield is crafted during the quest). Authored coordinates (2740, 3445, 0) south of Seers' Village conflict with the actual bookcase location SW of Seers' Village bank (poi_001791 at 2715, 3482, 0); coordinates preserved as unresolved placement conflict.",
+      "remaining_gaps": "Marker placement unresolved; duplicate quest marker of canonical poi_001791."
+    },
+    {
+      "location_id": "poi_002112",
+      "poi_id": "poi_002112",
+      "name": "Fishing spot",
+      "detail_title": "Fishing Spot (Common Tench)",
+      "check": "aerial_fishing_mechanics_and_requirements",
+      "disposition": "confirmed_error_corrected",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Lake_Molch?oldid=15333224",
+        "https://danielpgleason.com/osrs/reference/lake-molch-d4241815/"
+      ],
+      "before": {
+        "details": "Method / Fish: Common Tench\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nCheck Fishing skill guide for exact bait & level reqs\\nGreater siren",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+      },
+      "after": {
+        "details": "Method / Fish: Common Tench, Greater siren\\nCatch method: Aerial fishing with Cormorant's glove\\nBait: King worms or Fish offcuts\\nRequirements: 56 Fishing / 51 Hunter (Common tench), 91 Fishing / 87 Hunter (Greater siren)",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Lake_Molch?oldid=15333224"
+      },
+      "coordinates": {
+        "x": 1371,
+        "y": 3632,
+        "plane": 0
+      },
+      "rationale": "Replaced incorrect generic fishing tools (Net, Rod, Pot, Harpoon) with accurate aerial fishing mechanics: Cormorant's glove, king worms/fish offcuts bait, and paired Fishing/Hunter requirements (Common tench: 56 Fishing / 51 Hunter; Greater siren: 91 Fishing / 87 Hunter).",
+      "remaining_gaps": "Live client in-game tooltip re-render pending next client sideload build."
+    },
+    {
+      "location_id": "poi_007113",
+      "poi_id": "poi_007113",
+      "name": "Fishing Spot (Common Tench)",
+      "detail_title": "Fishing Spot (Common Tench)",
+      "check": "aerial_fishing_mechanics_and_requirements",
+      "disposition": "confirmed_error_corrected",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Lake_Molch?oldid=15333224",
+        "https://danielpgleason.com/osrs/reference/lake-molch-d4241815/"
+      ],
+      "before": {
+        "details": "Method / Fish: Common Tench\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nCheck Fishing skill guide for exact bait & level reqs\\nGreater siren",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1099"
+      },
+      "after": {
+        "details": "Method / Fish: Common Tench, Greater siren\\nCatch method: Aerial fishing with Cormorant's glove\\nBait: King worms or Fish offcuts\\nRequirements: 56 Fishing / 51 Hunter (Common tench), 91 Fishing / 87 Hunter (Greater siren)",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1099; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Lake_Molch?oldid=15333224"
+      },
+      "coordinates": {
+        "x": 1370,
+        "y": 3632,
+        "plane": 0
+      },
+      "rationale": "Applied identical aerial fishing correction to the unrendered searchable duplicate record (poi_007113, alias 'Greater siren').",
+      "remaining_gaps": "Live client in-game tooltip re-render pending next client sideload build."
+    },
+    {
+      "poi_id": "poi_005871",
+      "name": "Regicide",
+      "canonical_id": "poi_005871",
+      "location_id": "loc_005871",
+      "category_before": "Quest Start \u2022 Master",
+      "category_after": "Quest Start \u2022 Experienced",
+      "description_before": "Start: King Lathas in East Ardougne Castle\\nDifficulty: Master \u2022 Length: Long\\nReward: 3 Quest Points, 13,750 Agility XP, Access to Tirannwn / Port Tyras\\nRequirements: 56 Agility, Underground Pass",
+      "description_after": "Start: King Lathas in East Ardougne Castle\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 3 Quest Points, 13,750 Agility XP, Access to Tirannwn / Port Tyras\\nRequirements: 56 Agility, Underground Pass",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Regicide (Difficulty: Experienced). Authored entry erroneously assigned Master.",
+      "rationale": "Regicide is an Experienced tier quest in the Elf quest series, not Master."
+    },
+    {
+      "poi_id": "poi_005872",
+      "name": "Roving Elves",
+      "canonical_id": "poi_005872",
+      "location_id": "loc_005872",
+      "category_before": "Quest Start \u2022 Master",
+      "category_after": "Quest Start \u2022 Experienced",
+      "description_before": "Start: Islwyn and Eluned in Isafdar\\nDifficulty: Master \u2022 Length: Medium\\nReward: 1 Quest Point, Crystal bow or Crystal shield\\nRequirements: 56 Agility, Regicide, Waterfall Quest",
+      "description_after": "Start: Islwyn and Eluned in Isafdar\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point, Crystal bow or Crystal shield\\nRequirements: 56 Agility, Regicide, Waterfall Quest",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Roving Elves (Difficulty: Experienced). Authored entry erroneously assigned Master.",
+      "rationale": "Roving Elves is an Experienced tier quest, not Master."
+    },
+    {
+      "poi_id": "poi_005881",
+      "name": "Eadgar's Ruse",
+      "canonical_id": "poi_005881",
+      "location_id": "loc_005881",
+      "category_before": "Quest Start \u2022 Experienced",
+      "category_after": "Quest Start \u2022 Intermediate",
+      "description_before": "Start: Sanfew in Taverley herb shop\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point, 11,000 Herblore XP, Trollheim Teleport\\nRequirements: 31 Herblore, 44 Agility, Druidic Ritual, Troll Stronghold",
+      "description_after": "Start: Sanfew in Taverley herb shop\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 1 Quest Point, 11,000 Herblore XP, Trollheim Teleport\\nRequirements: 31 Herblore, 44 Agility, Druidic Ritual, Troll Stronghold",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Eadgar's Ruse (Difficulty: Intermediate). Authored entry erroneously assigned Experienced.",
+      "rationale": "Eadgar's Ruse is an Intermediate tier quest, not Experienced."
+    },
+    {
+      "poi_id": "poi_005882",
+      "name": "My Arm's Big Adventure",
+      "canonical_id": "poi_005882",
+      "location_id": "loc_005882",
+      "category_before": "Quest Start \u2022 Intermediate",
+      "category_after": "Quest Start \u2022 Experienced",
+      "description_before": "Start: Burntmeat in Troll Stronghold kitchen\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 1 Quest Point, 10,000 Herblore XP, 10,000 Farming XP, Disease-free herb patch\\nRequirements: 29 Farming, 61 Cooking, Eadgar's Ruse, The Feud",
+      "description_after": "Start: Burntmeat in Troll Stronghold kitchen\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point, 10,000 Herblore XP, 10,000 Farming XP, Disease-free herb patch\\nRequirements: 29 Farming, 61 Cooking, Eadgar's Ruse, The Feud",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for My Arm's Big Adventure (Difficulty: Experienced). Authored entry erroneously assigned Intermediate.",
+      "rationale": "My Arm's Big Adventure is an Experienced tier quest, not Intermediate."
+    },
+    {
+      "poi_id": "poi_005883",
+      "name": "Making Friends with My Arm",
+      "canonical_id": "poi_005883",
+      "location_id": "loc_005883",
+      "category_before": "Quest Start \u2022 Experienced",
+      "category_after": "Quest Start \u2022 Master",
+      "description_before": "Start: Burntmeat in Troll Stronghold kitchen / My Arm in Weiss\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 2 Quest Points, 50,000 Mining XP, 40,000 Firemaking XP, 40,000 Agility XP, Weiss herb patch\\nRequirements: 66 Mining, 68 Firemaking, 72 Woodcutting, 35 Construction, My Arm's Big Adventure, Swan Song, Cold War",
+      "description_after": "Start: Burntmeat in Troll Stronghold kitchen\\nDifficulty: Master \u2022 Length: Long\\nReward: 2 Quest Points, 50,000 Mining XP, 40,000 Firemaking XP, 40,000 Agility XP, Weiss herb patch\\nRequirements: 66 Mining, 68 Firemaking, 72 Woodcutting, 35 Construction, My Arm's Big Adventure, Swan Song, Cold War",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Making Friends with My Arm (Difficulty: Master; Start: Burntmeat in Troll Stronghold kitchen). Authored entry erroneously assigned Experienced and ambiguous start.",
+      "rationale": "Making Friends with My Arm is a Master tier quest starting with Burntmeat in Troll Stronghold."
+    },
+    {
+      "poi_id": "poi_005894",
+      "name": "Ethically Acquired Antiquities",
+      "canonical_id": "poi_005894",
+      "location_id": "loc_005894",
+      "category_before": "Quest Start \u2022 Intermediate",
+      "category_after": "Quest Start \u2022 Novice",
+      "description_before": "Start: Curator in Hunter Guild / Auburnvale\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 1 Quest Point, 1,500 Thieving XP\\nRequirements: 25 Thieving, Children of the Sun",
+      "description_after": "Start: Curator in Hunter Guild / Auburnvale\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point, 1,500 Thieving XP\\nRequirements: 25 Thieving, Children of the Sun",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Ethically Acquired Antiquities (Difficulty: Novice). Authored entry erroneously assigned Intermediate.",
+      "rationale": "Ethically Acquired Antiquities is a Novice tier Varlamore quest."
+    },
+    {
+      "poi_id": "poi_005895",
+      "name": "Death on the Isle",
+      "canonical_id": "poi_005895",
+      "location_id": "loc_005895",
+      "category_before": "Quest Start \u2022 Experienced",
+      "category_after": "Quest Start \u2022 Intermediate",
+      "description_before": "Start: Detective in Aldarin\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point, 6,000 Thieving XP, 4,000 Agility XP, 3,000 Crafting XP\\nRequirements: 34 Agility, 32 Thieving, Children of the Sun",
+      "description_after": "Start: Detective in Aldarin\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 2 Quest Points, 6,000 Thieving XP, 4,000 Agility XP, 3,000 Crafting XP\\nRequirements: 34 Agility, 32 Thieving, Children of the Sun",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for Death on the Isle (Difficulty: Intermediate, Reward: 2 Quest Points). Authored entry erroneously assigned Experienced and 1 QP.",
+      "rationale": "Death on the Isle awards 2 Quest Points and is classified as Intermediate."
+    },
+    {
+      "poi_id": "poi_005896",
+      "name": "The Heart of Darkness",
+      "canonical_id": "poi_005896",
+      "location_id": "loc_005896",
+      "category_before": "Quest Start \u2022 Master",
+      "category_after": "Quest Start \u2022 Experienced",
+      "description_before": "Start: Queen Ameyalli in Civitas illa Fortis palace\\nDifficulty: Master \u2022 Length: Long\\nReward: 2 Quest Points, 35,000 Thieving XP, 25,000 Agility XP, 25,000 Mining XP\\nRequirements: 55 Agility, 48 Mining, 46 Thieving, Twilight's Promise, Perilous Moons",
+      "description_after": "Start: Queen Ameyalli in Civitas illa Fortis palace\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 2 Quest Points, 35,000 Thieving XP, 25,000 Agility XP, 25,000 Mining XP\\nRequirements: 55 Agility, 48 Mining, 46 Thieving, Twilight's Promise, Perilous Moons",
+      "evidence": "Official OSRS quest log / quest-details.tsv line for The Heart of Darkness (Difficulty: Experienced). Authored entry erroneously assigned Master.",
+      "rationale": "The Heart of Darkness is an Experienced tier Varlamore quest, not Master."
+    },
+    {
+      "poi_id": "poi_005778",
+      "name": "Varlamore - Moonlight Antelopes (Level 91)",
+      "canonical_id": "poi_005778",
+      "location_id": "poi_005778",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "[REMOVED]",
+      "description_before": "Target: Moonlight antelope (Moonlight antelope horn, fur, meat)\\nLevel requirement: Level 91 Hunter\\nCatch method: Pitfall trap (Logs & Teasing stick)\\nRegion: Varlamore (Avium Savannah / Hunters' Guild South)",
+      "description_after": "[REMOVED]",
+      "evidence": "User confirmation and runtime verification: Moonlight antelopes do not exist in the surface overworld at Sunset Bay (1560, 2920, 0). Canonical rendered marker poi_006365 already accurately covers the Hunter Guild Caverns at (1559, 9420, 0).",
+      "rationale": "Removed erroneous surface overworld marker for Moonlight antelopes per user instruction; under-cavern marker poi_006365 remains active."
+    },
+    {
+      "poi_id": "poi_007820",
+      "name": "Crimson swift (1)",
+      "canonical_id": "poi_007820",
+      "location_id": "poi_007820",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Carnivorous chinchompa (Red chinchompa)\\nLevel requirement: Level 63 Hunter\\nCatch method: Box trap (up to 5 traps)\\nRegion: Feldip Hills\\nCrimson swift (1)\\nFeldip Weasel (7)\\nTropical wagtail (19)\\nSpined larupia (31)\\nBarb-tailed kebbit (33)\\nBlack warlock (45)\\nCarnivorous chinchompa (63)",
+      "description_after": "Target: Crimson swift (1)\\nLevel requirement: Level 1 Hunter",
+      "evidence": "RuneLite HunterAreaLocation.java line 47 (Feldip Hills Crimson Swift). Pre-migration snapshot attached red chinchompa text to crimson swift marker.",
+      "rationale": "Repaired proximity-contaminated description on unrendered searchable hunter area marker."
+    },
+    {
+      "poi_id": "poi_007845",
+      "name": "Common kebbit (3)",
+      "canonical_id": "poi_007845",
+      "location_id": "poi_007845",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Chinchompa (Grey chinchompa)\\nLevel requirement: Level 53 Hunter\\nCatch method: Box trap\\nRegion: Piscatoris Hunter Area\\nCommon kebbit (3)\\nCopper longtail (9)\\nRuby harvest (15)\\nWild kebbit (23)\\nFerret (27)\\nWhite rabbit (27)\\nPrickly kebbit (37)\\nRazor-backed kebbit (49)\\nChinchompa (53)",
+      "description_after": "Target: Common kebbit (3)\\nLevel requirement: Level 3 Hunter",
+      "evidence": "RuneLite HunterAreaLocation.java line 80 (Piscatoris Common Kebbit). Pre-migration snapshot attached grey chinchompa text to common kebbit marker.",
+      "rationale": "Repaired proximity-contaminated description on unrendered searchable hunter area marker."
+    },
+    {
+      "poi_id": "poi_007854",
+      "name": "Golden warbler (5)",
+      "canonical_id": "poi_007854",
+      "location_id": "poi_007854",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Orange salamander\\nLevel requirement: Level 47 Hunter\\nCatch method: Net trap (Ropes & Small fishing nets on young trees)\\nRegion: Kharidian Desert (East of Uzer \u2022 Waterskins needed)\\nGolden warbler (5)\\nDesert devil (13)\\nOrange salamander (47)",
+      "description_after": "Target: Golden warbler (5)\\nLevel requirement: Level 5 Hunter",
+      "evidence": "RuneLite HunterAreaLocation.java line 93 (Uzer Golden Warbler). Pre-migration snapshot attached orange salamander text to golden warbler marker.",
+      "rationale": "Repaired proximity-contaminated description on unrendered searchable hunter area marker."
+    },
+    {
+      "poi_id": "poi_005808",
+      "name": "Anglers' Retreat - Ruby Harvests (Level 15)",
+      "canonical_id": "poi_005808",
+      "location_id": "poi_005808",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Anglers' Retreat (Sailing)",
+      "description_after": "Target: Ruby harvest butterfly\\nLevel requirement: Level 15 Hunter\\nCatch method: Butterfly net & Butterfly jar (or barehanded at 75)\\nRegion: Anglers' Retreat (Sailing)",
+      "evidence": "Live server visit confirmed NPC 5556 Ruby harvest at 2470, 2715.",
+      "rationale": "Replaced generic placeholder description with verified butterfly species and requirements."
+    },
+    {
+      "poi_id": "poi_005810",
+      "name": "Brittle Isle - Snowy Knights (Level 35)",
+      "canonical_id": "poi_005810",
+      "location_id": "poi_005810",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Brittle Isle (Sailing)",
+      "description_after": "Target: Snowy knight butterfly\\nLevel requirement: Level 35 Hunter\\nCatch method: Butterfly net & Butterfly jar (or barehanded at 85)\\nRegion: Brittle Isle (Sailing)",
+      "evidence": "Live server visit confirmed NPC 5554 Snowy knight at 1956, 4058.",
+      "rationale": "Replaced generic placeholder description with verified butterfly species and requirements."
+    },
+    {
+      "poi_id": "poi_005791",
+      "name": "Dognose Island - Crimson Swifts (Level 1)",
+      "canonical_id": "poi_005791",
+      "location_id": "poi_005791",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Turtle Belt (Dognose Island)",
+      "description_after": "Target: Crimson swift (Red feathers)\\nLevel requirement: Level 1 Hunter\\nCatch method: Bird snare\\nRegion: Turtle Belt (Dognose Island)",
+      "evidence": "Live server visit confirmed NPC 5549 Crimson swift at 3050, 2647.",
+      "rationale": "Replaced generic placeholder description with verified bird species and requirements."
+    },
+    {
+      "poi_id": "poi_006968",
+      "name": "Shimmering Atoll - Black Warlocks (Level 45)",
+      "canonical_id": "poi_006968",
+      "location_id": "poi_006968",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Shimmering Atoll (Sailing)",
+      "description_after": "Target: Black warlock butterfly (Strength boost)\\nLevel requirement: Level 45 Hunter\\nCatch method: Butterfly net & Butterfly jar (or barehanded at 85)\\nRegion: Shimmering Atoll (Sailing)",
+      "evidence": "Live server visit confirmed NPC 5553 Black warlock at 1565, 2775.",
+      "rationale": "Replaced generic placeholder description with verified butterfly species and requirements."
+    },
+    {
+      "poi_id": "poi_002604",
+      "name": "Hunter training",
+      "canonical_id": "poi_002604",
+      "location_id": "poi_002604",
+      "category_before": "Skilling \u2022 Hunter",
+      "category_after": "Skilling \u2022 Hunter",
+      "description_before": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Brittle Isle (Sailing)",
+      "description_after": "Target: Snowy knight butterfly\\nLevel requirement: Level 35 Hunter\\nCatch method: Butterfly net & Butterfly jar\\nRegion: Brittle Isle (Sailing)",
+      "evidence": "Live server visit confirmed NPC 5554 Snowy knight at 1956, 4058.",
+      "rationale": "Replaced generic placeholder description on duplicate marker."
+    }
+  ]
+}

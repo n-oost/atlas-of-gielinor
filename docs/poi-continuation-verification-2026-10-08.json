@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-08",
+  "review_phase": "Continuation audit and candidate adjudication",
+  "environment": {
+    "mcp_endpoint": "http://127.0.0.1:7780/mcp",
+    "client_state": "LOGGED_IN",
+    "world_tile": {
+      "x": 2244,
+      "y": 3460,
+      "plane": 0
+    },
+    "region_id": 9014
+  },
+  "settled_corrections": [
+    "poi_005888",
+    "poi_005858",
+    "poi_005862",
+    "poi_002112",
+    "poi_007113",
+    "poi_005871",
+    "poi_005872",
+    "poi_005881",
+    "poi_005882",
+    "poi_005883",
+    "poi_005894",
+    "poi_005895",
+    "poi_005896",
+    "poi_005778",
+    "poi_007820",
+    "poi_007845",
+    "poi_007854",
+    "poi_005808",
+    "poi_005810",
+    "poi_005791",
+    "poi_006968",
+    "poi_002604"
+  ],
+  "reference_conflict_candidates": [
+    {
+      "location_id": "poi_005815",
+      "subject": "Gwyna (Trial Master)",
+      "status": "unresolved_placement_suspect",
+      "authored_coordinates": {
+        "x": 2198,
+        "y": 3518,
+        "plane": 0
+      },
+      "observed_scoreboard": {
+        "x": 2244,
+        "y": 3460,
+        "plane": 0,
+        "object_id": 58928
+      },
+      "findings": "Scoreboard 58928 (SAILING_BT_SCOREBOARD_GWENITH_GLIDE) is located 58 tiles away at (2244, 3460, 0). Gwyna is a boat NPC (parent 15105 / morphs 15106-15108). Missing boat NPC on the private server is not proof of absence on live OSRS. Scoreboard is an associated trial object, not a proven boat start tile.",
+      "disposition": "Preserved at authored tile as unresolved placement suspect."
+    },
+    {
+      "location_id": "poi_005871",
+      "subject": "Regicide",
+      "status": "confirmed_reference_conflict",
+      "authored_coordinates": {
+        "x": 2185,
+        "y": 3145,
+        "plane": 0
+      },
+      "findings": "Authored difficulty is listed as Master (canonical OSRS is Experienced). Text states King Lathas in East Ardougne Castle, but authored marker is in Tirannwn (2185, 3145, 0). Canonical quest start already exists at East Ardougne Castle 1st floor (poi_003727 at 2576, 3293, 1). Marker represents regional/Tirannwn quest access rather than initial NPC spawn.",
+      "disposition": "Preserved as confirmed reference conflict; not treated as settled replacement."
+    },
+    {
+      "location_id": "poi_005883",
+      "subject": "Making Friends with My Arm",
+      "status": "confirmed_reference_conflict",
+      "authored_coordinates": {
+        "x": 2840,
+        "y": 3920,
+        "plane": 0
+      },
+      "findings": "Authored difficulty is listed as Experienced (canonical OSRS is Master). Text states 'My Arm in Troll Stronghold' at surface coordinate (2840, 3920, 0). Canonical quest start is Burntmeat in the stronghold kitchen (poi_004033 at 2841, 10060, 1). Surface marker represents stronghold exterior approach/entrance.",
+      "disposition": "Preserved as confirmed reference conflict; not treated as settled replacement."
+    },
+    {
+      "location_id": "poi_005772",
+      "subject": "Ferret",
+      "status": "confirmed_reference_conflict",
+      "authored_coordinates": {
+        "x": 2330,
+        "y": 3500,
+        "plane": 0
+      },
+      "findings": "Conflict between requirement for partial Eagles' Peak quest progress (box trap training during quest) versus full quest completion.",
+      "disposition": "Preserved as confirmed reference conflict pending authoritative gate script verification."
+    }
+  ],
+  "thirteen_fishing_identity_candidates": [
+    {
+      "location_id": "poi_002661",
+      "subject": "Sacred eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002664",
+      "subject": "Sacred eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002665",
+      "subject": "Sacred eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002829",
+      "subject": "Crystal eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002735",
+      "subject": "Infernal eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002738",
+      "subject": "Infernal eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002841",
+      "subject": "Camdozaal tetra",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002885",
+      "subject": "Camdozaal tetra",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_003255",
+      "subject": "Cave eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_003269",
+      "subject": "Cave eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_003274",
+      "subject": "Cave eel",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_003026",
+      "subject": "Shrimp/anchovies",
+      "disposition": "unresolved"
+    },
+    {
+      "location_id": "poi_002649",
+      "subject": "Volcanic ash/seaweed",
+      "disposition": "unresolved"
+    }
+  ],
+  "dismissed_suspicions": [
+    {
+      "claim": "Lake Molch Hunter levels 35/51/68/87",
+      "verdict": "correct_dismissed",
+      "note": "Independent research confirms these are accurate Hunter thresholds. Fishing levels (43/56/73/91) are separate."
+    },
+    {
+      "claim": "Sailing habitats in RuneLite enum",
+      "verdict": "dismissed",
+      "note": "RuneLite's HunterCreature enum does not exhaustively represent Sailing island habitats."
+    },
+    {
+      "claim": "Ralph/Gurtob open water coordinates",
+      "verdict": "dismissed",
+      "note": "Ralph and Gurtob are boat NPCs; water coordinates are expected."
+    },
+    {
+      "claim": "River Kelda dungeon icon omission",
+      "verdict": "dismissed",
+      "note": "Covered by native region labels; absence of dedicated dungeon icon is not an error."
+    }
+  ],
+  "unreviewed_candidates": {
+    "secondary_generic_descriptions": 3973,
+    "authored_location_coverage_gaps": 606,
+    "blocked_catalog_visits": 13
+  },
+  "workflow_improvements": [
+    {
+      "name": "Staged Sideload Jar Synchronization Check",
+      "description": "Verify file timestamps between updated source resources and compiled sideloaded jars in .runelite/sideloaded-plugins to avoid prematurely claiming in-game runtime confirmation.",
+      "benefit": "Maintains strict reporting integrity between verified source catalog fixes and pending live-client render states."
+    },
+    {
+      "name": "Cross-Catalog Duplicate & Projection Identification",
+      "description": "Search for identical quest titles, NPC names, and calculated offsets across catalog tables to discover whether an authored error is an inaccurate duplicate of an existing correct canonical record.",
+      "benefit": "Prevents redundant relocated markers and exposes authoring anomalies (such as offset surface projections of underground areas)."
+    },
+    {
+      "name": "Automated Test Assertion Pre-Audit",
+      "description": "Search test files for legacy strings before running test suites to ensure tests asserting old incorrect behavior are updated alongside catalog corrections.",
+      "benefit": "Ensures regressions tests align with verified factual claims without broken test runs."
+    }
+  ]
+}

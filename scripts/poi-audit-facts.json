@@ -1,0 +1,60 @@
+{
+  "reviewed_on": "2026-10-08",
+  "fishing_families_source": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/game/FishingSpot.java",
+  "fishing_families": {
+    "Anchovies": ["Shrimp", "Anchovies", "Sardine", "Herring"],
+    "Lobster": ["Lobster", "Swordfish", "Tuna"],
+    "Shark": ["Shark", "Bass"],
+    "Salmon": ["Salmon", "Trout", "Pike"],
+    "Karambwanji": ["Karambwanji", "Shrimp"],
+    "Greater siren": ["Common tench", "Bluegill", "Greater siren", "Mottled eel"],
+    "Tetra": ["Guppy", "Cavefish", "Tetra", "Catfish", "Barronite shards", "Barronite handle"],
+    "Cave eel": ["Slimy eel", "Cave eel"],
+    "Rum deal (Quest)": ["Sluglings"],
+    "Tai Bwo Wannai Trio (Quest)": ["Karambwan"],
+    "Fishing Contest (Quest)": ["Giant carp"],
+    "Lobster (Approval only)": ["Lobster"]
+  },
+  "rules": [
+    {
+      "id": "herbiboar_false_birdhouse_description",
+      "key": "hunter_training",
+      "subject_regex": "herbiboar",
+      "claim_regex": "Clockwork Birdhouses",
+      "expected": "Herbiboar are tracked at level 80 Hunter and 31 Herblore; they are not caught using birdhouses.",
+      "source_url": "https://oldschool.runescape.wiki/w/Hunter_training#Levels_80%E2%80%9399:_Herbiboar"
+    },
+    {
+      "id": "isle_of_souls_false_hunter_species",
+      "key": "hunter_training",
+      "subject_regex": "isle of souls",
+      "claim_regex": "red chinchompa|carnivorous chinchompa",
+      "expected": "The Isle of Souls chinchompa population is grey chinchompas, requiring level 53 Hunter.",
+      "source_url": "https://oldschool.runescape.wiki/w/Chinchompa_%28race%29"
+    },
+    {
+      "id": "sunlight_moth_false_prayer_effect",
+      "key": "hunter_training",
+      "subject_regex": "sunlight moth",
+      "claim_regex": "restores?\\s+\\d+(?:[–-]\\d+)?\\s+prayer",
+      "expected": "Sunlight moths restore reduced stats excluding Prayer and heal 8 Hitpoints.",
+      "source_url": "https://oldschool.runescape.wiki/w/Sunlight_moth"
+    },
+    {
+      "id": "moonlight_moth_false_stat_effect",
+      "key": "hunter_training",
+      "subject_regex": "moonlight moth",
+      "claim_regex": "stat restoration",
+      "expected": "Moonlight moths restore 22 Prayer points.",
+      "source_url": "https://oldschool.runescape.wiki/w/Moonlight_moth_(item)"
+    },
+    {
+      "id": "ferret_incomplete_quest_requirement",
+      "key": "hunter_training",
+      "subject_regex": "ferret",
+      "claim_regex": "Requires Eagles' Peak quest started",
+      "expected": "Catching wild ferrets requires completing Eagles' Peak, not merely starting it.",
+      "source_url": "https://oldschool.runescape.wiki/w/Eagles%27_Peak_(mountain)"
+    }
+  ]
+}

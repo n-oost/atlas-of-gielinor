@@ -1,0 +1,78 @@
+{
+  "checked_at": "2026-10-08T17:30:00.598054-04:00",
+  "client_pid": 7500,
+  "client_state": "LOGGED_IN",
+  "native_position": {
+    "x": 2330,
+    "y": 3500,
+    "plane": 0
+  },
+  "local_profile_check": "passed: isolated test-home and loopback javconfig/server",
+  "result": "blocked_stale_packaged_catalog",
+  "source_sha256": "4f361d449e4090798c4362624c213eed50b2510433e856fd0d95d24f24273d57",
+  "packages": [
+    {
+      "path": "C:\\dev\\runelite-p-server-for-devving\\dev-server\\test-home\\.runelite\\sideloaded-plugins\\better-map.jar",
+      "catalog_sha256": "95f2309ce37af26ace9804be4b8f1180473bde91085656e48ae2d88f6803fc69",
+      "fixes": [
+        {
+          "location_id": "poi_005888",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_005858",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_005862",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_002112",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_007113",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        }
+      ]
+    },
+    {
+      "path": "C:\\dev\\runelite-p-server-for-devving\\dev-server\\test-home\\.rlcustom\\sideloaded-plugins\\better-map.jar",
+      "catalog_sha256": "95f2309ce37af26ace9804be4b8f1180473bde91085656e48ae2d88f6803fc69",
+      "fixes": [
+        {
+          "location_id": "poi_005888",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_005858",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_005862",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_002112",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        },
+        {
+          "location_id": "poi_007113",
+          "source_matches_ledger": true,
+          "package_matches_source": false
+        }
+      ]
+    }
+  ],
+  "limits": "Packaged file inspection and connection check only; no direct in-memory resource lookup or visual check."
+}

@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-10-08T22:43:28.770973+00:00",
+  "summary": {
+    "pinned_revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
+    "current_revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38",
+    "current_commit_date": "2026-10-07T10:36:01Z",
+    "source_comparisons": 0,
+    "confirmed_reference_conflicts": 0,
+    "unresolved_source_comparisons": 0,
+    "factual_rules_requiring_assistant_review": 0,
+    "placement_candidates_retained": 15
+  },
+  "sources": [
+    {
+      "revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
+      "name": "HunterAreaLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
+      "sha256": "3bb076802bef5a84da7e840203a935884a2759c11a126f6a3bf9f20db3422fa5"
+    },
+    {
+      "revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
+      "name": "FishingSpotLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
+      "sha256": "68a4f6ed65a5198426fff3e7eeb0129ea0dcfe1609c2446a8cef40e8e30e3188"
+    },
+    {
+      "revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
+      "name": "RareTreeLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/RareTreeLocation.java",
+      "sha256": "5c9ba4f46a4c391f606463fe29c9fa1ff8895cdbf4d9c275e11269f83c6c0399"
+    },
+    {
+      "revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
+      "name": "FishingSpot",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/game/FishingSpot.java",
+      "sha256": "40f5d1d57dcc696e58c10bf1e118e420b3ec02382c08fcb109091ddc8a267a30"
+    },
+    {
+      "revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38",
+      "name": "HunterAreaLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
+      "sha256": "3bb076802bef5a84da7e840203a935884a2759c11a126f6a3bf9f20db3422fa5"
+    },
+    {
+      "revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38",
+      "name": "FishingSpotLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
+      "sha256": "68a4f6ed65a5198426fff3e7eeb0129ea0dcfe1609c2446a8cef40e8e30e3188"
+    },
+    {
+      "revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38",
+      "name": "RareTreeLocation",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/RareTreeLocation.java",
+      "sha256": "5c9ba4f46a4c391f606463fe29c9fa1ff8895cdbf4d9c275e11269f83c6c0399"
+    },
+    {
+      "revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38",
+      "name": "FishingSpot",
+      "url": "https://raw.githubusercontent.com/runelite/runelite/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/game/FishingSpot.java",
+      "sha256": "40f5d1d57dcc696e58c10bf1e118e420b3ec02382c08fcb109091ddc8a267a30"
+    }
+  ],
+  "findings": [],
+  "reviewed_rule_candidates": []
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/Zoinkwiz/quest-helper/75b623a6bc14237831fddc10b44765c0910a4eb0/src/main/java/com/questhelper/helpers/quests/dragonslayer/DragonSlayer.java",
+    "sha256": "b53dcf8e4d4ac7a5ed0050165a4acb0c22ba0dd80866a566a0f08035a76c3563",
+    "file": "better-map\\docs\\poi-pilot-placement-evidence-2026-10-08\\DragonSlayer.java",
+    "revision": "75b623a6bc14237831fddc10b44765c0910a4eb0"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Zoinkwiz/quest-helper/75b623a6bc14237831fddc10b44765c0910a4eb0/src/main/java/com/questhelper/helpers/quests/elementalworkshopi/ElementalWorkshopI.java",
+    "sha256": "b4a0329f8219d44baa3f36bd1e2bdcc315250dfa0a23b5e726ea71e37e47e8ec",
+    "file": "better-map\\docs\\poi-pilot-placement-evidence-2026-10-08\\ElementalWorkshopI.java",
+    "revision": "75b623a6bc14237831fddc10b44765c0910a4eb0"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Zoinkwiz/quest-helper/75b623a6bc14237831fddc10b44765c0910a4eb0/src/main/java/com/questhelper/helpers/quests/taibwowannaitrio/TaiBwoWannaiTrio.java",
+    "sha256": "257f8f6acad8d681c7073fbf106162e341547e8f61580cb8451597142d8f2d2d",
+    "file": "better-map\\docs\\poi-pilot-placement-evidence-2026-10-08\\TaiBwoWannaiTrio.java",
+    "revision": "75b623a6bc14237831fddc10b44765c0910a4eb0"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/runelite/runelite/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
+    "sha256": "3bb076802bef5a84da7e840203a935884a2759c11a126f6a3bf9f20db3422fa5",
+    "file": "better-map\\docs\\poi-pilot-placement-evidence-2026-10-08\\HunterAreaLocation.java",
+    "revision": "42a6f17a6a2e8e478aa763890ecd0181a59dad38"
+  }
+]

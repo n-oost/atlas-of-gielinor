@@ -79,7 +79,7 @@ public enum PoiCategory
 		"shipwright");
 
 	private static final Set<String> SERVICE_KEYS = keys(
-		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth", "cargo_bay", "noticeboard");
+		"lumbridge_guide", "makeover_mage", "hairdresser", "poll_booth", "cargo_bay", "noticeboard", "services");
 
 	private static final Set<String> PLACE_KEYS = keys("region_label");
 

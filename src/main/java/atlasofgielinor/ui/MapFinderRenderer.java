@@ -39,7 +39,9 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.map.MapCamera;
@@ -181,33 +183,39 @@ class MapFinderRenderer
 		final WorldPoint playerLoc = camera.getPlayerLocation();
 		final String query = finder.getQuery();
 		final boolean isEmptyQuery = query == null || query.trim().isEmpty();
-		final int rowH = isEmptyQuery ? 20 : 30;
-		final boolean browseLoading = isEmptyQuery && finder.isBrowseLoading();
+		final MapFinder.BrowseCategory category = finder.getBrowseCategory();
+		final boolean categoryHome = isEmptyQuery && category == null;
+		final boolean browseRegions = isEmptyQuery && category == MapFinder.BrowseCategory.PLACES;
+		final int rowH = browseRegions ? 20 : 30;
+		final boolean browseLoading = !categoryHome && (isEmptyQuery || category != null) && finder.isBrowseLoading();
 		finder.refresh(playerLoc);
 
-		final List<MapRegion> allRegions = isEmptyQuery && !browseLoading
+		final List<MapRegion> allRegions = browseRegions && !browseLoading
 			? finder.getRegions(playerLoc) : Collections.emptyList();
-		final List<MapFinder.Result> rows = !isEmptyQuery ? finder.getResults() : Collections.emptyList();
+		final List<MapFinder.Result> rows = !categoryHome && !browseRegions ? finder.getResults() : Collections.emptyList();
 		final int matchCount = finder.getMatchCount();
 		final int locationMatchCount = finder.getLocationMatchCount();
-		final int bodyItemCount = isEmptyQuery
-			? (browseLoading ? 1 : allRegions.size())
-			: (rows.isEmpty() ? 1 : rows.size());
+		final int bodyItemCount = categoryHome ? MapFinder.BrowseCategory.values().length
+			: browseLoading ? 1 : browseRegions ? allRegions.size() : Math.max(1, rows.size());
 
-		final String scrollKey = isEmptyQuery ? "" : query;
+		final String scrollKey = (category == null ? "" : category.name()) + ":" + query;
 		if (!scrollKey.equals(camera.getFinderScrollKey()))
 		{
 			camera.setFinderBodyScrollOffset(0);
 			camera.setFinderScrollKey(scrollKey);
 		}
 		camera.setFinderBodyItemCount(bodyItemCount);
-		camera.clampFinderBodyScroll();
 
 		final int bodyViewportRows = camera.finderBodyViewportRows();
-		final int displayBodyRows = Math.min(bodyViewportRows, Math.max(1, bodyItemCount));
-		final boolean hasOverflow = !isEmptyQuery && matchCount > rows.size();
+		final boolean hasOverflow = !categoryHome && !browseRegions && matchCount > rows.size();
 		final boolean showExpand = bodyItemCount > MapCamera.FINDER_BODY_ROWS;
 		final int expandBarH = showExpand ? 16 : 0;
+		final int fixedPanelH = padTop + titleH + fieldH + 4 + chipRowH + 6 + expandBarH
+			+ (hasOverflow ? rowH : 0) + 6 + descStripH + 4 + 6;
+		final int fittingRows = Math.max(1, (bounds.height - fixedPanelH - 8) / rowH);
+		final int displayBodyRows = Math.min(fittingRows, Math.min(bodyViewportRows, Math.max(1, bodyItemCount)));
+		camera.setFinderBodyVisibleRows(displayBodyRows);
+		camera.clampFinderBodyScroll();
 
 		final int panelH = padTop + titleH + fieldH + 4 + chipRowH + 6 + expandBarH
 			+ displayBodyRows * rowH
@@ -231,7 +239,18 @@ class MapFinderRenderer
 		MapStyle.drawCard(graphics, panel);
 
 		graphics.setColor(CARD_TITLE);
-		graphics.drawString("Find location  (Esc)", panel.x + padX, panel.y + padTop + 12);
+		graphics.drawString(category == null ? "Find location  (Esc)" : category.getDisplayName(),
+			panel.x + padX, panel.y + padTop + 12);
+		if (category != null)
+		{
+			final Rectangle back = new Rectangle(panel.x + panelW - padX - 46, panel.y + padTop - 2, 46, 18);
+			drawQuickChip(graphics, graphics.getFontMetrics(), input.getCursor(), back, "Back", true);
+			camera.setFinderBackButton(back);
+		}
+		else
+		{
+			camera.setFinderBackButton(null);
+		}
 
 		final Rectangle field = new Rectangle(panel.x + padX, panel.y + padTop + titleH, panelW - 2 * padX, fieldH);
 		final FontMetrics fm = graphics.getFontMetrics();
@@ -271,6 +290,7 @@ class MapFinderRenderer
 		final List<MapCamera.FinderResultTarget> targets = new ArrayList<>();
 		MapCamera.FinderResultTarget hoveredTarget = null;
 		Rectangle flyoutAnchorRow = null;
+		final Map<MapFinder.BrowseCategory, Rectangle> categoryTargets = new EnumMap<>(MapFinder.BrowseCategory.class);
 
 		if (bodyScroll > 0)
 		{
@@ -283,13 +303,33 @@ class MapFinderRenderer
 			graphics.drawString("▼", bodyViewport.x + bodyViewport.width - 12, bodyViewport.y + bodyViewport.height - 4);
 		}
 
-		if (browseLoading)
+		if (categoryHome)
+		{
+			final MapFinder.BrowseCategory[] categories = MapFinder.BrowseCategory.values();
+			for (int i = bodyScroll; i < bodyEnd; i++)
+			{
+				final MapFinder.BrowseCategory item = categories[i];
+				final Rectangle row = new Rectangle(panel.x + 3, rowY, panelW - 6, rowH);
+				if (cursor != null && row.contains(cursor))
+				{
+					graphics.setColor(CHIP_BG);
+					graphics.fillRoundRect(row.x, row.y, row.width, row.height, 4, 4);
+				}
+				graphics.setColor(CARD_TITLE);
+				graphics.drawString(item.getDisplayName(), panel.x + padX, rowY + 12);
+				graphics.drawString("▸", row.x + row.width - 16, rowY + 18);
+				drawClipped(graphics, fm, item.getDescription(), panel.x + padX, rowY + 25, panelW - 40, TEXT_DIM);
+				categoryTargets.put(item, row);
+				rowY += rowH;
+			}
+		}
+		else if (browseLoading)
 		{
 			graphics.setColor(TEXT_DIM);
 			graphics.drawString("Loading map data…", panel.x + padX, rowY + 14);
 			rowY += rowH;
 		}
-		else if (isEmptyQuery)
+		else if (browseRegions)
 		{
 			for (int i = bodyScroll; i < bodyEnd; i++)
 			{
@@ -419,7 +459,8 @@ class MapFinderRenderer
 							: result.getKind() == MapFinder.Result.Kind.MONSTER ? "Monster location"
 							: result.getKind() == MapFinder.Result.Kind.MINERAL ? "Mining location" : "Location";
 						graphics.setColor(TEXT_DIM);
-						graphics.drawString(itemKindLabel(result) + " · " + subtitle, nameX, rowY + 25);
+						drawClipped(graphics, fm, itemKindLabel(result) + " · " + subtitle,
+							nameX, rowY + 25, maxNameW, TEXT_DIM);
 					}
 
 					final MapFinder.Result routeTarget = MapFinder.activationTarget(result);
@@ -437,7 +478,7 @@ class MapFinderRenderer
 
 		rowY = bodyViewport.y + displayBodyRows * rowH;
 
-		if (!isEmptyQuery && hasOverflow)
+		if (hasOverflow)
 		{
 			final int hiddenGroups = matchCount - rows.size();
 			final String overflowText = "… " + hiddenGroups + " more group"
@@ -447,7 +488,7 @@ class MapFinderRenderer
 			rowY += rowH;
 		}
 
-		final MapFinder.Result flyoutHoveredItem = drawFlyout(graphics, panel, fm, cursor, padX, padTop, isEmptyQuery,
+		final MapFinder.Result flyoutHoveredItem = drawFlyout(graphics, panel, fm, cursor, padX, padTop, browseRegions,
 			bounds, flyoutAnchorRow, playerLoc, rows);
 
 		// Description strip: 2 dim lines under body
@@ -482,7 +523,7 @@ class MapFinderRenderer
 		}
 		else
 		{
-			descLine1 = "Click a row to show it on the map";
+			descLine1 = categoryHome ? "Choose a category or type to search" : "Click a row to show it on the map";
 			descLine2 = "";
 		}
 
@@ -496,6 +537,7 @@ class MapFinderRenderer
 		graphics.drawString(descLine2, panel.x + padX, descY + 22);
 
 		camera.setFinderResultTargets(targets);
+		camera.setFinderCategoryTargets(categoryTargets);
 		camera.setFinderPanelBounds(panel);
 	}
 
@@ -627,7 +669,8 @@ class MapFinderRenderer
 				drawClipped(graphics, fm, item.getName(), flyoutPanel.x + padX, fRowY + 12,
 					flyoutW - 88, CARD_TEXT);
 				graphics.setColor(TEXT_DIM);
-				graphics.drawString(itemKindLabel(item), flyoutPanel.x + padX, fRowY + 25);
+				drawClipped(graphics, fm, item.getDetail() != null ? item.getDetail() : itemKindLabel(item),
+					flyoutPanel.x + padX, fRowY + 25, flyoutW - 2 * padX, TEXT_DIM);
 
 				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, item.getPoint(), item.getName()));
 				fRowY += rowH;
@@ -715,7 +758,9 @@ class MapFinderRenderer
 		if (isEmptyQuery)
 		{
 			graphics.setColor(TEXT_DIM);
-			graphics.drawString("Type a place name", field.x + 6, textY);
+			graphics.drawString(finder.getBrowseCategory() == null ? "Search anything or browse below"
+				: "Search " + finder.getBrowseCategory().getDisplayName().toLowerCase(java.util.Locale.ROOT),
+				field.x + 6, textY);
 		}
 		else
 		{

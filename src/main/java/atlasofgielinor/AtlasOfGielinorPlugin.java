@@ -681,6 +681,16 @@ public class AtlasOfGielinorPlugin extends Plugin
 
 	public void centerMapOn(WorldPoint point)
 	{
+		centerMapOn(point, false);
+	}
+
+	public void centerFinderOn(WorldPoint point)
+	{
+		centerMapOn(point, true);
+	}
+
+	private void centerMapOn(WorldPoint point, boolean finderZoom)
+	{
 		if (point == null)
 		{
 			return;
@@ -749,14 +759,48 @@ public class AtlasOfGielinorPlugin extends Plugin
 		camera.setZoom(Math.max(camera.getZoom(), REVEAL_ZOOM));
 		camera.flashAt(new WorldPoint((int) Math.floor(camera.getCenterX()),
 			(int) Math.floor(camera.getCenterY()), camera.getPlane()));
+		WorldPoint positionTarget = point;
+		if (finderZoom)
+		{
+			final WorldPoint player = camera.getPlayerLocation();
+			final Rectangle view = camera.getViewport();
+			if (!config.maintainPlayerInView() || player == null
+				|| player.getPlane() != point.getPlane() || view == null
+				|| view.width <= 0 || view.height <= 0)
+			{
+				camera.setZoom(config.defaultZoom());
+			}
+			else
+			{
+				final double targetX = camera.getCenterX();
+				final double targetY = camera.getCenterY();
+				final DungeonPiece playerPiece = zone == null ? null : dungeonPieceIndex.pieceAt(
+					zone.getId(), player.getX(), player.getY(), player.getPlane(), camera.floorLayerFor(zone));
+				final Point2D playerDisplay = playerPiece == null
+					? new Point2D.Double(
+						InstanceMaps.toDisplayX(player.getX(), player.getY(), targetX, targetY),
+						InstanceMaps.toDisplayY(player.getX(), player.getY(), targetX, targetY))
+					: DungeonPieceTransform.toDisplay(playerPiece, player.getX() + 0.5, player.getY() + 0.5);
+				final double paddingTiles = 16.0;
+				final double width = Math.abs(targetX - playerDisplay.getX()) + 2 * paddingTiles;
+				final double height = Math.abs(targetY - playerDisplay.getY()) + 2 * paddingTiles;
+				final double zoom = Math.min(view.getWidth() / width, view.getHeight() / height);
+				camera.centerOn((targetX + playerDisplay.getX()) / 2,
+					(targetY + playerDisplay.getY()) / 2);
+				camera.setZoom(Math.max(0.25f, Math.min(2.0f, zoom)));
+				positionTarget = new WorldPoint((int) Math.round(camera.getCenterX()),
+					(int) Math.round(camera.getCenterY()), point.getPlane());
+			}
+		}
 
 		// Keep the client roughly in step so its icon and region data stays loaded around us.
+		final WorldPoint mapTarget = positionTarget;
 		clientThread.invoke(() ->
 		{
 			final WorldMap worldMap = client.getWorldMap();
 			if (worldMap != null)
 			{
-				worldMap.setWorldMapPositionTarget(point);
+				worldMap.setWorldMapPositionTarget(mapTarget);
 			}
 		});
 	}
@@ -1021,7 +1065,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 				.setOption("Show on map")
 				.setTarget("<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>")
 				.setType(MenuAction.RUNELITE)
-				.onClick(e -> centerMapOn(finderTarget));
+				.onClick(e -> centerFinderOn(finderTarget));
 			return;
 		}
 		final Rectangle finderPanel = camera.getFinderPanelBounds();

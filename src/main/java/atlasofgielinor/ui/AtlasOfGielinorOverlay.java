@@ -185,6 +185,11 @@ public class AtlasOfGielinorOverlay extends Overlay
 	private final MapFinderRenderer finderRenderer;
 	private final MapTooltipRenderer tooltipRenderer;
 	@Inject
+	void setStashUnitStatus(atlasofgielinor.integrations.StashUnitStatus tracker)
+	{
+		tooltipRenderer.setStashUnitStatus(tracker);
+	}
+	@Inject
 	private RaidBossDisplay raidBossDisplay;
 	private final WorldMapInput input;
 	private final WorldMapPointReader worldMapPointReader;

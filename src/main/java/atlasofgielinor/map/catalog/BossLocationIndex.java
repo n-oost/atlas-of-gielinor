@@ -19,6 +19,7 @@ import java.util.Map;
 
 import atlasofgielinor.data.io.BundledTsv;
 import atlasofgielinor.data.dungeons.DungeonPiece;
+import atlasofgielinor.data.dungeons.DungeonFloor;
 import atlasofgielinor.data.dungeons.DungeonPieceTransform;
 import atlasofgielinor.data.BossLocationData;
 import atlasofgielinor.data.dungeons.UndergroundZone;
@@ -114,14 +115,15 @@ public final class BossLocationIndex
 			{
 				return false;
 			}
-			final Integer hoveredPlane = camera.getHoveredUndergroundZone() == zone ? camera.getHoveredFloorPlane() : null;
-			final int visiblePlane = hoveredPlane != null ? hoveredPlane
+			final Integer selectedPlane = camera.floorPlaneFor(zone);
+			final int visiblePlane = selectedPlane != null ? selectedPlane
 				: camera.getActiveUndergroundZone() == zone ? camera.getPlane() : zone.getUndergroundPoint().getPlane();
 			if (plane != visiblePlane)
 			{
 				return false;
 			}
-			final Integer layer = camera.floorLayerFor(zone);
+			Integer layer = camera.floorLayerFor(zone);
+			if (layer == null) layer = DungeonFloor.defaultLayerFor(zone);
 			return layer == null || layer == this.layer;
 		}
 

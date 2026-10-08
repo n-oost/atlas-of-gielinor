@@ -340,6 +340,12 @@ public class MapCamera
 	@Setter
 	private volatile Rectangle finderFieldBounds;
 	@Getter
+	@Setter
+	private volatile Rectangle finderBackButton;
+	@Getter
+	@Setter
+	private volatile java.util.Map<MapFinder.BrowseCategory, Rectangle> finderCategoryTargets = Collections.emptyMap();
+	@Getter
 	private volatile List<FinderResultTarget> finderResultTargets = Collections.emptyList();
 	@Getter
 	@Setter
@@ -386,6 +392,8 @@ public class MapCamera
 	@Getter
 	private volatile boolean finderBodyExpanded;
 	private volatile int finderBodyItemCount;
+	@Setter
+	private volatile int finderBodyVisibleRows;
 	private volatile int finderFlyoutItemCount;
 	@Getter
 	private volatile String finderScrollKey = "";
@@ -810,6 +818,8 @@ public class MapCamera
 	{
 		finderPanelBounds = null;
 		finderFieldBounds = null;
+		finderBackButton = null;
+		finderCategoryTargets = Collections.emptyMap();
 		finderResultTargets = Collections.emptyList();
 		finderChipBank = null;
 		finderChipSlayer = null;
@@ -907,6 +917,7 @@ public class MapCamera
 		finderFlyoutScrollOffset = 0;
 		finderBodyExpanded = false;
 		finderBodyItemCount = 0;
+		finderBodyVisibleRows = 0;
 		finderFlyoutItemCount = 0;
 		finderScrollKey = "";
 		finderBodyViewport = null;
@@ -923,7 +934,8 @@ public class MapCamera
 
 	public void clampFinderBodyScroll()
 	{
-		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, 0, finderBodyItemCount, finderBodyViewportRows());
+		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, 0, finderBodyItemCount,
+			finderBodyVisibleRows > 0 ? finderBodyVisibleRows : finderBodyViewportRows());
 	}
 
 	public void clampFinderFlyoutScroll()
@@ -933,7 +945,8 @@ public class MapCamera
 
 	public void scrollFinderBody(int delta)
 	{
-		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, delta, finderBodyItemCount, finderBodyViewportRows());
+		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, delta, finderBodyItemCount,
+			finderBodyVisibleRows > 0 ? finderBodyVisibleRows : finderBodyViewportRows());
 	}
 
 	public void scrollFinderFlyout(int delta)
@@ -1014,9 +1027,21 @@ public class MapCamera
 
 	public synchronized void toggleUndergroundZone(UndergroundZone zone, WorldPoint entrance)
 	{
+		final DungeonFloor entranceFloor = DungeonFloor.forEntrance(zone, entrance);
+		final DungeonFloor selectedFloor = selectedDungeonFloors.get(zone);
 		if (!isUndergroundZoneOpen(zone))
 		{
 			setUndergroundMode(zone, entrance);
+			if (entranceFloor != null) setActiveFloor(entranceFloor);
+			return;
+		}
+		if (entranceFloor != null && (activeUndergroundZone != zone
+			|| selectedFloor == null || selectedFloor.plane != entranceFloor.plane
+			|| !java.util.Objects.equals(selectedFloor.layerId, entranceFloor.layerId)
+			|| !java.util.Objects.equals(activeUndergroundSurfacePoint, entrance)))
+		{
+			setUndergroundMode(zone, entrance);
+			setActiveFloor(entranceFloor);
 			return;
 		}
 		if (originalUndergroundZone != null && zone.getConnectedZones().stream()
@@ -1287,35 +1312,39 @@ public class MapCamera
 
 	public synchronized void setActiveFloor(DungeonFloor floor)
 	{
-		setUndergroundMode(floor.zone);
-		setPlane(floor.plane);
+		setUndergroundMode(floor.zone, activeUndergroundZone == floor.zone
+			? activeUndergroundSurfacePoint : floor.zone.getSurfacePoint());
+		// Floor diamonds select one dungeon; the global plane switcher clears every selection.
+		this.plane = Math.max(0, Math.min(3, floor.plane));
+		this.planeChosenByUser = true;
 		this.activeFloorLayer = floor.layerId;
 		selectedDungeonFloors.put(floor.zone, floor);
 	}
 
 	public Integer floorLayerFor(UndergroundZone zone)
 	{
-		if (lowerView)
-		{
-			final DungeonFloor floor = selectedDungeonFloors.get(zone);
-			return floor == null ? null : floor.layerId;
-		}
 		if (hoveredFloorPlane != null && hoveredUndergroundZone == zone)
 		{
 			return hoveredFloorLayer;
 		}
+		final DungeonFloor selected = selectedDungeonFloors.get(zone);
+		if (selected != null) return selected.layerId;
+		if (lowerView) return null;
 		return activeUndergroundZone == zone ? activeFloorLayer : null;
+	}
+
+	/** Selected floors belong to their dungeon, independently of the global camera plane. */
+	public Integer floorPlaneFor(UndergroundZone zone)
+	{
+		if (hoveredFloorPlane != null && hoveredUndergroundZone == zone) return hoveredFloorPlane;
+		final DungeonFloor selected = selectedDungeonFloors.get(zone);
+		return selected == null ? null : selected.plane;
 	}
 
 	/** Native composites contain all their arranged floors; authored zones retain floor controls. */
 	public boolean isDungeonPieceVisible(UndergroundZone zone, DungeonPiece piece)
 	{
 		if (zone.getId().startsWith("native_")) return true;
-		final DungeonFloor selected = selectedDungeonFloors.get(zone);
-		if (selected != null)
-		{
-			return piece.plane == selected.plane && (selected.layerId == null || piece.layer == selected.layerId);
-		}
 		// Different authored floors may share game plane 0. Show the default layer,
 		// rather than painting every floor on top of the parent dungeon.
 		Integer layer = floorLayerFor(zone);
@@ -1330,8 +1359,8 @@ public class MapCamera
 				break;
 			}
 		}
-		final int previewPlane = hoveredUndergroundZone == zone && hoveredFloorPlane != null
-			? hoveredFloorPlane : zone.getUndergroundPoint().getPlane();
+		final Integer selectedPlane = floorPlaneFor(zone);
+		final int previewPlane = selectedPlane == null ? zone.getUndergroundPoint().getPlane() : selectedPlane;
 		return !multiPlane || piece.plane == previewPlane;
 	}
 

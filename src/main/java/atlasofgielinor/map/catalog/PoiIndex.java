@@ -140,11 +140,24 @@ public class PoiIndex
 		icons.clear();
 		loaded = false;
 
+		final Set<String> hiddenMarkers = new HashSet<>();
+		try
+		{
+			for (String[] row : BundledTsv.read("/atlasofgielinor/dungeons/deleted-pois.tsv", 1))
+				if (row.length == 5 && "raw".equals(row[0])) hiddenMarkers.add(String.join("\t", row));
+		}
+		catch (IOException e)
+		{
+			log.debug("Unreadable tuner marker visibility", e);
+		}
+
 		// One authoritative row supplies marker identity, search aliases and visibility.
 		for (MapCatalog.Location location : MapCatalog.current().locations.values())
 		{
 			final Poi poi = new Poi(location.x, location.y, location.plane, location.iconKey, location.label, location.id);
-			if (location.rendered) addPoi(poi, location.searchable);
+			final boolean hidden = hiddenMarkers.contains("raw\t" + location.plane + "\t"
+				+ location.x + "\t" + location.y + "\t" + location.iconKey);
+			if (location.rendered && !hidden) addPoi(poi, location.searchable);
 			else if (location.searchable) addSearchPoi(poi);
 			if (location.searchable)
 				for (String alias : location.aliases)
@@ -273,6 +286,22 @@ public class PoiIndex
 		}
 
 		BufferedImage image = null;
+		if ("stash_unit".equals(key))
+		{
+			image = new BufferedImage(18, 18, BufferedImage.TYPE_INT_ARGB);
+			final java.awt.Graphics2D graphics = image.createGraphics();
+			graphics.setColor(new java.awt.Color(45, 29, 16));
+			graphics.fillRoundRect(1, 3, 16, 13, 3, 3);
+			graphics.setColor(new java.awt.Color(161, 101, 45));
+			graphics.fillRect(3, 5, 12, 9);
+			graphics.setColor(new java.awt.Color(238, 197, 105));
+			graphics.drawRect(2, 4, 13, 10);
+			graphics.drawLine(2, 8, 15, 8);
+			graphics.fillRect(8, 7, 2, 4);
+			graphics.dispose();
+			icons.put(key, image);
+			return image;
+		}
 		final String iconKey = "teleport".equals(key) ? "house_portal"
 			: "runecrafting_altar".equals(key) ? "altar"
 			: "salvaging".equals(key) ? "cache_icon_4947"
@@ -419,6 +448,7 @@ public class PoiIndex
 
 		private static String canonicalLocationId(int x, int y, int plane, String key)
 		{
+			if (key == null) return null;
 			MapCatalog.Location location = MapCatalog.current().locationAt(x, y, plane, key);
 			if (location == null && Set.of("dungeon", "dungeon_link", "basement").contains(key))
 			{

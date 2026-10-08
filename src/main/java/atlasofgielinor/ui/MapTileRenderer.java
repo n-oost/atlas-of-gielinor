@@ -258,11 +258,8 @@ class MapTileRenderer
 	 */
 	private int planeForZone(UndergroundZone zone)
 	{
-		final Integer hoveredFloor = camera.getHoveredFloorPlane();
-		if (hoveredFloor != null && zone == camera.getHoveredUndergroundZone())
-		{
-			return hoveredFloor;
-		}
+		final Integer selectedFloor = camera.floorPlaneFor(zone);
+		if (selectedFloor != null) return selectedFloor;
 		if (camera.getActiveUndergroundZone() == zone)
 		{
 			return camera.getPlane();

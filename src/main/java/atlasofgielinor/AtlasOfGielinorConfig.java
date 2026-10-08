@@ -381,6 +381,18 @@ public interface AtlasOfGielinorConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "maintainPlayerInView",
+		name = "Finder Zoom: Keep player in view",
+		description = "Frames the player and Finder destination together on the same plane. Otherwise uses the default zoom at the destination.",
+		position = 3,
+		section = finderSection
+	)
+	default boolean maintainPlayerInView()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "undergroundTransparentVoid",
 		name = "Transparent dungeon background",
 		description = "Makes black space around dungeon tiles transparent so the surface remains visible behind the dungeon.",

@@ -62,7 +62,7 @@ public enum PoiCategory
 	private static final Set<String> DUNGEON_KEYS = keys("dungeon", "basement");
 
 	private static final Set<String> QUEST_KEYS = keys(
-		"quest_start", "kourend_task", "task_master", "minigame", "raids_lobby", "holiday_event");
+		"quest_start", "kourend_task", "task_master", "minigame", "raids_lobby", "holiday_event", "stash_unit");
 
 	private static final Set<String> SKILLING_KEYS = keys(
 		"fishing_spot", "mining_site", "rare_trees", "cooking_range", "water_source", "farming_patch",

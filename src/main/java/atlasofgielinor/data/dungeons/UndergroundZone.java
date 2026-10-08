@@ -135,6 +135,14 @@ public enum UndergroundZone
 	UNDERGROUND_PASS,
 	CAMDOZAAL,
 	LASSAR_UNDERCITY,
+	SLAYER_TOWER,
+	AH_ZA_RHOON,
+	BANANA_PLANTATION,
+	SABAS_CAVE,
+	AGILITY_PYRAMID,
+	VILLA_LUCENS,
+	MAGE_TRAINING_ARENA,
+	MIND_ALTAR,
 	CORPOREAL_BEAST,
 	HALLOWED_SEPULCHRE,
 	DORGESH_KAAN,
@@ -492,10 +500,10 @@ public enum UndergroundZone
 		private final int yOffset;
 		private final int radius;
 		private final String description;
-		private final int clipMinX;
-		private final int clipMinY;
-		private final int clipMaxX;
-		private final int clipMaxY;
+		private int clipMinX;
+		private int clipMinY;
+		private int clipMaxX;
+		private int clipMaxY;
 		private final int projectionDx;
 		private final int projectionDy;
 		private Integer sourceZoom;
@@ -558,6 +566,19 @@ public enum UndergroundZone
 			addCanonicalZone(prepared, ids, ISLE_OF_SOULS_DUNGEON);
 			addCanonicalZone(prepared, ids, GOD_WARS_DUNGEON);
 			if (prepared.size() != values().length) throw new IOException("Incomplete dungeon catalog");
+
+			for (String[] fields : BundledTsv.read("/atlasofgielinor/dungeons/clips.tsv", 5))
+			{
+				final UndergroundZone zone = ids.get(fields[0]);
+				if (zone == null || fields.length != 5) throw new IOException("Invalid dungeon clip override");
+				final Metadata metadata = prepared.get(zone);
+				metadata.clipMinX = Integer.parseInt(fields[1]);
+				metadata.clipMinY = Integer.parseInt(fields[2]);
+				metadata.clipMaxX = Integer.parseInt(fields[3]);
+				metadata.clipMaxY = Integer.parseInt(fields[4]);
+				if (metadata.clipMaxX <= metadata.clipMinX || metadata.clipMaxY <= metadata.clipMinY)
+					throw new IOException("Invalid dungeon clip bounds: " + fields[0]);
+			}
 
 			for (String[] fields : BundledTsv.read("/atlasofgielinor/dungeons/tile-zooms.tsv", 2))
 			{

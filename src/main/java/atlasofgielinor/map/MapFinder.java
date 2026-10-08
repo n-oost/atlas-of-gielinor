@@ -28,6 +28,7 @@ import atlasofgielinor.map.catalog.GroundItemIndex;
 import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.map.catalog.MonsterIndex;
 import atlasofgielinor.map.catalog.PoiDetails;
+import atlasofgielinor.map.catalog.PoiCategory;
 import atlasofgielinor.map.catalog.PoiIndex;
 import atlasofgielinor.map.catalog.ShopIndex;
 import java.util.ArrayList;
@@ -49,6 +50,59 @@ import lombok.Getter;
 @Singleton
 public class MapFinder
 {
+	@Getter
+	public enum BrowseCategory
+	{
+		BANKS("Banks", "Nearby bank locations"),
+		SKILLING("Skilling", "Resources and skill facilities"),
+		MONSTERS("Monsters", "Monster names and locations"),
+		QUESTS("Quests", "Quest starting locations"),
+		SHOPS("Shops", "Shops and trading locations"),
+		TRAVEL("Travel", "Teleports, ports and transport"),
+		ACTIVITIES("Activities", "Minigames, raids and diary tasks"),
+		DUNGEONS("Dungeons", "Dungeon entrances"),
+		PLACES("Places", "Browse regions"),
+		SERVICES("Services", "Altars, tutors and facilities");
+
+		private final String displayName;
+		private final String description;
+
+		BrowseCategory(String displayName, String description)
+		{
+			this.displayName = displayName;
+			this.description = description;
+		}
+
+		static BrowseCategory of(String key)
+		{
+			switch (PoiCategory.of(key))
+			{
+				case BANKS: return BANKS;
+				case SKILLING:
+				case SHORTCUTS:
+				case SAILING: return SKILLING;
+				case QUESTS: return "quest_start".equals(key) ? QUESTS : ACTIVITIES;
+				case SHOPS: return SHOPS;
+				case TRAVEL: return TRAVEL;
+				case DUNGEONS: return DUNGEONS;
+				case PLACES: return PLACES;
+				case ALTARS:
+				case SERVICES: return SERVICES;
+				default: return null;
+			}
+		}
+	}
+
+	@Getter
+	private volatile BrowseCategory browseCategory;
+	private final Map<BrowseCategory, List<Result>> categoryLeaves = new HashMap<>();
+
+	public synchronized void selectBrowseCategory(BrowseCategory category, WorldPoint from)
+	{
+		browseCategory = category;
+		updateQuery(query, from);
+	}
+
 	public static final int MAX_RESULTS = 8;
 	static final int MAX_QUERY_LENGTH = 40;
 
@@ -234,6 +288,23 @@ public class MapFinder
 		// trailing space, so a typed "king " came back as "king" and the next character produced
 		// "kingb". Multi-word queries were unreachable by typing.
 		final String lower = next.trim().toLowerCase(Locale.ROOT);
+		if (browseCategory != null)
+		{
+			ensureBrowseIndex();
+			final List<Result> candidates = new ArrayList<>();
+			for (Result leaf : categoryLeaves.getOrDefault(browseCategory, Collections.emptyList()))
+			{
+				final int tier = lower.isEmpty() ? 0 : matchTier(leaf.getName(), leaf.getDetail(), lower);
+				if (tier < 0) continue;
+				candidates.add(new Result(leaf.getName(), leaf.getGroupKey(), leaf.getPoint(),
+					distanceTiles(leaf.getPoint(), from), tier, leaf.getKind(), leaf.getDetail(), leaf.getSellGp()));
+			}
+			queryMatches = Collections.unmodifiableList(candidates);
+			resultOrigin = from;
+			searchDataVersion = currentSearchDataVersion();
+			publishRankedResults(candidates);
+			return;
+		}
 		if (lower.isEmpty())
 		{
 			this.results = Collections.emptyList();
@@ -351,7 +422,7 @@ public class MapFinder
 	/** Refresh distance ordering after movement without rescanning source datasets. */
 	public synchronized void refresh(WorldPoint from)
 	{
-		if (query == null || query.trim().isEmpty())
+		if (browseCategory == null && (query == null || query.trim().isEmpty()))
 		{
 			return;
 		}
@@ -380,7 +451,7 @@ public class MapFinder
 		locationMatchCount = candidates.size();
 		matchCount = allGroups.size();
 		results = Collections.unmodifiableList(new ArrayList<>(
-			allGroups.subList(0, Math.min(MAX_RESULTS, allGroups.size()))));
+			allGroups.subList(0, browseCategory == null ? Math.min(MAX_RESULTS, allGroups.size()) : allGroups.size())));
 	}
 
 	/** The last non-empty query, for the "Last" quick-find chip. Survives {@link #clearQuery()}. */
@@ -391,12 +462,7 @@ public class MapFinder
 
 	public synchronized void clearQuery()
 	{
-		this.query = "";
-		this.results = Collections.emptyList();
-		this.queryMatches = Collections.emptyList();
-		this.matchCount = 0;
-		this.locationMatchCount = 0;
-		this.resultOrigin = null;
+		updateQuery("", resultOrigin);
 	}
 
 	private void ensureBrowseIndex()
@@ -413,32 +479,42 @@ public class MapFinder
 
 		regionLeaves.clear();
 		regionContentsCache.clear();
+		categoryLeaves.clear();
 
 		for (PoiIndex.Poi poi : poiIndex.all())
 		{
 			final MapRegion region = MapRegion.of(poi.getX(), poi.getY(), poi.getPlane());
-			if (region == null)
-			{
-				continue;
-			}
 			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
 			final String name = detail != null && detail.getTitle() != null && !detail.getTitle().isBlank()
 				? detail.getTitle() : poi.getName();
-			regionLeaves.computeIfAbsent(region, k -> new ArrayList<>())
-				.add(new Result(name, name, point, -1, 0));
+			final Result.Kind kind = "mining_site".equals(poi.getKey()) ? Result.Kind.MINERAL : Result.Kind.PLACE;
+			final Result leaf = new Result(name, name, point, -1, 0, kind,
+				detail == null ? null : String.join(" · ", detail.getLines()), 0);
+			final BrowseCategory category = BrowseCategory.of(poi.getKey());
+			if (category != null)
+			{
+				categoryLeaves.computeIfAbsent(category, k -> new ArrayList<>()).add(leaf);
+			}
+			if (region != null)
+			{
+				regionLeaves.computeIfAbsent(region, k -> new ArrayList<>()).add(leaf);
+			}
 		}
 
 		for (MonsterIndex.Zone zone : monsterIndex.getZones())
 		{
 			final MapRegion region = MapRegion.of(zone.getX(), zone.getY(), zone.getPlane());
-			if (region == null)
-			{
-				continue;
-			}
 			final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
-			regionLeaves.computeIfAbsent(region, k -> new ArrayList<>())
-				.add(new Result(zone.getLocationName(), zone.getMonster(), point, -1, 0));
+			categoryLeaves.computeIfAbsent(BrowseCategory.MONSTERS, k -> new ArrayList<>())
+				.add(new Result(zone.getMonster(), zone.getMonster(), point, -1, 0,
+					Result.Kind.MONSTER, zone.getLocationName(), 0));
+			if (region != null)
+			{
+				regionLeaves.computeIfAbsent(region, k -> new ArrayList<>())
+					.add(new Result(zone.getLocationName(), zone.getMonster(), point, -1, 0,
+						Result.Kind.MONSTER, zone.getLocationName(), 0));
+			}
 		}
 
 		browseDataVersion = version;

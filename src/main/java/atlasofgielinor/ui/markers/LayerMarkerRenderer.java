@@ -227,7 +227,8 @@ public class LayerMarkerRenderer
 
 			final boolean isHovered = camera.getHoveredUndergroundZone() == zone
 				&& camera.isHoveredSurfaceToUnderground() == isSurfaceToUnderground
-				&& camera.getHoveredFloorPlane() == null;
+				&& (camera.getHoveredFloorPlane() == null || camera.isHoveredFloor(
+					DungeonFloor.forEntrance(zone, onSurface ? anchors.get(i) : anchor)));
 
 			if (showDungeonIcon)
 			{
@@ -271,7 +272,9 @@ public class LayerMarkerRenderer
 			if (isHovered || (!onSurface && camera.getZoom() >= config.dungeonNavigationLabelMinZoom()))
 			{
 				graphics.setFont(SMALL);
-				final String label = zone.getName();
+				final DungeonFloor entranceFloor = DungeonFloor.forEntrance(zone, onSurface ? anchors.get(i) : anchor);
+				final String label = zone == UndergroundZone.SLAYER_TOWER ? "Slayer Tower — floors"
+					: entranceFloor == null ? zone.getName() : entranceFloor.name;
 				final int textWidth = graphics.getFontMetrics().stringWidth(label);
 				final int textX = sx - textWidth / 2;
 				final int textY = rect.y + rect.height + 13;
@@ -364,6 +367,12 @@ public class LayerMarkerRenderer
 
 	private static String floorGlyph(DungeonFloor selected)
 	{
+		if (selected.zone == UndergroundZone.SLAYER_TOWER)
+		{
+			if (selected.name.equals("Basement")) return "B";
+			if (selected.name.equals("Ground floor")) return "G";
+			if (selected.name.startsWith("Roof")) return "R";
+		}
 		final java.util.regex.Matcher m = EXPLICIT_FLOOR_NUM.matcher(selected.name);
 		if (m.find())
 		{

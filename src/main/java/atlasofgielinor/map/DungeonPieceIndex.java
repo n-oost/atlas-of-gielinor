@@ -208,13 +208,32 @@ public class DungeonPieceIndex
 	private void indexCanonical()
 	{
 		final MapCatalog catalog = MapCatalog.current();
+		final Map<Integer, DungeonPiece> bundled = new HashMap<>();
+		try (InputStream in = DungeonPieceIndex.class.getResourceAsStream(RESOURCE))
+		{
+			if (in != null)
+				for (DungeonPiece piece : parse(new InputStreamReader(in, StandardCharsets.UTF_8)).pieces)
+					bundled.put(piece.id, piece);
+		}
+		catch (IOException e)
+		{
+			log.debug("Could not read canonical piece rectangles", e);
+		}
 		final List<DungeonPiece> pieces = new ArrayList<>();
 		for (MapCatalog.Layout layout : catalog.layouts.values())
 		{
 			if (!layout.verified || !"piece".equals(layout.kind)) continue;
+			final DungeonPiece authored = bundled.get(layout.legacyPieceId);
+			int[][] rects = new int[][]{{layout.minX, layout.minY, layout.maxX, layout.maxY}};
+			if (authored != null && layout.placeId.equals(authored.zoneId) && layout.plane == authored.plane)
+			{
+				final int[] bounds = authored.srcBounds();
+				if (bounds[0] == layout.minX && bounds[1] == layout.minY
+					&& bounds[2] == layout.maxX && bounds[3] == layout.maxY) rects = authored.rects;
+			}
 			pieces.add(new DungeonPiece(layout.legacyPieceId, layout.layerId, layout.plane,
 				catalog.places.get(layout.placeId).name,
-				new int[][]{{layout.minX, layout.minY, layout.maxX, layout.maxY}}, layout.dx, layout.dy,
+				rects, layout.dx, layout.dy,
 				layout.rotation, (layout.flip & 1) != 0, (layout.flip & 2) != 0, true, layout.placeId));
 		}
 		index(pieces);

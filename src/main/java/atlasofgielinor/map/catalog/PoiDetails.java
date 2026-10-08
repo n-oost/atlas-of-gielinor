@@ -309,6 +309,13 @@ public final class PoiDetails
 		// Compatibility for positional callers. Indexed POIs always resolve by ID before this path.
 		final Entry nearby = nearestEntry(worldX, worldY, plane, 144, poi.getKey());
 		if (nearby != null) return entryToDetail(nearby);
+		if ("agility_short-cut".equals(poi.getKey()))
+		{
+			return new Detail(poi.getName(), PoiCategory.of(poi.getKey()).getDisplayName(), List.of(
+				"Agility shortcuts connect nearby areas.",
+				"Check the Agility skill guide for the level requirement."
+			));
+		}
 		return new Detail(poi.getName(), PoiCategory.of(poi.getKey()).getDisplayName(), List.of(
 			"Type: " + poi.getKey(),
 			"Location: " + poi.getX() + ", " + poi.getY() + " (Plane " + poi.getPlane() + ")",

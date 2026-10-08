@@ -154,7 +154,7 @@ public class FinderKeyCapture
 		{
 			return;
 		}
-		plugin.centerMapOn(target.getPoint());
+		plugin.centerFinderOn(target.getPoint());
 	}
 
 	private void onInputClosed()

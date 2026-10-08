@@ -31,3 +31,6 @@ BUGS.md
 .DS_Store
 Thumbs.db
 PLUGIN_HUB_REVIEW.md
+
+# Local tests
+/src/test/

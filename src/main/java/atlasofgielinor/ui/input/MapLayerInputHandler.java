@@ -24,6 +24,8 @@
  */
 package atlasofgielinor.ui.input;
 
+import atlasofgielinor.data.dungeons.DungeonFloor;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -127,9 +129,10 @@ public class MapLayerInputHandler
 			{
 				camera.setLayersPanelOpen(false);
 				camera.setBoatsDropdownOpen(false);
-				if (finder != null && pluginProvider != null && pluginProvider.get() != null)
+				if (finder != null)
 				{
-					finder.updateQuery("", pluginProvider.get().getPlayerLocation());
+					finder.selectBrowseCategory(null, camera.getPlayerLocation());
+					finder.updateQuery("", camera.getPlayerLocation());
 				}
 			}
 			return "finder-button";
@@ -259,6 +262,20 @@ public class MapLayerInputHandler
 	{
 		if (camera.isFinderPanelOpen())
 		{
+			final Rectangle back = camera.getFinderBackButton();
+			if (back != null && back.contains(event.getPoint()))
+			{
+				selectFinderCategory(null);
+				return true;
+			}
+			for (java.util.Map.Entry<MapFinder.BrowseCategory, Rectangle> category : camera.getFinderCategoryTargets().entrySet())
+			{
+				if (category.getValue().contains(event.getPoint()))
+				{
+					selectFinderCategory(category.getKey());
+					return true;
+				}
+			}
 			if (clickedFlyoutItem(event.getPoint(), event.getClickCount()))
 			{
 				return true;
@@ -302,6 +319,16 @@ public class MapLayerInputHandler
 		}
 
 		return false;
+	}
+
+	private void selectFinderCategory(MapFinder.BrowseCategory category)
+	{
+		if (finder == null) return;
+		finder.selectBrowseCategory(category, camera.getPlayerLocation());
+		clearFinderFlyoutHover();
+		camera.resetFinderScroll();
+		camera.clearFinderRegions();
+		camera.setFinderFieldFocused(true);
 	}
 
 	public boolean clickedFinderChip(Point point)
@@ -412,7 +439,7 @@ public class MapLayerInputHandler
 		// Do not restore shift-click auto-close or a programmatic widget operation.
 		if (pluginProvider != null && pluginProvider.get() != null)
 		{
-			pluginProvider.get().centerMapOn(point);
+			pluginProvider.get().centerFinderOn(point);
 		}
 	}
 
@@ -798,7 +825,10 @@ public class MapLayerInputHandler
 				}
 				else
 				{
-					camera.setHoveredUnderground(target.getZone(), target.isSurfaceToUnderground());
+					final DungeonFloor entranceFloor = target.isSurfaceToUnderground()
+						? DungeonFloor.forEntrance(target.getZone(), target.getSurfacePoint()) : null;
+					if (entranceFloor != null) camera.setHoveredFloor(entranceFloor);
+					else camera.setHoveredUnderground(target.getZone(), target.isSurfaceToUnderground());
 				}
 				return;
 			}

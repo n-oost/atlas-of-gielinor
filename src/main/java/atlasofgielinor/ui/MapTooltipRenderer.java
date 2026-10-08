@@ -100,6 +100,12 @@ public class MapTooltipRenderer
 	private final BoatTracker boatTracker;
 	private final WorldMapPointManager worldMapPointManager;
 	private final WorldMapPointReader worldMapPointReader;
+	private atlasofgielinor.integrations.StashUnitStatus stashUnitStatus;
+
+	public void setStashUnitStatus(atlasofgielinor.integrations.StashUnitStatus tracker)
+	{
+		stashUnitStatus = tracker;
+	}
 
 	@Getter
 	private final BoatTooltipBuilder boatTooltipBuilder;
@@ -644,6 +650,8 @@ public class MapTooltipRenderer
 
 	private PoiDetails.Detail enrichDetailWithRuneLitePoint(PoiDetails.Detail detail, PoiIndex.Poi poi, int plane)
 	{
+		if (poi != null && "stash_unit".equals(poi.getKey()))
+			return stashUnitStatus != null ? stashUnitStatus.enrich(poi, detail) : detail;
 		if (poi == null)
 		{
 			return detail;

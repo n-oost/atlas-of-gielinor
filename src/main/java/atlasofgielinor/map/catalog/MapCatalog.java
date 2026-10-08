@@ -27,7 +27,7 @@ public final class MapCatalog
 	private static final Set<String> POI_KINDS = Set.of("unknown", "area", "island", "dungeon", "cave",
 		"mooring", "bank", "shop", "mining_site", "fishing_spot", "woodcutting_site", "agility_course",
 		"agility_shortcut", "hunter_site", "farming_patch", "quest_start", "gate", "stairs", "ladder",
-		"boat", "teleport", "boss", "monster", "ground_item", "room", "salvage_site", "port");
+		"boat", "teleport", "boss", "monster", "ground_item", "room", "salvage_site", "port", "stash_unit");
 	private static volatile MapCatalog current = empty();
 	public final Map<String, Poi> pois;
 	public final Map<String, Place> places;

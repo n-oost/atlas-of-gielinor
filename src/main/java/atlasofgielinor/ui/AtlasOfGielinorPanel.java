@@ -31,10 +31,14 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,6 +60,8 @@ import atlasofgielinor.data.BossLocationData;
 import atlasofgielinor.data.sailing.BoatTracker;
 import atlasofgielinor.data.sailing.PlayerBoat;
 import atlasofgielinor.data.sailing.SailingPort;
+import atlasofgielinor.map.MapFinder;
+import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.map.catalog.MonsterIndex;
 import atlasofgielinor.map.catalog.PoiIndex;
 import net.runelite.api.coords.WorldPoint;
@@ -65,11 +71,8 @@ import net.runelite.client.ui.PluginPanel;
 import net.runelite.client.util.LinkBrowser;
 
 /**
- * The map legend: every kind of place on the map, collapsed into one row each.
- *
- * <p>Click a row to open the individual locations, nearest first, and click one of those to put
- * the map on it. That is the difference between a legend that tells you an icon exists and one
- * that takes you to it.
+ * The map legend sidebar: categorized identically to Finder into 10 top-level browse categories,
+ * expanding via an accordion into groups and nearest-first locations.
  */
 public class AtlasOfGielinorPanel extends PluginPanel
 {
@@ -87,7 +90,8 @@ public class AtlasOfGielinorPanel extends PluginPanel
 	private final JTextField searchField = new JTextField();
 	private final JPanel listPanel = new JPanel();
 
-	private String expandedKey;
+	private MapFinder.BrowseCategory expandedCategory;
+	private String expandedGroupKey;
 
 	public AtlasOfGielinorPanel(AtlasOfGielinorPlugin plugin, PoiIndex poiIndex, MonsterIndex monsterIndex, BoatTracker boatTracker)
 	{
@@ -153,74 +157,556 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		rebuild();
 	}
 
+	private void centerMapOn(WorldPoint point)
+	{
+		if (plugin != null && point != null)
+		{
+			plugin.centerMapOn(point);
+		}
+	}
+
 	private void rebuild()
 	{
 		listPanel.removeAll();
 
 		final String filter = searchField.getText().trim().toLowerCase(Locale.ROOT);
-		final WorldPoint from = plugin.getPlayerLocation();
+		final WorldPoint from = plugin != null ? plugin.getPlayerLocation() : null;
 
-		addBoatsSection(filter, from);
-		addMonsterSection(filter, from);
-
-		final Map<String, List<PoiIndex.Poi>> groups = poiIndex.groups();
-		if (groups.isEmpty())
+		if (!poiIndex.isLoaded())
 		{
-			listPanel.add(hint("No location data yet."));
+			listPanel.add(hint("Loading map data..."));
+			listPanel.revalidate();
+			listPanel.repaint();
+			return;
 		}
 
-		for (Map.Entry<String, List<PoiIndex.Poi>> entry : groups.entrySet())
+		final Map<String, List<PoiIndex.Poi>> allPoiGroups = poiIndex.groups();
+
+		// Partition POI groups into Finder's BrowseCategories
+		final Map<MapFinder.BrowseCategory, Map<String, List<PoiIndex.Poi>>> categoryGroups = new EnumMap<>(MapFinder.BrowseCategory.class);
+		for (MapFinder.BrowseCategory cat : MapFinder.BrowseCategory.values())
+		{
+			categoryGroups.put(cat, new LinkedHashMap<>());
+		}
+
+		for (Map.Entry<String, List<PoiIndex.Poi>> entry : allPoiGroups.entrySet())
 		{
 			final String key = entry.getKey();
-			final List<PoiIndex.Poi> entries = entry.getValue();
-			final String name = entries.get(0).getName();
-
-			if (!filter.isEmpty() && !name.toLowerCase(Locale.ROOT).contains(filter))
+			MapFinder.BrowseCategory cat = MapFinder.BrowseCategory.of(key);
+			if (cat == null)
 			{
-				continue;
+				cat = MapFinder.BrowseCategory.SERVICES;
 			}
+			categoryGroups.get(cat).put(key, entry.getValue());
+		}
 
-			listPanel.add(groupRow(key, name, entries.size()));
-
-			if (key.equals(expandedKey))
+		int categoriesShown = 0;
+		for (MapFinder.BrowseCategory cat : MapFinder.BrowseCategory.values())
+		{
+			if (renderCategorySection(cat, categoryGroups.get(cat), filter, from))
 			{
-				final List<PoiIndex.Poi> sorted = new ArrayList<>(entries);
-				if (from != null)
-				{
-					sorted.sort(Comparator.comparingLong(p -> distanceSq(p.getX(), p.getY(), from)));
-				}
-
-				int shown = 0;
-				for (PoiIndex.Poi poi : sorted)
-				{
-					if (shown++ >= MAX_ENTRIES_PER_GROUP)
-					{
-						listPanel.add(hint("  ... and " + (sorted.size() - MAX_ENTRIES_PER_GROUP) + " more"));
-						break;
-					}
-					listPanel.add(entryRow(poi, from));
-				}
+				categoriesShown++;
 			}
+		}
+
+		if (categoriesShown == 0)
+		{
+			listPanel.add(hint(filter.isEmpty() ? "No location data available." : "No locations matching \"" + filter + "\"."));
 		}
 
 		listPanel.revalidate();
 		listPanel.repaint();
 	}
 
-	private void addBoatsSection(String filter, WorldPoint from)
+	private boolean renderCategorySection(MapFinder.BrowseCategory cat, Map<String, List<PoiIndex.Poi>> poiGroups,
+		String filter, WorldPoint from)
 	{
-		if (boatTracker == null)
+		switch (cat)
 		{
-			return;
+			case QUESTS:
+				return renderQuestsCategory(cat, poiGroups, filter, from);
+			case MONSTERS:
+				return renderMonstersCategory(cat, filter, from);
+			case PLACES:
+				return renderPlacesCategory(cat, poiGroups, filter, from);
+			case TRAVEL:
+				return renderTravelCategory(cat, poiGroups, filter, from);
+			default:
+				return renderStandardPoiCategory(cat, poiGroups, filter, from);
+		}
+	}
+
+	private boolean renderStandardPoiCategory(MapFinder.BrowseCategory cat, Map<String, List<PoiIndex.Poi>> poiGroups,
+		String filter, WorldPoint from)
+	{
+		int totalLocations = 0;
+		final Map<String, List<PoiIndex.Poi>> matchingGroups = new LinkedHashMap<>();
+
+		for (Map.Entry<String, List<PoiIndex.Poi>> entry : poiGroups.entrySet())
+		{
+			final String groupKey = entry.getKey();
+			final List<PoiIndex.Poi> pois = entry.getValue();
+			final String groupName = pois.get(0).getName();
+			totalLocations += pois.size();
+
+			if (filter.isEmpty())
+			{
+				matchingGroups.put(groupKey, pois);
+			}
+			else
+			{
+				final boolean groupMatches = groupName.toLowerCase(Locale.ROOT).contains(filter)
+					|| cat.getDisplayName().toLowerCase(Locale.ROOT).contains(filter);
+				if (groupMatches)
+				{
+					matchingGroups.put(groupKey, pois);
+				}
+				else
+				{
+					final List<PoiIndex.Poi> matchedPois = new ArrayList<>();
+					for (PoiIndex.Poi p : pois)
+					{
+						if (p.getName().toLowerCase(Locale.ROOT).contains(filter))
+						{
+							matchedPois.add(p);
+						}
+					}
+					if (!matchedPois.isEmpty())
+					{
+						matchingGroups.put(groupKey, matchedPois);
+					}
+				}
+			}
 		}
 
-		final List<PlayerBoat> ownedBoats = boatTracker.getOwnedBoats();
-		if (ownedBoats.isEmpty())
+		if (!filter.isEmpty() && matchingGroups.isEmpty())
 		{
-			return;
+			return false;
 		}
 
-		final List<PlayerBoat> matches = new ArrayList<>();
+		final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && !matchingGroups.isEmpty());
+		final String subtitle = totalLocations + (totalLocations == 1 ? " location" : " locations");
+
+		listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+		{
+			if (expandedCategory == cat)
+			{
+				expandedCategory = null;
+				expandedGroupKey = null;
+			}
+			else
+			{
+				expandedCategory = cat;
+				expandedGroupKey = null;
+			}
+			rebuild();
+		}));
+
+		if (isCategoryExpanded)
+		{
+			for (Map.Entry<String, List<PoiIndex.Poi>> entry : matchingGroups.entrySet())
+			{
+				final String groupKey = entry.getKey();
+				final List<PoiIndex.Poi> pois = entry.getValue();
+				final String groupName = pois.get(0).getName();
+				final boolean isGroupExpanded = groupKey.equals(expandedGroupKey) || !filter.isEmpty();
+
+				listPanel.add(groupRow(groupKey, groupName, pois.size(), isGroupExpanded, 16, () ->
+				{
+					expandedGroupKey = groupKey.equals(expandedGroupKey) ? null : groupKey;
+					rebuild();
+				}));
+
+				if (isGroupExpanded)
+				{
+					renderPoiList(pois, from);
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean renderQuestsCategory(MapFinder.BrowseCategory cat, Map<String, List<PoiIndex.Poi>> poiGroups,
+		String filter, WorldPoint from)
+	{
+		final List<PoiIndex.Poi> allQuests = new ArrayList<>();
+		for (List<PoiIndex.Poi> list : poiGroups.values())
+		{
+			allQuests.addAll(list);
+		}
+
+		final List<PoiIndex.Poi> matchingQuests = new ArrayList<>();
+		for (PoiIndex.Poi quest : allQuests)
+		{
+			if (filter.isEmpty()
+				|| quest.getName().toLowerCase(Locale.ROOT).contains(filter)
+				|| cat.getDisplayName().toLowerCase(Locale.ROOT).contains(filter))
+			{
+				matchingQuests.add(quest);
+			}
+		}
+
+		if (!filter.isEmpty() && matchingQuests.isEmpty())
+		{
+			return false;
+		}
+
+		final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && !matchingQuests.isEmpty());
+		final String subtitle = allQuests.size() + (allQuests.size() == 1 ? " quest" : " quests");
+
+		listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+		{
+			if (expandedCategory == cat)
+			{
+				expandedCategory = null;
+				expandedGroupKey = null;
+			}
+			else
+			{
+				expandedCategory = cat;
+				expandedGroupKey = null;
+			}
+			rebuild();
+		}));
+
+		if (isCategoryExpanded)
+		{
+			final List<PoiIndex.Poi> sorted = new ArrayList<>(matchingQuests);
+			sorted.sort(Comparator.comparing(PoiIndex.Poi::getName, String.CASE_INSENSITIVE_ORDER));
+
+			int shown = 0;
+			for (PoiIndex.Poi quest : sorted)
+			{
+				if (shown++ >= MAX_ENTRIES_PER_GROUP)
+				{
+					listPanel.add(hint("  ... and " + (sorted.size() - MAX_ENTRIES_PER_GROUP) + " more — filter to narrow down"));
+					break;
+				}
+
+				final WorldPoint wp = new WorldPoint(quest.getX(), quest.getY(), quest.getPlane());
+				final String detail = from == null
+					? quest.getX() + ", " + quest.getY()
+					: quest.getX() + ", " + quest.getY() + "  " + tiles(wp, from);
+
+				listPanel.add(clickableRow(quest.getName(), detail, poiIndex.icon("quest_start"), false, false, 16,
+					() -> centerMapOn(wp)));
+			}
+		}
+
+		return true;
+	}
+
+	private boolean renderMonstersCategory(MapFinder.BrowseCategory cat, String filter, WorldPoint from)
+	{
+		if (!BossLocationData.isLoaded() && (monsterIndex == null || !monsterIndex.isLoaded()))
+		{
+			return false;
+		}
+
+		if (monsterIndex != null && monsterIndex.isLoaded())
+		{
+			final Map<String, List<MonsterIndex.Zone>> byMonster = monsterIndex.byMonster();
+			final List<Map.Entry<String, List<MonsterIndex.Zone>>> matching = new ArrayList<>();
+
+			for (Map.Entry<String, List<MonsterIndex.Zone>> entry : byMonster.entrySet())
+			{
+				if (filter.isEmpty())
+				{
+					matching.add(entry);
+				}
+				else
+				{
+					boolean match = entry.getKey().toLowerCase(Locale.ROOT).contains(filter)
+						|| cat.getDisplayName().toLowerCase(Locale.ROOT).contains(filter);
+					if (!match)
+					{
+						for (MonsterIndex.Zone zone : entry.getValue())
+						{
+							if (zone.getLocationName() != null && zone.getLocationName().toLowerCase(Locale.ROOT).contains(filter))
+							{
+								match = true;
+								break;
+							}
+						}
+					}
+					if (match)
+					{
+						matching.add(entry);
+					}
+				}
+			}
+
+			if (!filter.isEmpty() && matching.isEmpty())
+			{
+				return false;
+			}
+
+			final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && !matching.isEmpty());
+			final String subtitle = byMonster.size() + " monsters";
+
+			listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+			{
+				if (expandedCategory == cat)
+				{
+					expandedCategory = null;
+					expandedGroupKey = null;
+				}
+				else
+				{
+					expandedCategory = cat;
+					expandedGroupKey = null;
+				}
+				rebuild();
+			}));
+
+			if (isCategoryExpanded)
+			{
+				int groupShown = 0;
+				for (Map.Entry<String, List<MonsterIndex.Zone>> entry : matching)
+				{
+					if (groupShown++ >= MAX_MONSTER_GROUPS)
+					{
+						listPanel.add(hint("  ... and " + (matching.size() - MAX_MONSTER_GROUPS) + " more — type to filter"));
+						break;
+					}
+
+					final String monsterName = entry.getKey();
+					final List<MonsterIndex.Zone> zones = entry.getValue();
+					final String groupKey = "__monster__" + monsterName;
+					final boolean isGroupExpanded = groupKey.equals(expandedGroupKey) || !filter.isEmpty();
+
+					listPanel.add(groupRow(groupKey, monsterName, zones.size(), isGroupExpanded, 16, () ->
+					{
+						expandedGroupKey = groupKey.equals(expandedGroupKey) ? null : groupKey;
+						rebuild();
+					}));
+
+					if (isGroupExpanded)
+					{
+						final List<MonsterIndex.Zone> sortedZones = new ArrayList<>(zones);
+						if (from != null)
+						{
+							sortedZones.sort(Comparator.comparingLong(z -> distanceSq(z.getX(), z.getY(), from)));
+						}
+
+						int shownZone = 0;
+						for (MonsterIndex.Zone zone : sortedZones)
+						{
+							if (shownZone++ >= MAX_ENTRIES_PER_GROUP)
+							{
+								listPanel.add(hint("    ... and " + (sortedZones.size() - MAX_ENTRIES_PER_GROUP) + " more"));
+								break;
+							}
+
+							final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
+							final String loc = zone.getLocationName() != null ? zone.getLocationName() : zone.getMonster();
+							final String detail = from == null
+								? loc
+								: loc + "  " + tiles(point, from);
+
+							listPanel.add(clickableRow(loc, detail, null, false, false, 26,
+								() -> centerMapOn(point)));
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		// Fallback when monster index is not loaded: BossLocationData
+		final List<BossLocationData> bosses = new ArrayList<>();
+		for (BossLocationData boss : BossLocationData.values())
+		{
+			if (filter.isEmpty()
+				|| boss.getName().toLowerCase(Locale.ROOT).contains(filter)
+				|| boss.getLocationName().toLowerCase(Locale.ROOT).contains(filter))
+			{
+				bosses.add(boss);
+			}
+		}
+
+		if (!filter.isEmpty() && bosses.isEmpty())
+		{
+			return false;
+		}
+
+		final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && !bosses.isEmpty());
+		final String subtitle = BossLocationData.values().length + " bosses";
+
+		listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+		{
+			if (expandedCategory == cat)
+			{
+				expandedCategory = null;
+				expandedGroupKey = null;
+			}
+			else
+			{
+				expandedCategory = cat;
+				expandedGroupKey = null;
+			}
+			rebuild();
+		}));
+
+		if (isCategoryExpanded)
+		{
+			for (BossLocationData boss : bosses)
+			{
+				final WorldPoint wp = boss.getWorldPoint();
+				final String detail = from == null
+					? boss.getLocationName()
+					: boss.getLocationName() + "  " + tiles(wp, from);
+
+				listPanel.add(clickableRow(boss.getName(), detail, null, false, false, 16,
+					() -> centerMapOn(wp)));
+			}
+		}
+		return true;
+	}
+
+	private boolean renderPlacesCategory(MapFinder.BrowseCategory cat, Map<String, List<PoiIndex.Poi>> poiGroups,
+		String filter, WorldPoint from)
+	{
+		final List<MapRegion> regions = new ArrayList<>();
+		for (MapRegion region : MapRegion.values())
+		{
+			if (!region.isFallback())
+			{
+				if (filter.isEmpty()
+					|| region.getDisplayName().toLowerCase(Locale.ROOT).contains(filter)
+					|| cat.getDisplayName().toLowerCase(Locale.ROOT).contains(filter))
+				{
+					regions.add(region);
+				}
+			}
+		}
+
+		if (from != null)
+		{
+			regions.sort(Comparator.comparingInt(r -> distanceToRegionCenter(r, from)));
+		}
+
+		int totalPlaces = regions.size();
+		for (List<PoiIndex.Poi> pList : poiGroups.values())
+		{
+			totalPlaces += pList.size();
+		}
+
+		if (!filter.isEmpty() && regions.isEmpty() && poiGroups.isEmpty())
+		{
+			return false;
+		}
+
+		final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && !regions.isEmpty());
+		final String subtitle = regions.size() + " regions";
+
+		listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+		{
+			if (expandedCategory == cat)
+			{
+				expandedCategory = null;
+				expandedGroupKey = null;
+			}
+			else
+			{
+				expandedCategory = cat;
+				expandedGroupKey = null;
+			}
+			rebuild();
+		}));
+
+		if (isCategoryExpanded)
+		{
+			for (MapRegion region : regions)
+			{
+				final String regionGroupKey = "__region__" + region.name();
+				final boolean isRegionExpanded = regionGroupKey.equals(expandedGroupKey) || !filter.isEmpty();
+				final int dist = distanceToRegionCenter(region, from);
+				final String distText = dist >= 0 ? dist + " tiles" : "";
+
+				listPanel.add(groupRow(regionGroupKey, region.getDisplayName(), distText, isRegionExpanded, 16, () ->
+				{
+					expandedGroupKey = regionGroupKey.equals(expandedGroupKey) ? null : regionGroupKey;
+					rebuild();
+				}));
+
+				if (isRegionExpanded)
+				{
+					final WorldPoint center = new WorldPoint(region.getCenterX(), region.getCenterY(), 0);
+					final String centerDetail = region.getCenterX() + ", " + region.getCenterY()
+						+ (dist >= 0 ? "  " + dist + " tiles" : "");
+
+					listPanel.add(clickableRow("Region Center", centerDetail, null, false, false, 26,
+						() -> centerMapOn(center)));
+
+					final List<PoiIndex.Poi> regionPois = new ArrayList<>();
+					for (PoiIndex.Poi poi : poiIndex.all())
+					{
+						if (MapRegion.of(poi.getX(), poi.getY(), poi.getPlane()) == region)
+						{
+							if (filter.isEmpty() || poi.getName().toLowerCase(Locale.ROOT).contains(filter))
+							{
+								regionPois.add(poi);
+							}
+						}
+					}
+
+					if (from != null)
+					{
+						regionPois.sort(Comparator.comparingLong(p -> distanceSq(p.getX(), p.getY(), from)));
+					}
+
+					int shownPoi = 0;
+					for (PoiIndex.Poi poi : regionPois)
+					{
+						if (shownPoi++ >= MAX_ENTRIES_PER_GROUP)
+						{
+							listPanel.add(hint("    ... and " + (regionPois.size() - MAX_ENTRIES_PER_GROUP) + " more"));
+							break;
+						}
+
+						final WorldPoint wp = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
+						final String detail = from == null
+							? poi.getX() + ", " + poi.getY()
+							: poi.getX() + ", " + poi.getY() + "  " + tiles(wp, from);
+
+						listPanel.add(clickableRow(poi.getName(), detail, poiIndex.icon(poi.getKey()), false, false, 26,
+							() -> centerMapOn(wp)));
+					}
+				}
+			}
+
+			// Also render any POI groups in Places (e.g. region_label)
+			for (Map.Entry<String, List<PoiIndex.Poi>> entry : poiGroups.entrySet())
+			{
+				final String groupKey = entry.getKey();
+				final List<PoiIndex.Poi> pois = entry.getValue();
+				final String groupName = pois.get(0).getName();
+				final boolean isGroupExpanded = groupKey.equals(expandedGroupKey) || !filter.isEmpty();
+
+				listPanel.add(groupRow(groupKey, groupName, pois.size(), isGroupExpanded, 16, () ->
+				{
+					expandedGroupKey = groupKey.equals(expandedGroupKey) ? null : groupKey;
+					rebuild();
+				}));
+
+				if (isGroupExpanded)
+				{
+					renderPoiList(pois, from);
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private boolean renderTravelCategory(MapFinder.BrowseCategory cat, Map<String, List<PoiIndex.Poi>> poiGroups,
+		String filter, WorldPoint from)
+	{
+		final List<PlayerBoat> ownedBoats = boatTracker != null ? boatTracker.getOwnedBoats() : Collections.emptyList();
+		final List<PlayerBoat> matchingBoats = new ArrayList<>();
+
 		for (PlayerBoat boat : ownedBoats)
 		{
 			final String name = boat.getBoatName() != null ? boat.getBoatName() : "";
@@ -234,201 +720,189 @@ public class AtlasOfGielinorPanel extends PluginPanel
 				|| "ships".contains(filter)
 				|| "sailing".contains(filter))
 			{
-				matches.add(boat);
+				matchingBoats.add(boat);
 			}
 		}
 
-		if (matches.isEmpty())
+		final Map<String, List<PoiIndex.Poi>> matchingGroups = new LinkedHashMap<>();
+		int totalTravel = matchingBoats.size();
+
+		for (Map.Entry<String, List<PoiIndex.Poi>> entry : poiGroups.entrySet())
 		{
-			return;
-		}
+			final String groupKey = entry.getKey();
+			final List<PoiIndex.Poi> pois = entry.getValue();
+			final String groupName = pois.get(0).getName();
+			totalTravel += pois.size();
 
-		listPanel.add(groupRow("__boats__", "My Boats", matches.size()));
-
-		if (!"__boats__".equals(expandedKey))
-		{
-			return;
-		}
-
-		for (PlayerBoat boat : matches)
-		{
-			final SailingPort port = boat.getPort();
-			final String portName = port != null ? port.getName() : SailingPort.resolvePortName(null, boat.getPortId());
-			final String typeStr = boat.getBoatType() != null ? " (" + boat.getBoatType().getName() + ")" : "";
-			final String title = boat.getBoatName() + typeStr;
-
-			String detail = "Docked: " + portName;
-			if (port != null && port.getNavigationLocation() != null && from != null)
+			if (filter.isEmpty())
 			{
-				detail += "  " + tiles(port.getNavigationLocation(), from);
+				matchingGroups.put(groupKey, pois);
 			}
-
-			final Runnable action = (port != null && port.getNavigationLocation() != null)
-				? () -> plugin.centerMapOn(port.getNavigationLocation())
-				: null;
-
-			listPanel.add(clickableRow("    " + title, detail, null, action));
-		}
-	}
-
-	private void addMonsterSection(String filter, WorldPoint from)
-	{
-		if (!BossLocationData.isLoaded()) return;
-		if (monsterIndex == null || !monsterIndex.isLoaded())
-		{
-			final List<BossLocationData> matches = new ArrayList<>();
-			for (BossLocationData monster : BossLocationData.values())
+			else
 			{
-				if (filter.isEmpty()
-					|| monster.getName().toLowerCase(Locale.ROOT).contains(filter)
-					|| monster.getLocationName().toLowerCase(Locale.ROOT).contains(filter))
+				final boolean groupMatches = groupName.toLowerCase(Locale.ROOT).contains(filter)
+					|| cat.getDisplayName().toLowerCase(Locale.ROOT).contains(filter);
+				if (groupMatches)
 				{
-					matches.add(monster);
+					matchingGroups.put(groupKey, pois);
 				}
-			}
-
-			if (matches.isEmpty())
-			{
-				return;
-			}
-
-			listPanel.add(groupRow("__bosses__", "Bosses", matches.size()));
-
-			if (!"__bosses__".equals(expandedKey))
-			{
-				return;
-			}
-
-			for (BossLocationData monster : matches)
-			{
-				final WorldPoint point = monster.getWorldPoint();
-				final String detail = from == null
-					? monster.getLocationName()
-					: monster.getLocationName() + "  " + tiles(point, from);
-
-				listPanel.add(clickableRow(monster.getName(), detail, null,
-					() -> plugin.centerMapOn(point)));
-			}
-			return;
-		}
-
-		final Map<String, List<MonsterIndex.Zone>> byMonster = monsterIndex.byMonster();
-
-		// 833 monsters would bury the legend, so they stay behind the filter rather than listing by default.
-		if (filter.isEmpty())
-		{
-			listPanel.add(hint(byMonster.size() + " monsters — type to search them"));
-			return;
-		}
-
-		final List<Map.Entry<String, List<MonsterIndex.Zone>>> matches = new ArrayList<>();
-		for (Map.Entry<String, List<MonsterIndex.Zone>> entry : byMonster.entrySet())
-		{
-			boolean match = entry.getKey().toLowerCase(Locale.ROOT).contains(filter);
-			if (!match)
-			{
-				for (MonsterIndex.Zone zone : entry.getValue())
+				else
 				{
-					if (zone.getLocationName() != null
-						&& zone.getLocationName().toLowerCase(Locale.ROOT).contains(filter))
+					final List<PoiIndex.Poi> matchedPois = new ArrayList<>();
+					for (PoiIndex.Poi p : pois)
 					{
-						match = true;
-						break;
+						if (p.getName().toLowerCase(Locale.ROOT).contains(filter))
+						{
+							matchedPois.add(p);
+						}
+					}
+					if (!matchedPois.isEmpty())
+					{
+						matchingGroups.put(groupKey, matchedPois);
 					}
 				}
 			}
-			if (match)
+		}
+
+		if (!filter.isEmpty() && matchingBoats.isEmpty() && matchingGroups.isEmpty())
+		{
+			return false;
+		}
+
+		final boolean isCategoryExpanded = (cat == expandedCategory) || (!filter.isEmpty() && (!matchingBoats.isEmpty() || !matchingGroups.isEmpty()));
+		final String subtitle = totalTravel + (totalTravel == 1 ? " location" : " locations");
+
+		listPanel.add(categoryRow(cat, subtitle, isCategoryExpanded, () ->
+		{
+			if (expandedCategory == cat)
 			{
-				matches.add(entry);
+				expandedCategory = null;
+				expandedGroupKey = null;
+			}
+			else
+			{
+				expandedCategory = cat;
+				expandedGroupKey = null;
+			}
+			rebuild();
+		}));
+
+		if (isCategoryExpanded)
+		{
+			if (!matchingBoats.isEmpty())
+			{
+				final String boatsGroupKey = "__boats__";
+				final boolean isBoatsExpanded = boatsGroupKey.equals(expandedGroupKey) || !filter.isEmpty();
+
+				listPanel.add(groupRow(boatsGroupKey, "My Boats", matchingBoats.size(), isBoatsExpanded, 16, () ->
+				{
+					expandedGroupKey = boatsGroupKey.equals(expandedGroupKey) ? null : boatsGroupKey;
+					rebuild();
+				}));
+
+				if (isBoatsExpanded)
+				{
+					for (PlayerBoat boat : matchingBoats)
+					{
+						final SailingPort port = boat.getPort();
+						final String portName = port != null ? port.getName() : SailingPort.resolvePortName(null, boat.getPortId());
+						final String typeStr = boat.getBoatType() != null ? " (" + boat.getBoatType().getName() + ")" : "";
+						final String title = boat.getBoatName() + typeStr;
+
+						String detail = "Docked: " + portName;
+						if (port != null && port.getNavigationLocation() != null && from != null)
+						{
+							detail += "  " + tiles(port.getNavigationLocation(), from);
+						}
+
+						final Runnable action = (port != null && port.getNavigationLocation() != null)
+							? () -> centerMapOn(port.getNavigationLocation())
+							: null;
+
+						listPanel.add(clickableRow(title, detail, null, false, false, 26, action));
+					}
+				}
+			}
+
+			for (Map.Entry<String, List<PoiIndex.Poi>> entry : matchingGroups.entrySet())
+			{
+				final String groupKey = entry.getKey();
+				final List<PoiIndex.Poi> pois = entry.getValue();
+				final String groupName = pois.get(0).getName();
+				final boolean isGroupExpanded = groupKey.equals(expandedGroupKey) || !filter.isEmpty();
+
+				listPanel.add(groupRow(groupKey, groupName, pois.size(), isGroupExpanded, 16, () ->
+				{
+					expandedGroupKey = groupKey.equals(expandedGroupKey) ? null : groupKey;
+					rebuild();
+				}));
+
+				if (isGroupExpanded)
+				{
+					renderPoiList(pois, from);
+				}
 			}
 		}
 
-		if (matches.isEmpty())
+		return true;
+	}
+
+	private void renderPoiList(List<PoiIndex.Poi> pois, WorldPoint from)
+	{
+		final List<PoiIndex.Poi> sorted = new ArrayList<>(pois);
+		if (from != null)
 		{
-			return;
+			sorted.sort(Comparator.comparingLong(p -> distanceSq(p.getX(), p.getY(), from)));
 		}
 
-		int groupShown = 0;
-		for (Map.Entry<String, List<MonsterIndex.Zone>> entry : matches)
+		int shown = 0;
+		for (PoiIndex.Poi poi : sorted)
 		{
-			if (groupShown++ >= MAX_MONSTER_GROUPS)
+			if (shown++ >= MAX_ENTRIES_PER_GROUP)
 			{
-				listPanel.add(hint("... and " + (matches.size() - MAX_MONSTER_GROUPS) + " more — keep typing"));
+				listPanel.add(hint("    ... and " + (sorted.size() - MAX_ENTRIES_PER_GROUP) + " more"));
 				break;
 			}
-
-			final String name = entry.getKey();
-			final List<MonsterIndex.Zone> zones = entry.getValue();
-			final String key = "__monster__" + name;
-
-			listPanel.add(groupRow(key, name, zones.size()));
-
-			if (key.equals(expandedKey))
-			{
-				final List<MonsterIndex.Zone> sorted = new ArrayList<>(zones);
-				if (from != null)
-				{
-					sorted.sort(Comparator.comparingLong(z -> distanceSq(z.getX(), z.getY(), from)));
-				}
-
-				int shown = 0;
-				for (MonsterIndex.Zone zone : sorted)
-				{
-					if (shown++ >= MAX_ENTRIES_PER_GROUP)
-					{
-						listPanel.add(hint("  ... and " + (sorted.size() - MAX_ENTRIES_PER_GROUP) + " more"));
-						break;
-					}
-
-					final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
-					final String loc = zone.getLocationName() != null ? zone.getLocationName() : "";
-					final String detail = from == null
-						? loc
-						: loc + "  " + tiles(point, from);
-
-					listPanel.add(clickableRow("    " + zone.getMonster(), detail, null,
-						() -> plugin.centerMapOn(point)));
-				}
-			}
+			listPanel.add(entryRow(poi, from));
 		}
 	}
 
-	private JPanel groupRow(String key, String name, int count)
+	private JPanel categoryRow(MapFinder.BrowseCategory cat, String subtitle, boolean isExpanded, Runnable action)
 	{
-		final JPanel row = clickableRow(name, count + (count == 1 ? " location" : " locations"),
-			key.startsWith("__") ? null : poiIndex.icon(key),
-			() ->
-			{
-				expandedKey = key.equals(expandedKey) ? null : key;
-				rebuild();
-			});
+		return clickableRow(cat.getDisplayName(), subtitle, poiIndex.icon(cat.getIconKey()),
+			isExpanded, true, 6, action);
+	}
 
-		if (key.equals(expandedKey))
-		{
-			row.setBackground(ColorScheme.DARKER_GRAY_HOVER_COLOR);
-		}
+	private JPanel groupRow(String key, String name, int count, boolean isExpanded, int leftIndent, Runnable action)
+	{
+		final String countText = count + (count == 1 ? " location" : " locations");
+		return groupRow(key, name, countText, isExpanded, leftIndent, action);
+	}
 
-		return row;
+	private JPanel groupRow(String key, String name, String countText, boolean isExpanded, int leftIndent, Runnable action)
+	{
+		final java.awt.Image icon = key.startsWith("__") ? null : poiIndex.icon(key);
+		return clickableRow(name, countText, icon, isExpanded, true, leftIndent, action);
 	}
 
 	private JPanel entryRow(PoiIndex.Poi poi, WorldPoint from)
 	{
+		final WorldPoint wp = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 		final String detail = from == null
 			? poi.getX() + ", " + poi.getY()
-			: poi.getX() + ", " + poi.getY() + "  "
-				+ tiles(new WorldPoint(poi.getX(), poi.getY(), poi.getPlane()), from);
+			: poi.getX() + ", " + poi.getY() + "  " + tiles(wp, from);
 
-		final JPanel row = clickableRow("    " + poi.getName(), detail, null,
-			() -> plugin.centerMapOn(new WorldPoint(poi.getX(), poi.getY(), poi.getPlane())));
-		row.setBorder(new EmptyBorder(3, 14, 3, 6));
-		return row;
+		return clickableRow(poi.getName(), detail, null, false, false, 26,
+			() -> centerMapOn(wp));
 	}
 
-	private JPanel clickableRow(String title, String detail, java.awt.Image icon, Runnable action)
+	private JPanel clickableRow(String title, String detail, java.awt.Image icon,
+		boolean isExpanded, boolean showChevron, int leftIndent, Runnable action)
 	{
+		final Color baseBg = isExpanded ? ROW_HOVER : ROW_BG;
 		final JPanel row = new JPanel(new GridBagLayout());
-		row.setBackground(ROW_BG);
-		row.setBorder(new EmptyBorder(4, 6, 4, 6));
+		row.setBackground(baseBg);
+		row.setBorder(new EmptyBorder(4, leftIndent, 4, 6));
 		row.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		row.setAlignmentX(Component.LEFT_ALIGNMENT);
 		row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -438,7 +912,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		c.gridy = 0;
 		c.gridheight = 2;
 		c.anchor = GridBagConstraints.WEST;
-		c.insets = new java.awt.Insets(0, 0, 0, 6);
+		c.insets = new Insets(0, 0, 0, 6);
 
 		if (icon != null)
 		{
@@ -451,7 +925,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		c.fill = GridBagConstraints.HORIZONTAL;
 
 		final JLabel titleLabel = new JLabel(title);
-		titleLabel.setFont(FontManager.getRunescapeSmallFont());
+		titleLabel.setFont(leftIndent <= 6 ? FontManager.getRunescapeBoldFont() : FontManager.getRunescapeSmallFont());
 		titleLabel.setForeground(Color.WHITE);
 		row.add(titleLabel, c);
 
@@ -460,6 +934,22 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		detailLabel.setFont(FontManager.getDefaultFont().deriveFont(10f));
 		detailLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 		row.add(detailLabel, c);
+
+		if (showChevron)
+		{
+			c.gridx = 2;
+			c.gridy = 0;
+			c.gridheight = 2;
+			c.weightx = 0;
+			c.fill = GridBagConstraints.NONE;
+			c.anchor = GridBagConstraints.EAST;
+			c.insets = new Insets(0, 4, 0, 2);
+
+			final JLabel chevronLabel = new JLabel(isExpanded ? "▼" : "▸");
+			chevronLabel.setFont(FontManager.getDefaultFont().deriveFont(9f));
+			chevronLabel.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
+			row.add(chevronLabel, c);
+		}
 
 		row.addMouseListener(new MouseAdapter()
 		{
@@ -481,7 +971,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 			@Override
 			public void mouseExited(MouseEvent e)
 			{
-				row.setBackground(ROW_BG);
+				row.setBackground(baseBg);
 			}
 		});
 
@@ -498,7 +988,26 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		return label;
 	}
 
-	/** Squared tile distance; only ever used to order lists, so the square root is wasted work. */
+	private static int distanceToRegionCenter(MapRegion region, WorldPoint from)
+	{
+		if (from == null)
+		{
+			return -1;
+		}
+		return distanceTiles(new WorldPoint(region.getCenterX(), region.getCenterY(), 0), from);
+	}
+
+	private static int distanceTiles(WorldPoint point, WorldPoint from)
+	{
+		if (from == null || point == null)
+		{
+			return -1;
+		}
+		final int dx = point.getX() - from.getX();
+		final int dy = point.getY() - from.getY();
+		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
+	}
+
 	private static long distanceSq(int x, int y, WorldPoint from)
 	{
 		final long dx = (long) x - from.getX();
@@ -508,8 +1017,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 
 	private static String tiles(WorldPoint point, WorldPoint from)
 	{
-		final int dx = point.getX() - from.getX();
-		final int dy = point.getY() - from.getY();
-		return (int) Math.sqrt((double) dx * dx + (double) dy * dy) + " tiles";
+		final int dist = distanceTiles(point, from);
+		return dist >= 0 ? dist + " tiles" : "";
 	}
 }

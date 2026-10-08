@@ -73,7 +73,7 @@ public class MapFinder
 			this.description = description;
 		}
 
-		static BrowseCategory of(String key)
+		public static BrowseCategory of(String key)
 		{
 			switch (PoiCategory.of(key))
 			{
@@ -88,6 +88,24 @@ public class MapFinder
 				case PLACES: return PLACES;
 				case ALTARS:
 				case SERVICES: return SERVICES;
+				default: return null;
+			}
+		}
+
+		public String getIconKey()
+		{
+			switch (this)
+			{
+				case BANKS: return "bank";
+				case SKILLING: return "mining_site";
+				case MONSTERS: return "slayer_master";
+				case QUESTS: return "quest_start";
+				case SHOPS: return "general_store";
+				case TRAVEL: return "transportation";
+				case ACTIVITIES: return "minigame";
+				case DUNGEONS: return "dungeon";
+				case PLACES: return "map_link";
+				case SERVICES: return "altar";
 				default: return null;
 			}
 		}

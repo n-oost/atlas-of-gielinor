@@ -541,7 +541,7 @@ class MapTileRenderer
 	 * the cache render bakes between rooms) turned fully transparent, so the surface drawn
 	 * underneath shows through the tunnels. Computed once per tile and cached.
 	 */
-	private BufferedImage voidKeyed(BufferedImage src)
+	private BufferedImage voidKeyed(BufferedImage src, int plane, int zoom, int tileX, int tileY)
 	{
 		BufferedImage out = voidKeyedTiles.get(src);
 		if (out != null)
@@ -551,9 +551,15 @@ class MapTileRenderer
 		final int w = src.getWidth();
 		final int h = src.getHeight();
 		final int[] px = src.getRGB(0, 0, w, h, null, 0, w);
+		final double span = WikiMapTiles.worldTilesPerImageTile(zoom);
+		final double originX = WikiMapTiles.tileOrigin(tileX, zoom);
+		final double originY = WikiMapTiles.tileOrigin(tileY, zoom);
 		for (int i = 0; i < px.length; i++)
 		{
-			final int p = px[i];
+			final int p = DungeonVoid.brightenGoblinMaze(px[i], plane,
+				originX + (i % w + 0.5) * span / w,
+				originY + (h - i / w - 0.5) * span / h);
+			px[i] = p;
 			if (DungeonVoid.isVoid(p))
 			{
 				px[i] = 0;
@@ -676,7 +682,7 @@ class MapTileRenderer
 					continue;
 				}
 
-				graphics.drawImage(keyVoid ? voidKeyed(tile) : tile, x0, y0, w, h, null);
+				graphics.drawImage(keyVoid ? voidKeyed(tile, plane, tileZoom, tileX, tileY) : tile, x0, y0, w, h, null);
 			}
 		}
 	}

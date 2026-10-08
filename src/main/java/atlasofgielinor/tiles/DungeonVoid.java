@@ -46,6 +46,20 @@ public final class DungeonVoid
 	{
 	}
 
+	/** Preserve the Goblin Maze's near-black floor before applying the void mask. */
+	public static int brightenGoblinMaze(int argb, int plane, double worldX, double worldY)
+	{
+		final int rgb = argb & 0xFFFFFF;
+		if (plane == 0 && worldX >= 3222 && worldX < 3310
+			&& worldY >= 9598 && worldY < 9659
+			&& rgb != 0 && ((argb >>> 16) & 0xFF) <= 12
+			&& ((argb >>> 8) & 0xFF) <= 12 && (argb & 0xFF) <= 12)
+		{
+			return (argb & 0xFF000000) | 0x1C1A1A;
+		}
+		return argb;
+	}
+
 	/** True when {@code argb} is dungeon void and should be made fully transparent. */
 	public static boolean isVoid(int argb)
 	{

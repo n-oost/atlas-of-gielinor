@@ -41,6 +41,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -61,6 +62,7 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.PluginPanel;
+import net.runelite.client.util.LinkBrowser;
 
 /**
  * The map legend: every kind of place on the map, collapsed into one row each.
@@ -75,6 +77,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 	private static final Color ROW_BG = ColorScheme.DARKER_GRAY_COLOR;
 	private static final int MAX_ENTRIES_PER_GROUP = 40;
 	private static final int MAX_MONSTER_GROUPS = 40;
+	private static final String FEEDBACK_URL = "https://github.com/n-oost/atlas-of-gielinor/issues/new/choose";
 
 	private final AtlasOfGielinorPlugin plugin;
 	private final PoiIndex poiIndex;
@@ -135,6 +138,11 @@ public class AtlasOfGielinorPanel extends PluginPanel
 
 		add(searchField, BorderLayout.NORTH);
 		add(scroll, BorderLayout.CENTER);
+
+		final JButton feedbackButton = new JButton("Send feedback");
+		feedbackButton.setToolTipText("Report a bug or suggest an improvement on GitHub");
+		feedbackButton.addActionListener(e -> LinkBrowser.browse(FEEDBACK_URL));
+		add(feedbackButton, BorderLayout.SOUTH);
 
 		rebuild();
 	}

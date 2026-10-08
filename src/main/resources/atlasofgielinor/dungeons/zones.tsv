@@ -401,3 +401,11 @@ NATIVE_NORTHERN_OCEAN_UNDERGROUND_MISCELLANIA_UNDERGROUND	native_northern_ocean_
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_PENGUIN_BASE	native_northern_ocean_underground__penguin_base	KGP Headquarters	2638	4011	0	2655	10390	0	6379	64	Native section of Northern Ocean Underground	0	0	0	0
 NATIVE_NORTHERN_OCEAN_UNDERGROUND_WEISS_SALT_MINE	native_northern_ocean_underground__weiss_salt_mine	Weiss Salt Mine	2869	3941	0	2845	10351	0	6410	64	Native section of Northern Ocean Underground	0	0	0	0
 LASSAR_UNDERCITY	lassar_undercity	Lassar Undercity	3036	3496	0	2587	6436	0	2940	192	Under Camdozaal; rock passage inside the ruins	2432	6208	2815	6527
+SLAYER_TOWER	slayer_tower	Slayer Tower	3428	3535	0	3428	3535	0	0	64	Basement and above-ground Slayer Tower floors	3400	3525	3455	3583
+AH_ZA_RHOON	ah_za_rhoon	Ah Za Rhoon	2934	2970	0	2911	9307	0	6337	64	Authored tuner placement	2880	9280	2943	9335
+BANANA_PLANTATION	banana_plantation	Banana plantation	2713	2783	0	2713	9183	0	6400	64	Authored tuner placement	2684	9156	2743	9211
+SABAS_CAVE	sabas_cave	Saba's cave	2909	3600	0	2269	4755	0	1155	64	Authored tuner placement	2264	4748	2275	4763
+AGILITY_PYRAMID	agility_pyramid	Agility Pyramid	3520	2834	0	3039	4703	0	1869	64	Authored tuner placement	3008	4672	3071	4735
+VILLA_LUCENS	villa_lucens	Villa Lucens	1455	2927	0	1449	9325	0	6398	64	Authored tuner placement	1428	9308	1471	9343
+MAGE_TRAINING_ARENA	mage_training_arena	Mage Training Arena	3360	3306	0	3359	9695	0	6389	64	Authored tuner placement	3328	9664	3390	9727
+MIND_ALTAR	mind_altar	Mind altar	2980	3511	0	2792	4827	0	1316	64	Authored tuner placement	2784	4818	2800	4836

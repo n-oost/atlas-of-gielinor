@@ -1,10 +1,15 @@
-# Authored entrance markers; original entrance tiles remain in zones.tsv.
 # zone id	entrance index	marker x	marker y	hidden
 lumbridge_cellar	0	3209	3218	false
+taverley_dungeon	0	2892	3384	false
 brimhaven_dungeon	0	2737	3151	false
+miscellania_underground	0	2513	3866	false
+miscellania_underground	1	2508	3847	false
 ancient_cavern	0	2510	3511	false
 underground_pass	1	2315	3217	false
+camdozaal	0	3000	3492	false
+lassar_undercity	0	3061	3523	false
 dorgesh_kaan	0	3262	3188	false
+karuulm_slayer_dungeon	0	1311	3805	false
 dragon_nest	0	1285	3130	false
 fortis_barracks	0	1641	3166	false
 kalphite_lair	0	3226	3112	false
@@ -14,15 +19,23 @@ mos_le_harmless_cave	2	3830	3060	false
 paterdomus_basement	1	3420	3480	true
 chasm_of_tears	0	3187	3124	true
 motherlode_mine	0	3020	3360	false
+ice_troll_caves	1	2315	3892	false
+ice_troll_caves	2	2469	3881	true
+troll_stronghold	0	2839	3691	false
+troll_stronghold	2	2827	3648	false
 haunted_mine	0	3453	3244	false
 barrows_crypts	0	3565	3290	false
 meiyerditch_laboratories	0	3643	3308	false
 nature_grotto	0	3441	3338	false
 ectofuntus_dungeon	1	3651	3519	true
 poison_waste_dungeon	0	2321	3100	false
+ghorrock_dungeon	0	2870	3921	false
 hunter_guild	0	1558	3048	false
 hunter_guild	1	1535	3047	false
 lithkren_vault	0	3559	4010	false
 river_elid_dungeon	1	3367	3134	false
 port_sarim_rat_pits	0	3017	3232	false
 port_sarim_rat_pits	1	3028	3226	true
+here_be_minotaurs	0	1967	3095	false
+ungael_laboratory	0	2272	4079	false
+slayer_tower	0	3428	3521	false

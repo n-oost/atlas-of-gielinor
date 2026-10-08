@@ -3,8 +3,8 @@ deepfin_point	deepfin_mooring
 deepfin_mine	deepfin_mine_entrance	deepfin_mine_piece
 grimstone_island	grimstone_mooring	
 grimstone_dungeon	grimstone_dungeon_entrance	grimstone_dungeon_piece
-ghorrock_dungeon		
-isle_of_souls_dungeon	poi_000347	isle_of_souls_piece
+ghorrock_dungeon		ghorrock_authored_piece
+isle_of_souls_dungeon	poi_000347	isle_of_souls_native_piece
 camdozaal		
 lassar_undercity		lassar_undercity_piece
 god_wars_dungeon	poi_002340	god_wars_main_piece

@@ -24,26 +24,27 @@ underground_pass	Underground Pass (5 - Iban's Lair)	1	2406	3223	1380
 underground_pass	Underground Pass (6 - Well of Voyage)	0	2406	3211	1179
 waterbirth_dungeon	Waterbirth Island Dungeon (upper)	0	2544	3741	1195
 waterbirth_dungeon	Dagannoth Kings Lair	0	2544	3770	1389
-karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Wyrms)	0	1311	3807	1090
-karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Hydras)	0	1311	3825	1090
+karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Wyrms)	0	1331	3806	1436
+karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Middle)	1	1331	3810	1437
+karuulm_slayer_dungeon	Karuulm Slayer Dungeon (Hydras)	2	1315	3791	1438
 mining_guild	Mining Guild (ground)	0	3019	3339	1361
-mining_guild	Mining Guild (Amethyst Mine)	0	3030	3360	1361
+mining_guild	Mining Guild (Amethyst Mine)	0	3023	3354	1361
 brimhaven_dungeon	Brimhaven Dungeon (Metal Dragons)	0	2739	3180	1016
 brimhaven_dungeon	Brimhaven Dungeon (Red Dragons)	0	2739	3169	1016
-taverley_dungeon	Taverley Dungeon (Main level)	0	2884	3397	1162
-taverley_dungeon	Cerberus Lair	0	2874	3447	1162
+taverley_dungeon	Taverley Dungeon (Main level)	0	2805	3387	1162
+taverley_dungeon	Cerberus Lair	0	2805	3377	1162
 cam_torum	Cam Torum (City level)	1	1435	3145	1020
 neypotzli	Neypotzli (Moons of Peril)	0	1439	3279	1126
-haunted_mine	Haunted Mine (upper level)	0	3439	3232	227
-haunted_mine	Haunted Mine (Treus Dayth chamber)	0	3430	3240	227
+haunted_mine	Haunted Mine (upper level)	0	3426	3230	1000
+haunted_mine	Haunted Mine (lower level)	0	3530	3173	1312
 morytania_spider_cave	Morytania Spider Cave	0	3666	3419	1256
 morytania_spider_cave	Araxxor's Lair	0	3648	3419	1222
 shade_catacombs	Shade Catacombs	0	3522	3292	1266
-vetions_rest	Vet'ion's Rest	0	3295	3802	1280
+vetions_rest	Vet'ion's Rest	0	3221	3787	1410
 keldagrim	Keldagrim (Grand Exchange)	0	2821	3736	1092
 keldagrim	Keldagrim (Palace)	1	2821	3722	1092
-sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3727	3300
-sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3727	3870
+sisterhood_sanctuary	Sisterhood Sanctuary (crypt)	1	3768	3368	1152
+sisterhood_sanctuary	The Nightmare of Ashihama (lair)	0	3776	3871	1021
 jormungands_prison	Jormungand's Prison	0	2465	4010
 ape_atoll_dungeon	Ape Atoll (upper / gorillas)	1	2661	2769
 ape_atoll_dungeon	Ape Atoll (lower tunnels)	0	2661	2780
@@ -53,30 +54,30 @@ poison_waste_dungeon	Poison Waste Sewer (main level)	1	2321	3117
 poison_waste_dungeon	Poison Waste Sewer (lower level)	0	2321	3108
 ape_atoll_dungeon	Ape Atoll (Maniacal Monkeys)	1	2661	2758
 ape_atoll_dungeon	Ape Atoll (Kruk catwalks)	2	2670	2820
-tonali_cavern	Tonali Cavern	0	1309	3104	1301
+tonali_cavern	Tonali Cavern	0	1311	3073	1020
 dragon_nest	Dragon Nest	0	1264	3103	1303
-troll_stronghold	Troll Stronghold (Entrance & Kitchen)	0	2839	3690	1172
-troll_stronghold	Troll Stronghold (Prison & Roof)	1	2831	3677	1172
-troll_stronghold	Troll Stronghold (God Wars Pass)	0	2827	3647	1172
-god_wars_dungeon	God Wars Dungeon (main floor)	2	2918	3746	1069
-god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2948	3714	1388
+troll_stronghold	Troll Stronghold (bottom)	0	2833	3646	1426
+troll_stronghold	Troll Stronghold (middle)	1	2842	3662	1425
+troll_stronghold	Troll Stronghold (upper)	2	2840	3666	1424
+god_wars_dungeon	God Wars Dungeon (main floor)	2	2919	3778	1422
+god_wars_dungeon	God Wars Dungeon (Saradomin)	0	2941	3703	1421
 abyss	The Abyss	0	3105	3558	1275
 abyss	Abyssal Nexus	0	3172	3501	1390
-god_wars_dungeon	God Wars Dungeon (Nex)	0	2932	3647	1391
-ghorrock_dungeon	Phantom Muspah	0	2865	4073	1392
-ghorrock_dungeon	Duke Sucellus	0	2847	4048	1393
+god_wars_dungeon	God Wars Dungeon (Nex)	0	2959	3673	1423
+ghorrock_dungeon	Phantom Muspah	0	2862	3897	1428
+ghorrock_dungeon	Duke Sucellus	0	2895	3976	1428
 abyss	The Scar (Leviathan)	0	3105	3567	1394
-taverley_dungeon	Taverley Dungeon	0	2884	3398	1162
-taverley_dungeon	Cerberus Lair	0	2866	3463	1399
+taverley_dungeon	Taverley Dungeon	0	2805	3367	1162
+taverley_dungeon	Cerberus Lair	0	2805	3357	1399
 catacombs_of_kourend	Catacombs of Kourend	0	1636	3673	1021
-catacombs_of_kourend	Skotizo Arena	0	1636	3678	1398
+catacombs_of_kourend	Skotizo Arena	0	1636	3680	1398
 scorpia_cave	Scorpia Cave	0	3233	3941	1395
-silk_chasm	Silk Chasm	2	3320	3798	1397
+silk_chasm	Silk Chasm	2	3320	3799	1411
 champions_guild_basement	Champions' Guild Basement	0	3188	3355	1225
 varrock_museum_basement	Varrock Museum basement (lower)	0	3256	3448	1191
 varrock_museum_basement	Varrock Museum basement (higher)	0	3256	3460	1402
 water_mill_cellar	Water mill cellar	0	3230	3286	1404
-varrock_rat_pits	Varrock Rat Pits	0	3262	3401	1405
+varrock_rat_pits	Varrock Rat Pits	0	3278	3396	1263
 vtam_corporation	VTAM Corporation	0	3243	3383	1403
 sorceress_garden	Sorceress's Garden	0	3320	3141	1406
 crash_site_cavern	Crash Site Cavern	0	2465	3570	1028
@@ -86,8 +87,8 @@ monkey_madness_hangar	Military Glider Hangar (post-quest)	0	2396	3504	1119
 keldagrim	Blast Furnace	0	2839	3790	1401
 sisterhood_sanctuary	The Nightmare of Ashihama (arena)	0	3791	3356	1259
 fenkenstrain_dungeon	Experiment Cave	0	3575	3526	1327
-camdozaal	Ruins of Camdozaal	0	2998	3493	1147
-lassar_undercity	Lassar Undercity / The Whisperer	0	3036	3496	1249
+camdozaal	Ruins of Camdozaal	0	3000	3486	1147
+lassar_undercity	Lassar Undercity / The Whisperer	0	3062	3517	1249
 lassar_undercity	The Whisperer (Shadow Realm)	0	3036	3488	1407
 barbarian_assault	Barbarian Assault waiting rooms	0	2533	3573	1408
 barbarian_assault	Barbarian Assault arena	0	2535	3582	1009
@@ -96,7 +97,7 @@ lithkren_vault	Lithkren Vault (upper)	0	3555	4002	1104
 lithkren_vault	Lithkren Vault (Dragon Forge)	0	3560	4076	1322
 underground_pass	Ruins of Tapoyauki	0	1624	3223	1020
 alchemical_society	Mastering Mixology	0	1389	2918	1220
-ghorrock_dungeon	Phantom Muspah (instance)	0	2865	4073	1410
+ghorrock_dungeon	Phantom Muspah (instance)	0	2862	3897	1428
 farming_guild_seed_vault	Farming Guild Seed Vault	0	1247	3740	1411
 lumbridge_cellar	Lumbridge Castle Cellar	0	3218	3218	1110
 lumbridge_cellar	Recipe for Disaster room	0	3218	3220	1412
@@ -116,7 +117,7 @@ rantzs_cave	Rantz's Cave	0	2630	2980	1349
 harmony_island_basement	Harmony Island Basement	0	3785	2825	1075
 penguin_base	KGP Headquarters	0	2681	4000	1337
 tunnel_of_chaos	Tunnel of Chaos	0	3284	3469	1173
-ungael_laboratory	Ungael Laboratory	0	2310	4081	1180
+ungael_laboratory	Ungael Laboratory	0	2272	4078	1180
 genie_cave	Genie Cave	0	3374	2905	1236
 black_knight_catacombs	Black Knight Catacombs	1	3020	3514	1419
 draynor_manor_basement	Ernest the Chicken basement	0	3092	3361	1231
@@ -125,4 +126,26 @@ corporeal_beast	Corporeal Beast Lair	2	3202	3681	1022
 corporeal_beast	Corporeal Beast entry cavern	2	3228	3681	1421
 jaldraocht_pyramid	Jaldraocht Pyramid upper chamber	3	3233	2898	1422
 smoke_devil_dungeon	Smoke Devil Dungeon	0	2412	3061	1269
-grimstone_dungeon	Grimstone Dungeon	0	2942	4083	1342
+grimstone_dungeon	Grimstone Dungeon	0	2942	4083	1427
+slayer_tower	Ground floor	0	3428	3535	1433
+slayer_tower	Basement	3	3417	3535	1432
+slayer_tower	First floor	1	3435	3537	1434
+slayer_tower	Second floor	2	3415	3540	1435
+slayer_tower	Roof — Grotesque Guardians	0	3428	3537	1439
+callistos_den	Callisto's Den	0	3295	3863	1412
+here_be_minotaurs	Minotaur's Rest	0	1981	3080	1240
+haunted_mine	Haunted Mine (main cave)	0	3439	3242	227
+haunted_mine	Haunted Mine (upper chamber)	2	3426	3230	1000
+god_wars_dungeon	God Wars Dungeon (Saradomin upper)	1	2955	3725	1421
+ghorrock_dungeon	Ghorrock Dungeon (quest area)	2	2957	3868	1428
+sisterhood_sanctuary	Sisterhood Sanctuary (Slepe Crypt)	1	3809	3350	1021
+escape_caves	Wilderness Escape Caves	0	3281	3815	1280
+ice_troll_caves	Ice Troll Caves (upper)	1	2404	3871	1348
+ah_za_rhoon	Ah Za Rhoon	0	2934	2970	1002
+banana_plantation	Banana plantation	0	2713	2783	1008
+sabas_cave	Saba's cave	0	2909	3600	1331
+agility_pyramid	Agility Pyramid	0	3520	2834	1355
+villa_lucens	Villa Lucens	0	1455	2927	1281
+mage_training_arena	Mage Training Arena	0	3360	3306	1254
+mind_altar	Mind altar	0	2980	3511	1339
+troll_stronghold	Troll Stronghold (separate interior)	0	2670	3861	1172

@@ -1,0 +1,12 @@
+# Deleted tuner markers; Reset POI removes an entry.
+button	chasm_of_tears	0
+button	ectofuntus_dungeon	1
+button	ice_troll_caves	2
+button	paterdomus_basement	1
+button	port_sarim_rat_pits	1
+floor	dragon_nest	0	1264	3103	Dragon Nest
+floor	mos_le_harmless_cave	0	3752	2949	Mos Le'Harmless (cave horrors)
+floor	mos_le_harmless_cave	0	3857	2962	Mos Le'Harmless (eastern caverns)
+floor	shade_catacombs	0	3522	3292	Shade Catacombs
+floor	yanille_agility_dungeon	0	2591	3066	Yanille Agility Dungeon (upper level)
+floor	yanille_agility_dungeon	0	2610	3135	Yanille Agility Dungeon (lower level)

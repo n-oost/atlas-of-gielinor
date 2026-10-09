@@ -16,9 +16,8 @@ PRIORITIES
 4. Move changing game content, coordinate lists, and curated exceptions into bundled datasets. Keep implementation constants and format limits in code.
 5. Simplify installation and maintenance. Automate repetitive asset preparation where practical.
 
-HOW TO WORK WITH ME
 
-I will share classes and ask questions.
+. 
 
 For a review:
 - Inspect the full implementation and relevant callers.
@@ -36,9 +35,6 @@ GUARDRAILS
 Preserve Java 11 compatibility, native menus and map-close input, asynchronous loading, cancellation, and complete pack validation. Follow all AGENTS.md restrictions.
 
 
-Start by inspecting the class or task I provide next.
-
 goal is to reduce token count of files under main/java towards 200k token use, not including comments.
 
-
-start with largest file
+Start by checking largest classes, or classes that are likely to share code that could be reduced for savings

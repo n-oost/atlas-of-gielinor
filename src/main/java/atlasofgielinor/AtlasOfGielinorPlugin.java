@@ -1084,6 +1084,24 @@ public class AtlasOfGielinorPlugin extends Plugin
 
 		final int worldX = (int) Math.floor(camera.worldX(mouse.getX(), viewport));
 		final int worldY = (int) Math.floor(camera.worldY(mouse.getY(), viewport));
+		if (shortestPathTracker.isRoutingEnabled())
+		{
+			// Shortest Path's map callback reads the hidden native camera. Capture our
+			// destination when the menu opens, before the cursor moves onto its row.
+			final WorldPoint destination = routePointAt(camera.worldX(mouse.getX(), viewport),
+				camera.worldY(mouse.getY(), viewport));
+			for (MenuEntry entry : client.getMenu().getMenuEntries())
+			{
+				if (entry.getType() == MenuAction.RUNELITE && "Set".equals(entry.getOption())
+					&& "Target".equals(net.runelite.client.util.Text.removeTags(entry.getTarget())))
+				{
+					entry.onClick(e ->
+					{
+						if (destination != null) shortestPathTracker.routeTo(destination);
+					});
+				}
+			}
+		}
 		if (camera.isViewingDungeonLayer())
 		{
 			addLocalMenuEntry("Return to surface", "<col=ffff00>Overworld</col>", e -> camera.exitDungeonToSurface());

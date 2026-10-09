@@ -54,12 +54,14 @@ This report documents the continuation of the Atlas of Gielinor / Better Map POI
 - **`poi_005883` (Making Friends with My Arm):** Factual category and difficulty corrected to `Master`, start refined to Burntmeat. Authored coordinates are at the exterior mountain approach at `(2840, 3920, 0)`. Canonical quest start is Burntmeat in the stronghold kitchen (`poi_004033` at `2841, 10060, 1`). Preserved as an unresolved placement conflict.
 
 ### `poi_005772` — Ferret
-- **Issue:** Conflict between partial Eagles' Peak quest progress (learning box trapping during the quest) versus complete quest finish.
-- **Disposition:** Retained as confirmed reference conflict pending authoritative gate script verification.
+- **Issue:** Conflict between partial Eagles' Peak quest progress (learning box trapping during the quest) versus complete quest finish, and false claim of kebbits/deadfalls.
+- **Resolution:** Factual requirements resolved in canonical catalog. Ferrets at Eagles' Peak require box traps and full completion of *Eagles' Peak* quest to catch; false claims of kebbits and deadfall traps removed. Authored coordinate `(2330, 3500, 0)` verified in live game scene.
 
 ### Thirteen fishing identity candidates
-- The 13 fishing candidates (`poi_002661`, `poi_002664`, `poi_002665` Sacred eel; `poi_002829` crystal eel; `poi_002735`, `poi_002738` infernal eel; `poi_002841`, `poi_002885` Camdozaal tetra; `poi_003255`, `poi_003269`, `poi_003274` cave eel; `poi_003026` shrimp/anchovies; `poi_002649` volcanic ash/seaweed) retain observed numeric NPC IDs and RuneLite fishing spot associations.
-- **Disposition:** All 13 remain unresolved. Spawns in dev scenes are association leads, not proof that the catalog markers denote them.
+- The 13 fishing candidates (`poi_002661`, `poi_002664`, `poi_002665` Sacred eel; `poi_002829` crystal eel; `poi_002735`, `poi_002738` infernal eel; `poi_002841`, `poi_002885` Camdozaal tetra; `poi_003255`, `poi_003269`, `poi_003274` cave eel; `poi_003026` shrimp/anchovies; `poi_002649` drift net fishing) were audited and remediated:
+  - Eliminated generic fallback clutter (`Tools: Net, Rod + Bait, Pot, or Harpoon`) in favor of specific tools, levels, and mechanics.
+  - Fabricated "Crystal Eel" (`poi_002829`) corrected to standard Isle of Souls Net/Bait spot (`Fishing Spot (Shrimp & Sardine)`, NPC 10513).
+- **Disposition:** All 13 candidates resolved in canonical catalog `pois.tsv` and `poi_aliases.tsv`. Coordinates preserved at verified fishing spots.
 
 ---
 

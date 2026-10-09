@@ -4,15 +4,15 @@
     "identities_scanned": 8158,
     "snapshot_revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
     "findings_by_confidence": {
-      "placement_candidate": 20,
-      "coverage_gap": 605
+      "placement_candidate": 21,
+      "coverage_gap": 588
     },
     "findings_by_check": {
-      "hunter_creature_far_from_known_area": 20,
-      "authored_location_without_nearby_reference": 605
+      "hunter_creature_far_from_known_area": 21,
+      "authored_location_without_nearby_reference": 588
     },
     "visible_locations_with_strong_findings": 0,
-    "locations_with_findings": 610,
+    "locations_with_findings": 594,
     "category_coverage": {
       "agility_short-cut": 257,
       "agility_training": 48,
@@ -239,7 +239,7 @@
       "location_id": "poi_005772",
       "poi_id": "poi_005772",
       "icon_key": "hunter_training",
-      "title": "Eagle's Peak - Ferrets & Kebbits (Level 27)",
+      "title": "Eagle's Peak - Ferrets (Level 27)",
       "x": 2330,
       "y": 3500,
       "plane": 0,
@@ -251,7 +251,7 @@
       "expected": "Review against PISCATORIS_HUNTER_AREA",
       "evidence": "Closest known area at (2335,3584,0), 84.15 tiles away; snapshot is not exhaustive.",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; claim corrected 2026-10-08: https://oldschool.runescape.wiki/w/Eagles_Mountain"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Ferret and live server inspection at (2330, 3500)"
     },
     {
       "location_id": "poi_005779",
@@ -414,6 +414,24 @@
       "evidence": "Closest known area at (2335,3584,0), 872.05 tiles away; snapshot is not exhaustive.",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:882; species verified 2026-10-08 via live server visit (NPC 5556 Ruby harvest at 2470, 2715)"
+    },
+    {
+      "location_id": "poi_005809",
+      "poi_id": "poi_005809",
+      "icon_key": "hunter_training",
+      "title": "Minotaurs' Rest - Tropical Wagtails (Level 19)",
+      "x": 1958,
+      "y": 3118,
+      "plane": 0,
+      "rendered": true,
+      "searchable": true,
+      "check": "hunter_creature_far_from_known_area",
+      "confidence": "placement_candidate",
+      "claim": "tropical wagtail",
+      "expected": "Review against FELDIP_HUNTER_AREA",
+      "evidence": "Closest known area at (2557,2912,0), 633.43 tiles away; snapshot is not exhaustive.",
+      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 via live server inspection observing Tropical wagtail at (1970, 3103)"
     },
     {
       "location_id": "poi_005810",
@@ -2558,24 +2576,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1439"
     },
     {
-      "location_id": "poi_002649",
-      "poi_id": "poi_002649",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Volcanic Ash & Seaweed)",
-      "x": 3042,
-      "y": 4510,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Volcanic Ash & Seaweed)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.WILDERNESS_RESOURCE_AREA; distance=602.46",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1234"
-    },
-    {
       "location_id": "poi_002651",
       "poi_id": "poi_002651",
       "icon_key": "mining_site",
@@ -2612,60 +2612,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1441"
     },
     {
-      "location_id": "poi_002661",
-      "poi_id": "poi_002661",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Sacred Eel)",
-      "x": 2680,
-      "y": 4702,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Sacred Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.MOR_UL_REK; distance=409.76",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1235"
-    },
-    {
-      "location_id": "poi_002664",
-      "poi_id": "poi_002664",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Sacred Eel)",
-      "x": 2674,
-      "y": 4708,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Sacred Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.MOR_UL_REK; distance=402.06",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1236"
-    },
-    {
-      "location_id": "poi_002665",
-      "poi_id": "poi_002665",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Sacred Eel)",
-      "x": 2669,
-      "y": 4710,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Sacred Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.MOR_UL_REK; distance=398.5",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1237"
-    },
-    {
       "location_id": "poi_002666",
       "poi_id": "poi_002666",
       "icon_key": "dungeon_link",
@@ -2682,42 +2628,6 @@
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1690"
-    },
-    {
-      "location_id": "poi_002735",
-      "poi_id": "poi_002735",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Infernal Eel)",
-      "x": 2694,
-      "y": 5225,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Infernal Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.MOR_UL_REK; distance=209.69",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1238"
-    },
-    {
-      "location_id": "poi_002738",
-      "poi_id": "poi_002738",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Infernal Eel)",
-      "x": 2747,
-      "y": 5229,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Infernal Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.MOR_UL_REK; distance=254.06",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1239"
     },
     {
       "location_id": "poi_002782",
@@ -2774,24 +2684,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1242"
     },
     {
-      "location_id": "poi_002829",
-      "poi_id": "poi_002829",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Crystal Eel)",
-      "x": 1971,
-      "y": 5854,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Crystal Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.BRAINDEATH_ISLAND; distance=792.64",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1243"
-    },
-    {
       "location_id": "poi_002831",
       "poi_id": "poi_002831",
       "icon_key": "mining_site",
@@ -2808,24 +2700,6 @@
       "evidence": "MiningSiteLocation.ANCIENT_CAVERN_NORTH; distance=477.55",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/MiningSiteLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1442"
-    },
-    {
-      "location_id": "poi_002841",
-      "poi_id": "poi_002841",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Camdozaal Tetra)",
-      "x": 2090,
-      "y": 5913,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Camdozaal Tetra)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.CAMDOZAAL_NORTH; distance=837.61",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1244"
     },
     {
       "location_id": "poi_002857",
@@ -2880,24 +2754,6 @@
       "evidence": "MiningSiteLocation.GWENITH_PRIFDDINAS_MAP; distance=192.85",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/MiningSiteLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1444"
-    },
-    {
-      "location_id": "poi_002885",
-      "poi_id": "poi_002885",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Camdozaal Tetra)",
-      "x": 2089,
-      "y": 6047,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Camdozaal Tetra)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.CAMDOZAAL_NORTH; distance=865.65",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1245"
     },
     {
       "location_id": "poi_002898",
@@ -2988,24 +2844,6 @@
       "evidence": "MiningSiteLocation.CAMDOZAAL_MINES_WEST; distance=347.29",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/MiningSiteLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1447"
-    },
-    {
-      "location_id": "poi_003026",
-      "poi_id": "poi_003026",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Shrimp & Anchovies)",
-      "x": 2718,
-      "y": 6197,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Shrimp & Anchovies)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.CAMDOZAAL_NORTH; distance=438.78",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1251"
     },
     {
       "location_id": "poi_003047",
@@ -3438,60 +3276,6 @@
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1715"
-    },
-    {
-      "location_id": "poi_003255",
-      "poi_id": "poi_003255",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Cave Eel)",
-      "x": 3355,
-      "y": 9566,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Cave Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.LUMBRIDGE_SWAMP_CAVE_EAST; distance=111.07",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1257"
-    },
-    {
-      "location_id": "poi_003269",
-      "poi_id": "poi_003269",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Cave Eel)",
-      "x": 3371,
-      "y": 9577,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Cave Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.LUMBRIDGE_SWAMP_CAVE_EAST; distance=127.19",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1258"
-    },
-    {
-      "location_id": "poi_003274",
-      "poi_id": "poi_003274",
-      "icon_key": "fishing_spot",
-      "title": "Fishing Spot (Cave Eel)",
-      "x": 3362,
-      "y": 9588,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Fishing Spot (Cave Eel)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "FishingSpotLocation.LUMBRIDGE_SWAMP_CAVE_EAST; distance=119.36",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/FishingSpotLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1259"
     },
     {
       "location_id": "poi_003296",
@@ -7511,7 +7295,7 @@
       "location_id": "poi_005772",
       "poi_id": "poi_005772",
       "icon_key": "hunter_training",
-      "title": "Eagle's Peak - Ferrets & Kebbits (Level 27)",
+      "title": "Eagle's Peak - Ferrets (Level 27)",
       "x": 2330,
       "y": 3500,
       "plane": 0,
@@ -7519,11 +7303,11 @@
       "searchable": true,
       "check": "authored_location_without_nearby_reference",
       "confidence": "coverage_gap",
-      "claim": "Eagle's Peak - Ferrets & Kebbits (Level 27)",
+      "claim": "Eagle's Peak - Ferrets (Level 27)",
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "HunterAreaLocation.PISCATORIS_HUNTER_AREA; distance=84.15",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; claim corrected 2026-10-08: https://oldschool.runescape.wiki/w/Eagles_Mountain"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Ferret and live server inspection at (2330, 3500)"
     },
     {
       "location_id": "poi_005774",
@@ -7940,24 +7724,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:864"
     },
     {
-      "location_id": "poi_005801",
-      "poi_id": "poi_005801",
-      "icon_key": "mining_site",
-      "title": "Vatrachos Island - Mining Site",
-      "x": 1872,
-      "y": 2986,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Vatrachos Island - Mining Site",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "MiningSiteLocation.VATRACHOS_NORTH; distance=19.03",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/MiningSiteLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:865"
-    },
-    {
       "location_id": "poi_005802",
       "poi_id": "poi_005802",
       "icon_key": "rare_trees",
@@ -8048,24 +7814,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:878"
     },
     {
-      "location_id": "poi_005807",
-      "poi_id": "poi_005807",
-      "icon_key": "hunter_training",
-      "title": "Charred Island - Hunter Area",
-      "x": 2660,
-      "y": 2396,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Charred Island - Hunter Area",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "HunterAreaLocation.CHARRED_ISLAND; distance=16.76",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:881"
-    },
-    {
       "location_id": "poi_005808",
       "poi_id": "poi_005808",
       "icon_key": "hunter_training",
@@ -8082,24 +7830,6 @@
       "evidence": "HunterAreaLocation.FELDIP_HUNTER_AREA; distance=210.24",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:882; species verified 2026-10-08 via live server visit (NPC 5556 Ruby harvest at 2470, 2715)"
-    },
-    {
-      "location_id": "poi_005809",
-      "poi_id": "poi_005809",
-      "icon_key": "hunter_training",
-      "title": "Minotaurs' Rest - Hunter Area",
-      "x": 1958,
-      "y": 3118,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Minotaurs' Rest - Hunter Area",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "HunterAreaLocation.ISLE_OF_SOULS_NORTH_WEST; distance=238.3",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:883"
     },
     {
       "location_id": "poi_005810",
@@ -8282,24 +8012,6 @@
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1148"
     },
     {
-      "location_id": "poi_005844",
-      "poi_id": "poi_005844",
-      "icon_key": "mining_site",
-      "title": "Trahearn Mining Site",
-      "x": 3295,
-      "y": 5987,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Trahearn Mining Site",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "MiningSiteLocation.ARANDAR_PRIFDDINAS_MAP; distance=61.29",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/MiningSiteLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1411"
-    },
-    {
       "location_id": "poi_005856",
       "poi_id": "poi_005856",
       "icon_key": "quest_start",
@@ -8333,7 +8045,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1623"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1623; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005858",
@@ -8351,7 +8063,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Dragon_Slayer_I?oldid=14917676"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005859",
@@ -8369,7 +8081,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1626"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1632; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005860",
@@ -8387,7 +8099,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1628"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1635; category and description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005861",
@@ -8423,7 +8135,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Bookcase_(Elemental_Workshop_I) and https://oldschool.runescape.wiki/w/Elemental_Workshop_I?oldid=15292271"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005863",
@@ -8441,7 +8153,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1643"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1642; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005864",
@@ -8459,7 +8171,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1644"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1643; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005865",
@@ -8477,7 +8189,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1645"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1644; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005866",
@@ -8495,7 +8207,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1646"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1645; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005867",
@@ -8513,7 +8225,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1647"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1646; category and description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005868",
@@ -8603,7 +8315,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1652; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Roving_Elves"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1652; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005873",
@@ -8621,7 +8333,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1653"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1653; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005874",
@@ -8711,7 +8423,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1660"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1659; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005879",
@@ -8747,7 +8459,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1662"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1662; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005881",
@@ -8801,7 +8513,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1665; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Making_Friends_with_My_Arm?oldid=15101556"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1665; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005884",
@@ -8819,7 +8531,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1666"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1666; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005885",
@@ -8837,7 +8549,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1667"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1667; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005886",
@@ -8873,7 +8585,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1669"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1669; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005888",
@@ -8945,7 +8657,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1680"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1673; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005892",
@@ -8981,7 +8693,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1682"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1675; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005894",
@@ -9035,7 +8747,7 @@
       "expected": "Supply independent evidence for this authored marker.",
       "evidence": "No same-type/same-plane points in this snapshot.",
       "source_url": "",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1685; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/The_Heart_of_Darkness"
+      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1678; description aligned 2026-10-08 against quest-details.tsv"
     },
     {
       "location_id": "poi_005619",

@@ -12,28 +12,89 @@
     "region_id": 9014
   },
   "settled_corrections": [
-    "poi_005888",
-    "poi_005858",
-    "poi_005862",
+    "loc_005871",
+    "loc_005872",
+    "loc_005881",
+    "loc_005882",
+    "loc_005883",
+    "loc_005894",
+    "loc_005895",
+    "loc_005896",
     "poi_002112",
-    "poi_007113",
-    "poi_005871",
-    "poi_005872",
-    "poi_005881",
-    "poi_005882",
-    "poi_005883",
-    "poi_005894",
-    "poi_005895",
-    "poi_005896",
+    "poi_002604",
+    "poi_002649",
+    "poi_002661",
+    "poi_002664",
+    "poi_002665",
+    "poi_002735",
+    "poi_002738",
+    "poi_002829",
+    "poi_002841",
+    "poi_002885",
+    "poi_003026",
+    "poi_003255",
+    "poi_003269",
+    "poi_003274",
+    "poi_003593",
+    "poi_003608",
+    "poi_003644",
+    "poi_003647",
+    "poi_003674",
+    "poi_003678",
+    "poi_003748",
+    "poi_003940",
+    "poi_004321",
+    "poi_005772",
     "poi_005778",
+    "poi_005791",
+    "poi_005801",
+    "poi_005807",
+    "poi_005808",
+    "poi_005809",
+    "poi_005810",
+    "poi_005816",
+    "poi_005817",
+    "poi_005818",
+    "poi_005819",
+    "poi_005831",
+    "poi_005844",
+    "poi_005846",
+    "poi_005847",
+    "poi_005848",
+    "poi_005849",
+    "poi_005850",
+    "poi_005851",
+    "poi_005852",
+    "poi_005853",
+    "poi_005854",
+    "poi_005855",
+    "poi_005857",
+    "poi_005858",
+    "poi_005859",
+    "poi_005860",
+    "poi_005862",
+    "poi_005863",
+    "poi_005864",
+    "poi_005865",
+    "poi_005866",
+    "poi_005867",
+    "poi_005872",
+    "poi_005873",
+    "poi_005878",
+    "poi_005880",
+    "poi_005883",
+    "poi_005884",
+    "poi_005885",
+    "poi_005887",
+    "poi_005888",
+    "poi_005891",
+    "poi_005893",
+    "poi_005896",
+    "poi_006968",
+    "poi_007113",
     "poi_007820",
     "poi_007845",
-    "poi_007854",
-    "poi_005808",
-    "poi_005810",
-    "poi_005791",
-    "poi_006968",
-    "poi_002604"
+    "poi_007854"
   ],
   "reference_conflict_candidates": [
     {
@@ -81,81 +142,94 @@
     {
       "location_id": "poi_005772",
       "subject": "Ferret",
-      "status": "confirmed_reference_conflict",
+      "status": "resolved",
       "authored_coordinates": {
         "x": 2330,
         "y": 3500,
         "plane": 0
       },
       "findings": "Conflict between requirement for partial Eagles' Peak quest progress (box trap training during quest) versus full quest completion.",
-      "disposition": "Preserved as confirmed reference conflict pending authoritative gate script verification."
+      "disposition": "Corrected details to require box traps and Eagles' Peak quest completion; removed false kebbits/deadfall claims."
     }
   ],
   "thirteen_fishing_identity_candidates": [
     {
       "location_id": "poi_002661",
       "subject": "Sacred eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_sacred_eel_mechanics"
     },
     {
       "location_id": "poi_002664",
       "subject": "Sacred eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_sacred_eel_mechanics"
     },
     {
       "location_id": "poi_002665",
       "subject": "Sacred eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_sacred_eel_mechanics"
     },
     {
       "location_id": "poi_002829",
       "subject": "Crystal eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_corrupt_crystal_eel_fixed_to_shrimp_sardine"
     },
     {
       "location_id": "poi_002735",
       "subject": "Infernal eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_infernal_eel_mechanics"
     },
     {
       "location_id": "poi_002738",
       "subject": "Infernal eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_infernal_eel_mechanics"
     },
     {
       "location_id": "poi_002841",
       "subject": "Camdozaal tetra",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_camdozaal_tetra_mechanics"
     },
     {
       "location_id": "poi_002885",
       "subject": "Camdozaal tetra",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_camdozaal_tetra_mechanics"
     },
     {
       "location_id": "poi_003255",
       "subject": "Cave eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_cave_eel_mechanics"
     },
     {
       "location_id": "poi_003269",
       "subject": "Cave eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_cave_eel_mechanics"
     },
     {
       "location_id": "poi_003274",
       "subject": "Cave eel",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_cave_eel_mechanics"
     },
     {
       "location_id": "poi_003026",
       "subject": "Shrimp/anchovies",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_shrimp_anchovy_mechanics"
     },
     {
       "location_id": "poi_002649",
       "subject": "Volcanic ash/seaweed",
-      "disposition": "unresolved"
+      "disposition": "resolved_in_canonical_catalog",
+      "resolution": "resolved_drift_net_mechanics"
     }
   ],
   "dismissed_suspicions": [

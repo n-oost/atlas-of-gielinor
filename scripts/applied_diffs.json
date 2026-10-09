@@ -1,0 +1,1640 @@
+[
+  {
+    "id": "poi_002649",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002649",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Volcanic Ash & Seaweed)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Seaweed & Drift Net\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nDrift net fishing",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1234"
+    },
+    "after": {
+      "id": "poi_002649",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Volcanic Ash & Seaweed)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method: Drift net fishing\\nLevel requirement: Level 44 Fishing and Level 47 Hunter\\nTools: Drift net\\nEquipment: Fishbowl helmet & Diving apparatus",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Drift_net_fishing"
+    }
+  },
+  {
+    "id": "poi_002661",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002661",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Sacred Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1235"
+    },
+    "after": {
+      "id": "poi_002661",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Sacred eel\\nLevel requirement: Level 87 Fishing\\nTools: Fishing rod & Fishing bait\\nDissecting with a knife requires Cooking and yields Zulrah's scales",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Sacred_eel"
+    }
+  },
+  {
+    "id": "poi_002664",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002664",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Sacred Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1236"
+    },
+    "after": {
+      "id": "poi_002664",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Sacred eel\\nLevel requirement: Level 87 Fishing\\nTools: Fishing rod & Fishing bait\\nDissecting with a knife requires Cooking and yields Zulrah's scales",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Sacred_eel"
+    }
+  },
+  {
+    "id": "poi_002665",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002665",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Sacred Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1237"
+    },
+    "after": {
+      "id": "poi_002665",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Sacred Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Sacred eel\\nLevel requirement: Level 87 Fishing\\nTools: Fishing rod & Fishing bait\\nDissecting with a knife requires Cooking and yields Zulrah's scales",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Sacred_eel"
+    }
+  },
+  {
+    "id": "poi_002735",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002735",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Infernal Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Infernal Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nOily rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1238"
+    },
+    "after": {
+      "id": "poi_002735",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Infernal Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Infernal eel\\nLevel requirement: Level 80 Fishing\\nTools: Oily fishing rod & Fishing bait\\nRequirements: Fire cape to enter Mor Ul Rek inner city",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Infernal_eel"
+    }
+  },
+  {
+    "id": "poi_002738",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002738",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Infernal Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Infernal Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nOily rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1239"
+    },
+    "after": {
+      "id": "poi_002738",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Infernal Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Infernal eel\\nLevel requirement: Level 80 Fishing\\nTools: Oily fishing rod & Fishing bait\\nRequirements: Fire cape to enter Mor Ul Rek inner city",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Infernal_eel"
+    }
+  },
+  {
+    "id": "poi_002829",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002829",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Crystal Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Crystal Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nCrystal rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1243"
+    },
+    "after": {
+      "id": "poi_002829",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Shrimp & Sardine)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Net & Bait (Shrimp, Anchovies, Sardine, Herring)\\nTools: Small fishing net or Fishing rod & Fishing bait\\nLevel requirement: Level 1 Fishing (Shrimp), Level 5 (Sardine), Level 10 (Herring), Level 15 (Anchovies)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 via live server inspection observing NPC 10513 Net/Bait spot at (1971, 5855)"
+    }
+  },
+  {
+    "id": "poi_002841",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002841",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Camdozaal Tetra)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Camdozaal Tetra\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nSmall fishing net",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1244"
+    },
+    "after": {
+      "id": "poi_002841",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Camdozaal Tetra)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Camdozaal tetra\\nLevel requirement: Level 33 Fishing\\nTools: Small fishing net\\nRegion: Ruins of Camdozaal (Below Ice Mountain)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Camdozaal_tetra"
+    }
+  },
+  {
+    "id": "poi_002885",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_002885",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Camdozaal Tetra)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Camdozaal Tetra\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nSmall fishing net",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1245"
+    },
+    "after": {
+      "id": "poi_002885",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Camdozaal Tetra)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Camdozaal tetra\\nLevel requirement: Level 33 Fishing\\nTools: Small fishing net\\nRegion: Ruins of Camdozaal (Below Ice Mountain)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Camdozaal_tetra"
+    }
+  },
+  {
+    "id": "poi_003026",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_003026",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Shrimp & Anchovies)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Shrimp & Anchovies\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nSmall fishing net",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1251"
+    },
+    "after": {
+      "id": "poi_003026",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Shrimp & Anchovies)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Shrimp & Anchovies\\nLevel requirement: Level 1 Fishing (Shrimp), Level 15 Fishing (Anchovies)\\nTools: Small fishing net",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Shrimp"
+    }
+  },
+  {
+    "id": "poi_003255",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_003255",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Cave Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1257"
+    },
+    "after": {
+      "id": "poi_003255",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Cave eel\\nLevel requirement: Level 38 Fishing\\nTools: Fishing rod & Fishing bait\\nRequirements: Light source and Spiny helmet in Lumbridge Swamp Caves",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Cave_eel"
+    }
+  },
+  {
+    "id": "poi_003269",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_003269",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Cave Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1258"
+    },
+    "after": {
+      "id": "poi_003269",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Cave eel\\nLevel requirement: Level 38 Fishing\\nTools: Fishing rod & Fishing bait\\nRequirements: Light source and Spiny helmet in Lumbridge Swamp Caves",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Cave_eel"
+    }
+  },
+  {
+    "id": "poi_003274",
+    "name": "Fishing spot",
+    "before": {
+      "id": "poi_003274",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Method / Fish: Cave Eel\\nTools: Net, Rod + Bait, Pot, or Harpoon\\nFishing rod + Bait",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1259"
+    },
+    "after": {
+      "id": "poi_003274",
+      "name": "Fishing spot",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Fishing Spot (Cave Eel)",
+      "category": "Skilling \u2022 Fishing",
+      "details": "Fish: Cave eel\\nLevel requirement: Level 38 Fishing\\nTools: Fishing rod & Fishing bait\\nRequirements: Light source and Spiny helmet in Lumbridge Swamp Caves",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Cave_eel"
+    }
+  },
+  {
+    "id": "poi_003593",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003593",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 3187, 2367 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003593",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (The Summer Shore)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Must visit The Summer Shore first\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003608",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003608",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 1944, 2753 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003608",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Deepfin Point)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Must visit Deepfin Point first\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003644",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003644",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 1456, 2968 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003644",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Aldarin)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003647",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003647",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 1514, 2970 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003647",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Sunset Coast)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003674",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003674",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 2142, 3123 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003674",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Port Tyras)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Regicide\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003678",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003678",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 1744, 3136 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003678",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Civitas illa Fortis)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003748",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003748",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 2157, 3331 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003748",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Prifddinas)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Song of the Elves\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_003940",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_003940",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 3181, 6083 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_003940",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Prifddinas Quest Instance)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Song of the Elves (quest instance)\\nFares: Standard distance-based fares",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_004321",
+    "name": "Transportation",
+    "before": {
+      "id": "poi_004321",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Transportation",
+      "category": "Travel",
+      "details": "Type: transportation\\nLocation: 2676, 3275 (Plane 1)\\nNo additional details available.",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified"
+    },
+    "after": {
+      "id": "poi_004321",
+      "name": "Transportation",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Ship to Brimhaven / Rimmington",
+      "category": "Travel",
+      "details": "Operator: Captain Barnaby\\nDestinations: Brimhaven (30 coins), Rimmington\\nRequirements: None for Brimhaven (Rocking Out for Rimmington)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Captain_Barnaby"
+    }
+  },
+  {
+    "id": "poi_005772",
+    "name": "Eagle's Peak - Ferrets (Level 27)",
+    "before": {
+      "id": "poi_005772",
+      "name": "Eagle's Peak - Ferrets & Kebbits (Level 27)",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Eagle's Peak - Ferrets & Kebbits (Level 27)",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Ferret (Requires completion of Eagles' Peak)\\nLevel requirement: Level 27 Hunter\\nCatch method: Box trap / Deadfall\\nRegion: Kandarin (Eagle's Peak)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; claim corrected 2026-10-08: https://oldschool.runescape.wiki/w/Eagles_Mountain"
+    },
+    "after": {
+      "id": "poi_005772",
+      "name": "Eagle's Peak - Ferrets (Level 27)",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Eagle's Peak - Ferrets (Level 27)",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Ferret (Requires completion of Eagles' Peak)\\nLevel requirement: Level 27 Hunter\\nCatch method: Box trap\\nRegion: Kandarin (Eagle's Peak)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:805; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Ferret and live server inspection at (2330, 3500)"
+    }
+  },
+  {
+    "id": "poi_005801",
+    "name": "Vatrachos Island - Mining Site",
+    "before": {
+      "id": "poi_005801",
+      "name": "Vatrachos Island - Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Vatrachos Island - Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Clay (1), Copper (1), Tin (1), Iron (15), Mithril (55)\\nTool needed: Pickaxe (Bronze to Crystal)\\nRegion: Vatrachos Island (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:865"
+    },
+    "after": {
+      "id": "poi_005801",
+      "name": "Vatrachos Island - Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Vatrachos Island - Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Clay, Gold\\nTool needed: Pickaxe (Bronze to Crystal)\\nRegion: Vatrachos Island (Sailing)\\n1 Clay\\n2 Gold",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 via live server scene inspection at (1886, 2984)"
+    }
+  },
+  {
+    "id": "poi_005807",
+    "name": "Charred Island - Red Salamanders (Level 59)",
+    "before": {
+      "id": "poi_005807",
+      "name": "Charred Island - Hunter Area",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charred Island - Hunter Area",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Charred Island (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:881"
+    },
+    "after": {
+      "id": "poi_005807",
+      "name": "Charred Island - Red Salamanders (Level 59)",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charred Island - Red Salamanders (Level 59)",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Red salamander\\nLevel requirement: Level 59 Hunter\\nCatch method: Net trap (Rope & Small fishing net on young tree)\\nRegion: Charred Island (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 via live server inspection observing Red salamander at (2643, 2397)"
+    }
+  },
+  {
+    "id": "poi_005809",
+    "name": "Minotaurs' Rest - Tropical Wagtails (Level 19)",
+    "before": {
+      "id": "poi_005809",
+      "name": "Minotaurs' Rest - Hunter Area",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Minotaurs' Rest - Hunter Area",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Sailing-island hunter creatures\\nLevel requirement: Check Hunter skill guide for creature levels\\nCatch method: Traps, snares, or tracking\\nRegion: Minotaurs' Rest (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:883"
+    },
+    "after": {
+      "id": "poi_005809",
+      "name": "Minotaurs' Rest - Tropical Wagtails (Level 19)",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Minotaurs' Rest - Tropical Wagtails (Level 19)",
+      "category": "Skilling \u2022 Hunter",
+      "details": "Target: Tropical wagtail (Stripy feathers)\\nLevel requirement: Level 19 Hunter\\nCatch method: Bird snare\\nRegion: Minotaurs' Rest (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 via live server inspection observing Tropical wagtail at (1970, 3103)"
+    }
+  },
+  {
+    "id": "poi_005816",
+    "name": "Coral Farming Patch",
+    "before": {
+      "id": "poi_005816",
+      "name": "Coral Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Coral Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Coral\\nTools needed: Rake, Spade, Seed dibber, Watering can\\nCheck Farming skill guide for seed levels\\nFarming patch - Coral",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:975"
+    },
+    "after": {
+      "id": "poi_005816",
+      "name": "Coral Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Coral Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Coral\\nLevel requirement: Check Farming skill guide for coral levels\\nTools needed: Spade, Seed dibber, Rake\\nRegion: Ocean Reef (Sailing)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against live OSRS Sailing coral farming mechanics"
+    }
+  },
+  {
+    "id": "poi_005817",
+    "name": "Hespori Farming Patch",
+    "before": {
+      "id": "poi_005817",
+      "name": "Hespori Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Hespori Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Hespori\\nTools needed: Rake, Spade, Seed dibber, Watering can\\nCheck Farming skill guide for seed levels\\nFarming patch - Hespori",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:991"
+    },
+    "after": {
+      "id": "poi_005817",
+      "name": "Hespori Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Hespori Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Hespori\\nLevel requirement: Level 65 Farming\\nTools needed: Spade, Seed dibber\\nLocation: Farming Guild (West wing)\\nGrowth time: 22\u201332 hours (fights Hespori boss upon full growth)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Hespori"
+    }
+  },
+  {
+    "id": "poi_005818",
+    "name": "Seaweed Farming Patch",
+    "before": {
+      "id": "poi_005818",
+      "name": "Seaweed Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Seaweed Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Seaweed\\nTools needed: Rake, Spade, Seed dibber, Watering can\\nCheck Farming skill guide for seed levels\\nFarming patch - Seaweed",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:999"
+    },
+    "after": {
+      "id": "poi_005818",
+      "name": "Seaweed Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Seaweed Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Seaweed (2 patches)\\nLevel requirement: Level 23 Farming\\nTools needed: Spade, Seed dibber, Rake\\nEquipment: Fishbowl helmet & Diving apparatus\\nLocation: Fossil Island underwater",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Seaweed_patch"
+    }
+  },
+  {
+    "id": "poi_005819",
+    "name": "Spirit Tree Farming Patch",
+    "before": {
+      "id": "poi_005819",
+      "name": "Spirit Tree Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Spirit Tree Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Spirit Tree\\nTools needed: Rake, Spade, Seed dibber, Watering can\\nCheck Farming skill guide for seed levels\\nFarming patch - Spirit Tree",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1002"
+    },
+    "after": {
+      "id": "poi_005819",
+      "name": "Spirit Tree Farming Patch",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Spirit Tree Farming Patch",
+      "category": "Skilling \u2022 Farming",
+      "details": "Patches: Spirit tree\\nLevel requirement: Level 83 Farming\\nTools needed: Spade, Seed dibber, Rake\\nLocation: Mushroom Meadow (Fossil Island)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Spirit_tree_(Farming)"
+    }
+  },
+  {
+    "id": "poi_005831",
+    "name": "Desert Mining Camp Surface Mining Site",
+    "before": {
+      "id": "poi_005831",
+      "name": "Desert Mining Camp Surface Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Desert Mining Camp Surface Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Copper, Tin, Iron, Coal, Iron, Silver\\nTool needed: Pickaxe (Bronze to Crystal)\\nCheck Mining skill guide for ore levels\\n4 Copper\\n4 Tin\\n3 Iron\\n4 Coal",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1311"
+    },
+    "after": {
+      "id": "poi_005831",
+      "name": "Desert Mining Camp Surface Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Desert Mining Camp Surface Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Copper, Tin, Iron, Coal\\nTool needed: Pickaxe (Bronze to Crystal)\\nCheck Mining skill guide for ore levels\\n4 Copper\\n4 Tin\\n3 Iron\\n4 Coal",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against live server scene inspection and RuneLite MiningSiteLocation.DESERT_MINING_CAMP_SURFACE"
+    }
+  },
+  {
+    "id": "poi_005844",
+    "name": "Trahaearn Mining Site",
+    "before": {
+      "id": "poi_005844",
+      "name": "Trahearn Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Trahearn Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Iron, Silver, Coal, Gold, Mithril, Adamantite, Runite, Clay\\nTool needed: Pickaxe (Bronze to Crystal)\\nCheck Mining skill guide for ore levels",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1411"
+    },
+    "after": {
+      "id": "poi_005844",
+      "name": "Trahaearn Mining Site",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Trahaearn Mining Site",
+      "category": "Skilling \u2022 Mining",
+      "details": "Ores available: Iron, Silver, Coal, Gold, Mithril, Soft clay, Adamantite, Runite\\nTool needed: Pickaxe (Bronze to Crystal)\\nCheck Mining skill guide for ore levels\\n26 Iron\\n8 Silver\\n19 Coal\\n14 Gold\\n7 Mithril\\n10 Soft clay\\n7 Adamantite\\n4 Runite",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; description corrected 2026-10-08 against RuneLite MiningSiteLocation.TRAHEARN and https://oldschool.runescape.wiki/w/Trahaearn_mine"
+    }
+  },
+  {
+    "id": "poi_005846",
+    "name": "Ship to Brimhaven / Rimmington",
+    "before": {
+      "id": "poi_005846",
+      "name": "Ship to Brimhaven / Rimmington",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Ship to Brimhaven / Rimmington",
+      "category": "Travel",
+      "details": "Destination / Route: Ship to Brimhaven / Rimmington\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1488"
+    },
+    "after": {
+      "id": "poi_005846",
+      "name": "Ship to Brimhaven / Rimmington",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Ship to Brimhaven / Rimmington",
+      "category": "Travel",
+      "details": "Operator: Captain Barnaby\\nDestinations: Brimhaven (30 coins), Rimmington\\nRequirements: None for Brimhaven (Rocking Out for Rimmington)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1488; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Captain_Barnaby"
+    }
+  },
+  {
+    "id": "poi_005847",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005847",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1511"
+    },
+    "after": {
+      "id": "poi_005847",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Aldarin)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1511; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005848",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005848",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1514"
+    },
+    "after": {
+      "id": "poi_005848",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Civitas illa Fortis)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1514; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005849",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005849",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1516"
+    },
+    "after": {
+      "id": "poi_005849",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Deepfin Point)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Must visit Deepfin Point first\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1516; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005850",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005850",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1523"
+    },
+    "after": {
+      "id": "poi_005850",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Port Tyras)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Regicide\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1523; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005851",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005851",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1525"
+    },
+    "after": {
+      "id": "poi_005851",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Prifddinas)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Song of the Elves\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1525; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005852",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005852",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1526"
+    },
+    "after": {
+      "id": "poi_005852",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Prifddinas Quest Instance)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Song of the Elves (quest instance)\\nFares: Standard distance-based fares",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1526; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005853",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005853",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1527"
+    },
+    "after": {
+      "id": "poi_005853",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (The Summer Shore)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Must visit The Summer Shore first\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1527; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005854",
+    "name": "Charter Ship",
+    "before": {
+      "id": "poi_005854",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship",
+      "category": "Travel",
+      "details": "Destination / Route: Charter Ship\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1528"
+    },
+    "after": {
+      "id": "poi_005854",
+      "name": "Charter Ship",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Charter Ship (Sunset Coast)",
+      "category": "Travel",
+      "details": "Network: Trader Stan's Charter Ships\\nDestinations: Ports across Gielinor\\nRequirements: Children of the Sun\\nFares: Standard distance-based fares (half price with Cabin Fever or Ring of charos (a))",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1528; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Charter_ship"
+    }
+  },
+  {
+    "id": "poi_005855",
+    "name": "Lovakengj Minecart Network - Lovakengj",
+    "before": {
+      "id": "poi_005855",
+      "name": "Lovakengj Minecart Network - Lovakengj",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Lovakengj Minecart Network - Lovakengj",
+      "category": "Travel",
+      "details": "Destination / Route: Lovakengj Minecart Network - Lovakengj\\nCheck travel route for fares or quest requirements",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1538"
+    },
+    "after": {
+      "id": "poi_005855",
+      "name": "Lovakengj Minecart Network - Lovakengj",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Lovakengj Minecart Network - Lovakengj",
+      "category": "Travel",
+      "details": "Network: Lovakengj Minecart Network\\nLocation: Lovakengj central station\\nFares: 50 coins per trip (free after delivering control scrolls to Miriam)",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1538; description enriched 2026-10-08 against https://oldschool.runescape.wiki/w/Lovakengj_Minecart_Network"
+    }
+  },
+  {
+    "id": "poi_005857",
+    "name": "Gertrude's Cat",
+    "before": {
+      "id": "poi_005857",
+      "name": "Gertrude's Cat",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Gertrude's Cat",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Gertrude west of Varrock\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 1x Raw sardine, 1x Bucket of milk",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1623"
+    },
+    "after": {
+      "id": "poi_005857",
+      "name": "Gertrude's Cat",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Gertrude's Cat",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Gertrude west of Varrock\\nDifficulty: Novice \u2022 Length: Very Short\\nReward: 1 Quest Point\\nRequirements: 1x Raw sardine, 1x Bucket of milk",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1623; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005858",
+    "name": "Dragon Slayer I",
+    "before": {
+      "id": "poi_005858",
+      "name": "Dragon Slayer I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Dragon Slayer I",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Guildmaster in Champions' Guild\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: 32 Quest Points, Anti-dragon shield",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Dragon_Slayer_I?oldid=14917676"
+    },
+    "after": {
+      "id": "poi_005858",
+      "name": "Dragon Slayer I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Dragon Slayer I",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Guildmaster in Champions' Guild\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: 32 Quest Points, Anti-dragon shield",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1624; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005859",
+    "name": "Pirate's Treasure",
+    "before": {
+      "id": "poi_005859",
+      "name": "Pirate's Treasure",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Pirate's Treasure",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Redbeard Frank in Port Sarim\\nDifficulty: Novice \u2022 Length: Short\\nReward: 2 Quest Points\\nRequirements: Karamja rum, White apron",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1626"
+    },
+    "after": {
+      "id": "poi_005859",
+      "name": "Pirate's Treasure",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Pirate's Treasure",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Redbeard Frank in Port Sarim\\nDifficulty: Novice \u2022 Length: Very Short\\nReward: 2 Quest Points\\nRequirements: Karamja rum, White apron",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1632; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005860",
+    "name": "Vampyre Slayer",
+    "before": {
+      "id": "poi_005860",
+      "name": "Vampyre Slayer",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Vampyre Slayer",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Morgan in Draynor Village\\nDifficulty: Novice \u2022 Length: Short\\nReward: 3 Quest Points\\nRequirements: 1x Garlic, 1x Wooden stake",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1628"
+    },
+    "after": {
+      "id": "poi_005860",
+      "name": "Vampyre Slayer",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Vampyre Slayer",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Morgan in Draynor Village\\nDifficulty: Intermediate \u2022 Length: Very Short\\nReward: 3 Quest Points\\nRequirements: 1x Garlic, 1x Wooden stake",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1635; category and description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005862",
+    "name": "Elemental Workshop I",
+    "before": {
+      "id": "poi_005862",
+      "name": "Elemental Workshop I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Elemental Workshop I",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Battered book from bookcase in Seers' Village\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 20 Mining, 20 Smithing, 20 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Bookcase_(Elemental_Workshop_I) and https://oldschool.runescape.wiki/w/Elemental_Workshop_I?oldid=15292271"
+    },
+    "after": {
+      "id": "poi_005862",
+      "name": "Elemental Workshop I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Elemental Workshop I",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Battered book from bookcase in Seers' Village\\nDifficulty: Novice \u2022 Length: Very Short\\nReward: 1 Quest Point\\nRequirements: 20 Mining, 20 Smithing, 20 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1641; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005863",
+    "name": "Waterfall Quest",
+    "before": {
+      "id": "poi_005863",
+      "name": "Waterfall Quest",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Waterfall Quest",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Almera south-west of Baxtorian Falls\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: Rope, 6x Air, 6x Water, 6x Earth runes\\nReward: +13,750 Attack & Strength XP",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1643"
+    },
+    "after": {
+      "id": "poi_005863",
+      "name": "Waterfall Quest",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Waterfall Quest",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Almera south-west of Baxtorian Falls\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: Rope, 6x Air, 6x Water, 6x Earth runes\\nReward: +13,750 Attack & Strength XP",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1642; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005864",
+    "name": "Merlin's Crystal",
+    "before": {
+      "id": "poi_005864",
+      "name": "Merlin's Crystal",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Merlin's Crystal",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: King Arthur in Camelot Castle\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 6 Quest Points\\nRequirements: Excalibur sword, Black candle, Bat bones, Tinderbox",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1644"
+    },
+    "after": {
+      "id": "poi_005864",
+      "name": "Merlin's Crystal",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Merlin's Crystal",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: King Arthur in Camelot Castle\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 6 Quest Points\\nRequirements: Excalibur sword, Black candle, Bat bones, Tinderbox",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1643; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005865",
+    "name": "Holy Grail",
+    "before": {
+      "id": "poi_005865",
+      "name": "Holy Grail",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Holy Grail",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: King Arthur in Camelot Castle\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Merlin's Crystal completion, 20 Attack",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1645"
+    },
+    "after": {
+      "id": "poi_005865",
+      "name": "Holy Grail",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Holy Grail",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: King Arthur in Camelot Castle\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 2 Quest Points\\nRequirements: Merlin's Crystal completion, 20 Attack",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1644; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005866",
+    "name": "Priest in Peril",
+    "before": {
+      "id": "poi_005866",
+      "name": "Priest in Peril",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Priest in Peril",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: King Roald in Varrock Palace / Drezel at Paterdomus\\nDifficulty: Novice \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: 50x Pure or Rune essence, Access to Morytania",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1646"
+    },
+    "after": {
+      "id": "poi_005866",
+      "name": "Priest in Peril",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Priest in Peril",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: King Roald in Varrock Palace / Drezel at Paterdomus\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 50x Pure or Rune essence, Access to Morytania",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1645; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005867",
+    "name": "Nature Spirit",
+    "before": {
+      "id": "poi_005867",
+      "name": "Nature Spirit",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Nature Spirit",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Drezel in Paterdomus temple cellar\\nDifficulty: Novice \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Priest in Peril completion, 18 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1647"
+    },
+    "after": {
+      "id": "poi_005867",
+      "name": "Nature Spirit",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Nature Spirit",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Drezel in Paterdomus temple cellar\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 2 Quest Points\\nRequirements: Priest in Peril completion, 18 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1646; category and description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005872",
+    "name": "Roving Elves",
+    "before": {
+      "id": "poi_005872",
+      "name": "Roving Elves",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Roving Elves",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Islwyn and Eluned in Isafdar\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: Regicide, Waterfall Quest, 56 Agility",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1652; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Roving_Elves"
+    },
+    "after": {
+      "id": "poi_005872",
+      "name": "Roving Elves",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Roving Elves",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Islwyn and Eluned in Isafdar\\nDifficulty: Experienced \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: Regicide, Waterfall Quest, 56 Agility",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1652; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005873",
+    "name": "Mourning's End Part I",
+    "before": {
+      "id": "poi_005873",
+      "name": "Mourning's End Part I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Mourning's End Part I",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Arianwyn in Lletya\\nDifficulty: Master \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: Roving Elves, Big Chompy Bird Hunting, 60 Ranged, 50 Thieving",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1653"
+    },
+    "after": {
+      "id": "poi_005873",
+      "name": "Mourning's End Part I",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Mourning's End Part I",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Arianwyn in Lletya\\nDifficulty: Master \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Roving Elves, Big Chompy Bird Hunting, 60 Ranged, 50 Thieving",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1653; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005878",
+    "name": "Beneath Cursed Sands",
+    "before": {
+      "id": "poi_005878",
+      "name": "Beneath Cursed Sands",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Beneath Cursed Sands",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Jamila in Sophanem\\nDifficulty: Master \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: Contact!, Scorpia, 62 Agility, 55 Crafting, 55 Firemaking",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1660"
+    },
+    "after": {
+      "id": "poi_005878",
+      "name": "Beneath Cursed Sands",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Beneath Cursed Sands",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Jamila in Sophanem\\nDifficulty: Master \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Contact!, Scorpia, 62 Agility, 55 Crafting, 55 Firemaking",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1659; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005880",
+    "name": "Troll Stronghold",
+    "before": {
+      "id": "poi_005880",
+      "name": "Troll Stronghold",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Troll Stronghold",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Denulth in Burthorpe\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: Death Plateau, 15 Agility, 30 Thieving",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1662"
+    },
+    "after": {
+      "id": "poi_005880",
+      "name": "Troll Stronghold",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Troll Stronghold",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Denulth in Burthorpe\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: Death Plateau, 15 Agility, 30 Thieving",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1662; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005883",
+    "name": "Making Friends with My Arm",
+    "before": {
+      "id": "poi_005883",
+      "name": "Making Friends with My Arm",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Making Friends with My Arm",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Burntmeat in Troll Stronghold kitchen\\nDifficulty: Master \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: My Arm's Big Adventure, Swan Song, Cold War,\\nRomeo & Juliet, 66 Firemaking, 72 Mining, 35 Construction, 68 Agility",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1665; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/Making_Friends_with_My_Arm?oldid=15101556"
+    },
+    "after": {
+      "id": "poi_005883",
+      "name": "Making Friends with My Arm",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Making Friends with My Arm",
+      "category": "Quest Start \u2022 Master",
+      "details": "Start: Burntmeat in Troll Stronghold kitchen\\nDifficulty: Master \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: My Arm's Big Adventure, Swan Song, Cold War,\\nRomeo & Juliet, 66 Firemaking, 72 Mining, 35 Construction, 68 Agility",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1665; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005884",
+    "name": "Druidic Ritual",
+    "before": {
+      "id": "poi_005884",
+      "name": "Druidic Ritual",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Druidic Ritual",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Kaqemeex at stone circle north of Taverley\\nDifficulty: Novice \u2022 Length: Short\\nReward: 4 Quest Points\\nRequirements: Raw bear meat, Raw beef, Raw chicken, Raw rat meat\\nUnlocks: Herblore skill",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1666"
+    },
+    "after": {
+      "id": "poi_005884",
+      "name": "Druidic Ritual",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Druidic Ritual",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Kaqemeex at stone circle north of Taverley\\nDifficulty: Novice \u2022 Length: Very Short\\nReward: 4 Quest Points\\nRequirements: Raw bear meat, Raw beef, Raw chicken, Raw rat meat\\nUnlocks: Herblore skill",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1666; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005885",
+    "name": "Heroes' Quest",
+    "before": {
+      "id": "poi_005885",
+      "name": "Heroes' Quest",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Heroes' Quest",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Achietties outside Heroes' Guild\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 1 Quest Point\\nRequirements: Shield of Arrav, Lost City, Merlin's Crystal,\\nDragon Slayer I, 55 QP, 53 Cooking, 53 Fishing, 25 Herblore, 50 Mining",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1667"
+    },
+    "after": {
+      "id": "poi_005885",
+      "name": "Heroes' Quest",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Heroes' Quest",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Achietties outside Heroes' Guild\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: Shield of Arrav, Lost City, Merlin's Crystal,\\nDragon Slayer I, 55 QP, 53 Cooking, 53 Fishing, 25 Herblore, 50 Mining",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1667; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005887",
+    "name": "Witch's House",
+    "before": {
+      "id": "poi_005887",
+      "name": "Witch's House",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Witch's House",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Boy outside Witch's House in Taverley\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 4 Quest Points\\nRequirements: 1x Cheese, Leather gloves",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1669"
+    },
+    "after": {
+      "id": "poi_005887",
+      "name": "Witch's House",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Witch's House",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Boy outside Witch's House in Taverley\\nDifficulty: Intermediate \u2022 Length: Very Short\\nReward: 4 Quest Points\\nRequirements: 1x Cheese, Leather gloves",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1669; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005891",
+    "name": "Twilight's Promise",
+    "before": {
+      "id": "poi_005891",
+      "name": "Twilight's Promise",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Twilight's Promise",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Servant Caoimhe in Civitas illa Fortis\\nDifficulty: Intermediate \u2022 Length: Medium\\nReward: 1 Quest Point\\nRequirements: Children of the Sun, Unlocks deeper Varlamore areas",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1680"
+    },
+    "after": {
+      "id": "poi_005891",
+      "name": "Twilight's Promise",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "Twilight's Promise",
+      "category": "Quest Start \u2022 Intermediate",
+      "details": "Start: Servant Caoimhe in Civitas illa Fortis\\nDifficulty: Intermediate \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: Children of the Sun, Unlocks deeper Varlamore areas",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1673; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005893",
+    "name": "The Ribbiting Tale of a Lily Pad Labour Dispute",
+    "before": {
+      "id": "poi_005893",
+      "name": "The Ribbiting Tale of a Lily Pad Labour Dispute",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "The Ribbiting Tale of a Lily Pad Labour Dispute",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Frog Citizen in Varlamore quagmire\\nDifficulty: Novice \u2022 Length: Short\\nReward: 1 Quest Point\\nRequirements: 15 Woodcutting, +2,000 Woodcutting XP",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1682"
+    },
+    "after": {
+      "id": "poi_005893",
+      "name": "The Ribbiting Tale of a Lily Pad Labour Dispute",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "The Ribbiting Tale of a Lily Pad Labour Dispute",
+      "category": "Quest Start \u2022 Novice",
+      "details": "Start: Frog Citizen in Varlamore quagmire\\nDifficulty: Novice \u2022 Length: Very Short\\nReward: 1 Quest Point\\nRequirements: 15 Woodcutting, +2,000 Woodcutting XP",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1675; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  },
+  {
+    "id": "poi_005896",
+    "name": "The Heart of Darkness",
+    "before": {
+      "id": "poi_005896",
+      "name": "The Heart of Darkness",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "The Heart of Darkness",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Queen Ameyalli in Civitas illa Fortis palace\\nDifficulty: Experienced \u2022 Length: Long\\nReward: 2 Quest Points\\nRequirements: Twilight's Promise, Perilous Moons, 55 Thieving,\\n48 Slayer, 46 Mining, 46 Agility, 46 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1685; description corrected 2026-10-08 against https://oldschool.runescape.wiki/w/The_Heart_of_Darkness"
+    },
+    "after": {
+      "id": "poi_005896",
+      "name": "The Heart of Darkness",
+      "kind": "unknown",
+      "parent_id": "",
+      "detail_title": "The Heart of Darkness",
+      "category": "Quest Start \u2022 Experienced",
+      "details": "Start: Queen Ameyalli in Civitas illa Fortis palace\\nDifficulty: Experienced \u2022 Length: Medium\\nReward: 2 Quest Points\\nRequirements: Twilight's Promise, Perilous Moons, 55 Thieving,\\n48 Slayer, 46 Mining, 46 Agility, 46 Crafting",
+      "status": "unresolved",
+      "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:1678; description aligned 2026-10-08 against quest-details.tsv"
+    }
+  }
+]

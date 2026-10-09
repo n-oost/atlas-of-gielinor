@@ -76,8 +76,6 @@ public final class MapStyle
 	/** Route read from the Shortest Path plugin. */
 	public static final Color ROUTE_LINE = new Color(96, 205, 255, 235);
 
-	/** Enum.values() clones its array on every call; these are read in per-frame loops. */
-
 	/**
 	 * Left toolbar below the status chip: layers gear (slot 0), finder magnifier (slot 1).
 	 */

@@ -42,7 +42,6 @@ import net.runelite.api.coords.WorldPoint;
 @Slf4j
 public final class BossLocationData
 {
-
 	private static final String RESOURCE = "/atlasofgielinor/data/bosses.json.gz";
 	private static volatile Map<String, BossLocationData> entries = Collections.emptyMap();
 
@@ -141,13 +140,11 @@ public final class BossLocationData
 		return detail.keyDrops;
 	}
 
-
 	@Override
 	public String toString()
 	{
 		return detail.combatLevel > 0 ? detail.name + " (Lvl " + detail.combatLevel + ")" : detail.name;
 	}
-
 	private static final class Detail
 	{
 		private final String name;

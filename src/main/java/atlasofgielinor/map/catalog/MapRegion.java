@@ -33,9 +33,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -51,7 +51,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class MapRegion
 {
-
 	/** Top-level grouping used in Finder descriptions. */
 	public enum Kingdom
 	{
@@ -107,6 +106,12 @@ public final class MapRegion
 		final MapRegion entry = entries.get(id);
 		if (entry == null) throw new IllegalArgumentException("Unknown catalog identifier: " + id);
 		return entry;
+	}
+
+	@Override
+	public String toString()
+	{
+		return id;
 	}
 
 	public static boolean isLoaded()
@@ -186,7 +191,6 @@ public final class MapRegion
 	{
 		return detail.centerY;
 	}
-
 
 	private static final class Detail
 	{
@@ -318,7 +322,7 @@ public final class MapRegion
 	}
 
 	/**
-	 * Every region, grouped by kingdom in declaration order. The browse list renders this directly,
+	 * Every region, grouped by kingdom in catalog order. The browse list renders this directly,
 	 * so kingdom order here is the order the user sees.
 	 */
 	public static List<MapRegion> inKingdomOrder()

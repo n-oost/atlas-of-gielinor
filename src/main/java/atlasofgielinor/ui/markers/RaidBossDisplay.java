@@ -24,7 +24,6 @@
  */
 package atlasofgielinor.ui.markers;
 
-import static atlasofgielinor.data.BossLocationData.*;
 import static atlasofgielinor.ui.MapStyle.*;
 
 import java.awt.Color;
@@ -34,7 +33,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -52,21 +52,21 @@ public class RaidBossDisplay
 {
 	private enum Raid
 	{
-		XERIC("Chambers of Xeric", "CoX", 1255, 3564, GREAT_OLM,
-			TEKTON, VANGUARD, VESPULA, VASA_NISTIRIO, MUTTADILE, GREAT_OLM),
-		THEATRE("Theatre of Blood", "ToB", 3667, 3218, VERZIK_VITUR,
-			THE_MAIDEN_OF_SUGADINTI, PESTILENT_BLOAT, NYLOCAS_VASILIAS, SOTETSEG, XARPUS, VERZIK_VITUR),
-		TOMBS("Tombs of Amascut", "ToA", 3356, 2712, TUMEKEN_S_WARDEN,
-			AKKHA, BA_BA, KEPHRI, ZEBAK, TUMEKEN_S_WARDEN, ELIDINIS_WARDEN);
+		XERIC("Chambers of Xeric", "CoX", 1255, 3564, "GREAT_OLM",
+			"TEKTON", "VANGUARD", "VESPULA", "VASA_NISTIRIO", "MUTTADILE", "GREAT_OLM"),
+		THEATRE("Theatre of Blood", "ToB", 3667, 3218, "VERZIK_VITUR",
+			"THE_MAIDEN_OF_SUGADINTI", "PESTILENT_BLOAT", "NYLOCAS_VASILIAS", "SOTETSEG", "XARPUS", "VERZIK_VITUR"),
+		TOMBS("Tombs of Amascut", "ToA", 3356, 2712, "TUMEKEN_S_WARDEN",
+			"AKKHA", "BA_BA", "KEPHRI", "ZEBAK", "TUMEKEN_S_WARDEN", "ELIDINIS_WARDEN");
 
 		final String name;
 		final String shortName;
 		final int x;
 		final int y;
-		final BossLocationData signatureBoss;
-		final BossLocationData[] bosses;
+		final String signatureBoss;
+		final String[] bosses;
 
-		Raid(String name, String shortName, int x, int y, BossLocationData signatureBoss, BossLocationData... bosses)
+		Raid(String name, String shortName, int x, int y, String signatureBoss, String... bosses)
 		{
 			this.name = name;
 			this.shortName = shortName;
@@ -91,7 +91,7 @@ public class RaidBossDisplay
 		}
 	}
 
-	private static final EnumSet<BossLocationData> RAID_BOSSES = EnumSet.noneOf(BossLocationData.class);
+	private static final Set<String> RAID_BOSSES = new HashSet<>();
 	static
 	{
 		for (Raid raid : Raid.values())
@@ -118,7 +118,7 @@ public class RaidBossDisplay
 
 	public static boolean isRaidBoss(BossLocationData boss)
 	{
-		return RAID_BOSSES.contains(boss);
+		return boss != null && RAID_BOSSES.contains(boss.name());
 	}
 
 	public boolean ownsHover(Point cursor)
@@ -238,7 +238,7 @@ public class RaidBossDisplay
 				final Rectangle button = new Rectangle(x - width / 2, y - 22, width, height);
 				final boolean hovered = cursor != null && button.contains(cursor);
 				box(g, button, hovered);
-				final BufferedImage icon = icons.getBossIcon(entrance.signatureBoss, iconSize);
+				final BufferedImage icon = icons.getBossIcon(BossLocationData.valueOf(entrance.signatureBoss), iconSize);
 				if (icon != null)
 				{
 					g.drawImage(icon, button.x + 4, button.y + (height - iconSize) / 2, null);
@@ -277,7 +277,7 @@ public class RaidBossDisplay
 		final int cellWidth = (width - 24) / columns;
 		for (int i = 0; i < raid.bosses.length; i++)
 		{
-			final BossLocationData boss = raid.bosses[i];
+			final BossLocationData boss = BossLocationData.valueOf(raid.bosses[i]);
 			final Rectangle cell = new Rectangle(panel.x + 10 + (i % columns) * cellWidth,
 				panel.y + 44 + (i / columns) * rowHeight, cellWidth - 4, rowHeight - 4);
 			box(g, cell, cursor != null && cell.contains(cursor));

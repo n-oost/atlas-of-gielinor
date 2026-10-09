@@ -31,7 +31,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import atlasofgielinor.data.BossLocationData;
 import net.runelite.client.ui.FontManager;
 
 /**
@@ -78,7 +77,6 @@ public final class MapStyle
 	public static final Color ROUTE_LINE = new Color(96, 205, 255, 235);
 
 	/** Enum.values() clones its array on every call; these are read in per-frame loops. */
-	public static final BossLocationData[] BOSSES = BossLocationData.values();
 
 	/**
 	 * Left toolbar below the status chip: layers gear (slot 0), finder magnifier (slot 1).

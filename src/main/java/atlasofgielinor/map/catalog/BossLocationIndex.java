@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public final class BossLocationIndex
 
 	private static List<Location> load()
 	{
-		final Map<BossLocationData, Location> authored = new EnumMap<>(BossLocationData.class);
+		final Map<BossLocationData, Location> authored = new HashMap<>();
 		try (InputStream in = BossLocationIndex.class.getResourceAsStream(RESOURCE))
 		{
 			if (in != null)

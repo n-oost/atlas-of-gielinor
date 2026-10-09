@@ -137,7 +137,7 @@ public class MapTooltipRenderer
 
 	private long raidStatsVersion = Long.MIN_VALUE;
 	private final java.util.Map<BossLocationData, MonsterIndex.Zone> raidStats =
-		new java.util.EnumMap<>(BossLocationData.class);
+		new java.util.HashMap<>();
 
 	public void drawRaidBossCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor,
 		BossLocationData boss, String raidName)
@@ -155,7 +155,7 @@ public class MapTooltipRenderer
 			raidStats.clear();
 			for (MonsterIndex.Zone zone : monsterIndex.getZones())
 			{
-				for (BossLocationData candidate : MapStyle.BOSSES)
+				for (BossLocationData candidate : BossLocationData.values())
 				{
 					if (RaidBossDisplay.isRaidBoss(candidate) && candidate.getName().equalsIgnoreCase(zone.getMonster()))
 					{

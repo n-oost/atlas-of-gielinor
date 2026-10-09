@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,86 +49,8 @@ import lombok.extern.slf4j.Slf4j;
  * with distance to centre breaking ties. Only surface coordinates are classified.
  */
 @Slf4j
-public enum MapRegion
+public final class MapRegion
 {
-	VARROCK,
-	GRAND_EXCHANGE,
-	LUMBRIDGE,
-	DRAYNOR_VILLAGE,
-	EDGEVILLE,
-	BARBARIAN_VILLAGE,
-	AL_KHARID,
-	FALADOR,
-	PORT_SARIM,
-	RIMMINGTON,
-	TAVERLEY,
-	BURTHORPE,
-	ICE_MOUNTAIN,
-	ENTRANA,
-	CATHERBY,
-	SEERS_VILLAGE,
-	CAMELOT,
-	EAST_ARDOUGNE,
-	WEST_ARDOUGNE,
-	YANILLE,
-	HEMENSTER,
-	WITCHAVEN,
-	TREE_GNOME_STRONGHOLD,
-	PISCATORIS,
-	RELLEKKA,
-	KELDAGRIM,
-	NEITIZNOT,
-	JATIZSO,
-	MISCELLANIA,
-	LUNAR_ISLE,
-	WEISS,
-	TROLLHEIM,
-	TROLL_COUNTRY,
-	BRIMHAVEN,
-	MUSA_POINT,
-	TAI_BWO_WANNAI,
-	SHILO_VILLAGE,
-	POLLNIVNEACH,
-	NARDAH,
-	SOPHANEM,
-	MENAPHOS,
-	CANIFIS,
-	PORT_PHASMATYS,
-	DARKMEYER,
-	MEIYERDITCH,
-	BURGH_DE_ROTT,
-	MORTTON,
-	SLEPE,
-	VER_SINHAZA,
-	FOSSIL_ISLAND,
-	PRIFDDINAS,
-	LLETYA,
-	HOSIDIUS,
-	SHAYZIEN,
-	LOVAKENGJ,
-	ARCEUUS,
-	PORT_PISCARILIUS,
-	KOUREND_CASTLE,
-	CIVITAS_ILLA_FORTIS,
-	ALDARIN,
-	AUBURNVALE,
-	FELDIP_HILLS,
-	GU_TANOTH,
-	JIGGIG,
-	CORSAIR_COVE,
-	ISLE_OF_SOULS,
-	APE_ATOLL,
-	MOS_LE_HARMLESS,
-	WILDERNESS,
-	MISTHALIN,
-	ASGARNIA,
-	KANDARIN,
-	KARAMJA,
-	KHARIDIAN_DESERT,
-	FREMENNIK_PROVINCE,
-	TIRANNWN_REGION,
-	GREAT_KOUREND,
-	VARLAMORE_REGION;
 
 	/** Top-level grouping used in Finder descriptions. */
 	public enum Kingdom
@@ -154,20 +77,48 @@ public enum MapRegion
 	}
 
 	private static final String RESOURCE = "/atlasofgielinor/data/regions.json.gz";
-	private static volatile Map<MapRegion, Detail> details = Collections.emptyMap();
+	private static volatile Map<String, MapRegion> entries = Collections.emptyMap();
 	private static volatile Map<Kingdom, String> kingdomNames = Collections.emptyMap();
 	private static volatile Set<String> placeNames = Collections.emptySet();
 
+	private final String id;
+	private final Detail detail;
+
+	private MapRegion(JsonObject row)
+	{
+		id = row.get("id").getAsString();
+		if (id.isEmpty()) throw new IllegalArgumentException("Empty catalog identifier");
+		detail = new Detail(row);
+	}
+
+	public String name()
+	{
+		return id;
+	}
+
+	/** All entries in bundled catalog order; empty until the startup worker publishes them. */
+	public static MapRegion[] values()
+	{
+		return entries.values().toArray(new MapRegion[0]);
+	}
+
+	public static MapRegion valueOf(String id)
+	{
+		final MapRegion entry = entries.get(id);
+		if (entry == null) throw new IllegalArgumentException("Unknown catalog identifier: " + id);
+		return entry;
+	}
+
 	public static boolean isLoaded()
 	{
-		return !details.isEmpty();
+		return !entries.isEmpty();
 	}
 
 	/** Call on the startup worker before Finder input or map rendering is enabled. */
 	public static synchronized void load(Gson gson)
 	{
 		if (isLoaded()) return;
-		final Map<MapRegion, Detail> parsed = new EnumMap<>(MapRegion.class);
+		final Map<String, MapRegion> parsed = new LinkedHashMap<>();
 		final Map<Kingdom, String> names = new EnumMap<>(Kingdom.class);
 		final Set<String> places = new HashSet<>();
 		try (InputStream raw = MapRegion.class.getResourceAsStream(RESOURCE))
@@ -190,19 +141,19 @@ public enum MapRegion
 				{
 					if (Thread.currentThread().isInterrupted()) return;
 					final JsonObject row = element.getAsJsonObject();
-					final MapRegion region = valueOf(row.get("id").getAsString());
-					final Detail detail = new Detail(row);
-					if (parsed.put(region, detail) != null)
+					final MapRegion region = new MapRegion(row);
+					final Detail detail = region.detail;
+					if (parsed.put(region.name(), region) != null)
 						throw new IOException("Duplicate region: " + region.name());
 					places.add(detail.displayName.toLowerCase(Locale.ROOT));
 				}
 			}
-			if (parsed.size() != values().length || names.size() != Kingdom.values().length)
+			if (parsed.isEmpty() || names.size() != Kingdom.values().length)
 				throw new IOException("Incomplete bundled region catalog");
 			if (Thread.currentThread().isInterrupted()) return;
 			kingdomNames = Collections.unmodifiableMap(names);
 			placeNames = Collections.unmodifiableSet(places);
-			details = Collections.unmodifiableMap(parsed);
+			entries = Collections.unmodifiableMap(parsed);
 		}
 		catch (IOException | RuntimeException e)
 		{
@@ -218,30 +169,24 @@ public enum MapRegion
 
 	public String getDisplayName()
 	{
-		return detail().displayName;
+		return detail.displayName;
 	}
 
 	public Kingdom getKingdom()
 	{
-		return detail().kingdom;
+		return detail.kingdom;
 	}
 
 	public int getCenterX()
 	{
-		return detail().centerX;
+		return detail.centerX;
 	}
 
 	public int getCenterY()
 	{
-		return detail().centerY;
+		return detail.centerY;
 	}
 
-	private Detail detail()
-	{
-		final Detail detail = details.get(this);
-		if (detail == null) throw new IllegalStateException("Region catalog is not loaded");
-		return detail;
-	}
 
 	private static final class Detail
 	{
@@ -274,34 +219,34 @@ public enum MapRegion
 	 */
 	public boolean isFallback()
 	{
-		return detail().fallback;
+		return detail.fallback;
 	}
 
 
 	public int getMinX()
 	{
-		return getCenterX() - detail().halfWidth;
+		return getCenterX() - detail.halfWidth;
 	}
 
 	public int getMaxX()
 	{
-		return getCenterX() + detail().halfWidth;
+		return getCenterX() + detail.halfWidth;
 	}
 
 	public int getMinY()
 	{
-		return getCenterY() - detail().halfHeight;
+		return getCenterY() - detail.halfHeight;
 	}
 
 	public int getMaxY()
 	{
-		return getCenterY() + detail().halfHeight;
+		return getCenterY() + detail.halfHeight;
 	}
 
 	/** Box area in tiles, the primary tiebreak in {@link #of(int, int, int)}. */
 	public long area()
 	{
-		return (long) (2 * detail().halfWidth) * (2 * detail().halfHeight);
+		return (long) (2 * detail.halfWidth) * (2 * detail.halfHeight);
 	}
 
 	public boolean contains(int x, int y)

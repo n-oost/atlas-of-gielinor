@@ -24,12 +24,13 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.MARKER_OUTLINE;
+import static atlasofgielinor.ui.MapStyle.TINY;
+
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 import static atlasofgielinor.ui.MapStyle.CARD_TEXT;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -42,41 +43,24 @@ import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.map.catalog.GroundItemIndex;
 import atlasofgielinor.map.MapCamera;
 import atlasofgielinor.map.MonsterIconManager;
-import net.runelite.client.ui.FontManager;
+
+import lombok.RequiredArgsConstructor;
 
 /** Draws ground item spawn markers and their labels. */
+@RequiredArgsConstructor
 public class GroundItemMarkerRenderer
 {
-	private final Set<Object> visibleTooltipTargets;
 
-	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
 	/** Ground item spawns: green, so they never read as a monster (red) or Slayer zone (purple). */
 	private static final Color GROUND_ITEM_EDGE = new Color(126, 214, 134, 210);
 	private static final Color GROUND_ITEM_DOT = new Color(126, 214, 134, 235);
 
-	/**
-	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
-	 * Each renderer keeps its immutable outline strokes for reuse between frames.
-	 */
-	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
 	private final AtlasOfGielinorConfig config;
 	private final MapCamera camera;
 	private final MonsterIconManager monsterIconManager;
 	private final GroundItemIndex groundItemIndex;
+	private final Set<Object> visibleTooltipTargets;
 
-	public GroundItemMarkerRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		MonsterIconManager monsterIconManager,
-		GroundItemIndex groundItemIndex,
-		Set<Object> visibleTooltipTargets)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.monsterIconManager = monsterIconManager;
-		this.groundItemIndex = groundItemIndex;
-		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
 
 	/**
 	 * Wiki ground item spawn tiles, drawn as the item's own sprite.

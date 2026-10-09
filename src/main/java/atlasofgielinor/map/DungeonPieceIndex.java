@@ -40,6 +40,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Singleton;
+import javax.inject.Inject;
+import com.google.gson.Gson;
 
 import atlasofgielinor.data.dungeons.DungeonPiece;
 import atlasofgielinor.data.dungeons.UndergroundZone;
@@ -54,6 +56,14 @@ import lombok.extern.slf4j.Slf4j;
 @Singleton
 public class DungeonPieceIndex
 {
+	private final Gson gson;
+
+	@Inject
+	public DungeonPieceIndex(Gson gson)
+	{
+		this.gson = gson;
+	}
+
 	private static final String RESOURCE = "/atlasofgielinor/dungeons/pieces.tsv";
 
 	private final Map<String, List<DungeonPiece>> byZone = new HashMap<>();
@@ -66,7 +76,7 @@ public class DungeonPieceIndex
 
 	public void load(File tileDir)
 	{
-		final DungeonPieceIndex prepared = new DungeonPieceIndex();
+		final DungeonPieceIndex prepared = new DungeonPieceIndex(gson);
 		prepared.loadData(tileDir);
 		if (!prepared.loaded || Thread.currentThread().isInterrupted())
 		{
@@ -95,7 +105,7 @@ public class DungeonPieceIndex
 	{
 		byZone.clear();
 		loaded = false;
-		MapCatalogLoader.load();
+		MapCatalogLoader.load(gson);
 		if (!MapCatalogLoader.isReady()) return;
 		try (InputStream nativeIn = DungeonPieceIndex.class.getResourceAsStream("/atlasofgielinor/dungeons/native-pieces.tsv"))
 		{

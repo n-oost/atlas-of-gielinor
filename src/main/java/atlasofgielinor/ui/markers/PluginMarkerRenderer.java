@@ -39,30 +39,20 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 
+import lombok.RequiredArgsConstructor;
+
 /** Draws map points registered by other plugins. */
+@RequiredArgsConstructor
 public class PluginMarkerRenderer
 {
-	private final Set<Object> visibleTooltipTargets;
 	private final Map<WorldMapPoint, Rectangle> visiblePointBounds = new LinkedHashMap<>();
 
 	private final AtlasOfGielinorConfig config;
 	private final MapCamera camera;
 	private final WorldMapPointManager worldMapPointManager;
 	private final WorldMapPointReader worldMapPointReader;
+	private final Set<Object> visibleTooltipTargets;
 
-	public PluginMarkerRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		WorldMapPointManager worldMapPointManager,
-		WorldMapPointReader worldMapPointReader,
-		Set<Object> visibleTooltipTargets)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.worldMapPointManager = worldMapPointManager;
-		this.worldMapPointReader = worldMapPointReader;
-		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
 
 	/** Markers other plugins (and ours) registered, drawn through our transform. */
 	public void drawPluginMarkers(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)

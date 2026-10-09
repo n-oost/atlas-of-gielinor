@@ -51,11 +51,15 @@ import atlasofgielinor.tiles.TileLoader;
 import atlasofgielinor.tiles.WikiMap;
 import atlasofgielinor.tiles.WikiMapTiles;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 /**
  * The map's tile grid: which zoom level to read, which plane, and where each tile lands.
  *
  * <p>Split out of {@link AtlasOfGielinorOverlay}.
  */
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class MapTileRenderer
 {
 	private static final float SURFACE_VIEW_DUNGEON_OPACITY = 0.68f;
@@ -79,14 +83,6 @@ class MapTileRenderer
 	/** Cache of void-keyed copies, keyed by the source tile so it clears when the tile store evicts. */
 	private final java.util.Map<BufferedImage, BufferedImage> voidKeyedTiles = new java.util.WeakHashMap<>();
 
-	MapTileRenderer(AtlasOfGielinorConfig config, MapCamera camera, TileLoader tileLoader,
-		DungeonPieceIndex dungeonPieceIndex)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.tileLoader = tileLoader;
-		this.dungeonPieceIndex = dungeonPieceIndex;
-	}
 
 	void drawTiles(Graphics2D graphics, Rectangle bounds)
 	{

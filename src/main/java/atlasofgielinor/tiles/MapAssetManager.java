@@ -23,6 +23,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.util.Filepath;
 import okhttp3.Call;
@@ -34,6 +35,7 @@ import okhttp3.Response;
 /** Installs complete, compatible imagery packs before exposing them to the renderer. */
 @Slf4j
 @Singleton
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class MapAssetManager
 {
 	static final String REPOSITORY = "https://raw.githubusercontent.com/n-oost/better-map-assets/";
@@ -53,13 +55,6 @@ public class MapAssetManager
 	private Call call;
 	private int generation;
 
-	@Inject
-	public MapAssetManager(OkHttpClient http, Gson gson, TileLoader tiles)
-	{
-		this.http = http;
-		this.gson = gson;
-		this.tiles = tiles;
-	}
 
 	public synchronized void startUp(java.util.concurrent.Callable<Filepath> directory, boolean downloadsEnabled)
 	{

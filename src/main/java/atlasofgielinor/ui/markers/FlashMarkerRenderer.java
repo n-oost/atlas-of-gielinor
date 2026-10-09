@@ -24,9 +24,10 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.ACCENT_RING;
+
 import static atlasofgielinor.ui.MapStyle.CARD_TITLE;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -40,7 +41,6 @@ import net.runelite.api.coords.WorldPoint;
 public class FlashMarkerRenderer
 {
 	private static final long FLASH_MILLIS = 1600L;
-	private static final Stroke ACCENT_RING = new BasicStroke(2.0f);
 	private final MapCamera camera;
 
 	public FlashMarkerRenderer(MapCamera camera)

@@ -24,6 +24,8 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.TINY;
+
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 
 import java.awt.Color;
@@ -62,12 +64,13 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.game.AgilityShortcut;
 import net.runelite.client.ui.FontManager;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 /** Draws POI icons and place names, and tracks their hover bounds. */
+@RequiredArgsConstructor
 public class LocationMarkerRenderer
 {
-	private final Set<Object> visibleTooltipTargets;
-
-	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
 	/** Below this many pixels per game tile, icons are more clutter than information. */
 	private static final double ICON_ZOOM_THRESHOLD = 0.45;
 	private static final Pattern FAIRY_RING_CODE = Pattern.compile("Fairy Ring \\(([A-Z]{3})\\)");
@@ -90,24 +93,10 @@ public class LocationMarkerRenderer
 	private final PoiIndex poiIndex;
 	private final ShopIndex shopIndex;
 	private final DungeonPieceIndex dungeonPieceIndex;
+	private final Set<Object> visibleTooltipTargets;
 	private final List<PoiIconHit> visiblePoiIcons = new ArrayList<>();
 	private final List<ShopIconHit> visibleShopIcons = new ArrayList<>();
 
-	public LocationMarkerRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		PoiIndex poiIndex,
-		ShopIndex shopIndex,
-		DungeonPieceIndex dungeonPieceIndex,
-		Set<Object> visibleTooltipTargets)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.poiIndex = poiIndex;
-		this.shopIndex = shopIndex;
-		this.dungeonPieceIndex = dungeonPieceIndex;
-		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
 
 	private void forEachPoiInView(int plane, int minX, int maxX, int minY, int maxY,
 		Consumer<PoiIndex.Poi> consumer)
@@ -426,28 +415,20 @@ public class LocationMarkerRenderer
 		return null;
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class PoiIconHit
 	{
 		private final Rectangle bounds;
 		private final PoiIndex.Poi poi;
 
-		private PoiIconHit(Rectangle bounds, PoiIndex.Poi poi)
-		{
-			this.bounds = bounds;
-			this.poi = poi;
-		}
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class ShopIconHit
 	{
 		private final Rectangle bounds;
 		private final ShopIndex.Shop shop;
 
-		private ShopIconHit(Rectangle bounds, ShopIndex.Shop shop)
-		{
-			this.bounds = bounds;
-			this.shop = shop;
-		}
 	}
 
 	public ShopIndex.Shop visibleShopIconAt(java.awt.Point cursor)

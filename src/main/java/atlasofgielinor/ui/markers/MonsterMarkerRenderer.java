@@ -24,12 +24,17 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.MARKER_OUTLINE;
+import static atlasofgielinor.ui.MapStyle.LABEL_BORDER;
+import static atlasofgielinor.ui.MapStyle.MARKER_RING;
+import static atlasofgielinor.ui.MapStyle.TASK_EDGE;
+import static atlasofgielinor.ui.MapStyle.ACCENT_RING;
+
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 import static atlasofgielinor.ui.MapStyle.CARD_TEXT;
 import static atlasofgielinor.ui.MapStyle.CARD_TITLE;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
@@ -48,16 +53,18 @@ import atlasofgielinor.map.catalog.BossLocationIndex;
 import atlasofgielinor.map.DungeonPieceIndex;
 import atlasofgielinor.map.InstanceMaps;
 import atlasofgielinor.map.MapCamera;
+import atlasofgielinor.ui.MapPins;
 import atlasofgielinor.map.MonsterIconManager;
 import atlasofgielinor.map.catalog.MonsterIndex;
 import atlasofgielinor.map.PrifddinasShift;
 import atlasofgielinor.integrations.SlayerTaskTracker;
 
+import lombok.RequiredArgsConstructor;
+
 /** Draws boss pins and monster zones with Slayer task highlights. */
+@RequiredArgsConstructor
 public class MonsterMarkerRenderer
 {
-	private final Set<Object> visibleTooltipTargets;
-
 	private static final Color MONSTER_FILL = new Color(224, 72, 72);
 	private static final Color MONSTER_EDGE = new Color(18, 18, 18);
 	private static final Color MONSTER_ZONE_FILL = new Color(224, 72, 72, 75);
@@ -74,39 +81,14 @@ public class MonsterMarkerRenderer
 	private static final Color ZONE_CHIP_EDGE = new Color(224, 72, 72, 180);
 	private static final Color ZONE_CHIP_SLAYER_TEXT = new Color(230, 180, 255);
 
-	/**
-	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
-	 * Each renderer keeps its immutable outline strokes for reuse between frames.
-	 */
-	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
-	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
-	private static final Stroke MARKER_RING = new BasicStroke(1.5f);
-	private static final Stroke TASK_EDGE = new BasicStroke(1.8f);
-	private static final Stroke ACCENT_RING = new BasicStroke(2.0f);
 	private final AtlasOfGielinorConfig config;
 	private final MapCamera camera;
 	private final MonsterIndex monsterIndex;
 	private final MonsterIconManager monsterIconManager;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final DungeonPieceIndex dungeonPieceIndex;
+	private final Set<Object> visibleTooltipTargets;
 
-	public MonsterMarkerRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		MonsterIndex monsterIndex,
-		MonsterIconManager monsterIconManager,
-		SlayerTaskTracker slayerTaskTracker,
-		DungeonPieceIndex dungeonPieceIndex,
-		Set<Object> visibleTooltipTargets)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.monsterIndex = monsterIndex;
-		this.monsterIconManager = monsterIconManager;
-		this.slayerTaskTracker = slayerTaskTracker;
-		this.dungeonPieceIndex = dungeonPieceIndex;
-		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
 
 	private void forEachMonsterInView(int plane, int minX, int maxX, int minY, int maxY,
 		Consumer<MonsterIndex.Zone> consumer)
@@ -192,22 +174,8 @@ public class MonsterMarkerRenderer
 
 			if (drawIcons)
 			{
-				// Dark background
-				graphics.setColor(CARD_BG);
-				graphics.fillOval(rect.x, rect.y, rect.width, rect.height);
-
-				// Outer border: bright cyan if on active Slayer task, gold otherwise
-				if (isTaskBoss)
-				{
-					graphics.setColor(MONSTER_ZONE_TASK_EDGE);
-					graphics.setStroke(ACCENT_RING);
-				}
-				else
-				{
-					graphics.setColor(CARD_TITLE);
-					graphics.setStroke(MARKER_RING);
-				}
-				graphics.drawOval(rect.x, rect.y, rect.width, rect.height);
+				MapPins.drawPin(graphics, rect, CARD_BG, isTaskBoss ? MONSTER_ZONE_TASK_EDGE : CARD_TITLE,
+					isTaskBoss ? ACCENT_RING : MARKER_RING);
 
 				// The boss's item sprite
 				final BufferedImage icon = monsterIconManager.getBossIcon(monster, 18);
@@ -370,23 +338,9 @@ public class MonsterMarkerRenderer
 				return;
 			}
 
-			// Dark circular chip background
-			graphics.setColor(CARD_BG);
-			graphics.fillOval(rect.x, rect.y, rect.width, rect.height);
-
-			// Border: Cyan for Slayer Task, Purple for Slayer level required, Crimson for regular monsters
-			if (isTaskZone)
-			{
-				graphics.setColor(MONSTER_ZONE_TASK_EDGE);
-				graphics.setStroke(TASK_EDGE);
-			}
-			else
-			{
-				final boolean isSlayer = zone.getSlayerLevel() > 1;
-				graphics.setColor(isSlayer ? ZONE_MARK_SLAYER : ZONE_MARK);
-				graphics.setStroke(LABEL_BORDER);
-			}
-			graphics.drawOval(rect.x, rect.y, rect.width, rect.height);
+			MapPins.drawPin(graphics, rect, CARD_BG,
+				isTaskZone ? MONSTER_ZONE_TASK_EDGE : (zone.getSlayerLevel() > 1 ? ZONE_MARK_SLAYER : ZONE_MARK),
+				isTaskZone ? TASK_EDGE : LABEL_BORDER);
 
 			// The monster's item sprite
 			final BufferedImage icon = monsterIconManager.getZoneIcon(zone, 14);

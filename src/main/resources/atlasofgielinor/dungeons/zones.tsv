@@ -94,7 +94,7 @@ LIZARDMAN_TEMPLE	lizardman_temple	Lizardman Temple	1214	3559	0	1281	10048	0	6489
 GIANTS_DEN	giants_den	Giants' Den	1420	3588	0	1432	9913	0	6325	60	Under Shayzien • Hill Giants, Moss Giants, Fire Giants	1412	9856	1471	9915	1419	3588	0
 FORTIS_BARRACKS	fortis_barracks	Fortis Barracks	1640	3166	0	1641	9576	0	6410	60	Under Civitas illa Fortis • Fortis Barracks & subterranean tunnels	1612	9484	1691	9579
 FENKENSTRAIN_DUNGEON	fenkenstrain_dungeon	Fenkenstrain's Castle Dungeon	3509	3448	0	3509	9848	0	6400	45	Under Castle Fenkenstrain • Experiments cave, memorial gravestone link	3520	9856	3583	9919	3575	3526	0
-WILDERNESS_AGILITY_DUNGEON	wilderness_agility_dungeon	Wilderness Agility Dungeon	2854	3944	0	3008	10367	0	6423	45	Under Deep Wilderness • Wilderness Agility Course escape tunnel & Pirate's Hideout	2991	10339	3071	10367	3004	3963	0
+WILDERNESS_AGILITY_DUNGEON	wilderness_agility_dungeon	Wilderness Agility Dungeon	3004	3963	0	3008	10367	0	6423	45	Under Deep Wilderness • Wilderness Agility Course escape tunnel & Pirate's Hideout	2991	10339	3071	10367
 DAEYALT_ESSENCE_MINE	daeyalt_essence_mine	Daeyalt Essence Mine	3725	3356	0	3649	9820	0	6464	45	Under Darkmeyer • Daeyalt essence extraction caverns	3609	9795	3710	9850
 MOLCH_PEARL_CAVES	molch_pearl_caves	Molch Pearl Caves	1382	3825	0	1280	9983	0	6158	45	Under Lake Molch • Cormorant fishing cavern & lizardman nests	1280	9935	1343	9983
 KALPHITE_LAIR	kalphite_lair	Kalphite Lair	3226	3108	0	3483	9510	0	6402	60	Under the Kharidian Desert • Kalphite Queen, kalphite soldiers	3464	9480	3511	9519

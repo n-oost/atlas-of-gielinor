@@ -44,16 +44,28 @@ import java.util.Set;
 import java.util.TreeMap;
 import javax.imageio.ImageIO;
 import javax.inject.Singleton;
+import javax.inject.Inject;
+import com.google.gson.Gson;
 
 import atlasofgielinor.data.io.BundledTsv;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Getter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /** Loads markers and search aliases from the normalized bundled map catalog. */
 @Slf4j
 @Singleton
 public class PoiIndex
 {
+	private final Gson gson;
+
+	@Inject
+	public PoiIndex(Gson gson)
+	{
+		this.gson = gson;
+	}
+
 	/** How far from a cursor a point of interest can be and still be the thing being pointed at. */
 	private static final int MATCH_RADIUS = 6;
 
@@ -104,7 +116,7 @@ public class PoiIndex
 
 	public void load(File tileDir)
 	{
-		final PoiIndex prepared = new PoiIndex();
+		final PoiIndex prepared = new PoiIndex(gson);
 		prepared.loadData(tileDir);
 		if (!MapCatalogLoader.isReady() || Thread.currentThread().isInterrupted())
 		{
@@ -130,7 +142,7 @@ public class PoiIndex
 
 	private void loadData(File tileDir)
 	{
-		MapCatalogLoader.load();
+		MapCatalogLoader.load(gson);
 		if (!MapCatalogLoader.isReady()) return;
 		this.tileDir = tileDir;
 		pois.clear();
@@ -415,23 +427,17 @@ public class PoiIndex
 		return matches;
 	}
 
+	@Getter
+	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 	public static final class Poi
 	{
-		@Getter
 		private final int x;
-		@Getter
 		private final int y;
-		@Getter
 		private final int plane;
-		@Getter
 		private final String key;
-		@Getter
 		private final String name;
-		@Getter
 		private final String locationId;
-		@Getter
 		private java.awt.geom.Point2D displayPoint;
-		@Getter
 		private boolean nativeLayout;
 
 		public Poi withDisplayPoint(java.awt.geom.Point2D point, boolean nativeLayout)
@@ -462,14 +468,5 @@ public class PoiIndex
 			return location == null ? null : location.id;
 		}
 
-		Poi(int x, int y, int plane, String key, String name, String locationId)
-		{
-			this.x = x;
-			this.y = y;
-			this.plane = plane;
-			this.key = key;
-			this.name = name;
-			this.locationId = locationId;
-		}
 	}
 }

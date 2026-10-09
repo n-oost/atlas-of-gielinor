@@ -26,7 +26,7 @@ package atlasofgielinor.map.catalog;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -164,7 +164,7 @@ public enum MapRegion
 	}
 
 	/** Call on the startup worker before Finder input or map rendering is enabled. */
-	public static synchronized void load()
+	public static synchronized void load(Gson gson)
 	{
 		if (isLoaded()) return;
 		final Map<MapRegion, Detail> parsed = new EnumMap<>(MapRegion.class);
@@ -175,7 +175,7 @@ public enum MapRegion
 			if (raw == null) throw new IOException("Missing bundled region catalog: " + RESOURCE);
 			try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(raw), StandardCharsets.UTF_8))
 			{
-				final JsonObject dataset = new JsonParser().parse(reader).getAsJsonObject();
+				final JsonObject dataset = gson.fromJson(reader, JsonObject.class);
 				for (JsonElement element : dataset.getAsJsonArray("kingdoms"))
 				{
 					if (Thread.currentThread().isInterrupted()) return;

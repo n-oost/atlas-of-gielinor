@@ -24,6 +24,8 @@
  */
 package atlasofgielinor.ui;
 
+import java.awt.BasicStroke;
+import java.awt.Stroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -56,6 +58,14 @@ public final class MapStyle
 
 	public static final Font RUNELITE_PLAIN = FontManager.getDefaultFont().deriveFont(11f);
 	public static final Font RUNELITE_BOLD = FontManager.getDefaultBoldFont().deriveFont(11f);
+
+	public static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
+
+	public static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
+	public static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
+	public static final Stroke MARKER_RING = new BasicStroke(1.5f);
+	public static final Stroke TASK_EDGE = new BasicStroke(1.8f);
+	public static final Stroke ACCENT_RING = new BasicStroke(2.0f);
 
 	public static final Font SMALL = RUNELITE_PLAIN;
 

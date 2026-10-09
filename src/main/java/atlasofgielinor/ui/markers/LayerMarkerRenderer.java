@@ -24,6 +24,8 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.TINY;
+
 import static atlasofgielinor.ui.MapStyle.CARD_EDGE;
 import static atlasofgielinor.ui.MapStyle.CARD_TEXT;
 import static atlasofgielinor.ui.MapStyle.CARD_TITLE;
@@ -31,7 +33,6 @@ import static atlasofgielinor.ui.MapStyle.SMALL;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -45,14 +46,13 @@ import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.data.dungeons.DungeonFloor;
 import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.map.MapCamera;
+import atlasofgielinor.ui.MapPins;
 import atlasofgielinor.map.catalog.PoiIndex;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.FontManager;
 
 /** Draws dungeon entrance toggles and floor controls. */
 public class LayerMarkerRenderer
 {
-	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
 	/** Fixed colours that were being reallocated inside per-frame draw loops. */
 	private static final Color LAYER_CHIP_BG_HOVER = new Color(28, 34, 48, 235);
 	private static final Color LAYER_CHIP_BG = new Color(16, 20, 28, 195);
@@ -255,11 +255,8 @@ public class LayerMarkerRenderer
 			}
 			else
 			{
-				graphics.setColor(isHovered ? LAYER_CHIP_BG_HOVER : LAYER_CHIP_BG);
-				graphics.fillRoundRect(rect.x, rect.y, rect.width, rect.height, radius, radius);
-				graphics.setColor(isHovered ? CARD_TITLE : LAYER_CHIP_EDGE);
-				graphics.setStroke(isHovered ? SYMBOL_BORDER_HOVER : SYMBOL_BORDER);
-				graphics.drawRoundRect(rect.x, rect.y, rect.width, rect.height, radius, radius);
+				MapPins.drawBadge(graphics, rect, radius, isHovered ? LAYER_CHIP_BG_HOVER : LAYER_CHIP_BG,
+					isHovered ? CARD_TITLE : LAYER_CHIP_EDGE, isHovered ? SYMBOL_BORDER_HOVER : SYMBOL_BORDER);
 				graphics.setColor(isHovered ? CARD_TITLE : LAYER_CHIP_TEXT);
 				final int[] ax = {rect.x + glyph(size, 10), rect.x + glyph(size, 22), rect.x + glyph(size, 16)};
 				final int[] ay = {rect.y + glyph(size, 18), rect.y + glyph(size, 18), rect.y + glyph(size, 8)};

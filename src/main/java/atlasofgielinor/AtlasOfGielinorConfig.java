@@ -35,6 +35,8 @@ import net.runelite.client.config.Units;
 @ConfigGroup("bettermap")
 public interface AtlasOfGielinorConfig extends Config
 {
+	String MINIMUM_ZOOM_DESCRIPTION = " Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.";
+
 	@ConfigSection(
 		name = "Map",
 		description = "Map window and access buttons.",
@@ -531,7 +533,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "shortcutMinZoom",
 		name = "Agility Shortcuts",
-		description = "Agility shortcut icons; controlled by their own category toggle. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Agility shortcut icons; controlled by their own category toggle." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 32,
 		section = iconsZoomSection
 	)
@@ -544,7 +546,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "slayerMasterMinZoom",
 		name = "Skilling: Slayer Masters",
-		description = "Slayer master icons under Skilling. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Slayer master icons under Skilling." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 33,
 		section = iconsZoomSection
 	)
@@ -557,7 +559,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "sailingLookoutMinZoom",
 		name = "Sailing Lookouts",
-		description = "Lookout point icons; ports, boats and task boards have separate settings. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Lookout point icons; ports, boats and task boards have separate settings." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 34,
 		section = iconsZoomSection
 	)
@@ -570,7 +572,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "bankMinZoom",
 		name = "Banks",
-		description = "Bank icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Bank icons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 10,
 		section = iconsZoomSection
 	)
@@ -583,7 +585,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "shopMinZoom",
 		name = "Shops and Trade",
-		description = "Shop icons, traders and stock-indexed shops. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Shop icons, traders and stock-indexed shops." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 11,
 		section = iconsZoomSection
 	)
@@ -596,7 +598,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "skillingMinZoom",
 		name = "Skilling",
-		description = "Skilling icons, including agility courses and hunter areas. Slayer masters have a separate threshold; agility shortcuts have their own category. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Skilling icons, including agility courses and hunter areas. Slayer masters have a separate threshold; agility shortcuts have their own category." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 12,
 		section = iconsZoomSection
 	)
@@ -609,7 +611,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "travelMinZoom",
 		name = "Travel",
-		description = "Transport icons, house portals, mooring points and dungeon map links. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Transport icons, house portals, mooring points and dungeon map links." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 13,
 		section = iconsZoomSection
 	)
@@ -622,7 +624,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "questMinZoom",
 		name = "Quests and Tasks",
-		description = "Quest starts, task masters and holiday events. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Quest starts, task masters and holiday events." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 14,
 		section = iconsZoomSection
 	)
@@ -635,7 +637,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "activityMinZoom",
 		name = "Minigames and Raids Lobbies",
-		description = "Minigame and raids lobby icons under Quests and Activities. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Minigame and raids lobby icons under Quests and Activities." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 15,
 		section = iconsZoomSection
 	)
@@ -648,7 +650,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "altarMinZoom",
 		name = "Altars",
-		description = "Altar icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Altar icons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 16,
 		section = iconsZoomSection
 	)
@@ -661,7 +663,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "dungeonMinZoom",
 		name = "Dungeons",
-		description = "Dungeon and basement icons. Dungeon navigation buttons have a separate threshold. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Dungeon and basement icons. Dungeon navigation buttons have a separate threshold." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 17,
 		section = iconsZoomSection
 	)
@@ -674,7 +676,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "serviceMinZoom",
 		name = "Tutors and Services",
-		description = "Tutor, guide, cosmetic service, cargo bay and noticeboard icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Tutor, guide, cosmetic service, cargo bay and noticeboard icons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 18,
 		section = iconsZoomSection
 	)
@@ -687,7 +689,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "otherMinZoom",
 		name = "Other Map Icons",
-		description = "Unidentified native map icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Unidentified native map icons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 19,
 		section = iconsZoomSection
 	)
@@ -700,7 +702,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "majorPlaceMinZoom",
 		name = "Cities, Kingdoms and Islands",
-		description = "Major place names. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Major place names." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 20,
 		section = iconsZoomSection
 	)
@@ -713,7 +715,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "localPlaceMinZoom",
 		name = "Districts and Landmarks",
-		description = "Smaller place names. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Smaller place names." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 21,
 		section = iconsZoomSection
 	)
@@ -726,7 +728,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "interiorPlaceMinZoom",
 		name = "Dungeon Room Names",
-		description = "Interior place names; rooms still require the dungeon to be visible or hovered. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Interior place names; rooms still require the dungeon to be visible or hovered." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 22,
 		section = iconsZoomSection
 	)
@@ -739,7 +741,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "bossMinZoom",
 		name = "Bosses and Raid Entrances",
-		description = "Boss pins and raid entrance buttons. Highlighted Slayer task bosses still ignore this threshold. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Boss pins and raid entrance buttons. Highlighted Slayer task bosses still ignore this threshold." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 23,
 		section = iconsZoomSection
 	)
@@ -752,7 +754,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "slayerTaskIconMinZoom",
 		name = "Slayer Task Icons",
-		description = "Highlighted Slayer task monster icons. Task area overlays remain visible at every zoom. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Highlighted Slayer task monster icons. Task area overlays remain visible at every zoom." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 24,
 		section = iconsZoomSection
 	)
@@ -765,7 +767,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "sailingPortMinZoom",
 		name = "Sailing Ports",
-		description = "Sailing port pins. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Sailing port pins." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 25,
 		section = iconsZoomSection
 	)
@@ -778,7 +780,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "portNoticeBoardMinZoom",
 		name = "Port Notice Boards",
-		description = "Dedicated Sailing task-board markers. Native noticeboard icons follow Tutors and Services. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Dedicated Sailing task-board markers. Native noticeboard icons follow Tutors and Services." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 26,
 		section = iconsZoomSection
 	)
@@ -791,7 +793,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "playerBoatMinZoom",
 		name = "Player Boats",
-		description = "Docked player boat markers. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Docked player boat markers." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 27,
 		section = iconsZoomSection
 	)
@@ -804,7 +806,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "pluginMarkerMinZoom",
 		name = "Other Plugin Markers",
-		description = "Markers supplied by other RuneLite plugins. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Markers supplied by other RuneLite plugins." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 29,
 		section = iconsZoomSection
 	)
@@ -817,7 +819,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "dungeonNavigationMinZoom",
 		name = "Dungeon Navigation Buttons",
-		description = "Dungeon entrance toggles, connected previews and floor navigation buttons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Dungeon entrance toggles, connected previews and floor navigation buttons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 30,
 		section = iconsZoomSection
 	)
@@ -830,7 +832,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "travelStationMinZoom",
 		name = "Travel Network Stations",
-		description = "Travel network pins and route previews, separate from native Travel icons. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Travel network pins and route previews, separate from native Travel icons." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 31,
 		section = iconsZoomSection
 	)
@@ -843,7 +845,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "fairyRingLabelMinZoom",
 		name = "Fairy Ring Codes",
-		description = "Fairy ring code labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Fairy ring code labels." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 10,
 		section = iconsLabelZoomSection
 	)
@@ -856,7 +858,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "shortcutLabelMinZoom",
 		name = "Agility Shortcut Levels",
-		description = "Agility shortcut level labels. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Agility shortcut level labels." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 11,
 		section = iconsLabelZoomSection
 	)
@@ -869,7 +871,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "bossLabelMinZoom",
 		name = "Boss Names",
-		description = "Boss name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Boss name badges." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 12,
 		section = iconsLabelZoomSection
 	)
@@ -882,7 +884,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "monsterLabelMinZoom",
 		name = "Monster Names",
-		description = "Standard monster name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Standard monster name badges." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 13,
 		section = iconsLabelZoomSection
 	)
@@ -895,7 +897,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "slayerTaskLabelMinZoom",
 		name = "Slayer Task Names",
-		description = "Highlighted Slayer task names; these retain their independent visibility behavior. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Highlighted Slayer task names; these retain their independent visibility behavior." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 14,
 		section = iconsLabelZoomSection
 	)
@@ -908,7 +910,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "groundItemLabelMinZoom",
 		name = "Ground Item Names",
-		description = "Ground item name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Ground item name badges." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 15,
 		section = iconsLabelZoomSection
 	)
@@ -921,7 +923,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "boatLabelMinZoom",
 		name = "Player Boat Names",
-		description = "Docked player boat name badges. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Docked player boat name badges." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 16,
 		section = iconsLabelZoomSection
 	)
@@ -934,7 +936,7 @@ public interface AtlasOfGielinorConfig extends Config
 	@ConfigItem(
 		keyName = "dungeonNavigationLabelMinZoom",
 		name = "Dungeon Navigation Names",
-		description = "Dungeon button labels inside a dungeon. Hover still reveals names at any zoom. Minimum zoom in px/tile; lower shows farther out, 0 shows at every zoom.",
+		description = "Dungeon button labels inside a dungeon. Hover still reveals names at any zoom." + MINIMUM_ZOOM_DESCRIPTION,
 		position = 18,
 		section = iconsLabelZoomSection
 	)

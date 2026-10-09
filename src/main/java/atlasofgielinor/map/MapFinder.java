@@ -46,11 +46,15 @@ import javax.inject.Singleton;
 import atlasofgielinor.AtlasOfGielinorConfig;
 import net.runelite.api.coords.WorldPoint;
 import lombok.Getter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 @Singleton
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class MapFinder
 {
 	@Getter
+	@RequiredArgsConstructor
 	public enum BrowseCategory
 	{
 		BANKS("Banks", "Nearby bank locations"),
@@ -67,11 +71,6 @@ public class MapFinder
 		private final String displayName;
 		private final String description;
 
-		BrowseCategory(String displayName, String description)
-		{
-			this.displayName = displayName;
-			this.description = description;
-		}
 
 		public static BrowseCategory of(String key)
 		{
@@ -152,23 +151,13 @@ public class MapFinder
 
 	/**
 	 * Test constructor: POI and monster search only, no shop / ground-item search and no config
-	 * gate. Production uses the {@link Inject}-annotated constructor below.
+	 * gate. Production uses the {@link Inject}-annotated generated constructor.
 	 */
 	public MapFinder(PoiIndex poiIndex, MonsterIndex monsterIndex)
 	{
 		this(poiIndex, monsterIndex, null, null, null);
 	}
 
-	@Inject
-	public MapFinder(PoiIndex poiIndex, MonsterIndex monsterIndex, ShopIndex shopIndex,
-		GroundItemIndex groundItemIndex, AtlasOfGielinorConfig config)
-	{
-		this.poiIndex = poiIndex;
-		this.monsterIndex = monsterIndex;
-		this.shopIndex = shopIndex;
-		this.groundItemIndex = groundItemIndex;
-		this.config = config;
-	}
 
 	private boolean itemSearchEnabled()
 	{
@@ -557,16 +546,12 @@ public class MapFinder
 		return version;
 	}
 
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class BrowseCacheEntry
 	{
 		private final WorldPoint origin;
 		private final List<Result> results;
 
-		private BrowseCacheEntry(WorldPoint origin, List<Result> results)
-		{
-			this.origin = origin;
-			this.results = results;
-		}
 	}
 
 	/** Best textual match first, then distance; group children after per-result relevance ranking. */
@@ -693,6 +678,7 @@ public class MapFinder
 		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
 	}
 
+	@Getter
 	public static final class Result
 	{
 		/** What a result points at, so the panel can label it. */
@@ -705,22 +691,23 @@ public class MapFinder
 			MINERAL
 		}
 
-		@Getter
 		private final String name;
-		@Getter
 		private final String groupKey;
-		@Getter
 		private final WorldPoint point;
-		@Getter
 		private final int distanceTiles;
-		@Getter
 		private final int tier;
-		@Getter
 		private final Kind kind;
+		/** Child rows when this result groups duplicates. Empty for a plain leaf. */
 		private final List<Result> children;
-		/** Optional hover strip line (e.g. shop item cost/stock); null when unused. */
+		/**
+		 * Optional hover strip line (e.g. shop item cost/stock); null when unused.
+		 * Hover description strip line, or null.
+		 */
 		private final String detail;
-		/** Shop sell price in coins for the matched item, or {@code 0} when unknown / not a shop. */
+		/**
+		 * Shop sell price in coins for the matched item, or {@code 0} when unknown / not a shop.
+		 * Matched shop-item sell price in coins, or {@code 0}.
+		 */
 		private final int sellGp;
 
 		public Result(String name, WorldPoint point, int distanceTiles)
@@ -780,24 +767,6 @@ public class MapFinder
 
 
 
-
-		/** Child rows when this result groups duplicates. Empty for a plain leaf. */
-		public List<Result> getChildren()
-		{
-			return children;
-		}
-
-		/** Hover description strip line, or null. */
-		public String getDetail()
-		{
-			return detail;
-		}
-
-		/** Matched shop-item sell price in coins, or {@code 0}. */
-		public int getSellGp()
-		{
-			return sellGp;
-		}
 
 		/** True when the row should show a flyout affordance ({@code ▸}). */
 		public boolean hasChildren()

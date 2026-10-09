@@ -24,6 +24,10 @@
  */
 package atlasofgielinor.ui;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.util.ArrayList;
@@ -69,6 +73,7 @@ final class CardText
 	}
 
 	/** The four colours the overlay draws card rows in. */
+	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 	static final class Palette
 	{
 		private final Color chip;
@@ -76,36 +81,18 @@ final class CardText
 		private final Color dim;
 		private final Color normal;
 
-		Palette(Color chip, Color warn, Color dim, Color normal)
-		{
-			this.chip = chip;
-			this.warn = warn;
-			this.dim = dim;
-			this.normal = normal;
-		}
 	}
 
 	/** One drawable row: text that already fits, and the colour it inherited. */
+	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+	@Getter(AccessLevel.PACKAGE)
 	static final class Row
 	{
 		private final String text;
 		private final Color colour;
 
-		Row(String text, Color colour)
-		{
-			this.text = text;
-			this.colour = colour;
-		}
 
-		String getText()
-		{
-			return text;
-		}
 
-		Color getColour()
-		{
-			return colour;
-		}
 	}
 
 	/**
@@ -222,7 +209,7 @@ final class CardText
 		}
 
 		final List<Row> rows = new ArrayList<>(lines.size());
-		final List<Row> lastLineRows = new ArrayList<>(MAX_FRAGMENTS);
+		Row lastLineRow = null;
 
 		for (int i = 0; i < lines.size(); i++)
 		{
@@ -239,9 +226,9 @@ final class CardText
 			{
 				final Row row = new Row(fragment, colour);
 				rows.add(row);
-				if (isLast && lastLineRows.isEmpty())
+				if (isLast && lastLineRow == null)
 				{
-					lastLineRows.add(row);
+					lastLineRow = row;
 				}
 			}
 		}
@@ -258,15 +245,14 @@ final class CardText
 		final List<Row> capped = new ArrayList<>(MAX_LINES);
 		capped.addAll(rows.subList(0, kept));
 
-		final Row tail = lastLineRows.isEmpty() ? null : lastLineRows.get(0);
-		final int dropped = rows.size() - kept - (tail == null ? 0 : 1);
+		final int dropped = rows.size() - kept - (lastLineRow == null ? 0 : 1);
 		if (dropped > 0)
 		{
 			capped.add(new Row("+" + dropped + " more", palette.dim));
 		}
-		if (tail != null)
+		if (lastLineRow != null)
 		{
-			capped.add(tail);
+			capped.add(lastLineRow);
 		}
 
 		return capped;

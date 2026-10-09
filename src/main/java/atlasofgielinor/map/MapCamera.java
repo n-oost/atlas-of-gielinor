@@ -25,7 +25,6 @@
 package atlasofgielinor.map;
 
 import atlasofgielinor.map.catalog.MapRegion;
-import atlasofgielinor.map.MapFinder;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.Collections;
@@ -41,6 +40,7 @@ import atlasofgielinor.data.sailing.PlayerBoat;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -59,6 +59,19 @@ import lombok.Setter;
 @Singleton
 public class MapCamera
 {
+	public boolean isCursorOverPanel(java.awt.Point cursor)
+	{
+		if (cursor == null) return false;
+		final Rectangle layers = layersPanelBounds;
+		final Rectangle finder = finderPanelBounds;
+		final Rectangle clue = cluePanelBounds;
+		final Rectangle boats = boatsDropdownBounds;
+		return (layers != null && layers.contains(cursor))
+			|| (finder != null && finder.contains(cursor))
+			|| (clue != null && clue.contains(cursor))
+			|| (boats != null && boats.contains(cursor));
+	}
+
 	public static final double MIN_ZOOM = 0.14;
 	public static final double MAX_ZOOM = 24.0;
 
@@ -68,6 +81,7 @@ public class MapCamera
 	public static final int MAX_WORLD_Y = 12607;
 
 	@Getter
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	public static final class LayerSymbolTarget
 	{
 		private final Rectangle bounds;
@@ -84,20 +98,12 @@ public class MapCamera
 		public LayerSymbolTarget(Rectangle bounds, UndergroundZone zone, WorldPoint surfacePoint,
 			boolean surfaceToUnderground)
 		{
-			this.bounds = bounds;
-			this.zone = zone;
-			this.surfacePoint = surfacePoint;
-			this.floor = null;
-			this.surfaceToUnderground = surfaceToUnderground;
+			this(bounds, zone, surfacePoint, null, surfaceToUnderground);
 		}
 
 		public LayerSymbolTarget(Rectangle bounds, DungeonFloor floor)
 		{
-			this.bounds = bounds;
-			this.zone = floor.zone;
-			this.surfacePoint = floor.zone.getSurfacePoint();
-			this.floor = floor;
-			this.surfaceToUnderground = true;
+			this(bounds, floor.zone, floor.zone.getSurfacePoint(), floor, true);
 		}
 
 
@@ -934,13 +940,12 @@ public class MapCamera
 
 	public void clampFinderBodyScroll()
 	{
-		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, 0, finderBodyItemCount,
-			finderBodyVisibleRows > 0 ? finderBodyVisibleRows : finderBodyViewportRows());
+		scrollFinderBody(0);
 	}
 
 	public void clampFinderFlyoutScroll()
 	{
-		finderFlyoutScrollOffset = scrollOffset(finderFlyoutScrollOffset, 0, finderFlyoutItemCount, FINDER_FLYOUT_ROWS);
+		scrollFinderFlyout(0);
 	}
 
 	public void scrollFinderBody(int delta)

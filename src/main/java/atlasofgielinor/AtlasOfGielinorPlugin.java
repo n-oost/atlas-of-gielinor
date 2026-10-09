@@ -28,6 +28,7 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import com.google.inject.Provides;
 
@@ -69,6 +70,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
+import net.runelite.api.MenuEntry;
 import net.runelite.api.Player;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -1061,11 +1063,8 @@ public class AtlasOfGielinorPlugin extends Plugin
 		final WorldPoint finderTarget = finderTargetAt(mouse);
 		if (finderTarget != null)
 		{
-			client.getMenu().createMenuEntry(-1)
-				.setOption("Show on map")
-				.setTarget("<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> centerFinderOn(finderTarget));
+			addLocalMenuEntry("Show on map", "<col=ffff00>" + finderTarget.getX() + ", " + finderTarget.getY() + "</col>",
+			e -> centerFinderOn(finderTarget));
 			return;
 		}
 		final Rectangle finderPanel = camera.getFinderPanelBounds();
@@ -1087,14 +1086,20 @@ public class AtlasOfGielinorPlugin extends Plugin
 		final int worldY = (int) Math.floor(camera.worldY(mouse.getY(), viewport));
 		if (camera.isViewingDungeonLayer())
 		{
-			client.getMenu().createMenuEntry(-1)
-				.setOption("Return to surface")
-				.setTarget("<col=ffff00>Overworld</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> camera.exitDungeonToSurface());
+			addLocalMenuEntry("Return to surface", "<col=ffff00>Overworld</col>", e -> camera.exitDungeonToSurface());
 		}
 
 		addEntityContextMenuEntries(mouse, worldX, worldY);
+	}
+
+	/** Append a local action without replacing any native menu entries. */
+	private void addLocalMenuEntry(String option, String target, Consumer<MenuEntry> action)
+	{
+		client.getMenu().createMenuEntry(-1)
+			.setOption(option)
+			.setTarget(target)
+			.setType(MenuAction.RUNELITE)
+			.onClick(action);
 	}
 
 	@Nullable
@@ -1146,11 +1151,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 		if (travel != null)
 		{
 			final WorldPoint point = travel.getLocation();
-			client.getMenu().createMenuEntry(-1)
-				.setOption("Mark")
-				.setTarget("<col=ffff00>" + travel.getName() + "</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> markMapPoint(point));
+			addLocalMenuEntry("Mark", "<col=ffff00>" + travel.getName() + "</col>", e -> markMapPoint(point));
 			return;
 		}
 
@@ -1168,16 +1169,8 @@ public class AtlasOfGielinorPlugin extends Plugin
 
 		final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 		final String target = "<col=ffff00>" + poi.getName() + "</col>";
-		client.getMenu().createMenuEntry(-1)
-			.setOption("Examine")
-			.setTarget(target)
-			.setType(MenuAction.RUNELITE)
-			.onClick(e -> examinePoi(poi));
-		client.getMenu().createMenuEntry(-1)
-			.setOption("Mark")
-			.setTarget(target)
-			.setType(MenuAction.RUNELITE)
-			.onClick(e -> markMapPoint(point));
+		addLocalMenuEntry("Examine", target, e -> examinePoi(poi));
+		addLocalMenuEntry("Mark", target, e -> markMapPoint(point));
 	}
 
 	private void addLayerSymbolMenuEntries(MapCamera.LayerSymbolTarget target)
@@ -1189,11 +1182,8 @@ public class AtlasOfGielinorPlugin extends Plugin
 		}
 		if (target.isSurfaceToUnderground())
 		{
-			client.getMenu().createMenuEntry(-1)
-				.setOption(target.isFloor() ? "Open floor" : "Enter")
-				.setTarget("<col=ffff00>" + (target.isFloor() ? target.getFloor().name : zone.getName()) + "</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e ->
+			addLocalMenuEntry(target.isFloor() ? "Open floor" : "Enter",
+				"<col=ffff00>" + (target.isFloor() ? target.getFloor().name : zone.getName()) + "</col>", e ->
 				{
 					if (target.isFloor())
 					{
@@ -1207,20 +1197,13 @@ public class AtlasOfGielinorPlugin extends Plugin
 			final DungeonFloor next = nextFloor(zone, target.getFloor());
 			if (next != null)
 			{
-				client.getMenu().createMenuEntry(-1)
-					.setOption("Cycle floor")
-					.setTarget("<col=ffff00>" + next.name + "</col>")
-					.setType(MenuAction.RUNELITE)
-					.onClick(e -> camera.setActiveFloor(next));
+				addLocalMenuEntry("Cycle floor", "<col=ffff00>" + next.name + "</col>", e -> camera.setActiveFloor(next));
 			}
 		}
 		else
 		{
-			client.getMenu().createMenuEntry(-1)
-				.setOption("Return to surface")
-				.setTarget("<col=ffff00>" + zone.getName() + "</col>")
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> camera.exitDungeonToSurface(target.getSurfacePoint()));
+			addLocalMenuEntry("Return to surface", "<col=ffff00>" + zone.getName() + "</col>",
+			e -> camera.exitDungeonToSurface(target.getSurfacePoint()));
 		}
 	}
 

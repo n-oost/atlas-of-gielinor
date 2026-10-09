@@ -24,24 +24,25 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.MARKER_OUTLINE;
+import static atlasofgielinor.ui.MapStyle.LABEL_BORDER;
+import static atlasofgielinor.ui.MapStyle.MARKER_RING;
+import static atlasofgielinor.ui.MapStyle.TINY;
+
 import static atlasofgielinor.ui.MapStyle.CARD_TITLE;
 import static atlasofgielinor.ui.MapStyle.SMALL;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.imageio.ImageIO;
+import net.runelite.client.util.ImageUtil;
 
 import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.data.sailing.BoatTracker;
@@ -50,16 +51,18 @@ import atlasofgielinor.data.sailing.PlayerBoat;
 import atlasofgielinor.data.sailing.PortNoticeBoard;
 import atlasofgielinor.data.sailing.SailingPort;
 import atlasofgielinor.map.MapCamera;
+import atlasofgielinor.ui.MapPins;
 import atlasofgielinor.map.catalog.PoiIndex;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.client.ui.FontManager;
+
+import lombok.RequiredArgsConstructor;
 
 /** Draws sailing ports, notice boards, and owned boats. */
 @Slf4j
+@RequiredArgsConstructor
 public class BoatMarkerRenderer
 {
-	private final Set<Object> visibleTooltipTargets;
 
 	private static final Color BOAT_EDGE = new Color(14, 18, 26, 220);
 	private static final Color BOAT_FILL = new Color(38, 128, 205);
@@ -75,37 +78,16 @@ public class BoatMarkerRenderer
 	private static final Color BOARD_FILL = new Color(175, 115, 45, 220);
 	private static final Color BOARD_BORDER = new Color(255, 225, 140, 240);
 	private static final Color BOARD_GLYPH = new Color(255, 245, 220);
-	private static final Font TINY = FontManager.getDefaultBoldFont().deriveFont(9f);
-	private static final SailingPort[] PORTS = SailingPort.values();
 
-	/**
-	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
-	 * Each renderer keeps its immutable outline strokes for reuse between frames.
-	 */
-	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
-	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
-	private static final Stroke MARKER_RING = new BasicStroke(1.5f);
 	private final AtlasOfGielinorConfig config;
 	private final MapCamera camera;
 	private final PoiIndex poiIndex;
 	private final BoatTracker boatTracker;
+	private final Set<Object> visibleTooltipTargets;
 	private BufferedImage boatSloopIcon;
 	private BufferedImage boatSkiffIcon;
 	private BufferedImage boatRaftIcon;
 
-	public BoatMarkerRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		PoiIndex poiIndex,
-		BoatTracker boatTracker,
-		Set<Object> visibleTooltipTargets)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.poiIndex = poiIndex;
-		this.boatTracker = boatTracker;
-		this.visibleTooltipTargets = visibleTooltipTargets;
-	}
 
 	private BufferedImage boatIcon(BoatType type)
 	{
@@ -145,14 +127,11 @@ public class BoatMarkerRenderer
 		}
 		if (icon == null)
 		{
-			try (InputStream in = BoatMarkerRenderer.class.getResourceAsStream("/atlasofgielinor/" + name + ".png"))
+			try
 			{
-				if (in != null)
-				{
-					icon = ImageIO.read(in);
-				}
+				icon = ImageUtil.loadImageResource(BoatMarkerRenderer.class, "/atlasofgielinor/" + name + ".png");
 			}
-			catch (IOException e)
+			catch (RuntimeException e)
 			{
 				log.warn("Failed to load boat icon: {}", name, e);
 			}
@@ -181,7 +160,7 @@ public class BoatMarkerRenderer
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		final Stroke oldStroke = graphics.getStroke();
 
-		for (SailingPort port : PORTS)
+		for (SailingPort port : SailingPort.ALL_PORTS)
 		{
 			final WorldPoint loc = port.getNavigationLocation();
 			if (loc == null || loc.getPlane() != plane)
@@ -213,12 +192,7 @@ public class BoatMarkerRenderer
 				graphics.setColor(PORT_EDGE);
 				graphics.fillOval(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2);
 
-				graphics.setColor(PORT_FILL);
-				graphics.fillOval(rect.x, rect.y, rect.width, rect.height);
-
-				graphics.setColor(PORT_BORDER);
-				graphics.setStroke(LABEL_BORDER);
-				graphics.drawOval(rect.x, rect.y, rect.width, rect.height);
+				MapPins.drawPin(graphics, rect, PORT_FILL, PORT_BORDER, LABEL_BORDER);
 
 				graphics.setColor(PORT_DOT);
 				graphics.fillOval(sx - 2, sy - 2, 4, 4);
@@ -279,12 +253,7 @@ public class BoatMarkerRenderer
 			graphics.setColor(BOARD_EDGE);
 			graphics.fillRoundRect(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2, 4, 4);
 
-			graphics.setColor(BOARD_FILL);
-			graphics.fillRoundRect(rect.x, rect.y, rect.width, rect.height, 4, 4);
-
-			graphics.setColor(BOARD_BORDER);
-			graphics.setStroke(LABEL_BORDER);
-			graphics.drawRoundRect(rect.x, rect.y, rect.width, rect.height, 4, 4);
+			MapPins.drawBadge(graphics, rect, 4, BOARD_FILL, BOARD_BORDER, LABEL_BORDER);
 
 			graphics.setColor(BOARD_GLYPH);
 			graphics.drawLine(sx - 3, sy - 2, sx + 3, sy - 2);

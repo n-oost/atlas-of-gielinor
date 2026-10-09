@@ -24,7 +24,6 @@
  */
 package atlasofgielinor.ui;
 
-import static atlasofgielinor.ui.MapStyle.BOSSES;
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 import static atlasofgielinor.ui.MapStyle.CARD_EDGE;
 import static atlasofgielinor.ui.MapStyle.CARD_PALETTE;
@@ -72,7 +71,8 @@ import atlasofgielinor.ui.tooltips.MonsterTooltipBuilder;
 import atlasofgielinor.ui.tooltips.PoiTooltipBuilder;
 import atlasofgielinor.ui.tooltips.TooltipCard;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
@@ -83,7 +83,7 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
  *
  * <p>Decomposed into specialized tooltip builders in {@code com.atlasofgielinor.ui.tooltips}.
  */
-@Slf4j
+@RequiredArgsConstructor
 public class MapTooltipRenderer
 {
 	private final AtlasOfGielinorConfig config;
@@ -108,47 +108,11 @@ public class MapTooltipRenderer
 	}
 
 	@Getter
-	private final BoatTooltipBuilder boatTooltipBuilder;
+	private final BoatTooltipBuilder boatTooltipBuilder = new BoatTooltipBuilder();
 	@Getter
-	private final MonsterTooltipBuilder monsterTooltipBuilder;
+	private final MonsterTooltipBuilder monsterTooltipBuilder = new MonsterTooltipBuilder();
 	@Getter
-	private final PoiTooltipBuilder poiTooltipBuilder;
-
-	public MapTooltipRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		WorldMapInput input,
-		PoiIndex poiIndex,
-		MonsterIndex monsterIndex,
-		DungeonPieceIndex dungeonPieceIndex,
-		MonsterIconManager monsterIconManager,
-		SlayerTaskTracker slayerTaskTracker,
-		ShopIndex shopIndex,
-		MapFinder mapFinder,
-		GroundItemIndex groundItemIndex,
-		BoatTracker boatTracker,
-		WorldMapPointManager worldMapPointManager,
-		WorldMapPointReader worldMapPointReader)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.input = input;
-		this.poiIndex = poiIndex;
-		this.monsterIndex = monsterIndex;
-		this.dungeonPieceIndex = dungeonPieceIndex;
-		this.monsterIconManager = monsterIconManager;
-		this.slayerTaskTracker = slayerTaskTracker;
-		this.shopIndex = shopIndex;
-		this.mapFinder = mapFinder;
-		this.groundItemIndex = groundItemIndex;
-		this.boatTracker = boatTracker;
-		this.worldMapPointManager = worldMapPointManager;
-		this.worldMapPointReader = worldMapPointReader;
-
-		this.boatTooltipBuilder = new BoatTooltipBuilder();
-		this.monsterTooltipBuilder = new MonsterTooltipBuilder();
-		this.poiTooltipBuilder = new PoiTooltipBuilder();
-	}
+	private final PoiTooltipBuilder poiTooltipBuilder = new PoiTooltipBuilder();
 
 	private <T> T hit(int worldX, int worldY, BiFunction<Integer, Integer, T> lookup)
 	{
@@ -230,24 +194,7 @@ public class MapTooltipRenderer
 			return;
 		}
 
-		// Don't float a hovercard over the open Layers panel or Finder panel.
-		final Rectangle layersPanel = camera.getLayersPanelBounds();
-		if (layersPanel != null && layersPanel.contains(cursor))
-		{
-			return;
-		}
-		final Rectangle finderPanel = camera.getFinderPanelBounds();
-		if (finderPanel != null && finderPanel.contains(cursor))
-		{
-			return;
-		}
-		final Rectangle cluePanel = camera.getCluePanelBounds();
-		if (cluePanel != null && cluePanel.contains(cursor))
-		{
-			return;
-		}
-		final Rectangle boatsPanel = camera.getBoatsDropdownBounds();
-		if (boatsPanel != null && boatsPanel.contains(cursor))
+		if (camera.isCursorOverPanel(cursor))
 		{
 			return;
 		}
@@ -256,11 +203,7 @@ public class MapTooltipRenderer
 			&& camera.getZoom() >= config.travelStationMinZoom() && camera.getSelectedTravelNode() != null);
 		if (travelFocused && camera.getHoveredTravelNode() != null)
 		{
-			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(camera.getHoveredTravelNode());
-			if (card != null)
-			{
-				drawCard(graphics, bounds, cursor, card);
-			}
+			drawIfPresent(graphics, bounds, cursor, poiTooltipBuilder.buildTravelNodeCard(camera.getHoveredTravelNode()));
 			return;
 		}
 		if (!travelFocused && drawUndergroundZoneCard(graphics, bounds, cursor))
@@ -300,20 +243,11 @@ public class MapTooltipRenderer
 				final ShopIndex.Shop shop = shopIndex.nearest(drawnPoi.getX(), drawnPoi.getY(), plane, 3);
 				if (shop != null)
 				{
-					final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
-					final TooltipCard shopCard = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
-					if (shopCard != null)
-					{
-						drawCard(graphics, bounds, cursor, shopCard);
-						return;
-					}
+					if (drawIfPresent(graphics, bounds, cursor, buildShopCard(shop))) return;
 				}
 			}
 
-			PoiDetails.Detail detail = PoiDetails.getDetail(drawnPoi, drawnPoi.getX(), drawnPoi.getY(), plane);
-			detail = enrichDetailWithRuneLitePoint(detail, drawnPoi, plane);
-			final BufferedImage icon = poiIndex != null ? poiIndex.icon(drawnPoi.getKey()) : null;
-			final TooltipCard card = poiTooltipBuilder.buildPoiCard(detail, drawnPoi, icon, compact);
+			final TooltipCard card = buildPoiCard(drawnPoi, plane, compact);
 			if (card != null)
 			{
 				if (!compact)
@@ -328,8 +262,7 @@ public class MapTooltipRenderer
 		final ShopIndex.Shop drawnShop = markers != null ? markers.locations.visibleShopIconAt(cursor) : null;
 		if (drawnShop != null && shopIndex != null)
 		{
-			final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
-			final TooltipCard shopCard = poiTooltipBuilder.buildShopCard(drawnShop, shopIndex.othersNear(drawnShop, 6, 2), poiIndex, findQuery);
+			final TooltipCard shopCard = buildShopCard(drawnShop);
 			if (shopCard != null)
 			{
 				if (!compact)
@@ -386,16 +319,12 @@ public class MapTooltipRenderer
 				final ShopIndex.Shop shop = shopIndex.nearest(iconPoi.getX(), iconPoi.getY(), plane, 3);
 				if (shop != null)
 				{
-					final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
-					card = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
+					card = buildShopCard(shop);
 				}
 			}
 			if (card == null)
 			{
-				PoiDetails.Detail detail = PoiDetails.getDetail(iconPoi, iconPoi.getX(), iconPoi.getY(), plane);
-				detail = enrichDetailWithRuneLitePoint(detail, iconPoi, plane);
-				final BufferedImage tooltipIcon = poiIndex != null ? poiIndex.icon(iconPoi.getKey()) : null;
-				card = poiTooltipBuilder.buildPoiCard(detail, iconPoi, tooltipIcon, compact);
+				card = buildPoiCard(iconPoi, plane, compact);
 			}
 		}
 
@@ -405,8 +334,7 @@ public class MapTooltipRenderer
 				(x, y) -> shopIndex.nearest(x, y, plane, Math.min(radius, 10)));
 			if (shop != null && probe.allows(shop))
 			{
-				final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
-				card = poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex, findQuery);
+				card = buildShopCard(shop);
 			}
 		}
 
@@ -474,6 +402,7 @@ public class MapTooltipRenderer
 	/**
 	 * Where the cursor is, in screen and world terms, plus the hit radius for this zoom.
 	 */
+	@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 	private static final class HoverProbe
 	{
 		private final java.awt.Point cursor;
@@ -482,16 +411,6 @@ public class MapTooltipRenderer
 		private final int plane;
 		private final int pointRadius;
 		private final MapMarkerRenderers markers;
-
-		private HoverProbe(java.awt.Point cursor, int worldX, int worldY, int plane, int pointRadius, MapMarkerRenderers markers)
-		{
-			this.cursor = cursor;
-			this.worldX = worldX;
-			this.worldY = worldY;
-			this.plane = plane;
-			this.pointRadius = pointRadius;
-			this.markers = markers;
-		}
 
 		private boolean allows(Object target)
 		{
@@ -506,12 +425,7 @@ public class MapTooltipRenderer
 		if (config.showTravelRoutes() && travelNode != null && camera.getZoom() >= config.travelStationMinZoom()
 			&& !hasTighterPointMarker(probe))
 		{
-			final TooltipCard card = poiTooltipBuilder.buildTravelNodeCard(travelNode);
-			if (card != null)
-			{
-				drawCard(graphics, bounds, probe.cursor, card);
-				return true;
-			}
+			return drawIfPresent(graphics, bounds, probe.cursor, poiTooltipBuilder.buildTravelNodeCard(travelNode));
 		}
 		return false;
 	}
@@ -523,12 +437,7 @@ public class MapTooltipRenderer
 		if (port != null && probe.allows(port))
 		{
 			final List<PlayerBoat> dockedBoats = boatTracker != null ? boatTracker.getBoatsAt(port) : Collections.emptyList();
-			final TooltipCard card = boatTooltipBuilder.buildPortCard(port, dockedBoats, probe.plane);
-			if (card != null)
-			{
-				drawCard(graphics, bounds, probe.cursor, card);
-				return true;
-			}
+			return drawIfPresent(graphics, bounds, probe.cursor, boatTooltipBuilder.buildPortCard(port, dockedBoats, probe.plane));
 		}
 		return false;
 	}
@@ -539,12 +448,7 @@ public class MapTooltipRenderer
 		final PortNoticeBoard noticeBoard = noticeBoardNear(probe.worldX, probe.worldY, probe.plane);
 		if (noticeBoard != null && probe.allows(noticeBoard))
 		{
-			final TooltipCard card = boatTooltipBuilder.buildNoticeBoardCard(noticeBoard, probe.plane);
-			if (card != null)
-			{
-				drawCard(graphics, bounds, probe.cursor, card);
-				return true;
-			}
+			return drawIfPresent(graphics, bounds, probe.cursor, boatTooltipBuilder.buildNoticeBoardCard(noticeBoard, probe.plane));
 		}
 		return false;
 	}
@@ -555,12 +459,7 @@ public class MapTooltipRenderer
 		final PlayerBoat boat = boatNear(probe.worldX, probe.worldY, probe.plane);
 		if (boat != null && probe.allows(boat) && boat.isOwned() && boat.getPort() != null)
 		{
-			final TooltipCard card = boatTooltipBuilder.buildBoatCard(boat, probe.plane);
-			if (card != null)
-			{
-				drawCard(graphics, bounds, probe.cursor, card);
-				return true;
-			}
+			return drawIfPresent(graphics, bounds, probe.cursor, boatTooltipBuilder.buildBoatCard(boat, probe.plane));
 		}
 		return false;
 	}
@@ -571,12 +470,8 @@ public class MapTooltipRenderer
 		final UndergroundZone hoveredZone = camera.getHoveredUndergroundZone();
 		if (hoveredZone != null)
 		{
-			final TooltipCard card = poiTooltipBuilder.buildUndergroundZoneCard(hoveredZone, camera.isHoveredSurfaceToUnderground());
-			if (card != null)
-			{
-				drawCard(graphics, bounds, cursor, card);
-				return true;
-			}
+			return drawIfPresent(graphics, bounds, cursor,
+				poiTooltipBuilder.buildUndergroundZoneCard(hoveredZone, camera.isHoveredSurfaceToUnderground()));
 		}
 		return false;
 	}
@@ -621,11 +516,6 @@ public class MapTooltipRenderer
 		}
 		final WorldMapPoint point = findRuneLitePointNear(worldX, worldY, plane, pointRadius, true);
 		return point != null && probe.allows(point);
-	}
-
-	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius)
-	{
-		return findRuneLitePointNear(worldX, worldY, plane, radius, false);
 	}
 
 	private WorldMapPoint findRuneLitePointNear(int worldX, int worldY, int plane, int radius, boolean requireImage)
@@ -724,6 +614,27 @@ public class MapTooltipRenderer
 			? detail.getCategory()
 			: PoiCategory.of(poi.getKey()).name();
 		return new PoiDetails.Detail(specificTitle, cat, lines);
+	}
+
+	private TooltipCard buildShopCard(ShopIndex.Shop shop)
+	{
+		final String findQuery = mapFinder != null ? mapFinder.getQuery() : null;
+		return poiTooltipBuilder.buildShopCard(shop, shopIndex.othersNear(shop, 6, 2), poiIndex,
+			findQuery);
+	}
+
+	private TooltipCard buildPoiCard(PoiIndex.Poi poi, int plane, boolean compact)
+	{
+		final PoiDetails.Detail detail = enrichDetailWithRuneLitePoint(
+			PoiDetails.getDetail(poi, poi.getX(), poi.getY(), plane), poi, plane);
+		return poiTooltipBuilder.buildPoiCard(detail, poi, poiIndex != null ? poiIndex.icon(poi.getKey()) : null, compact);
+	}
+
+	private boolean drawIfPresent(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor, TooltipCard card)
+	{
+		if (card == null) return false;
+		drawCard(graphics, bounds, cursor, card);
+		return true;
 	}
 
 	/** Keeps the hit area a roughly constant size on screen as the zoom changes. */

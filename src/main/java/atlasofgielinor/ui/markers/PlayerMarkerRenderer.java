@@ -47,7 +47,10 @@ import net.runelite.api.WorldView;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 
+import lombok.RequiredArgsConstructor;
+
 /** Draws the player arrow in surface and dungeon views. */
+@RequiredArgsConstructor
 public class PlayerMarkerRenderer
 {
 	private static final Color PLAYER_FILL = new Color(255, 255, 255);
@@ -65,17 +68,6 @@ public class PlayerMarkerRenderer
 	private final MapCamera camera;
 	private final DungeonPieceIndex dungeonPieceIndex;
 
-	public PlayerMarkerRenderer(
-		Client client,
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		DungeonPieceIndex dungeonPieceIndex)
-	{
-		this.client = client;
-		this.config = config;
-		this.camera = camera;
-		this.dungeonPieceIndex = dungeonPieceIndex;
-	}
 
 	/** Place the arrow with the same per-piece translation/rotation/flip used for dungeon tiles. */
 	private Point2D arrangedPlayerPoint(WorldPoint rawLocation, Rectangle bounds)

@@ -65,6 +65,8 @@ import atlasofgielinor.map.WorldMapInput;
 import atlasofgielinor.map.WorldMapPointReader;
 import atlasofgielinor.tiles.TileLoader;
 import atlasofgielinor.ui.markers.RaidBossDisplay;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Point;
@@ -97,18 +99,13 @@ public class AtlasOfGielinorOverlay extends Overlay
 	private static final double JUMP_TILES = 60;
 
 	/** One row of the on-map "Layers" panel: a label, the {@code bettermap.*} key it writes, and how to read it. */
+	@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 	static final class LayerToggle
 	{
 		final String label;
 		final String key;
 		final Predicate<AtlasOfGielinorConfig> getter;
 
-		LayerToggle(String label, String key, Predicate<AtlasOfGielinorConfig> getter)
-		{
-			this.label = label;
-			this.key = key;
-			this.getter = getter;
-		}
 	}
 
 	/**
@@ -555,12 +552,8 @@ public class AtlasOfGielinorOverlay extends Overlay
 	{
 		final int x = position.getX();
 		final int y = position.getY();
-		if (x < MapCamera.MIN_WORLD_X || x > MapCamera.MAX_WORLD_X
-			|| y < MapCamera.MIN_WORLD_Y || y > MapCamera.MAX_WORLD_Y)
-		{
-			return false;
-		}
-		return true;
+		return x >= MapCamera.MIN_WORLD_X && x <= MapCamera.MAX_WORLD_X
+			&& y >= MapCamera.MIN_WORLD_Y && y <= MapCamera.MAX_WORLD_Y;
 	}
 
 	/**

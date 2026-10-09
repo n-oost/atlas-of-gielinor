@@ -50,6 +50,8 @@ import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.integrations.SlayerTaskTracker;
 import atlasofgielinor.map.WorldMapInput;
 import net.runelite.api.coords.WorldPoint;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * The search field, its result rows and the flyout submenus.
@@ -58,6 +60,7 @@ import net.runelite.api.coords.WorldPoint;
  * draws the panel and publishes every row's screen rect to {@link MapCamera} so
  * {@link atlasofgielinor.map.WorldMapInput} can hit-test clicks against it.
  */
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class MapFinderRenderer
 {
 	private final AtlasOfGielinorConfig config;
@@ -65,20 +68,6 @@ class MapFinderRenderer
 	private final WorldMapInput input;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final MapFinder finder;
-
-	MapFinderRenderer(
-		AtlasOfGielinorConfig config,
-		MapCamera camera,
-		WorldMapInput input,
-		SlayerTaskTracker slayerTaskTracker,
-		MapFinder finder)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.input = input;
-		this.slayerTaskTracker = slayerTaskTracker;
-		this.finder = finder;
-	}
 
 	/** Readable category name for every result row and detail strip. */
 	private static String itemKindLabel(MapFinder.Result res)
@@ -217,11 +206,7 @@ class MapFinderRenderer
 		camera.setFinderBodyVisibleRows(displayBodyRows);
 		camera.clampFinderBodyScroll();
 
-		final int panelH = padTop + titleH + fieldH + 4 + chipRowH + 6 + expandBarH
-			+ displayBodyRows * rowH
-			+ (hasOverflow ? rowH : 0)
-			+ 6 + descStripH + 4
-			+ 6;
+		final int panelH = fixedPanelH + displayBodyRows * rowH;
 
 		int panelX = button.x;
 		int panelY = button.y + button.height + 4;
@@ -292,16 +277,7 @@ class MapFinderRenderer
 		Rectangle flyoutAnchorRow = null;
 		final Map<MapFinder.BrowseCategory, Rectangle> categoryTargets = new EnumMap<>(MapFinder.BrowseCategory.class);
 
-		if (bodyScroll > 0)
-		{
-			graphics.setColor(TEXT_DIM);
-			graphics.drawString("▲", bodyViewport.x + bodyViewport.width - 12, bodyViewport.y + 10);
-		}
-		if (bodyEnd < bodyItemCount)
-		{
-			graphics.setColor(TEXT_DIM);
-			graphics.drawString("▼", bodyViewport.x + bodyViewport.width - 12, bodyViewport.y + bodyViewport.height - 4);
-		}
+		drawScrollIndicators(graphics, bodyViewport, bodyScroll, bodyEnd, bodyItemCount);
 
 		if (categoryHome)
 		{
@@ -635,16 +611,7 @@ class MapFinderRenderer
 			final Rectangle flyoutViewport = new Rectangle(flyoutPanel.x + 3, fRowY, flyoutW - 6, MapCamera.FINDER_FLYOUT_ROWS * rowH);
 			camera.setFinderFlyoutViewport(flyoutViewport);
 
-			if (flyoutScroll > 0)
-			{
-				graphics.setColor(TEXT_DIM);
-				graphics.drawString("▲", flyoutViewport.x + flyoutViewport.width - 12, flyoutViewport.y + 10);
-			}
-			if (flyoutEnd < totalFlyout)
-			{
-				graphics.setColor(TEXT_DIM);
-				graphics.drawString("▼", flyoutViewport.x + flyoutViewport.width - 12, flyoutViewport.y + flyoutViewport.height - 4);
-			}
+			drawScrollIndicators(graphics, flyoutViewport, flyoutScroll, flyoutEnd, totalFlyout);
 
 			for (int fi = flyoutScroll; fi < flyoutEnd; fi++)
 			{
@@ -680,21 +647,11 @@ class MapFinderRenderer
 			camera.setFlyoutTargets(flyoutTargets);
 
 			final Rectangle hitBounds = new Rectangle(flyoutPanel);
-			if (flyoutOnRight)
+			final int corridorX = flyoutOnRight ? panel.x + panel.width : flyoutX + flyoutW;
+			final int corridorW = (flyoutOnRight ? flyoutX : panel.x) - corridorX;
+			if (corridorW > 0)
 			{
-				final int corridorW = flyoutX - (panel.x + panel.width);
-				if (corridorW > 0)
-				{
-					hitBounds.add(new Rectangle(panel.x + panel.width, flyoutY, corridorW, flyoutH));
-				}
-			}
-			else
-			{
-				final int corridorW = panel.x - (flyoutX + flyoutW);
-				if (corridorW > 0)
-				{
-					hitBounds.add(new Rectangle(flyoutX + flyoutW, flyoutY, corridorW, flyoutH));
-				}
+				hitBounds.add(new Rectangle(corridorX, flyoutY, corridorW, flyoutH));
 			}
 			if (flyoutAnchorRow != null)
 			{
@@ -778,6 +735,20 @@ class MapFinderRenderer
 			graphics.drawString(displayText, field.x + 6, textY);
 		}
 		camera.setFinderFieldBounds(field);
+	}
+
+	private static void drawScrollIndicators(Graphics2D graphics, Rectangle viewport, int start, int end, int total)
+	{
+		if (start > 0)
+		{
+			graphics.setColor(TEXT_DIM);
+			graphics.drawString("▲", viewport.x + viewport.width - 12, viewport.y + 10);
+		}
+		if (end < total)
+		{
+			graphics.setColor(TEXT_DIM);
+			graphics.drawString("▼", viewport.x + viewport.width - 12, viewport.y + viewport.height - 4);
+		}
 	}
 
 	private static void drawResultIcon(Graphics2D graphics, MapFinder.Result result, int x, int y)

@@ -30,6 +30,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import javax.inject.Provider;
+import java.util.function.Consumer;
 
 import atlasofgielinor.AtlasOfGielinorPlugin;
 import atlasofgielinor.data.TravelData;
@@ -41,6 +42,7 @@ import atlasofgielinor.map.catalog.PoiIndex;
 import atlasofgielinor.integrations.SlayerTaskTracker;
 import atlasofgielinor.ui.AtlasOfGielinorOverlay;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
@@ -51,6 +53,7 @@ import net.runelite.api.coords.WorldPoint;
  * and the finder search interface.
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MapLayerInputHandler
 {
 	private final MapCamera camera;
@@ -66,21 +69,6 @@ public class MapLayerInputHandler
 	@Setter
 	private long flyoutDwellMs = MapCamera.FINDER_FLYOUT_DWELL_MS;
 
-	public MapLayerInputHandler(
-		MapCamera camera,
-		Provider<AtlasOfGielinorPlugin> pluginProvider,
-		MapFinder finder,
-		PoiIndex poiIndex,
-		MonsterIndex monsterIndex,
-		SlayerTaskTracker slayerTaskTracker)
-	{
-		this.camera = camera;
-		this.pluginProvider = pluginProvider;
-		this.finder = finder;
-		this.poiIndex = poiIndex;
-		this.monsterIndex = monsterIndex;
-		this.slayerTaskTracker = slayerTaskTracker;
-	}
 
 	/**
 	 * Dispatches clicks on primary map chrome buttons (gear, toggles, chat, find,
@@ -148,40 +136,28 @@ public class MapLayerInputHandler
 		final Rectangle clueBtn = camera.getClueButton();
 		if (clueBtn != null && clueBtn.contains(point))
 		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().goToClue();
-			}
+			withPlugin(AtlasOfGielinorPlugin::goToClue);
 			return "go-to-clue";
 		}
 
 		final Rectangle questBtn = camera.getQuestButton();
 		if (questBtn != null && questBtn.contains(point))
 		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().goToQuestStep();
-			}
+			withPlugin(AtlasOfGielinorPlugin::goToQuestStep);
 			return "go-to-quest-step";
 		}
 
 		final Rectangle playerBtn = camera.getPlayerButton();
 		if (playerBtn != null && playerBtn.contains(point))
 		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().goToPlayer();
-			}
+			withPlugin(AtlasOfGielinorPlugin::goToPlayer);
 			return "go-to-player";
 		}
 
 		final Rectangle destBtn = camera.getDestinationButton();
 		if (destBtn != null && destBtn.contains(point))
 		{
-			if (pluginProvider != null && pluginProvider.get() != null)
-			{
-				pluginProvider.get().goToDestination();
-			}
+			withPlugin(AtlasOfGielinorPlugin::goToDestination);
 			return "go-to-destination";
 		}
 
@@ -201,10 +177,7 @@ public class MapLayerInputHandler
 				{
 					if (target.getBounds().contains(point))
 					{
-						if (pluginProvider != null && pluginProvider.get() != null)
-						{
-							pluginProvider.get().goToBoat(target.getBoat());
-						}
+						withPlugin(plugin -> plugin.goToBoat(target.getBoat()));
 						camera.setBoatsDropdownOpen(false);
 						return "boat-dropdown-select";
 					}
@@ -364,10 +337,23 @@ public class MapLayerInputHandler
 		return false;
 	}
 
+	private void withPlugin(Consumer<AtlasOfGielinorPlugin> action)
+	{
+		if (pluginProvider != null && pluginProvider.get() != null)
+		{
+			action.accept(pluginProvider.get());
+		}
+	}
+
+	private WorldPoint playerLocation()
+	{
+		return pluginProvider != null && pluginProvider.get() != null
+			? pluginProvider.get().getPlayerLocation() : null;
+	}
+
 	private void handleBankChip()
 	{
-		final WorldPoint playerLoc = pluginProvider != null && pluginProvider.get() != null
-			? pluginProvider.get().getPlayerLocation() : null;
+		final WorldPoint playerLoc = playerLocation();
 		if (poiIndex == null)
 		{
 			return;
@@ -382,8 +368,7 @@ public class MapLayerInputHandler
 
 	private void handleSlayerChip()
 	{
-		final WorldPoint playerLoc = pluginProvider != null && pluginProvider.get() != null
-			? pluginProvider.get().getPlayerLocation() : null;
+		final WorldPoint playerLoc = playerLocation();
 		if (slayerTaskTracker == null)
 		{
 			return;
@@ -397,8 +382,7 @@ public class MapLayerInputHandler
 
 	private void handleTravelChip()
 	{
-		final WorldPoint playerLoc = pluginProvider != null && pluginProvider.get() != null
-			? pluginProvider.get().getPlayerLocation() : null;
+		final WorldPoint playerLoc = playerLocation();
 		TravelData.TravelNode best = null;
 		int bestDist = Integer.MAX_VALUE;
 		for (TravelData.TravelNode node : TravelData.ALL_NODES)
@@ -437,18 +421,12 @@ public class MapLayerInputHandler
 	{
 		// Hub review F2: Finder pans only; closing requires genuine input on the native control.
 		// Do not restore shift-click auto-close or a programmatic widget operation.
-		if (pluginProvider != null && pluginProvider.get() != null)
-		{
-			pluginProvider.get().centerFinderOn(point);
-		}
+		withPlugin(plugin -> plugin.centerFinderOn(point));
 	}
 
 	private void routeToRow(WorldPoint point)
 	{
-		if (pluginProvider != null && pluginProvider.get() != null)
-		{
-			pluginProvider.get().routeTo(point);
-		}
+		withPlugin(plugin -> plugin.routeTo(point));
 	}
 
 	public boolean clickedFlyoutItem(Point point, int clickCount)
@@ -569,19 +547,13 @@ public class MapLayerInputHandler
 				if (AtlasOfGielinorOverlay.HIDE_ALL_LAYERS_KEY.equals(target.getConfigKey()))
 				{
 					final boolean showAll = target.getCurrentValue();
-					if (pluginProvider != null && pluginProvider.get() != null)
-					{
-						pluginProvider.get().setAllLayersEnabled(showAll);
-					}
+					withPlugin(plugin -> plugin.setAllLayersEnabled(showAll));
 					log.debug("[AtlasOfGielinor] layer hide-all -> {}", showAll ? "show all" : "hide all");
 					return true;
 				}
 
 				final boolean next = !target.getCurrentValue();
-				if (pluginProvider != null && pluginProvider.get() != null)
-				{
-					pluginProvider.get().setLayerEnabled(target.getConfigKey(), next);
-				}
+				withPlugin(plugin -> plugin.setLayerEnabled(target.getConfigKey(), next));
 				log.debug("[AtlasOfGielinor] layer toggle {} -> {}", target.getConfigKey(), next);
 				return true;
 			}

@@ -25,6 +25,8 @@
 package atlasofgielinor.ui;
 
 import net.runelite.api.Client;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 import static atlasofgielinor.ui.MapStyle.CARD_EDGE;
@@ -59,7 +61,6 @@ import atlasofgielinor.integrations.QuestHelperTracker;
 import atlasofgielinor.integrations.ShortestPathTracker;
 import atlasofgielinor.map.WorldMapInput;
 import atlasofgielinor.tiles.WikiMapTiles;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.components.PanelComponent;
 
 /**
@@ -69,6 +70,7 @@ import net.runelite.client.ui.overlay.components.PanelComponent;
  * <p>Split out of {@link AtlasOfGielinorOverlay}. Every button it draws publishes its screen
  * rect to {@link MapCamera} for {@link WorldMapInput} to hit-test.
  */
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class MapChromeRenderer
 {
 	private static final String[] CREDITS = {WikiMapTiles.ATTRIBUTION, WikiMapTiles.DATA_ATTRIBUTION};
@@ -90,20 +92,6 @@ class MapChromeRenderer
 		this(config, camera, input, layout, clueScrollTracker, questHelperTracker, null, null, null);
 	}
 
-	MapChromeRenderer(AtlasOfGielinorConfig config, MapCamera camera, WorldMapInput input, MapLayout layout,
-		ClueScrollTracker clueScrollTracker, QuestHelperTracker questHelperTracker,
-		ShortestPathTracker shortestPathTracker, BoatTracker boatTracker, Client client)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.input = input;
-		this.layout = layout;
-		this.clueScrollTracker = clueScrollTracker;
-		this.questHelperTracker = questHelperTracker;
-		this.shortestPathTracker = shortestPathTracker;
-		this.boatTracker = boatTracker;
-		this.client = client;
-	}
 
 	private int nextTopChipX(Rectangle bounds, Rectangle... previousChips)
 	{
@@ -157,10 +145,7 @@ class MapChromeRenderer
 			buttons[i] = button;
 
 			final boolean selected = active[i];
-			graphics.setColor(selected ? CARD_EDGE : CHIP_BG);
-			graphics.fillRoundRect(button.x, button.y, button.width, button.height, 6, 6);
-			graphics.setColor(selected ? CARD_TITLE : TEXT_DIM);
-			graphics.drawRoundRect(button.x, button.y, button.width, button.height, 6, 6);
+			drawToggleButton(graphics, button, selected);
 
 			final String label = labels[i];
 			final int textWidth = graphics.getFontMetrics().stringWidth(label);
@@ -678,10 +663,7 @@ class MapChromeRenderer
 		final Rectangle gear = new Rectangle(layout.leftToolbarButtonX(bounds, LEFT_TOOLBAR_LAYERS), top, size, size);
 		final boolean open = camera.isLayersPanelOpen();
 
-		graphics.setColor(open ? CARD_EDGE : CHIP_BG);
-		graphics.fillRoundRect(gear.x, gear.y, gear.width, gear.height, 6, 6);
-		graphics.setColor(open ? CARD_TITLE : TEXT_DIM);
-		graphics.drawRoundRect(gear.x, gear.y, gear.width, gear.height, 6, 6);
+		drawToggleButton(graphics, gear, open);
 		graphics.setColor(open ? Color.BLACK : TEXT_DIM);
 		for (int i = 0; i < 3; i++)
 		{
@@ -797,10 +779,7 @@ class MapChromeRenderer
 		final Rectangle button = new Rectangle(x, top, size, size);
 		final boolean hidden = camera.isChatHidden();
 
-		graphics.setColor(hidden ? CARD_EDGE : CHIP_BG);
-		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 6, 6);
-		graphics.setColor(hidden ? CARD_TITLE : TEXT_DIM);
-		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 6, 6);
+		drawToggleButton(graphics, button, hidden);
 
 		// A speech bubble: rounded body plus a tail. Struck through while the chat is hidden.
 		graphics.setColor(hidden ? Color.BLACK : TEXT_DIM);
@@ -813,6 +792,14 @@ class MapChromeRenderer
 		}
 
 		camera.setChatButton(button);
+	}
+
+	private static void drawToggleButton(Graphics2D graphics, Rectangle button, boolean selected)
+	{
+		graphics.setColor(selected ? CARD_EDGE : CHIP_BG);
+		graphics.fillRoundRect(button.x, button.y, button.width, button.height, 6, 6);
+		graphics.setColor(selected ? CARD_TITLE : TEXT_DIM);
+		graphics.drawRoundRect(button.x, button.y, button.width, button.height, 6, 6);
 	}
 
 	private Rectangle topChip(Graphics2D graphics, Rectangle bounds, String label, int x, boolean selected)

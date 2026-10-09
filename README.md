@@ -24,11 +24,7 @@ Plugin was created with the help of AI tools. The author has verified the code a
 
 Common settings are grouped under **Map**, **Controls**, **Search & tooltips**, **Map layers**, and
 **Shortest Path integration**. Each **Advanced** section starts collapsed and contains appearance
-or marker detail controls. Dungeon tuning and diagnostics share one collapsed
-**Developer** section. Turn the plugin off to restore RuneLite's normal world map.
-
-### Surface and underground on one map
-Hover a dungeon entrance to preview its connected zones. Click to open the group; click any open entrance in that group to close it. Floor controls still select individual dungeon floors. Connections are defined in the bundled dungeon dataset.
+or marker detail controls. Turn the plugin off to restore RuneLite's normal world map.
 
 <!-- ![](docs/gifs/surface-underground.gif) -->
 
@@ -39,17 +35,11 @@ the cursor, right click to step back out.
 
 ![Zoom and pan](docs/gifs/zoom-and-pan.gif)
 
-### Closing the map
-
-Click the game's original map close button. It remains visible and clickable in fullscreen
-and while map assets are unavailable. Atlas does not provide a replacement close chip or
-close the map after a Finder selection. Escape follows the client's native behavior;
-when a boss gallery is open, Escape dismisses that gallery first.
 
 ### Raid boss galleries
 
 Click **CoX · Bosses**, **ToB · Bosses**, or **ToA · Bosses** at the respective raid entrance to open its six boss cards. Hover a card for its boss tooltip; hold your configured tooltip expansion modifier for available combat details. Press **Esc** or click **×** to close the gallery. Enable **Show boss locations** and **Show tooltips** in Atlas of Gielinor settings.
-
+![x](image.png)
 ### Hover cards
 
 Hover anything on the map for shop stock, POI names, monster details (combat level, slayer level,
@@ -80,12 +70,6 @@ Install and enable **Shortest Path** separately from RuneLite's Plugin Hub. Enab
 Shortest Path routes** in Atlas's **Shortest Path integration** section. Atlas contains no
 pathfinding engine or collision map: Shortest Path owns the calculations and transport settings.
 
-Selecting **Route** sends the destination to Shortest Path. Atlas uses its public plugin-message
-API to follow the active destination and request route coordinates for Atlas's custom map.
-These coordinate queries are separate searches in Shortest Path, so Atlas refreshes can lag its
-in-game route. Atlas does not draw a minimap route; Shortest Path controls its own overlays.
-If Shortest Path is disabled, Atlas clears its displayed route. A plugin version without the
-`getTarget`/`query` API cannot supply coordinates to Atlas.
 
 ![Walking routes](docs/gifs/click-map-path-route.gif)
 
@@ -102,7 +86,7 @@ tiles, with the spawn area shaded behind it.
 `groundItemMinZoom` (default 9 px/tile) and filtered by the `groundItemMinValue` gp slider
 (default 0, so everything shows).
 
-<!-- ![](docs/gifs/ground-items.gif) -->
+![Ground item spawns](image_1.png)
 
 ### Travel networks
 
@@ -116,21 +100,6 @@ hover card.
 Markers registered by other RuneLite plugins ( clue scrolls, party
 members,quest helper) are drawn on Atlas of Gielinor's camera, along with the player orientation arrow.
 
-Go to Clue centres the map on RuneLite's active clue location (the nearest candidate when there are several). The fullscreen clue card displays RuneLite's own hint content. Atlas of Gielinor does not add clue markers, labels or requirement summaries; RuneLite's registered clue markers use the shared plugin marker display.
-
-<!-- ![](docs/gifs/plugin-markers.gif) -->
-
-### Plugin Hub notes
-
-- No reflection, no AWT-level input hooks, and no native code.
-- With **Download map assets** enabled, the plugin downloads the pack pinned in `src/main/resources/atlasofgielinor/data/map-pack.json` using asynchronous OkHttp when that pack is not already installed. Asset updates require a plugin release; no remote channel is checked. Installed files use RuneLite Filepath in the plugin directory.
-- The plugin replaces the world map and
-  draws Shortest Path route coordinates on its custom world map. The map's Chat control can hide the chatbox while
-  the map is open; Finder text input keeps the chatbox visible.
-- The tile cache is budgeted in megabytes, not tiles: ~49 MB of LRU plus ~30 MB of permanently held
-  coarse levels.
-- The Finder takes typed search text through RuneLite's `ChatboxPanelManager`; the on-map
-  search field mirrors that text.
 
 ## Datasets
 -Data is bundled in `resources/atlasofgielinor/data`.
@@ -147,8 +116,7 @@ Go to Clue centres the map on RuneLite's active clue location (the nearest candi
 ## Credits
 - n-oost, truenosus
 - **[RuneLite](https://runelite.net)** - plugin API and client.
-- **[Skretzo and Shortest Path contributors](https://github.com/Skretzo/shortest-path)** -
-  external integration and extracted teleport POI coordinates, BSD 2-Clause. See [third-party notices](THIRD-PARTY-NOTICES.md).
+
 
 ## License
 

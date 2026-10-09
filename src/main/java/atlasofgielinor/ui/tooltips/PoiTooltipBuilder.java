@@ -142,15 +142,7 @@ public class PoiTooltipBuilder
 		if (title.endsWith(" (Barracuda Trials)"))
 		{
 			final String trialName = title.substring(0, title.length() - " (Barracuda Trials)".length());
-			for (String line : lines)
-			{
-				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
-				if (level.matches())
-				{
-					return trialName + " (" + level.group(1) + " Sailing)";
-				}
-			}
-			return trialName;
+			return withSailingLevel(trialName, lines);
 		}
 
 		// 0. Travel networks and port services -> clean basic name
@@ -162,15 +154,7 @@ public class PoiTooltipBuilder
 				return fixedName;
 			}
 			final String mooringName = poiName != null ? poiName : (title != null ? title : "Mooring point");
-			for (String line : lines)
-			{
-				final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
-				if (level.matches())
-				{
-					return mooringName + " (" + level.group(1) + " Sailing)";
-				}
-			}
-			return mooringName;
+			return withSailingLevel(mooringName, lines);
 		}
 		final String fixedName = PoiDetails.compactTooltipName("compact", key, title);
 		if (fixedName != null)
@@ -246,8 +230,7 @@ public class PoiTooltipBuilder
 			}
 			if (title != null)
 			{
-				String t = title.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
-					.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
+				String t = withoutLevelSuffix(title);
 				if (!t.isEmpty() && !t.equalsIgnoreCase("Mining site") && !t.equalsIgnoreCase("mining_site") && !t.equalsIgnoreCase("Mining"))
 				{
 					return t;
@@ -264,12 +247,8 @@ public class PoiTooltipBuilder
 		if ("farming_patch".equals(key) || (cat != null && cat.contains("Farming")) || (title != null && (title.toLowerCase().contains("farming") || title.toLowerCase().contains("patch"))))
 		{
 			String t = title != null ? title : (poiName != null ? poiName : "Farming patch");
-			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
-				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
-			if (t.contains(" - "))
-			{
-				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
-			}
+			t = withoutLevelSuffix(t);
+			t = withoutLocationPrefix(t);
 			t = t.replaceFirst("(?i)\\s+Farming Patch$", " patch").trim();
 			t = t.replace("/", ", ");
 			return t;
@@ -279,12 +258,8 @@ public class PoiTooltipBuilder
 		if ("rare_trees".equals(key) || (cat != null && cat.contains("Woodcutting")) || (title != null && title.toLowerCase().contains("tree")))
 		{
 			String t = title != null ? title : (poiName != null ? poiName : "Rare trees");
-			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
-				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
-			if (t.contains(" - "))
-			{
-				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
-			}
+			t = withoutLevelSuffix(t);
+			t = withoutLocationPrefix(t);
 			return t;
 		}
 
@@ -293,12 +268,8 @@ public class PoiTooltipBuilder
 		{
 			String t = title != null ? title : (poiName != null ? poiName : "Hunter training");
 			t = cleanPoiName(t);
-			t = t.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
-				.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
-			if (t.contains(" - "))
-			{
-				t = t.substring(t.lastIndexOf(" - ") + 3).trim();
-			}
+			t = withoutLevelSuffix(t);
+			t = withoutLocationPrefix(t);
 			if (t.startsWith("-") || t.startsWith("–") || t.startsWith("—"))
 			{
 				t = t.substring(1).trim();
@@ -313,6 +284,30 @@ public class PoiTooltipBuilder
 
 
 		return title != null ? title : (poiName != null ? poiName : "");
+	}
+
+	private static String withoutLevelSuffix(String name)
+	{
+		return name.replaceFirst("\\s*\\((?:Level\\s+)?\\d+\\+?\\)$", "")
+			.replaceFirst("\\s+(?:Level\\s+)?\\d+\\+?$", "").trim();
+	}
+
+	private static String withoutLocationPrefix(String name)
+	{
+		return name.contains(" - ") ? name.substring(name.lastIndexOf(" - ") + 3).trim() : name;
+	}
+
+	private static String withSailingLevel(String name, List<String> lines)
+	{
+		for (String line : lines)
+		{
+			final Matcher level = SAILING_LEVEL_REQUIREMENT.matcher(line.trim());
+			if (level.matches())
+			{
+				return name + " (" + level.group(1) + " Sailing)";
+			}
+		}
+		return name;
 	}
 
 	private static String cleanMineralList(String ores)

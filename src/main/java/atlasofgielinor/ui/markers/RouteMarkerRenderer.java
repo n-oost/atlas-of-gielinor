@@ -24,6 +24,9 @@
  */
 package atlasofgielinor.ui.markers;
 
+import static atlasofgielinor.ui.MapStyle.MARKER_OUTLINE;
+import static atlasofgielinor.ui.MapStyle.LABEL_BORDER;
+
 import static atlasofgielinor.ui.MapStyle.CARD_BG;
 import static atlasofgielinor.ui.MapStyle.CARD_TEXT;
 import static atlasofgielinor.ui.MapStyle.ROUTE_LINE;
@@ -50,18 +53,15 @@ import atlasofgielinor.integrations.ShortestPathTracker;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 
+import lombok.RequiredArgsConstructor;
+
 /** Draws calculated paths, travel stations, and travel connections. */
 @Slf4j
+@RequiredArgsConstructor
 public class RouteMarkerRenderer
 {
 	private static final Color ROUTE_OUTLINE = new Color(18, 18, 18);
 
-	/**
-	 * Outline weights, thinnest to thickest. BasicStroke is immutable, so one instance each.
-	 * Each renderer keeps its immutable outline strokes for reuse between frames.
-	 */
-	private static final Stroke MARKER_OUTLINE = new BasicStroke(1.0f);
-	private static final Stroke LABEL_BORDER = new BasicStroke(1.2f);
 
 	/** Route polylines are drawn round-capped so the joins between hops do not notch. */
 	private static final Stroke ROUTE_LINE_STROKE =
@@ -82,12 +82,6 @@ public class RouteMarkerRenderer
 	private final MapCamera camera;
 	private final ShortestPathTracker shortestPathTracker;
 
-	public RouteMarkerRenderer(AtlasOfGielinorConfig config, MapCamera camera, ShortestPathTracker shortestPathTracker)
-	{
-		this.config = config;
-		this.camera = camera;
-		this.shortestPathTracker = shortestPathTracker;
-	}
 
 	private static Stroke[] buildTravelDashStrokes()
 	{
@@ -116,7 +110,6 @@ public class RouteMarkerRenderer
 		final int plane = camera.getPlane();
 		final Stroke oldStroke = graphics.getStroke();
 		final Color oldColor = graphics.getColor();
-		boolean hasPointOnLayer = false;
 		int segments = 0;
 		WorldPoint previous = null;
 		WorldPoint firstPointOnLayer = null;
@@ -130,7 +123,6 @@ public class RouteMarkerRenderer
 					previous = null;
 					continue;
 				}
-				hasPointOnLayer = true;
 				if (firstPointOnLayer == null)
 				{
 					firstPointOnLayer = point;
@@ -167,7 +159,7 @@ public class RouteMarkerRenderer
 				}
 				previous = point;
 			}
-			if (!hasPointOnLayer)
+			if (firstPointOnLayer == null)
 			{
 				// A valid route can belong to another plane or focused dungeon layer. It has
 				// nothing to draw in this view, which is not a projection failure.

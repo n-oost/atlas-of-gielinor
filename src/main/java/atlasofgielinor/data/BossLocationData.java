@@ -26,7 +26,7 @@ package atlasofgielinor.data;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -146,7 +146,7 @@ public enum BossLocationData
 	}
 
 	/** Call off the client thread before boss search, rendering or authored positions are loaded. */
-	public static synchronized void load()
+	public static synchronized void load(Gson gson)
 	{
 		if (isLoaded()) return;
 		final Map<BossLocationData, Detail> parsed = new EnumMap<>(BossLocationData.class);
@@ -155,7 +155,7 @@ public enum BossLocationData
 			if (raw == null) throw new IOException("Missing bundled boss catalog: " + RESOURCE);
 			try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(raw), StandardCharsets.UTF_8))
 			{
-				final JsonObject dataset = new JsonParser().parse(reader).getAsJsonObject();
+				final JsonObject dataset = gson.fromJson(reader, JsonObject.class);
 				for (JsonElement element : dataset.getAsJsonArray("bosses"))
 				{
 					if (Thread.currentThread().isInterrupted()) return;

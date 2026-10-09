@@ -10,14 +10,14 @@ public class MapCatalogMigrationTest
 	@BeforeClass
 	public static void load()
 	{
-		MapCatalogLoader.load();
+		MapCatalogLoader.load(new com.google.gson.Gson());
 		assertTrue("All catalog adapters must publish successfully", MapCatalogLoader.isReady());
 	}
 
 	@Test
 	public void allRenderedPoisAndTheirDetailsComeFromTheGlobalTable()
 	{
-		PoiIndex index = new PoiIndex();
+		PoiIndex index = new PoiIndex(new com.google.gson.Gson());
 		index.load(null);
 		assertEquals(MapCatalog.current().locations.values().stream().filter(p -> p.rendered).count(), index.all().size());
 		assertTrue(MapCatalog.current().locations.size() > 7900);
@@ -37,7 +37,7 @@ public class MapCatalogMigrationTest
 	@Test
 	public void everySearchAliasRetainsItsNativePointAndId()
 	{
-		PoiIndex index = new PoiIndex();
+		PoiIndex index = new PoiIndex(new com.google.gson.Gson());
 		index.load(null);
 		for (PoiIndex.Poi poi : index.searchEntries())
 		{
@@ -80,7 +80,7 @@ public class MapCatalogMigrationTest
 	@Test
 	public void herbiboarMarkersAndSearchAliasesDoNotDescribeBirdhouses()
 	{
-		final PoiIndex index = new PoiIndex();
+		final PoiIndex index = new PoiIndex(new com.google.gson.Gson());
 		index.load(null);
 		for (String id : new String[]{"poi_002475", "poi_002498", "poi_002528", "poi_007823", "poi_007824", "poi_007825"})
 		{
@@ -102,7 +102,7 @@ public class MapCatalogMigrationTest
 		assertFalse(MapCatalog.current().pois.containsKey("poi_005783"));
 		assertFalse(MapCatalog.current().locations.containsKey("poi_005785"));
 		assertFalse(MapCatalog.current().pois.containsKey("poi_005785"));
-		final PoiIndex index = new PoiIndex();
+		final PoiIndex index = new PoiIndex(new com.google.gson.Gson());
 		index.load(null);
 		assertFalse(index.all().stream().anyMatch(poi -> "poi_005784".equals(poi.getLocationId())));
 		assertFalse(index.searchEntries().stream().anyMatch(poi -> "poi_005784".equals(poi.getLocationId())));

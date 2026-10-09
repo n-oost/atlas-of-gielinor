@@ -29,8 +29,11 @@ import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.map.catalog.PoiDetails;
 import atlasofgielinor.map.catalog.MapCatalog;
 import java.io.IOException;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import atlasofgielinor.data.BossLocationData;
+import atlasofgielinor.data.sailing.SailingPort;
+import atlasofgielinor.data.sailing.PortNoticeBoard;
 import atlasofgielinor.data.dungeons.DungeonFloor;
 import atlasofgielinor.data.TravelData;
 import atlasofgielinor.data.dungeons.UndergroundZone;
@@ -51,7 +54,7 @@ public final class MapCatalogLoader
 		return ready;
 	}
 
-	public static void load()
+	public static void load(Gson gson)
 	{
 		if (ready) return;
 		try
@@ -64,9 +67,11 @@ public final class MapCatalogLoader
 			return;
 		}
 		if (!MapCatalog.isLoaded() || Thread.currentThread().isInterrupted()) return;
+		if (!SailingPort.load() || Thread.currentThread().isInterrupted()) return;
+		if (!PortNoticeBoard.load() || Thread.currentThread().isInterrupted()) return;
 		PrifddinasShift.load();
 		if (!PrifddinasShift.isLoaded() || Thread.currentThread().isInterrupted()) return;
-		MapRegion.load();
+		MapRegion.load(gson);
 		if (!MapRegion.isLoaded() || Thread.currentThread().isInterrupted()) return;
 		WikiMap.load();
 		if (!WikiMap.isLoaded() || Thread.currentThread().isInterrupted()) return;
@@ -76,7 +81,7 @@ public final class MapCatalogLoader
 		if (Thread.currentThread().isInterrupted()) return;
 		InstanceMaps.load();
 		if (Thread.currentThread().isInterrupted()) return;
-		BossLocationData.load();
+		BossLocationData.load(gson);
 		if (!BossLocationData.isLoaded() || Thread.currentThread().isInterrupted()) return;
 		BossLocationIndex.all();
 		if (!MonsterIconManager.load() || Thread.currentThread().isInterrupted()) return;

@@ -1,10 +1,10 @@
 Help me simplify and maintain my RuneLite plugin with the least custom code necessary.
 
 Plugin:
-C:\dev\runelite-plugin-better-map-2\better-map
+.
 
 Assets:
-C:\dev\runelite-plugin-better-map-2\better-map-assets
+../better-map-assets
 
 Read AGENTS.md before working. Preserve existing uncommitted changes.
 

@@ -36,7 +36,7 @@ The font cleanup removed 64,836 bytes of unused TTF files. It shrinks packaged b
 
 The complete-only unplaced records are Beach Cocktails, Beach Kit, Bunbridge General Store, Farming Supplies, and Sawmill. Among matching shops, 373 preserve identical ordered stock name/quantity lists; the remaining records differ in entries, quantities, or order. These snapshots are not interchangeable and should not be merged by blindly choosing the larger file.
 
-Archive path: `C:/dev/runelite-plugin-better-map-2/archive/shop_data_complete.json`.
+Archive path: `../archive/shop_data_complete.json`.
 SHA-256: `d34d749226c3f0bdbb136cd1a7a84cae49445695701e6d101f77f92a83422701`.
 All 455 records and source metadata remain in that unchanged archive and in pinned Git history.
 

@@ -34,3 +34,7 @@ PLUGIN_HUB_REVIEW.md
 
 # Local tests
 /src/test/
+
+# Python build artifacts
+__pycache__/
+*.py[cod]

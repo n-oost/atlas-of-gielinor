@@ -25,7 +25,7 @@ Coordinator owns this queue, reconciliation, and canonical catalog edits. Resear
 
 Before operating, confirm the session is the local development server with a throwaway account and read the dev server's AGENTS.md and `dev-server/verify-poi.md`. This plan concerns that local environment. Keep production plugin restrictions separate from the external dev tooling.
 
-Use the existing helper from `C:/dev/runelite-p-server-for-devving`:
+Use the existing helper from `../../runelite-p-server-for-devving`:
 
 ```powershell
 python .\dev-server\verify-poi.py --location-id <location_id>

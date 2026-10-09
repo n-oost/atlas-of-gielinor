@@ -31,11 +31,11 @@ Baseline codebase scan:
 ### 1. Spatial Chunk Indexing & Bounding Queries
 
 #### Locations
-- [`GroundItemIndex.java#L80-L83`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/GroundItemIndex.java#L80-L83), [`#L200-L214`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/GroundItemIndex.java#L200-L214), [`#L244-L263`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/GroundItemIndex.java#L244-L263)
-- [`MonsterIndex.java#L76-L79`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/MonsterIndex.java#L76-L79), [`#L268-L281`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/MonsterIndex.java#L268-L281), [`#L308-L326`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/MonsterIndex.java#L308-L326)
-- [`PoiIndex.java#L120-L123`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/PoiIndex.java#L120-L123), [`#L823-L836`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/PoiIndex.java#L823-L836), [`#L872-L890`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/PoiIndex.java#L872-L890)
-- [`ShopIndex.java#L77-L80`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/ShopIndex.java#L77-L80), [`#L99-L117`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/ShopIndex.java#L99-L117), [`#L248-L261`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/ShopIndex.java#L248-L261)
-- [`PoiDetails.java#L159-L162`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/PoiDetails.java#L159-L162), [`#L1070-L1080`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/map/PoiDetails.java#L1070-L1080)
+- [`GroundItemIndex.java#L80-L83`](../src/main/java/com/bettermap/map/GroundItemIndex.java#L80-L83), [`#L200-L214`](../src/main/java/com/bettermap/map/GroundItemIndex.java#L200-L214), [`#L244-L263`](../src/main/java/com/bettermap/map/GroundItemIndex.java#L244-L263)
+- [`MonsterIndex.java#L76-L79`](../src/main/java/com/bettermap/map/MonsterIndex.java#L76-L79), [`#L268-L281`](../src/main/java/com/bettermap/map/MonsterIndex.java#L268-L281), [`#L308-L326`](../src/main/java/com/bettermap/map/MonsterIndex.java#L308-L326)
+- [`PoiIndex.java#L120-L123`](../src/main/java/com/bettermap/map/PoiIndex.java#L120-L123), [`#L823-L836`](../src/main/java/com/bettermap/map/PoiIndex.java#L823-L836), [`#L872-L890`](../src/main/java/com/bettermap/map/PoiIndex.java#L872-L890)
+- [`ShopIndex.java#L77-L80`](../src/main/java/com/bettermap/map/ShopIndex.java#L77-L80), [`#L99-L117`](../src/main/java/com/bettermap/map/ShopIndex.java#L99-L117), [`#L248-L261`](../src/main/java/com/bettermap/map/ShopIndex.java#L248-L261)
+- [`PoiDetails.java#L159-L162`](../src/main/java/com/bettermap/map/PoiDetails.java#L159-L162), [`#L1070-L1080`](../src/main/java/com/bettermap/map/PoiDetails.java#L1070-L1080)
 
 #### Duplicated Code Snippet
 Each class defines the identical bit-packing helper:
@@ -84,11 +84,11 @@ public final class MapChunkKey
 ### 2. Top-Bar Navigation Chip / Button Rendering
 
 #### Locations
-- [`MapChromeRenderer.java#L318-L348`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapChromeRenderer.java#L318-L348) (`drawClueButton`)
-- [`MapChromeRenderer.java#L370-L405`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapChromeRenderer.java#L370-L405) (`drawQuestButton`)
-- [`MapChromeRenderer.java#L420-L455`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapChromeRenderer.java#L420-L455) (`drawPlayerButton`)
-- [`MapChromeRenderer.java#L470-L510`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapChromeRenderer.java#L470-L510) (`drawDestinationButton`)
-- [`MapChromeRenderer.java#L525-L560`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapChromeRenderer.java#L525-L560) (`drawBoatsButton`)
+- [`MapChromeRenderer.java#L318-L348`](../src/main/java/com/bettermap/ui/MapChromeRenderer.java#L318-L348) (`drawClueButton`)
+- [`MapChromeRenderer.java#L370-L405`](../src/main/java/com/bettermap/ui/MapChromeRenderer.java#L370-L405) (`drawQuestButton`)
+- [`MapChromeRenderer.java#L420-L455`](../src/main/java/com/bettermap/ui/MapChromeRenderer.java#L420-L455) (`drawPlayerButton`)
+- [`MapChromeRenderer.java#L470-L510`](../src/main/java/com/bettermap/ui/MapChromeRenderer.java#L470-L510) (`drawDestinationButton`)
+- [`MapChromeRenderer.java#L525-L560`](../src/main/java/com/bettermap/ui/MapChromeRenderer.java#L525-L560) (`drawBoatsButton`)
 
 #### Duplicated Code Snippet
 All five chip buttons execute this identical sequence:
@@ -137,9 +137,9 @@ private Rectangle drawTopBarChip(Graphics2D graphics, Rectangle bounds, int x, S
 ### 3. Floating Marker Hover Label Geometry & Rendering
 
 #### Locations
-- [`BoatMarkerRenderer.java#L424-L436`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/markers/BoatMarkerRenderer.java#L424-L436)
-- [`MonsterMarkerRenderer.java#L245-L265`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/markers/MonsterMarkerRenderer.java#L245-L265)
-- [`LayerMarkerRenderer.java#L450-L465`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/markers/LayerMarkerRenderer.java#L450-L465)
+- [`BoatMarkerRenderer.java#L424-L436`](../src/main/java/com/bettermap/ui/markers/BoatMarkerRenderer.java#L424-L436)
+- [`MonsterMarkerRenderer.java#L245-L265`](../src/main/java/com/bettermap/ui/markers/MonsterMarkerRenderer.java#L245-L265)
+- [`LayerMarkerRenderer.java#L450-L465`](../src/main/java/com/bettermap/ui/markers/LayerMarkerRenderer.java#L450-L465)
 
 #### Duplicated Code Snippet
 ```java
@@ -172,9 +172,9 @@ public static void drawHoverPill(Graphics2D graphics, Rectangle bounds, int cent
 ### 4. Nearest 2D Euclidean / Chebyshev Distance Search
 
 #### Locations
-- [`BoatTracker.java#L417-L433`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/sailing/BoatTracker.java#L417-L433)
-- [`PortNoticeBoard.java#L562-L579`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/sailing/PortNoticeBoard.java#L562-L579)
-- [`SailingPort.java#L197-L214`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/sailing/SailingPort.java#L197-L214)
+- [`BoatTracker.java#L417-L433`](../src/main/java/com/bettermap/data/sailing/BoatTracker.java#L417-L433)
+- [`PortNoticeBoard.java#L562-L579`](../src/main/java/com/bettermap/data/sailing/PortNoticeBoard.java#L562-L579)
+- [`SailingPort.java#L197-L214`](../src/main/java/com/bettermap/data/sailing/SailingPort.java#L197-L214)
 
 #### Duplicated Code Snippet
 ```java
@@ -203,9 +203,9 @@ public static int distanceSquaredChebyshevBounded(WorldPoint a, int worldX, int 
 ### 5. TSV Resource Parsing Boilerplate
 
 #### Locations
-- [`OverlayCluster.java#L160-L185`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/OverlayCluster.java#L160-L185)
-- [`OverlayFloor.java#L105-L130`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/OverlayFloor.java#L105-L130)
-- [`DungeonPoiOverrides.java#L89-L97, L127-L135`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/data/DungeonPoiOverrides.java#L89-L97)
+- [`OverlayCluster.java#L160-L185`](../src/main/java/com/bettermap/data/OverlayCluster.java#L160-L185)
+- [`OverlayFloor.java#L105-L130`](../src/main/java/com/bettermap/data/OverlayFloor.java#L105-L130)
+- [`DungeonPoiOverrides.java#L89-L97, L127-L135`](../src/main/java/com/bettermap/data/DungeonPoiOverrides.java#L89-L97)
 
 #### Duplicated Code Snippet
 ```java
@@ -241,8 +241,8 @@ public static void forEachTsvRow(Reader source, int minColumns, Consumer<String[
 ### 6. Rune Pouch Varbit Unpacking & Container Item Counting
 
 #### Locations
-- [`BankPickupRequirements.java#L394-L406, L456-L468`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/pathfinding/transport/BankPickupRequirements.java#L394-L406) (Rune pouch varbits)
-- [`BankPickupRequirements.java#L420-L439`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/pathfinding/transport/BankPickupRequirements.java#L420-L439) (Item container merge)
+- [`BankPickupRequirements.java#L394-L406, L456-L468`](../src/main/java/com/bettermap/pathfinding/transport/BankPickupRequirements.java#L394-L406) (Rune pouch varbits)
+- [`BankPickupRequirements.java#L420-L439`](../src/main/java/com/bettermap/pathfinding/transport/BankPickupRequirements.java#L420-L439) (Item container merge)
 
 #### Duplicated Code Snippet
 Varbit reading loop:
@@ -280,7 +280,7 @@ Extract private helpers `unpackRunePouchRunes(Client client, BiConsumer<Integer,
 ### 7. Search Result & Hover Detail Resolution
 
 #### Locations
-- [`MapFinderRenderer.java#L499-L525, L539-L565`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/MapFinderRenderer.java#L499-L525)
+- [`MapFinderRenderer.java#L499-L525, L539-L565`](../src/main/java/com/bettermap/ui/MapFinderRenderer.java#L499-L525)
 
 #### Duplicated Code Snippet
 Both `flyoutHoveredItem` and `hoveredTarget.getResult()` execute identical POI lookup and 2-line description formatting:
@@ -310,7 +310,7 @@ Extract into a private helper `resolveDetailLines(WorldPoint pt, String regName,
 ### 8. Layer / Cluster Marker Icon & Exclamation Glyph Drawing
 
 #### Locations
-- [`LayerMarkerRenderer.java#L258-L278, L442-L460`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/main/java/com/bettermap/ui/markers/LayerMarkerRenderer.java#L258-L278)
+- [`LayerMarkerRenderer.java#L258-L278, L442-L460`](../src/main/java/com/bettermap/ui/markers/LayerMarkerRenderer.java#L258-L278)
 
 #### Duplicated Code Snippet
 ```java
@@ -343,11 +343,11 @@ Extract a private helper `drawZoneOrClusterIcon(Graphics2D graphics, Rectangle r
 ### 9. Test Suite Setup & Fixture Duplication
 
 #### Locations
-- [`ClueButtonTest.java`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/test/java/com/bettermap/ui/ClueButtonTest.java)
-- [`DestinationAndBoatsButtonTest.java`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/test/java/com/bettermap/ui/DestinationAndBoatsButtonTest.java)
-- [`DualTooltipBugFixTest.java`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/test/java/com/bettermap/ui/DualTooltipBugFixTest.java)
-- [`WorldMapInputFinderTest.java`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/test/java/com/bettermap/map/WorldMapInputFinderTest.java)
-- [`WorldMapInputLayerToggleTest.java`](file:///C:/dev/runelite-plugin-better-map-2/better-map/src/test/java/com/bettermap/map/WorldMapInputLayerToggleTest.java)
+- [`ClueButtonTest.java`](../src/test/java/com/bettermap/ui/ClueButtonTest.java)
+- [`DestinationAndBoatsButtonTest.java`](../src/test/java/com/bettermap/ui/DestinationAndBoatsButtonTest.java)
+- [`DualTooltipBugFixTest.java`](../src/test/java/com/bettermap/ui/DualTooltipBugFixTest.java)
+- [`WorldMapInputFinderTest.java`](../src/test/java/com/bettermap/map/WorldMapInputFinderTest.java)
+- [`WorldMapInputLayerToggleTest.java`](../src/test/java/com/bettermap/map/WorldMapInputLayerToggleTest.java)
 
 #### Duplicated Code Snippet
 - Identical `TestConfig` mock implementations with dozens of stubbed methods.

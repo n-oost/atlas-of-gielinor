@@ -34,7 +34,7 @@ The chunk indexes already call `MapChunkKey` directly. The warning renderer had 
 
 Compared each changed file against a snapshot taken immediately before cleanup: all cleanup differences were deletions. Existing pending edits were preserved; no files were staged or committed.
 
-The nine original file snapshots and a change manifest are stored outside the repository at `C:\Users\nifty\AppData\Local\Temp\better-map-dead-code-20261005-130602`.
+The nine original file snapshots and a change manifest are stored outside the repository at `<local temporary directory>/better-map-dead-code-20261005-130602`.
 
 ## Pending in-game confirmation
 

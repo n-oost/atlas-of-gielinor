@@ -27,10 +27,8 @@ package atlasofgielinor.map.catalog;
 import atlasofgielinor.map.MapCatalogLoader;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -52,6 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.Getter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import net.runelite.client.util.Filepath;
 
 /** Loads markers and search aliases from the normalized bundled map catalog. */
 @Slf4j
@@ -78,7 +77,7 @@ public class PoiIndex
 		Collections.emptyList(), Poi::getPlane, Poi::getX, Poi::getY);
 	private final Map<String, BufferedImage> icons = new HashMap<>();
 
-	private File tileDir;
+	private Filepath tileDir;
 	private boolean loaded;
 	@Getter
 	private volatile long dataVersion;
@@ -94,27 +93,27 @@ public class PoiIndex
 	 * rather than as a file. Dev tooling can override supplementary files in the tile store.
 	 * The main icon snapshot is always read from the jar when present.
 	 */
-	private static InputStream open(File tileDir, String name)
+	private static InputStream open(Filepath tileDir, String name)
 	{
 		if (tileDir != null)
 		{
-			final File file = new File(tileDir, "poi/" + name);
-			if (file.isFile() && file.length() > 0)
+			final Filepath file = tileDir.join("poi/" + name);
+			try
 			{
-				try
+				if (file.isFile() && file.size() > 0)
 				{
-					return Files.newInputStream(file.toPath());
+					return file.openInputStream();
 				}
-				catch (IOException e)
-				{
-					log.debug("Unreadable POI file {}", file, e);
-				}
+			}
+			catch (IOException e)
+			{
+				log.debug("Unreadable POI file {}", file, e);
 			}
 		}
 		return PoiIndex.class.getResourceAsStream(RESOURCE_ROOT + name);
 	}
 
-	public void load(File tileDir)
+	public void load(Filepath tileDir)
 	{
 		final PoiIndex prepared = new PoiIndex(gson);
 		prepared.loadData(tileDir);
@@ -140,7 +139,7 @@ public class PoiIndex
 		}
 	}
 
-	private void loadData(File tileDir)
+	private void loadData(Filepath tileDir)
 	{
 		MapCatalogLoader.load(gson);
 		if (!MapCatalogLoader.isReady()) return;

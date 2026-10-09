@@ -25,13 +25,11 @@
 package atlasofgielinor.map;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,6 +45,7 @@ import atlasofgielinor.data.dungeons.DungeonPiece;
 import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.map.catalog.MapCatalog;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.util.Filepath;
 
 /**
  * Arranged dungeon pieces exported by the Swing tuner. Used when a dungeon layer is hovered or
@@ -69,12 +68,12 @@ public class DungeonPieceIndex
 	private final Map<String, List<DungeonPiece>> byZone = new HashMap<>();
 	private boolean loaded;
 
-	public static File file(File tileDir)
+	public static Filepath file(Filepath tileDir)
 	{
-		return new File(tileDir, "dungeons/pieces.tsv");
+		return tileDir.join("dungeons/pieces.tsv");
 	}
 
-	public void load(File tileDir)
+	public void load(Filepath tileDir)
 	{
 		final DungeonPieceIndex prepared = new DungeonPieceIndex(gson);
 		prepared.loadData(tileDir);
@@ -101,7 +100,7 @@ public class DungeonPieceIndex
 		}
 	}
 
-	private void loadData(File tileDir)
+	private void loadData(Filepath tileDir)
 	{
 		byZone.clear();
 		loaded = false;
@@ -249,22 +248,22 @@ public class DungeonPieceIndex
 		index(pieces);
 	}
 
-	private static InputStream open(File tileDir)
+	private static InputStream open(Filepath tileDir)
 	{
 		if (tileDir != null)
 		{
-			final File file = file(tileDir);
-			if (file.isFile() && file.length() > 0)
+			final Filepath file = file(tileDir);
+			try
 			{
-				try
+				if (file.isFile() && file.size() > 0)
 				{
 					log.debug("Legacy dungeon geometry from disk {}; canonical migrated pieces take precedence", file);
-					return Files.newInputStream(file.toPath());
+					return file.openInputStream();
 				}
-				catch (IOException e)
-				{
-					log.debug("Unreadable dungeon-piece file {}", file, e);
-				}
+			}
+			catch (IOException e)
+			{
+				log.debug("Unreadable dungeon-piece file {}", file, e);
 			}
 		}
 		log.debug("Legacy dungeon geometry from bundled {}", RESOURCE);

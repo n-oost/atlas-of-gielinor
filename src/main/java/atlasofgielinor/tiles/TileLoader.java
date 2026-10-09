@@ -69,7 +69,7 @@ public class TileLoader
 	 * and until they arrive a coarser parent is upscaled in their place.
 	 */
 	private static final int BASE_PREWARM_MAX_ZOOM = -2;
-	private static final int WORKER_THREADS = Math.min(4, Math.max(2, Runtime.getRuntime().availableProcessors()));
+	private static final int WORKER_THREADS = 4;
 
 	private final Map<Long, BufferedImage> memory = Collections.synchronizedMap(
 		new LinkedHashMap<Long, BufferedImage>(MEMORY_CACHE_SIZE, 0.75f, false)

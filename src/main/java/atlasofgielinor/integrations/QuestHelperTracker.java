@@ -144,13 +144,6 @@ public class QuestHelperTracker
 		{
 			return true;
 		}
-		for (Class<?> c = point.getClass(); c != null && c != Object.class; c = c.getSuperclass())
-		{
-			if (c.getName().contains("questhelper"))
-			{
-				return true;
-			}
-		}
-		return false;
+		return point.getClass().getName().startsWith("questhelper.");
 	}
 }

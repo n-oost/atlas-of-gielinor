@@ -87,6 +87,13 @@ def format_fix_row(f):
     before_det = before.get('details', '')
     after_det = after.get('details', '')
     
+    if f.get('disposition') == 'removed_from_catalog_and_locations':
+        err = "False phantom authored spawn on Soul Wars / Isle of Souls; real hunting grounds exist elsewhere on the island"
+        corr = "**REMOVED** from catalog and locations per user confirmation"
+        placement = f"Removed from {coord_str}"
+        ref_str = "RuneLite `HunterAreaLocation` & live OSRS scene"
+        return f"| `{pid}` | {name} | {err} | {corr} | {placement} | {ref_str} |"
+
     if 'hunter' in chk:
         if pid == 'poi_005772':
             err = "Listed false kebbits target and deadfall method; missing Eagles' Peak quest completion requirement"

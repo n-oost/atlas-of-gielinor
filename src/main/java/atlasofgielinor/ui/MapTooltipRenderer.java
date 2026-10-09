@@ -274,6 +274,12 @@ public class MapTooltipRenderer
 		final int radius = hitRadius();
 		final int pointRadius = Math.min(radius, 6);
 		final HoverProbe probe = new HoverProbe(cursor, worldX, worldY, plane, pointRadius, markers);
+		final WorldMapPoint drawnPoint = markers != null ? markers.pluginMarkers.visiblePointAt(cursor) : null;
+		if (!travelFocused && drawnPoint != null && isStashPoint(drawnPoint))
+		{
+			drawCard(graphics, bounds, cursor, buildPluginPointCard(drawnPoint, compact));
+			return;
+		}
 		if (drawPortCard(graphics, bounds, probe))
 		{
 			return;
@@ -423,7 +429,7 @@ public class MapTooltipRenderer
 			final WorldMapPoint rPoint = findRuneLitePointNear(worldX, worldY, plane, 1, true);
 			if (rPoint != null && probe.allows(rPoint))
 			{
-				card = poiTooltipBuilder.buildRuneLitePointCard(rPoint);
+				card = buildPluginPointCard(rPoint, compact);
 			}
 		}
 
@@ -646,6 +652,34 @@ public class MapTooltipRenderer
 			}
 		}
 		return null;
+	}
+
+	TooltipCard buildPluginPointCard(WorldMapPoint point, boolean compact)
+	{
+		final WorldPoint wp = point.getWorldPoint();
+		if (isStashPoint(point) && wp != null)
+		{
+			final atlasofgielinor.map.catalog.MapCatalog.Location location =
+				atlasofgielinor.map.catalog.MapCatalog.current().locationAt(wp.getX(), wp.getY(), wp.getPlane(), "stash_unit");
+			if (location != null)
+			{
+				final PoiIndex.Poi poi = new PoiIndex.Poi(location.x, location.y, location.plane,
+					location.iconKey, location.label);
+				PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
+				detail = enrichDetailWithRuneLitePoint(detail, poi, poi.getPlane());
+				return poiTooltipBuilder.buildPoiCard(detail, poi, point.getImage(), compact);
+			}
+		}
+		return poiTooltipBuilder.buildRuneLitePointCard(point);
+	}
+
+	private static boolean isStashPoint(WorldMapPoint point)
+	{
+		final String name = point.getName();
+		final String tooltip = point.getTooltip();
+		return point.getClass().getSimpleName().toLowerCase(java.util.Locale.ROOT).contains("stash")
+			|| (name != null && name.toUpperCase(java.util.Locale.ROOT).startsWith("STASH"))
+			|| (tooltip != null && tooltip.toUpperCase(java.util.Locale.ROOT).startsWith("STASH"));
 	}
 
 	private PoiDetails.Detail enrichDetailWithRuneLitePoint(PoiDetails.Detail detail, PoiIndex.Poi poi, int plane)

@@ -1,6 +1,6 @@
 # POI continuation audit fixes — 2026-10-08
 
-Following the October 8 runtime verification audit and subsequent reviews, 83 catalog records were corrected or removed in canonical data (`src/main/resources/atlasofgielinor/catalog/pois.tsv` and `locations.tsv`).
+Following the October 8 runtime verification audit and subsequent reviews, 85 catalog records were corrected or removed in canonical data (`src/main/resources/atlasofgielinor/catalog/pois.tsv` and `locations.tsv`).
 
 ## Summary of corrected and removed records
 
@@ -89,6 +89,8 @@ Following the October 8 runtime verification audit and subsequent reviews, 83 ca
 | `poi_005891` | Twilight's Promise | Difficulty: Intermediate • Length: Medium | **Difficulty: Intermediate • Length: Short** | (1680, 3130, 0) verified catalog location | Canonical `quest-details.tsv` |
 | `poi_005893` | The Ribbiting Tale of a Lily Pad Labour Dispute | Difficulty: Novice • Length: Short | **Difficulty: Novice • Length: Very Short** | (1540, 3040, 0) verified catalog location | Canonical `quest-details.tsv` |
 | `poi_005896` | The Heart of Darkness | Difficulty: Experienced • Length: Long | **Difficulty: Experienced • Length: Medium** | (1415, 3180, 0) verified catalog location | Canonical `quest-details.tsv` |
+| `poi_005783` | Isle of Souls - Grey Chinchompas (Level 53) | False phantom authored spawn on Soul Wars / Isle of Souls; real hunting grounds exist elsewhere on the island | **REMOVED** from catalog and locations per user confirmation | Removed from (2220, 2870, 0) | RuneLite `HunterAreaLocation` & live OSRS scene |
+| `poi_005785` | Isle of Souls - Crimson Swifts (Level 1) | False phantom authored spawn on Soul Wars / Isle of Souls; real hunting grounds exist elsewhere on the island | **REMOVED** from catalog and locations per user confirmation | Removed from (2190, 2880, 0) | RuneLite `HunterAreaLocation` & live OSRS scene |
 
 ## Queue-by-queue audit analysis & remediation
 

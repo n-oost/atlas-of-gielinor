@@ -1,18 +1,18 @@
 {
   "summary": {
-    "locations_scanned": 8151,
-    "identities_scanned": 8158,
+    "locations_scanned": 8149,
+    "identities_scanned": 8156,
     "snapshot_revision": "d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22",
     "findings_by_confidence": {
-      "placement_candidate": 21,
-      "coverage_gap": 588
+      "placement_candidate": 19,
+      "coverage_gap": 586
     },
     "findings_by_check": {
-      "hunter_creature_far_from_known_area": 21,
-      "authored_location_without_nearby_reference": 588
+      "hunter_creature_far_from_known_area": 19,
+      "authored_location_without_nearby_reference": 586
     },
     "visible_locations_with_strong_findings": 0,
-    "locations_with_findings": 594,
+    "locations_with_findings": 592,
     "category_coverage": {
       "agility_short-cut": 257,
       "agility_training": 48,
@@ -69,7 +69,7 @@
       "hot_air_balloon": 5,
       "house_portal": 10,
       "hunter_shop": 4,
-      "hunter_training": 169,
+      "hunter_training": 167,
       "hunting_tutor": 3,
       "ironman_tutor": 2,
       "jewellery": 2,
@@ -288,42 +288,6 @@
       "evidence": "Closest known area at (1671,3001,0), 76.53 tiles away; snapshot is not exhaustive.",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:833"
-    },
-    {
-      "location_id": "poi_005783",
-      "poi_id": "poi_005783",
-      "icon_key": "hunter_training",
-      "title": "Isle of Souls - Grey Chinchompas (Level 53)",
-      "x": 2220,
-      "y": 2870,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "hunter_creature_far_from_known_area",
-      "confidence": "placement_candidate",
-      "claim": "chinchompa",
-      "expected": "Review against ISLE_OF_SOULS_NORTH_WEST",
-      "evidence": "Closest known area at (2127,2950,0), 122.67 tiles away; snapshot is not exhaustive.",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:835; claim corrected 2026-10-08: https://oldschool.runescape.wiki/w/Chinchompa_%28race%29, https://github.com/runelite/runelite/blob/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java"
-    },
-    {
-      "location_id": "poi_005785",
-      "poi_id": "poi_005785",
-      "icon_key": "hunter_training",
-      "title": "Isle of Souls - Crimson Swifts (Level 1)",
-      "x": 2190,
-      "y": 2880,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "hunter_creature_far_from_known_area",
-      "confidence": "placement_candidate",
-      "claim": "crimson swift",
-      "expected": "Review against ISLE_OF_SOULS_SOUTH_WEST",
-      "evidence": "Closest known area at (2158,2822,0), 66.24 tiles away; snapshot is not exhaustive.",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:837"
     },
     {
       "location_id": "poi_005787",
@@ -7434,42 +7398,6 @@
       "evidence": "HunterAreaLocation.LOCUS_OASIS; distance=76.53",
       "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
       "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:833"
-    },
-    {
-      "location_id": "poi_005783",
-      "poi_id": "poi_005783",
-      "icon_key": "hunter_training",
-      "title": "Isle of Souls - Grey Chinchompas (Level 53)",
-      "x": 2220,
-      "y": 2870,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Isle of Souls - Grey Chinchompas (Level 53)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "HunterAreaLocation.ISLE_OF_SOULS_SOUTH_WEST; distance=78.41",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:835; claim corrected 2026-10-08: https://oldschool.runescape.wiki/w/Chinchompa_%28race%29, https://github.com/runelite/runelite/blob/42a6f17a6a2e8e478aa763890ecd0181a59dad38/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java"
-    },
-    {
-      "location_id": "poi_005785",
-      "poi_id": "poi_005785",
-      "icon_key": "hunter_training",
-      "title": "Isle of Souls - Crimson Swifts (Level 1)",
-      "x": 2190,
-      "y": 2880,
-      "plane": 0,
-      "rendered": true,
-      "searchable": true,
-      "check": "authored_location_without_nearby_reference",
-      "confidence": "coverage_gap",
-      "claim": "Isle of Souls - Crimson Swifts (Level 1)",
-      "expected": "Supply independent evidence for this authored marker.",
-      "evidence": "HunterAreaLocation.ISLE_OF_SOULS_SOUTH_WEST; distance=66.24",
-      "source_url": "https://github.com/runelite/runelite/blob/d8e7d1e5f34e2899eda3d7cf4cd9661ae2206f22/runelite-client/src/main/java/net/runelite/client/plugins/worldmap/HunterAreaLocation.java",
-      "inherited_source": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:837"
     },
     {
       "location_id": "poi_005786",

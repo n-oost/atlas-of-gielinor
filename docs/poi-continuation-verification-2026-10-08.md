@@ -4,8 +4,9 @@
 
 This report documents the continuation of the Atlas of Gielinor / Better Map POI review, execution of confirmed factual corrections, evaluation of outstanding reference-conflict candidates, and formalization of verification workflow improvements.
 
-- **17 confirmed erroneous records corrected or removed:**
+- **19 confirmed erroneous records corrected or removed:**
   - `poi_005778` (Moonlight Antelope overworld marker at Sunset Bay `1560, 2920, 0`): **REMOVED** per user confirmation. Antelopes reside exclusively in Hunter Guild Caverns, correctly represented by active canonical marker `poi_006365` at `(1559, 9420, 0)`.
+  - `poi_005783` & `poi_005785` (Phantom chinchompa and crimson swift markers directly adjacent to Soul Wars lobby and arena): **REMOVED** per user confirmation. Legitimate island hunter grounds are active at `(2128, 2950, 0)` (`poi_000386`) and `(2159, 2822, 0)` (`poi_000257`).
   - 5 initial confirmed erroneous records: `poi_005888` (Tai Bwo Wannai Trio), `poi_005858` (Dragon Slayer I), `poi_005862` (Elemental Workshop I), `poi_002112` (Lake Molch aerial fishing), and `poi_007113` (Lake Molch search duplicate).
   - 8 additional authored quest start records with verified difficulty/reward discrepancies corrected against official OSRS quest criteria: `poi_005871` (Regicide), `poi_005872` (Roving Elves), `poi_005881` (Eadgar's Ruse), `poi_005882` (My Arm's Big Adventure), `poi_005883` (Making Friends with My Arm), `poi_005894` (Ethically Acquired Antiquities), `poi_005895` (Death on the Isle), and `poi_005896` (The Heart of Darkness).
   - 3 unrendered hunter area records with proximity-contaminated creature targets repaired against upstream RuneLite enums: `poi_007820` (Crimson swift), `poi_007845` (Common kebbit), and `poi_007854` (Golden warbler).
@@ -22,6 +23,8 @@ This report documents the continuation of the Atlas of Gielinor / Better Map POI
 | ID | Title / Subject | Before | After | Placement disposition |
 |---|---|---|---|---|
 | `poi_005778` | Moonlight Antelopes (Level 91) | Erroneous surface marker on Sunset Bay `(1560, 2920, 0)` | **REMOVED** from catalog and locations | Removed per user confirmation; cavern marker `poi_006365` active. |
+| `poi_005783` | Isle of Souls - Grey Chinchompas (Level 53) | Erroneous phantom marker on Soul Wars `(2220, 2870, 0)`; chinchompas only exist in northwest at `(2128, 2950, 0)` | **REMOVED** from catalog and locations | Removed per user confirmation; canonical markers `poi_000386` / `poi_007829` active. |
+| `poi_005785` | Isle of Souls - Crimson Swifts (Level 1) | Erroneous phantom marker on Soul Wars `(2190, 2880, 0)`; crimson swifts only exist in southwest at `(2159, 2822, 0)` | **REMOVED** from catalog and locations | Removed per user confirmation; canonical markers `poi_000257` / `poi_007830` active. |
 | `poi_005888` | Tai Bwo Wannai Trio | `Requirements: ... 15 Fishing` | `Requirements: ... 5 Fishing` | Coordinates `(2900, 3500, 0)` preserved. Duplicate of canonical record `poi_003672` (`2780, 3087, 1`). |
 | `poi_005858` | Dragon Slayer I | `Start: Oziach in Edgeville / Guildmaster ... Reward: 3 Quest Points` | `Start: Guildmaster in Champions' Guild ... Reward: 2 Quest Points` | Coordinates `(3074, 3515, 0)` preserved. Duplicate of canonical record `poi_001426` (`3191, 3362, 0`). |
 | `poi_005862` | Elemental Workshop I | `Start: Slashed book in Seers' Village library ... Requirements: ... Elemental shield` | `Start: Battered book from bookcase in Seers' Village ... Requirements: 20 Mining, 20 Smithing, 20 Crafting` | Coordinates `(2740, 3445, 0)` preserved. Duplicate of canonical record `poi_001791` (`2715, 3482, 0`). |

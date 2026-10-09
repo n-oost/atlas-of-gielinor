@@ -1,7 +1,7 @@
 {
   "date": "2026-10-08",
-  "description": "Continuation audit fixes for 83 confirmed erroneous or incomplete catalog records",
-  "total_fixes": 83,
+  "description": "Continuation audit fixes for 85 confirmed erroneous or incomplete catalog records",
+  "total_fixes": 85,
   "fixes": [
     {
       "location_id": "poi_005888",
@@ -2304,6 +2304,72 @@
       },
       "rationale": "Aligned quest difficulty tier, length, or category with canonical quest-details.tsv ground truth.",
       "remaining_gaps": "None; factual details fully resolved against game cache and live world evidence."
+    },
+    {
+      "location_id": "poi_005783",
+      "poi_id": "poi_005783",
+      "name": "Isle of Souls - Grey Chinchompas (Level 53)",
+      "detail_title": "Isle of Souls - Grey Chinchompas (Level 53)",
+      "check": "ghost_overworld_spawn_removal",
+      "disposition": "removed_from_catalog_and_locations",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Isle_of_Souls",
+        "https://oldschool.runescape.wiki/w/Chinchompa_%28race%29"
+      ],
+      "before": {
+        "name": "Isle of Souls - Grey Chinchompas (Level 53)",
+        "detail_title": "Isle of Souls - Grey Chinchompas (Level 53)",
+        "category": "Skilling \u2022 Hunter",
+        "details": "Target: Grey chinchompa\\nLevel requirement: Level 53 Hunter\\nCatch method: Box trap\\nRegion: Isle of Souls (South-west)",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:835"
+      },
+      "after": {
+        "name": "[REMOVED]",
+        "detail_title": "[REMOVED]",
+        "category": "[REMOVED]",
+        "details": "[REMOVED]",
+        "source_ref": "[REMOVED]"
+      },
+      "coordinates": {
+        "x": 2220,
+        "y": 2870,
+        "plane": 0
+      },
+      "rationale": "REMOVED from locations.tsv and pois.tsv per user instruction. False phantom authored spawn situated directly south of Soul Wars lobby. Real Isle of Souls chinchompas reside in the northwest at (2128, 2950, 0), correctly represented by canonical active markers poi_000386 and poi_007829.",
+      "remaining_gaps": "None; record completely removed from catalog and locations."
+    },
+    {
+      "location_id": "poi_005785",
+      "poi_id": "poi_005785",
+      "name": "Isle of Souls - Crimson Swifts (Level 1)",
+      "detail_title": "Isle of Souls - Crimson Swifts (Level 1)",
+      "check": "ghost_overworld_spawn_removal",
+      "disposition": "removed_from_catalog_and_locations",
+      "source_references": [
+        "https://oldschool.runescape.wiki/w/Isle_of_Souls",
+        "https://oldschool.runescape.wiki/w/Crimson_swift"
+      ],
+      "before": {
+        "name": "Isle of Souls - Crimson Swifts (Level 1)",
+        "detail_title": "Isle of Souls - Crimson Swifts (Level 1)",
+        "category": "Skilling \u2022 Hunter",
+        "details": "Target: Crimson swift (Red feathers)\\nLevel requirement: Level 1 Hunter\\nCatch method: Bird snare\\nRegion: Isle of Souls (West coast)",
+        "source_ref": "Pre-consolidation PoiIndex/PoiDetails snapshot; identity not globally verified; poi/curated-details.tsv:837"
+      },
+      "after": {
+        "name": "[REMOVED]",
+        "detail_title": "[REMOVED]",
+        "category": "[REMOVED]",
+        "details": "[REMOVED]",
+        "source_ref": "[REMOVED]"
+      },
+      "coordinates": {
+        "x": 2190,
+        "y": 2880,
+        "plane": 0
+      },
+      "rationale": "REMOVED from locations.tsv and pois.tsv per user instruction. False phantom authored spawn situated directly west of Soul Wars lobby near the western graveyard. Real Isle of Souls crimson swifts reside in the southwest at (2159, 2822, 0), correctly represented by canonical active markers poi_000257 and poi_007830.",
+      "remaining_gaps": "None; record completely removed from catalog and locations."
     }
   ]
 }

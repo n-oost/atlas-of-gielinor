@@ -666,6 +666,11 @@ public class LocationMarkerRenderer
 		{
 			return false;
 		}
+		// STASH plugins own marker visibility and artwork; keep our catalog for search and tooltips.
+		if ("stash_unit".equals(poi.getKey()))
+		{
+			return false;
+		}
 		if (camera != null && camera.isTravelViewActive())
 		{
 			final PoiCategory category = PoiCategory.of(poi.getKey());

@@ -27,7 +27,9 @@ package atlasofgielinor.ui.markers;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import atlasofgielinor.AtlasOfGielinorConfig;
@@ -41,6 +43,7 @@ import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 public class PluginMarkerRenderer
 {
 	private final Set<Object> visibleTooltipTargets;
+	private final Map<WorldMapPoint, Rectangle> visiblePointBounds = new LinkedHashMap<>();
 
 	private final AtlasOfGielinorConfig config;
 	private final MapCamera camera;
@@ -64,6 +67,7 @@ public class PluginMarkerRenderer
 	/** Markers other plugins (and ours) registered, drawn through our transform. */
 	public void drawPluginMarkers(Graphics2D graphics, Rectangle bounds, List<Rectangle> placed)
 	{
+		visiblePointBounds.clear();
 		if (!config.showPluginMarkers() || camera.getZoom() < config.pluginMarkerMinZoom())
 		{
 			return;
@@ -117,7 +121,21 @@ public class PluginMarkerRenderer
 			graphics.drawImage(image, rect.x, rect.y, null);
 			placed.add(rect);
 			visibleTooltipTargets.add(point);
+			visiblePointBounds.put(point, rect);
 		}
+	}
+
+	/** Match the original image bounds, including icons whose anchor is offset from their tile. */
+	public WorldMapPoint visiblePointAt(java.awt.Point cursor)
+	{
+		for (Map.Entry<WorldMapPoint, Rectangle> entry : visiblePointBounds.entrySet())
+		{
+			if (visibleTooltipTargets.contains(entry.getKey()) && entry.getValue().contains(cursor))
+			{
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
 
 }

@@ -23,9 +23,18 @@ bin/
 .gemini/
 AGENTS.md
 agent.md
+CLAUDE.md
 
 # Documentation / Scratch
 BUGS.md
+
+# Local maintenance tools and generated development reports
+/scripts/
+/docs/*
+!/docs/asset-provenance.md
+!/docs/banner.png
+!/docs/gifs/
+!/docs/poi-zoom-settings.md
 
 # OS files
 .DS_Store

@@ -1,7 +1,7 @@
 {
   "date": "2026-10-08",
   "description": "Continuation audit fixes for 85 confirmed erroneous or incomplete catalog records",
-  "total_fixes": 85,
+  "total_fixes": 246,
   "fixes": [
     {
       "location_id": "poi_005888",
@@ -2370,6 +2370,1294 @@
       },
       "rationale": "REMOVED from locations.tsv and pois.tsv per user instruction. False phantom authored spawn situated directly west of Soul Wars lobby near the western graveyard. Real Isle of Souls crimson swifts reside in the southwest at (2159, 2822, 0), correctly represented by canonical active markers poi_000257 and poi_007830.",
       "remaining_gaps": "None; record completely removed from catalog and locations."
+    },
+    {
+      "location_id": "poi_005701",
+      "poi_id": "poi_005701",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002767",
+      "coordinates": "0, 1768, 5366"
+    },
+    {
+      "location_id": "poi_005710",
+      "poi_id": "poi_005710",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003190",
+      "coordinates": "0, 2525, 9294"
+    },
+    {
+      "location_id": "poi_005713",
+      "poi_id": "poi_005713",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003347",
+      "coordinates": "0, 2964, 9731"
+    },
+    {
+      "location_id": "poi_005717",
+      "poi_id": "poi_005717",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004343",
+      "coordinates": "0, 2400, 5984"
+    },
+    {
+      "location_id": "poi_005722",
+      "poi_id": "poi_005722",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005666",
+      "coordinates": "0, 1952, 4448"
+    },
+    {
+      "location_id": "poi_005726",
+      "poi_id": "poi_005726",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005527",
+      "coordinates": "0, 3487, 9510"
+    },
+    {
+      "location_id": "poi_005727",
+      "poi_id": "poi_005727",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005526",
+      "coordinates": "0, 3319, 9522"
+    },
+    {
+      "location_id": "poi_005733",
+      "poi_id": "poi_005733",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003475",
+      "coordinates": "0, 2278, 10011"
+    },
+    {
+      "location_id": "poi_005735",
+      "poi_id": "poi_005735",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002018",
+      "coordinates": "0, 2533, 3573"
+    },
+    {
+      "location_id": "poi_005749",
+      "poi_id": "poi_005749",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003307",
+      "coordinates": "0, 3164, 9652"
+    },
+    {
+      "location_id": "poi_005750",
+      "poi_id": "poi_005750",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003346",
+      "coordinates": "0, 3484, 9721"
+    },
+    {
+      "location_id": "poi_005753",
+      "poi_id": "poi_005753",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003275",
+      "coordinates": "0, 2808, 9594"
+    },
+    {
+      "location_id": "poi_005759",
+      "poi_id": "poi_005759",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005399",
+      "coordinates": "0, 2712, 5247"
+    },
+    {
+      "location_id": "poi_005761",
+      "poi_id": "poi_005761",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004860",
+      "coordinates": "0, 3107, 3367"
+    },
+    {
+      "location_id": "poi_005763",
+      "poi_id": "poi_005763",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000503",
+      "coordinates": "0, 2871, 3007"
+    },
+    {
+      "location_id": "poi_005764",
+      "poi_id": "poi_005764",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004947",
+      "coordinates": "0, 2550, 2930"
+    },
+    {
+      "location_id": "poi_005767",
+      "poi_id": "poi_005767",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004947",
+      "coordinates": "0, 2568, 2938"
+    },
+    {
+      "location_id": "poi_005769",
+      "poi_id": "poi_005769",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005144",
+      "coordinates": "0, 2350, 3620"
+    },
+    {
+      "location_id": "poi_005770",
+      "poi_id": "poi_005770",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005144",
+      "coordinates": "0, 2340, 3635"
+    },
+    {
+      "location_id": "poi_005771",
+      "poi_id": "poi_005771",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005144",
+      "coordinates": "0, 2345, 3590"
+    },
+    {
+      "location_id": "poi_005782",
+      "poi_id": "poi_005782",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000645",
+      "coordinates": "0, 1475, 3090"
+    },
+    {
+      "location_id": "poi_005787",
+      "poi_id": "poi_005787",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004766",
+      "coordinates": "0, 3270, 6080"
+    },
+    {
+      "location_id": "poi_005788",
+      "poi_id": "poi_005788",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005239",
+      "coordinates": "0, 3177, 2455"
+    },
+    {
+      "location_id": "poi_005789",
+      "poi_id": "poi_005789",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000116",
+      "coordinates": "0, 3213, 2516"
+    },
+    {
+      "location_id": "poi_005790",
+      "poi_id": "poi_005790",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000096",
+      "coordinates": "0, 3251, 2434"
+    },
+    {
+      "location_id": "poi_005791",
+      "poi_id": "poi_005791",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005362",
+      "coordinates": "0, 3061, 2639"
+    },
+    {
+      "location_id": "poi_005792",
+      "poi_id": "poi_005792",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001637",
+      "coordinates": "0, 1892, 3429"
+    },
+    {
+      "location_id": "poi_005793",
+      "poi_id": "poi_005793",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005238",
+      "coordinates": "0, 3069, 2986"
+    },
+    {
+      "location_id": "poi_005794",
+      "poi_id": "poi_005794",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000148",
+      "coordinates": "0, 1765, 2659"
+    },
+    {
+      "location_id": "poi_005795",
+      "poi_id": "poi_005795",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003160",
+      "coordinates": "0, 2580, 8613"
+    },
+    {
+      "location_id": "poi_005796",
+      "poi_id": "poi_005796",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005238",
+      "coordinates": "0, 3069, 2987"
+    },
+    {
+      "location_id": "poi_005798",
+      "poi_id": "poi_005798",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005384",
+      "coordinates": "0, 2222, 3467"
+    },
+    {
+      "location_id": "poi_005799",
+      "poi_id": "poi_005799",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005388",
+      "coordinates": "0, 2927, 4057"
+    },
+    {
+      "location_id": "poi_005800",
+      "poi_id": "poi_005800",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005377",
+      "coordinates": "0, 2189, 2328"
+    },
+    {
+      "location_id": "poi_005801",
+      "poi_id": "poi_005801",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005368",
+      "coordinates": "0, 1872, 2986"
+    },
+    {
+      "location_id": "poi_005802",
+      "poi_id": "poi_005802",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005377",
+      "coordinates": "0, 2191, 2327"
+    },
+    {
+      "location_id": "poi_005805",
+      "poi_id": "poi_005805",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005362",
+      "coordinates": "0, 3063, 2639"
+    },
+    {
+      "location_id": "poi_005806",
+      "poi_id": "poi_005806",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005384",
+      "coordinates": "0, 2224, 3466"
+    },
+    {
+      "location_id": "poi_005807",
+      "poi_id": "poi_005807",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005367",
+      "coordinates": "0, 2660, 2396"
+    },
+    {
+      "location_id": "poi_005808",
+      "poi_id": "poi_005808",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005369",
+      "coordinates": "0, 2467, 2722"
+    },
+    {
+      "location_id": "poi_005809",
+      "poi_id": "poi_005809",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005370",
+      "coordinates": "0, 1958, 3118"
+    },
+    {
+      "location_id": "poi_005810",
+      "poi_id": "poi_005810",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002604",
+      "coordinates": "0, 1954, 4057"
+    },
+    {
+      "location_id": "poi_005812",
+      "poi_id": "poi_005812",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005369",
+      "coordinates": "0, 2469, 2721"
+    },
+    {
+      "location_id": "poi_005817",
+      "poi_id": "poi_005817",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004363",
+      "coordinates": "0, 1182, 10068"
+    },
+    {
+      "location_id": "poi_005831",
+      "poi_id": "poi_005831",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004862",
+      "coordinates": "0, 3299, 3021"
+    },
+    {
+      "location_id": "poi_005834",
+      "poi_id": "poi_005834",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003563",
+      "coordinates": "0, 3045, 10263"
+    },
+    {
+      "location_id": "poi_005842",
+      "poi_id": "poi_005842",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004486",
+      "coordinates": "0, 2221, 9003"
+    },
+    {
+      "location_id": "poi_005843",
+      "poi_id": "poi_005843",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004486",
+      "coordinates": "0, 2224, 8977"
+    },
+    {
+      "location_id": "poi_005848",
+      "poi_id": "poi_005848",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005160",
+      "coordinates": "0, 1743, 3136"
+    },
+    {
+      "location_id": "poi_005850",
+      "poi_id": "poi_005850",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005024",
+      "coordinates": "0, 2141, 3123"
+    },
+    {
+      "location_id": "poi_005853",
+      "poi_id": "poi_005853",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000059",
+      "coordinates": "0, 3186, 2367"
+    },
+    {
+      "location_id": "poi_005854",
+      "poi_id": "poi_005854",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005163",
+      "coordinates": "0, 1513, 2970"
+    },
+    {
+      "location_id": "poi_005855",
+      "poi_id": "poi_005855",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004144",
+      "coordinates": "0, 1524, 3725"
+    },
+    {
+      "location_id": "poi_005856",
+      "poi_id": "poi_005856",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000978",
+      "coordinates": "0, 3244, 3206"
+    },
+    {
+      "location_id": "poi_005859",
+      "poi_id": "poi_005859",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001128",
+      "coordinates": "0, 3097, 3257"
+    },
+    {
+      "location_id": "poi_005861",
+      "poi_id": "poi_005861",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001360",
+      "coordinates": "0, 2982, 3338"
+    },
+    {
+      "location_id": "poi_005871",
+      "poi_id": "poi_005871",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000822",
+      "coordinates": "0, 2185, 3145"
+    },
+    {
+      "location_id": "poi_005872",
+      "poi_id": "poi_005872",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000828",
+      "coordinates": "0, 2185, 3160"
+    },
+    {
+      "location_id": "poi_005880",
+      "poi_id": "poi_005880",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004968",
+      "coordinates": "0, 2875, 3670"
+    },
+    {
+      "location_id": "poi_005889",
+      "poi_id": "poi_005889",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000623",
+      "coordinates": "0, 2795, 3065"
+    },
+    {
+      "location_id": "poi_005890",
+      "poi_id": "poi_005890",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000498",
+      "coordinates": "0, 2830, 2985"
+    },
+    {
+      "location_id": "poi_005891",
+      "poi_id": "poi_005891",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000772",
+      "coordinates": "0, 1680, 3130"
+    },
+    {
+      "location_id": "poi_006900",
+      "poi_id": "poi_006900",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000756",
+      "coordinates": "0, 1496, 3132"
+    },
+    {
+      "location_id": "poi_006901",
+      "poi_id": "poi_006901",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001716",
+      "coordinates": "0, 3236, 3458"
+    },
+    {
+      "location_id": "poi_006902",
+      "poi_id": "poi_006902",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001872",
+      "coordinates": "0, 3229, 3504"
+    },
+    {
+      "location_id": "poi_006903",
+      "poi_id": "poi_006903",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002442",
+      "coordinates": "0, 3815, 3808"
+    },
+    {
+      "location_id": "poi_006904",
+      "poi_id": "poi_006904",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002338",
+      "coordinates": "0, 1812, 3745"
+    },
+    {
+      "location_id": "poi_006905",
+      "poi_id": "poi_006905",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001955",
+      "coordinates": "0, 2832, 3542"
+    },
+    {
+      "location_id": "poi_006906",
+      "poi_id": "poi_006906",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001840",
+      "coordinates": "0, 2462, 3496"
+    },
+    {
+      "location_id": "poi_006907",
+      "poi_id": "poi_006907",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002283",
+      "coordinates": "0, 2730, 3713"
+    },
+    {
+      "location_id": "poi_006908",
+      "poi_id": "poi_006908",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004964",
+      "coordinates": "0, 2240, 3328"
+    },
+    {
+      "location_id": "poi_006909",
+      "poi_id": "poi_006909",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002562",
+      "coordinates": "0, 3045, 3925"
+    },
+    {
+      "location_id": "poi_006910",
+      "poi_id": "poi_006910",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000697",
+      "coordinates": "0, 2339, 3108"
+    },
+    {
+      "location_id": "poi_006911",
+      "poi_id": "poi_006911",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002326",
+      "coordinates": "0, 2520, 3740"
+    },
+    {
+      "location_id": "poi_006912",
+      "poi_id": "poi_006912",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002328",
+      "coordinates": "0, 2542, 3741"
+    },
+    {
+      "location_id": "poi_006913",
+      "poi_id": "poi_006913",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002580",
+      "coordinates": "0, 2853, 3944"
+    },
+    {
+      "location_id": "poi_006914",
+      "poi_id": "poi_006914",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001788",
+      "coordinates": "0, 2876, 3480"
+    },
+    {
+      "location_id": "poi_006915",
+      "poi_id": "poi_006915",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001795",
+      "coordinates": "0, 2819, 3484"
+    },
+    {
+      "location_id": "poi_006916",
+      "poi_id": "poi_006916",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002588",
+      "coordinates": "0, 3004, 3963"
+    },
+    {
+      "location_id": "poi_006917",
+      "poi_id": "poi_006917",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002323",
+      "coordinates": "0, 3016, 3739"
+    },
+    {
+      "location_id": "poi_006918",
+      "poi_id": "poi_006918",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002341",
+      "coordinates": "0, 3292, 3746"
+    },
+    {
+      "location_id": "poi_006919",
+      "poi_id": "poi_006919",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002171",
+      "coordinates": "0, 3259, 3666"
+    },
+    {
+      "location_id": "poi_006920",
+      "poi_id": "poi_006920",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001167",
+      "coordinates": "0, 2695, 3283"
+    },
+    {
+      "location_id": "poi_006921",
+      "poi_id": "poi_006921",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000620",
+      "coordinates": "0, 2593, 3085"
+    },
+    {
+      "location_id": "poi_006922",
+      "poi_id": "poi_006922",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000837",
+      "coordinates": "0, 3103, 3162"
+    },
+    {
+      "location_id": "poi_006923",
+      "poi_id": "poi_006923",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001881",
+      "coordinates": "0, 1603, 3508"
+    },
+    {
+      "location_id": "poi_006924",
+      "poi_id": "poi_006924",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002387",
+      "coordinates": "0, 3745, 3779"
+    },
+    {
+      "location_id": "poi_006925",
+      "poi_id": "poi_006925",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002504",
+      "coordinates": "0, 3677, 3854"
+    },
+    {
+      "location_id": "poi_006926",
+      "poi_id": "poi_006926",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000732",
+      "coordinates": "0, 2568, 3122"
+    },
+    {
+      "location_id": "poi_006927",
+      "poi_id": "poi_006927",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000610",
+      "coordinates": "0, 2603, 3078"
+    },
+    {
+      "location_id": "poi_006928",
+      "poi_id": "poi_006928",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002902",
+      "coordinates": "0, 3280, 6059"
+    },
+    {
+      "location_id": "poi_006929",
+      "poi_id": "poi_006929",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000552",
+      "coordinates": "0, 2484, 3043"
+    },
+    {
+      "location_id": "poi_006930",
+      "poi_id": "poi_006930",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002724",
+      "coordinates": "0, 2480, 5175"
+    },
+    {
+      "location_id": "poi_006931",
+      "poi_id": "poi_006931",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002719",
+      "coordinates": "0, 2438, 5168"
+    },
+    {
+      "location_id": "poi_006932",
+      "poi_id": "poi_006932",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002705",
+      "coordinates": "0, 2496, 5118"
+    },
+    {
+      "location_id": "poi_006933",
+      "poi_id": "poi_006933",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003516",
+      "coordinates": "0, 2773, 10162"
+    },
+    {
+      "location_id": "poi_006934",
+      "poi_id": "poi_006934",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003978",
+      "coordinates": "1, 1439, 9509"
+    },
+    {
+      "location_id": "poi_006935",
+      "poi_id": "poi_006935",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003405",
+      "coordinates": "0, 2428, 9824"
+    },
+    {
+      "location_id": "poi_006936",
+      "poi_id": "poi_006936",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_003310",
+      "coordinates": "0, 2833, 9656"
+    },
+    {
+      "location_id": "poi_006937",
+      "poi_id": "poi_006937",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000263",
+      "coordinates": "0, 3347, 2827"
+    },
+    {
+      "location_id": "poi_006938",
+      "poi_id": "poi_006938",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002019",
+      "coordinates": "0, 2544, 3569"
+    },
+    {
+      "location_id": "poi_006939",
+      "poi_id": "poi_006939",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000942",
+      "coordinates": "0, 2806, 3193"
+    },
+    {
+      "location_id": "poi_006940",
+      "poi_id": "poi_006940",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001822",
+      "coordinates": "0, 3506, 3490"
+    },
+    {
+      "location_id": "poi_006941",
+      "poi_id": "poi_006941",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000366",
+      "coordinates": "0, 1649, 2930"
+    },
+    {
+      "location_id": "poi_006942",
+      "poi_id": "poi_006942",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001159",
+      "coordinates": "0, 3103, 3279"
+    },
+    {
+      "location_id": "poi_006943",
+      "poi_id": "poi_006943",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001361",
+      "coordinates": "0, 3035, 3340"
+    },
+    {
+      "location_id": "poi_006944",
+      "poi_id": "poi_006944",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001655",
+      "coordinates": "0, 2474, 3436"
+    },
+    {
+      "location_id": "poi_006945",
+      "poi_id": "poi_006945",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002949",
+      "coordinates": "0, 3253, 6109"
+    },
+    {
+      "location_id": "poi_006946",
+      "poi_id": "poi_006946",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002114",
+      "coordinates": "0, 1551, 3632"
+    },
+    {
+      "location_id": "poi_006947",
+      "poi_id": "poi_006947",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_004880",
+      "coordinates": "0, 3422, 3550"
+    },
+    {
+      "location_id": "poi_006948",
+      "poi_id": "poi_006948",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001665",
+      "coordinates": "0, 2945, 3439"
+    },
+    {
+      "location_id": "poi_006949",
+      "poi_id": "poi_006949",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001166",
+      "coordinates": "0, 3546, 3282"
+    },
+    {
+      "location_id": "poi_006950",
+      "poi_id": "poi_006950",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000401",
+      "coordinates": "0, 3373, 2957"
+    },
+    {
+      "location_id": "poi_006951",
+      "poi_id": "poi_006951",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002346",
+      "coordinates": "0, 2546, 3748"
+    },
+    {
+      "location_id": "poi_006952",
+      "poi_id": "poi_006952",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002106",
+      "coordinates": "0, 3268, 3627"
+    },
+    {
+      "location_id": "poi_006953",
+      "poi_id": "poi_006953",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001996",
+      "coordinates": "0, 3505, 3558"
+    },
+    {
+      "location_id": "poi_006954",
+      "poi_id": "poi_006954",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000061",
+      "coordinates": "0, 3258, 2378"
+    },
+    {
+      "location_id": "poi_006955",
+      "poi_id": "poi_006955",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000109",
+      "coordinates": "0, 3143, 2485"
+    },
+    {
+      "location_id": "poi_006956",
+      "poi_id": "poi_006956",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000121",
+      "coordinates": "0, 3122, 2532"
+    },
+    {
+      "location_id": "poi_006957",
+      "poi_id": "poi_006957",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005367",
+      "coordinates": "0, 2661, 2395"
+    },
+    {
+      "location_id": "poi_006958",
+      "poi_id": "poi_006958",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002243",
+      "coordinates": "0, 2081, 3690"
+    },
+    {
+      "location_id": "poi_006959",
+      "poi_id": "poi_006959",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005387",
+      "coordinates": "0, 1955, 4056"
+    },
+    {
+      "location_id": "poi_006960",
+      "poi_id": "poi_006960",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005364",
+      "coordinates": "0, 2998, 2288"
+    },
+    {
+      "location_id": "poi_006961",
+      "poi_id": "poi_006961",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001946",
+      "coordinates": "0, 2151, 3530"
+    },
+    {
+      "location_id": "poi_006962",
+      "poi_id": "poi_006962",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005362",
+      "coordinates": "0, 3062, 2639"
+    },
+    {
+      "location_id": "poi_006963",
+      "poi_id": "poi_006963",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005383",
+      "coordinates": "0, 2098, 3188"
+    },
+    {
+      "location_id": "poi_006964",
+      "poi_id": "poi_006964",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005369",
+      "coordinates": "0, 2468, 2721"
+    },
+    {
+      "location_id": "poi_006965",
+      "poi_id": "poi_006965",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005372",
+      "coordinates": "0, 2319, 2774"
+    },
+    {
+      "location_id": "poi_006966",
+      "poi_id": "poi_006966",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005375",
+      "coordinates": "0, 1766, 2659"
+    },
+    {
+      "location_id": "poi_006967",
+      "poi_id": "poi_006967",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005382",
+      "coordinates": "0, 1861, 3306"
+    },
+    {
+      "location_id": "poi_006968",
+      "poi_id": "poi_006968",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_005379",
+      "coordinates": "0, 1558, 2771"
+    },
+    {
+      "location_id": "poi_006970",
+      "poi_id": "poi_006970",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000225",
+      "coordinates": "0, 1202, 2785"
+    },
+    {
+      "location_id": "poi_006971",
+      "poi_id": "poi_006971",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000271",
+      "coordinates": "0, 3793, 2836"
+    },
+    {
+      "location_id": "poi_006972",
+      "poi_id": "poi_006972",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002303",
+      "coordinates": "0, 1269, 3730"
+    },
+    {
+      "location_id": "poi_006973",
+      "poi_id": "poi_006973",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002936",
+      "coordinates": "0, 3289, 6100"
+    },
+    {
+      "location_id": "poi_006974",
+      "poi_id": "poi_006974",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001991",
+      "coordinates": "0, 1729, 3558"
+    },
+    {
+      "location_id": "poi_006975",
+      "poi_id": "poi_006975",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001919",
+      "coordinates": "0, 3598, 3524"
+    },
+    {
+      "location_id": "poi_006976",
+      "poi_id": "poi_006976",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001246",
+      "coordinates": "0, 3052, 3309"
+    },
+    {
+      "location_id": "poi_006977",
+      "poi_id": "poi_006977",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001727",
+      "coordinates": "0, 2810, 3462"
+    },
+    {
+      "location_id": "poi_006978",
+      "poi_id": "poi_006978",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001468",
+      "coordinates": "0, 2663, 3375"
+    },
+    {
+      "location_id": "poi_006979",
+      "poi_id": "poi_006979",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000658",
+      "coordinates": "0, 1587, 3101"
+    },
+    {
+      "location_id": "poi_006980",
+      "poi_id": "poi_006980",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002295",
+      "coordinates": "0, 1235, 3724"
+    },
+    {
+      "location_id": "poi_006981",
+      "poi_id": "poi_006981",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001408",
+      "coordinates": "0, 3084, 3356"
+    },
+    {
+      "location_id": "poi_006982",
+      "poi_id": "poi_006982",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001397",
+      "coordinates": "0, 1449, 3354"
+    },
+    {
+      "location_id": "poi_006983",
+      "poi_id": "poi_006983",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001013",
+      "coordinates": "0, 2938, 3223"
+    },
+    {
+      "location_id": "poi_006984",
+      "poi_id": "poi_006984",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002517",
+      "coordinates": "0, 2589, 3862"
+    },
+    {
+      "location_id": "poi_006985",
+      "poi_id": "poi_006985",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001409",
+      "coordinates": "0, 3182, 3356"
+    },
+    {
+      "location_id": "poi_006986",
+      "poi_id": "poi_006986",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001016",
+      "coordinates": "0, 2615, 3224"
+    },
+    {
+      "location_id": "poi_006987",
+      "poi_id": "poi_006987",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002301",
+      "coordinates": "0, 1259, 3729"
+    },
+    {
+      "location_id": "poi_006988",
+      "poi_id": "poi_006988",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000958",
+      "coordinates": "0, 3313, 3201"
+    },
+    {
+      "location_id": "poi_006989",
+      "poi_id": "poi_006989",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002336",
+      "coordinates": "0, 1264, 3745"
+    },
+    {
+      "location_id": "poi_006990",
+      "poi_id": "poi_006990",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000655",
+      "coordinates": "0, 2793, 3099"
+    },
+    {
+      "location_id": "poi_006991",
+      "poi_id": "poi_006991",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000533",
+      "coordinates": "0, 1365, 3035"
+    },
+    {
+      "location_id": "poi_006992",
+      "poi_id": "poi_006992",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000076",
+      "coordinates": "0, 3125, 2403"
+    },
+    {
+      "location_id": "poi_006993",
+      "poi_id": "poi_006993",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002355",
+      "coordinates": "0, 1242, 3755"
+    },
+    {
+      "location_id": "poi_006994",
+      "poi_id": "poi_006994",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_002963",
+      "coordinates": "0, 3292, 6120"
+    },
+    {
+      "location_id": "poi_006995",
+      "poi_id": "poi_006995",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000519",
+      "coordinates": "0, 1352, 3025"
+    },
+    {
+      "location_id": "poi_006996",
+      "poi_id": "poi_006996",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000910",
+      "coordinates": "0, 2487, 3181"
+    },
+    {
+      "location_id": "poi_006997",
+      "poi_id": "poi_006997",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_000829",
+      "coordinates": "0, 2343, 3160"
+    },
+    {
+      "location_id": "poi_006998",
+      "poi_id": "poi_006998",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001683",
+      "coordinates": "0, 2472, 3445"
+    },
+    {
+      "location_id": "poi_006999",
+      "poi_id": "poi_006999",
+      "check": "Class 1: Spatial/Lexical Duplicate (<=35 tiles)",
+      "disposition": "deleted",
+      "canonical_survivor": "poi_001642",
+      "coordinates": "0, 2858, 3432"
     }
   ]
 }

@@ -331,10 +331,8 @@ poi_005633	Barrows Crypts & Tunnels
 poi_005640	Mage Arena Bank
 poi_005641	The Warrens
 poi_005642	Woodcutting Guild Dungeon
-poi_005735	Barbarian Assault
 poi_005758	TzHaar City / Mor Ul Rek
 poi_005816	Farming patch - Coral
-poi_005817	Farming patch - Hespori
 poi_005818	Farming patch - Seaweed
 poi_005819	Farming patch - Spirit Tree
 poi_005820	Lava eel
@@ -344,10 +342,8 @@ poi_005827	8 Mithril
 poi_005828	5 Iron
 poi_005829	10 Coal
 poi_005830	3 Daeyalt essence
-poi_005831	4 Copper
 poi_005832	1 Runite
 poi_005833	2 Adamantite
-poi_005834	1 Runite
 poi_005835	2 Silver
 poi_005836	3 Gem rock
 poi_005837	3 Silver
@@ -355,8 +351,6 @@ poi_005838	4 Gold
 poi_005839	2 Gold
 poi_005840	5 Coal
 poi_005841	6 Iron
-poi_005842	4 Coal
-poi_005843	3 Coal
 poi_005845	3 Iron
 poi_005897	Varrock - lvl 25
 poi_005908	Construction Cape - Prifddinas
@@ -617,44 +611,6 @@ poi_006760	Ironwood tree - Level 80
 poi_006761	Ironwood tree - Level 80
 poi_006762	Redwood tree - Level 90
 poi_006763	Redwood tree - Level 90
-poi_006937	Agility Pyramid
-poi_006938	Barbarian Outpost Agility Course
-poi_006939	Brimhaven Agility Arena
-poi_006940	Canifis Rooftop Course
-poi_006941	Colossal Wyrm Course
-poi_006942	Draynor Village Rooftop Course
-poi_006944	Gnome Stronghold Agility Course
-poi_006945	Prifddinas Agility Course
-poi_006946	Shayzien Agility Course
-poi_006971	Farming patch - Allotment
-poi_006972	Farming patch - Allotment
-poi_006973	Farming patch - Allotment/Flower
-poi_006974	Farming patch - Allotment/Herb/Flower
-poi_006975	Farming patch - Allotment/Herb/Flower
-poi_006976	Farming patch - Allotment/Herb/Flower
-poi_006977	Farming patch - Allotment/Herb/Flower
-poi_006978	Farming patch - Allotment/Herb/Flower
-poi_006979	Farming patch - Allotment/Herb/Flower
-poi_006980	Farming patch - Anima/Herb
-poi_006981	Farming patch - Belladonna
-poi_006982	Farming patch - Belladonna
-poi_006983	Farming patch - Bush
-poi_006984	Farming patch - Bush
-poi_006985	Farming patch - Bush
-poi_006986	Farming patch - Bush
-poi_006987	Farming patch - Bush/Flower
-poi_006988	Farming patch - Cactus
-poi_006989	Farming patch - Cactus
-poi_006990	Farming patch - Calquat
-poi_006991	Farming patch - Calquat
-poi_006992	Farming patch - Calquat
-poi_006993	Farming patch - Celastrus/Fruit Tree
-poi_006994	Farming patch - Crystal Tree
-poi_006995	Farming patch - Flower
-poi_006996	Farming patch - Fruit Tree
-poi_006997	Farming patch - Fruit Tree
-poi_006998	Farming patch - Fruit Tree
-poi_006999	Farming patch - Fruit Tree
 poi_007000	Farming patch - Fruit Tree
 poi_007001	Farming patch - Fruit Tree
 poi_007002	Farming patch - Grapes
@@ -1217,19 +1173,11 @@ poi_002829	Fishing Spot (Shrimp & Sardine)
 poi_002829	Saltfish
 poi_005772	Eagle's Peak - Ferrets (Level 27)
 poi_005772	Ferret
-poi_005807	Charred Island - Red Salamanders (Level 59)
-poi_005807	Red salamander
-poi_005809	Minotaurs' Rest - Tropical Wagtails (Level 19)
-poi_005809	Tropical wagtail
 poi_005844	Trahaearn Mining Site
 poi_005844	Trahaearn mine
 poi_005846	Captain Barnaby
 poi_005846	Ship to Brimhaven / Rimmington
 poi_005847	Charter Ship (Aldarin)
-poi_005848	Charter Ship (Civitas illa Fortis)
 poi_005849	Charter Ship (Deepfin Point)
-poi_005850	Charter Ship (Port Tyras)
 poi_005851	Charter Ship (Prifddinas)
 poi_005852	Charter Ship (Prifddinas Quest Instance)
-poi_005853	Charter Ship (The Summer Shore)
-poi_005854	Charter Ship (Sunset Coast)

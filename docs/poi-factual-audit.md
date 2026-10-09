@@ -1,15 +1,15 @@
 # POI factual audit
 
-Generated 2026-10-09T04:05:27.912018+00:00
+Generated 2026-10-09T04:44:12.176299+00:00
 
-Scanned **8149 locations** across **128 categories**.
+Scanned **7988 locations** across **127 categories**.
 
 ## Results
 
 | Classification | Findings |
 | --- | ---: |
-| placement_candidate | 19 |
-| coverage_gap | 586 |
+| placement_candidate | 8 |
+| coverage_gap | 508 |
 
 Counts are findings, not unique incorrect POIs. Several findings can describe one location.
 

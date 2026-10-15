@@ -451,20 +451,6 @@ public class AtlasOfGielinorOverlay extends Overlay
 
 			if (playerZone != null)
 			{
-				camera.setUndergroundMode(playerZone);
-				camera.setPlane(rawPlayer.getPlane());
-				for (DungeonFloor floor : DungeonFloor.all())
-				{
-					if (floor.zone == playerZone && floor.plane == rawPlayer.getPlane())
-					{
-						camera.setActiveFloor(floor);
-						break;
-					}
-				}
-				final WorldPoint here = camera.getPlayerDisplayLocation();
-				final int centreX = here != null ? here.getX() : playerZone.getSurfacePoint().getX();
-				final int centreY = here != null ? here.getY() : playerZone.getSurfacePoint().getY();
-				camera.centerOn(centreX, centreY);
 				final double defZoom = (double) Math.max(1, config.defaultZoom());
 				camera.setZoom(clientZoom > 0 ? clientZoom : defZoom);
 			}
@@ -493,10 +479,14 @@ public class AtlasOfGielinorOverlay extends Overlay
 			// Ignore client jumps for a few frames while the vanilla map camera settles.
 			ignoreClientJumps = 8;
 
-			log.debug("[AtlasOfGielinor] map opened, centred on {},{} ({}) resolved={} instance={}",
+			log.debug("[AtlasOfGielinor] map opened, centred on {},{} ({}) resolved={} instance={} zone={} floor={} projectionHides={} markerMapped={}",
 				(int) camera.getCenterX(), (int) camera.getCenterY(),
 				rawPlayer != null ? "player" : "client map position", rawPlayer,
-				client.getTopLevelWorldView() != null && client.getTopLevelWorldView().isInstance());
+				client.getTopLevelWorldView() != null && client.getTopLevelWorldView().isInstance(),
+				playerZone == null ? null : playerZone.getId(),
+				playerZone == null ? null : camera.floorLayerFor(playerZone),
+				rawPlayer != null && InstanceMaps.hiddenOnSurface(rawPlayer.getX(), rawPlayer.getY(),
+					camera.getCenterX(), camera.getCenterY()), camera.isPlayerPieceVisible());
 		}
 		else if (ignoreClientJumps > 0)
 		{

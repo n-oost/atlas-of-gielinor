@@ -695,6 +695,11 @@ public class MapCamera
 			{
 				exitDungeonToSurface();
 			}
+			log.debug("[AtlasOfGielinor:transition] player={} previous={} observed={} piece={} pieceLayer={} active={} floor={} center={},{} unavailable={}",
+				player, previous == null ? null : previous.getId(),
+				playerZone == null ? null : playerZone.getId(), playerPiece == null ? null : playerPiece.id,
+				playerPieceLayer, activeUndergroundZone == null ? null : activeUndergroundZone.getId(),
+				activeFloorLayer, centerX, centerY, unavailable);
 		}
 
 		if (unavailable && !interiorMapUnavailable && lastSurfaceLocation != null)
@@ -724,6 +729,17 @@ public class MapCamera
 	public boolean isViewingPlayerInteriorFromSurface()
 	{
 		return observedPlayerUndergroundZone != null && activeUndergroundZone == null;
+	}
+
+	/** A mapped cutaway uses its authored player projection even when the surface projection is hidden. */
+	public boolean isPlayerPieceVisible()
+	{
+		final UndergroundZone zone = observedPlayerUndergroundZone;
+		final WorldPoint player = playerLocation;
+		if (!lowerView || zone == null || player == null || !openUndergroundZones.contains(zone)) return false;
+		final DungeonPiece piece = InstanceMaps.pieceForPoint(zone,
+			player.getX(), player.getY(), player.getPlane(), floorLayerFor(zone));
+		return piece != null && isDungeonPieceVisible(zone, piece);
 	}
 
 

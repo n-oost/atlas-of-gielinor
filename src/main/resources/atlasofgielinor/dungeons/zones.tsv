@@ -93,7 +93,7 @@ LIZARDMAN_CAVES	lizardman_caves	Lizardman Caves	1306	3574	0	1308	9963	0	6400	45	
 LIZARDMAN_TEMPLE	lizardman_temple	Lizardman Temple	1214	3559	0	1281	10048	0	6489	45	Under Mount Quidamortem • Lizardman Shamans & stone chests	1281	10048	1342	10111	1329	3669	0	1311	3686	0	1313	3663	0	1291	3657	0
 GIANTS_DEN	giants_den	Giants' Den	1420	3588	0	1432	9913	0	6325	60	Under Shayzien • Hill Giants, Moss Giants, Fire Giants	1412	9856	1471	9915	1419	3588	0
 FORTIS_BARRACKS	fortis_barracks	Fortis Barracks	1640	3166	0	1641	9576	0	6410	60	Under Civitas illa Fortis • Fortis Barracks & subterranean tunnels	1612	9484	1691	9579
-FENKENSTRAIN_DUNGEON	fenkenstrain_dungeon	Fenkenstrain's Castle Dungeon	3509	3448	0	3509	9848	0	6400	45	Under Castle Fenkenstrain • Experiments cave, memorial gravestone link	3520	9856	3583	9919	3575	3526	0
+FENKENSTRAIN_DUNGEON	fenkenstrain_dungeon	Fenkenstrain's Castle Dungeon	3509	3448	0	3530	9950	0	6400	45	Under Castle Fenkenstrain • Experiments cave, memorial gravestone link	3464	9922	3581	9981	3575	3526	0
 WILDERNESS_AGILITY_DUNGEON	wilderness_agility_dungeon	Wilderness Agility Dungeon	3004	3963	0	3008	10367	0	6423	45	Under Deep Wilderness • Wilderness Agility Course escape tunnel & Pirate's Hideout	2991	10339	3071	10367
 DAEYALT_ESSENCE_MINE	daeyalt_essence_mine	Daeyalt Essence Mine	3725	3356	0	3649	9820	0	6464	45	Under Darkmeyer • Daeyalt essence extraction caverns	3609	9795	3710	9850
 MOLCH_PEARL_CAVES	molch_pearl_caves	Molch Pearl Caves	1382	3825	0	1280	9983	0	6158	45	Under Lake Molch • Cormorant fishing cavern & lizardman nests	1280	9935	1343	9983
@@ -213,7 +213,6 @@ BLACK_KNIGHT_CATACOMBS	black_knight_catacombs	Black Knight Catacombs	3020	3514	0
 ARTIOS_LAIR	artios_lair	Hunter's End (Artio)	3115	3675	0	1758	11552	0	7877	45	Wilderness • Artio's singles-plus bear lair	0	0	0	0
 SPINDELS_LAIR	spindels_lair	Web Chasm (Spindel)	3182	3745	0	1632	11555	2	7810	45	Wilderness • Spindel's singles-plus spider lair	0	0	0	0
 CHARRED_DUNGEON	charred_dungeon	Charred Dungeon	2637	2416	0	2691	8884	0	6468	80	Under Charred Island • Charred Dungeon	0	0	0	0
-FARMING_GUILD_SEED_VAULT	farming_guild_seed_vault	Farming Guild Seed Vault	1247	3740	0	1265	10160	0	6420	30	Farming Guild • Seed vault beneath the central tier	0	0	0	0
 DESERT_MINING_CAMP_DUNGEON	desert_mining_camp_dungeon	Desert Mining Camp Dungeon	3288	3021	0	3280	9415	0	6394	65	Inside the Desert Mining Camp • The Tourist Trap, slave mines	0	0	0	0
 CRASH_SITE_CAVERN	crash_site_cavern	Crash Site Cavern	2436	3520	0	2113	5663	0	2143	120	Through the northern Gnome Stronghold fence • Follow the path north-east, Demonic Gorillas	0	0	0	0
 LIBRARY_HISTORICAL_ARCHIVE	library_historical_archive	Library Historical Archive	1624	3808	0	1575	10200	0	6392	55	Arceuus Library • Speak to Archeio to enter the historical archive	0	0	0	0
@@ -345,7 +344,6 @@ NATIVE_KOUREND_UNDERGROUND_GIANTS_DEN	native_kourend_underground__giants_den	Gia
 NATIVE_KOUREND_UNDERGROUND_THE_WARRENS	native_kourend_underground__the_warrens	The Warrens	1775	3730	0	1775	10130	0	6400	64	Native section of Kourend Underground	0	0	0	0
 NATIVE_KOUREND_UNDERGROUND_WOODCUTTING_GUILD_DUNGEON	native_kourend_underground__woodcutting_guild_dungeon	Woodcutting Guild Dungeon	1580	3480	0	1580	9880	0	6400	64	Native section of Kourend Underground	0	0	0	0
 NATIVE_KEBOS_UNDERGROUND	native_kebos_underground	Kebos Underground	1298	3736	0	1216	10112	0	6376	200	Native OSRS map selector: Kebos Underground	0	0	0	0
-NATIVE_KEBOS_UNDERGROUND_FARMING_GUILD_SEED_VAULT	native_kebos_underground__farming_guild_seed_vault	Farming Guild Seed Vault	1247	3740	0	1265	10160	0	6420	64	Native section of Kebos Underground	0	0	0	0
 NATIVE_KEBOS_UNDERGROUND_HESPORI_CAVE	native_kebos_underground__hespori_cave	Hespori Cave	1248	3737	0	1248	10089	0	6352	64	Native section of Kebos Underground	0	0	0	0
 NATIVE_KEBOS_UNDERGROUND_KARUULM_SLAYER_DUNGEON	native_kebos_underground__karuulm_slayer_dungeon	Karuulm Slayer Dungeon	1311	3807	0	1311	10207	0	6400	64	Native section of Kebos Underground	0	0	0	0
 NATIVE_KEBOS_UNDERGROUND_LIZARDMAN_CAVES	native_kebos_underground__lizardman_caves	Lizardman Caves	1306	3574	0	1308	9963	0	6389	64	Native section of Kebos Underground	0	0	0	0

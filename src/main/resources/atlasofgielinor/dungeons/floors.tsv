@@ -8,7 +8,6 @@ dorgesh_kaan	Dorgesh-Kaan (Upper level)	2	3326	3118	1373
 dorgesh_kaan_south	Dorgesh-Kaan South Dungeon	0	3290	3075
 dorgesh_kaan_south	Dorgesh-Kaan South Dungeon (upper)	3	3322	3059
 zanaris	Zanaris	0	3221	3157
-zanaris	Zanaris (upper)	1	3254	3182
 stronghold_of_security	Vault of War	0	3145	3415	1271
 stronghold_of_security	Catacomb of Famine	0	3145	3398	1358
 stronghold_of_security	Pit of Pestilence	0	3145	3381	1359
@@ -53,7 +52,6 @@ mos_le_harmless_cave	Mos Le'Harmless (eastern caverns)	0	3857	2962
 poison_waste_dungeon	Poison Waste Sewer (main level)	1	2321	3117
 poison_waste_dungeon	Poison Waste Sewer (lower level)	0	2321	3108
 ape_atoll_dungeon	Ape Atoll (Maniacal Monkeys)	1	2661	2758
-ape_atoll_dungeon	Ape Atoll (Kruk catwalks)	2	2670	2820
 tonali_cavern	Tonali Cavern	0	1311	3073	1020
 dragon_nest	Dragon Nest	0	1264	3103	1303
 troll_stronghold	Troll Stronghold (bottom)	0	2833	3646	1426
@@ -89,7 +87,6 @@ sisterhood_sanctuary	The Nightmare of Ashihama (arena)	0	3791	3356	1259
 fenkenstrain_dungeon	Experiment Cave	0	3575	3526	1327
 camdozaal	Ruins of Camdozaal	0	3000	3486	1147
 lassar_undercity	Lassar Undercity / The Whisperer	0	3062	3517	1249
-lassar_undercity	The Whisperer (Shadow Realm)	0	3036	3488	1407
 barbarian_assault	Barbarian Assault waiting rooms	0	2533	3573	1408
 barbarian_assault	Barbarian Assault arena	0	2535	3582	1009
 barbarian_assault	Barbarian Assault Queen	0	2533	3580	1409
@@ -98,9 +95,7 @@ lithkren_vault	Lithkren Vault (Dragon Forge)	0	3560	4076	1322
 underground_pass	Ruins of Tapoyauki	0	1624	3223	1020
 alchemical_society	Mastering Mixology	0	1389	2918	1220
 ghorrock_dungeon	Phantom Muspah (instance)	0	2862	3897	1428
-farming_guild_seed_vault	Farming Guild Seed Vault	0	1247	3740	1411
 lumbridge_cellar	Lumbridge Castle Cellar	0	3218	3218	1110
-lumbridge_cellar	Recipe for Disaster room	0	3218	3220	1412
 artios_lair	Hunter's End (Artio)	0	3115	3675	1413
 spindels_lair	Web Chasm (Spindel)	2	3182	3745	1414
 charred_dungeon	Charred Dungeon	0	2668	2404	1226
@@ -123,7 +118,6 @@ black_knight_catacombs	Black Knight Catacombs	1	3020	3514	1419
 draynor_manor_basement	Ernest the Chicken basement	0	3092	3361	1231
 draynor_manor_basement	Draynor Manor Crypt	0	3115	3356	1420
 corporeal_beast	Corporeal Beast Lair	2	3202	3681	1022
-corporeal_beast	Corporeal Beast entry cavern	2	3228	3681	1421
 jaldraocht_pyramid	Jaldraocht Pyramid upper chamber	3	3233	2898	1422
 smoke_devil_dungeon	Smoke Devil Dungeon	0	2412	3061	1269
 grimstone_dungeon	Grimstone Dungeon	0	2942	4083	1427

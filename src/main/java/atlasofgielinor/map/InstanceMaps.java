@@ -200,7 +200,12 @@ public final class InstanceMaps
 
 	private static boolean braindeathInstance(double worldX, double worldY)
 	{
-		return WikiMap.BRAINDEATH_ISLAND.contains((int) Math.floor(worldX), (int) Math.floor(worldY));
+		// The wiki image includes padding occupied by Eagles' Peak and the Stronghold.
+		for (DungeonPiece piece : displayPiecesFor(UndergroundZone.NATIVE_BRAINDEATH_ISLAND))
+		{
+			if (piece.containsNative((int) Math.floor(worldX), (int) Math.floor(worldY))) return true;
+		}
+		return false;
 	}
 
 	/** Instance-band terrain that is intentionally composited into the normal overworld. */

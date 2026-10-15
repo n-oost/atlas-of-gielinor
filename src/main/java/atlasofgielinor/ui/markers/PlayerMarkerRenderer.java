@@ -72,10 +72,8 @@ public class PlayerMarkerRenderer
 	/** Place the arrow with the same per-piece translation/rotation/flip used for dungeon tiles. */
 	private Point2D arrangedPlayerPoint(WorldPoint rawLocation, Rectangle bounds)
 	{
-		final UndergroundZone zone = camera.getActiveUndergroundZone() != null
-			? camera.getActiveUndergroundZone()
-			: camera.getObservedPlayerUndergroundZone();
-		if (zone == null || dungeonPieceIndex == null)
+		final UndergroundZone zone = camera.getObservedPlayerUndergroundZone();
+		if (!camera.isPlayerPieceVisible() || zone == null || dungeonPieceIndex == null)
 		{
 			return null;
 		}
@@ -131,7 +129,7 @@ public class PlayerMarkerRenderer
 			&& rawLocation.getY() > InstanceMaps.GAP_MIN_Y
 			&& camera.getObservedPlayerUndergroundZone() == null
 			&& InstanceMaps.cameraOnOverworld(camera.getCenterY());
-		if (camera.isInteriorMapUnavailable() || projectionHides || instancedAbove)
+		if (camera.isInteriorMapUnavailable() || (projectionHides && !camera.isPlayerPieceVisible()) || instancedAbove)
 		{
 			final WorldPoint surface = camera.getLastSurfaceLocation();
 			if (surface == null)

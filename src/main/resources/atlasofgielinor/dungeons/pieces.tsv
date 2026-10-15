@@ -336,8 +336,8 @@
 20	1007	0	Asgarnian Ice Dungeon (south-west)	2882	9472	2946	9536	-72	-6587	0	0	0	asgarnia_ice_cave
 23	1008	0	Banana plantation	2684	9156	2743	9211	0	-6400	0	0	0	banana_plantation
 24	1009	0	Barbarian Assault Room	1864	5448	1911	5494	647	-1889	0	1	0	barbarian_assault
-25	1009	0	Barbarian Assault Queen Room	1860	5388	1911	5427	647	-1825	0	1	0	barbarian_assault
-26	1009	0	Barbarian Assault lobby	2572	5256	2611	5303	-58	-1706	0	0	0	barbarian_assault
+25	1409	0	Barbarian Assault Queen Room	1860	5388	1911	5427	647	-1825	0	1	0	barbarian_assault
+26	1408	0	Barbarian Assault lobby	2572	5256	2611	5303	-58	-1706	0	0	0	barbarian_assault
 30	1205	0	Temple of Ikov	2626	9791	2751	9844	0	-6400	0	1	0	temple_of_ikov
 35	1418	0	Tiles (dump leftover)	2752	9600	2815	9615	5709	-6421	0	0	0	-
 36	1016	0	Brimhaven Dungeon	2626	9409	2749	9522	25	-6414	0	0	0	brimhaven_dungeon
@@ -536,6 +536,7 @@
 287	1287	0	Ynysdail Cavern	2242	9831	2301	9919	-72	-6438	0	1	0	ynysdail_cavern
 288	1418	0	Tiles (dump leftover)	2384	9764	2475	9792	5709	-6421	0	0	0	-
 289	1380	1	Underground Pass (5 Iban's Lair & Platforms)	2112	4608	2175	4735	203	-1431	0	0	0	underground_pass
+9000	1380	1	Underground Pass (5 Restored Well of Voyage)	1984	4672	2047	4735	331	-1495	0	0	0	underground_pass
 292	1180	0	Ungael Laboratory	2250	10449	2297	10488	12	-6374	270	1	0	ungael_laboratory
 293	1418	0	Tiles (dump leftover)	3076	8644	3135	8699	5709	-6421	0	0	0	-
 295	1418	0	Tiles (dump leftover)	3264	5440	3291	5467	2313	-1729	0	0	0	-
@@ -611,7 +612,7 @@
 377	1418	0	Tiles (dump leftover) (island 8)	2564	9176	2571	9183	5709	-6421	0	0	0	-
 378	1418	0	Tiles (dump leftover) (island 9)	2500	9031	2609	9114	5684	-6475	0	0	0	-
 379	1418	0	Tiles (dump leftover) (island 10)	2640	9032	2683	9063	5709	-6421	0	0	0	-
-380	1226	0	Charred Dungeon (island 11)	2624	8832	2743	8895	-23	-6480	0	1	0	zanaris
+380	1226	0	Charred Dungeon (island 11)	2624	8832	2743	8895	-23	-6480	0	1	0	charred_dungeon
 381	1418	0	Tiles (dump leftover) (island 1)	2628	9616	2687	9727	5709	-6421	0	0	0	-
 382	1418	0	Tiles (dump leftover)	3000	9536	3040	9599	5709	-6421	0	0	0	-
 383	1353	0	Pandemonium Cave	3020	9359	3066	9410	2	-6400	0	1	0	pandemonium_cave
@@ -620,7 +621,7 @@
 386	1418	0	Tiles (dump leftover) (island 2)	2587	9065	2689	9211	5722	-6555	0	0	0	-
 387	1418	0	Tiles (dump leftover) (island 3)	2618	9224	2639	9275	5783	-6402	0	0	0	-
 389	1418	0	Tiles (dump leftover) (extra bits 11)	1725	5268	1991	5374	2401	-1845	0	0	0	-
-393	1072	0	Ham hideout hallway quest spot	2563	5184	2579	5219	598	-1944	0	0	0	ham_hideout
+393	1417	0	Ham hideout hallway quest spot	2563	5184	2579	5219	598	-1944	0	0	0	ham_hideout
 394	1266	0	Shade Catacombs	3456	9664	3519	9727	1	-6400	0	1	0	shade_catacombs
 410	1401	0	Blast Furnace	1932	4952	1959	4975	894	-1173	0	1	0	keldagrim
 415	1418	0	Tiles (dump leftover) (extra bits 12)	2225	9222	3072	10002	-2713	-6599	0	0	0	-
@@ -660,7 +661,7 @@
 458	1418	0	Tiles (dump leftover) (island 1)	1612	10106	1623	10106	5681	-6396	0	0	0	-
 459	1418	0	Tiles (dump leftover) (island 2)	1596	10107	1619	10114	5681	-6396	0	0	0	-
 460	1418	2	Tiles (dump leftover) (island 1)	2892	4428	2939	4471	5944	-722	0	0	0	-
-461	1022	2	Corporeal Beast Lair (island 2)	2964	4368	2999	4399	235	-701	0	0	0	corporeal_beast
+461	1022	2	Corporeal Beast Lair (island 2)	2960	4368	2999	4399	235	-701	0	0	0	corporeal_beast
 462	1418	2	Tiles (dump leftover) (island 3)	2964	4240	2999	4267	5944	-722	0	0	0	-
 463	1418	1	Tiles (dump leftover) (island 1)	1924	9160	2107	9215	6221	-6167	0	0	0	-
 465	1418	0	Tiles (dump leftover) (island 2)	1664	9680	1727	9715	5709	-6420	0	0	0	-
@@ -692,11 +693,11 @@
 494	1418	0	Tiles (dump leftover)	3072	9764	3083	9779	5709	-6421	0	0	0	-
 496	1418	0	Tiles (dump leftover)	2972	9904	2991	9919	2192	-6188	0	0	0	-
 499	1418	0	Tiles (dump leftover) (island 1)	3020	9360	3063	9403	5779	-6423	0	0	0	-
-500	1229	0	Desert Mining Camp Dungeon	3264	9407	3327	9471	23	-6384	0	1	0	enakhras_temple
+500	1229	0	Desert Mining Camp Dungeon	3264	9407	3327	9471	23	-6384	0	1	0	desert_mining_camp_dungeon
 501	1418	0	Tiles (dump leftover) (island 3)	3024	9228	3059	9263	5779	-6423	0	0	0	-
 502	1418	0	Tiles (dump leftover) (island 4)	3080	9242	3130	9270	5779	-6423	0	0	0	-
 503	1374	0	Jaldraocht Pyramid	3200	9280	3269	9342	0	-6396	0	1	0	enakhras_temple
-504	1191	0	Varrock Museum basement	1728	4928	1791	4991	1498	-1504	0	0	0	varrock_museum_basement
+504	1402	0	Varrock Museum basement	1728	4928	1791	4991	1498	-1504	0	0	0	varrock_museum_basement
 507	1418	0	Tiles (dump leftover)	2504	4823	2539	4854	6333	-1543	0	0	0	-
 508	1330	0	Revenant Caves	3144	10053	3262	10236	-124	-6403	0	1	0	revenant_caves
 509	1418	0	Tiles (dump leftover) (island 2)	3076	9948	3135	9999	5642	-6403	0	0	0	-
@@ -782,7 +783,7 @@
 611	1418	0	Tiles (dump leftover) (island 3)	2608	9500	2623	9527	5709	-6421	0	0	0	-
 612	1124	0	Myreque Hideout	3488	9856	3515	9879	18	-6419	270	1	0	myreque_hideout
 615	1132	0	Paterdomus Basement	3402	9880	3442	9907	0	-6400	0	1	0	paterdomus_basement
-617	1327	0	Experiment cave	3464	9922	3581	9981	-5	-6400	0	1	0	native_morytania_underground__fenkenstrain_dungeon
+617	1327	0	Experiment cave	3464	9922	3581	9981	-5	-6400	0	1	0	fenkenstrain_dungeon
 618	1418	0	Tiles (dump leftover) (island 2)	3200	6272	3263	6272	5133	-2837	0	0	0	-
 621	1418	0	Tiles (dump leftover) (extra bits 19 - Prison Pete)	2112	4352	2175	4415	2386	-2121	0	0	0	-
 631	1418	0	Tiles (dump leftover) (island 9)	2056	4444	2111	4479	7037	-1674	0	0	0	-
@@ -1018,7 +1019,7 @@
 613	1137	0	Tairannwn Mine	3277	12430	3316	12474	-1022	-9145	0	1	0	prifddinas_underground
 614	1137	0	Prifddinas Underground (island 1)	3152	12475	3263	12480	-1014	-9142	0	1	0	prifddinas_underground
 616	1137	0	Prifddinas Underground (island 2)	3152	12430	3263	12474	-1014	-9142	0	1	0	prifddinas_underground
-11	1006	0	Ardougne Sewers (West)	2500	9734	2534	9782	37	-6436	0	1	0	ardougne_underground
+11	1418	0	Ardougne Sewers (West)	2500	9734	2534	9782	37	-6436	0	1	0	ardougne_underground
 27	1386	0	Legends Guild Dungeon	2688	9728	2751	9786	0	-6399	0	1	0	legends_guild_dungeon
 63	1201	0	Yanille Agility Dungeon (Salarin Twisted Chamber)	2609	9500	2618	9527	-4	-6399	0	1	0	yanille_agility_dungeon
 64	1201	0	Yanille Agility Dungeon (small bit)	2612	9561	2624	9568	0	-6465	0	1	0	yanille_agility_dungeon
@@ -1082,7 +1083,7 @@
 159	1421	1	God Wars Dungeon (Saradomin) (split)	2910	5274	2932	5307	34	-1565	0	1	0	god_wars_dungeon
 34	1348	1	Ice Troll Caves	2352	10228	2448	10316	4	-6401	0	1	0	ice_troll_caves
 160	1425	1	Troll Cave(middle)	2821	10043	2864	10079	0	-6399	0	1	0	troll_stronghold
-162	1424	2	Troll Cave (Upper)	2816	10042	2871	10117	-2252	-5553	0	1	0	troll_stronghold
+162	1424	2	Troll Cave (Upper)	2816	10042	2871	10117	0	-6399	0	1	0	troll_stronghold
 191	1424	2	Troll Cave(Upper)	2818	10047	2863	10083	0	-6399	0	1	0	troll_stronghold
 201	1426	0	Troll Cave (Bottom) (split)	2845	10057	2872	10095	0	-6397	0	1	0	troll_stronghold
 242	1428	0	Phantom Muspah (fight arena)	2832	4245	2862	4274	15	-362	0	1	0	ghorrock_dungeon
@@ -1117,3 +1118,12 @@
 576	1436	0	Karuulm Slayer Dungeon (island 2)	1246	10173	1389	10177	0	-6400	0	1	0	karuulm_slayer_dungeon
 577	1437	1	Karuulm Slayer Dungeon (Middle) (island 1)	1262	10165	1366	10167	-1	-6399	0	1	0	karuulm_slayer_dungeon
 625	1439	0	Grotesque Guardians fight arena	1664	4544	1727	4607	1732	-1019	0	0	0	slayer_tower
+# Room coverage restored from installed map imagery and local scene evidence (2026-10-14).
+9001	1413	0	Artio	1742	11527	1775	11560	1357	-7877	0	1	0	artios_lair
+9002	1414	2	Spindel	1613	11527	1649	11568	1550	-7810	0	1	0	spindels_lair
+9003	1419	1	Black Knight Catacombs	4108	4839	4147	4859	-1123	-1339	0	1	0	black_knight_catacombs
+9004	1406	0	Sorceress's Garden	2880	5440	2943	5503	408	-2331	0	1	0	sorceress_garden
+9005	1415	0	Hallowed Sepulchre entrance	2385	5965	2415	5994	1255	-2598	0	1	0	hallowed_sepulchre
+9006	1416	2	Hallowed Sepulchre Floor 1	2112	5824	2431	6143	1360	-2591	0	1	0	hallowed_sepulchre
+9007	1420	0	Draynor Manor crypt	3072	9760	3087	9783	38	-6420	0	1	0	draynor_manor_basement
+9008	1436	0	Karuulm Wyrm chamber	1248	10144	1279	10171	0	-6400	0	1	0	karuulm_slayer_dungeon

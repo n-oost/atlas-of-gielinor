@@ -20,7 +20,7 @@ poi_000107	Fishing Spot (Bass, Shark)
 poi_000113	Fishing Spot (Bass, Shark)
 poi_000123	Fishing Spot (Lobster, Swordfish, Tuna)
 poi_000124	Fishing Spot (Lobster, Swordfish, Tuna)
-poi_000128	Fishing Spot (Sea Turtle & Manta Ray)
+poi_000128	Fishing Spot (Squid)
 poi_000132	Fishing Spot (Bass, Shark)
 poi_000154	Fishing Spot (Bass, Shark)
 poi_000158	Fishing Spot (Lobster & Swordfish)
@@ -64,8 +64,8 @@ poi_000541	Quetzal Transport (Outer Fortis)
 poi_000544	Clay & Iron Mining Site
 poi_000563	Tai Bwo Wannai Stepping Stones (Level 30)
 poi_000571	Quetzal Transport (Hunter Guild)
-poi_000592	Fishing Spot (Sacred eel)
-poi_000595	Fishing Spot (Sacred eel)
+poi_000592	Fishing Spot (Sacred Eel)
+poi_000595	Fishing Spot (Sacred Eel)
 poi_000599	Yanille South Wall Climb (Level 69)
 poi_000601	Zul-Andra Stepping Stone (Level 76)
 poi_000626	Quetzal Transport (Tal Teklan)
@@ -1181,3 +1181,35 @@ poi_005847	Charter Ship (Aldarin)
 poi_005849	Charter Ship (Deepfin Point)
 poi_005851	Charter Ship (Prifddinas)
 poi_005852	Charter Ship (Prifddinas Quest Instance)
+poi_006360	Myths' Guild Mining Site
+poi_006360	Myths' Guild Mine
+poi_006361	Trahaearn Mining Site
+poi_006361	Trahaearn Mine
+poi_006362	Wyrmscraig Cavern Mining Site
+poi_006362	Wyrmscraig Mine
+poi_003780	Redwood tree (Level 90)
+poi_003780	Redwood tree
+poi_003788	Redwood tree (Level 90)
+poi_003788	Redwood tree
+poi_004062	Redwood tree (Level 90)
+poi_004062	Redwood tree
+poi_004065	Redwood tree (Level 90)
+poi_004065	Redwood tree
+poi_001963	Rosewood tree - Level 92
+poi_001963	Rosewood tree
+poi_001986	Rosewood tree - Level 92
+poi_001986	Rosewood tree
+poi_007728	Rosewood tree - Level 92
+poi_007728	Rosewood tree
+poi_007729	Rosewood tree - Level 92
+poi_007729	Rosewood tree
+poi_005803	Deepfin Point - Oak & Yew trees (Level 60)
+poi_005803	Deepfin Point - Oak & Yew trees
+poi_006365	Moonlight Antelope (91)
+poi_006365	Moonlight Antelope
+poi_002422	Sandworms (15)
+poi_002422	Sandworms
+poi_003135	Letvek (76)
+poi_003135	Letvek
+poi_003152	Stymphike (82)
+poi_003152	Stymphike

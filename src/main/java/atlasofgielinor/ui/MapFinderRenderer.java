@@ -40,6 +40,7 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,8 @@ class MapFinderRenderer
 	private final WorldMapInput input;
 	private final SlayerTaskTracker slayerTaskTracker;
 	private final MapFinder finder;
+	private final Map<WorldPoint, String> locationLabels = new HashMap<>();
+	private List<MapFinder.Result> labeledRows;
 
 	/** Readable category name for every result row and detail strip. */
 	private static String itemKindLabel(MapFinder.Result res)
@@ -182,8 +185,12 @@ class MapFinderRenderer
 		final List<MapRegion> allRegions = browseRegions && !browseLoading
 			? finder.getRegions(playerLoc) : Collections.emptyList();
 		final List<MapFinder.Result> rows = !categoryHome && !browseRegions ? finder.getResults() : Collections.emptyList();
+		if (labeledRows != rows)
+		{
+			locationLabels.clear();
+			labeledRows = rows;
+		}
 		final int matchCount = finder.getMatchCount();
-		final int locationMatchCount = finder.getLocationMatchCount();
 		final int bodyItemCount = categoryHome ? MapFinder.BrowseCategory.values().length
 			: browseLoading ? 1 : browseRegions ? allRegions.size() : Math.max(1, rows.size());
 
@@ -364,6 +371,8 @@ class MapFinderRenderer
 			{
 				graphics.setColor(TEXT_DIM);
 				graphics.drawString("No matches", panel.x + padX, rowY + 14);
+				drawClipped(graphics, fm, category == null ? "Try a place, monster, or item name" : "Try another term or select Back",
+					panel.x + padX, rowY + 26, panelW - 2 * padX, TEXT_DIM);
 				rowY += rowH;
 			}
 			else
@@ -394,54 +403,25 @@ class MapFinderRenderer
 					drawResultIcon(graphics, result, panel.x + padX, rowY + 4);
 
 					final Rectangle walk = result.getPoint() == null ? null : drawRouteButton(graphics, fm, row, cursor);
+					final int nameX = panel.x + padX + 16;
+					final int textRight = walk == null ? row.x + row.width - 6 : walk.x - 8;
+					drawClipped(graphics, fm, resultTitle(result), nameX, rowY + 12,
+						textRight - nameX - (result.hasChildren() ? 14 : 0), CARD_TEXT);
 					if (result.hasChildren())
 					{
-						final String countText = "▸ " + result.getChildren().size();
-						final int countW = fm.stringWidth(countText);
 						graphics.setColor(CARD_TITLE);
-						graphics.drawString(countText, row.x + row.width - countW - 60, rowY + rowH - 6);
-
-						final int dist = result.getDistanceTiles();
-						final String distText = distanceLabel(dist);
-						if (!distText.isEmpty())
-						{
-							final int dW = fm.stringWidth(distText);
-							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - countW - 66 - dW, rowY + 11);
-						}
-
-						final int nameX = panel.x + padX + 16;
-						final int maxNameW = row.x + row.width - countW - 8 - 58 - nameX;
-						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
-						graphics.setColor(TEXT_DIM);
-						graphics.drawString(itemKindLabel(result) + " · " + result.getChildren().size() + " locations",
-							nameX, rowY + 25);
+						graphics.drawString("▸", textRight - 10, rowY + 12);
 					}
-					else
-					{
-						final int dist = result.getDistanceTiles();
-						final String distText = distanceLabel(dist);
-						if (!distText.isEmpty())
-						{
-							final int dW = fm.stringWidth(distText);
-							graphics.setColor(TEXT_DIM);
-							graphics.drawString(distText, row.x + row.width - 62 - dW, rowY + 12);
-						}
-
-						final int nameX = panel.x + padX + 16;
-						final int maxNameW = row.x + row.width - 74 - nameX;
-						drawClipped(graphics, fm, result.getName(), nameX, rowY + 12, maxNameW, CARD_TEXT);
-						final String subtitle = result.getDetail() != null ? result.getDetail()
-							: result.getKind() == MapFinder.Result.Kind.MONSTER ? "Monster location"
-							: result.getKind() == MapFinder.Result.Kind.MINERAL ? "Mining location" : "Location";
-						graphics.setColor(TEXT_DIM);
-						drawClipped(graphics, fm, itemKindLabel(result) + " · " + subtitle,
-							nameX, rowY + 25, maxNameW, TEXT_DIM);
-					}
+					final String distText = distanceLabel(result.getDistanceTiles());
+					final int distanceWidth = distText.isEmpty() ? 0 : fm.stringWidth(distText) + 8;
+					drawClipped(graphics, fm, resultSubtitle(result), nameX, rowY + 25,
+						textRight - nameX - distanceWidth, TEXT_DIM);
+					graphics.setColor(TEXT_DIM);
+					graphics.drawString(distText, textRight - fm.stringWidth(distText), rowY + 25);
 
 					final MapFinder.Result routeTarget = MapFinder.activationTarget(result);
 					final WorldPoint targetPoint = routeTarget != null ? routeTarget.getPoint() : result.getPoint();
-					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, targetPoint, result.getName(), result, null);
+					final MapCamera.FinderResultTarget target = new MapCamera.FinderResultTarget(row, walk, targetPoint, resultTitle(result), result, null);
 					targets.add(target);
 					if (cursor != null && row.contains(cursor))
 					{
@@ -456,11 +436,8 @@ class MapFinderRenderer
 
 		if (hasOverflow)
 		{
-			final int hiddenGroups = matchCount - rows.size();
-			final String overflowText = "… " + hiddenGroups + " more group"
-				+ (hiddenGroups == 1 ? "" : "s") + " • " + locationMatchCount + " locations";
-			graphics.setColor(TEXT_DIM);
-			graphics.drawString(overflowText, panel.x + padX, rowY + 14);
+			final String overflowText = rows.size() + " of " + matchCount + " results · Refine your search";
+			drawClipped(graphics, fm, overflowText, panel.x + padX, rowY + 14, panelW - 2 * padX, TEXT_DIM);
 			rowY += rowH;
 		}
 
@@ -499,8 +476,8 @@ class MapFinderRenderer
 		}
 		else
 		{
-			descLine1 = categoryHome ? "Choose a category or type to search" : "Click a row to show it on the map";
-			descLine2 = "";
+			descLine1 = categoryHome ? "Choose a category or type to search" : "Click a result to locate it";
+			descLine2 = categoryHome ? "" : "Route plans a path to the location";
 		}
 
 		final int maxDescW = panelW - 2 * padX;
@@ -562,7 +539,7 @@ class MapFinderRenderer
 						if (r.hasChildren())
 						{
 							flyoutItems = r.getChildren();
-							flyoutTitle = r.getName();
+							flyoutTitle = resultTitle(r);
 						}
 						break;
 					}
@@ -575,14 +552,17 @@ class MapFinderRenderer
 
 		if (flyoutItems != null && !flyoutItems.isEmpty())
 		{
-				final int flyoutW = 260;
+			final int flyoutW = Math.max(1, Math.min(260, bounds.width - 8));
 			final int totalFlyout = flyoutItems.size();
+			final int flyoutTitleH = 20;
+			final int visibleRows = Math.min(totalFlyout, Math.max(1, Math.min(MapCamera.FINDER_FLYOUT_ROWS,
+				(bounds.height - padTop - flyoutTitleH - 14) / rowH)));
 			camera.setFinderFlyoutItemCount(totalFlyout);
+			camera.setFinderFlyoutVisibleRows(visibleRows);
 			camera.clampFinderFlyoutScroll();
 			final int flyoutScroll = camera.getFinderFlyoutScrollOffset();
-			final int flyoutEnd = Math.min(totalFlyout, flyoutScroll + MapCamera.FINDER_FLYOUT_ROWS);
-			final int flyoutTitleH = 20;
-			final int flyoutH = padTop + flyoutTitleH + MapCamera.FINDER_FLYOUT_ROWS * rowH + 6;
+			final int flyoutEnd = Math.min(totalFlyout, flyoutScroll + visibleRows);
+			final int flyoutH = padTop + flyoutTitleH + visibleRows * rowH + 6;
 
 			int flyoutX = panel.x + panel.width + 6;
 			final boolean flyoutOnRight = flyoutX + flyoutW <= bounds.getMaxX() - 4;
@@ -605,10 +585,11 @@ class MapFinderRenderer
 			MapStyle.drawCard(graphics, flyoutPanel);
 
 			graphics.setColor(CARD_TITLE);
-			graphics.drawString(flyoutTitle != null ? flyoutTitle : "Locations", flyoutPanel.x + padX, flyoutPanel.y + padTop + 12);
+			drawClipped(graphics, fm, flyoutTitle != null ? flyoutTitle : "Locations",
+				flyoutPanel.x + padX, flyoutPanel.y + padTop + 12, flyoutW - 2 * padX, CARD_TITLE);
 
 			int fRowY = flyoutPanel.y + padTop + flyoutTitleH;
-			final Rectangle flyoutViewport = new Rectangle(flyoutPanel.x + 3, fRowY, flyoutW - 6, MapCamera.FINDER_FLYOUT_ROWS * rowH);
+			final Rectangle flyoutViewport = new Rectangle(flyoutPanel.x + 3, fRowY, flyoutW - 6, visibleRows * rowH);
 			camera.setFinderFlyoutViewport(flyoutViewport);
 
 			drawScrollIndicators(graphics, flyoutViewport, flyoutScroll, flyoutEnd, totalFlyout);
@@ -627,19 +608,18 @@ class MapFinderRenderer
 
 				final Rectangle route = item.getPoint() == null ? null : drawRouteButton(graphics, fm, itemRow, cursor);
 				final String distText = distanceLabel(item.getDistanceTiles());
-				if (!distText.isEmpty())
-				{
-					final int dW = fm.stringWidth(distText);
-					graphics.setColor(TEXT_DIM);
-					graphics.drawString(distText, itemRow.x + itemRow.width - (route == null ? 6 : route.width + 10) - dW, fRowY + 12);
-				}
-				drawClipped(graphics, fm, item.getName(), flyoutPanel.x + padX, fRowY + 12,
-					flyoutW - 88, CARD_TEXT);
+				final int textRight = route == null ? itemRow.x + itemRow.width - 6 : route.x - 8;
+				final int textLeft = flyoutPanel.x + padX;
+				final int distanceWidth = distText.isEmpty() ? 0 : fm.stringWidth(distText) + 8;
+				drawClipped(graphics, fm, flyoutName(item), textLeft, fRowY + 12,
+					textRight - textLeft - distanceWidth, CARD_TEXT);
+				drawClipped(graphics, fm, resultLocation(item), textLeft, fRowY + 25,
+					textRight - textLeft, TEXT_DIM);
 				graphics.setColor(TEXT_DIM);
-				drawClipped(graphics, fm, item.getDetail() != null ? item.getDetail() : itemKindLabel(item),
-					flyoutPanel.x + padX, fRowY + 25, flyoutW - 2 * padX, TEXT_DIM);
+				graphics.drawString(distText, textRight - fm.stringWidth(distText), fRowY + 12);
 
-				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, item.getPoint(), item.getName()));
+				final MapFinder.Result activated = MapFinder.activationTarget(item);
+				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, activated.getPoint(), flyoutName(item)));
 				fRowY += rowH;
 			}
 
@@ -783,12 +763,10 @@ class MapFinderRenderer
 		return button;
 	}
 
-	private static String distanceLabel(int tiles)
+	static String distanceLabel(int tiles)
 	{
 		if (tiles < 0) return "";
-		if (tiles <= 20) return "Close";
-		if (tiles <= 100) return "Moderate";
-		return "Far";
+		return "~" + tiles + " tiles";
 	}
 
 	private static void drawClipped(Graphics2D graphics, FontMetrics fm, String text,
@@ -810,15 +788,64 @@ class MapFinderRenderer
 		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
 	}
 
-	private static String[] resultDescription(MapFinder.Result result)
+	static String resultTitle(MapFinder.Result result)
 	{
-		final WorldPoint point = result.getPoint();
-		final MapRegion region = point != null ? MapRegion.of(point.getX(), point.getY(), point.getPlane()) : null;
-		final String regionName = region != null ? region.getDisplayName() : "Surface";
-		final String kind = itemKindLabel(result);
+		final String name = result.getGroupKey() != null ? result.getGroupKey() : result.getName();
+		for (String prefix : new String[]{"Shop item: ", "Ground item: "})
+		{
+			if (name != null && name.startsWith(prefix)) return name.substring(prefix.length());
+		}
+		return name == null ? "Location" : name;
+	}
+
+	static String flyoutName(MapFinder.Result result)
+	{
+		if (result.hasChildren()) return resultTitle(result);
+		if (result.getKind() == MapFinder.Result.Kind.SHOP && result.getDetail() != null)
+		{
+			final int separator = result.getDetail().indexOf(" · ");
+			if (separator > 0) return result.getDetail().substring(0, separator);
+		}
+		final String name = result.getName();
+		final int separator = name == null ? -1 : name.indexOf(" — ");
+		return separator >= 0 && result.getKind() == MapFinder.Result.Kind.MINERAL
+			? name.substring(separator + 3) : name == null ? resultTitle(result) : name;
+	}
+
+	private String resultSubtitle(MapFinder.Result result)
+	{
+		if (result.hasChildren()) return itemKindLabel(result) + " · " + result.getChildren().size() + " locations";
+		if (result.getKind() == MapFinder.Result.Kind.MONSTER) return "Monster · " + result.getName();
+		if (result.getKind() == MapFinder.Result.Kind.SHOP && result.getDetail() != null)
+		{
+			return "Shop · " + flyoutName(result);
+		}
+		if (result.getKind() == MapFinder.Result.Kind.GROUND_ITEM) return "Ground spawn · " + result.getName();
+		return itemKindLabel(result) + " · " + resultLocation(result);
+	}
+
+	private String resultLocation(MapFinder.Result result)
+	{
+		final MapFinder.Result target = MapFinder.activationTarget(result);
+		return target.getPoint() == null ? "Unknown location"
+			: locationLabels.computeIfAbsent(target.getPoint(), MapFinderRenderer::locationLabel);
+	}
+
+	static String locationLabel(WorldPoint point)
+	{
+		if (point == null) return "Unknown location";
+		final MapRegion region = MapRegion.of(point.getX(), point.getY(), point.getPlane());
+		final String coordinates = point.getX() + ", " + point.getY();
+		return (region == null ? "" : region.getDisplayName() + " · ") + coordinates
+			+ (point.getPlane() == 0 ? "" : " · Floor " + point.getPlane());
+	}
+
+	private String[] resultDescription(MapFinder.Result result)
+	{
 		final String detail = result.getDetail();
-		return new String[]{kind + " · " + regionName,
-			detail != null && !detail.isEmpty() ? detail : result.getName()};
+		return new String[]{resultTitle(result) + " · " + itemKindLabel(result),
+			result.hasChildren() ? "Click to locate · Hover to choose a location"
+				: detail != null && !detail.isEmpty() ? detail : resultLocation(result) + " · Click to locate"};
 	}
 
 	private static void drawQuickChip(Graphics2D graphics, FontMetrics metrics, java.awt.Point cursor,

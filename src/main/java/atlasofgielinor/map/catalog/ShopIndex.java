@@ -269,6 +269,7 @@ public class ShopIndex
 		@Getter
 		private String special;
 		private List<String> services;
+		@Getter
 		private List<String> notable;
 		@Getter
 		private String bulk;

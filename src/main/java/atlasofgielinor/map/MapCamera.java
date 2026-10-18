@@ -401,6 +401,8 @@ public class MapCamera
 	@Setter
 	private volatile int finderBodyVisibleRows;
 	private volatile int finderFlyoutItemCount;
+	@Setter
+	private volatile int finderFlyoutVisibleRows = FINDER_FLYOUT_ROWS;
 	@Getter
 	private volatile String finderScrollKey = "";
 	@Getter
@@ -941,6 +943,7 @@ public class MapCamera
 		finderBodyItemCount = 0;
 		finderBodyVisibleRows = 0;
 		finderFlyoutItemCount = 0;
+		finderFlyoutVisibleRows = FINDER_FLYOUT_ROWS;
 		finderScrollKey = "";
 		finderBodyViewport = null;
 		finderFlyoutViewport = null;
@@ -972,7 +975,8 @@ public class MapCamera
 
 	public void scrollFinderFlyout(int delta)
 	{
-		finderFlyoutScrollOffset = scrollOffset(finderFlyoutScrollOffset, delta, finderFlyoutItemCount, FINDER_FLYOUT_ROWS);
+		finderFlyoutScrollOffset = scrollOffset(finderFlyoutScrollOffset, delta, finderFlyoutItemCount,
+			Math.max(1, finderFlyoutVisibleRows));
 	}
 
 	private static int scrollOffset(int offset, int delta, int itemCount, int viewportRows)

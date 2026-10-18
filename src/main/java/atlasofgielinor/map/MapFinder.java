@@ -31,6 +31,7 @@ import atlasofgielinor.map.catalog.PoiDetails;
 import atlasofgielinor.map.catalog.PoiCategory;
 import atlasofgielinor.map.catalog.PoiIndex;
 import atlasofgielinor.map.catalog.ShopIndex;
+import atlasofgielinor.map.finder.FinderSearchText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -141,6 +142,8 @@ public class MapFinder
 	private volatile int locationMatchCount;
 	private WorldPoint resultOrigin;
 	private long searchDataVersion = Long.MIN_VALUE;
+	private long normalizedDataVersion = Long.MIN_VALUE;
+	private final Map<String, String> normalizedNames = new HashMap<>();
 	/** The last non-empty query, so the "Last" quick-find chip can put it back. */
 	private volatile String lastQuery = "";
 
@@ -245,34 +248,33 @@ public class MapFinder
 			return -1;
 		}
 
-		final String lq = lowerQuery.toLowerCase(Locale.ROOT);
+		final String lq = FinderSearchText.query(lowerQuery);
 		if (name != null)
 		{
-			final String lowerName = name.toLowerCase(Locale.ROOT);
-			if (lowerName.equals(lq))
-			{
-				return 0;
-			}
-			if (lowerName.startsWith(lq))
-			{
-				return 1;
-			}
-			if (lowerName.contains(lq))
-			{
-				return 2;
-			}
+			final int tier = FinderSearchText.tier(FinderSearchText.normalize(name), lq);
+			if (tier >= 0) return tier;
 		}
 
 		if (locationName != null)
 		{
-			final String lowerLoc = locationName.toLowerCase(Locale.ROOT);
-			if (lowerLoc.contains(lq))
+			if (FinderSearchText.tier(FinderSearchText.normalize(locationName), lq) >= 0)
 			{
 				return 3;
 			}
 		}
 
 		return -1;
+	}
+
+	private int searchTier(String name, String detail, String term)
+	{
+		final int tier = FinderSearchText.tier(normalizedName(name), term);
+		return tier >= 0 ? tier : FinderSearchText.tier(normalizedName(detail), term) >= 0 ? 3 : -1;
+	}
+
+	private String normalizedName(String name)
+	{
+		return name == null ? "" : normalizedNames.computeIfAbsent(name, FinderSearchText::normalize);
 	}
 
 	public synchronized void updateQuery(String next, WorldPoint from)
@@ -294,14 +296,21 @@ public class MapFinder
 		// Trim only the search term, never the editable text: trimming the stored query ate every
 		// trailing space, so a typed "king " came back as "king" and the next character produced
 		// "kingb". Multi-word queries were unreachable by typing.
-		final String lower = next.trim().toLowerCase(Locale.ROOT);
+		final long dataVersion = currentSearchDataVersion();
+		if (normalizedDataVersion != dataVersion)
+		{
+			normalizedNames.clear();
+			normalizedDataVersion = dataVersion;
+		}
+		final String lower = FinderSearchText.query(next);
 		if (browseCategory != null)
 		{
 			ensureBrowseIndex();
 			final List<Result> candidates = new ArrayList<>();
 			for (Result leaf : categoryLeaves.getOrDefault(browseCategory, Collections.emptyList()))
 			{
-				final int tier = lower.isEmpty() ? 0 : matchTier(leaf.getName(), leaf.getDetail(), lower);
+				final String term = leaf.getKind() == Result.Kind.MINERAL ? FinderSearchText.mineral(lower) : lower;
+				final int tier = lower.isEmpty() ? 0 : searchTier(leaf.getName(), leaf.getDetail(), term);
 				if (tier < 0) continue;
 				candidates.add(new Result(leaf.getName(), leaf.getGroupKey(), leaf.getPoint(),
 					distanceTiles(leaf.getPoint(), from), tier, leaf.getKind(), leaf.getDetail(), leaf.getSellGp()));
@@ -324,9 +333,9 @@ public class MapFinder
 
 		final List<Result> candidates = new ArrayList<>();
 
-		for (PoiIndex.Poi poi : poiIndex.searchByName(lower, Integer.MAX_VALUE))
+		for (PoiIndex.Poi poi : poiIndex.searchEntries())
 		{
-			final int tier = matchTier(poi.getName(), null, lower);
+			final int tier = searchTier(poi.getName(), null, lower);
 			if (tier == -1)
 			{
 				continue;
@@ -341,16 +350,17 @@ public class MapFinder
 		{
 			if (!"mining_site".equals(poi.getKey())) continue;
 			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
-			final String mineral = detail == null ? null : mineralMatch(detail, lower);
+			final String resourceTerm = FinderSearchText.mineral(lower);
+			final String mineral = detail == null ? null : mineralMatch(detail, resourceTerm);
 			if (mineral == null) continue;
 			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
 			candidates.add(new Result(mineral + " — " + poi.getName(), mineral, point,
-				distanceTiles(point, from), matchTier(mineral, poi.getName(), lower), Result.Kind.MINERAL));
+				distanceTiles(point, from), searchTier(mineral, poi.getName(), resourceTerm), Result.Kind.MINERAL));
 		}
 
-		for (MonsterIndex.Zone zone : monsterIndex.searchByName(lower, Integer.MAX_VALUE))
+		for (MonsterIndex.Zone zone : monsterIndex.getZones())
 		{
-			final int tier = matchTier(zone.getMonster(), zone.getLocationName(), lower);
+			final int tier = searchTier(zone.getMonster(), zone.getLocationName(), lower);
 			if (tier == -1)
 			{
 				continue;
@@ -368,10 +378,10 @@ public class MapFinder
 
 			for (ShopIndex.Shop shop : shopIndex.all())
 			{
-				final ShopIndex.StockItem matched = shop.stockItemMatch(lower);
+				final ShopIndex.StockItem matched = matchingStock(shop, lower);
 				final String matchName = matched != null ? matched.getName() : null;
-				final int itemTier = matchTier(matchName, null, lower);
-				final int shopTier = matchTier(shop.getName(), null, lower);
+				final int itemTier = searchTier(matchName, null, lower);
+				final int shopTier = searchTier(shop.getName(), null, lower);
 				if (itemTier < 0 && shopTier < 0)
 				{
 					continue;
@@ -386,14 +396,20 @@ public class MapFinder
 					point, tiles, tier, Result.Kind.SHOP, subtitle, sellGp));
 			}
 
-			for (GroundItemIndex.Spawn spawn : groundItemIndex.searchByName(lower, Integer.MAX_VALUE))
+			for (GroundItemIndex.Spawn spawn : groundItemIndex.all())
 			{
-				final String itemName = spawn.matchingItemName(lower);
-				int tier = matchTier(itemName, null, lower);
-				if (tier < 0)
+				String itemName = null;
+				int tier = Integer.MAX_VALUE;
+				for (GroundItemIndex.Item item : spawn.getItems())
 				{
-					tier = 2;
+					final int itemTier = searchTier(item.getName(), null, lower);
+					if (itemTier >= 0 && itemTier < tier)
+					{
+						itemName = item.getName();
+						tier = itemTier;
+					}
 				}
+				if (itemName == null) continue;
 				final WorldPoint point = new WorldPoint(spawn.getX(), spawn.getY(), spawn.getPlane());
 				final int tiles = distanceTiles(point, from);
 				final String matchedName = itemName != null ? itemName : term;
@@ -404,10 +420,65 @@ public class MapFinder
 			}
 		}
 
+		if (candidates.isEmpty() && lower.length() >= 5 && lower.indexOf(' ') < 0)
+		{
+			final String correction = uniquePlaceCorrection(lower);
+			if (correction != null)
+			{
+				updateQuery(correction, from);
+				this.query = next;
+				this.lastQuery = next;
+				return;
+			}
+		}
 		this.queryMatches = Collections.unmodifiableList(candidates);
 		this.resultOrigin = from;
 		this.searchDataVersion = currentSearchDataVersion();
 		publishRankedResults(candidates);
+	}
+
+	private String uniquePlaceCorrection(String term)
+	{
+		String correction = null;
+		for (PoiIndex.Poi poi : poiIndex.searchEntries())
+		{
+			final String name = normalizedName(poi.getName());
+			if (name.indexOf(' ') >= 0 || !FinderSearchText.oneEditApart(term, name)) continue;
+			if (correction != null && !correction.equals(name)) return null;
+			correction = name;
+		}
+		return correction;
+	}
+
+	private ShopIndex.StockItem matchingStock(ShopIndex.Shop shop, String term)
+	{
+		ShopIndex.StockItem best = null;
+		int bestTier = Integer.MAX_VALUE;
+		for (ShopIndex.StockItem item : shop.getStock())
+		{
+			if (item == null) continue;
+			final int tier = searchTier(item.getName(), null, term);
+			if (tier >= 0 && tier < bestTier)
+			{
+				best = item;
+				bestTier = tier;
+				if (tier == 0) return best;
+			}
+		}
+		if (best != null) return best;
+		// Retain legacy hints for shops whose full stock is unavailable.
+		if (shop.getNotable() != null)
+		{
+			for (String hint : shop.getNotable())
+			{
+				if (searchTier(hint, null, term) >= 0) return shop.stockItemMatch(hint.toLowerCase(Locale.ROOT));
+			}
+		}
+		for (String hint : new String[]{shop.getBulk(), shop.getSpecial()})
+		{
+			if (searchTier(hint, null, term) >= 0) return shop.stockItemMatch(hint.toLowerCase(Locale.ROOT));
+		}
+		return null;
 	}
 
 	private static String mineralMatch(PoiDetails.Detail detail, String lower)
@@ -420,7 +491,7 @@ public class MapFinder
 			for (String value : line.substring(colon + 1).split(","))
 			{
 				final String mineral = value.replaceAll("\\s*\\([^)]*\\)", "").trim();
-				if (mineral.toLowerCase(Locale.ROOT).contains(lower)) return mineral;
+				if (FinderSearchText.tier(FinderSearchText.normalize(mineral), lower) >= 0) return mineral;
 			}
 		}
 		return null;
@@ -502,6 +573,11 @@ public class MapFinder
 			if (category != null)
 			{
 				categoryLeaves.computeIfAbsent(category, k -> new ArrayList<>()).add(leaf);
+			}
+			if ("region_label".equals(poi.getKey())
+				&& "wintertodt".equals(FinderSearchText.normalize(name)))
+			{
+				categoryLeaves.computeIfAbsent(BrowseCategory.ACTIVITIES, k -> new ArrayList<>()).add(leaf);
 			}
 			if (region != null)
 			{
@@ -636,6 +712,8 @@ public class MapFinder
 		{
 			return Integer.compare(t1, t2);
 		}
+		final int typeOrder = Integer.compare(itemResultPriority(r1), itemResultPriority(r2));
+		if (typeOrder != 0) return typeOrder;
 		final int d1 = r1.getDistanceTiles();
 		final int d2 = r2.getDistanceTiles();
 		if (d1 < 0 && d2 < 0)
@@ -651,6 +729,11 @@ public class MapFinder
 			return -1;
 		}
 		return Integer.compare(d1, d2);
+	}
+
+	private static int itemResultPriority(Result result)
+	{
+		return result.getKind() == Result.Kind.SHOP || result.getKind() == Result.Kind.GROUND_ITEM ? 1 : 0;
 	}
 
 	private static String resultGroupIdentity(Result result)

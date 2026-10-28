@@ -201,7 +201,7 @@ public class ShopIndex
 		final List<Shop> found = new ArrayList<>(limit);
 		spatialIndex.forEachInArea(of.plane, of.x - tiles, of.x + tiles, of.y - tiles, of.y + tiles, shop ->
 		{
-			if (shop != of && found.size() < limit)
+			if (shop.getOrigin() != of.getOrigin() && found.size() < limit)
 			{
 				found.add(shop);
 			}
@@ -299,6 +299,42 @@ public class ShopIndex
 		private double displayOffsetX;
 		@Getter
 		private double displayOffsetY;
+		@Getter
+		private transient java.awt.geom.Point2D displayPoint;
+		private transient Shop origin;
+
+		public Shop getOrigin()
+		{
+			return origin != null ? origin : this;
+		}
+
+		public Shop withDisplayPoint(java.awt.geom.Point2D point)
+		{
+			final Shop projected = new Shop();
+			projected.name = name;
+			projected.owner = owner;
+			projected.location = location;
+			projected.icon = icon;
+			projected.members = members;
+			projected.special = special;
+			projected.services = services;
+			projected.notable = notable;
+			projected.bulk = bulk;
+			projected.bulkStock = bulkStock;
+			projected.stockTotal = stockTotal;
+			projected.stock = stock;
+			projected.sellPct = sellPct;
+			projected.buyPct = buyPct;
+			projected.x = x;
+			projected.y = y;
+			projected.plane = plane;
+			projected.approx = approx;
+			projected.displayOffsetX = displayOffsetX;
+			projected.displayOffsetY = displayOffsetY;
+			projected.displayPoint = point;
+			projected.origin = getOrigin();
+			return projected;
+		}
 
 		public List<StockItem> getStock()
 		{

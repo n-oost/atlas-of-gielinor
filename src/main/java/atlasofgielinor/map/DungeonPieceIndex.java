@@ -143,6 +143,19 @@ public class DungeonPieceIndex
 			n += list.size();
 		}
 		log.debug("Loaded {} dungeon pieces across {} zones", n, byZone.size());
+		if (log.isDebugEnabled())
+		{
+			for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
+			{
+				for (atlasofgielinor.data.dungeons.DungeonFloor floor : atlasofgielinor.data.dungeons.DungeonFloor.forZone(zone))
+				{
+					final long matching = piecesFor(zone.getId()).stream().filter(p -> p.plane == floor.plane
+						&& (floor.layerId == null || p.layer == floor.layerId)).count();
+					log.debug("[AtlasOfGielinor:floor-audit] zone={} name={} glyph={} order={} plane={} layer={} matchingPieces={}",
+						zone.getId(), floor.name, floor.glyph, floor.displayOrder, floor.plane, floor.layerId, matching);
+				}
+			}
+		}
 	}
 
 	public synchronized List<DungeonPiece> piecesFor(String zoneId)

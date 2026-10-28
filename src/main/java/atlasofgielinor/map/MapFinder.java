@@ -27,11 +27,11 @@ package atlasofgielinor.map;
 import atlasofgielinor.map.catalog.GroundItemIndex;
 import atlasofgielinor.map.catalog.MapRegion;
 import atlasofgielinor.map.catalog.MonsterIndex;
-import atlasofgielinor.map.catalog.PoiDetails;
 import atlasofgielinor.map.catalog.PoiCategory;
 import atlasofgielinor.map.catalog.PoiIndex;
 import atlasofgielinor.map.catalog.ShopIndex;
 import atlasofgielinor.map.finder.FinderSearchText;
+import atlasofgielinor.map.finder.FinderPoiIndex;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -303,6 +303,8 @@ public class MapFinder
 			normalizedDataVersion = dataVersion;
 		}
 		final String lower = FinderSearchText.query(next);
+		final boolean resourceQuery = poiIndex.finderEntries().stream().anyMatch(entry ->
+			entry.getSubject().isResource() && primarySubjectTier(entry, lower) >= 0);
 		if (browseCategory != null)
 		{
 			ensureBrowseIndex();
@@ -310,10 +312,11 @@ public class MapFinder
 			for (Result leaf : categoryLeaves.getOrDefault(browseCategory, Collections.emptyList()))
 			{
 				final String term = leaf.getKind() == Result.Kind.MINERAL ? FinderSearchText.mineral(lower) : lower;
-				final int tier = lower.isEmpty() ? 0 : searchTier(leaf.getName(), leaf.getDetail(), term);
+				final int tier = lower.isEmpty() ? 0 : leaf.getSubjectEntry() == null
+					? searchTier(groupKey(leaf), leaf.getDetail(), term)
+					: subjectTier(leaf.getSubjectEntry(), term, resourceQuery);
 				if (tier < 0) continue;
-				candidates.add(new Result(leaf.getName(), leaf.getGroupKey(), leaf.getPoint(),
-					distanceTiles(leaf.getPoint(), from), tier, leaf.getKind(), leaf.getDetail(), leaf.getSellGp()));
+				candidates.add(leaf.withRanking(distanceTiles(leaf.getPoint(), from), tier));
 			}
 			queryMatches = Collections.unmodifiableList(candidates);
 			resultOrigin = from;
@@ -333,29 +336,11 @@ public class MapFinder
 
 		final List<Result> candidates = new ArrayList<>();
 
-		for (PoiIndex.Poi poi : poiIndex.searchEntries())
+		for (FinderPoiIndex.Entry entry : poiIndex.finderEntries())
 		{
-			final int tier = searchTier(poi.getName(), null, lower);
-			if (tier == -1)
-			{
-				continue;
-			}
-			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-			final int tiles = distanceTiles(point, from);
-			final Result.Kind kind = "mining_site".equals(poi.getKey()) ? Result.Kind.MINERAL : Result.Kind.PLACE;
-			candidates.add(new Result(poi.getName(), poi.getName(), point, tiles, tier, kind));
-		}
-
-		for (PoiIndex.Poi poi : PoiDetails.getAllPois())
-		{
-			if (!"mining_site".equals(poi.getKey())) continue;
-			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
-			final String resourceTerm = FinderSearchText.mineral(lower);
-			final String mineral = detail == null ? null : mineralMatch(detail, resourceTerm);
-			if (mineral == null) continue;
-			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-			candidates.add(new Result(mineral + " — " + poi.getName(), mineral, point,
-				distanceTiles(point, from), searchTier(mineral, poi.getName(), resourceTerm), Result.Kind.MINERAL));
+			final String term = "mining_site".equals(entry.getPoi().getKey()) ? FinderSearchText.mineral(lower) : lower;
+			final int tier = subjectTier(entry, term, resourceQuery);
+			if (tier >= 0) candidates.add(subjectResult(entry, from, tier));
 		}
 
 		for (MonsterIndex.Zone zone : monsterIndex.getZones())
@@ -481,20 +466,50 @@ public class MapFinder
 		return null;
 	}
 
-	private static String mineralMatch(PoiDetails.Detail detail, String lower)
+	private int primarySubjectTier(FinderPoiIndex.Entry entry, String term)
 	{
-		for (String line : detail.getLines())
+		final FinderPoiIndex.Subject subject = entry.getSubject();
+		if (subject.isResource())
 		{
-			if (!line.toLowerCase(Locale.ROOT).startsWith("ores")) continue;
-			final int colon = line.indexOf(':');
-			if (colon < 0) continue;
-			for (String value : line.substring(colon + 1).split(","))
-			{
-				final String mineral = value.replaceAll("\\s*\\([^)]*\\)", "").trim();
-				if (FinderSearchText.tier(FinderSearchText.normalize(mineral), lower) >= 0) return mineral;
-			}
+			final String type = normalizedName(subject.getType());
+			if (term.startsWith(type + " ")) term = term.substring(type.length() + 1);
+			if (term.endsWith(" " + type)) term = term.substring(0, term.length() - type.length() - 1);
+			if ("Mining".equals(subject.getType())) term = FinderSearchText.mineral(term);
 		}
-		return null;
+		if (subject.isResource() && "Woodcutting".equals(subject.getType())
+			&& searchTier(subject.getName().replaceFirst(" trees$", ""), null, term) == 0) return 0;
+		return searchTier(subject.getName(), null, term);
+	}
+
+	private int subjectTier(FinderPoiIndex.Entry entry, String term, boolean resourceQuery)
+	{
+		final FinderPoiIndex.Subject subject = entry.getSubject();
+		final int primary = primarySubjectTier(entry, term);
+		if (primary >= 0) return primary;
+		// A resource query must not match another catch through an old family alias.
+		if (resourceQuery && subject.isResource()) return -1;
+		if (searchTier(subject.getType(), null, term) >= 0) return 2;
+		for (String alias : entry.getAliases())
+		{
+			final int tier = searchTier(alias, null, term);
+			if (tier >= 0) return subject.isResource() ? 3 : tier;
+		}
+		// Context fields are useful search terms; tool and requirement text is not a source of items.
+		for (String line : entry.getDetails().split(" · "))
+		{
+			if ((line.startsWith("Region:") || line.startsWith("Location:"))
+				&& searchTier(line, null, term) >= 0) return 3;
+		}
+		return -1;
+	}
+
+	private static Result subjectResult(FinderPoiIndex.Entry entry, WorldPoint from, int tier)
+	{
+		final PoiIndex.Poi poi = entry.getPoi();
+		final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
+		final Result.Kind kind = "mining_site".equals(poi.getKey()) ? Result.Kind.MINERAL : Result.Kind.PLACE;
+		return new Result(entry.getSubject().getName(), entry.getSubject().getName(), point,
+			distanceTiles(point, from), tier, kind, Collections.emptyList(), entry.getDetails(), 0, entry);
 	}
 
 	/** Refresh distance ordering after movement without rescanning source datasets. */
@@ -526,10 +541,9 @@ public class MapFinder
 	private void publishRankedResults(List<Result> candidates)
 	{
 		final List<Result> allGroups = rank(candidates, Integer.MAX_VALUE);
-		locationMatchCount = candidates.size();
+		locationMatchCount = (int) candidates.stream().map(Result::getPoint).distinct().count();
 		matchCount = allGroups.size();
-		results = Collections.unmodifiableList(new ArrayList<>(
-			allGroups.subList(0, browseCategory == null ? Math.min(MAX_RESULTS, allGroups.size()) : allGroups.size())));
+		results = Collections.unmodifiableList(allGroups);
 	}
 
 	/** The last non-empty query, for the "Last" quick-find chip. Survives {@link #clearQuery()}. */
@@ -559,16 +573,12 @@ public class MapFinder
 		regionContentsCache.clear();
 		categoryLeaves.clear();
 
-		for (PoiIndex.Poi poi : poiIndex.all())
+		for (FinderPoiIndex.Entry entry : poiIndex.finderEntries())
 		{
+			final PoiIndex.Poi poi = entry.getPoi();
 			final MapRegion region = MapRegion.of(poi.getX(), poi.getY(), poi.getPlane());
-			final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-			final PoiDetails.Detail detail = PoiDetails.getDetail(poi, poi.getX(), poi.getY(), poi.getPlane());
-			final String name = detail != null && detail.getTitle() != null && !detail.getTitle().isBlank()
-				? detail.getTitle() : poi.getName();
-			final Result.Kind kind = "mining_site".equals(poi.getKey()) ? Result.Kind.MINERAL : Result.Kind.PLACE;
-			final Result leaf = new Result(name, name, point, -1, 0, kind,
-				detail == null ? null : String.join(" · ", detail.getLines()), 0);
+			final Result leaf = subjectResult(entry, null, 0);
+			final String name = leaf.getName();
 			final BrowseCategory category = BrowseCategory.of(poi.getKey());
 			if (category != null)
 			{
@@ -579,7 +589,7 @@ public class MapFinder
 			{
 				categoryLeaves.computeIfAbsent(BrowseCategory.ACTIVITIES, k -> new ArrayList<>()).add(leaf);
 			}
-			if (region != null)
+			if (region != null && entry.isBrowsable())
 			{
 				regionLeaves.computeIfAbsent(region, k -> new ArrayList<>()).add(leaf);
 			}
@@ -590,7 +600,7 @@ public class MapFinder
 			final MapRegion region = MapRegion.of(zone.getX(), zone.getY(), zone.getPlane());
 			final WorldPoint point = new WorldPoint(zone.getX(), zone.getY(), zone.getPlane());
 			categoryLeaves.computeIfAbsent(BrowseCategory.MONSTERS, k -> new ArrayList<>())
-				.add(new Result(zone.getMonster(), zone.getMonster(), point, -1, 0,
+				.add(new Result(zone.getLocationName(), zone.getMonster(), point, -1, 0,
 					Result.Kind.MONSTER, zone.getLocationName(), 0));
 			if (region != null)
 			{
@@ -659,7 +669,9 @@ public class MapFinder
 		for (Result leaf : sortedLeaves)
 		{
 			final String key = resultGroupIdentity(leaf).toLowerCase(Locale.ROOT);
-			groups.computeIfAbsent(key, k -> new ArrayList<>()).add(leaf);
+			final List<Result> members = groups.computeIfAbsent(key, k -> new ArrayList<>());
+			if (members.stream().noneMatch(member -> Objects.equals(member.getPoint(), leaf.getPoint())))
+				members.add(leaf);
 		}
 
 		final List<Result> ranked = new ArrayList<>(Math.min(groups.size(), max));
@@ -684,19 +696,9 @@ public class MapFinder
 		final List<Result> children = new ArrayList<>(members);
 		children.sort(MapFinder::compareByRelevanceThenDistance);
 		final Result nearest = children.get(0);
-		final String label = resultGroupLabel(nearest, members.size());
+		final String label = groupKey(nearest);
 		return new Result(label, groupKey(nearest), nearest.getPoint(), nearest.getDistanceTiles(),
-			nearest.getTier(), nearest.getKind(), children, nearest.getDetail(), nearest.getSellGp());
-	}
-
-	private static String resultGroupLabel(Result result, int count)
-	{
-		final String key = groupKey(result);
-		if (result.getKind() == Result.Kind.SHOP || result.getKind() == Result.Kind.GROUND_ITEM)
-		{
-			return key + " · " + count + " location" + (count == 1 ? "" : "s");
-		}
-		return key;
+			nearest.getTier(), nearest.getKind(), children, nearest.getDetail(), nearest.getSellGp(), nearest.getSubjectEntry());
 	}
 
 	private static String groupKey(Result result)
@@ -712,8 +714,6 @@ public class MapFinder
 		{
 			return Integer.compare(t1, t2);
 		}
-		final int typeOrder = Integer.compare(itemResultPriority(r1), itemResultPriority(r2));
-		if (typeOrder != 0) return typeOrder;
 		final int d1 = r1.getDistanceTiles();
 		final int d2 = r2.getDistanceTiles();
 		if (d1 < 0 && d2 < 0)
@@ -731,13 +731,9 @@ public class MapFinder
 		return Integer.compare(d1, d2);
 	}
 
-	private static int itemResultPriority(Result result)
-	{
-		return result.getKind() == Result.Kind.SHOP || result.getKind() == Result.Kind.GROUND_ITEM ? 1 : 0;
-	}
-
 	private static String resultGroupIdentity(Result result)
 	{
+		if (result.getSubjectEntry() != null) return result.getSubjectEntry().getSubject().getId();
 		if (result.getKind() == Result.Kind.SHOP || result.getKind() == Result.Kind.GROUND_ITEM)
 		{
 			return result.getGroupKey();
@@ -750,7 +746,7 @@ public class MapFinder
 		return distanceTiles(new WorldPoint(region.getCenterX(), region.getCenterY(), 0), from);
 	}
 
-	private static int distanceTiles(WorldPoint point, WorldPoint from)
+	public static int distanceTiles(WorldPoint point, WorldPoint from)
 	{
 		if (from == null || point == null)
 		{
@@ -780,6 +776,7 @@ public class MapFinder
 		private final int distanceTiles;
 		private final int tier;
 		private final Kind kind;
+		private final FinderPoiIndex.Entry subjectEntry;
 		/** Child rows when this result groups duplicates. Empty for a plain leaf. */
 		private final List<Result> children;
 		/**
@@ -823,12 +820,19 @@ public class MapFinder
 		Result(String name, String groupKey, WorldPoint point, int distanceTiles, int tier, Kind kind,
 			List<Result> children, String detail, int sellGp)
 		{
+			this(name, groupKey, point, distanceTiles, tier, kind, children, detail, sellGp, null);
+		}
+
+		Result(String name, String groupKey, WorldPoint point, int distanceTiles, int tier, Kind kind,
+			List<Result> children, String detail, int sellGp, FinderPoiIndex.Entry subjectEntry)
+		{
 			this.name = name;
 			this.groupKey = groupKey;
 			this.point = point;
 			this.distanceTiles = distanceTiles;
 			this.tier = tier;
 			this.kind = kind == null ? Kind.PLACE : kind;
+			this.subjectEntry = subjectEntry;
 			this.children = children == null || children.isEmpty()
 				? Collections.emptyList()
 				: Collections.unmodifiableList(new ArrayList<>(children));
@@ -842,7 +846,17 @@ public class MapFinder
 			{
 				return this;
 			}
-			return new Result(name, groupKey, point, distanceTiles, tier, kind, children, detail, sellGp);
+			return withRanking(distanceTiles, tier);
+		}
+
+		Result withRanking(int distanceTiles, int tier)
+		{
+			return new Result(name, groupKey, point, distanceTiles, tier, kind, children, detail, sellGp, subjectEntry);
+		}
+
+		public String getIdentity()
+		{
+			return resultGroupIdentity(this);
 		}
 
 

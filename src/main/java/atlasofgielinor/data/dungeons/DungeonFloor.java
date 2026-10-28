@@ -47,6 +47,7 @@ public final class DungeonFloor
 {
 	private static final String RESOURCE = "/atlasofgielinor/dungeons/floors.tsv";
 	private static volatile List<DungeonFloor> ALL = Collections.emptyList();
+	private static volatile Map<UndergroundZone, List<DungeonFloor>> BY_ZONE = Collections.emptyMap();
 	private static volatile boolean loaded;
 	private static volatile Map<String, DungeonFloor> ENTRANCE_FLOORS = Collections.emptyMap();
 
@@ -57,6 +58,8 @@ public final class DungeonFloor
 	public final int worldY;
 	/** Optional authored layer, for distinct floors sharing a game plane. */
 	public final Integer layerId;
+	public final String glyph;
+	public final int displayOrder;
 
 	public DungeonFloor(String name, UndergroundZone zone, int plane, int worldX, int worldY)
 	{
@@ -65,12 +68,20 @@ public final class DungeonFloor
 
 	public DungeonFloor(String name, UndergroundZone zone, int plane, int worldX, int worldY, Integer layerId)
 	{
+		this(name, zone, plane, worldX, worldY, layerId, "", 0);
+	}
+
+	private DungeonFloor(String name, UndergroundZone zone, int plane, int worldX, int worldY,
+		Integer layerId, String glyph, int displayOrder)
+	{
 		this.name = name;
 		this.zone = zone;
 		this.plane = plane;
 		this.worldX = worldX;
 		this.worldY = worldY;
 		this.layerId = layerId;
+		this.glyph = glyph;
+		this.displayOrder = displayOrder;
 	}
 
 	/** Initialize on the map data worker; frame-time reads never open resources. */
@@ -99,6 +110,19 @@ public final class DungeonFloor
 			// Unmapped entrances retain the zone's default floor.
 		}
 		if (Thread.currentThread().isInterrupted()) return;
+		final Map<UndergroundZone, List<DungeonFloor>> byZone = new HashMap<>();
+		for (DungeonFloor floor : prepared)
+		{
+			final List<DungeonFloor> floors = byZone.computeIfAbsent(floor.zone, z -> new ArrayList<>());
+			// Named destinations can share exactly the same selectable map content.
+			if (floors.stream().noneMatch(f -> f.plane == floor.plane
+				&& java.util.Objects.equals(f.layerId, floor.layerId))) floors.add(floor);
+		}
+		byZone.replaceAll((zone, floors) -> {
+			floors.sort(java.util.Comparator.comparingInt(f -> f.displayOrder));
+			return Collections.unmodifiableList(floors);
+		});
+		BY_ZONE = Collections.unmodifiableMap(byZone);
 		ALL = prepared;
 		ENTRANCE_FLOORS = Collections.unmodifiableMap(entrances);
 		loaded = true;
@@ -107,6 +131,12 @@ public final class DungeonFloor
 	public static List<DungeonFloor> all()
 	{
 		return ALL;
+	}
+
+	/** Unique map selections, in authored display order; prepared off the rendering thread. */
+	public static List<DungeonFloor> forZone(UndergroundZone zone)
+	{
+		return BY_ZONE.getOrDefault(zone, Collections.emptyList());
 	}
 
 	/** Floor reached by a particular surface entrance, using the original navigation point. */
@@ -191,7 +221,9 @@ public final class DungeonFloor
 						Integer.parseInt(f[2].trim()),
 						Integer.parseInt(f[3].trim()),
 						Integer.parseInt(f[4].trim()),
-						f.length > 5 && !f[5].trim().isEmpty() ? Integer.valueOf(f[5].trim()) : null));
+						f.length > 5 && !f[5].trim().isEmpty() ? Integer.valueOf(f[5].trim()) : null,
+						f.length > 6 ? f[6].trim() : "",
+						f.length > 7 ? Integer.parseInt(f[7].trim()) : 0));
 				}
 				catch (NumberFormatException ignored)
 				{

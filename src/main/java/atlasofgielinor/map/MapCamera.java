@@ -68,12 +68,14 @@ public class MapCamera
 		final Rectangle boats = boatsDropdownBounds;
 		return (layers != null && layers.contains(cursor))
 			|| (finder != null && finder.contains(cursor))
+			|| (finderFlyoutBounds != null && finderFlyoutBounds.contains(cursor))
 			|| (clue != null && clue.contains(cursor))
 			|| (boats != null && boats.contains(cursor));
 	}
 
 	public static final double MIN_ZOOM = 0.14;
 	public static final double MAX_ZOOM = 24.0;
+	public static final int FLOOR_BAR_ROW_HEIGHT = 26;
 
 	public static final int MIN_WORLD_X = 896;
 	public static final int MAX_WORLD_X = 4096;
@@ -429,10 +431,17 @@ public class MapCamera
 	private volatile boolean travelView;
 	private volatile List<UndergroundZone> openUndergroundZones = Collections.emptyList();
 	private final java.util.Map<UndergroundZone, DungeonFloor> selectedDungeonFloors = new java.util.concurrent.ConcurrentHashMap<>();
+	@Getter
+	@Setter
+	private volatile java.util.Map<UndergroundZone, Rectangle> floorBarBounds = Collections.emptyMap();
+	private final java.util.Map<UndergroundZone, Integer> floorBarScroll = new java.util.concurrent.ConcurrentHashMap<>();
 	private volatile WorldPoint activeUndergroundSurfacePoint;
-	/** First dungeon opened during this Lower view session; closing it returns to Surface. */
+	/** Return anchor for the current Lower view session, reassigned when a group closes. */
 	private volatile UndergroundZone originalUndergroundZone;
 	private volatile WorldPoint originalUndergroundSurfacePoint;
+	@Getter
+	@Setter
+	private volatile boolean hoverPreviewEnabled = true;
 	@Getter
 	private volatile UndergroundZone hoveredUndergroundZone;
 	@Getter
@@ -523,6 +532,8 @@ public class MapCamera
 			layersButton = null;
 			layerToggleTargets = Collections.emptyList();
 			layerSymbolTargets = Collections.emptyList();
+			floorBarBounds = Collections.emptyMap();
+			floorBarScroll.clear();
 			layersPanelOpen = false;
 			layersPanelBounds = null;
 			chatButton = null;
@@ -554,6 +565,8 @@ public class MapCamera
 		}
 		this.activeFloorLayer = null;
 		selectedDungeonFloors.clear();
+		floorBarScroll.clear();
+		floorBarBounds = Collections.emptyMap();
 		this.plane = Math.max(0, Math.min(3, plane));
 		this.planeChosenByUser = true;
 	}
@@ -616,6 +629,12 @@ public class MapCamera
 	 */
 	public synchronized void followPlayerInterior()
 	{
+		followPlayerInterior(false);
+	}
+
+	/** Explicit Lower entry resolves the current interior even without a physical transition. */
+	private void followPlayerInterior(boolean enteringLower)
+	{
 		if (travelView) return;
 		final WorldPoint player = playerLocation;
 		final UndergroundZone playerZone = player == null
@@ -637,7 +656,7 @@ public class MapCamera
 			playerZone, player.getX(), player.getY(), playerPlane, null);
 		final int playerPieceLayer = playerPiece == null ? -1 : playerPiece.layer;
 		if (playerZone != observedPlayerUndergroundZone || playerPlane != observedPlayerPlane
-			|| playerPieceLayer != observedPlayerPieceLayer)
+			|| playerPieceLayer != observedPlayerPieceLayer || (enteringLower && playerZone != null))
 		{
 			final UndergroundZone previous = observedPlayerUndergroundZone;
 			observedPlayerUndergroundZone = playerZone;
@@ -788,6 +807,10 @@ public class MapCamera
 	public void setLayerSymbolTargets(List<LayerSymbolTarget> targets)
 	{
 		this.layerSymbolTargets = targets != null ? targets : Collections.emptyList();
+		if (this.layerSymbolTargets.isEmpty())
+		{
+			floorBarBounds = Collections.emptyMap();
+		}
 	}
 
 
@@ -969,14 +992,31 @@ public class MapCamera
 
 	public void scrollFinderBody(int delta)
 	{
-		finderBodyScrollOffset = scrollOffset(finderBodyScrollOffset, delta, finderBodyItemCount,
+		final int next = scrollOffset(finderBodyScrollOffset, delta, finderBodyItemCount,
 			finderBodyVisibleRows > 0 ? finderBodyVisibleRows : finderBodyViewportRows());
+		if (next != finderBodyScrollOffset)
+		{
+			finderBodyScrollOffset = next;
+			// Until the next render publishes rows, old hit targets refer to different results.
+			finderResultTargets = Collections.emptyList();
+			finderCategoryTargets = Collections.emptyMap();
+			hoveredRowKey = null;
+			finderFlyoutBounds = null;
+			finderFlyoutHitBounds = null;
+			finderFlyoutViewport = null;
+			flyoutTargets = Collections.emptyList();
+		}
 	}
 
 	public void scrollFinderFlyout(int delta)
 	{
-		finderFlyoutScrollOffset = scrollOffset(finderFlyoutScrollOffset, delta, finderFlyoutItemCount,
+		final int next = scrollOffset(finderFlyoutScrollOffset, delta, finderFlyoutItemCount,
 			Math.max(1, finderFlyoutVisibleRows));
+		if (next != finderFlyoutScrollOffset)
+		{
+			finderFlyoutScrollOffset = next;
+			flyoutTargets = Collections.emptyList();
+		}
 	}
 
 	private static int scrollOffset(int offset, int delta, int itemCount, int viewportRows)
@@ -1013,13 +1053,17 @@ public class MapCamera
 	/** Browsing Lower is independent of whether any layout is open. */
 	public synchronized void enterLowerView()
 	{
+		final boolean enteringLower = !lowerView;
 		travelView = false;
 		lowerView = true;
 		selectedTravelNode = null;
 		hoveredTravelNode = null;
 		activeFloorLayer = null;
 		hoveredUndergroundZone = null;
-
+		if (enteringLower)
+		{
+			followPlayerInterior(true);
+		}
 	}
 
 	public boolean isTravelViewActive()
@@ -1069,25 +1113,23 @@ public class MapCamera
 			setActiveFloor(entranceFloor);
 			return;
 		}
-		if (originalUndergroundZone != null && zone.getConnectedZones().stream()
-			.anyMatch(connected -> connected.getSelectionId().equals(originalUndergroundZone.getSelectionId())))
-		{
-			exitDungeonToSurface(originalUndergroundSurfacePoint);
-			return;
-		}
 		final java.util.ArrayList<UndergroundZone> zones = new java.util.ArrayList<>(openUndergroundZones);
 		zones.removeIf(open -> zone.getConnectedZones().stream()
 			.anyMatch(connected -> open.getSelectionId().equals(connected.getSelectionId())));
 		openUndergroundZones = Collections.unmodifiableList(zones);
-		if (activeUndergroundZone != null && zone.getConnectedZones().stream()
-			.anyMatch(connected -> activeUndergroundZone.getSelectionId().equals(connected.getSelectionId())))
+		if (zones.isEmpty())
 		{
-			activeUndergroundZone = zones.isEmpty() ? null : zones.get(zones.size() - 1);
-			activeUndergroundSurfacePoint = activeUndergroundZone == null ? null : activeUndergroundZone.getSurfacePoint();
-			plane = activeUndergroundZone == null ? 0 : activeUndergroundZone.getUndergroundPoint().getPlane();
-			activeFloorLayer = null;
+			exitDungeonToSurface(originalUndergroundSurfacePoint != null ? originalUndergroundSurfacePoint : entrance);
+			return;
 		}
-		hoveredUndergroundZone = null;
+		activeUndergroundZone = zones.get(zones.size() - 1);
+		activeUndergroundSurfacePoint = activeUndergroundZone.getSurfacePoint();
+		originalUndergroundZone = activeUndergroundZone;
+		originalUndergroundSurfacePoint = activeUndergroundSurfacePoint;
+		final DungeonFloor remainingFloor = selectedDungeonFloors.get(activeUndergroundZone);
+		plane = remainingFloor == null ? activeUndergroundZone.getUndergroundPoint().getPlane() : remainingFloor.plane;
+		activeFloorLayer = remainingFloor == null ? null : remainingFloor.layerId;
+		setHoveredUnderground(null, true);
 
 	}
 
@@ -1155,6 +1197,8 @@ public class MapCamera
 	{
 		travelView = false;
 		selectedDungeonFloors.clear();
+		floorBarScroll.clear();
+		floorBarBounds = Collections.emptyMap();
 		lowerView = false;
 		openUndergroundZones = Collections.emptyList();
 		originalUndergroundZone = null;
@@ -1294,7 +1338,7 @@ public class MapCamera
 		{
 			return null;
 		}
-		return hoveredUndergroundZone;
+		return hoverPreviewEnabled ? hoveredUndergroundZone : null;
 	}
 
 	/**
@@ -1310,7 +1354,7 @@ public class MapCamera
 		{
 			return true;
 		}
-		return hoveredUndergroundZone != null && hoveredSurfaceToUnderground;
+		return hoverPreviewEnabled && hoveredUndergroundZone != null && hoveredSurfaceToUnderground;
 	}
 
 
@@ -1328,6 +1372,8 @@ public class MapCamera
 			this.hoveredFloorPlane = null;
 			return;
 		}
+		if (!isHoveredFloor(floor)) log.debug("[AtlasOfGielinor:floor] preview zone={} name={} plane={} layer={}",
+			floor.zone.getId(), floor.name, floor.plane, floor.layerId);
 		this.hoveredUndergroundZone = floor.zone;
 		this.hoveredSurfaceToUnderground = true;
 
@@ -1344,6 +1390,65 @@ public class MapCamera
 		this.planeChosenByUser = true;
 		this.activeFloorLayer = floor.layerId;
 		selectedDungeonFloors.put(floor.zone, floor);
+		floorBarScroll.remove(floor.zone);
+		log.debug("[AtlasOfGielinor:floor] select zone={} name={} plane={} layer={} center={},{}",
+			floor.zone.getId(), floor.name, floor.plane, floor.layerId, centerX, centerY);
+	}
+
+	/** Committed selection, deliberately independent of temporary hover previews. */
+	public DungeonFloor selectedFloorFor(UndergroundZone zone)
+	{
+		final DungeonFloor selected = selectedDungeonFloors.get(zone);
+		final Integer layer = selected != null ? selected.layerId
+			: activeUndergroundZone == zone ? activeFloorLayer : DungeonFloor.defaultLayerFor(zone);
+		final int selectedPlane = selected != null ? selected.plane
+			: activeUndergroundZone == zone ? plane : zone.getUndergroundPoint().getPlane();
+		final List<DungeonFloor> floors = DungeonFloor.forZone(zone);
+		for (DungeonFloor floor : floors)
+		{
+			if (floor.plane == selectedPlane && java.util.Objects.equals(floor.layerId, layer)) return floor;
+		}
+		return floors.isEmpty() ? null : floors.get(0);
+	}
+
+	public int floorBarOffset(UndergroundZone zone, int visibleRows)
+	{
+		final List<DungeonFloor> floors = DungeonFloor.forZone(zone);
+		final int initial = Math.max(0, floors.indexOf(selectedFloorFor(zone)) - visibleRows / 2);
+		return Math.min(Math.max(0, floors.size() - visibleRows), floorBarScroll.getOrDefault(zone, initial));
+	}
+
+	public double floorBarScale()
+	{
+		return Math.max(0.5, Math.min(2.0, frameZoom / 4.0));
+	}
+
+	public int floorBarRowHeight()
+	{
+		return (int) Math.round(FLOOR_BAR_ROW_HEIGHT * floorBarScale());
+	}
+
+	public int floorBarPadding()
+	{
+		return (int) Math.round(4 * floorBarScale());
+	}
+
+	/** Scroll only the local floor list, leaving map zoom unchanged. */
+	public boolean scrollFloorBar(java.awt.Point point, int rotation)
+	{
+		if (isTravelViewActive() || isCursorOverPanel(point)) return false;
+		for (java.util.Map.Entry<UndergroundZone, Rectangle> entry : floorBarBounds.entrySet())
+		{
+			if (!entry.getValue().contains(point)) continue;
+			final int rows = Math.max(1, (entry.getValue().height - 2 * floorBarPadding()) / floorBarRowHeight());
+			final int max = Math.max(0, DungeonFloor.forZone(entry.getKey()).size() - rows);
+			floorBarScroll.put(entry.getKey(), Math.max(0, Math.min(max, floorBarOffset(entry.getKey(), rows) + rotation)));
+			log.debug("[AtlasOfGielinor:floor] scroll zone={} offset={} rows={} total={}",
+				entry.getKey().getId(), floorBarScroll.get(entry.getKey()), rows, DungeonFloor.forZone(entry.getKey()).size());
+			setHoveredUnderground(null, true);
+			return true;
+		}
+		return false;
 	}
 
 	public Integer floorLayerFor(UndergroundZone zone)
@@ -1366,6 +1471,24 @@ public class MapCamera
 		return selected == null ? null : selected.plane;
 	}
 
+	/** Shared plane selection for dungeon terrain and its markers. */
+	public int effectivePlaneFor(UndergroundZone zone)
+	{
+		final Integer selectedFloor = floorPlaneFor(zone);
+		if (selectedFloor != null) return selectedFloor;
+		if (activeUndergroundZone == zone)
+		{
+			return plane;
+		}
+		if (isViewingPlayerInteriorFromSurface()
+			&& observedPlayerUndergroundZone == zone
+			&& playerLocation != null)
+		{
+			return playerLocation.getPlane();
+		}
+		return zone.getUndergroundPoint().getPlane();
+	}
+
 	/** Native composites contain all their arranged floors; authored zones retain floor controls. */
 	public boolean isDungeonPieceVisible(UndergroundZone zone, DungeonPiece piece)
 	{
@@ -1375,17 +1498,8 @@ public class MapCamera
 		Integer layer = floorLayerFor(zone);
 		if (layer == null) layer = DungeonFloor.defaultLayerFor(zone);
 		if (layer != null && piece.layer != layer) return false;
-		boolean multiPlane = false;
-		for (DungeonFloor floor : DungeonFloor.all())
-		{
-			if (floor.zone == zone && floor.plane != zone.getUndergroundPoint().getPlane())
-			{
-				multiPlane = true;
-				break;
-			}
-		}
-		final Integer selectedPlane = floorPlaneFor(zone);
-		final int previewPlane = selectedPlane == null ? zone.getUndergroundPoint().getPlane() : selectedPlane;
+		final boolean multiPlane = DungeonFloor.hasMultiplePlanes(zone);
+		final int previewPlane = effectivePlaneFor(zone);
 		return !multiPlane || piece.plane == previewPlane;
 	}
 
@@ -1411,13 +1525,22 @@ public class MapCamera
 	{
 		if (lowerView)
 		{
+			if (hoverPreviewEnabled && hoveredUndergroundZone != null && hoveredSurfaceToUnderground)
+			{
+				final java.util.Map<String, UndergroundZone> zones = new java.util.LinkedHashMap<>();
+				for (UndergroundZone open : openUndergroundZones) zones.putIfAbsent(open.getId(), open);
+				final List<UndergroundZone> hovered = hoveredFloorPlane != null
+					? Collections.singletonList(hoveredUndergroundZone) : hoveredUndergroundZone.getConnectedZones();
+				for (UndergroundZone preview : hovered) zones.putIfAbsent(preview.getId(), preview);
+				return Collections.unmodifiableList(new java.util.ArrayList<>(zones.values()));
+			}
 			return openUndergroundZones;
 		}
 		if (activeUndergroundZone != null)
 		{
 			return activeUndergroundZone.getConnectedZones();
 		}
-		if (hoveredUndergroundZone != null && hoveredSurfaceToUnderground)
+		if (hoverPreviewEnabled && hoveredUndergroundZone != null && hoveredSurfaceToUnderground)
 		{
 			return hoveredFloorPlane != null ? Collections.singletonList(hoveredUndergroundZone)
 				: hoveredUndergroundZone.getConnectedZones();

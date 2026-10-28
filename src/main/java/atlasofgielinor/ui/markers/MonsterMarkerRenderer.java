@@ -42,12 +42,15 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
+import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.data.BossLocationData;
+import atlasofgielinor.data.dungeons.DungeonPiece;
+import atlasofgielinor.data.dungeons.DungeonPieceTransform;
 import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.map.catalog.BossLocationIndex;
 import atlasofgielinor.map.DungeonPieceIndex;
@@ -90,15 +93,72 @@ public class MonsterMarkerRenderer
 	private final Set<Object> visibleTooltipTargets;
 
 
-	private void forEachMonsterInView(int plane, int minX, int maxX, int minY, int maxY,
-		Consumer<MonsterIndex.Zone> consumer)
+	private void forEachZoneMonsterInView(UndergroundZone zone, int minX, int maxX, int minY, int maxY,
+		BiConsumer<MonsterIndex.Zone, Point2D> consumer)
 	{
+		final java.util.Set<String> seen = new java.util.HashSet<>();
+		final List<DungeonPiece> pieces = dungeonPieceIndex == null
+			? java.util.Collections.emptyList()
+			: dungeonPieceIndex.piecesFor(zone.getId());
+		if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
+		{
+			final int x = zone.getUndergroundPoint().getX();
+			final int y = zone.getUndergroundPoint().getY();
+			final int radius = zone.getRadius();
+			monsterIndex.forEachInArea(camera.effectivePlaneFor(zone),
+				x - radius, x + radius, y - radius, y + radius, mz ->
+				{
+					if (InstanceMaps.belongsToZone(mz.getX(), mz.getY(), zone))
+					{
+						final Point2D pt = new Point2D.Double(
+							mz.getX() + 0.5 - zone.getDeltaX(),
+							mz.getY() + 0.5 - zone.getDeltaY());
+						if (pt.getX() >= minX && pt.getX() <= maxX
+							&& pt.getY() >= minY && pt.getY() <= maxY)
+						{
+							consumer.accept(mz, pt);
+						}
+					}
+				});
+		}
+		for (DungeonPiece piece : pieces)
+		{
+			if (!camera.isDungeonPieceVisible(zone, piece)) continue;
+			for (int[] rect : piece.rects)
+			{
+				monsterIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], mz ->
+				{
+					final Point2D pt = DungeonPieceTransform.toDisplay(piece,
+						mz.getX() + 0.5, mz.getY() + 0.5);
+					final String key = mz.getMonster() + ":" + pt;
+					if (pt.getX() >= minX && pt.getX() <= maxX
+						&& pt.getY() >= minY && pt.getY() <= maxY && seen.add(key))
+					{
+						consumer.accept(mz, pt);
+					}
+				});
+			}
+		}
+	}
+
+	private void forEachMonsterInView(int plane, int minX, int maxX, int minY, int maxY,
+		BiConsumer<MonsterIndex.Zone, Point2D> consumer)
+	{
+		final List<UndergroundZone> previewZones = camera.previewUndergroundZones();
+		for (UndergroundZone zone : previewZones)
+		{
+			forEachZoneMonsterInView(zone, minX, maxX, minY, maxY, consumer);
+		}
+		if (camera.isUndergroundModeActive())
+		{
+			return;
+		}
 		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(), false,
 			(qMinX, qMaxX, qMinY, qMaxY) -> monsterIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, zone ->
 			{
 				if (ViewWindow.isDrawable(camera, zone.getX(), zone.getY()))
 				{
-					consumer.accept(zone);
+					consumer.accept(zone, null);
 				}
 			}));
 	}
@@ -239,7 +299,7 @@ public class MonsterMarkerRenderer
 		final Stroke normalStroke = MARKER_OUTLINE;
 		final Stroke taskStroke = TASK_EDGE;
 
-		forEachMonsterInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, zone ->
+		forEachMonsterInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, (zone, displayPoint) ->
 		{
 			final boolean isTaskZone = highlightTask && slayerTaskTracker.isTaskMonster(zone);
 
@@ -249,8 +309,12 @@ public class MonsterMarkerRenderer
 				return;
 			}
 
-			final int sx = (int) monsterScreenX(zone.getX() + 0.5, zone.getY() + 0.5, bounds);
-			final int sy = (int) monsterScreenY(zone.getX() + 0.5, zone.getY() + 0.5, bounds);
+			final int sx = displayPoint == null
+				? (int) monsterScreenX(zone.getX() + 0.5, zone.getY() + 0.5, bounds)
+				: (int) camera.screenX(displayPoint.getX(), bounds);
+			final int sy = displayPoint == null
+				? (int) monsterScreenY(zone.getX() + 0.5, zone.getY() + 0.5, bounds)
+				: (int) camera.screenY(displayPoint.getY(), bounds);
 			if (!bounds.intersects(sx - 60, sy - 60, 120, 120))
 			{
 				return;
@@ -310,7 +374,7 @@ public class MonsterMarkerRenderer
 		final int iconSize = 18;
 		final Stroke iconPrevStroke = graphics.getStroke();
 
-		forEachMonsterInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, zone ->
+		forEachMonsterInView(plane, view.minXi, view.maxXi, view.minYi, view.maxYi, (zone, displayPoint) ->
 		{
 			final boolean isTaskZone = highlightTask && slayerTaskTracker.isTaskMonster(zone);
 
@@ -324,8 +388,12 @@ public class MonsterMarkerRenderer
 				return;
 			}
 
-			final int sx = (int) Math.round(monsterScreenX(zone.getX() + 0.5, zone.getY() + 0.5, bounds));
-			final int sy = (int) Math.round(monsterScreenY(zone.getX() + 0.5, zone.getY() + 0.5, bounds));
+			final int sx = displayPoint == null
+				? (int) Math.round(monsterScreenX(zone.getX() + 0.5, zone.getY() + 0.5, bounds))
+				: (int) Math.round(camera.screenX(displayPoint.getX(), bounds));
+			final int sy = displayPoint == null
+				? (int) Math.round(monsterScreenY(zone.getX() + 0.5, zone.getY() + 0.5, bounds))
+				: (int) Math.round(camera.screenY(displayPoint.getY(), bounds));
 
 			final Rectangle rect = new Rectangle(sx - iconSize / 2, sy - iconSize / 2, iconSize, iconSize);
 			if (!bounds.intersects(rect))

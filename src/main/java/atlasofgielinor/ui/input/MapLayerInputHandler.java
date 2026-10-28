@@ -227,6 +227,10 @@ public class MapLayerInputHandler
 		{
 			return "plane-button";
 		}
+		for (Rectangle bar : camera.getFloorBarBounds().values())
+		{
+			if (bar.contains(point)) return "floor-bar";
+		}
 
 		return null;
 	}
@@ -235,6 +239,10 @@ public class MapLayerInputHandler
 	{
 		if (camera.isFinderPanelOpen())
 		{
+			// Flyouts can overlap the parent panel on narrow viewports.
+			if (clickedFlyoutItem(event.getPoint(), event.getClickCount())) return true;
+			final Rectangle visibleFlyout = camera.getFinderFlyoutBounds();
+			if (visibleFlyout != null && visibleFlyout.contains(event.getPoint())) return true;
 			final Rectangle back = camera.getFinderBackButton();
 			if (back != null && back.contains(event.getPoint()))
 			{
@@ -249,11 +257,6 @@ public class MapLayerInputHandler
 					return true;
 				}
 			}
-			if (clickedFlyoutItem(event.getPoint(), event.getClickCount()))
-			{
-				return true;
-			}
-
 			if (clickedFinderChip(event.getPoint()))
 			{
 				return true;
@@ -387,7 +390,7 @@ public class MapLayerInputHandler
 		int bestDist = Integer.MAX_VALUE;
 		for (TravelData.TravelNode node : TravelData.ALL_NODES)
 		{
-			final int dist = distanceTiles(node.getLocation(), playerLoc);
+			final int dist = MapFinder.distanceTiles(node.getLocation(), playerLoc);
 			if (dist >= 0 && dist < bestDist)
 			{
 				bestDist = dist;
@@ -497,6 +500,7 @@ public class MapLayerInputHandler
 
 	public MapCamera.LayerSymbolTarget findLayerSymbol(Point point)
 	{
+		if (camera.isCursorOverPanel(point)) return null;
 		if (camera.isTravelViewActive()) return null;
 		if (camera.getSelectedTravelNode() != null && pluginProvider != null && pluginProvider.get() != null
 			&& pluginProvider.get().getConfig().showTravelRoutes())
@@ -519,15 +523,11 @@ public class MapLayerInputHandler
 		{
 			if (target.isFloor())
 			{
-				camera.setUndergroundMode(target.getZone(), target.getSurfacePoint());
+				camera.setActiveFloor(target.getFloor());
 			}
 			else
 			{
 				camera.toggleUndergroundZone(target.getZone(), target.getSurfacePoint());
-			}
-			if (target.isFloor())
-			{
-				camera.setActiveFloor(target.getFloor());
 			}
 			log.debug("[AtlasOfGielinor] entered underground mode for {}", target.getZone().getName());
 		}
@@ -642,9 +642,7 @@ public class MapLayerInputHandler
 					{
 						break;
 					}
-					hitKey = target.getResult().getGroupKey() != null
-						? target.getResult().getGroupKey()
-						: target.getResult().getName();
+					hitKey = target.getResult().getIdentity();
 				}
 				else
 				{
@@ -714,43 +712,30 @@ public class MapLayerInputHandler
 			return;
 		}
 
-		boolean scrolled = false;
 		final int edge = MapCamera.FINDER_SCROLL_EDGE_PX;
-
-		final Rectangle bodyVp = camera.getFinderBodyViewport();
-		if (bodyVp != null && bodyVp.contains(point))
-		{
-			if (point.y < bodyVp.y + edge)
-			{
-				camera.scrollFinderBody(-1);
-				scrolled = true;
-			}
-			else if (point.y > bodyVp.y + bodyVp.height - edge)
-			{
-				camera.scrollFinderBody(1);
-				scrolled = true;
-			}
-		}
-
 		final Rectangle flyoutVp = camera.getFinderFlyoutViewport();
-		if (!scrolled && flyoutVp != null && flyoutVp.contains(point))
+		final Rectangle flyout = camera.getFinderFlyoutBounds();
+		final boolean overFlyout = flyout != null && flyout.contains(point);
+		final Rectangle bodyVp = camera.getFinderBodyViewport();
+		final Rectangle viewport = overFlyout ? flyoutVp : bodyVp;
+		if (viewport == null || !viewport.contains(point))
 		{
-			if (point.y < flyoutVp.y + edge)
-			{
-				camera.scrollFinderFlyout(-1);
-				scrolled = true;
-			}
-			else if (point.y > flyoutVp.y + flyoutVp.height - edge)
-			{
-				camera.scrollFinderFlyout(1);
-				scrolled = true;
-			}
+			return;
 		}
-
-		if (scrolled)
+		final int delta = point.y < viewport.y + edge ? -1
+			: point.y > viewport.y + viewport.height - edge ? 1 : 0;
+		if (delta == 0) return;
+		if (overFlyout)
 		{
-			camera.setFinderLastEdgeScrollMs(now);
+			camera.scrollFinderFlyout(delta);
 		}
+		else
+		{
+			final int previous = camera.getFinderBodyScrollOffset();
+			camera.scrollFinderBody(delta);
+			if (previous != camera.getFinderBodyScrollOffset()) clearFinderFlyoutHover();
+		}
+		camera.setFinderLastEdgeScrollMs(now);
 	}
 
 	public void updateHoveredTravelNode(Point point)
@@ -787,6 +772,11 @@ public class MapLayerInputHandler
 
 	public void updateHoveredLayerSymbol(Point point)
 	{
+		if (camera.isCursorOverPanel(point))
+		{
+			camera.setHoveredUnderground(null, true);
+			return;
+		}
 		for (MapCamera.LayerSymbolTarget target : camera.getLayerSymbolTargets())
 		{
 			if (target.getBounds() != null && target.getBounds().contains(point))
@@ -806,17 +796,18 @@ public class MapLayerInputHandler
 			}
 		}
 
+		for (java.util.Map.Entry<atlasofgielinor.data.dungeons.UndergroundZone, Rectangle> entry
+			: camera.getFloorBarBounds().entrySet())
+		{
+			final Rectangle approach = new Rectangle(entry.getValue());
+			approach.grow((int) Math.ceil(14 * camera.floorBarScale()), camera.floorBarPadding());
+			if (approach.contains(point))
+			{
+				camera.setHoveredUnderground(entry.getKey(), true);
+				return;
+			}
+		}
 		camera.setHoveredUnderground(null, true);
 	}
 
-	private static int distanceTiles(WorldPoint point, WorldPoint from)
-	{
-		if (from == null || point == null)
-		{
-			return -1;
-		}
-		final int dx = point.getX() - from.getX();
-		final int dy = point.getY() - from.getY();
-		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
-	}
 }

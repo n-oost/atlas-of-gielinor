@@ -68,52 +68,65 @@ class MapLayout
 		return (int) bounds.getMaxX() - 8 - rightUiInset(bounds);
 	}
 
-	/**
-	 * Space to leave clear on the right for the overview minimap (and a fallback when its
-	 * widget bounds are missing). Uses distance from the canvas right edge to the overview's
-	 * left edge — not just overview width — so plugin controls sit beside the minimap.
-	 */
+	/** Reserve the actual visible minimap geometry, including the game frame in fullscreen. */
 	int rightUiInset(Rectangle bounds)
 	{
-		if (client == null || config == null)
+		int inset = rightUiInset(bounds, overviewBounds());
+		if (config != null && config.fullscreenMap())
 		{
-			return 0;
+			inset = Math.max(inset, rightUiInset(bounds, minimapBounds()));
 		}
-
-		final int margin = 10;
-		final Rectangle ovBounds = overviewBounds();
-		if (ovBounds != null)
-		{
-			final int fromRight = (int) Math.ceil(bounds.getMaxX() - ovBounds.getMinX());
-			if (fromRight > 0)
-			{
-				return fromRight + margin;
-			}
-		}
-
-		// Fullscreen often still shows the overview while its widget reports odd bounds.
-		if (config.fullscreenMap())
-		{
-			return Math.min(230, Math.max(0, bounds.width / 6)) + margin;
-		}
-
-		return 0;
+		return inset;
 	}
 
-	/** Visible overview bounds, using the display widget when its container is absent or hidden. */
+	private static int rightUiInset(Rectangle viewport, Rectangle obstacle)
+	{
+		return obstacle != null && viewport.intersects(obstacle)
+			? (int) Math.ceil(viewport.getMaxX() - obstacle.getMinX()) + 10 : 0;
+	}
+
+	/** Include the display and border even when the container reports empty or smaller bounds. */
 	Rectangle overviewBounds()
 	{
-		Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
-		if (overview == null || overview.isHidden())
-		{
-			overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_DISPLAY);
-		}
-		if (overview == null || overview.isHidden())
+		return visibleBounds(InterfaceID.Worldmap.OVERVIEW_CONTAINER,
+			InterfaceID.Worldmap.OVERVIEW_CONTAINER_GRAPHIC0, InterfaceID.Worldmap.OVERVIEW_DISPLAY);
+	}
+
+	/** Native minimap frame for fixed, resizable classic and resizable modern layouts. */
+	Rectangle minimapBounds()
+	{
+		return visibleBounds(InterfaceID.Toplevel.MAPCONTAINER,
+			InterfaceID.ToplevelPreEoc.MAP_MINIMAP, InterfaceID.ToplevelOsrsStretch.MAP_MINIMAP);
+	}
+
+	private Rectangle visibleBounds(int... ids)
+	{
+		if (client == null)
 		{
 			return null;
 		}
-		final Rectangle bounds = overview.getBounds();
-		return bounds != null && bounds.width > 0 && bounds.height > 0 ? bounds : null;
+		Rectangle bounds = null;
+		for (int id : ids)
+		{
+			final Widget widget = client.getWidget(id);
+			if (widget == null || widget.isHidden())
+			{
+				continue;
+			}
+			final Rectangle widgetBounds = widget.getBounds();
+			if (widgetBounds != null && widgetBounds.width > 0 && widgetBounds.height > 0)
+			{
+				if (bounds == null)
+				{
+					bounds = new Rectangle(widgetBounds);
+				}
+				else
+				{
+					bounds.add(widgetBounds);
+				}
+			}
+		}
+		return bounds;
 	}
 
 	private static final int[] WORLD_MAP_ORB_IDS = {

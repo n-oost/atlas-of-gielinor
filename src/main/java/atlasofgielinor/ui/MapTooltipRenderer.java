@@ -44,6 +44,8 @@ import java.util.function.BiFunction;
 import atlasofgielinor.AtlasOfGielinorConfig;
 import atlasofgielinor.data.BossLocationData;
 import atlasofgielinor.data.TravelData;
+import atlasofgielinor.data.dungeons.DungeonPiece;
+import atlasofgielinor.data.dungeons.DungeonPieceTransform;
 import atlasofgielinor.data.dungeons.UndergroundZone;
 import atlasofgielinor.data.sailing.BoatTracker;
 import atlasofgielinor.data.sailing.PlayerBoat;
@@ -114,11 +116,59 @@ public class MapTooltipRenderer
 	@Getter
 	private final PoiTooltipBuilder poiTooltipBuilder = new PoiTooltipBuilder();
 
+	@FunctionalInterface
+	private interface TriFunction<A, B, C, R>
+	{
+		R apply(A a, B b, C c);
+	}
+
 	private <T> T hit(int worldX, int worldY, BiFunction<Integer, Integer, T> lookup)
 	{
 		return InstanceMaps.firstHit(worldX, worldY,
 			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(),
 			(x, y) -> layerAllows(x, y) ? lookup.apply(x, y) : null);
+	}
+
+	private <T> T hitWithPreviewPieces(int displayX, int displayY, int defaultPlane,
+		TriFunction<Integer, Integer, Integer, T> lookup)
+	{
+		final List<UndergroundZone> zones = camera.previewUndergroundZones();
+		for (int z = zones.size() - 1; z >= 0; z--)
+		{
+			final UndergroundZone zone = zones.get(z);
+			final List<DungeonPiece> pieces = dungeonPieceIndex == null
+				? Collections.emptyList()
+				: dungeonPieceIndex.piecesFor(zone.getId());
+			for (int p = pieces.size() - 1; p >= 0; p--)
+			{
+				final DungeonPiece piece = pieces.get(p);
+				if (!camera.isDungeonPieceVisible(zone, piece)) continue;
+				final java.awt.geom.Point2D nativePt = DungeonPieceTransform.toNative(
+					piece, displayX + 0.5, displayY + 0.5);
+				final int nx = (int) Math.floor(nativePt.getX());
+				final int ny = (int) Math.floor(nativePt.getY());
+				if (piece.containsNative(nx, ny))
+				{
+					final T found = lookup.apply(nx, ny, piece.plane);
+					if (found != null) return found;
+				}
+			}
+			if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
+			{
+				final int nx = displayX + zone.getDeltaX();
+				final int ny = displayY + zone.getDeltaY();
+				if (InstanceMaps.belongsToZone(nx, ny, zone))
+				{
+					final T found = lookup.apply(nx, ny, camera.effectivePlaneFor(zone));
+					if (found != null) return found;
+				}
+			}
+		}
+		if (camera.isUndergroundModeActive())
+		{
+			return null;
+		}
+		return hit(displayX, displayY, (x, y) -> lookup.apply(x, y, defaultPlane));
 	}
 
 	private boolean layerAllows(int worldX, int worldY)
@@ -230,6 +280,7 @@ public class MapTooltipRenderer
 		final PoiIndex.Poi drawnPoi = markers != null ? markers.locations.visiblePoiIconAt(cursor) : null;
 		if (drawnPoi != null)
 		{
+			final int poiPlane = drawnPoi.getPlane();
 			if (camera.isTravelViewActive() && "teleport".equals(drawnPoi.getKey()))
 			{
 				final TooltipCard card = new TooltipCard("Teleport destination", poiIndex.icon("teleport"));
@@ -240,19 +291,19 @@ public class MapTooltipRenderer
 			}
 			if (shopIndex != null && PoiCategory.of(drawnPoi.getKey()) == PoiCategory.SHOPS)
 			{
-				final ShopIndex.Shop shop = shopIndex.nearest(drawnPoi.getX(), drawnPoi.getY(), plane, 3);
+				final ShopIndex.Shop shop = shopIndex.nearest(drawnPoi.getX(), drawnPoi.getY(), poiPlane, 3);
 				if (shop != null)
 				{
 					if (drawIfPresent(graphics, bounds, cursor, buildShopCard(shop))) return;
 				}
 			}
 
-			final TooltipCard card = buildPoiCard(drawnPoi, plane, compact);
+			final TooltipCard card = buildPoiCard(drawnPoi, poiPlane, compact);
 			if (card != null)
 			{
 				if (!compact)
 				{
-					card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+					card.addLine(drawnPoi.getX() + ", " + drawnPoi.getY() + " (Floor " + poiPlane + ")");
 				}
 				drawCard(graphics, bounds, cursor, card);
 				return;
@@ -267,7 +318,7 @@ public class MapTooltipRenderer
 			{
 				if (!compact)
 				{
-					shopCard.addLine(drawnShop.getX() + ", " + drawnShop.getY() + " (Floor " + plane + ")");
+					shopCard.addLine(drawnShop.getX() + ", " + drawnShop.getY() + " (Floor " + drawnShop.getPlane() + ")");
 				}
 				drawCard(graphics, bounds, cursor, shopCard);
 				return;
@@ -296,6 +347,9 @@ public class MapTooltipRenderer
 		}
 
 		TooltipCard card = null;
+		int cardX = worldX;
+		int cardY = worldY;
+		int cardPlane = plane;
 
 		// The active overlay already handled exact drawn POI icons above.
 		final BossLocationData boss = monsterNear(worldX, worldY);
@@ -304,11 +358,15 @@ public class MapTooltipRenderer
 			final BufferedImage bossIcon = monsterIconManager != null ? monsterIconManager.getBossIcon(boss, 20) : null;
 			final boolean isTaskBoss = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskBoss(boss);
 			final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
+			final WorldPoint bossWp = boss.getWorldPoint();
 			final MonsterIndex.Zone stats = monsterIndex != null
-				? monsterIndex.nearest(plane, boss.getWorldPoint().getX(), boss.getWorldPoint().getY(), 2)
+				? monsterIndex.nearest(bossWp.getPlane(), bossWp.getX(), bossWp.getY(), 2)
 				: null;
 			final MonsterIndex.Zone bossStats = stats != null && boss.getName().equalsIgnoreCase(stats.getMonster()) ? stats : null;
 			card = monsterTooltipBuilder.buildBossCard(boss, bossIcon, isTaskBoss, remaining, compact, bossStats);
+			cardX = bossWp.getX();
+			cardY = bossWp.getY();
+			cardPlane = bossWp.getPlane();
 		}
 
 		final PoiIndex.Poi iconPoi = markers == null ? poiIconAt(cursor, bounds, plane) : null;
@@ -316,7 +374,7 @@ public class MapTooltipRenderer
 		{
 			if (shopIndex != null && PoiCategory.of(iconPoi.getKey()) == PoiCategory.SHOPS)
 			{
-				final ShopIndex.Shop shop = shopIndex.nearest(iconPoi.getX(), iconPoi.getY(), plane, 3);
+				final ShopIndex.Shop shop = shopIndex.nearest(iconPoi.getX(), iconPoi.getY(), iconPoi.getPlane(), 3);
 				if (shop != null)
 				{
 					card = buildShopCard(shop);
@@ -324,25 +382,31 @@ public class MapTooltipRenderer
 			}
 			if (card == null)
 			{
-				card = buildPoiCard(iconPoi, plane, compact);
+				card = buildPoiCard(iconPoi, iconPoi.getPlane(), compact);
 			}
+			cardX = iconPoi.getX();
+			cardY = iconPoi.getY();
+			cardPlane = iconPoi.getPlane();
 		}
 
 		if (card == null && shopIndex != null)
 		{
-			final ShopIndex.Shop shop = hit(worldX, worldY,
-				(x, y) -> shopIndex.nearest(x, y, plane, Math.min(radius, 10)));
+			final ShopIndex.Shop shop = hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> shopIndex.nearest(x, y, p, Math.min(radius, 10)));
 			if (shop != null && probe.allows(shop))
 			{
 				card = buildShopCard(shop);
+				cardX = shop.getX();
+				cardY = shop.getY();
+				cardPlane = shop.getPlane();
 			}
 		}
 
 		if (card == null && markers == null)
 		{
 			// Tight radius (1 tile) for position hits so moving the cursor into adjacent grass does not trigger phantom cards
-			final PoiDetails.Detail detail = hit(worldX, worldY,
-				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, 1));
+			final PoiDetails.Detail detail = hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> PoiDetails.getDetailByPosition(x, y, p, 1));
 			if (detail != null)
 			{
 				card = poiTooltipBuilder.buildPoiCard(detail, null, null, compact);
@@ -358,6 +422,12 @@ public class MapTooltipRenderer
 			if (rPoint != null && probe.allows(rPoint))
 			{
 				card = buildPluginPointCard(rPoint, compact);
+				if (rPoint.getWorldPoint() != null)
+				{
+					cardX = rPoint.getWorldPoint().getX();
+					cardY = rPoint.getWorldPoint().getY();
+					cardPlane = rPoint.getWorldPoint().getPlane();
+				}
 			}
 		}
 
@@ -365,25 +435,36 @@ public class MapTooltipRenderer
 		if (card == null && config.showGroundItems() && groundItemIndex != null && groundItemIndex.isLoaded()
 			&& camera.getZoom() >= config.groundItemMinZoom())
 		{
-			final GroundItemIndex.Spawn spawn = hit(worldX, worldY,
-				(x, y) -> groundItemIndex.nearest(x, y, plane, Math.min(radius, 4), config.groundItemMinValue()));
+			final GroundItemIndex.Spawn spawn = hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> groundItemIndex.nearest(x, y, p, Math.min(radius, 4), config.groundItemMinValue()));
 			if (spawn != null && probe.allows(spawn))
 			{
 				card = poiTooltipBuilder.buildGroundItemCard(spawn, monsterIconManager, compact);
+				cardX = spawn.getX();
+				cardY = spawn.getY();
+				cardPlane = spawn.getPlane();
 			}
 		}
 
 		// Monster zones last - wide centroids must not steal shortcut / shop / quest hovers.
 		if (card == null && config.showMonsterZones() && monsterIndex != null && monsterIndex.isLoaded())
 		{
-			final MonsterIndex.Zone monster = PrifddinasShift.firstHit(worldX, worldY,
-				(x, y) -> layerAllows(x, y) ? monsterIndex.nearest(plane, x, y, pointRadius) : null);
+			MonsterIndex.Zone monster = hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> monsterIndex.nearest(p, x, y, pointRadius));
+			if (monster == null && !camera.isUndergroundModeActive())
+			{
+				monster = PrifddinasShift.firstHit(worldX, worldY,
+					(x, y) -> layerAllows(x, y) ? monsterIndex.nearest(plane, x, y, pointRadius) : null);
+			}
 			if (monster != null && probe.allows(monster))
 			{
 				final BufferedImage zoneIcon = monsterIconManager != null ? monsterIconManager.getZoneIcon(monster, 20) : null;
 				final boolean isTask = config.highlightSlayerTask() && slayerTaskTracker != null && slayerTaskTracker.isTaskMonster(monster);
 				final int remaining = slayerTaskTracker != null ? slayerTaskTracker.getRemainingTaskAmount() : 0;
-			card = monsterTooltipBuilder.buildMonsterZoneCard(monster, zoneIcon, isTask, remaining, compact);
+				card = monsterTooltipBuilder.buildMonsterZoneCard(monster, zoneIcon, isTask, remaining, compact);
+				cardX = monster.getX();
+				cardY = monster.getY();
+				cardPlane = monster.getPlane();
 			}
 		}
 
@@ -394,7 +475,7 @@ public class MapTooltipRenderer
 
 		if (!compact)
 		{
-			card.addLine(worldX + ", " + worldY + " (Floor " + plane + ")");
+			card.addLine(cardX + ", " + cardY + " (Floor " + cardPlane + ")");
 		}
 		drawCard(graphics, bounds, cursor, card);
 	}
@@ -467,6 +548,17 @@ public class MapTooltipRenderer
 	/** A hovered large layer symbol, surface or underground. */
 	private boolean drawUndergroundZoneCard(Graphics2D graphics, Rectangle bounds, java.awt.Point cursor)
 	{
+		for (MapCamera.LayerSymbolTarget target : camera.getLayerSymbolTargets())
+		{
+			if (target.isFloor() && target.getBounds().contains(cursor))
+			{
+				final TooltipCard card = new TooltipCard(target.getFloor().name);
+				card.addLine(target.getZone().getName());
+				card.addLine("Hover to preview; click to select.");
+				card.addLine("Scroll the bar to reveal more floors.");
+				return drawIfPresent(graphics, bounds, cursor, card);
+			}
+		}
 		final UndergroundZone hoveredZone = camera.getHoveredUndergroundZone();
 		if (hoveredZone != null)
 		{
@@ -488,28 +580,29 @@ public class MapTooltipRenderer
 		{
 			return true;
 		}
-		final ShopIndex.Shop shop = shopIndex != null ? hit(worldX, worldY,
-			(x, y) -> shopIndex.nearest(x, y, plane, Math.min(pointRadius, 10))) : null;
+		final ShopIndex.Shop shop = shopIndex != null ? hitWithPreviewPieces(worldX, worldY, plane,
+			(x, y, p) -> shopIndex.nearest(x, y, p, Math.min(pointRadius, 10))) : null;
 		if (shop != null && probe.allows(shop))
 		{
 			return true;
 		}
 		if (probe.markers != null)
 		{
-			if (probe.markers.locations.visiblePoiIconAt(probe.cursor) != null)
+			if (probe.markers.locations.visiblePoiIconAt(probe.cursor) != null
+				|| probe.markers.locations.visibleShopIconAt(probe.cursor) != null)
 			{
 				return true;
 			}
 		}
 		else
 		{
-			if (poiIndex != null && hit(worldX, worldY,
-				(x, y) -> poiIndex.nearest(x, y, plane, pointRadius)) != null)
+			if (poiIndex != null && hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> poiIndex.nearest(x, y, p, pointRadius)) != null)
 			{
 				return true;
 			}
-			if (hit(worldX, worldY,
-				(x, y) -> PoiDetails.getDetailByPosition(x, y, plane, pointRadius)) != null)
+			if (hitWithPreviewPieces(worldX, worldY, plane,
+				(x, y, p) -> PoiDetails.getDetailByPosition(x, y, p, pointRadius)) != null)
 			{
 				return true;
 			}

@@ -785,19 +785,9 @@ public class AtlasOfGielinorPanel extends PluginPanel
 		{
 			return -1;
 		}
-		return distanceTiles(new WorldPoint(region.getCenterX(), region.getCenterY(), 0), from);
+		return MapFinder.distanceTiles(new WorldPoint(region.getCenterX(), region.getCenterY(), 0), from);
 	}
 
-	private static int distanceTiles(WorldPoint point, WorldPoint from)
-	{
-		if (from == null || point == null)
-		{
-			return -1;
-		}
-		final int dx = point.getX() - from.getX();
-		final int dy = point.getY() - from.getY();
-		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
-	}
 
 	private static long distanceSq(int x, int y, WorldPoint from)
 	{
@@ -808,7 +798,7 @@ public class AtlasOfGielinorPanel extends PluginPanel
 
 	private static String tiles(WorldPoint point, WorldPoint from)
 	{
-		final int dist = distanceTiles(point, from);
+		final int dist = MapFinder.distanceTiles(point, from);
 		return dist >= 0 ? dist + " tiles" : "";
 	}
 }

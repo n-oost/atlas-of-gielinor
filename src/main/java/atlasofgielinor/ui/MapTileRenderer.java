@@ -60,6 +60,7 @@ import lombok.RequiredArgsConstructor;
  * <p>Split out of {@link AtlasOfGielinorOverlay}.
  */
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@lombok.extern.slf4j.Slf4j
 class MapTileRenderer
 {
 	private static final float SURFACE_VIEW_DUNGEON_OPACITY = 0.68f;
@@ -79,6 +80,7 @@ class MapTileRenderer
 	private int[] columnWidth = new int[0];
 	private int[] rowY = new int[0];
 	private int[] rowHeight = new int[0];
+	private final java.util.Map<UndergroundZone, String> loggedFloorStates = new java.util.HashMap<>();
 
 	/** Cache of void-keyed copies, keyed by the source tile so it clears when the tile store evicts. */
 	private final java.util.Map<BufferedImage, BufferedImage> voidKeyedTiles = new java.util.WeakHashMap<>();
@@ -86,6 +88,7 @@ class MapTileRenderer
 
 	void drawTiles(Graphics2D graphics, Rectangle bounds)
 	{
+		camera.setHoverPreviewEnabled(config.undergroundHoverPreview());
 		final int plane = camera.getPlane();
 
 		// Never ask for a level that was not prefetched, or the map would simply go black past
@@ -254,19 +257,7 @@ class MapTileRenderer
 	 */
 	private int planeForZone(UndergroundZone zone)
 	{
-		final Integer selectedFloor = camera.floorPlaneFor(zone);
-		if (selectedFloor != null) return selectedFloor;
-		if (camera.getActiveUndergroundZone() == zone)
-		{
-			return camera.getPlane();
-		}
-		if (camera.isViewingPlayerInteriorFromSurface()
-			&& camera.getObservedPlayerUndergroundZone() == zone
-			&& camera.getPlayerLocation() != null)
-		{
-			return camera.getPlayerLocation().getPlane();
-		}
-		return zone.getUndergroundPoint().getPlane();
+		return camera.effectivePlaneFor(zone);
 	}
 
 	private boolean drawZonePieces(Graphics2D graphics, Rectangle bounds, UndergroundZone zone,
@@ -288,6 +279,8 @@ class MapTileRenderer
 		final int viewMaxY = (int) Math.ceil(camera.worldY(bounds.getMinY(), bounds)) + 1;
 		final Integer floorLayer = camera.floorLayerFor(zone);
 		final boolean multiPlane = DungeonFloor.hasMultiplePlanes(zone);
+		final StringBuilder visible = config.debugLogging() && log.isDebugEnabled() ? new StringBuilder() : null;
+		int drawn = 0;
 
 		for (DungeonPiece piece : pieces)
 		{
@@ -300,6 +293,8 @@ class MapTileRenderer
 			{
 				continue;
 			}
+			if (visible != null) visible.append(piece.id).append(':').append(piece.layer).append(':').append(piece.plane).append(',');
+			drawn++;
 			final Graphics2D pg = (Graphics2D) graphics.create();
 			try
 			{
@@ -318,6 +313,13 @@ class MapTileRenderer
 			{
 				pg.dispose();
 			}
+		}
+		if (visible != null)
+		{
+			final String state = planeFilter + ":" + floorLayer + ":" + visible;
+			if (!state.equals(loggedFloorStates.put(zone, state)))
+				log.debug("[AtlasOfGielinor:floor-render] zone={} plane={} layer={} drawnPieces={} pieces(id:layer:plane)={}",
+					zone.getId(), planeFilter, floorLayer, drawn, visible);
 		}
 		return true;
 	}

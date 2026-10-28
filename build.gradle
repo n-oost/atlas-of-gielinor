@@ -30,7 +30,7 @@ dependencies {
 group = 'atlasofgielinor'
 
 // Large map imagery comes from the installed pack; small cavern fallback tiles are bundled.
-sourceSets.main.resources.exclude 'atlasofgielinor/tiles/0/**'
+sourceSets.main.resources.exclude 'atlasofgielinor/tiles/0/**', 'atlasofgielinor/catalog/*.md', 'atlasofgielinor/catalog/*.json'
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'

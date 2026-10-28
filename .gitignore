@@ -30,6 +30,12 @@ BUGS.md
 
 # Local maintenance tools and generated development reports
 /scripts/
+/tools/
+/tooltip.datapackage.json
+/validate-*.ps1
+/image*.png
+src/main/resources/atlasofgielinor/catalog/*.md
+src/main/resources/atlasofgielinor/catalog/*.json
 /docs/*
 !/docs/asset-provenance.md
 !/docs/banner.png
@@ -41,8 +47,13 @@ BUGS.md
 Thumbs.db
 PLUGIN_HUB_REVIEW.md
 
-# Local tests
-/src/test/
+# Local tests (keep standard RuneLite launcher tracked)
+/src/test/*
+!/src/test/java/
+/src/test/java/*
+!/src/test/java/atlasofgielinor/
+/src/test/java/atlasofgielinor/*
+!/src/test/java/atlasofgielinor/AtlasOfGielinorPluginTest.java
 
 # Python build artifacts
 __pycache__/

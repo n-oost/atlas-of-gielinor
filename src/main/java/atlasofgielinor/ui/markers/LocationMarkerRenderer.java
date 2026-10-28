@@ -104,53 +104,69 @@ public class LocationMarkerRenderer
 		forEachPoiInView(plane, minX, maxX, minY, maxY, true, consumer);
 	}
 
+	private void forEachZonePoiInView(UndergroundZone zone, int minX, int maxX, int minY, int maxY,
+		Consumer<PoiIndex.Poi> consumer)
+	{
+		final java.util.Set<String> seen = new java.util.HashSet<>();
+		final List<DungeonPiece> pieces = dungeonPieceIndex == null
+			? java.util.Collections.emptyList()
+			: dungeonPieceIndex.piecesFor(zone.getId());
+		if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
+		{
+			final int x = zone.getUndergroundPoint().getX();
+			final int y = zone.getUndergroundPoint().getY();
+			final int radius = zone.getRadius();
+			poiIndex.forEachInArea(camera.effectivePlaneFor(zone),
+				x - radius, x + radius, y - radius, y + radius, poi ->
+				{
+					if (InstanceMaps.belongsToZone(poi.getX(), poi.getY(), zone))
+					{
+						consumer.accept(poi.withDisplayPoint(new java.awt.geom.Point2D.Double(
+							poi.getX() + 0.5 - zone.getDeltaX(), poi.getY() + 0.5 - zone.getDeltaY()), false));
+					}
+				});
+		}
+		for (DungeonPiece piece : pieces)
+		{
+			if (!camera.isDungeonPieceVisible(zone, piece)) continue;
+			for (int[] rect : piece.rects)
+			{
+				poiIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], poi ->
+				{
+					final java.awt.geom.Point2D point = DungeonPieceTransform.toDisplay(piece,
+						poi.getX() + 0.5, poi.getY() + 0.5);
+					final String key = poi.getKey() + ":" + poi.getName() + ":" + point;
+					if (point.getX() >= minX && point.getX() <= maxX
+						&& point.getY() >= minY && point.getY() <= maxY && seen.add(key))
+					{
+						consumer.accept(poi.withDisplayPoint(point, zone.getId().startsWith("native_")));
+					}
+				});
+			}
+		}
+	}
+
 	private void forEachPoiInView(int plane, int minX, int maxX, int minY, int maxY,
 		boolean projectDungeons, Consumer<PoiIndex.Poi> consumer)
 	{
+		final List<UndergroundZone> previewZones = camera.previewUndergroundZones();
 		if (camera.isUndergroundModeActive())
 		{
-			for (UndergroundZone zone : camera.previewUndergroundZones())
+			for (UndergroundZone zone : previewZones)
 			{
-				final java.util.Set<String> seen = new java.util.HashSet<>();
-				final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
-				if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
-				{
-					final int x = zone.getUndergroundPoint().getX();
-					final int y = zone.getUndergroundPoint().getY();
-					final int radius = zone.getRadius();
-					poiIndex.forEachInArea(zone.getUndergroundPoint().getPlane(),
-						x - radius, x + radius, y - radius, y + radius, poi ->
-						{
-							if (InstanceMaps.belongsToZone(poi.getX(), poi.getY(), zone))
-							{
-								consumer.accept(poi.withDisplayPoint(new java.awt.geom.Point2D.Double(
-									poi.getX() + 0.5 - zone.getDeltaX(), poi.getY() + 0.5 - zone.getDeltaY()), false));
-							}
-						});
-				}
-				for (DungeonPiece piece : pieces)
-				{
-					if (!camera.isDungeonPieceVisible(zone, piece)) continue;
-					for (int[] rect : piece.rects)
-					{
-						poiIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], poi ->
-						{
-							final java.awt.geom.Point2D point = DungeonPieceTransform.toDisplay(piece,
-								poi.getX() + 0.5, poi.getY() + 0.5);
-							final String key = poi.getKey() + ":" + poi.getName() + ":" + point;
-							if (point.getX() >= minX && point.getX() <= maxX
-								&& point.getY() >= minY && point.getY() <= maxY && seen.add(key))
-							{
-								consumer.accept(poi.withDisplayPoint(point, zone.getId().startsWith("native_")));
-							}
-						});
-					}
-				}
+				forEachZonePoiInView(zone, minX, maxX, minY, maxY, consumer);
 			}
 			return;
 		}
+		if (projectDungeons && !previewZones.isEmpty())
+		{
+			for (UndergroundZone zone : previewZones)
+			{
+				forEachZonePoiInView(zone, minX, maxX, minY, maxY, consumer);
+			}
+		}
 		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(),
-			projectDungeons,
+			projectDungeons && previewZones.isEmpty(),
 			(qMinX, qMaxX, qMinY, qMaxY) -> poiIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, poi ->
 			{
 				if (ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY()))
@@ -174,13 +190,72 @@ public class LocationMarkerRenderer
 			: camera.screenY(poi.getDisplayPoint().getY(), bounds);
 	}
 
+	private void forEachZoneShopInView(UndergroundZone zone, int minX, int maxX, int minY, int maxY,
+		Consumer<ShopIndex.Shop> consumer)
+	{
+		final java.util.Set<String> seen = new java.util.HashSet<>();
+		final List<DungeonPiece> pieces = dungeonPieceIndex == null
+			? java.util.Collections.emptyList()
+			: dungeonPieceIndex.piecesFor(zone.getId());
+		if (pieces.isEmpty() && !zone.getId().startsWith("native_"))
+		{
+			final int x = zone.getUndergroundPoint().getX();
+			final int y = zone.getUndergroundPoint().getY();
+			final int radius = zone.getRadius();
+			shopIndex.forEachInArea(camera.effectivePlaneFor(zone),
+				x - radius, x + radius, y - radius, y + radius, shop ->
+				{
+					if (InstanceMaps.belongsToZone(shop.getX(), shop.getY(), zone))
+					{
+						consumer.accept(shop.withDisplayPoint(new java.awt.geom.Point2D.Double(
+							shop.getX() + 0.5 + shop.getDisplayOffsetX() - zone.getDeltaX(),
+							shop.getY() + 0.5 + shop.getDisplayOffsetY() - zone.getDeltaY())));
+					}
+				});
+		}
+		for (DungeonPiece piece : pieces)
+		{
+			if (!camera.isDungeonPieceVisible(zone, piece)) continue;
+			for (int[] rect : piece.rects)
+			{
+				shopIndex.forEachInArea(piece.plane, rect[0], rect[2], rect[1], rect[3], shop ->
+				{
+					final java.awt.geom.Point2D point = DungeonPieceTransform.toDisplay(piece,
+						shop.getX() + 0.5 + shop.getDisplayOffsetX(),
+						shop.getY() + 0.5 + shop.getDisplayOffsetY());
+					final String key = shop.getName() + ":" + point;
+					if (point.getX() >= minX && point.getX() <= maxX
+						&& point.getY() >= minY && point.getY() <= maxY && seen.add(key))
+					{
+						consumer.accept(shop.withDisplayPoint(point));
+					}
+				});
+			}
+		}
+	}
+
 	private void forEachShopInView(int plane, int minX, int maxX, int minY, int maxY,
 		Consumer<ShopIndex.Shop> consumer)
 	{
-		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(), true,
+		final List<UndergroundZone> previewZones = camera.previewUndergroundZones();
+		if (camera.isUndergroundModeActive())
+		{
+			for (UndergroundZone zone : previewZones)
+			{
+				forEachZoneShopInView(zone, minX, maxX, minY, maxY, consumer);
+			}
+			return;
+		}
+		for (UndergroundZone zone : previewZones)
+		{
+			forEachZoneShopInView(zone, minX, maxX, minY, maxY, consumer);
+		}
+		InstanceMaps.forEachQueryArea(minX, maxX, minY, maxY, camera.getCenterX(), camera.getCenterY(),
+			previewZones.isEmpty(),
 			(qMinX, qMaxX, qMinY, qMaxY) -> shopIndex.forEachInArea(plane, qMinX, qMaxX, qMinY, qMaxY, shop ->
 			{
-				if (ViewWindow.isPoiDrawable(camera, shop.getX(), shop.getY()))
+				if (ViewWindow.isPoiDrawable(camera, shop.getX(), shop.getY())
+					&& !(shop.getY() <= InstanceMaps.GAP_MIN_Y && coveredByDungeonPreview(shop.getX(), shop.getY())))
 				{
 					consumer.accept(shop);
 				}
@@ -272,11 +347,17 @@ public class LocationMarkerRenderer
 					return;
 				}
 
-				final double sx = shop.getX() + 0.5 + shop.getDisplayOffsetX();
-				final double sy = shop.getY() + 0.5 + shop.getDisplayOffsetY();
+				final double screenX = shop.getDisplayPoint() == null
+					? camera.screenX(shop.getX() + 0.5 + shop.getDisplayOffsetX(),
+						shop.getY() + 0.5 + shop.getDisplayOffsetY(), bounds)
+					: camera.screenX(shop.getDisplayPoint().getX(), bounds);
+				final double screenY = shop.getDisplayPoint() == null
+					? camera.screenY(shop.getX() + 0.5 + shop.getDisplayOffsetX(),
+						shop.getY() + 0.5 + shop.getDisplayOffsetY(), bounds)
+					: camera.screenY(shop.getDisplayPoint().getY(), bounds);
 				final Rectangle rect = new Rectangle(
-					(int) Math.round(camera.screenX(sx, sy, bounds)) - icon.getWidth() / 2,
-					(int) Math.round(camera.screenY(sx, sy, bounds)) - icon.getHeight() / 2,
+					(int) Math.round(screenX) - icon.getWidth() / 2,
+					(int) Math.round(screenY) - icon.getHeight() / 2,
 					icon.getWidth(),
 					icon.getHeight());
 
@@ -288,6 +369,7 @@ public class LocationMarkerRenderer
 				graphics.drawImage(icon, rect.x, rect.y, null);
 				placed.add(rect);
 				visibleTooltipTargets.add(shop);
+				visibleTooltipTargets.add(shop.getOrigin());
 				visibleShopIcons.add(new ShopIconHit(rect, shop));
 			});
 		}
@@ -663,7 +745,7 @@ public class LocationMarkerRenderer
 			return false;
 		}
 
-		if (camera != null && !ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY()))
+		if (camera != null && poi.getDisplayPoint() == null && !ViewWindow.isPoiDrawable(camera, poi.getX(), poi.getY()))
 		{
 			return false;
 		}

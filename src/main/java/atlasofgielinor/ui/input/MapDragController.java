@@ -114,6 +114,8 @@ public class MapDragController
 			}
 		}
 
+		if (camera.scrollFloorBar(event.getPoint(), event.getWheelRotation())) return true;
+
 		final double step = 1 + BASE_ZOOM_STEP * Math.max(1, config.zoomSpeed());
 		final int rotation = config.invertZoom() ? -event.getWheelRotation() : event.getWheelRotation();
 		final double factor = rotation < 0 ? step : 1 / step;

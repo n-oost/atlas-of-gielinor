@@ -26,6 +26,7 @@ package atlasofgielinor.map.finder;
 
 import atlasofgielinor.map.MapFinder;
 import atlasofgielinor.map.MapCamera;
+import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -57,6 +58,8 @@ public class FinderKeyCapture
 
 	/** True between {@link #openInput()} and {@link #onInputClosed()}. */
 	private boolean open;
+	private String editorText;
+	private long inputGeneration;
 	/**
 	 * Set while <i>we</i> are the ones closing the input (the field lost focus), so
 	 * {@link #onInputClosed()} can tell that apart from the user dismissing it with Esc or Enter -
@@ -103,6 +106,12 @@ public class FinderKeyCapture
 		{
 			closeInput();
 		}
+		else if (want && !Objects.equals(editorText, finder.getQuery()))
+		{
+			// The host exposes no text setter. Replace only our search input; callbacks
+			// from the replaced input must not dismiss the card or overwrite the query.
+			openInput();
+		}
 	}
 
 	/** Close the input on plugin shutdown so it is never left behind. */
@@ -119,14 +128,16 @@ public class FinderKeyCapture
 	private void openInput()
 	{
 		open = true;
+		final long generation = ++inputGeneration;
+		editorText = finder.getQuery();
 		// A stale flag from an open that never landed would poison the next Esc; clear it here too.
 		programmaticClose = false;
 		host.open(
 			PROMPT,
-			finder.getQuery(),
-			this::onChanged,
-			s -> onDone(),
-			this::onInputClosed);
+			editorText,
+			text -> { if (generation == inputGeneration && open) onChanged(text); },
+			s -> { if (generation == inputGeneration && open) onDone(); },
+			() -> { if (generation == inputGeneration) onInputClosed(); });
 	}
 
 	private void closeInput()
@@ -138,6 +149,7 @@ public class FinderKeyCapture
 
 	private void onChanged(String text)
 	{
+		editorText = text;
 		finder.updateQuery(text, playerLocation());
 	}
 

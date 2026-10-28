@@ -38,6 +38,19 @@ import net.runelite.client.plugins.PluginManager;
 @Getter
 public class PlayerBoat
 {
+	private static final int[][] BOAT_VARBITS = {
+		{VarbitID.SAILING_BOAT_1_NAME_1, VarbitID.SAILING_BOAT_1_NAME_2, VarbitID.SAILING_BOAT_1_NAME_3, VarbitID.SAILING_BOAT_1_PORT, VarbitID.SAILING_BOAT_1_STORED_HP, VarbitID.SAILING_BOAT_1_STORED_MAXHP, VarbitID.SAILING_BOAT_1_OWNED, VarbitID.SAILING_BOAT_1_TYPE},
+		{VarbitID.SAILING_BOAT_2_NAME_1, VarbitID.SAILING_BOAT_2_NAME_2, VarbitID.SAILING_BOAT_2_NAME_3, VarbitID.SAILING_BOAT_2_PORT, VarbitID.SAILING_BOAT_2_STORED_HP, VarbitID.SAILING_BOAT_2_STORED_MAXHP, VarbitID.SAILING_BOAT_2_OWNED, VarbitID.SAILING_BOAT_2_TYPE},
+		{VarbitID.SAILING_BOAT_3_NAME_1, VarbitID.SAILING_BOAT_3_NAME_2, VarbitID.SAILING_BOAT_3_NAME_3, VarbitID.SAILING_BOAT_3_PORT, VarbitID.SAILING_BOAT_3_STORED_HP, VarbitID.SAILING_BOAT_3_STORED_MAXHP, VarbitID.SAILING_BOAT_3_OWNED, VarbitID.SAILING_BOAT_3_TYPE},
+		{VarbitID.SAILING_BOAT_4_NAME_1, VarbitID.SAILING_BOAT_4_NAME_2, VarbitID.SAILING_BOAT_4_NAME_3, VarbitID.SAILING_BOAT_4_PORT, VarbitID.SAILING_BOAT_4_STORED_HP, VarbitID.SAILING_BOAT_4_STORED_MAXHP, VarbitID.SAILING_BOAT_4_OWNED, VarbitID.SAILING_BOAT_4_TYPE},
+		{VarbitID.SAILING_BOAT_5_NAME_1, VarbitID.SAILING_BOAT_5_NAME_2, VarbitID.SAILING_BOAT_5_NAME_3, VarbitID.SAILING_BOAT_5_PORT, VarbitID.SAILING_BOAT_5_STORED_HP, VarbitID.SAILING_BOAT_5_STORED_MAXHP, VarbitID.SAILING_BOAT_5_OWNED, VarbitID.SAILING_BOAT_5_TYPE}
+	};
+	private static final int[] NAME_ROWS = {
+		DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_PREFIX_OPTIONS,
+		DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_DESCRIPTOR_OPTIONS,
+		DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_NOUN_OPTIONS
+	};
+
 	private final int boatId;
 
 	@Setter private String boatName;
@@ -60,103 +73,34 @@ public class PlayerBoat
 	{
 		this.boatId = boatId;
 		this.boatName = "Boat " + boatId;
-		initVarbits();
-	}
-
-	private void initVarbits()
-	{
-		switch (boatId)
+		if (boatId >= 1 && boatId <= BOAT_VARBITS.length)
 		{
-			case 1:
-				name1Vb = VarbitID.SAILING_BOAT_1_NAME_1;
-				name2Vb = VarbitID.SAILING_BOAT_1_NAME_2;
-				name3Vb = VarbitID.SAILING_BOAT_1_NAME_3;
-				portVb = VarbitID.SAILING_BOAT_1_PORT;
-				hpVb = VarbitID.SAILING_BOAT_1_STORED_HP;
-				maxHpVb = VarbitID.SAILING_BOAT_1_STORED_MAXHP;
-				ownedVb = VarbitID.SAILING_BOAT_1_OWNED;
-				typeVb = VarbitID.SAILING_BOAT_1_TYPE;
-				break;
-			case 2:
-				name1Vb = VarbitID.SAILING_BOAT_2_NAME_1;
-				name2Vb = VarbitID.SAILING_BOAT_2_NAME_2;
-				name3Vb = VarbitID.SAILING_BOAT_2_NAME_3;
-				portVb = VarbitID.SAILING_BOAT_2_PORT;
-				hpVb = VarbitID.SAILING_BOAT_2_STORED_HP;
-				maxHpVb = VarbitID.SAILING_BOAT_2_STORED_MAXHP;
-				ownedVb = VarbitID.SAILING_BOAT_2_OWNED;
-				typeVb = VarbitID.SAILING_BOAT_2_TYPE;
-				break;
-			case 3:
-				name1Vb = VarbitID.SAILING_BOAT_3_NAME_1;
-				name2Vb = VarbitID.SAILING_BOAT_3_NAME_2;
-				name3Vb = VarbitID.SAILING_BOAT_3_NAME_3;
-				portVb = VarbitID.SAILING_BOAT_3_PORT;
-				hpVb = VarbitID.SAILING_BOAT_3_STORED_HP;
-				maxHpVb = VarbitID.SAILING_BOAT_3_STORED_MAXHP;
-				ownedVb = VarbitID.SAILING_BOAT_3_OWNED;
-				typeVb = VarbitID.SAILING_BOAT_3_TYPE;
-				break;
-			case 4:
-				name1Vb = VarbitID.SAILING_BOAT_4_NAME_1;
-				name2Vb = VarbitID.SAILING_BOAT_4_NAME_2;
-				name3Vb = VarbitID.SAILING_BOAT_4_NAME_3;
-				portVb = VarbitID.SAILING_BOAT_4_PORT;
-				hpVb = VarbitID.SAILING_BOAT_4_STORED_HP;
-				maxHpVb = VarbitID.SAILING_BOAT_4_STORED_MAXHP;
-				ownedVb = VarbitID.SAILING_BOAT_4_OWNED;
-				typeVb = VarbitID.SAILING_BOAT_4_TYPE;
-				break;
-			case 5:
-				name1Vb = VarbitID.SAILING_BOAT_5_NAME_1;
-				name2Vb = VarbitID.SAILING_BOAT_5_NAME_2;
-				name3Vb = VarbitID.SAILING_BOAT_5_NAME_3;
-				portVb = VarbitID.SAILING_BOAT_5_PORT;
-				hpVb = VarbitID.SAILING_BOAT_5_STORED_HP;
-				maxHpVb = VarbitID.SAILING_BOAT_5_STORED_MAXHP;
-				ownedVb = VarbitID.SAILING_BOAT_5_OWNED;
-				typeVb = VarbitID.SAILING_BOAT_5_TYPE;
-				break;
-			default:
-				break;
+			final int[] vbs = BOAT_VARBITS[boatId - 1];
+			name1Vb = vbs[0];
+			name2Vb = vbs[1];
+			name3Vb = vbs[2];
+			portVb = vbs[3];
+			hpVb = vbs[4];
+			maxHpVb = vbs[5];
+			ownedVb = vbs[6];
+			typeVb = vbs[7];
 		}
 	}
 
 	boolean updateForVarbit(int id, Client client, PluginManager pluginManager, ConfigManager configManager)
 	{
-		if (id == name1Vb || id == name2Vb || id == name3Vb)
-		{
-			updateName(client, pluginManager, configManager);
-		}
-		else if (id == portVb)
-		{
-			updatePort(client);
-		}
-		else if (id == hpVb || id == maxHpVb)
-		{
-			updateHealth(client);
-		}
-		else if (id == ownedVb)
-		{
-			updateOwned(client);
-		}
-		else if (id == typeVb)
-		{
-			updateType(client);
-		}
-		else
-		{
-			return false;
-		}
+		if (id == name1Vb || id == name2Vb || id == name3Vb) updateName(client, pluginManager, configManager);
+		else if (id == portVb) updatePort(client);
+		else if (id == hpVb || id == maxHpVb) updateHealth(client);
+		else if (id == ownedVb) updateOwned(client);
+		else if (id == typeVb) updateType(client);
+		else return false;
 		return true;
 	}
 
 	public void updateAll(Client client, PluginManager pluginManager, ConfigManager configManager)
 	{
-		if (client == null)
-		{
-			return;
-		}
+		if (client == null) return;
 		updateName(client, pluginManager, configManager);
 		updatePort(client);
 		updateHealth(client);
@@ -166,7 +110,6 @@ public class PlayerBoat
 
 	public void updateName(Client client, PluginManager pluginManager, ConfigManager configManager)
 	{
-		// 1. ShipRenamerPlugin compatibility
 		if (pluginManager != null && configManager != null)
 		{
 			for (Plugin plugin : pluginManager.getPlugins())
@@ -187,69 +130,28 @@ public class PlayerBoat
 			}
 		}
 
-		if (client == null)
-		{
-			return;
-		}
+		if (client == null) return;
 
-		// 2. Standard Sailing Boat name lookup via client db table
-		final int name1Val = client.getVarbitValue(name1Vb);
-		final int name2Val = client.getVarbitValue(name2Vb);
-		final int name3Val = client.getVarbitValue(name3Vb);
-
-		if ((name1Val + name2Val + name3Val) == 0)
+		final int[] vals = {client.getVarbitValue(name1Vb), client.getVarbitValue(name2Vb), client.getVarbitValue(name3Vb)};
+		if ((vals[0] + vals[1] + vals[2]) == 0)
 		{
 			this.boatName = "Boat " + boatId;
 			return;
 		}
 
-		final int name1Idx = name1Val - 1;
-		final int name2Idx = name2Val - 1;
-		final int name3Idx = name3Val - 1;
-
-		final int optionCol = DBTableID.SailingBoatNameOptions.COL_OPTION;
 		final List<String> parts = new ArrayList<>();
-
 		try
 		{
-			if (name1Idx >= 0)
+			for (int i = 0; i < NAME_ROWS.length; i++)
 			{
-				final Object[] prefixOpts = client.getDBTableField(
-					DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_PREFIX_OPTIONS, optionCol, 0);
-				if (prefixOpts != null && name1Idx < prefixOpts.length && prefixOpts[name1Idx] instanceof String)
+				final int idx = vals[i] - 1;
+				if (idx >= 0)
 				{
-					final String s = (String) prefixOpts[name1Idx];
-					if (s != null && !s.isEmpty())
+					final Object[] opts = client.getDBTableField(NAME_ROWS[i], DBTableID.SailingBoatNameOptions.COL_OPTION, 0);
+					if (opts != null && idx < opts.length && opts[idx] instanceof String)
 					{
-						parts.add(s);
-					}
-				}
-			}
-
-			if (name2Idx >= 0)
-			{
-				final Object[] descOpts = client.getDBTableField(
-					DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_DESCRIPTOR_OPTIONS, optionCol, 0);
-				if (descOpts != null && name2Idx < descOpts.length && descOpts[name2Idx] instanceof String)
-				{
-					final String s = (String) descOpts[name2Idx];
-					if (s != null && !s.isEmpty())
-					{
-						parts.add(s);
-					}
-				}
-			}
-
-			if (name3Idx >= 0)
-			{
-				final Object[] nounOpts = client.getDBTableField(
-					DBTableID.SailingBoatNameOptions.Row.SAILING_BOAT_NAME_NOUN_OPTIONS, optionCol, 0);
-				if (nounOpts != null && name3Idx < nounOpts.length && nounOpts[name3Idx] instanceof String)
-				{
-					final String s = (String) nounOpts[name3Idx];
-					if (s != null && !s.isEmpty())
-					{
-						parts.add(s);
+						final String s = (String) opts[idx];
+						if (!s.isEmpty()) parts.add(s);
 					}
 				}
 			}
@@ -258,52 +160,27 @@ public class PlayerBoat
 		{
 		}
 
-		if (!parts.isEmpty())
-		{
-			this.boatName = String.join(" ", parts);
-		}
-		else
-		{
-			this.boatName = "Boat " + boatId;
-		}
+		this.boatName = parts.isEmpty() ? "Boat " + boatId : String.join(" ", parts);
 	}
 
 	public void updatePort(Client client)
 	{
-		if (client == null)
-		{
-			return;
-		}
-		final int portVal = client.getVarbitValue(portVb);
-		this.portId = portVal;
-		this.port = SailingPort.fromId(portVal);
+		if (client == null) return;
+		this.portId = client.getVarbitValue(portVb);
+		this.port = SailingPort.fromId(portId);
 	}
 
 	public void updateHealth(Client client)
 	{
-		if (client == null)
-		{
-			return;
-		}
+		if (client == null) return;
 		final int hp = client.getVarbitValue(hpVb);
 		final int maxHp = client.getVarbitValue(maxHpVb);
-
-		if (maxHp > 0)
-		{
-			this.health = (float) hp / (float) maxHp;
-		}
-		else
-		{
-			this.health = -1f;
-		}
+		this.health = maxHp > 0 ? (float) hp / (float) maxHp : -1f;
 	}
 
 	public void updateOwned(Client client)
 	{
-		if (client == null)
-		{
-			return;
-		}
+		if (client == null) return;
 		this.owned = client.getVarbitValue(ownedVb) > 0
 			|| client.getVarbitValue(portVb) > 0
 			|| client.getVarbitValue(name2Vb) > 0;
@@ -311,11 +188,7 @@ public class PlayerBoat
 
 	public void updateType(Client client)
 	{
-		if (client == null)
-		{
-			return;
-		}
-		final int typeVal = client.getVarbitValue(typeVb);
-		this.boatType = BoatType.fromId(typeVal);
+		if (client == null) return;
+		this.boatType = BoatType.fromId(client.getVarbitValue(typeVb));
 	}
 }

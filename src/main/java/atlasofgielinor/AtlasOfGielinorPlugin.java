@@ -480,7 +480,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 			{
 				return raw;
 			}
-			if (config.debugLogging() && client.isInInstancedRegion())
+			if (config.debugLogging() && isPlayerInInstance())
 			{
 				log.debug("[AtlasOfGielinor] instance player raw={} resolved={}", raw, resolved);
 			}
@@ -493,20 +493,26 @@ public class AtlasOfGielinorPlugin extends Plugin
 		}
 	}
 
+	private boolean isPlayerInInstance()
+	{
+		final net.runelite.api.WorldView wv = client.getTopLevelWorldView();
+		return wv != null && wv.isInstance();
+	}
+
 	@Subscribe
 	public void onGameTick(GameTick tick)
 	{
 		final Player local = client.getLocalPlayer();
 		lastPlayerLocation = local == null ? null : resolvePlayerLocation(local);
 		camera.setPlayerLocation(lastPlayerLocation);
-		camera.setPlayerInInstance(local != null && client.isInInstancedRegion());
+		camera.setPlayerInInstance(local != null && isPlayerInInstance());
 
 		// Remember the last spot the player actually stood on the overworld surface. Instances with
 		// no UndergroundZone mapping resolve to unmapped template coords, so
 		// this remembered point is the only sane surface anchor for the player marker and for
 		// right-click "exit to surface".
 		if (lastPlayerLocation != null
-			&& !client.isInInstancedRegion()
+			&& !isPlayerInInstance()
 			&& lastPlayerLocation.getY() <= InstanceMaps.GAP_MIN_Y)
 		{
 			camera.setLastSurfaceLocation(lastPlayerLocation);
@@ -723,7 +729,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 			final DungeonPiece piece = dungeonPieceIndex.pieceAt(
 				zone.getId(), point.getX(), point.getY(), point.getPlane(), null);
 			DungeonFloor selectedFloor = null;
-			for (DungeonFloor floor : DungeonFloor.all())
+			for (DungeonFloor floor : DungeonFloor.forZone(zone))
 			{
 				if (floor.zone != zone || floor.plane != point.getPlane())
 				{
@@ -841,16 +847,10 @@ public class AtlasOfGielinorPlugin extends Plugin
 
 
 			final List<DungeonPiece> pieces = dungeonPieceIndex.piecesFor(zone.getId());
-			final Integer layer = camera.floorLayerFor(zone);
-			final int plane = camera.getHoveredFloorPlane() != null && camera.getHoveredUndergroundZone() == zone
-				? camera.getHoveredFloorPlane() : camera.getActiveUndergroundZone() == zone
-					? camera.getPlane() : zone.getUndergroundPoint().getPlane();
-			final boolean multiPlane = DungeonFloor.hasMultiplePlanes(zone);
 			for (int p = pieces.size() - 1; p >= 0; p--)
 			{
 				final DungeonPiece piece = pieces.get(p);
-				if (camera.isUndergroundModeActive() ? !camera.isDungeonPieceVisible(zone, piece)
-					: (multiPlane && piece.plane != plane) || (layer != null && piece.layer != layer))
+				if (!camera.isDungeonPieceVisible(zone, piece))
 				{
 					continue;
 				}
@@ -873,7 +873,7 @@ public class AtlasOfGielinorPlugin extends Plugin
 						|| InstanceMaps.clipMapsForZone(zone).stream().anyMatch(map -> map.contains(x, y));
 				if (inside)
 				{
-					return new WorldPoint(x, y, zone.getUndergroundPoint().getPlane());
+					return new WorldPoint(x, y, camera.effectivePlaneFor(zone));
 				}
 			}
 		}
@@ -1177,17 +1177,26 @@ public class AtlasOfGielinorPlugin extends Plugin
 		{
 			return;
 		}
-		final PoiIndex.Poi poi = InstanceMaps.firstHit(worldX, worldY,
-			camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(),
-			(x, y) -> poiIndex.nearest(x, y, camera.getPlane(), radius));
+		PoiIndex.Poi poi = mapOverlay != null
+			? mapOverlay.visiblePoiIconAt(new java.awt.Point(mouse.getX(), mouse.getY())) : null;
+		if (poi == null)
+		{
+			poi = InstanceMaps.firstHit(worldX, worldY,
+				camera.getFocusedUndergroundZone(), camera.isDungeonContentsFocused(),
+				(x, y) -> poiIndex.nearest(x, y, camera.getPlane(), radius));
+		}
 		if (poi == null || (mapOverlay != null && !mapOverlay.shouldDrawPoiIcon(poi)))
 		{
 			return;
 		}
 
-		final WorldPoint point = new WorldPoint(poi.getX(), poi.getY(), poi.getPlane());
-		final String target = "<col=ffff00>" + poi.getName() + "</col>";
-		addLocalMenuEntry("Examine", target, e -> examinePoi(poi));
+		final PoiIndex.Poi resolvedPoi = poi;
+		final WorldPoint point = resolvedPoi.getDisplayPoint() != null
+			? new WorldPoint((int) Math.floor(resolvedPoi.getDisplayPoint().getX()),
+				(int) Math.floor(resolvedPoi.getDisplayPoint().getY()), camera.getPlane())
+			: new WorldPoint(resolvedPoi.getX(), resolvedPoi.getY(), resolvedPoi.getPlane());
+		final String target = "<col=ffff00>" + resolvedPoi.getName() + "</col>";
+		addLocalMenuEntry("Examine", target, e -> examinePoi(resolvedPoi));
 		addLocalMenuEntry("Mark", target, e -> markMapPoint(point));
 	}
 
@@ -1212,7 +1221,8 @@ public class AtlasOfGielinorPlugin extends Plugin
 						camera.toggleUndergroundZone(zone, target.getSurfacePoint());
 					}
 				});
-			final DungeonFloor next = nextFloor(zone, target.getFloor());
+			final DungeonFloor next = nextFloor(zone,
+				target.getFloor() != null ? target.getFloor() : camera.selectedFloorFor(zone));
 			if (next != null)
 			{
 				addLocalMenuEntry("Cycle floor", "<col=ffff00>" + next.name + "</col>", e -> camera.setActiveFloor(next));
@@ -1227,30 +1237,9 @@ public class AtlasOfGielinorPlugin extends Plugin
 
 	private static DungeonFloor nextFloor(UndergroundZone zone, DungeonFloor current)
 	{
-		DungeonFloor first = null;
-		boolean returnNext = false;
-		int count = 0;
-		for (DungeonFloor floor : DungeonFloor.all())
-		{
-			if (floor.zone != zone)
-			{
-				continue;
-			}
-			count++;
-			if (first == null)
-			{
-				first = floor;
-			}
-			else if (returnNext)
-			{
-				return floor;
-			}
-			if (floor == current)
-			{
-				returnNext = true;
-			}
-		}
-		return count > 1 ? first : null;
+		final List<DungeonFloor> floors = DungeonFloor.forZone(zone);
+		if (floors.size() < 2) return null;
+		return floors.get((floors.indexOf(current) + 1) % floors.size());
 	}
 
 	private void markMapPoint(WorldPoint point)

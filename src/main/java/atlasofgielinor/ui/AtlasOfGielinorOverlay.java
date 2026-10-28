@@ -298,6 +298,7 @@ public class AtlasOfGielinorOverlay extends Overlay
 		// Native input owns closing; the tick handler releases input when the interface disappears.
 		camera.setActive(true);
 
+		camera.setHoverPreviewEnabled(config.undergroundHoverPreview());
 		syncWithClient(worldMap);
 		// Freeze the camera pose for the rest of this frame. Without this, a drag or wheel event
 		// on the AWT thread can move the camera between the tile-grid pass and later passes,
@@ -557,6 +558,11 @@ public class AtlasOfGielinorOverlay extends Overlay
 		return markers.locations.shouldDrawPoiIcon(poi);
 	}
 
+	public PoiIndex.Poi visiblePoiIconAt(java.awt.Point cursor)
+	{
+		return markers.locations.visiblePoiIconAt(cursor);
+	}
+
 	/**
 	 * A magnifier button top-left (below the status chip) and, when expanded, a searchable
 	 * location finder card. Chars are captured by {@code WorldMapInput} and results queried
@@ -611,11 +617,11 @@ public class AtlasOfGielinorOverlay extends Overlay
 		final Area area = new Area(rect);
 		if (!config.fullscreenMap())
 		{
-			final Widget overview = client.getWidget(InterfaceID.Worldmap.OVERVIEW_CONTAINER);
+			final Rectangle overview = layout.overviewBounds();
 			final Widget mapList = client.getWidget(InterfaceID.Worldmap.MAPLIST_BOX_GRAPHIC0);
-			if (overview != null && !overview.isHidden())
+			if (overview != null)
 			{
-				area.subtract(new Area(overview.getBounds()));
+				area.subtract(new Area(overview));
 			}
 			if (mapList != null && !mapList.isHidden())
 			{

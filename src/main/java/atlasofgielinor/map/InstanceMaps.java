@@ -26,7 +26,7 @@ package atlasofgielinor.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +83,8 @@ public final class InstanceMaps
 
 	private static final class Indexes
 	{
-		private final Map<UndergroundZone, WikiMap> primaryMap = new EnumMap<>(UndergroundZone.class);
-		private final Map<UndergroundZone, List<WikiMap>> mapsByZone = new EnumMap<>(UndergroundZone.class);
+		private final Map<UndergroundZone, WikiMap> primaryMap = new LinkedHashMap<>();
+		private final Map<UndergroundZone, List<WikiMap>> mapsByZone = new LinkedHashMap<>();
 		private final Map<String, List<UndergroundZone>> zonesById = new HashMap<>();
 		private boolean loaded;
 	}

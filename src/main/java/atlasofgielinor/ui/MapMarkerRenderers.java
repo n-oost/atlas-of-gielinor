@@ -88,7 +88,7 @@ class MapMarkerRenderers
 		routes = new RouteMarkerRenderer(config, camera, shortestPathTracker);
 		layers = new LayerMarkerRenderer(config, camera, poiIndex);
 		pluginMarkers = new PluginMarkerRenderer(config, camera, worldMapPointManager, worldMapPointReader, visibleTooltipTargets);
-		groundItems = new GroundItemMarkerRenderer(config, camera, monsterIconManager, groundItemIndex, visibleTooltipTargets);
+		groundItems = new GroundItemMarkerRenderer(config, camera, monsterIconManager, groundItemIndex, dungeonPieceIndex, visibleTooltipTargets);
 		flash = new FlashMarkerRenderer(camera);
 	}
 

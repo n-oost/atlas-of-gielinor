@@ -213,6 +213,14 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 
 		if (SwingUtilities.isLeftMouseButton(event))
 		{
+			// overMap above preserves native close passthrough before plugin UI hit testing.
+			layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
+			if (layerInputHandler.handleFinderClick(event))
+			{
+				event.consume();
+				return event;
+			}
+
 			final boolean deferLayerSymbol = config.dragToPan() && config.panButton().matches(event);
 			final String uiHit = layerInputHandler.handleUiButtonClick(event.getPoint(), deferLayerSymbol);
 			if (uiHit != null)
@@ -226,13 +234,6 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 				}
 				event.consume();
 				dbgConsume(uiHit, event.getPoint(), true);
-				return event;
-			}
-
-			layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
-			if (layerInputHandler.handleFinderClick(event))
-			{
-				event.consume();
 				return event;
 			}
 
@@ -454,6 +455,13 @@ public class WorldMapInput implements MouseListener, MouseWheelListener, KeyList
 	public void tickFinderFlyoutDwell()
 	{
 		layerInputHandler.setFlyoutDwellMs(flyoutDwellMs);
+		final Point point = cursor;
+		if (point != null && overMap(point) && !contextMenuHandler.isClientMenuOpen()
+			&& !dragController.isDraggingMap() && (raidBossDisplay == null || !raidBossDisplay.isOpen()))
+		{
+			layerInputHandler.updateFinderEdgeScroll(point);
+			layerInputHandler.updateHoveredFinderRow(point);
+		}
 		layerInputHandler.tickFinderFlyoutDwell();
 	}
 

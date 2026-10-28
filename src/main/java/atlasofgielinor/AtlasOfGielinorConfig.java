@@ -391,7 +391,7 @@ public interface AtlasOfGielinorConfig extends Config
 	)
 	default boolean maintainPlayerInView()
 	{
-		return true;
+		return false;
 	}
 
 	@ConfigItem(

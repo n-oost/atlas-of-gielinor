@@ -25,6 +25,7 @@
 package atlasofgielinor.map.catalog;
 
 import atlasofgielinor.map.MapCatalogLoader;
+import atlasofgielinor.map.finder.FinderPoiIndex;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -71,6 +72,7 @@ public class PoiIndex
 	private final List<Poi> pois = new ArrayList<>();
 	/** Search-only aliases that share a rendered point with an earlier source. */
 	private final List<Poi> searchPois = new ArrayList<>();
+	private List<FinderPoiIndex.Entry> finderEntries = Collections.emptyList();
 	private final Set<String> searchIdentities = new HashSet<>();
 	private final Map<String, List<Poi>> byKey = new TreeMap<>();
 	private SpatialIndex<Poi> spatialIndex = new SpatialIndex<>(
@@ -117,7 +119,7 @@ public class PoiIndex
 	{
 		final PoiIndex prepared = new PoiIndex(gson);
 		prepared.loadData(tileDir);
-		if (!MapCatalogLoader.isReady() || Thread.currentThread().isInterrupted())
+		if (!prepared.loaded || !MapCatalogLoader.isReady() || Thread.currentThread().isInterrupted())
 		{
 			return;
 		}
@@ -127,6 +129,7 @@ public class PoiIndex
 			pois.addAll(prepared.pois);
 			searchPois.clear();
 			searchPois.addAll(prepared.searchPois);
+			finderEntries = prepared.finderEntries;
 			searchIdentities.clear();
 			searchIdentities.addAll(prepared.searchIdentities);
 			byKey.clear();
@@ -199,6 +202,15 @@ public class PoiIndex
 		}
 
 		spatialIndex = new SpatialIndex<>(pois, Poi::getPlane, Poi::getX, Poi::getY);
+		try
+		{
+			finderEntries = FinderPoiIndex.build(searchPois, pois);
+		}
+		catch (IOException e)
+		{
+			log.debug("Unreadable Finder subject catalog", e);
+			return;
+		}
 
 		// Decode on the loading thread; rendering only looks up prepared images.
 		for (String key : byKey.keySet())
@@ -257,6 +269,11 @@ public class PoiIndex
 	public synchronized List<Poi> searchEntries()
 	{
 		return Collections.unmodifiableList(searchPois);
+	}
+
+	public synchronized List<FinderPoiIndex.Entry> finderEntries()
+	{
+		return finderEntries;
 	}
 
 	/**

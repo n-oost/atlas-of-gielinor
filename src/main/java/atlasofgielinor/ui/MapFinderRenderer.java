@@ -79,6 +79,7 @@ class MapFinderRenderer
 		{
 			return null;
 		}
+		if (res.getSubjectEntry() != null) return res.getSubjectEntry().getSubject().getType();
 		switch (res.getKind())
 		{
 			case PLACE:
@@ -332,7 +333,7 @@ class MapFinderRenderer
 				}
 
 				final WorldPoint regCenter = new WorldPoint(region.getCenterX(), region.getCenterY(), 0);
-				final int dist = distanceTiles(regCenter, playerLoc);
+				final int dist = MapFinder.distanceTiles(regCenter, playerLoc);
 				final String arrow = "▸";
 				graphics.setColor(CARD_TITLE);
 				graphics.drawString(arrow, row.x + row.width - 60, rowY + rowH - 6);
@@ -381,7 +382,7 @@ class MapFinderRenderer
 				{
 					final MapFinder.Result result = rows.get(i);
 					final Rectangle row = new Rectangle(panel.x + 3, rowY, panelW - 6, rowH);
-					final String groupKey = result.getGroupKey() != null ? result.getGroupKey() : result.getName();
+					final String groupKey = result.getIdentity();
 					final boolean isHovered = cursor != null && row.contains(cursor);
 					final boolean isSelected = i == 0;
 
@@ -525,7 +526,7 @@ class MapFinderRenderer
 				}
 				if (hoveredReg != null)
 				{
-					flyoutItems = finder.getRegionContents(hoveredReg, playerLoc);
+					flyoutItems = flattenRegionContents(finder.getRegionContents(hoveredReg, playerLoc));
 					flyoutTitle = hoveredReg.getDisplayName();
 				}
 			}
@@ -533,13 +534,15 @@ class MapFinderRenderer
 			{
 				for (MapFinder.Result r : rows)
 				{
-					final String rKey = r.getGroupKey() != null ? r.getGroupKey() : r.getName();
-					if (rKey.equalsIgnoreCase(hoveredKey) || r.getName().equalsIgnoreCase(hoveredKey))
+					final String rKey = r.getIdentity();
+					if (rKey.equals(hoveredKey))
 					{
 						if (r.hasChildren())
 						{
 							flyoutItems = r.getChildren();
-							flyoutTitle = resultTitle(r);
+							final String kind = itemKindLabel(r);
+							flyoutTitle = kind == null || resultTitle(r).equalsIgnoreCase(kind)
+								? resultTitle(r) : resultTitle(r) + " · " + kind;
 						}
 						break;
 					}
@@ -611,15 +614,28 @@ class MapFinderRenderer
 				final int textRight = route == null ? itemRow.x + itemRow.width - 6 : route.x - 8;
 				final int textLeft = flyoutPanel.x + padX;
 				final int distanceWidth = distText.isEmpty() ? 0 : fm.stringWidth(distText) + 8;
-				drawClipped(graphics, fm, flyoutName(item), textLeft, fRowY + 12,
+				final String itemTitle = isEmptyQuery ? resultTitle(item) : flyoutName(item);
+				drawClipped(graphics, fm, itemTitle, textLeft, fRowY + 12,
 					textRight - textLeft - distanceWidth, CARD_TEXT);
-				drawClipped(graphics, fm, resultLocation(item), textLeft, fRowY + 25,
+				final String locText = resultLocation(item);
+				final String stripPrefix = isEmptyQuery ? flyoutTitle : itemTitle;
+				final String subLoc = stripPrefix != null && locText.equals(stripPrefix) ? ""
+					: stripPrefix != null && locText.startsWith(stripPrefix + " · ")
+						? locText.substring(stripPrefix.length() + 3) : locText;
+				final String spot = isEmptyQuery ? flyoutName(item) : "";
+				final boolean showSpot = isEmptyQuery && !spot.isEmpty()
+					&& !spot.equalsIgnoreCase(itemTitle)
+					&& (flyoutTitle == null || !spot.equalsIgnoreCase(flyoutTitle))
+					&& !spot.equals(locText);
+				final String subLine = (showSpot ? itemKindLabel(item) + " · " + spot : itemKindLabel(item))
+					+ (subLoc.isEmpty() ? "" : " · " + subLoc);
+				drawClipped(graphics, fm, subLine, textLeft, fRowY + 25,
 					textRight - textLeft, TEXT_DIM);
 				graphics.setColor(TEXT_DIM);
 				graphics.drawString(distText, textRight - fm.stringWidth(distText), fRowY + 12);
 
 				final MapFinder.Result activated = MapFinder.activationTarget(item);
-				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, activated.getPoint(), flyoutName(item)));
+				flyoutTargets.add(new MapCamera.FlyoutTarget(itemRow, route, activated.getPoint(), itemTitle));
 				fRowY += rowH;
 			}
 
@@ -777,15 +793,18 @@ class MapFinderRenderer
 		graphics.drawString(clipped, x, baseline);
 	}
 
-	private static int distanceTiles(WorldPoint point, WorldPoint from)
+
+	static List<MapFinder.Result> flattenRegionContents(List<MapFinder.Result> groups)
 	{
-		if (from == null || point == null)
+		if (groups == null || groups.isEmpty()) return Collections.emptyList();
+		final List<MapFinder.Result> flat = new ArrayList<>(groups.size());
+		for (MapFinder.Result row : groups)
 		{
-			return -1;
+			if (row.hasChildren()) flat.addAll(row.getChildren());
+			else flat.add(row);
 		}
-		final int dx = point.getX() - from.getX();
-		final int dy = point.getY() - from.getY();
-		return (int) Math.sqrt((double) dx * dx + (double) dy * dy);
+		flat.sort(java.util.Comparator.comparingInt(MapFinder.Result::getDistanceTiles));
+		return flat;
 	}
 
 	static String resultTitle(MapFinder.Result result)
@@ -801,6 +820,23 @@ class MapFinderRenderer
 	static String flyoutName(MapFinder.Result result)
 	{
 		if (result.hasChildren()) return resultTitle(result);
+		if (result.getSubjectEntry() != null)
+		{
+			final String title = result.getSubjectEntry().getLocationName();
+			if (title.equalsIgnoreCase(result.getSubjectEntry().getSubject().getName())
+				|| (result.getSubjectEntry().getSubject().isResource()
+					&& (title.startsWith("Fishing Spot")
+						|| title.equalsIgnoreCase("Hunter training")
+						|| title.equalsIgnoreCase("Mining site")
+						|| title.matches("(?i)(?:.+ )?farming patch")
+						|| title.matches("(?i).+ trees?(?: \\(Level \\d+\\))?"))))
+			{
+				final WorldPoint point = result.getPoint();
+				final MapRegion region = MapRegion.of(point.getX(), point.getY(), point.getPlane());
+				return region == null ? locationLabel(point) : region.getDisplayName();
+			}
+			return title;
+		}
 		if (result.getKind() == MapFinder.Result.Kind.SHOP && result.getDetail() != null)
 		{
 			final int separator = result.getDetail().indexOf(" · ");
@@ -812,7 +848,7 @@ class MapFinderRenderer
 			? name.substring(separator + 3) : name == null ? resultTitle(result) : name;
 	}
 
-	private String resultSubtitle(MapFinder.Result result)
+	String resultSubtitle(MapFinder.Result result)
 	{
 		if (result.hasChildren()) return itemKindLabel(result) + " · " + result.getChildren().size() + " locations";
 		if (result.getKind() == MapFinder.Result.Kind.MONSTER) return "Monster · " + result.getName();
@@ -821,7 +857,8 @@ class MapFinderRenderer
 			return "Shop · " + flyoutName(result);
 		}
 		if (result.getKind() == MapFinder.Result.Kind.GROUND_ITEM) return "Ground spawn · " + result.getName();
-		return itemKindLabel(result) + " · " + resultLocation(result);
+		return itemKindLabel(result) + " · " + (result.getSubjectEntry() == null ? resultLocation(result)
+			: flyoutName(result).equals(resultTitle(result)) ? resultLocation(result) : flyoutName(result));
 	}
 
 	private String resultLocation(MapFinder.Result result)
@@ -843,7 +880,10 @@ class MapFinderRenderer
 	private String[] resultDescription(MapFinder.Result result)
 	{
 		final String detail = result.getDetail();
-		return new String[]{resultTitle(result) + " · " + itemKindLabel(result),
+		final String kind = itemKindLabel(result);
+		final String title = kind == null || resultTitle(result).equalsIgnoreCase(kind)
+			? resultTitle(result) : resultTitle(result) + " · " + kind;
+		return new String[]{title,
 			result.hasChildren() ? "Click to locate · Hover to choose a location"
 				: detail != null && !detail.isEmpty() ? detail : resultLocation(result) + " · Click to locate"};
 	}

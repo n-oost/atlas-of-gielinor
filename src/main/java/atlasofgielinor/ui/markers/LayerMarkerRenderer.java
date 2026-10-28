@@ -51,6 +51,7 @@ import atlasofgielinor.map.catalog.PoiIndex;
 import net.runelite.api.coords.WorldPoint;
 
 /** Draws dungeon entrance toggles and floor controls. */
+@lombok.extern.slf4j.Slf4j
 public class LayerMarkerRenderer
 {
 	/** Fixed colours that were being reallocated inside per-frame draw loops. */
@@ -71,6 +72,8 @@ public class LayerMarkerRenderer
 	private final PoiIndex poiIndex;
 	private BufferedImage dungeonExclamation;
 	private BufferedImage dungeonExclamationGreen;
+	private java.util.Map<UndergroundZone, Rectangle> lastLoggedBars = Collections.emptyMap();
+	private long lastBarLogNanos;
 
 	public LayerMarkerRenderer(AtlasOfGielinorConfig config, MapCamera camera, PoiIndex poiIndex)
 	{
@@ -181,6 +184,7 @@ public class LayerMarkerRenderer
 
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		final Stroke oldStroke = graphics.getStroke();
+		camera.setFloorBarBounds(Collections.emptyMap());
 		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
 			if (zone.getId().contains("__") || !zone.hasEntranceToggle()) continue;
@@ -288,7 +292,7 @@ public class LayerMarkerRenderer
 
 		if (onSurface || focused != null)
 		{
-			drawFloorOverlays(graphics, bounds, targets, size, onSurface, focused);
+			drawFloorOverlays(graphics, bounds, targets, onSurface, focused);
 		}
 
 
@@ -297,99 +301,131 @@ public class LayerMarkerRenderer
 	}
 
 	private void drawFloorOverlays(Graphics2D graphics, Rectangle bounds,
-		List<MapCamera.LayerSymbolTarget> targets, int size, boolean onSurface, UndergroundZone focused)
+		List<MapCamera.LayerSymbolTarget> targets, boolean onSurface, UndergroundZone focused)
 	{
-		final Integer hoveredFloor = camera.getHoveredFloorPlane();
-		final int chip = Math.max(8, size - 4);
-		for (DungeonFloor floor : DungeonFloor.all())
+		final java.util.Map<UndergroundZone, Rectangle> bars = new java.util.LinkedHashMap<>();
+		final List<Rectangle> occupied = new ArrayList<>();
+		Collections.addAll(occupied, camera.getNativePassthrough());
+		Collections.addAll(occupied, camera.getPlaneButtons());
+		Collections.addAll(occupied, camera.getLayersButton(), camera.getFinderButton(), camera.getChatButton(),
+			camera.getUndergroundReturnButton(), camera.getClueButton(), camera.getQuestButton(),
+			camera.getPlayerButton(), camera.getDestinationButton(), camera.getBoatsButton(),
+			camera.getFinderPanelBounds(), camera.getFinderFlyoutBounds(), camera.getLayersPanelBounds(),
+			camera.getCluePanelBounds(), camera.getBoatsDropdownBounds());
+		occupied.removeIf(java.util.Objects::isNull);
+		final List<UndergroundZone> previewZones = camera.previewUndergroundZones();
+		final double scale = camera.floorBarScale();
+		final int rowHeight = camera.floorBarRowHeight();
+		final int padding = camera.floorBarPadding();
+		final int width = (int) Math.round(30 * scale);
+		final int diamond = (int) Math.round(10 * scale);
+		final int gap = (int) Math.round(8 * scale);
+		final java.awt.Font font = TINY.deriveFont((float) (TINY.getSize2D() * scale));
+		final Stroke border = new BasicStroke((float) (1.1 * scale));
+		final Stroke emphasis = new BasicStroke((float) (1.6 * scale));
+		final int rowsAvailable = Math.min(7, (bounds.height - 4 * padding) / rowHeight);
+		if (rowsAvailable < 1 || bounds.width < width + 2 * padding) return;
+		final java.util.Map<UndergroundZone, Rectangle> entrances = new java.util.LinkedHashMap<>();
+		for (UndergroundZone zone : UndergroundZone.ALL_ZONES)
 		{
-			if (!onSurface && floor.zone != focused
-				&& (focused == null || !focused.getConnectedZones().contains(floor.zone)))
-			{
-				continue;
-			}
+			final List<DungeonFloor> floors = DungeonFloor.forZone(zone);
+			if (floors.size() < 2) continue;
 			if (onSurface)
 			{
-				final boolean matchesHoveredZone = camera.getHoveredUndergroundZone() != null && camera.isHoveredSurfaceToUnderground()
-					&& camera.previewUndergroundZones().contains(floor.zone);
-				final boolean matchesOpenZone = camera.isUndergroundZoneOpen(floor.zone);
-				if (!matchesHoveredZone && !matchesOpenZone)
-				{
-					continue;
-				}
+				if (!camera.isUndergroundZoneOpen(zone)
+					&& !previewZones.contains(zone)) continue;
 			}
+			else if (zone != focused && (focused == null || !focused.getConnectedZones().contains(zone))) continue;
 
-			final int sx = (int) Math.round(camera.screenX(floor.worldX + 0.5, floor.worldY + 0.5, bounds));
-			final int sy = (int) Math.round(camera.screenY(floor.worldX + 0.5, floor.worldY + 0.5, bounds));
-			final Rectangle rect = new Rectangle(sx - chip / 2, sy - chip / 2, chip, chip);
-			if (!bounds.intersects(rect))
+			Rectangle entrance = null;
+			for (MapCamera.LayerSymbolTarget target : targets)
 			{
-				continue;
+				if (target.isFloor() || target.getZone() != zone) continue;
+				final Rectangle rect = target.getBounds();
+				if (entrance == null || rect.getLocation().distanceSq(bounds.getCenterX(), bounds.getCenterY())
+					< entrance.getLocation().distanceSq(bounds.getCenterX(), bounds.getCenterY())) entrance = rect;
 			}
-
-			targets.add(new MapCamera.LayerSymbolTarget(rect, floor));
-
-			final boolean isHovered = hoveredFloor != null && camera.isHoveredFloor(floor);
-
-			final int[] dx = {sx, sx + chip / 2, sx, sx - chip / 2};
-			final int[] dy = {sy - chip / 2, sy, sy + chip / 2, sy};
-			graphics.setColor(isHovered ? FLOOR_CHIP_BG_HOVER : FLOOR_CHIP_BG);
-			graphics.fillPolygon(dx, dy, 4);
-			graphics.setColor(isHovered ? FLOOR_CHIP_EDGE_HOVER : FLOOR_CHIP_EDGE);
-			graphics.setStroke(isHovered ? SYMBOL_BORDER_HOVER : SYMBOL_BORDER);
-			graphics.drawPolygon(dx, dy, 4);
-
-			graphics.setFont(TINY);
-			final String glyph = floorGlyph(floor);
-			final int textWidth = graphics.getFontMetrics().stringWidth(glyph);
-			graphics.setColor(isHovered ? CARD_TITLE : FLOOR_CHIP_TEXT);
-			graphics.drawString(glyph, sx - textWidth / 2, sy + 3);
-
-			if (isHovered)
+			if (entrance == null)
 			{
-				graphics.setFont(SMALL);
-				final String label = floor.name;
-				final int labelWidth = graphics.getFontMetrics().stringWidth(label);
-				final int textX = sx - labelWidth / 2;
-				final int textY = rect.y + chip + 13;
-				graphics.setColor(LAYER_LABEL_BG);
-				graphics.fillRoundRect(textX - 4, textY - 11, labelWidth + 8, 14, 5, 5);
-				graphics.setColor(CARD_TITLE);
-				graphics.drawString(label, textX, textY);
+				final WorldPoint point = zone.getSurfacePoint();
+				entrance = dungeonIconRect(point.getX(), point.getY(), bounds,
+					Math.max(8, Math.min(32, config.undergroundSymbolSize())));
+			}
+			if (bounds.intersects(entrance)) entrances.put(zone, entrance);
+		}
+		final List<UndergroundZone> orderedZones = new ArrayList<>(entrances.keySet());
+		if (orderedZones.remove(focused)) orderedZones.add(0, focused);
+		for (UndergroundZone zone : orderedZones)
+		{
+			final List<DungeonFloor> floors = DungeonFloor.forZone(zone);
+			final int rows = Math.min(floors.size(), rowsAvailable);
+			final Rectangle bar = placeFloorBar(bounds, entrances.get(zone), width,
+				rows * rowHeight + 2 * padding, gap, occupied);
+			if (bar == null) continue;
+			bars.put(zone, bar);
+			occupied.add(bar);
+			MapPins.drawBadge(graphics, bar, diamond, LAYER_LABEL_BG, FLOOR_CHIP_EDGE, border);
+			final int offset = camera.floorBarOffset(zone, rows);
+			final DungeonFloor selected = camera.selectedFloorFor(zone);
+			for (int row = 0; row < rows; row++)
+			{
+				final DungeonFloor floor = floors.get(offset + row);
+				final int cx = bar.x + bar.width / 2;
+				final int cy = bar.y + padding + row * rowHeight + rowHeight / 2;
+				final Rectangle hit = new Rectangle(bar.x + 1, bar.y + padding + row * rowHeight, bar.width - 2, rowHeight);
+				targets.add(0, new MapCamera.LayerSymbolTarget(hit, floor));
+				final boolean hovered = camera.isHoveredFloor(floor);
+				final boolean active = selected != null && selected.plane == floor.plane
+					&& java.util.Objects.equals(selected.layerId, floor.layerId);
+				final int[] x = {cx, cx + diamond, cx, cx - diamond};
+				final int[] y = {cy - diamond, cy, cy + diamond, cy};
+				graphics.setColor(active ? FLOOR_CHIP_EDGE : hovered ? FLOOR_CHIP_BG_HOVER : FLOOR_CHIP_BG);
+				graphics.fillPolygon(x, y, 4);
+				graphics.setColor(hovered ? FLOOR_CHIP_EDGE_HOVER : FLOOR_CHIP_EDGE);
+				graphics.setStroke(active || hovered ? emphasis : border);
+				graphics.drawPolygon(x, y, 4);
+				graphics.setFont(font);
+				final String label = floor.glyph.isEmpty() ? String.valueOf(offset + row + 1) : floor.glyph;
+				graphics.setColor(active ? FLOOR_CHIP_BG : FLOOR_CHIP_TEXT);
+				graphics.drawString(label, cx - graphics.getFontMetrics().stringWidth(label) / 2, cy + (int) Math.round(4 * scale));
+			}
+			graphics.setColor(FLOOR_CHIP_EDGE_HOVER);
+			final int cx = bar.x + width / 2;
+			final int arrow = Math.max(2, padding - 1);
+			if (offset > 0) graphics.fillPolygon(new int[]{cx - arrow, cx + arrow, cx},
+				new int[]{bar.y + padding, bar.y + padding, bar.y + 1}, 3);
+			if (offset + rows < floors.size()) graphics.fillPolygon(new int[]{cx - arrow, cx + arrow, cx},
+				new int[]{bar.y + bar.height - padding, bar.y + bar.height - padding, bar.y + bar.height - 1}, 3);
+		}
+		camera.setFloorBarBounds(Collections.unmodifiableMap(bars));
+		if (config.debugLogging() && log.isDebugEnabled() && !bars.equals(lastLoggedBars)
+			&& System.nanoTime() - lastBarLogNanos > 1_000_000_000L)
+		{
+			lastBarLogNanos = System.nanoTime();
+			lastLoggedBars = bars;
+			for (java.util.Map.Entry<UndergroundZone, Rectangle> entry : bars.entrySet())
+			{
+				log.debug("[AtlasOfGielinor:floor-bar] zone={} bounds={} total={} zoom={} entrance={} gap={} side=left",
+					entry.getKey().getId(), entry.getValue(), DungeonFloor.forZone(entry.getKey()).size(),
+					camera.getFrameZoom(), entrances.get(entry.getKey()),
+					entrances.get(entry.getKey()).x - (entry.getValue().x + entry.getValue().width));
+			}
+			for (MapCamera.LayerSymbolTarget target : targets)
+			{
+				if (target.isFloor()) log.debug("[AtlasOfGielinor:floor-target] zone={} name={} bounds={} selected={}",
+					target.getZone().getId(), target.getFloor().name, target.getBounds(),
+					camera.selectedFloorFor(target.getZone()) == target.getFloor());
 			}
 		}
 	}
 
-	private static final java.util.regex.Pattern EXPLICIT_FLOOR_NUM = java.util.regex.Pattern.compile("\\(([0-9]+)(?:\\s*[-–].*)?\\)");
-
-	private static String floorGlyph(DungeonFloor selected)
+	/** Keep the bar immediately left of its entrance; never relocate it to another side. */
+	private static Rectangle placeFloorBar(Rectangle view, Rectangle entrance, int width, int height,
+		int gap, List<Rectangle> occupied)
 	{
-		if (selected.zone == UndergroundZone.SLAYER_TOWER)
-		{
-			if (selected.name.equals("Basement")) return "B";
-			if (selected.name.equals("Ground floor")) return "G";
-			if (selected.name.startsWith("Roof")) return "R";
-		}
-		final java.util.regex.Matcher m = EXPLICIT_FLOOR_NUM.matcher(selected.name);
-		if (m.find())
-		{
-			return m.group(1);
-		}
-		int count = 0;
-		int ordinal = 0;
-		for (DungeonFloor floor : DungeonFloor.all())
-		{
-			if (floor.zone == selected.zone && floor.plane == selected.plane)
-			{
-				count++;
-				if (floor == selected)
-				{
-					ordinal = count;
-				}
-			}
-		}
-		return count > 1 ? String.valueOf(ordinal)
-			: selected.plane == 0 ? "G" : String.valueOf(selected.plane);
+		final int y = Math.max(view.y, Math.min((int) entrance.getCenterY() - height / 2,
+			view.y + view.height - height));
+		final Rectangle bar = new Rectangle(entrance.x - gap - width, y, width, height);
+		return view.contains(bar) && !ViewWindow.overlapsPlaced(occupied, bar) ? bar : null;
 	}
-
 }
